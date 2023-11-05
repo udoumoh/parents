@@ -1,6 +1,6 @@
 "use client";
-import { FC } from "react";
-import { useEffect, useState } from "react";
+import LoadingBar from 'react-top-loading-bar'
+import { FC, useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import {useRouter} from "next/navigation";
 import {
@@ -19,14 +19,20 @@ import {
   InputGroup,
   InputLeftElement,
   Input,
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
 } from "@chakra-ui/react";
+import { HiOutlineHome } from "react-icons/hi";
+import {IoIosSearch} from 'react-icons/io'
+import { PiChatsTeardropLight } from 'react-icons/pi'
+import {CiGrid41} from 'react-icons/ci'
 import { AiOutlineSearch, AiOutlinePlus } from "react-icons/ai";
 import { BsGrid } from "react-icons/bs";
-import { HiOutlineSearch } from "react-icons/hi";
 import { AiOutlineSetting } from "react-icons/ai";
-import { PiChatsTeardropBold } from "react-icons/pi";
 import { AiOutlineFile } from "react-icons/ai";
 import { RiContactsBookLine } from "react-icons/ri";
+import { BiChevronRight } from 'react-icons/bi';
 
 interface MobileProps extends FlexProps {
   onOpen: () => void;
@@ -54,8 +60,6 @@ const SecondSidebarContent = ({ onClose, ...rest }: SidebarProps) => {
       setActive("dashboard")
     }
   }, [pathName])
-  console.log(pathName)
-  // console.log(active)
   return (
     <Box
       transition="3s ease"
@@ -83,6 +87,7 @@ const SecondSidebarContent = ({ onClose, ...rest }: SidebarProps) => {
             height={{ md: "40px" }}
             borderRadius={"50%"}
             alt="profile"
+            pointerEvents={'none'}
           ></Image>
           <Box lineHeight={"20px"}>
             <Text fontWeight={"600"}>Chibuzor Ali-Williams</Text>
@@ -115,7 +120,7 @@ const SecondSidebarContent = ({ onClose, ...rest }: SidebarProps) => {
         </Box>
         <Box
           as="button"
-          color={"#979797"}
+          color={active === 'results' ? "#fff" : '#979797'}
           textAlign={"start"}
           alignItems={"center"}
           display={"flex"}
@@ -136,7 +141,7 @@ const SecondSidebarContent = ({ onClose, ...rest }: SidebarProps) => {
         </Box>
         <Box
           as="button"
-          color={"#979797"}
+          color={active === 'greycases' ? "#fff" : '#979797'}
           textAlign={"start"}
           alignItems={"center"}
           display={"flex"}
@@ -167,7 +172,7 @@ const FirstSidebarContent = ({ onClose, ...rest }: SidebarProps) => {
       bg={"#005E5D"}
       borderRight="1px"
       borderRightColor={"gray.300"}
-      w={{ base: "full", md: "4rem" }}
+      w={{ base: "full", md: "4.1rem" }}
       pos="fixed"
       h="100%"
       py={5}
@@ -185,21 +190,22 @@ const FirstSidebarContent = ({ onClose, ...rest }: SidebarProps) => {
             width={"3rem"}
             height={"3rem"}
             alt="logolight"
+            pointerEvents={'none'}  
           />
         </Box>
         <Grid justifyContent={"center"} gap={5}>
-          <Button bg={"none"} _hover={{ background: "#114E4A" }} py={5}>
-            <BsGrid
-              size={"20"}
+          <Button bg={"none"} _hover={{ background: "#114E4A" }} py={5} background={'#114E4A'}>
+            <CiGrid41
+              size={"23"}
               color={"#fff"}
               focus={{ backgroundColor: "#114E4D" }}
             />
           </Button>
           <Button bg={"none"} _hover={{ background: "#114E4E" }} py={5}>
-            <PiChatsTeardropBold size={"20"} color={"#fff"} />
+            <PiChatsTeardropLight size={"20"} color={"#fff"} />
           </Button>
           <Button bg={"none"} _hover={{ background: "#114E4E" }} py={5}>
-            <HiOutlineSearch size={"20"} color={"#fff"} />
+            <IoIosSearch size={"20"} color={"#fff"} />
           </Button>
           <Button bg={"none"} _hover={{ background: "#114E4E" }} py={5}>
             <AiOutlineSetting size={"20"} color={"#fff"} />
@@ -211,6 +217,7 @@ const FirstSidebarContent = ({ onClose, ...rest }: SidebarProps) => {
             width={"3rem"}
             height={"3rem"}
             alt="profile"
+            pointerEvents={'none'}
           />
         </Box>
       </Box>
@@ -255,6 +262,18 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
 
 const SidebarWithHeader: FC<SidebarWithHeader> = ({children}) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+   const [active, setActive] = useState("")
+  const pathName = usePathname()
+
+  useEffect(() => {
+    if(pathName.includes('/results')){
+      setActive('results')
+    } else if(pathName.includes('/greycases')){
+      setActive('greycases')
+    } else {
+      setActive('Dashboard')
+    }
+  }, [pathName])
 
   return (
     <Box minH="100vh" bg={"#fff"}>
@@ -283,6 +302,31 @@ const SidebarWithHeader: FC<SidebarWithHeader> = ({children}) => {
       <MobileNav onOpen={onOpen} />
       <Box ml={{ base: 0, md: 80 }} p="4">
         {/* Content */}
+        <Breadcrumb
+        px={"1rem"}
+        mb={'1rem'}
+        spacing="4px"
+        separator={<BiChevronRight color="gray.500" />}
+      >
+        <BreadcrumbItem>
+          <BreadcrumbLink
+            href="#"
+            fontSize={"sm"}
+            fontWeight={"600"}
+            display={"flex"}
+            alignItems={"center"}
+          >
+            <HiOutlineHome />
+            <Text ml={"5px"}>Home</Text>
+          </BreadcrumbLink>
+        </BreadcrumbItem>
+
+        <BreadcrumbItem isCurrentPage>
+          <BreadcrumbLink href={'/'} fontSize={"sm"} fontWeight={"bold"} color={'#005D5D'}>
+            {active}
+          </BreadcrumbLink>
+        </BreadcrumbItem>
+      </Breadcrumb>
         {children}
       </Box>
     </Box>

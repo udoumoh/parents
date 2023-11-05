@@ -14,6 +14,7 @@ const EmptyStateCard: FC<EmptyStateCardProps> = ({ }) => {
       w={"full"}
       p={10}
       my={{base:'10px', md:'0'}}
+      shadow={'none'}
     >
       <Box textAlign={"center"}>
         <Image
@@ -21,7 +22,8 @@ const EmptyStateCard: FC<EmptyStateCardProps> = ({ }) => {
           alt="card"
           mx={"auto"}
           mb={"1.5rem"}
-        ></Image>
+          pointerEvents={'none'}
+        />
         <Text fontWeight={"600"}>You have no messages</Text>
         <Text fontWeight={"600"}>Send a message to see them here</Text>
       </Box>
