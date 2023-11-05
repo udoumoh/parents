@@ -4,6 +4,7 @@ import { FC, useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import {useRouter} from "next/navigation";
 import {
+  IconButton,
   Box,
   Flex,
   useColorModeValue,
@@ -22,7 +23,11 @@ import {
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbLink,
+  CloseButton
 } from "@chakra-ui/react";
+import {
+  FiMenu,
+} from 'react-icons/fi'
 import { HiOutlineHome } from "react-icons/hi";
 import {IoIosSearch} from 'react-icons/io'
 import { PiChatsTeardropLight } from 'react-icons/pi'
@@ -69,7 +74,7 @@ const SecondSidebarContent = ({ onClose, ...rest }: SidebarProps) => {
       w={{ base: "full", md: "16rem" }}
       pos="fixed"
       h="full"
-      ml={"4.1rem"}
+      ml={{md:"4.1rem"}}
       {...rest}
     >
       <Box
@@ -80,11 +85,12 @@ const SecondSidebarContent = ({ onClose, ...rest }: SidebarProps) => {
         mx={"0.5rem"}
         gap={2}
       >
-        <Box display={"flex"} gap={2} mb={10}>
+        <Box display={"flex"} gap={2} mb={10} justifyContent={'space-between'}>
+          <Box>
           <Image
             src="/images/profileImg.jpeg"
-            width={{ md: "40px" }}
-            height={{ md: "40px" }}
+            width={{base:"2rem", md: "40px" }}
+            height={{base:"2rem", md: "40px" }}
             borderRadius={"50%"}
             alt="profile"
             pointerEvents={'none'}
@@ -95,6 +101,8 @@ const SecondSidebarContent = ({ onClose, ...rest }: SidebarProps) => {
               GN24002
             </Text>
           </Box>
+          </Box>
+          <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose} />
         </Box>
 
         <Box
@@ -176,6 +184,7 @@ const FirstSidebarContent = ({ onClose, ...rest }: SidebarProps) => {
       pos="fixed"
       h="100%"
       py={5}
+      display={{base:'none'}}
       {...rest}
     >
       <Box
@@ -238,6 +247,16 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
       justifyContent={"space-between"}
       {...rest}
     >
+
+      <IconButton
+        color={'#000'}
+        display={{ base: 'flex', md: 'none' }}
+        onClick={onOpen}
+        variant="outline"
+        aria-label="open menu"
+        icon={<FiMenu />}
+      />
+
       <InputGroup w={"30%"}>
         <InputLeftElement pointerEvents="none">
           <AiOutlineSearch color="gray.300" />

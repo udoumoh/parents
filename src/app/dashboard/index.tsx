@@ -8,7 +8,6 @@ import {
   Grid,
   Card,
 } from "@chakra-ui/react";
-import { usePathname } from "next/navigation";
 import { BiMessageRoundedDetail } from "react-icons/bi";
 import { BsArrowRightShort } from "react-icons/bs";
 import EmptyStateCard from "@/components/shared/emptyStateCard";
