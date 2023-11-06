@@ -1,11 +1,11 @@
 import { FC } from 'react'
 import EmptyStateCard from '@/components/shared/emptyStateCard'
 
-interface GreycasesProps {
+interface GraycasesProps {
   
 }
 
-const Greycases: FC<GreycasesProps> = ({}) => {
+const Graycases: FC<GraycasesProps> = ({}) => {
   return (
     <div>
         <EmptyStateCard />
@@ -13,4 +13,4 @@ const Greycases: FC<GreycasesProps> = ({}) => {
   )
 }
 
-export default Greycases
+export default Graycases

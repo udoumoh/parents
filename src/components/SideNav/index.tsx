@@ -1,5 +1,4 @@
 "use client";
-import LoadingBar from 'react-top-loading-bar'
 import { FC, useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import {useRouter} from "next/navigation";
@@ -59,8 +58,8 @@ const SecondSidebarContent = ({ onClose, ...rest }: SidebarProps) => {
   useEffect(() => {
     if(pathName.includes("/results")){
       setActive('results')
-    } else if(pathName.includes("/greycases")){
-      setActive('greycases')
+    } else if(pathName.includes("/graycases")){
+      setActive('graycases')
     } else {
       setActive("dashboard")
     }
@@ -149,7 +148,7 @@ const SecondSidebarContent = ({ onClose, ...rest }: SidebarProps) => {
         </Box>
         <Box
           as="button"
-          color={active === 'greycases' ? "#fff" : '#979797'}
+          color={active === 'gra  ycases' ? "#fff" : '#979797'}
           textAlign={"start"}
           alignItems={"center"}
           display={"flex"}
