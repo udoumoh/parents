@@ -18,6 +18,7 @@ import {
   Grid,
   InputGroup,
   InputLeftElement,
+  Avatar,
   Input,
   Breadcrumb,
   BreadcrumbItem,
@@ -85,15 +86,8 @@ const SecondSidebarContent = ({ onClose, ...rest }: SidebarProps) => {
         gap={2}
       >
         <Box display={"flex"} gap={2} mb={10} justifyContent={'space-between'}>
-          <Box>
-          <Image
-            src="/images/profileImg.jpeg"
-            width={{base:"2rem", md: "40px" }}
-            height={{base:"2rem", md: "40px" }}
-            borderRadius={"50%"}
-            alt="profile"
-            pointerEvents={'none'}
-          ></Image>
+          <Box display={'flex'} alignItems={'center'}>
+          <Avatar size={"md"} src={"/images/profileImg.jpeg"} pointerEvents={"none"}/>
           <Box lineHeight={"20px"}>
             <Text fontWeight={"600"}>Chibuzor Ali-Williams</Text>
             <Text fontSize={"12px"} color={"#AAAAAA"}>

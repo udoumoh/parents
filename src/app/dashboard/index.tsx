@@ -6,6 +6,7 @@ import {
   Image,
   Button,
   Grid,
+  Avatar,
   Card,
 } from "@chakra-ui/react";
 import { BiMessageRoundedDetail } from "react-icons/bi";
@@ -81,15 +82,8 @@ const Dashboard: FC<DashboardProps> = ({}) => {
             my={{ base: "10px", md: "0" }}
           >
             <Box display={"flex"} justifyContent={"space-between"}>
-              <Box display={"flex"} alignItems={"center"} gap={4}>
-                <Image
-                  src="/images/profileImg.jpeg"
-                  width={{ base:'2rem', md: "4rem" }}
-                  height={{ base:'2rem', md: "4rem" }}
-                  borderRadius={"50%"}
-                  alt="profile"
-                  pointerEvents={"none"}
-                />
+              <Box display={"flex"} alignItems={"center"} gap={3}>
+                <Avatar size={"lg"} src={"/images/profileImg.jpeg"} pointerEvents={"none"}/>
                 <Box lineHeight={"20px"}>
                   <Text fontWeight={"600"} fontSize={"lg"}>
                     Chibuzor Ali-Williams
