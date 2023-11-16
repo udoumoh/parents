@@ -23,7 +23,8 @@ import {
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbLink,
-  CloseButton
+  CloseButton,
+  Icon,
 } from "@chakra-ui/react";
 import {
   FiMenu,
@@ -38,9 +39,22 @@ import { AiOutlineSetting } from "react-icons/ai";
 import { AiOutlineFile } from "react-icons/ai";
 import { RiContactsBookLine } from "react-icons/ri";
 import { BiChevronRight } from 'react-icons/bi';
+import { IconType } from 'react-icons'
 
 interface MobileProps extends FlexProps {
   onOpen: () => void;
+}
+
+interface NavItemProps extends FlexProps {
+  icon: IconType;
+  link: string;
+  children: React.ReactNode;
+}
+
+interface LinkItemProps {
+  name: string;
+  icon: IconType;
+  url: string;
 }
 
 interface SidebarProps extends BoxProps {
@@ -51,20 +65,14 @@ interface SidebarWithHeader {
   children: React.ReactNode;
 }
 
-const SecondSidebarContent = ({ onClose, ...rest }: SidebarProps) => {
-  const [active, setActive] = useState("")
-  const pathName = usePathname()
-  const router = useRouter()
+const LinkItems: Array<LinkItemProps> = [
+  { name: "Dashboard", icon: BsGrid, url: "/dashboard" },
+  { name: "Results", icon: AiOutlineFile, url: "/results" },
+  { name: "Graycases", icon: RiContactsBookLine, url: "/graycases" },
+];
 
-  useEffect(() => {
-    if(pathName.includes("/results")){
-      setActive('results')
-    } else if(pathName.includes("/graycases")){
-      setActive('graycases')
-    } else {
-      setActive("dashboard")
-    }
-  }, [pathName])
+const SecondSidebarContent = ({ onClose, ...rest }: SidebarProps) => {
+  const pathName = usePathname()
   return (
     <Box
       transition="3s ease"
@@ -86,7 +94,7 @@ const SecondSidebarContent = ({ onClose, ...rest }: SidebarProps) => {
         gap={2}
       >
         <Box display={"flex"} gap={2} mb={10} justifyContent={'space-between'}>
-          <Box display={'flex'} alignItems={'center'}>
+          <Box display={'flex'} alignItems={'center'} gap={2}>
           <Avatar size={"md"} src={"/images/profileImg.jpeg"} pointerEvents={"none"}/>
           <Box lineHeight={"20px"}>
             <Text fontWeight={"600"}>Chibuzor Ali-Williams</Text>
@@ -97,70 +105,20 @@ const SecondSidebarContent = ({ onClose, ...rest }: SidebarProps) => {
           </Box>
           <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose} />
         </Box>
-
-        <Box
-          as="button"
-          color={active === 'dashboard' ? "#fff" : '#979797'}
-          textAlign={"start"}
-          alignItems={"center"}
-          display={"flex"}
-          p={"10px"}
-          gap={3}
-          backgroundColor={active === 'dashboard' ? "#005D5D" : ""}
-          rounded={'md'}
-          _hover={{
-            backgroundColor: `${active === 'dashboard' ? "#005D5D" : "#B4B4B3"}`,
-            color: "#fff",
-            borderRadius: "5px",
-            transitionDuration:'0.5s'
-          }}
-          onClick={() => router.push('/')}
-        >
-          <BsGrid size={"20"} />
-          <Text>Dashboard</Text>
-        </Box>
-        <Box
-          as="button"
-          color={active === 'results' ? "#fff" : '#979797'}
-          textAlign={"start"}
-          alignItems={"center"}
-          display={"flex"}
-          p={"10px"}
-          gap={3}
-          rounded={'md'}
-          backgroundColor={active === 'results' ? "#005D5D" : ""}
-          _hover={{
-            backgroundColor: `${active === 'results' ? "#005D5D" : "#B4B4B3"}`,
-            color: "#fff",
-            borderRadius: "5px",
-            transitionDuration:'0.5s'
-          }}
-          onClick={() => router.push('results')}
-        >
-          <AiOutlineFile size={"20"} />
-          <Text>Results</Text>
-        </Box>
-        <Box
-          as="button"
-          color={active === 'gra  ycases' ? "#fff" : '#979797'}
-          textAlign={"start"}
-          alignItems={"center"}
-          display={"flex"}
-          p={"10px"}
-          gap={3}
-          rounded={'md'}
-          backgroundColor={active === 'greycases' ? "#005D5D" : ""}
-          _hover={{
-            backgroundColor: `${active === 'greycases' ? "#005D5D" : "#B4B4B3"}`,
-            color: "#fff",
-            borderRadius: "5px",
-            transitionDuration:'0.5s'
-          }}
-          onClick={() => router.push('greycases')}
-        >
-          <RiContactsBookLine size={"20"} />
-          <Text>Greycases</Text>
-        </Box>
+        {
+          LinkItems.map((item, index) => {
+            return (
+              <NavItem
+                key={index}
+                icon={item.icon}
+                link={item.url}
+                bg={pathName === `/${item.name.toLowerCase()}` ? "#005D5D" : ""}
+              >
+                {item.name}
+              </NavItem>
+            );
+          })
+        }
       </Box>
     </Box>
   );
@@ -227,6 +185,48 @@ const FirstSidebarContent = ({ onClose, ...rest }: SidebarProps) => {
   );
 };
 
+const NavItem = ({ icon, children, link, ...rest }: NavItemProps) => {
+  const pathName = usePathname()
+  return (
+    <Box
+      as="a"
+      href={`${link}`}
+      style={{ textDecoration: "none" }}
+      _focus={{ boxShadow: "none" }}
+    >
+      <Flex
+        align="center"
+        fontSize="md"
+        color={pathName === link ? "#FFF" : "#979797"}
+        py={"2"}
+        px={"2"}
+        rounded={"md"}
+        role="group"
+        cursor="pointer"
+        _hover={{
+          bg: "#B4B4B3",
+          color: "#fff",
+          transitionDuration: "0.5s",
+        }}
+        {...rest}
+      >
+        {icon && (
+          <Icon
+            mr="4"
+            color={pathName === link ? "#FFF" : "#979797"}
+            fontSize="20"
+            _groupHover={{
+              color: "#fff",
+            }}
+            as={icon}
+          />
+        )}
+        {children}
+      </Flex>
+    </Box>
+  );
+};
+
 const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
   return (
     <Flex
@@ -240,10 +240,9 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
       justifyContent={"space-between"}
       {...rest}
     >
-
       <IconButton
-        color={'#000'}
-        display={{ base: 'flex', md: 'none' }}
+        color={"#000"}
+        display={{ base: "flex", md: "none" }}
         onClick={onOpen}
         variant="outline"
         aria-label="open menu"
@@ -262,10 +261,14 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
         />
       </InputGroup>
 
-      <Button backgroundColor={"#005D5D"} color={"#fff"}>
+      <Button
+        backgroundColor={"#005D5D"}
+        color={"#fff"}
+        _hover={{ backgroundColor: "#03594A" }}
+      >
         <AiOutlinePlus />
-        <Text fontWeight={"light"} pl="2px">
-          Register Child
+        <Text fontWeight={"light"} pl="0.5rem">
+          Link your Child
         </Text>
       </Button>
     </Flex>
@@ -280,8 +283,8 @@ const SidebarWithHeader: FC<SidebarWithHeader> = ({children}) => {
   useEffect(() => {
     if(pathName.includes('/results')){
       setActive('results')
-    } else if(pathName.includes('/greycases')){
-      setActive('greycases')
+    } else if(pathName.includes('/graycases')){
+      setActive('graycases')
     } else {
       setActive('Dashboard')
     }

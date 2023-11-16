@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Mulish } from "next/font/google";
 import "./globals.css";
 import { ChakraProvider } from "@chakra-ui/react";
-import SidebarWithHeader from "@/components/SideNav";
 
 const mulish = Mulish({ subsets: ["cyrillic"] });
 
@@ -20,9 +19,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={mulish.className}>
         <ChakraProvider>
-          <SidebarWithHeader>
           {children}
-          </SidebarWithHeader>
         </ChakraProvider>
       </body>
     </html>

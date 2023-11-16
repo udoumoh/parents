@@ -8,35 +8,38 @@ import {
   Grid,
   Avatar,
   Card,
+  IconButton,
 } from "@chakra-ui/react";
 import { BiMessageRoundedDetail } from "react-icons/bi";
-import { BsArrowRightShort } from "react-icons/bs";
+import { BsArrowRightShort, BsThreeDots } from "react-icons/bs";
 import EmptyStateCard from "@/components/shared/emptyStateCard";
 
-interface DashboardProps {}
+interface DashboardPageProps {}
 
-const Dashboard: FC<DashboardProps> = ({}) => {
+const DashboardPage: FC<DashboardPageProps> = ({}) => {
   return (
     <Box>
-      <Box px={"1rem"}>
-        <Box
-          display={{ base: "col", md: "flex" }}
+      <Flex px={"1rem"} gap={5} flexDir={"column"}>
+        <Flex
+          flexDir={{ base: "column", lg: "row" }}
           justifyContent={"space-between"}
           gap={5}
+          columnGap={5}
         >
           <Card
-            width={{base:"auto", md:'20rem'}}
+            width={{ base: "full", lg: "20rem" }}
             rounded={"xl"}
             border={"1px solid"}
             borderColor={"gray.300"}
             overflow={"hidden"}
-            shadow={'none'}
+            shadow={"none"}
           >
             <Box
               backgroundImage={"/images/dbimg.png"}
-              h={"10rem"}
-              bgRepeat={"no-repeat"}
-              bgSize={'cover'}
+              h={"4.6rem"}
+              backgroundSize="cover"
+              backgroundRepeat="no-repeat"
+              backgroundPosition="center"
             />
             <Image
               src="/images/schoollogo.png"
@@ -44,7 +47,7 @@ const Dashboard: FC<DashboardProps> = ({}) => {
               w={"5rem"}
               h={"5rem"}
               mx={"auto"}
-              mt={"-50px"}
+              mt={"-30px"}
               border={"5px solid #fff"}
               rounded={"2xl"}
               pointerEvents={"none"}
@@ -70,7 +73,7 @@ const Dashboard: FC<DashboardProps> = ({}) => {
           </Card>
 
           <Card
-            width={{ base: "full", md: "69%" }}
+            width={{ base: "full", lg: "69%" }}
             rounded={"xl"}
             border={"1px solid"}
             borderColor={"gray.300"}
@@ -78,12 +81,16 @@ const Dashboard: FC<DashboardProps> = ({}) => {
             p={"1rem"}
             bgImage={"/images/childcard.png"}
             bgSize={"cover"}
-            shadow={'none'}
+            shadow={"none"}
             my={{ base: "10px", md: "0" }}
           >
             <Box display={"flex"} justifyContent={"space-between"}>
               <Box display={"flex"} alignItems={"center"} gap={3}>
-                <Avatar size={"lg"} src={"/images/profileImg.jpeg"} pointerEvents={"none"}/>
+                <Avatar
+                  size={"lg"}
+                  src={"/images/profileImg.jpeg"}
+                  pointerEvents={"none"}
+                />
                 <Box lineHeight={"20px"}>
                   <Text fontWeight={"600"} fontSize={"lg"}>
                     Chibuzor Ali-Williams
@@ -144,7 +151,12 @@ const Dashboard: FC<DashboardProps> = ({}) => {
                 </Grid>
               </Box>
 
-              <Box textAlign={"start"} display={"flex"} gap={10} my={"1rem"}>
+              <Box
+                textAlign={"start"}
+                display={"flex"}
+                gap={{ base: 2, md: 10 }}
+                my={"1rem"}
+              >
                 <Grid>
                   <Text
                     color={"#8F8F8F"}
@@ -153,7 +165,7 @@ const Dashboard: FC<DashboardProps> = ({}) => {
                   >
                     Gender
                   </Text>
-                  <Text fontWeight={"600"} fontSize={"lg"}>
+                  <Text fontWeight={"600"} fontSize={{ base: "xs", md: "lg" }}>
                     Male
                   </Text>
                 </Grid>
@@ -165,7 +177,7 @@ const Dashboard: FC<DashboardProps> = ({}) => {
                   >
                     Class
                   </Text>
-                  <Text fontWeight={"600"} fontSize={"lg"}>
+                  <Text fontWeight={"600"} fontSize={{ base: "xs", md: "lg" }}>
                     JSS 1
                   </Text>
                 </Grid>
@@ -177,13 +189,18 @@ const Dashboard: FC<DashboardProps> = ({}) => {
                   >
                     Date of Birth
                   </Text>
-                  <Text fontWeight={"600"} fontSize={"lg"}>
+                  <Text fontWeight={"600"} fontSize={{ base: "xs", md: "lg" }}>
                     15th July 2010
                   </Text>
                 </Grid>
               </Box>
 
-              <Box textAlign={"start"} display={"flex"} gap={10} my={"1rem"}>
+              <Box
+                textAlign={"start"}
+                display={"flex"}
+                gap={{ base: 2, md: 10 }}
+                my={"1rem"}
+              >
                 <Grid>
                   <Text
                     color={"#8F8F8F"}
@@ -192,7 +209,7 @@ const Dashboard: FC<DashboardProps> = ({}) => {
                   >
                     Date Enrolled
                   </Text>
-                  <Text fontWeight={"600"} fontSize={"lg"}>
+                  <Text fontWeight={"600"} fontSize={{ base: "xs", md: "lg" }}>
                     13th August 2019
                   </Text>
                 </Grid>
@@ -204,7 +221,7 @@ const Dashboard: FC<DashboardProps> = ({}) => {
                   >
                     Expected Graduation
                   </Text>
-                  <Text fontWeight={"600"} fontSize={"lg"}>
+                  <Text fontWeight={"600"} fontSize={{ base: "xs", md: "lg" }}>
                     15th July 2025
                   </Text>
                 </Grid>
@@ -216,20 +233,20 @@ const Dashboard: FC<DashboardProps> = ({}) => {
                   >
                     Date Registered
                   </Text>
-                  <Text fontWeight={"600"} fontSize={"lg"}>
+                  <Text fontWeight={"600"} fontSize={{ base: "xs", md: "lg" }}>
                     21st July 2023
                   </Text>
                 </Grid>
               </Box>
             </Box>
           </Card>
-        </Box>
+        </Flex>
 
-        <Box
-          display={{ base: "col", md: "flex" }}
+        <Flex
+          flexDir={{ base: "column", lg: "row" }}
           justifyContent={"space-between"}
-          my={{base:"", md:5}}
           gap={5}
+          columnGap={5}
         >
           <EmptyStateCard />
 
@@ -240,7 +257,7 @@ const Dashboard: FC<DashboardProps> = ({}) => {
             w={"full"}
             p={4}
             my={{ base: "10px", md: "0" }}
-            shadow={'none'}
+            shadow={"none"}
           >
             <Flex align={"flex-end"} justifyContent={"space-between"}>
               <Grid>
@@ -260,8 +277,72 @@ const Dashboard: FC<DashboardProps> = ({}) => {
               </Button>
             </Flex>
 
-            <Flex gap={16} mx={"1.3rem"} my={"1rem"}>
-              <Box display={"flex"} alignItems={"center"}>
+            <Flex
+              mx={"1.3rem"}
+              my={"1rem"}
+              justifyContent={"space-between"}
+              flexDir={{ base: "column", xl: "row" }}
+            >
+              <Box
+                display={{ base: "column", xl: "flex" }}
+                alignItems={"center"}
+              >
+                <Image
+                  w={"3.5rem"}
+                  h={"3.5rem"}
+                  src="/images/schoollogo.png"
+                  alt="schoolLogo"
+                  mr={"1rem"}
+                  pointerEvents={"none"}
+                />
+                <Grid w={"full"}>
+                  <Text fontWeight={"700"} fontSize={"sm"} mb={"0.3rem"}>
+                    Green Springs High School
+                  </Text>
+                  <Flex align={"flex-end"}>
+                    <Text color={"#555555"} fontSize={"xs"} fontWeight={"700"}>
+                      Amount owed: &nbsp;
+                    </Text>
+                    <Text color={"#8F8F8F"} fontSize={"xs"} fontWeight={"600"}>
+                      {" "}
+                      $ 1200
+                    </Text>
+                  </Flex>
+                  <Flex align={"flex-end"}>
+                    <Text color={"#555555"} fontSize={"xs"} fontWeight={"700"}>
+                      Date Created: &nbsp;
+                    </Text>
+                    <Text color={"#8F8F8F"} fontSize={"xs"} fontWeight={"600"}>
+                      {" "}
+                      22nd June 2023
+                    </Text>
+                  </Flex>
+                </Grid>
+              </Box>
+              <Flex gap={2}>
+                <Box
+                  w={".8rem"}
+                  h={".8rem"}
+                  borderRadius={"50%"}
+                  bg={"#F93535"}
+                  border={"4px solid #FCAEAE"}
+                />
+                <Text fontSize={"2xs"} color={"#F93535"} fontWeight={"600"}>
+                  Fees Default
+                </Text>
+              </Flex>
+            </Flex>
+
+            <Flex
+              mx={"1.3rem"}
+              my={"1rem"}
+              justifyContent={"space-between"}
+              flexDir={{ base: "column", xl: "row" }}
+            >
+              <Box
+                display={{ base: "column", xl: "flex" }}
+                alignItems={"center"}
+              >
                 <Image
                   w={"3.5rem"}
                   h={"3.5rem"}
@@ -308,56 +389,16 @@ const Dashboard: FC<DashboardProps> = ({}) => {
               </Flex>
             </Flex>
 
-            <Flex gap={16} mx={"1.3rem"} my={"1rem"}>
-              <Box display={"flex"} alignItems={"center"}>
-                <Image
-                  w={"3.5rem"}
-                  h={"3.5rem"}
-                  src="/images/schoollogo.png"
-                  alt="schoolLogo"
-                  mr={"1rem"}
-                  pointerEvents={"none"}
-                />
-                <Grid>
-                  <Text fontWeight={"700"} fontSize={"sm"} mb={"0.3rem"}>
-                    Green Springs High School
-                  </Text>
-                  <Flex align={"flex-end"}>
-                    <Text color={"#555555"} fontSize={"xs"} fontWeight={"700"}>
-                      Amount owed: &nbsp;
-                    </Text>
-                    <Text color={"#8F8F8F"} fontSize={"xs"} fontWeight={"600"}>
-                      {" "}
-                      $ 1200
-                    </Text>
-                  </Flex>
-                  <Flex align={"flex-end"}>
-                    <Text color={"#555555"} fontSize={"xs"} fontWeight={"700"}>
-                      Date Created: &nbsp;
-                    </Text>
-                    <Text color={"#8F8F8F"} fontSize={"xs"} fontWeight={"600"}>
-                      {" "}
-                      22nd June 2023
-                    </Text>
-                  </Flex>
-                </Grid>
-              </Box>
-              <Flex gap={2}>
-                <Box
-                  w={".8rem"}
-                  h={".8rem"}
-                  borderRadius={"50%"}
-                  bg={"#F93535"}
-                  border={"4px solid #FCAEAE"}
-                />
-                <Text fontSize={"2xs"} color={"#F93535"} fontWeight={"600"}>
-                  Fees Default
-                </Text>
-              </Flex>
-            </Flex>
-
-            <Flex gap={16} mx={"1.3rem"} my={"1rem"}>
-              <Box display={"flex"} alignItems={"center"}>
+            <Flex
+              mx={"1.3rem"}
+              my={"1rem"}
+              justifyContent={"space-between"}
+              flexDir={{ base: "column", xl: "row" }}
+            >
+              <Box
+                display={{ base: "column", xl: "flex" }}
+                alignItems={"center"}
+              >
                 <Image
                   w={"3.5rem"}
                   h={"3.5rem"}
@@ -404,10 +445,10 @@ const Dashboard: FC<DashboardProps> = ({}) => {
               </Flex>
             </Flex>
           </Card>
-        </Box>
-      </Box>
+        </Flex>
+      </Flex>
     </Box>
   );
 };
 
-export default Dashboard;
+export default DashboardPage;
