@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import SidebarWithHeader from '@/components/SideNav';
+import SidebarWithHeader from '@/components/navigation/secondaryNav';
 
 interface layoutProps {
   children: React.ReactNode;
