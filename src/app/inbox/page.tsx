@@ -123,14 +123,14 @@ const InboxPage: FC<InboxPageProps> = ({}) => {
     });
   return (
     <>
-      <Box h="100vh" w={'full'}>
+      <Box h="100vh" w={"full"}>
         <Flex>
           <Box
             bg={"#fff"}
-            minW={{base:"full", md:"auto"}}
+            minW={{ base: "full", md: "auto" }}
             h={"100vh"}
-            overflowY={'auto'}
-            pb={'5rem'}
+            overflowY={"auto"}
+            pb={"5rem"}
             borderRight={"1px solid #C2C2C2"}
           >
             <Box
@@ -240,7 +240,7 @@ const InboxPage: FC<InboxPageProps> = ({}) => {
                       <Button
                         backgroundColor={"#005D5D"}
                         color={"#fff"}
-                        _hover={{ backgroundColor: "#03594A" }}
+                        colorScheme="teal"
                         w={"90%"}
                       >
                         <AiOutlinePlus />
@@ -273,11 +273,11 @@ const InboxPage: FC<InboxPageProps> = ({}) => {
             bg="#fff"
             minW="auto"
             h="100vh"
-            overflowY={'auto'}
-            pt={{base:"7rem", lg:'0px'}}    
-            pb={'5rem'}
-            flex={'1'}
-            display={{base:"none", sm:"flex"}}
+            overflowY={"auto"}
+            pt={{ base: "7rem", lg: "0px" }}
+            pb={"5rem"}
+            flex={"1"}
+            display={{ base: "none", sm: "flex" }}
             alignItems={"center"}
             justifyContent={"center"}
           >
@@ -285,13 +285,14 @@ const InboxPage: FC<InboxPageProps> = ({}) => {
               flexDir={"column"}
               alignItems={"center"}
               justifyContent={"center"}
-              w={"80%"}
+              w={"50%"}
               textAlign={"center"}
             >
               <Image
                 src="/images/inboxillustration.svg"
                 alt="No message"
                 my={"1rem"}
+                boxSize={"32"}
               />
               <Text fontSize={"xl"} fontWeight={"bold"} my={"0.8rem"}>
                 Your Inbox
@@ -304,6 +305,7 @@ const InboxPage: FC<InboxPageProps> = ({}) => {
                 backgroundColor={"#005D5D"}
                 rounded={"lg"}
                 my={"0.8rem"}
+                colorScheme="teal"
               >
                 <Text color={"#fff"} fontSize={"xs"} px={"1.5rem"}>
                   Send Message

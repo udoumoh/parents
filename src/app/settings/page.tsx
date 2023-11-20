@@ -15,6 +15,7 @@ import {
 } from "@chakra-ui/react";
 import { AiFillClockCircle } from "react-icons/ai";
 import ResultCard from "@/components/shared/resultCard";
+import { useUserAPI } from "@/hooks/user/UserContext";
 
 interface SettingsPageProps {}
 
@@ -40,6 +41,7 @@ const LegendBadge = ({ ...rest }) => {
 };
 
 const SettingsPage: FC<SettingsPageProps> = ({}) => {
+    const { profileData, setProfileData } = useUserAPI()
     const [wardData, setWarddata] = useState([
       {
         name: "Chibuzor Ali-Williams",
@@ -87,19 +89,21 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
         <Flex justifyContent={"space-between"} alignItems={"center"}>
           <Flex alignItems={"center"} gap={5}>
             <Avatar
-              src="https://media.istockphoto.com/id/1183107601/photo/african-american-lady-talking-on-phone-sitting-at-workplace.jpg?s=612x612&w=0&k=20&c=A5ABRClT_h8x-PkNlyP_fhMyH8BvlAfKuqygMGTL7OA="
+              src={profileData.userBio.profileImage}
               size={"2xl"}
+              pointerEvents={"none"}
             />
             <Box>
               <Flex alignItems={"center"} gap={2}>
                 <Text fontSize={"2xl"} fontWeight={"bold"}>
-                  Adenike Ali-Williams
+                  {`${profileData.userBio.firstName} ${profileData.userBio.lastName}`}
                 </Text>
                 <Image
                   src="/images/verifiedtag.png"
                   alt="badge"
                   w={"1rem"}
                   h={"1rem"}
+                  pointerEvents={"none"}
                 />
               </Flex>
 
@@ -113,7 +117,12 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
               </Flex>
             </Box>
           </Flex>
-          <Button backgroundColor={"#005D5D"} size={"sm"} color={"#fff"}>
+          <Button
+            backgroundColor={"#005D5D"}
+            size={"sm"}
+            color={"#fff"}
+            colorScheme="teal"
+          >
             <Text fontSize={"xs"} px={"1rem"}>
               Edit Profile
             </Text>
@@ -178,15 +187,26 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
             <Text fontSize={"sm"} fontWeight={"bold"} textAlign={"start"}>
               Invoices
             </Text>
-            <VStack border={"1px solid #E2E2E2"} py={"1rem"} px={'2rem'} rounded={"lg"} justifyContent={'center'} mt={'1rem'} pb={'10rem'}>
+            <VStack
+              border={"1px solid #E2E2E2"}
+              py={"1rem"}
+              px={"2rem"}
+              rounded={"lg"}
+              justifyContent={"center"}
+              mt={"1rem"}
+              pb={"10rem"}
+            >
               <Image
                 src="/images/invoiceillustration.svg"
                 alt="invoice"
                 boxSize={"28"}
+                pointerEvents={"none"}
               />
-              <Box mt={'2rem'}>
-                <Text color={"#747474"} fontSize={'xs'} textAlign={'center'}>No invoice has been sent to you.</Text>
-                <Text color={"#747474"} fontSize={'xs'} textAlign={'center'}>
+              <Box mt={"2rem"}>
+                <Text color={"#747474"} fontSize={"xs"} textAlign={"center"}>
+                  No invoice has been sent to you.
+                </Text>
+                <Text color={"#747474"} fontSize={"xs"} textAlign={"center"}>
                   You&apos;ll see them here once they are sent
                 </Text>
               </Box>

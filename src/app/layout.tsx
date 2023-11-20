@@ -3,6 +3,7 @@ import { Mulish } from "next/font/google";
 import "./globals.css";
 import { ChakraProvider } from "@chakra-ui/react";
 import MainNav from "@/components/navigation/mainNav";
+import UserApiProvider from "@/hooks/user/UserContext";
 
 const mulish = Mulish({ subsets: ["cyrillic"] });
 
@@ -20,9 +21,11 @@ export default function RootLayout({
     <html lang="en">
       <body className={mulish.className}>
         <ChakraProvider>
+          <UserApiProvider>
           <MainNav>
           {children}
           </MainNav>
+          </UserApiProvider>
         </ChakraProvider>
       </body>
     </html>

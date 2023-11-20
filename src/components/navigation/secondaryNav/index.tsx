@@ -4,7 +4,6 @@ import { usePathname } from "next/navigation";
 import {
   Box,
   Flex,
-  useColorModeValue,
   Text,
   Drawer,
   DrawerContent,
@@ -14,7 +13,6 @@ import {
   Image,
   Button,
   Avatar,
-  Input,
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbLink,
@@ -32,6 +30,8 @@ import { AiOutlineFile } from "react-icons/ai";
 import { RiContactsBookLine } from "react-icons/ri";
 import { BiChevronRight } from "react-icons/bi";
 import { IconType } from "react-icons";
+import { useUserAPI } from "@/hooks/user/UserContext";
+import { UserChildren } from "@/hooks/user/UserContext";
 
 interface NavItemProps extends FlexProps {
   icon: IconType;
@@ -60,13 +60,13 @@ const LinkItems: Array<LinkItemProps> = [
 ];
 
 const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
+  const { profileData, setProfileData, currentId, setCurrentId, currentWardProfile } = useUserAPI()
+  const [wardProfile, setWardprofile] = useState(profileData.userChildren)
   const pathName = usePathname();
   return (
     <Box
       transition="3s ease"
-      bg={useColorModeValue("white", "gray.900")}
-      borderRight="1px"
-      borderRightColor={useColorModeValue("gray.200", "gray.700")}
+      borderRight="1px solid #C2C2C2"
       w={{ base: "full", md: "16rem" }}
       pos="fixed"
       h="full"
@@ -88,94 +88,80 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
                 alignItems={"center"}
                 width={"full"}
                 justifyContent={"space-between"}
-                _hover={{cursor:"pointer"}}
+                _hover={{ cursor: "pointer" }}
               >
                 <Flex alignItems={"center"} gap={2}>
                   <Avatar
                     size={"md"}
-                    src={"/images/profileImg.jpeg"}
+                    src={currentWardProfile?.profileImage}
                     pointerEvents={"none"}
                   />
                   <Box lineHeight={"20px"}>
                     <Text fontWeight={"600"} fontSize={"sm"}>
-                      Chibuzor Ali-Williams
+                      {`${currentWardProfile?.firstName} ${currentWardProfile?.lastName}`}
                     </Text>
                     <Text
                       fontSize={"12px"}
                       color={"#AAAAAA"}
                       fontWeight={"600"}
                     >
-                      GN24002
+                      {currentWardProfile?.greynoteNumber}
                     </Text>
                   </Box>
                 </Flex>
                 <BsThreeDots color={"#005D5D"} />
               </Box>
             </PopoverTrigger>
-            <PopoverContent rounded={"xl"} w={'auto'} shadow={'lg'}>
+            <PopoverContent rounded={"xl"} w={"auto"} shadow={"lg"}>
               <PopoverBody p={"0.4rem"}>
-                <Flex
-                  alignItems={"center"}
-                  justifyContent={"center"}
-                  gap={2}
-                  bgColor={"#3F999830"}
-                  rounded={"md"}
-                  py={"0.5rem"}
-                  mb={"0.4rem"}
-                  _hover={{ backgroundColor: "#3F999830", cursor: "pointer" }}
-                >
-                  <Avatar
-                    size={"md"}
-                    src={"/images/profileImg.jpeg"}
-                    pointerEvents={"none"}
-                  />
-                  <Box lineHeight={"20px"}>
-                    <Text fontWeight={"600"} fontSize={"sm"}>
-                      Chibuzor Ali-Williams
-                    </Text>
-                    <Text
-                      fontSize={"12px"}
-                      color={"#AAAAAA"}
-                      fontWeight={"600"}
+                {wardProfile.map((ward: UserChildren, index: number) => {
+                  return (
+                    <Flex
+                      alignItems={"center"}
+                      justifyContent={"center"}
+                      gap={2}
+                      bgColor={
+                        currentId === profileData.userChildren[index].id
+                          ? "#3F999830"
+                          : ""
+                      }
+                      rounded={"md"}
+                      py={"0.5rem"}
+                      mb={"0.4rem"}
+                      _hover={{
+                        backgroundColor: "#3F999830",
+                        cursor: "pointer",
+                      }}
+                      key={index}
+                      onClick={() =>
+                        setCurrentId(profileData.userChildren[index].id)
+                      }
                     >
-                      GN24002
-                    </Text>
-                  </Box>
-                </Flex>
-                <Flex
-                  alignItems={"center"}
-                  justifyContent={"center"}
-                  gap={2}
-                  _hover={{ backgroundColor: "#3F999830", cursor: "pointer" }}
-                  rounded={"md"}
-                  py={"0.5rem"}
-                  my={"0.4rem"}
-                >
-                  <Avatar
-                    size={"md"}
-                    src={
-                      "https://th.bing.com/th/id/R.5dcfec967642191443ae9a4b04c55d47?rik=oahz060yDmOp%2bA&pid=ImgRaw&r=0"
-                    }
-                    pointerEvents={"none"}
-                  />
-                  <Box lineHeight={"20px"}>
-                    <Text fontWeight={"600"} fontSize={"sm"}>
-                      Chibuzor Ali-Williams
-                    </Text>
-                    <Text
-                      fontSize={"12px"}
-                      color={"#AAAAAA"}
-                      fontWeight={"600"}
-                    >
-                      GN24002
-                    </Text>
-                  </Box>
-                </Flex>
+                      <Avatar
+                        size={"md"}
+                        src={ward.profileImage}
+                        pointerEvents={"none"}
+                      />
+                      <Box lineHeight={"20px"}>
+                        <Text fontWeight={"600"} fontSize={"sm"}>
+                          {`${ward.firstName} ${ward.lastName}`}
+                        </Text>
+                        <Text
+                          fontSize={"12px"}
+                          color={"#AAAAAA"}
+                          fontWeight={"600"}
+                        >
+                          {ward.greynoteNumber}
+                        </Text>
+                      </Box>
+                    </Flex>
+                  );
+                })}
                 <Flex justifyContent={"center"} mb={"1rem"} mt={"2rem"}>
                   <Button
                     backgroundColor={"#005D5D"}
                     color={"#fff"}
-                    _hover={{ backgroundColor: "#03594A" }}
+                    colorScheme="teal"
                     w={"90%"}
                   >
                     <AiOutlinePlus />
@@ -228,9 +214,9 @@ const NavItem = ({ icon, children, link, ...rest }: NavItemProps) => {
         role="group"
         cursor="pointer"
         _hover={{
-          bg: "#005D5D29",
-          color: "#979797",
-          transitionDuration: "0.5s",
+          bg: pathName === link ? "" : "#005D5D29",
+          color: pathName === link ? "#fff" : "#979797",
+          transition: "0.5s",
         }}
         {...rest}
       >
@@ -240,7 +226,7 @@ const NavItem = ({ icon, children, link, ...rest }: NavItemProps) => {
             color={pathName === link ? "#FFF" : "#979797"}
             fontSize="20"
             _groupHover={{
-              color: "#979797",
+              color: pathName === link ? "#fff" : "#979797",
             }}
             as={icon}
           />
@@ -254,7 +240,7 @@ const NavItem = ({ icon, children, link, ...rest }: NavItemProps) => {
 const SidebarWithHeader: FC<SidebarWithHeader> = ({ children }) => {
   const [profileData, setProfiledata] = useState({
     name: "",
-    numberOfChildren: 0,
+    numberOfChildren: 1,
   });
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [active, setActive] = useState("");

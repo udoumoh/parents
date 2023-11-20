@@ -136,7 +136,7 @@ const Results: FC<ResultsProps> = ({}) => {
         <Button
           backgroundColor={"#005D5D"}
           color={"#fff"}
-          _hover={{ backgroundColor: "#03594A" }}
+          colorScheme="teal"
           size={"md"}
         >
           <AiOutlinePlus />

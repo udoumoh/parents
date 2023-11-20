@@ -1,3 +1,4 @@
+'use client'
 import { FC } from "react";
 import {
   Box,
@@ -9,15 +10,18 @@ import {
   Avatar,
   Card,
 } from "@chakra-ui/react";
-import { BiMessageRoundedDetail } from "react-icons/bi";
+import { PiChatTeardropTextLight } from "react-icons/pi";
 import { BsArrowRightShort } from "react-icons/bs";
 import EmptyStateCard from "@/components/shared/emptyStateCard";
+import { useUserAPI } from "@/hooks/user/UserContext";
 
 interface DashboardPageProps {}
 
 const DashboardPage: FC<DashboardPageProps> = ({}) => {
+    const { currentWardProfile } = useUserAPI();
+
   return (
-    <Flex gap={5} flexDir={"column"} mb={'5rem'}>
+    <Flex gap={5} flexDir={"column"} mb={"5rem"}>
       <Flex
         flexDir={{ base: "column", lg: "row" }}
         justifyContent={"space-between"}
@@ -27,8 +31,7 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
         <Box
           width={{ base: "full", lg: "20rem" }}
           rounded={"xl"}
-          border={"1px solid"}
-          borderColor={"gray.300"}
+          border={"1px solid #C2C2C2"}
           overflow={"hidden"}
           shadow={"none"}
         >
@@ -40,7 +43,7 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
             backgroundPosition="center"
           />
           <Image
-            src="/images/schoollogo.png"
+            src={currentWardProfile?.schoollogo}
             alt="logo"
             w={"5rem"}
             h={"5rem"}
@@ -52,7 +55,7 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
           />
           <Box textAlign={"center"} my={"0.5rem"} px={"2rem"}>
             <Text fontSize={"xl"} fontWeight={"600"}>
-              Green Springs High School
+              {currentWardProfile?.school}
             </Text>
             <Text fontSize="md" color={"#959595"}>
               Your ward attends this school
@@ -62,9 +65,9 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
               color={"#fff"}
               my={"2rem"}
               fontWeight={"light"}
-              _hover={{ backgroundColor: "#005D4A" }}
+              colorScheme="teal"
             >
-              <BiMessageRoundedDetail size={"1.3rem"} />
+              <PiChatTeardropTextLight size={"1.3rem"} />
               <Text mx={"0.2rem"}>Contact School</Text>
             </Button>
           </Box>
@@ -73,8 +76,7 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
         <Box
           width={{ base: "full", lg: "69%" }}
           rounded={"xl"}
-          border={"1px solid"}
-          borderColor={"gray.300"}
+          border={"1px solid #C2C2C2"}
           overflow={"hidden"}
           p={"1rem"}
           bgImage={"/images/childcard.png"}
@@ -86,12 +88,12 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
             <Box display={"flex"} alignItems={"center"} gap={3}>
               <Avatar
                 size={"lg"}
-                src={"/images/profileImg.jpeg"}
+                src={currentWardProfile?.profileImage}
                 pointerEvents={"none"}
               />
               <Box lineHeight={"20px"}>
                 <Text fontWeight={"600"} fontSize={"lg"}>
-                  Chibuzor Ali-Williams
+                  {`${currentWardProfile?.firstName} ${currentWardProfile?.lastName}`}
                 </Text>
                 <Text fontSize={"1rem"} fontWeight={"600"} color={"#AAAAAA"}>
                   GN24002
@@ -113,7 +115,7 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
             <Box textAlign={"center"} display={"flex"} gap={10} mb={"1rem"}>
               <Grid>
                 <Text fontSize={"lg"} fontWeight={"600"}>
-                  5
+                  {currentWardProfile?.feesDefault}
                 </Text>
                 <Text color={"#8F8F8F"} fontWeight={"600"} fontSize={"0.7rem"}>
                   Fees Default
@@ -121,7 +123,7 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
               </Grid>
               <Grid>
                 <Text fontSize={"lg"} fontWeight={"600"}>
-                  1
+                  {currentWardProfile?.suspension}
                 </Text>
                 <Text color={"#8F8F8F"} fontWeight={"600"} fontSize={"0.7rem"}>
                   Suspension
@@ -129,7 +131,7 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
               </Grid>
               <Grid>
                 <Text fontSize={"lg"} fontWeight={"600"}>
-                  0
+                  {currentWardProfile?.expulsion}
                 </Text>
                 <Text color={"#8F8F8F"} fontWeight={"600"} fontSize={"0.7rem"}>
                   Expulsion
@@ -148,7 +150,7 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
                   Gender
                 </Text>
                 <Text fontWeight={"600"} fontSize={{ base: "xs", md: "lg" }}>
-                  Male
+                  {currentWardProfile?.gender}
                 </Text>
               </Grid>
               <Grid>
@@ -156,7 +158,7 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
                   Class
                 </Text>
                 <Text fontWeight={"600"} fontSize={{ base: "xs", md: "lg" }}>
-                  JSS 1
+                  {currentWardProfile?.class}
                 </Text>
               </Grid>
               <Grid>
@@ -164,7 +166,7 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
                   Date of Birth
                 </Text>
                 <Text fontWeight={"600"} fontSize={{ base: "xs", md: "lg" }}>
-                  15th July 2010
+                  {currentWardProfile?.dateOfBirth}
                 </Text>
               </Grid>
             </Box>
@@ -180,7 +182,7 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
                   Date Enrolled
                 </Text>
                 <Text fontWeight={"600"} fontSize={{ base: "xs", md: "lg" }}>
-                  13th August 2019
+                  {currentWardProfile?.dateEnrolled}
                 </Text>
               </Grid>
               <Grid>
@@ -188,7 +190,7 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
                   Expected Graduation
                 </Text>
                 <Text fontWeight={"600"} fontSize={{ base: "xs", md: "lg" }}>
-                  15th July 2025
+                  {currentWardProfile?.expectedGraduation}
                 </Text>
               </Grid>
               <Grid>
@@ -196,7 +198,7 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
                   Date Registered
                 </Text>
                 <Text fontWeight={"600"} fontSize={{ base: "xs", md: "lg" }}>
-                  21st July 2023
+                  {currentWardProfile?.dateRegistered}
                 </Text>
               </Grid>
             </Box>
@@ -213,8 +215,7 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
         <EmptyStateCard />
 
         <Card
-          border={"1px solid"}
-          borderColor={"gray.300"}
+          border={"1px solid #C2C2C2"}
           rounded={"xl"}
           w={"full"}
           p={4}
@@ -239,7 +240,7 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
             mb={"0.5rem"}
             justifyContent={"space-between"}
             flexDir={{ base: "column", sm: "row" }}
-            border={"1px solid #007C7B40"}
+            border={"1px solid #C2C2C2"}
             p={"1rem"}
             rounded={"lg"}
             _hover={{
@@ -299,7 +300,7 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
             my={"0.5rem"}
             justifyContent={"space-between"}
             flexDir={{ base: "column", sm: "row" }}
-            border={"1px solid #007C7B40"}
+            border={"1px solid #C2C2C2"}
             p={"1rem"}
             rounded={"lg"}
             _hover={{
@@ -359,7 +360,7 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
             my={"0.5rem"}
             justifyContent={"space-between"}
             flexDir={{ base: "column", sm: "row" }}
-            border={"1px solid #007C7B40"}
+            border={"1px solid #C2C2C2"}
             p={"1rem"}
             rounded={"lg"}
             _hover={{
