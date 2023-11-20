@@ -33,6 +33,7 @@ const ResultCard: FC<ResultCardProps> = ({ result }) => {
           alt="pdf"
           width={"4rem"}
           h={"4.5rem"}
+          pointerEvents={"none"}
         />
       </Flex>
       <Flex alignItems={"center"} gap={2} mt={"0.6rem"}>
@@ -41,6 +42,7 @@ const ResultCard: FC<ResultCardProps> = ({ result }) => {
           alt="logo"
           height={"2.5rem"}
           width={"2.5rem"}
+          pointerEvents={"none"}
         />
         <Box>
           <Text fontSize={"md"}>{result.schoolName}</Text>

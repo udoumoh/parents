@@ -1,5 +1,5 @@
 "use client";
-import { FC, useEffect, useState } from "react";
+import { FC } from "react";
 import { usePathname } from "next/navigation";
 import {
   Box,
@@ -18,18 +18,20 @@ import {
   Input,
   Icon,
   IconButton,
+  Tooltip,
 } from "@chakra-ui/react";
 import { FiMenu } from "react-icons/fi";
-import { IoIosSearch } from "react-icons/io";
-import { PiChatsTeardrop } from "react-icons/pi";
-import { CiGrid41 } from "react-icons/ci";
+import { IoIosSearch, IoMdSettings } from "react-icons/io";
+import { PiChatsTeardrop, PiChatsTeardropFill } from "react-icons/pi";
+import { GoHome, GoHomeFill } from "react-icons/go";
+import { RiSearchFill } from "react-icons/ri";
 import {
   AiOutlineSearch,
   AiOutlinePlus,
-  AiOutlineHome,
   AiOutlineSetting,
 } from "react-icons/ai";
 import { IconType } from "react-icons";
+import { useUserAPI } from "@/hooks/user/UserContext";
 
 interface MobileProps extends FlexProps {
   onOpen: () => void;
@@ -38,11 +40,13 @@ interface MobileProps extends FlexProps {
 interface NavItemProps extends FlexProps {
   icon: IconType;
   link: string;
+  name: string;
 }
 
 interface LinkItemProps {
   name: string;
-  icon: IconType;
+  iconLight: IconType;
+  iconFill: IconType;
   url: string;
 }
 
@@ -55,18 +59,39 @@ interface MainNav {
 }
 
 const LinkItems: Array<LinkItemProps> = [
-  { name: "Dashboard", icon: AiOutlineHome, url: "/dashboard/overview" },
-  { name: "Inbox", icon: PiChatsTeardrop, url: "/inbox" },
-  { name: "Search", icon: IoIosSearch, url: "/search" },
-  { name: "Settings", icon: AiOutlineSetting, url: "/settings" },
+  {
+    name: "Dashboard",
+    iconLight: GoHome,
+    iconFill: GoHomeFill,
+    url: "/dashboard/overview",
+  },
+  {
+    name: "Inbox",
+    iconLight: PiChatsTeardrop,
+    iconFill: PiChatsTeardropFill,
+    url: "/inbox",
+  },
+  {
+    name: "Search",
+    iconLight: IoIosSearch,
+    iconFill: RiSearchFill,
+    url: "/search",
+  },
+  {
+    name: "Settings",
+    iconLight: AiOutlineSetting,
+    iconFill: IoMdSettings,
+    url: "/settings",
+  },
 ];
 
 const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
-    const pathName = usePathname()
+  const {profileData, setProfileData} = useUserAPI()
+  const pathName = usePathname();
 
   return (
     <Box
-      bg={"#005E5D"}
+      bg={"#005D5D"}
       borderRight="1px"
       borderRightColor={"gray.300"}
       w={{ base: "full", md: "4.1rem" }}
@@ -74,7 +99,7 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
       h="100vh"
       py={5}
       display={{ base: "none" }}
-      overflowY={'auto'}
+      overflowY={"auto"}
       {...rest}
     >
       <Box
@@ -85,36 +110,36 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
       >
         <Box justifyContent={"center"} alignItems={"center"} display={"flex"}>
           <Image
-            src={"/images/greylight.png"}
-            width={"3rem"}
-            height={"3rem"}
+            src={"/images/greylight.svg"}
+            width={"2.5rem"}
+            height={"2.5rem"}
             alt="logolight"
             pointerEvents={"none"}
           />
         </Box>
         <Grid justifyContent={"center"} gap={4}>
-          {
-            LinkItems.map((item, index) => {
-                return (
-                  <NavItem
-                    key={index}
-                    icon={item.icon}
-                    link={item.url}
-                    backgroundColor={
-                      pathName.includes(item.url) ? "#114E4D" : "transparent"
-                    }
-                  />
-                );
-            })
-          }
+          {LinkItems.map((item, index) => {
+            return (
+              <NavItem
+                key={index}
+                icon={ pathName.includes(item.name.toLowerCase()) ? item.iconFill : item.iconLight}
+                link={item.url}
+                backgroundColor={
+                  pathName.includes(item.name.toLowerCase()) ? "#144646" : "transparent"
+                }
+                name={item.name}
+              />
+            );
+          })}
         </Grid>
         <Box justifyContent={"center"} display={"flex"} alignItems={"center"}>
           <Image
-            src="/images/profile.png"
-            width={"3rem"}
-            height={"3rem"}
+            src={profileData.userBio.profileImage}
+            width={"2.7rem"}
+            height={"2.7rem"}
             alt="profile"
             pointerEvents={"none"}
+            rounded={'md'}
           />
         </Box>
       </Box>
@@ -122,44 +147,59 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
   );
 };
 
-const NavItem = ({ icon, link, ...rest }: NavItemProps) => {
+const NavItem = ({ icon, link, name, ...rest }: NavItemProps) => {
   return (
-    <Box
-      as="a"
-      href={`${link}`}
-      style={{ textDecoration: "none" }}
-      _focus={{ boxShadow: "none" }}
-      display={'flex'}
-      justifyContent={'center'}
+    <Tooltip
+      hasArrow
+      bg={"#144646"}
+      rounded={"md"}
+      py={"0.3rem"}
+      transition={"0.5s"}
+      px={"1rem"}
+      label={name}
+      placement="right"
     >
-      <Flex
-        justifyContent={'center'}
-        alignItems={'center'}
-        fontSize="md"
-        color={'#fff'}
-        py={"2"}
-        px={"2"}
-        rounded={"md"}
-        role="group"
-        cursor="pointer"
-        _hover={{
-          bg: "#114E4A",
-          transitionDuration: "0.5s",
-        }}
-        {...rest}
+      <Box
+        as="a"
+        w={"auto"}
+        h={"auto"}
+        href={`${link}`}
+        style={{ textDecoration: "none" }}
+        _focus={{ boxShadow: "none" }}
+        display={"flex"}
+        justifyContent={"center"}
       >
-        {icon && (
-          <Icon
-            color={'#fff'}
-            fontSize="23"
-            _groupHover={{
-              color: "#fff",
-            }}
-            as={icon}
-          />
-        )}
-      </Flex>
-    </Box>
+        <Flex
+          justifyContent={"center"}
+          alignItems={"center"}
+          fontSize="md"
+          color={"#fff"}
+          py={"3"}
+          px={"3"}
+          rounded={"md"}
+          role="group"
+          cursor="pointer"
+          _hover={{
+            bg: "#144646",
+            transitionDuration: "0.5s",
+          }}
+          {...rest}
+        >
+          {icon && (
+            <Icon
+              color={"#fff"}
+              fontSize="23"
+              _groupHover={{
+                color: "#fff",
+                transform: "scale(1.1)",
+                transition: "0.5s",
+              }}
+              as={icon}
+            />
+          )}
+        </Flex>
+      </Box>
+    </Tooltip>
   );
 };
 
@@ -197,11 +237,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
         />
       </InputGroup>
 
-      <Button
-        backgroundColor={"#005D5D"}
-        color={"#fff"}
-        _hover={{ backgroundColor: "#03594A" }}
-      >
+      <Button backgroundColor={"#005D5D"} color={"#fff"} colorScheme="teal">
         <AiOutlinePlus />
         <Text fontWeight={"light"} pl="0.5rem">
           Link your Child
@@ -216,7 +252,7 @@ const MainNav: FC<MainNav> = ({ children }) => {
   const pathName = usePathname();
 
   return (
-    <Box minH="100vh" bg={"#fff"} w={'full'} pos={'fixed'}>
+    <Box minH="100vh" bg={"#fff"} w={"full"} pos={"fixed"}>
       <SidebarContent
         onClose={() => onClose}
         display={{ base: "none", md: "block" }}
