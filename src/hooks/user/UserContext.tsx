@@ -96,7 +96,14 @@ export const UserApiProvider: FC<UserApiProviderProps> = ({ children }) => {
       },
     ],
   });
-  const [currentId, setCurrentId] = useState(profileData.userChildren[0]?.id)
+
+const isServer = typeof window === "undefined";
+const defaultId = isServer ? undefined : profileData.userChildren[0]?.id;
+
+const [currentId, setCurrentId] = useState(
+  parseInt(localStorage.getItem("currentId") ?? `${defaultId}`, 10)
+);
+
   const currentWardProfile = profileData.userChildren.find(
     (wardProfile) => wardProfile.id === currentId
   );

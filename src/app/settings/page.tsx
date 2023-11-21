@@ -41,7 +41,7 @@ const LegendBadge = ({ ...rest }) => {
 };
 
 const SettingsPage: FC<SettingsPageProps> = ({}) => {
-    const { profileData, setProfileData } = useUserAPI()
+    const { profileData } = useUserAPI()
     const [wardData, setWarddata] = useState([
       {
         name: "Chibuzor Ali-Williams",

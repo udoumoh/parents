@@ -60,8 +60,13 @@ const LinkItems: Array<LinkItemProps> = [
 ];
 
 const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
-  const { profileData, setProfileData, currentId, setCurrentId, currentWardProfile } = useUserAPI()
-  const [wardProfile, setWardprofile] = useState(profileData.userChildren)
+  const {
+    profileData,
+    currentId,
+    setCurrentId,
+    currentWardProfile,
+  } = useUserAPI();
+  const [wardProfile, setWardprofile] = useState(profileData.userChildren);
   const pathName = usePathname();
   return (
     <Box
@@ -133,9 +138,19 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
                         cursor: "pointer",
                       }}
                       key={index}
-                      onClick={() =>
-                        setCurrentId(profileData.userChildren[index].id)
-                      }
+                      onClick={() => {
+                        localStorage.setItem(
+                          "currentId",
+                          `${profileData.userChildren[index].id}`
+                        );
+                        setCurrentId(
+                          parseInt(
+                            localStorage.getItem("currentId") ??
+                              `${profileData.userChildren[0]?.id}`,
+                            10
+                          )
+                        );
+                      }}
                     >
                       <Avatar
                         size={"md"}
@@ -280,9 +295,9 @@ const SidebarWithHeader: FC<SidebarWithHeader> = ({ children }) => {
               w={"15rem"}
               h={"15rem"}
             />
-            <Text wordBreak={'break-word'} textAlign={"center"} w={'20rem'}>
-              Looks like you’re not linked to any child on Greynote,
-              would you like to connect with your child/ward now?
+            <Text wordBreak={"break-word"} textAlign={"center"} w={"20rem"}>
+              Looks like you’re not linked to any child on Greynote, would you
+              like to connect with your child/ward now?
             </Text>
             <Button
               backgroundColor={"#005D5D"}
