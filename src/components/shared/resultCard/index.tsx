@@ -20,7 +20,16 @@ interface ResultCardProps {
 
 const ResultCard: FC<ResultCardProps> = ({ result }) => {
   return (
-    <Box backgroundColor={"#E2F2F2"} p={"1rem"} rounded={"lg"}>
+    <Box
+      backgroundColor={"#E2F2F2"}
+      p={"1rem"}
+      rounded={"lg"}
+      _hover={{
+        backgroundColor: "#92DADA",
+        cursor: "pointer",
+        transition: "0.5s",
+      }}
+    >
       <Flex
         backgroundColor={"#fff"}
         justifyContent={"center"}
