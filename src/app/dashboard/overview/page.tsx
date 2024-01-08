@@ -83,6 +83,7 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
           bgSize={"cover"}
           shadow={"none"}
           my={{ base: "10px", md: "0" }}
+          flex={1}
         >
           <Box display={"flex"} justifyContent={"space-between"}>
             <Box display={"flex"} alignItems={"center"} gap={3}>
