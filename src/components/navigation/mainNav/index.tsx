@@ -19,17 +19,28 @@ import {
   Icon,
   IconButton,
   Tooltip,
+  DrawerFooter,
+  DrawerBody,
+  DrawerHeader,
+  Divider
 } from "@chakra-ui/react";
 import { FiMenu } from "react-icons/fi";
 import { IoIosSearch, IoMdSettings } from "react-icons/io";
 import { PiChatsTeardrop, PiChatsTeardropFill } from "react-icons/pi";
 import { GoHome, GoHomeFill } from "react-icons/go";
-import { RiSearchFill } from "react-icons/ri";
+import {
+  RiSearchFill,
+  RiArrowDownSLine,
+  RiArrowRightSLine,
+} from "react-icons/ri";
 import {
   AiOutlineSearch,
   AiOutlinePlus,
   AiOutlineSetting,
 } from "react-icons/ai";
+import { HiOutlineArrowSmRight } from "react-icons/hi";
+import { PiPlus } from "react-icons/pi";
+import { IoClose } from "react-icons/io5";
 import { IconType } from "react-icons";
 import { useUserAPI } from "@/hooks/user/UserContext";
 
@@ -85,8 +96,48 @@ const LinkItems: Array<LinkItemProps> = [
   },
 ];
 
+const DrawerNavLinkItems = {
+  HomeSubLinks: [
+    {
+      name: "Dashboard",
+      icon: HiOutlineArrowSmRight,
+      url: "/dashboard/overview",
+    },
+    {
+      name: "Results",
+      icon: HiOutlineArrowSmRight,
+      url: "/dashboard/results",
+    },
+    {
+      name: "Greycases",
+      icon: HiOutlineArrowSmRight,
+      url: "/dashboard/greycases",
+    },
+  ],
+  NavLinks: [
+    {
+      name: "Inbox",
+      iconLight: PiChatsTeardrop,
+      iconFill: PiChatsTeardropFill,
+      url: "/inbox",
+    },
+    {
+      name: "Search",
+      iconLight: IoIosSearch,
+      iconFill: RiSearchFill,
+      url: "/search",
+    },
+    {
+      name: "Settings",
+      iconLight: AiOutlineSetting,
+      iconFill: IoMdSettings,
+      url: "/settings",
+    },
+  ],
+};
+
 const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
-  const {profileData, setProfileData} = useUserAPI()
+  const { profileData, setProfileData } = useUserAPI();
   const pathName = usePathname();
 
   return (
@@ -122,10 +173,16 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
             return (
               <NavItem
                 key={index}
-                icon={ pathName.includes(item.name.toLowerCase()) ? item.iconFill : item.iconLight}
+                icon={
+                  pathName.includes(item.name.toLowerCase())
+                    ? item.iconFill
+                    : item.iconLight
+                }
                 link={item.url}
                 backgroundColor={
-                  pathName.includes(item.name.toLowerCase()) ? "#144646" : "transparent"
+                  pathName.includes(item.name.toLowerCase())
+                    ? "#144646"
+                    : "transparent"
                 }
                 name={item.name}
               />
@@ -139,7 +196,7 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
             height={"2.7rem"}
             alt="profile"
             pointerEvents={"none"}
-            rounded={'md'}
+            rounded={"md"}
           />
         </Box>
       </Box>
@@ -225,7 +282,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
         icon={<FiMenu />}
       />
 
-      <InputGroup w={"30%"}>
+      <InputGroup w={{ base: "60%", md: "30%" }}>
         <InputLeftElement pointerEvents="none">
           <AiOutlineSearch color="gray.300" />
         </InputLeftElement>
@@ -237,7 +294,12 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
         />
       </InputGroup>
 
-      <Button backgroundColor={"#005D5D"} color={"#fff"} colorScheme="teal">
+      <Button
+        backgroundColor={"#005D5D"}
+        color={"#fff"}
+        colorScheme="teal"
+        display={{ base: "none", md: "flex" }}
+      >
         <AiOutlinePlus />
         <Text fontWeight={"light"} pl="0.5rem">
           Link your Child
@@ -249,7 +311,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
 
 const MainNav: FC<MainNav> = ({ children }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const pathName = usePathname();
+  const { profileData, setProfileData } = useUserAPI();
 
   return (
     <Box minH="100vh" bg={"#fff"} w={"full"} pos={"fixed"}>
@@ -263,10 +325,127 @@ const MainNav: FC<MainNav> = ({ children }) => {
         onClose={onClose}
         returnFocusOnClose={false}
         onOverlayClick={onClose}
-        size="full"
       >
-        <DrawerContent>
-          <SidebarContent onClose={onClose} />
+        <DrawerContent bgColor={"#005D5D"}>
+          <DrawerHeader>
+            <Flex justifyContent={"space-between"} alignItems={"center"}>
+              <Image
+                src={"/images/greylight.svg"}
+                width={"2.5rem"}
+                height={"2.5rem"}
+                alt="logolight"
+                pointerEvents={"none"}
+              />
+              <Icon
+                as={IoClose}
+                boxSize={6}
+                color={"#8AACAC"}
+                onClick={onClose}
+              />
+            </Flex>
+
+            <Divider mt={"1.5rem"} borderColor={"#2D6666"} />
+          </DrawerHeader>
+
+          <DrawerBody>
+            <Box
+              as={"button"}
+              textAlign={"start"}
+              borderRadius={"8"}
+              px={"1rem"}
+              py={"0.7rem"}
+              backgroundColor={"#114E4D"}
+              w={"full"}
+              display={"flex"}
+              alignItems={"center"}
+              justifyContent={"space-between"}
+            >
+              <Box display={"flex"} alignItems={"center"} my={"auto"} gap={4}>
+                <Icon as={GoHomeFill} color={"#fff"} boxSize={6} />
+                <Text color={"#fff"} fontWeight={"500"} fontSize={"lg"}>
+                  Home
+                </Text>
+              </Box>
+              <Icon as={RiArrowRightSLine} color={"#fff"} boxSize={6} />
+            </Box>
+            <Box>
+              {DrawerNavLinkItems.HomeSubLinks.map((item, index) => {
+                return (
+                  <Box
+                    as="a"
+                    key={index}
+                    display={"flex"}
+                    alignItems={"center"}
+                    gap={4}
+                    my={"1rem"}
+                    color={"#9FC2C2"}
+                    ml={"1.7rem"}
+                    href={`${item.url}`}
+                  >
+                    <Icon as={item.icon} color={"#9FC2C2"} boxSize={6} />
+                    <Text color={"#9FC2C2"}>{item.name}</Text>
+                  </Box>
+                );
+              })}
+            </Box>
+
+            <Box mt={"2rem"}>
+              {DrawerNavLinkItems.NavLinks.map((item, index) => {
+                return (
+                  <Box
+                    as="a"
+                    key={index}
+                    display={"flex"}
+                    alignItems={"center"}
+                    gap={4}
+                    my={"1rem"}
+                    ml={"1rem"}
+                    href={`${item.url}`}
+                  >
+                    <Icon as={item.iconLight} color={"#fff"} boxSize={6} />
+                    <Text color={"#fff"} fontSize={"lg"}>
+                      {item.name}
+                    </Text>
+                  </Box>
+                );
+              })}
+            </Box>
+
+            <Divider mt={"4rem"} mb={"1.5rem"} borderColor={"#2D6666"} />
+
+            <Button backgroundColor={"#E4B972"} w={"full"} borderRadius={"3"}>
+              <Icon as={PiPlus} color={"#fff"} boxSize={5} mx={"0.3rem"} />
+              <Text color={"#fff"} mx={"0.3rem"} fontWeight={"400"}>
+                Link your Child
+              </Text>
+            </Button>
+          </DrawerBody>
+
+          <DrawerFooter>
+            <Box as={'a'} w={"full"} display={'flex'} justifyContent={'space-between'} alignItems={'center'} href="#">
+              <Box display={"flex"} alignItems={"center"} gap={2}>
+                <Image
+                  src={profileData.userBio.profileImage}
+                  width={"2.5rem"}
+                  height={"2.5rem"}
+                  alt="profile"
+                  pointerEvents={"none"}
+                  rounded={"md"}
+                />
+                <Grid lineHeight={"1rem"}>
+                  <Text
+                    color={"#fff"}
+                    fontWeight={"600"}
+                    fontSize={"sm"}
+                  >{`${profileData.userBio.firstName} ${profileData.userBio.lastName}`}</Text>
+                  <Text color={"#629B9B"} fontSize={"xs"}>
+                    {profileData.userBio.email}
+                  </Text>
+                </Grid>
+              </Box>
+              <Icon as={RiArrowRightSLine} color={"#fff"} boxSize={6} />
+            </Box>
+          </DrawerFooter>
         </DrawerContent>
       </Drawer>
       {/* mobilenav */}
