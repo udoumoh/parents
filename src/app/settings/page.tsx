@@ -144,12 +144,12 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
 
         <Divider my={"2rem"} />
 
-        <Flex justifyContent={"space-between"} w={"full"}>
-          <Flex flexDir={"column"}>
+        <Flex justifyContent={"space-between"} w={"full"} flexDir={{base:"column", lg:"row"}}>
+          <Flex flexDir={"column"} alignItems={'flex-start'}>
             <Text fontSize={"sm"} fontWeight={"bold"}>
               Linked Students
             </Text>
-            <Flex flexDir={{base:"column", lg:"row"}} gap={20} mt={"1rem"}>
+            <Flex flexDir={{base:"column", lg:"row"}} gap={{base:"5", lg:"20"}} mt={"1rem"}>
               {wardData.map((item, index) => {
                 return (
                   <Flex
@@ -196,7 +196,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
             </Box>
           </Flex>
 
-          <Box>
+          <Box mt={{base:"1.5rem", lg:"0rem"}}>
             <Text fontSize={"sm"} fontWeight={"bold"} textAlign={"start"}>
               Invoices
             </Text>
