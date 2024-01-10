@@ -32,14 +32,14 @@ interface UserContextProps {
     userBio: UserBio;
     userChildren: UserChildren[];
   };
-  currentId: number;
+  currentId: number | undefined;
   setProfileData: React.Dispatch<
     React.SetStateAction<{
       userBio: UserBio;
       userChildren: UserChildren[];
     }>
   >;
-  setCurrentId: React.Dispatch<React.SetStateAction<number>>;
+  setCurrentId: React.Dispatch<React.SetStateAction<number | undefined>>;
   currentWardProfile?: UserChildren;
 }
 
@@ -99,19 +99,26 @@ export const UserApiProvider: FC<UserApiProviderProps> = ({ children }) => {
     ],
   });
 
-const isServer = typeof window === "undefined";
-const defaultId = isServer ? undefined : profileData.userChildren[0]?.id;
+const isServer = typeof window === 'undefined';
+  const defaultId = isServer ? undefined : profileData.userChildren[0]?.id;
 
-const [currentId, setCurrentId] = useState(
-  parseInt(localStorage.getItem("currentId") ?? `${defaultId}`, 10)
-);
+  const [currentId, setCurrentId] = useState(() => {
+    if (!isServer) {
+      // Check if localStorage is available
+      const storedId = localStorage.getItem('currentId');
+      return parseInt(storedId ?? `${defaultId}`, 10);
+    }
+    return defaultId;
+  });
 
   const currentWardProfile = profileData.userChildren.find(
     (wardProfile) => wardProfile.id === currentId
   );
 
   return (
-    <UserContext.Provider value={{ profileData, setProfileData, currentId, setCurrentId, currentWardProfile }}>
+    <UserContext.Provider
+      value={{ profileData, setProfileData, currentId, setCurrentId, currentWardProfile }}
+    >
       {children}
     </UserContext.Provider>
   );
