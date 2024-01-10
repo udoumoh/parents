@@ -56,7 +56,7 @@ interface SidebarWithHeader {
 const LinkItems: Array<LinkItemProps> = [
   { name: "Dashboard", icon: BsGrid, url: "/dashboard/overview" },
   { name: "Results", icon: AiOutlineFile, url: "/dashboard/results" },
-  { name: "Graycases", icon: RiContactsBookLine, url: "/dashboard/graycases" },
+  { name: "Greycases", icon: RiContactsBookLine, url: "/dashboard/greycases" },
 ];
 
 const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
