@@ -114,7 +114,7 @@ const Results: FC<ResultsProps> = ({}) => {
   };
 
   return (
-    <Box mb={"5rem"}>
+    <Box mb={{base:"8rem", lg:"5rem"}}>
       <Text>Result Type</Text>
       <Flex justifyContent={"space-between"} my={"1rem"}>
         <Box>
