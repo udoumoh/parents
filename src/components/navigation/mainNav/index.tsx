@@ -1,5 +1,5 @@
 "use client";
-import { FC } from "react";
+import { FC, useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import {
   Box,
@@ -312,6 +312,27 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
 const MainNav: FC<MainNav> = ({ children }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { profileData, setProfileData } = useUserAPI();
+  const pathName = usePathname();
+  const [active, setActive] = useState("");
+  const [isDropOpen, setDropOpen] = useState(false)
+
+  useEffect(() => {
+    if (pathName.includes("/dashboard/overview")) {
+      setActive("Dashboard");
+    } else if (pathName.includes("/dashboard/results")) {
+      setActive("Results");
+    } else if (pathName.includes("/dashboard/greycases")) {
+      setActive("Greycases");
+    } else if (pathName.includes("/inbox")) {
+      setActive("Inbox");
+    } else if (pathName.includes("/search")) {
+      setActive("Search");
+    } else if (pathName.includes("/settings")) {
+      setActive("Settings");
+    } else {
+      setActive("/");
+    }
+  }, [pathName]);
 
   return (
     <Box minH="100vh" bg={"#fff"} w={"full"} pos={"fixed"}>
@@ -354,11 +375,12 @@ const MainNav: FC<MainNav> = ({ children }) => {
               borderRadius={"8"}
               px={"1rem"}
               py={"0.7rem"}
-              backgroundColor={"#114E4D"}
+              backgroundColor={isDropOpen ? "#114E4D" : ""}
               w={"full"}
               display={"flex"}
               alignItems={"center"}
               justifyContent={"space-between"}
+              onClick={() => {setDropOpen(!isDropOpen)}}
             >
               <Box display={"flex"} alignItems={"center"} my={"auto"} gap={4}>
                 <Icon as={GoHomeFill} color={"#fff"} boxSize={6} />
@@ -366,9 +388,17 @@ const MainNav: FC<MainNav> = ({ children }) => {
                   Home
                 </Text>
               </Box>
-              <Icon as={RiArrowRightSLine} color={"#fff"} boxSize={6} />
+              <Icon
+                as={
+                  isDropOpen
+                    ? RiArrowDownSLine
+                    : RiArrowRightSLine
+                }
+                color={"#fff"}
+                boxSize={6}
+              />
             </Box>
-            <Box>
+            <Box display={!isDropOpen ? "none" : "block"} mt={'0'}>
               {DrawerNavLinkItems.HomeSubLinks.map((item, index) => {
                 return (
                   <Box
@@ -381,15 +411,22 @@ const MainNav: FC<MainNav> = ({ children }) => {
                     color={"#9FC2C2"}
                     ml={"1.7rem"}
                     href={`${item.url}`}
+                    transition={'ease-in-out 1s'}
                   >
-                    <Icon as={item.icon} color={"#9FC2C2"} boxSize={6} />
-                    <Text color={"#9FC2C2"}>{item.name}</Text>
+                    <Icon
+                      as={item.icon}
+                      color={active == item.name ? "#fff" : "##9FC2C2"}
+                      boxSize={6}
+                    />
+                    <Text color={active == item.name ? "#fff" : "##9FC2C2"}>
+                      {item.name}
+                    </Text>
                   </Box>
                 );
               })}
             </Box>
 
-            <Box mt={"2rem"}>
+            <Box>
               {DrawerNavLinkItems.NavLinks.map((item, index) => {
                 return (
                   <Box
@@ -422,7 +459,14 @@ const MainNav: FC<MainNav> = ({ children }) => {
           </DrawerBody>
 
           <DrawerFooter>
-            <Box as={'a'} w={"full"} display={'flex'} justifyContent={'space-between'} alignItems={'center'} href="#">
+            <Box
+              as={"a"}
+              w={"full"}
+              display={"flex"}
+              justifyContent={"space-between"}
+              alignItems={"center"}
+              href="#"
+            >
               <Box display={"flex"} alignItems={"center"} gap={2}>
                 <Image
                   src={profileData.userBio.profileImage}

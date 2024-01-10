@@ -90,12 +90,12 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
           <Flex alignItems={"center"} gap={5}>
             <Avatar
               src={profileData.userBio.profileImage}
-              size={"2xl"}
+              size={{ base: "lg", lg: "2xl" }}
               pointerEvents={"none"}
             />
             <Box>
               <Flex alignItems={"center"} gap={2}>
-                <Text fontSize={"2xl"} fontWeight={"bold"}>
+                <Text fontSize={{ base: "xs", lg: "2xl" }} fontWeight={"bold"}>
                   {`${profileData.userBio.firstName} ${profileData.userBio.lastName}`}
                 </Text>
                 <Image
@@ -107,17 +107,30 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                 />
               </Flex>
 
-              <LegendBadge mt={"0.8rem"} />
+              <LegendBadge mt={{ base: "0.3rem", lg: "0.8rem" }} />
 
-              <Flex alignItems={"center"} gap={2} mt="0.5rem">
+              <Flex alignItems={"center"} gap={2} my="0.5rem">
                 <Icon as={AiFillClockCircle} color={"#747474"} />
-                <Text color={"#747474"} fontSize={"sm"}>
+                <Text color={"#747474"} fontSize={{base:"2xs", lg:"sm"}}>
                   Created on 25th October 2022
                 </Text>
               </Flex>
+              {/* Hidden on screen sizes bigger than lg */}
+              <Button
+                display={{ base: "block", lg: "none" }}
+                backgroundColor={"#005D5D"}
+                size={"sm"}
+                color={"#fff"}
+                colorScheme="teal"
+              >
+                <Text fontSize={"xs"} px={"1rem"}>
+                  Edit Profile
+                </Text>
+              </Button>
             </Box>
           </Flex>
           <Button
+            display={{ base: "none", lg: "block" }}
             backgroundColor={"#005D5D"}
             size={"sm"}
             color={"#fff"}
@@ -136,7 +149,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
             <Text fontSize={"sm"} fontWeight={"bold"}>
               Linked Students
             </Text>
-            <Flex gap={20} mt={"1rem"}>
+            <Flex flexDir={{base:"column", lg:"row"}} gap={20} mt={"1rem"}>
               {wardData.map((item, index) => {
                 return (
                   <Flex
