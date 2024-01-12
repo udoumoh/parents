@@ -16,6 +16,8 @@ import {
 } from "@chakra-ui/react"
 import {BsThreeDots, BsDot} from 'react-icons/bs'
 import { AiOutlinePlus } from "react-icons/ai";
+import { useUserAPI } from "@/hooks/user/UserContext";
+import { UserChildren } from "@/hooks/user/UserContext";
 
 interface InboxPageProps {}
 
@@ -86,6 +88,9 @@ const ChatContactItem: FC<ChatContactItemProps> = ({chat}) => {
 };
 
 const InboxPage: FC<InboxPageProps> = ({}) => {
+  const { profileData, currentId, setCurrentId, currentWardProfile } =
+    useUserAPI();
+  const [wardProfile, setWardprofile] = useState(profileData.userChildren);
     const [messages, setMessages] = useState({
       chats: [
         {
@@ -152,19 +157,19 @@ const InboxPage: FC<InboxPageProps> = ({}) => {
                     <Flex alignItems={"center"} gap={2}>
                       <Avatar
                         size={"md"}
-                        src={"/images/profileImg.jpeg"}
+                        src={currentWardProfile?.profileImage}
                         pointerEvents={"none"}
                       />
                       <Box lineHeight={"20px"}>
-                        <Text fontWeight={"bold"} fontSize={"lg"}>
-                          Chibuzor Ali-Williams
+                        <Text fontWeight={"600"} fontSize={"sm"}>
+                          {`${currentWardProfile?.firstName} ${currentWardProfile?.lastName}`}
                         </Text>
                         <Text
                           fontSize={"12px"}
                           color={"#AAAAAA"}
                           fontWeight={"600"}
                         >
-                          GN24002
+                          {currentWardProfile?.greynoteNumber}
                         </Text>
                       </Box>
                     </Flex>
@@ -173,69 +178,59 @@ const InboxPage: FC<InboxPageProps> = ({}) => {
                 </PopoverTrigger>
                 <PopoverContent rounded={"xl"} w={"auto"} shadow={"lg"}>
                   <PopoverBody p={"0.4rem"}>
-                    <Flex
-                      alignItems={"center"}
-                      justifyContent={"center"}
-                      gap={2}
-                      bgColor={"#3F999830"}
-                      rounded={"md"}
-                      py={"0.5rem"}
-                      mb={"0.4rem"}
-                      _hover={{
-                        backgroundColor: "#3F999830",
-                        cursor: "pointer",
-                      }}
-                    >
-                      <Avatar
-                        size={"md"}
-                        src={"/images/profileImg.jpeg"}
-                        pointerEvents={"none"}
-                      />
-                      <Box lineHeight={"20px"}>
-                        <Text fontWeight={"600"} fontSize={"sm"}>
-                          Chibuzor Ali-Williams
-                        </Text>
-                        <Text
-                          fontSize={"12px"}
-                          color={"#AAAAAA"}
-                          fontWeight={"600"}
+                    {wardProfile.map((ward: UserChildren, index: number) => {
+                      return (
+                        <Flex
+                          alignItems={"center"}
+                          justifyContent={"center"}
+                          gap={2}
+                          bgColor={
+                            currentId === profileData.userChildren[index].id
+                              ? "#3F999830"
+                              : ""
+                          }
+                          rounded={"md"}
+                          py={"0.5rem"}
+                          mb={"0.4rem"}
+                          _hover={{
+                            backgroundColor: "#3F999830",
+                            cursor: "pointer",
+                          }}
+                          key={index}
+                          onClick={() => {
+                            localStorage.setItem(
+                              "currentId",
+                              `${profileData.userChildren[index].id}`
+                            );
+                            setCurrentId(
+                              parseInt(
+                                localStorage.getItem("currentId") ??
+                                  `${profileData.userChildren[0]?.id}`,
+                                10
+                              )
+                            );
+                          }}
                         >
-                          GN24002
-                        </Text>
-                      </Box>
-                    </Flex>
-                    <Flex
-                      alignItems={"center"}
-                      justifyContent={"center"}
-                      gap={2}
-                      _hover={{
-                        backgroundColor: "#3F999830",
-                        cursor: "pointer",
-                      }}
-                      rounded={"md"}
-                      py={"0.5rem"}
-                      my={"0.4rem"}
-                    >
-                      <Avatar
-                        size={"md"}
-                        src={
-                          "https://th.bing.com/th/id/R.5dcfec967642191443ae9a4b04c55d47?rik=oahz060yDmOp%2bA&pid=ImgRaw&r=0"
-                        }
-                        pointerEvents={"none"}
-                      />
-                      <Box lineHeight={"20px"}>
-                        <Text fontWeight={"600"} fontSize={"sm"}>
-                          Chibuzor Ali-Williams
-                        </Text>
-                        <Text
-                          fontSize={"12px"}
-                          color={"#AAAAAA"}
-                          fontWeight={"600"}
-                        >
-                          GN24002
-                        </Text>
-                      </Box>
-                    </Flex>
+                          <Avatar
+                            size={"md"}
+                            src={ward.profileImage}
+                            pointerEvents={"none"}
+                          />
+                          <Box lineHeight={"20px"}>
+                            <Text fontWeight={"600"} fontSize={"sm"}>
+                              {`${ward.firstName} ${ward.lastName}`}
+                            </Text>
+                            <Text
+                              fontSize={"12px"}
+                              color={"#AAAAAA"}
+                              fontWeight={"600"}
+                            >
+                              {ward.greynoteNumber}
+                            </Text>
+                          </Box>
+                        </Flex>
+                      );
+                    })}
                     <Flex justifyContent={"center"} mb={"1rem"} mt={"2rem"}>
                       <Button
                         backgroundColor={"#005D5D"}
