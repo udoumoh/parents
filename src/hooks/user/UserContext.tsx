@@ -1,5 +1,5 @@
 "use client";
-import { FC, useState, createContext, useContext } from "react";
+import { FC, useState, createContext, useContext, useEffect } from "react";
 
 interface UserBio {
   firstName: string;
@@ -39,7 +39,7 @@ interface UserContextProps {
       userChildren: UserChildren[];
     }>
   >;
-  setCurrentId: React.Dispatch<React.SetStateAction<number | undefined>>;
+  setCurrentId: React.Dispatch<React.SetStateAction<number>>;
   currentWardProfile?: UserChildren;
 }
 
@@ -99,17 +99,18 @@ export const UserApiProvider: FC<UserApiProviderProps> = ({ children }) => {
     ],
   });
 
-const isServer = typeof window === 'undefined';
-  const defaultId = isServer ? undefined : profileData.userChildren[0]?.id;
+  // const isClient = typeof window !== "undefined";
+
+  const defaultId = 0;
 
   const [currentId, setCurrentId] = useState(() => {
-    if (!isServer) {
-      // Check if localStorage is available
-      const storedId = localStorage.getItem('currentId');
-      return parseInt(storedId ?? `${defaultId}`, 10);
-    }
     return defaultId;
   });
+
+  useEffect(() => {
+      const storedId = localStorage.getItem("currentId");
+      setCurrentId(parseInt(storedId ?? `${defaultId}`, 10));
+  }, []);
 
   const currentWardProfile = profileData.userChildren.find(
     (wardProfile) => wardProfile.id === currentId
@@ -117,12 +118,19 @@ const isServer = typeof window === 'undefined';
 
   return (
     <UserContext.Provider
-      value={{ profileData, setProfileData, currentId, setCurrentId, currentWardProfile }}
+      value={{
+        profileData,
+        setProfileData,
+        currentId,
+        setCurrentId,
+        currentWardProfile,
+      }}
     >
       {children}
     </UserContext.Provider>
   );
 };
+
 
 export const useUserAPI = () => {
   const context = useContext(UserContext);
