@@ -287,7 +287,6 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
           <AiOutlineSearch color="gray.300" />
         </InputLeftElement>
         <Input
-          type="tel"
           placeholder="Search"
           pl={10}
           borderColor={"gray.400"}
