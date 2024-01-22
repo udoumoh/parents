@@ -9,4 +9,4 @@ const Home: FC<homeProps> = ({}) => {
   redirect('/dashboard/overview')
 }
 
-export default Home
+export default Home;
