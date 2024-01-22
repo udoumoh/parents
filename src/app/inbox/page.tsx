@@ -35,10 +35,16 @@ interface ChatContactItemProps {
 
 const ChatContactItem: FC<ChatContactItemProps> = ({chat}) => {
   return (
-    <Flex my={"1.5rem"} gap={2} alignItems={"center"}>
-      <Avatar size={{base:"sm", md:"md"}} src={chat.profileImage} />
+    <Flex
+      // my={"1.5rem"}
+      gap={2}
+      p={"0.7rem"}
+      alignItems={"center"}
+      _hover={{ backgroundColor: "#2A938C30", transition: "0.3s", borderRadius:"5" }}
+    >
+      <Avatar size={{ base: "sm", md: "md" }} src={chat.profileImage} />
       <Box>
-        <Flex alignItems={"center"}>
+        <Flex alignItems={"center"} pointerEvents={"none"}>
           <Text fontSize={"xs"} fontWeight={"600"}>
             {`${chat.firstName} ${chat.lastName}`}
           </Text>
@@ -52,6 +58,7 @@ const ChatContactItem: FC<ChatContactItemProps> = ({chat}) => {
             fontSize={"xs"}
             mr={"0.5rem"}
             display={{ base: "none", md: "block" }}
+            pointerEvents={"none"}
           >
             {chat.schoolName}
           </Text>
@@ -69,7 +76,7 @@ const ChatContactItem: FC<ChatContactItemProps> = ({chat}) => {
             {chat.position}
           </Badge>
         </Flex>
-        <Flex alignItems={"center"}>
+        <Flex alignItems={"center"} pointerEvents={"none"}>
           <Text color={"#C2C2C2"} fontSize={"xs"}>
             You: &nbsp;
           </Text>
@@ -258,7 +265,7 @@ const InboxPage: FC<InboxPageProps> = ({}) => {
               Inbox
             </Text>
 
-            <Box px={"0.8rem"}>
+            <Box px={"0.8rem"} mt={'1rem'}>
               {messages.chats.map((item, index) => {
                 return <ChatContactItem chat={item} key={index} />;
               })}
