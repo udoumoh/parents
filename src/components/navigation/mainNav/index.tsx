@@ -268,8 +268,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
       height="16"
       alignItems="center"
       bg={"#fff"}
-      borderBottomWidth="1px"
-      borderBottomColor={"gray.300"}
+      borderBottom={"1px solid #C2C2C2"}
       justifyContent={"space-between"}
       {...rest}
     >
@@ -286,11 +285,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
         <InputLeftElement pointerEvents="none">
           <AiOutlineSearch color="gray.300" />
         </InputLeftElement>
-        <Input
-          placeholder="Search"
-          pl={10}
-          borderColor={"gray.400"}
-        />
+        <Input placeholder="Search" pl={10} borderColor={"gray.400"} />
       </InputGroup>
 
       <Button
