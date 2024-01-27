@@ -16,7 +16,7 @@ const EmptyInboxCard: FC<emptyInboxCardProps> = ({}) => {
       flexDir={"column"}
       alignItems={"center"}
       justifyContent={"center"}
-      w={"50%"}
+      w={"100%"}
       textAlign={"center"}
     >
       <Image

@@ -1,33 +1,43 @@
-import { FC } from 'react'
-import { 
-    Flex,
-    Box,
-    Button,
-    Text,
-    InputGroup,
-    Input,
-    Avatar,
-    IconButton,
-    Icon,
- } from "@chakra-ui/react"
- import { MdOutlineEmojiEmotions } from "react-icons/md";
- import { IoMdSend } from "react-icons/io";
+import { FC, useState } from "react";
+import {
+  Flex,
+  Box,
+  Button,
+  Text,
+  InputGroup,
+  Input,
+  Avatar,
+  IconButton,
+  Icon,
+} from "@chakra-ui/react";
+import { MdOutlineEmojiEmotions } from "react-icons/md";
+import { IoMdSend } from "react-icons/io";
 
 interface ChatBoxProps {
   ward: {
     profileImage: string;
     firstName: string;
-  }
+    lastName: string;
+    schoolName: string;
+    lastMessage: string;
+    timeSent: string;
+    position: string;
+    id: number;
+  };
+  id: String;
 }
 
-const ChatBox: FC<ChatBoxProps> = ({ward}) => {
+const ChatBox: FC<ChatBoxProps> = ({ ward, id }) => {
+  console.log(ward);
+  
+
   return (
     <Flex
       flexDir={"column"}
-      h={"100vh"}
-      flex={"1"}
+      w={"full"}
       textAlign={"center"}
-      //   backgroundColor={"red.400"}
+      maxH={"100vh"}
+      justifyContent={"space-between"}
     >
       <Box
         borderBottom={"1px solid #C2C2C2"}
@@ -36,19 +46,22 @@ const ChatBox: FC<ChatBoxProps> = ({ward}) => {
         py={"0.5rem"}
       >
         <Box display={"flex"} alignItems={"center"} gap={3}>
-          <Avatar size={"md"} src={ward.profileImage} pointerEvents={"none"} />
+          <Avatar size={"md"} src={ward?.profileImage} pointerEvents={"none"} />
           <Text fontSize={"xl"} fontWeight={"600"}>
-            {ward.firstName}
+            {ward?.firstName}
           </Text>
         </Box>
       </Box>
-      <Box flex={'1'} overflowY="auto">hi</Box>
+      <Box overflowY="auto" flex={"1"} backgroundColor={"red.100"}>
+        hi
+      </Box>
       <Box
         borderBottom={"1px solid #C2C2C2"}
         borderTop={"1px solid #C2C2C2"}
         backgroundColor={"#fff"}
         px={"1rem"}
         py={"0.5rem"}
+        bottom={"0"}
       >
         <Box display={"flex"} alignItems={"center"} gap={3} w={"full"}>
           <IconButton
@@ -64,6 +77,6 @@ const ChatBox: FC<ChatBoxProps> = ({ward}) => {
       </Box>
     </Flex>
   );
-}
+};
 
-export default ChatBox
+export default ChatBox;

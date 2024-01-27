@@ -25,6 +25,16 @@ export interface UserChildren {
   school: string;
   schoollogo: string;
   id: number;
+  chats: {
+    profileImage: string;
+    firstName: string;
+    lastName: string;
+    schoolName: string;
+    lastMessage: string;
+    timeSent: string;
+    position: string;
+    id: number;
+  }[];
 }
 
 interface UserContextProps {
@@ -76,6 +86,42 @@ export const UserApiProvider: FC<UserApiProviderProps> = ({ children }) => {
         school: "Green Springs High School",
         schoollogo: "/images/schoollogo.png",
         id: 1,
+        chats: [
+          {
+            profileImage:
+              "https://th.bing.com/th/id/OIP.KdBSw8TPL34eU6T7bjhpAAHaLH?rs=1&pid=ImgDetMain",
+            firstName: "Mayowa",
+            lastName: "Chinedu",
+            schoolName: "Greeenfield High School",
+            lastMessage: "Oga Mayowa, my childs result is still not verified",
+            timeSent: "3m",
+            position: "Admin",
+            id: 1,
+          },
+          {
+            profileImage:
+              "https://th.bing.com/th/id/OIP._glmrtIyzUtogxZCkpiQBwHaLH?rs=1&pid=ImgDetMain",
+            firstName: "Mary-Anne",
+            lastName: "Ayodele",
+            schoolName: "Greeenfield High School",
+            lastMessage:
+              "Ma, Chibuzor is still owing the school almost 300 thousand naira",
+            timeSent: "17m",
+            position: "Bursar",
+            id: 2,
+          },
+          {
+            profileImage:
+              "https://th.bing.com/th/id/R.310437da9c381f5c5342434ff6a31107?rik=0CsDgDc9kcOspw&pid=ImgRaw&r=0",
+            firstName: "Zainab",
+            lastName: "Kayode",
+            schoolName: "Greeenfield High School",
+            lastMessage: "I am not authorized to verify any student’s result",
+            timeSent: "Yesterday",
+            position: "Teacher",
+            id: 3,
+          },
+        ],
       },
       {
         firstName: "Chiamaka",
@@ -95,6 +141,42 @@ export const UserApiProvider: FC<UserApiProviderProps> = ({ children }) => {
         school: "Green Springs High School",
         schoollogo: "/images/schoollogo.png",
         id: 2,
+        chats: [
+          {
+            profileImage:
+              "https://th.bing.com/th/id/OIP.KdBSw8TPL34eU6T7bjhpAAHaLH?rs=1&pid=ImgDetMain",
+            firstName: "Tunde",
+            lastName: "Oluwagbenga",
+            schoolName: "Luthran High School",
+            lastMessage: "Oga Tunde, my childs result is still not verified",
+            timeSent: "3m",
+            position: "Admin",
+            id: 1,
+          },
+          {
+            profileImage:
+              "https://th.bing.com/th/id/OIP._glmrtIyzUtogxZCkpiQBwHaLH?rs=1&pid=ImgDetMain",
+            firstName: "Grace",
+            lastName: "Owoade",
+            schoolName: "Luthran High School",
+            lastMessage:
+              "Ma, chiamaka is still not doing her homework, please assis",
+            timeSent: "17m",
+            position: "Bursar",
+            id: 2,
+          },
+          {
+            profileImage:
+              "https://th.bing.com/th/id/R.310437da9c381f5c5342434ff6a31107?rik=0CsDgDc9kcOspw&pid=ImgRaw&r=0",
+            firstName: "George",
+            lastName: "Saviour",
+            schoolName: "Luthran High School",
+            lastMessage: "Your child was not in school today, hope all is well.",
+            timeSent: "Yesterday",
+            position: "Teacher",
+            id: 3,
+          },
+        ],
       },
     ],
   });
