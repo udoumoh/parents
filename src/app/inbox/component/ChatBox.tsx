@@ -52,7 +52,7 @@ const ChatBox: FC<ChatBoxProps> = ({ ward, id }) => {
           </Text>
         </Box>
       </Box>
-      <Box overflowY="auto" flex={"1"} backgroundColor={"red.100"}>
+      <Box overflowY="auto" flex={"1"}>
         hi
       </Box>
       <Box
