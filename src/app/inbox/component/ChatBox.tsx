@@ -59,7 +59,7 @@ const ChatBox: FC<ChatBoxProps> = ({ ward, id }) => {
         borderBottom={"1px solid #C2C2C2"}
         borderTop={"1px solid #C2C2C2"}
         backgroundColor={"#fff"}
-        px={"1rem"}
+        px={"1rem"} 
         py={"0.5rem"}
         bottom={"0"}
       >

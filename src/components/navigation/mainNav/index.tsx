@@ -22,12 +22,22 @@ import {
   DrawerFooter,
   DrawerBody,
   DrawerHeader,
-  Divider
+  Divider,
+  Modal,
+  ModalContent,
+  ModalBody,
+  ModalOverlay,
+  ModalHeader,
+  ModalFooter,
+  FormControl,
+  FormLabel,
+  Avatar,
 } from "@chakra-ui/react";
 import { FiMenu } from "react-icons/fi";
 import { IoIosSearch, IoMdSettings } from "react-icons/io";
 import { PiChatsTeardrop, PiChatsTeardropFill } from "react-icons/pi";
 import { GoHome, GoHomeFill } from "react-icons/go";
+import { FaLink } from "react-icons/fa6";
 import {
   RiSearchFill,
   RiArrowDownSLine,
@@ -69,6 +79,14 @@ interface MainNav {
   children: React.ReactNode;
 }
 
+interface SearchResultItemProps {
+  student: {
+    name: string;
+    schoolName: string;
+    profileImageUrl: string;
+  }
+}
+
 const LinkItems: Array<LinkItemProps> = [
   {
     name: "Dashboard",
@@ -81,12 +99,6 @@ const LinkItems: Array<LinkItemProps> = [
     iconLight: PiChatsTeardrop,
     iconFill: PiChatsTeardropFill,
     url: "/inbox",
-  },
-  {
-    name: "Search",
-    iconLight: IoIosSearch,
-    iconFill: RiSearchFill,
-    url: "/search",
   },
   {
     name: "Settings",
@@ -134,6 +146,35 @@ const DrawerNavLinkItems = {
       url: "/settings",
     },
   ],
+};
+
+const SearchResultItem = ({student}: SearchResultItemProps) => {
+  return(
+  <Box
+    display={'flex'}
+    alignItems={'center'}
+    gap={3}
+    w={'auto'}
+    rounded={"md"}
+    py={"0.5rem"}
+    px={'1rem'}
+    mb={"0.4rem"}
+    _hover={{
+      backgroundColor: "#3F999830",
+      cursor: "pointer",
+    }}
+  >
+    <Avatar size={"md"} src={student.profileImageUrl} pointerEvents={"none"} />
+    <Box lineHeight={"20px"}>
+      <Text fontWeight={"700"} fontSize={"lg"}>
+        {`${student.name}`}
+      </Text>
+      <Text fontSize={"sm"} color={"#AAAAAA"} fontWeight={"600"}>
+        {student.schoolName}
+      </Text>
+    </Box>
+  </Box>
+  )
 };
 
 const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
@@ -261,6 +302,57 @@ const NavItem = ({ icon, link, name, ...rest }: NavItemProps) => {
 };
 
 const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
+  const {
+    isOpen: isModalOpen,
+    onOpen: onModalOpen,
+    onClose: onModalClose,
+  } = useDisclosure();
+  const [searchInput, setSearchInput] = useState("");
+  const handleSearchChange = (e: any) => {
+    setSearchInput(e.target.value);
+  };
+  const studentData = [
+    {
+      name: "Chibuzor Ali-Williams",
+      schoolName: "Greenfield High School",
+      profileImageUrl:
+        "https://th.bing.com/th/id/R.4c5a711143bfb1a8d5a5c8e4c806b86c?rik=5Syk2%2bsOsteflA&riu=http%3a%2f%2f4.bp.blogspot.com%2f-KR2kHf628f0%2fUxDZbTxRBBI%2fAAAAAAAAAw8%2f0wLIlZKXZ0Q%2fs1600%2f(1%2bof%2b2)%2ba.jpg&ehk=bQbTKqYjeuycfjjYeGGOXi9mQxAZFG4F2z6AmjVgV%2bI%3d&risl=&pid=ImgRaw&r=0",
+    },
+    {
+      name: "ALicia keys",
+      schoolName: "Cadbury High School",
+      profileImageUrl:
+        "https://thumbs.dreamstime.com/b/image-child-profile-watched-tv-note-shallow-depth-field-189047061.jpg",
+    },
+    {
+      name: "Priyanka Rishi",
+      schoolName: "Mumbai general School",
+      profileImageUrl:
+        "https://images.statusfacebook.com/profile_pictures/beautiful-children-photos/beautiful-children-dp-profile-pictures-for-whatsapp-facebook-15.jpg",
+    },
+    {
+      name: "Grace Williams",
+      schoolName: "British elementary School",
+      profileImageUrl:
+        "https://dp.profilepics.in/profile_pictures/beautiful-children-photos/beautiful-children-dp-profile-pictures-for-whatsapp-facebook-167.jpg",
+    },
+    {
+      name: "Emeka Steve",
+      schoolName: "Greenfield High School",
+      profileImageUrl:
+        "https://th.bing.com/th/id/R.738aafb18f512a8b87b225a3279e9b9f?rik=qd5iSoMbrXsY8w&pid=ImgRaw&r=0&sres=1&sresct=1",
+    },
+    {
+      name: "Emeka Chibuzor",
+      schoolName: "Faith academy High School",
+      profileImageUrl:
+        "https://dp.profilepics.in/profile_pictures/beautiful-children-photos/beautiful-children-dp-profile-pictures-for-whatsapp-facebook-167.jpg",
+    },
+  ];
+  const filteredSearchData = studentData.filter((item) =>
+    item.name.toLowerCase().includes(searchInput.toLowerCase())
+  );
+
   return (
     <Flex
       ml={{ base: 0, md: 16 }}
@@ -292,13 +384,71 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
         backgroundColor={"#005D5D"}
         color={"#fff"}
         colorScheme="teal"
+        _hover={{ backgroundColor: "#044141" }}
         display={{ base: "none", md: "flex" }}
+        onClick={onModalOpen}
       >
         <AiOutlinePlus />
         <Text fontWeight={"light"} pl="0.5rem">
           Link your Child
         </Text>
       </Button>
+
+      <Modal
+        blockScrollOnMount={false}
+        isOpen={isModalOpen}
+        onClose={onModalClose}
+      >
+        <ModalOverlay />
+        <ModalContent rounded={"xl"}>
+          <ModalHeader>
+            <Flex alignItems={"center"} gap={4}>
+              <Icon as={FaLink} color={"#005D5D"} boxSize={6} />
+              <Text fontWeight={"600"} fontSize={"lg"}>
+                Link your child
+              </Text>
+            </Flex>
+          </ModalHeader>
+          <Divider />
+          <ModalBody pb={6}>
+            <InputGroup>
+              <InputLeftElement pointerEvents="none">
+                <IoIosSearch color="#C2C2C2" size="20" />
+              </InputLeftElement>
+              <Input
+                onChange={handleSearchChange}
+                value={searchInput}
+                type="text"
+                placeholder="Search for your child"
+                backgroundColor={"#F4F4F4"}
+                _placeholder={{ color: "#C2C2C2" }}
+              />
+            </InputGroup>
+            {searchInput && (
+              <Box display={'flex'} flexDir={'column'} justifyContent={'center'} mt={'1rem'}>
+                {filteredSearchData.map((item, index) => (
+                  <SearchResultItem student={item} key={index} />
+                ))}
+              </Box>
+            )}
+          </ModalBody>
+
+          <ModalFooter justifyContent={"center"}>
+            <Button
+              backgroundColor={"#005D5D"}
+              mr={3}
+              gap={2}
+              px={"3rem"}
+              _hover={{ backgroundColor: "#044141" }}
+            >
+              <Icon as={AiOutlinePlus} color={"#fff"} />
+              <Text color={"#fff"} fontWeight={"300"} fontSize={"md"}>
+                Send Request Link
+              </Text>
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </Flex>
   );
 };
@@ -308,7 +458,7 @@ const MainNav: FC<MainNav> = ({ children }) => {
   const { profileData, setProfileData } = useUserAPI();
   const pathName = usePathname();
   const [active, setActive] = useState("");
-  const [isDropOpen, setDropOpen] = useState(false)
+  const [isDropOpen, setDropOpen] = useState(false);
 
   useEffect(() => {
     if (pathName.includes("/dashboard/overview")) {
@@ -374,7 +524,9 @@ const MainNav: FC<MainNav> = ({ children }) => {
               display={"flex"}
               alignItems={"center"}
               justifyContent={"space-between"}
-              onClick={() => {setDropOpen(!isDropOpen)}}
+              onClick={() => {
+                setDropOpen(!isDropOpen);
+              }}
             >
               <Box display={"flex"} alignItems={"center"} my={"auto"} gap={4}>
                 <Icon as={GoHomeFill} color={"#fff"} boxSize={6} />
@@ -383,16 +535,12 @@ const MainNav: FC<MainNav> = ({ children }) => {
                 </Text>
               </Box>
               <Icon
-                as={
-                  isDropOpen
-                    ? RiArrowDownSLine
-                    : RiArrowRightSLine
-                }
+                as={isDropOpen ? RiArrowDownSLine : RiArrowRightSLine}
                 color={"#fff"}
                 boxSize={6}
               />
             </Box>
-            <Box display={!isDropOpen ? "none" : "block"} mt={'0'}>
+            <Box display={!isDropOpen ? "none" : "block"} mt={"0"}>
               {DrawerNavLinkItems.HomeSubLinks.map((item, index) => {
                 return (
                   <Box
@@ -405,7 +553,7 @@ const MainNav: FC<MainNav> = ({ children }) => {
                     color={"#9FC2C2"}
                     ml={"1.7rem"}
                     href={`${item.url}`}
-                    transition={'ease-in-out 1s'}
+                    transition={"ease-in-out 1s"}
                   >
                     <Icon
                       as={item.icon}

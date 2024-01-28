@@ -22,6 +22,12 @@ import {
   PopoverTrigger,
   PopoverContent,
   PopoverBody,
+  Modal,
+  ModalContent,
+  ModalBody,
+  ModalOverlay,
+  ModalHeader,
+  ModalFooter,
 } from "@chakra-ui/react";
 import { HiOutlineHome } from "react-icons/hi";
 import { AiOutlinePlus } from "react-icons/ai";
@@ -178,6 +184,7 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
                     color={"#fff"}
                     colorScheme="teal"
                     w={"90%"}
+                    _hover={{ backgroundColor: "#044141" }}
                   >
                     <AiOutlinePlus />
                     <Text fontWeight={"light"} pl="0.5rem">
@@ -257,9 +264,10 @@ const SidebarWithHeader: FC<SidebarWithHeader> = ({ children }) => {
     name: "",
     numberOfChildren: 1,
   });
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const { isOpen, onOpen, onClose } = useDisclosure()
   const [active, setActive] = useState("");
   const pathName = usePathname();
+  const { isOpen: isModalOpen, onOpen: onModalOpen, onClose: onModalClose } = useDisclosure();
 
   useEffect(() => {
     if (pathName.includes("/results")) {
@@ -304,12 +312,34 @@ const SidebarWithHeader: FC<SidebarWithHeader> = ({ children }) => {
               color={"#fff"}
               _hover={{ backgroundColor: "#03594A" }}
               w={"10rem"}
+              onClick={onModalOpen}
             >
               <AiOutlinePlus />
               <Text fontWeight={"light"} pl="0.5rem">
                 Link your Child
               </Text>
             </Button>
+
+            <Modal blockScrollOnMount={false} isOpen={isModalOpen} onClose={onModalClose}>
+              <ModalOverlay />
+              <ModalContent>
+                <ModalHeader>Modal Title</ModalHeader>
+                <ModalBody>
+                  <Text fontWeight="bold" mb="1rem">
+                    You can scroll the content behind the modal
+                  </Text>
+                  {/* <Lorem count={2} /> */}
+                </ModalBody>
+
+                <ModalFooter>
+                  <Button colorScheme="blue" mr={3} onClick={onModalClose}>
+                    Close
+                  </Button>
+                  <Button variant="ghost">Secondary Action</Button>
+                </ModalFooter>
+              </ModalContent>
+            </Modal>
+
           </Flex>
         </Box>
       ) : (

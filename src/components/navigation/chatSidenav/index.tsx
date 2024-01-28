@@ -222,6 +222,7 @@ const ChatSidenav: FC<ChatSidenavProps> = ({ children }) => {
                       color={"#fff"}
                       colorScheme="teal"
                       w={"90%"}
+                      _hover={{ backgroundColor: "#044141" }}
                     >
                       <AiOutlinePlus />
                       <Text fontWeight={"light"} pl="0.5rem">

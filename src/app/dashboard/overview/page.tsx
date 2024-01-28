@@ -66,6 +66,7 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
               my={"2rem"}
               fontWeight={"light"}
               colorScheme="teal"
+              _hover={{ backgroundColor: "#044141" }}
             >
               <PiChatTeardropTextLight size={"1.3rem"} />
               <Text mx={"0.2rem"}>Contact School</Text>
