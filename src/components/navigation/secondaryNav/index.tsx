@@ -1,6 +1,7 @@
 "use client";
 import { FC, useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
+import { useRouter } from "next/navigation";
 import {
   Box,
   Flex,
@@ -218,11 +219,12 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
 };
 
 const NavItem = ({ icon, children, link, ...rest }: NavItemProps) => {
+  const router = useRouter()
   const pathName = usePathname();
   return (
     <Box
       as="a"
-      href={`${link}`}
+      onClick={() => router.push(link)}
       style={{ textDecoration: "none" }}
       _focus={{ boxShadow: "none" }}
     >

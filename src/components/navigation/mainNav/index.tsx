@@ -1,6 +1,7 @@
 "use client";
 import { FC, useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
+import { useRouter } from "next/navigation";
 import {
   Box,
   Flex,
@@ -246,6 +247,7 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
 };
 
 const NavItem = ({ icon, link, name, ...rest }: NavItemProps) => {
+  const router = useRouter()
   return (
     <Tooltip
       hasArrow
@@ -261,7 +263,8 @@ const NavItem = ({ icon, link, name, ...rest }: NavItemProps) => {
         as="a"
         w={"auto"}
         h={"auto"}
-        href={`${link}`}
+        onClick={()=>router.push(link)}
+        // href={`${link}`}
         style={{ textDecoration: "none" }}
         _focus={{ boxShadow: "none" }}
         display={"flex"}

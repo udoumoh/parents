@@ -1,6 +1,7 @@
 "use client";
 import { FC, useState } from "react";
 import { usePathname } from "next/navigation";
+import { useRouter } from "next/navigation";
 import {
   Box,
   Avatar,
@@ -39,6 +40,7 @@ interface ChatContactItemProps {
 }
 
 const ChatContactItem: FC<ChatContactItemProps> = ({ chat }) => {
+  const router = useRouter()
   return (
     <Link
       my={"0.5rem"}
@@ -51,7 +53,7 @@ const ChatContactItem: FC<ChatContactItemProps> = ({ chat }) => {
         backgroundColor: "#2A938C30",
         transition: "0.3s",
       }}
-      href={`/inbox/${chat.id}`}
+      onClick={() => router.push(`/inbox/${chat.id}`)}
       borderRadius="5"
     >
       <Avatar size={{ base: "sm", md: "md" }} src={chat.profileImage} />
