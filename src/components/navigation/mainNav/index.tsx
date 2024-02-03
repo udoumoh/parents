@@ -54,6 +54,7 @@ import { PiPlus } from "react-icons/pi";
 import { IoClose } from "react-icons/io5";
 import { IconType } from "react-icons";
 import { useUserAPI } from "@/hooks/user/UserContext";
+import SearchResultItem from "@/components/shared/searchResultItem";
 
 interface MobileProps extends FlexProps {
   onOpen: () => void;
@@ -149,34 +150,6 @@ const DrawerNavLinkItems = {
   ],
 };
 
-const SearchResultItem = ({student}: SearchResultItemProps) => {
-  return(
-  <Box
-    display={'flex'}
-    alignItems={'center'}
-    gap={3}
-    w={'auto'}
-    rounded={"md"}
-    py={"0.5rem"}
-    px={'1rem'}
-    mb={"0.4rem"}
-    _hover={{
-      backgroundColor: "#3F999830",
-      cursor: "pointer",
-    }}
-  >
-    <Avatar size={"md"} src={student.profileImageUrl} pointerEvents={"none"} />
-    <Box lineHeight={"20px"}>
-      <Text fontWeight={"700"} fontSize={"lg"}>
-        {`${student.name}`}
-      </Text>
-      <Text fontSize={"sm"} color={"#AAAAAA"} fontWeight={"600"}>
-        {student.schoolName}
-      </Text>
-    </Box>
-  </Box>
-  )
-};
 
 const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
   const { profileData, setProfileData } = useUserAPI();
