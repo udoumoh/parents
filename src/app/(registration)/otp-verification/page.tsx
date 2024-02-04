@@ -11,13 +11,13 @@ import {
   Button,
 } from "@chakra-ui/react";
 import { AiOutlineCheck } from "react-icons/ai";
+import { gql, useMutation } from "@apollo/client";
 
 interface PageProps {}
 
 const Page: FC<PageProps> = ({}) => {
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
   const [isVerified, setIsVerified] = useState(true);
-  const [referralCode, setRefferalCode] = useState("A5VW68");
 
   const handleOtpChange = (value: string, index: number) => {
     const newPin = [...otp];
@@ -40,9 +40,6 @@ const Page: FC<PageProps> = ({}) => {
               alt="'logo"
             />
           </Flex>
-
-          {isVerified ? (
-            <>
               <Box my={"1.5rem"} textAlign={"center"}>
                 <Text
                   mt={"2.5rem"}
@@ -86,66 +83,6 @@ const Page: FC<PageProps> = ({}) => {
                   Continue
                 </Button>
               </Flex>
-            </>
-          ) : (
-            <>
-              <Box
-                textAlign={"center"}
-                display={"flex"}
-                flexDir={"column"}
-                justifyContent={"center"}
-                alignItems={"center"}
-              >
-                <Text
-                  color={"#EAEAEA"}
-                  mt={"2.5rem"}
-                  fontSize={{ base: "lg", md: "2xl" }}
-                  fontWeight={"400"}
-                >
-                  Account Creation Successful
-                </Text>
-
-                <Box
-                  display={"flex"}
-                  rounded={"full"}
-                  border={"2px solid #00863E"}
-                  width={"3rem"}
-                  height={"3rem"}
-                  justifyContent={"center"}
-                  alignItems={"center"}
-                  my={"1rem"}
-                >
-                  <AiOutlineCheck color="#00863E" size={"32"} />
-                </Box>
-
-                <Box textAlign={"center"}>
-                  <Text color="#fff" fontSize={"xs"}>
-                    Your referral code is
-                  </Text>
-                  <Text
-                    color="#fff"
-                    fontSize={"2rem"}
-                    letterSpacing={"1rem"}
-                    mt={"2rem"}
-                  >
-                    {referralCode}
-                  </Text>
-                </Box>
-              </Box>
-              <Flex justifyContent={"center"} my={"1.5rem"}>
-                <Button
-                  mt={20}
-                  backgroundColor={"#007C7B"}
-                  color={"#fff"}
-                  fontWeight={"400"}
-                  w={"17rem"}
-                  _hover={{ backgroundColor: "#099C9B" }}
-                >
-                  Continue
-                </Button>
-              </Flex>
-            </>
-          )}
         </Box>
       </Flex>
     </>

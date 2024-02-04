@@ -17,22 +17,71 @@ import {
   Select,
   Avatar,
   useDisclosure,
+  useToast,
 } from "@chakra-ui/react";
 import * as Yup from "yup";
 import { Formik, Form, Field } from "formik";
 import { useRouter } from "next/navigation";
-import ImageUpload from "@/components/imageUpload/ImageUpload";
+import { ImageUpload } from "@/components/imageUpload/ImageUpload";
+import { gql, useMutation } from "@apollo/client";
 
 interface pageProps {}
 
+const REGISTER_PARENT = gql(`
+mutation RegisterParent($folder: String!, $options: parentRegInput!) {
+  registerParent(folder: $folder, options: $options) {
+    errors {
+      field
+      message
+    }
+    parent {
+      id
+      userId
+      status
+      isPaid
+      isVerified
+      isReferred
+      agreedTo
+      createdAt
+      firstName
+      middleName
+      lastName
+      parentRole
+      phoneNumber
+      email
+      relationToStudent
+      role
+      folder
+      isDisabled
+      profileImgUrl
+    }
+  }
+}`);
+
 const Page: FC<pageProps> = ({}) => {
+  const toast = useToast()
+  const router = useRouter();
   const [tabIndex, setTabIndex] = useState(0);
   const { isOpen, onClose, onOpen } = useDisclosure();
   const [profileUrl, setProfileUrl] = useState("");
+  const [file, setFile] = useState<string>("");
+  const [folder, setFolder] = useState<string>("");
+  const [signup] = useMutation(REGISTER_PARENT);
+  const [consent, setConsent] = useState(false);
+
+const handleImageUpload = (
+  uploadedImageUrl: string,
+  uploadedFolder: string
+) => {
+  setProfileUrl(uploadedImageUrl); // Set the image URL received from the upload component
+  setFolder(uploadedFolder); // Set the folder received from the upload component
+  console.log(profileUrl);
+};
+
   const handleTabsChange = () => {
     setTabIndex(tabIndex + 1);
+    setConsent(true)
   };
-  const router = useRouter();
   const handleProfileUrlChange = (url: any) => {
     setProfileUrl(url);
   };
@@ -63,7 +112,7 @@ const Page: FC<pageProps> = ({}) => {
         alignItems={"center"}
         gap={5}
         py={{ base: "2rem", lg: "0" }}
-        mx={'2rem'}
+        mx={"2rem"}
       >
         <Image src="/images/greylightBordered.svg" alt="logo" />
 
@@ -71,11 +120,64 @@ const Page: FC<pageProps> = ({}) => {
           initialValues={{
             firstName: "",
             lastName: "",
+            middleName: "",
             email: "",
             phoneNumber: "",
             password: "",
+            parentRole: "",
           }}
-          onSubmit={(values, actions) => {
+          onSubmit={async (values, actions) => {
+            const response = await signup({
+              variables: {
+                options: {
+                  firstName: values.firstName,
+                  lastName: values.lastName,
+                  middleName: values.middleName,
+                  email: values.email,
+                  referralCode: "",
+                  phoneNumber: values.phoneNumber.toString(),
+                  password: values.password,
+                  parentRole: values.parentRole,
+                  profileImgUrl: profileUrl,
+                  agreedTo: consent,
+                },
+                folder: folder,
+              },
+            });
+            console.log(response);
+
+            if (!response.data) {
+              toast({
+                title: "Client Error",
+                description:
+                  "An error occured while you were creating your account",
+                position: "bottom",
+                variant: "left-accent",
+                isClosable: true,
+                status: "error",
+              });
+              actions.setSubmitting(false);
+            } else if (response.data.registerParent.errors) {
+              toast({
+                title: "Server Error",
+                description:
+                  "An error occured while you were creating your account",
+                position: "bottom",
+                variant: "left-accent",
+                isClosable: true,
+                status: "error",
+              });
+            }
+            toast({
+              title: "Account created",
+              description:
+                "Your account was created successfully, you will be redirected soon.",
+              position: "bottom",
+              variant: "left-accent",
+              isClosable: true,
+              status: "success",
+            });
+            router.push("/otpverification");
             actions.setSubmitting(false);
           }}
           validationSchema={schema}
@@ -125,7 +227,6 @@ const Page: FC<pageProps> = ({}) => {
                                     py={"1.5rem"}
                                     type="text"
                                     backgroundColor={"#F5F5F5"}
-                                    color={"#BCBCD8"}
                                     autoComplete="true"
                                   />
                                   <FormErrorMessage>
@@ -154,7 +255,6 @@ const Page: FC<pageProps> = ({}) => {
                                     py={"1.5rem"}
                                     type="text"
                                     backgroundColor={"#F5F5F5"}
-                                    color={"#BCBCD8"}
                                     autoComplete="true"
                                   />
                                   <FormErrorMessage>
@@ -176,14 +276,15 @@ const Page: FC<pageProps> = ({}) => {
                               mb="1.5rem"
                             >
                               <Box w={"full"}>
-                                <FormLabel color={"#999999"}>Email</FormLabel>
+                                <FormLabel color={"#999999"}>
+                                  Middle Name
+                                </FormLabel>
                                 <Input
                                   border={"1px solid #D5D5D5"}
                                   {...field}
                                   py={"1.5rem"}
                                   type="text"
                                   backgroundColor={"#F5F5F5"}
-                                  color={"#BCBCD8"}
                                   autoComplete="true"
                                 />
                                 <FormErrorMessage>
@@ -211,7 +312,6 @@ const Page: FC<pageProps> = ({}) => {
                                     py={"1.5rem"}
                                     type="email"
                                     backgroundColor={"#F5F5F5"}
-                                    color={"#BCBCD8"}
                                     autoComplete="true"
                                   />
                                   <FormErrorMessage>
@@ -239,9 +339,7 @@ const Page: FC<pageProps> = ({}) => {
                                     border={"1px solid #D5D5D5"}
                                     {...field}
                                     py={"1.5rem"}
-                                    type="number"
                                     backgroundColor={"#F5F5F5"}
-                                    color={"#BCBCD8"}
                                     autoComplete="true"
                                   />
                                   <FormErrorMessage>
@@ -271,7 +369,6 @@ const Page: FC<pageProps> = ({}) => {
                                   py={"1.5rem"}
                                   type="password"
                                   backgroundColor={"#F5F5F5"}
-                                  color={"#BCBCD8"}
                                   autoComplete="true"
                                 />
                                 <FormErrorMessage>
@@ -300,7 +397,7 @@ const Page: FC<pageProps> = ({}) => {
                             backgroundColor={"#007C7B"}
                             isLoading={props.isSubmitting}
                             //   isDisabled={!props.values.firstName ? true : false}
-                            type="submit"
+                           
                           >
                             Continue
                           </Button>
@@ -361,7 +458,7 @@ const Page: FC<pageProps> = ({}) => {
                           </Text>
                         </Box>
                         <Flex justifyContent={"center"} mt={"1rem"}>
-                          <Avatar size={"lg"} src={profileUrl} />
+                          <Avatar size={"xl"} src={profileUrl} />
                         </Flex>
 
                         <Flex justifyContent={"center"} mb={"1.5rem"}>
@@ -384,7 +481,9 @@ const Page: FC<pageProps> = ({}) => {
                           <ImageUpload
                             isModalOpen={isOpen}
                             onModalClose={onClose}
-                            profileUrl={handleProfileUrlChange}
+                            type="parentImg"
+                            imageFolder={folder}
+                            onUpload={handleImageUpload}
                           />
                         </Flex>
 
@@ -402,7 +501,7 @@ const Page: FC<pageProps> = ({}) => {
                           >
                             What is your relationship to the student?
                           </Text>
-                          <Field name="docType">
+                          <Field name="parentRole">
                             {({ field, form }: any) => (
                               <FormControl
                               // isInvalid={form.errors.name && form.touched.name}
@@ -412,7 +511,7 @@ const Page: FC<pageProps> = ({}) => {
                                     Relationship to student
                                   </FormLabel>
                                   <Select
-                                    placeholder="Select document"
+                                    placeholder=" "
                                     {...field}
                                     border={"1px solid #747474"}
                                     size={{ base: "sm", md: "lg" }}
@@ -421,20 +520,10 @@ const Page: FC<pageProps> = ({}) => {
                                     fontSize={"sm"}
                                     variant={"filled"}
                                   >
-                                    <option value="Utility bill" color="#fff">
-                                      Utility bill under your name (electricity,
-                                      water, gas, Internet etc.)
+                                    <option value="Mother" color="#fff">
+                                      Mother
                                     </option>
-                                    <option value={"Bank Statement"}>
-                                      Bank account statement (includes Bank
-                                      Credit Card bill)
-                                    </option>
-                                    <option value={"Driving license"}>
-                                      Driving license
-                                    </option>
-                                    <option value={"International passport"}>
-                                      International passport
-                                    </option>
+                                    <option value={"Father"}>Father</option>
                                   </Select>
                                 </Box>
                               </FormControl>
@@ -445,8 +534,8 @@ const Page: FC<pageProps> = ({}) => {
                         <Flex justifyContent={"center"}>
                           <Button
                             mt={4}
-                            px={'2rem'}
-                            py={'1.5rem'}
+                            px={"2rem"}
+                            py={"1.5rem"}
                             backgroundColor={"#007C7B"}
                             color={"#fff"}
                             type="submit"

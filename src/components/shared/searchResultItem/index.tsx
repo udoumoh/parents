@@ -8,8 +8,10 @@ import {
 interface SearchResultItemProps {
   student: {
     name: string;
-    schoolName: string;
     profileImageUrl: string;
+    gender: string;
+    className: string;
+    age: number;
   };
 }
 
@@ -39,7 +41,7 @@ const SearchResultItem = ({ student }: SearchResultItemProps) => {
           {`${student.name}`}
         </Text>
         <Text fontSize={"sm"} color={"#AAAAAA"} fontWeight={"600"}>
-          {student.schoolName}
+          {student.gender} · {student.age} · {student.className}
         </Text>
       </Box>
     </Box>

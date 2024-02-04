@@ -8,11 +8,9 @@ interface layoutProps {
 
 const layout: FC<layoutProps> = ({children}) => {
   return (
-  <MainNav>
-  <SidebarWithHeader>
+    <SidebarWithHeader>
     {children}
-  </SidebarWithHeader>
-  </MainNav>
+    </SidebarWithHeader>
   );
 }
 
