@@ -41,7 +41,7 @@ const SearchResultItem = ({ student }: SearchResultItemProps) => {
           {`${student.name}`}
         </Text>
         <Text fontSize={"sm"} color={"#AAAAAA"} fontWeight={"600"}>
-          {student.gender} · {student.age} · {student.className}
+          {student.gender} • {student.age} • {student.className}
         </Text>
       </Box>
     </Box>
