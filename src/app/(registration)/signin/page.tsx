@@ -70,9 +70,38 @@ const Page: FC<pageProps> = ({}) => {
           email: email,
         },
       })
-      console.log(response.data);
-      
-    }
+      if (!response.data) {
+              toast({
+                title: "Client Error",
+                description:
+                  "An error occured while you were creating your account",
+                position: "top-right",
+                variant: "left-accent",
+                isClosable: true,
+                status: "error",
+              });
+            } else if (response.data.loginParent.errors) {
+              toast({
+                title: "Server Error",
+                description:
+                  "An error occured while you were creating your account",
+                position: "top-right",
+                variant: "left-accent",
+                isClosable: true,
+                status: "error",
+              });
+            }
+            toast({
+              title: "Login Successfull",
+              description:
+                "You are being redirected to your dashboard",
+              position: "top-right",
+              variant: "left-accent",
+              isClosable: true,
+              status: "success",
+            });
+            router.push("/dashboard/overview");
+          }
   return (
     <Box
       minH={"100vh"}
