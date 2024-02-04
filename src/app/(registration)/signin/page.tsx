@@ -2,22 +2,58 @@
 import { FC, useState } from 'react'
 import {
   Box,
-  Flex,
   Image,
   Text,
   Input,
   FormControl,
   FormLabel,
   Button,
+  useToast,
 } from "@chakra-ui/react";
+import { useRouter } from 'next/navigation';
+import { gql, useMutation } from "@apollo/client";
 
 interface pageProps {
   
 }
 
+const LOGIN_PARENT = gql(`
+mutation LoginParent($password: String!, $email: String!) {
+  loginParent(password: $password, email: $email) {
+    errors {
+      field
+      message
+    }
+    parent {
+      id
+      userId
+      status
+      isPaid
+      isVerified
+      isReferred
+      agreedTo
+      createdAt
+      firstName
+      middleName
+      lastName
+      parentRole
+      phoneNumber
+      email
+      relationToStudent
+      role
+      folder
+      isDisabled
+      profileImgUrl
+    }
+  }
+}`);
+
 const Page: FC<pageProps> = ({}) => {
+    const router = useRouter()
+    const toast = useToast()
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
+    const [login] = useMutation(LOGIN_PARENT);
 
     const handleEmailChange = (e:any) => {
         setEmail(e.target.value)
@@ -26,6 +62,17 @@ const Page: FC<pageProps> = ({}) => {
     const handlePasswordChange = (e: any) => {
       setPassword(e.target.value);
     };
+
+    const handleLogin = async () => {
+      const response = await login({
+        variables: {
+          password: password,
+          email: email,
+        },
+      })
+      console.log(response.data);
+      
+    }
   return (
     <Box
       minH={"100vh"}
@@ -95,6 +142,7 @@ const Page: FC<pageProps> = ({}) => {
         </Box>
 
         <Button
+          onClick={handleLogin}
           backgroundColor={"#007C7B"}
           w={"full"}
           py={"2rem"}
