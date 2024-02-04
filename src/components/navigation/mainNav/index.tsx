@@ -84,8 +84,10 @@ interface MainNav {
 interface SearchResultItemProps {
   student: {
     name: string;
-    schoolName: string;
     profileImageUrl: string;
+    gender: string;
+    className: string;
+    age: number;
   }
 }
 
@@ -290,37 +292,49 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
   const studentData = [
     {
       name: "Chibuzor Ali-Williams",
-      schoolName: "Greenfield High School",
+      age: 9,
+      className: "Nursery 1",
+      gender: "Male",
       profileImageUrl:
         "https://th.bing.com/th/id/R.4c5a711143bfb1a8d5a5c8e4c806b86c?rik=5Syk2%2bsOsteflA&riu=http%3a%2f%2f4.bp.blogspot.com%2f-KR2kHf628f0%2fUxDZbTxRBBI%2fAAAAAAAAAw8%2f0wLIlZKXZ0Q%2fs1600%2f(1%2bof%2b2)%2ba.jpg&ehk=bQbTKqYjeuycfjjYeGGOXi9mQxAZFG4F2z6AmjVgV%2bI%3d&risl=&pid=ImgRaw&r=0",
     },
     {
       name: "ALicia keys",
-      schoolName: "Cadbury High School",
+      age: 9,
+      className: "Primary 2",
+      gender: "Female",
       profileImageUrl:
         "https://thumbs.dreamstime.com/b/image-child-profile-watched-tv-note-shallow-depth-field-189047061.jpg",
     },
     {
       name: "Priyanka Rishi",
-      schoolName: "Mumbai general School",
+      age: 9,
+      className: "Kindergarten",
+      gender: "Female",
       profileImageUrl:
         "https://images.statusfacebook.com/profile_pictures/beautiful-children-photos/beautiful-children-dp-profile-pictures-for-whatsapp-facebook-15.jpg",
     },
     {
       name: "Grace Williams",
-      schoolName: "British elementary School",
+      age: 9,
+      className: "Nuersery 2",
+      gender: "Female",
       profileImageUrl:
         "https://dp.profilepics.in/profile_pictures/beautiful-children-photos/beautiful-children-dp-profile-pictures-for-whatsapp-facebook-167.jpg",
     },
     {
       name: "Emeka Steve",
-      schoolName: "Greenfield High School",
+      age: 9,
+      className: "Primary 2",
+      gender: "Male",
       profileImageUrl:
         "https://th.bing.com/th/id/R.738aafb18f512a8b87b225a3279e9b9f?rik=qd5iSoMbrXsY8w&pid=ImgRaw&r=0&sres=1&sresct=1",
     },
     {
       name: "Emeka Chibuzor",
-      schoolName: "Faith academy High School",
+      age: 9,
+      className: "Primary 1",
+      gender: "Male",
       profileImageUrl:
         "https://dp.profilepics.in/profile_pictures/beautiful-children-photos/beautiful-children-dp-profile-pictures-for-whatsapp-facebook-167.jpg",
     },
