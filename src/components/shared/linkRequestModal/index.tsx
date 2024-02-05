@@ -234,7 +234,7 @@ const LinkRequestModal: FC<LinkRequestModalProps> = ({
           toast({
             title: "Server Error",
             description:
-              "An error occured while creating a request",
+              response.data.createRequest.errors[0].message,
             position: "bottom",
             variant: "left-accent",
             isClosable: true,
