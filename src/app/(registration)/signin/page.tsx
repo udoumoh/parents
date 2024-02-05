@@ -91,16 +91,17 @@ const Page: FC<pageProps> = ({}) => {
                 status: "error",
               });
             }
-            toast({
-              title: "Login Successfull",
-              description:
-                "You are being redirected to your dashboard",
-              position: "top-right",
-              variant: "left-accent",
-              isClosable: true,
-              status: "success",
-            });
-            router.push("/dashboard/overview");
+            if (response.data.loginParent.errors.length == 0) {
+              toast({
+                title: "Login Successfull",
+                description: "You are being redirected to your dashboard",
+                position: "top-right",
+                variant: "left-accent",
+                isClosable: true,
+                status: "success",
+              });
+              router.push("/dashboard/overview");
+            }
           }
   return (
     <Box
