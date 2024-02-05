@@ -17,6 +17,7 @@ import {
   ModalOverlay,
   ModalHeader,
   ModalFooter,
+  ModalCloseButton,
 } from "@chakra-ui/react";
 import SearchResultItem from '../searchResultItem';
 import { FaLink } from "react-icons/fa6";
@@ -214,61 +215,69 @@ const SearchStudentModal: FC<SearchStudentModalProps> = ({isOpen, onOpen, onClos
     item?.name?.toLowerCase().includes(searchInput.toLowerCase())
   );
   return (
-    <Modal
-        blockScrollOnMount={false}
-        isOpen={isOpen}
-        onClose={onClose}
-      >
-        <ModalOverlay />
-        <ModalContent rounded={"xl"}>
-          <ModalHeader>
-            <Flex alignItems={"center"} gap={4}>
-              <Icon as={FaLink} color={"#005D5D"} boxSize={6} />
-              <Text fontWeight={"600"} fontSize={"lg"}>
-                Link your child
-              </Text>
-            </Flex>
-          </ModalHeader>
-          <Divider />
-          <ModalBody pb={6}>
-            <InputGroup>
-              <InputLeftElement pointerEvents="none">
-                <IoIosSearch color="#C2C2C2" size="20" />
-              </InputLeftElement>
-              <Input
-                onChange={handleSearchChange}
-                value={searchInput}
-                type="text"
-                placeholder="Search for your child"
-                backgroundColor={"#F4F4F4"}
-                _placeholder={{ color: "#C2C2C2" }}
-              />
-            </InputGroup>
-            {searchInput && (
-              <Box display={'flex'} flexDir={'column'} justifyContent={'center'} mt={'1rem'}>
-                {filteredSearchData.map((item, index) => (
-                  <SearchResultItem student={item} key={index} />
-                ))}
-              </Box>
-            )}
-          </ModalBody>
-
-          <ModalFooter justifyContent={"center"}>
-            <Button
-              backgroundColor={"#005D5D"}
-              mr={3}
-              gap={2}
-              px={"3rem"}
-              _hover={{ backgroundColor: "#044141" }}
+    <Modal blockScrollOnMount={false} isOpen={isOpen} onClose={onClose}>
+      <ModalOverlay />
+      <ModalContent rounded={"xl"}>
+        <ModalHeader>
+          <Flex alignItems={"center"} gap={4}>
+            <Icon as={FaLink} color={"#005D5D"} boxSize={6} />
+            <Text fontWeight={"600"} fontSize={"lg"}>
+              Link your child
+            </Text>
+          </Flex>
+        </ModalHeader>
+        <ModalCloseButton />
+        <Divider />
+        <ModalBody pb={6}>
+          <InputGroup>
+            <InputLeftElement pointerEvents="none">
+              <IoIosSearch color="#C2C2C2" size="20" />
+            </InputLeftElement>
+            <Input
+              onChange={handleSearchChange}
+              value={searchInput}
+              type="text"
+              placeholder="Search for your child"
+              backgroundColor={"#F4F4F4"}
+              _placeholder={{ color: "#C2C2C2" }}
+            />
+          </InputGroup>
+          {searchInput && (
+            <Box
+              display={"flex"}
+              flexDir={"column"}
+              justifyContent={"center"}
+              mt={"1rem"}
             >
-              <Icon as={AiOutlinePlus} color={"#fff"} />
-              <Text color={"#fff"} fontWeight={"300"} fontSize={"md"}>
-                Send Request Link
-              </Text>
-            </Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
-  )
+              {filteredSearchData.length == 0 ? (
+                <Text textAlign={"center"} fontSize={"lg"} color={"#484848"}>
+                  No results match your search criteria
+                </Text>
+              ) : (
+                filteredSearchData?.map((item, index) => (
+                  <SearchResultItem student={item} key={index} />
+                ))
+              )}
+            </Box>
+          )}
+        </ModalBody>
+
+        <ModalFooter justifyContent={"center"}>
+          <Button
+            backgroundColor={"#005D5D"}
+            mr={3}
+            gap={2}
+            px={"3rem"}
+            _hover={{ backgroundColor: "#044141" }}
+          >
+            <Icon as={AiOutlinePlus} color={"#fff"} />
+            <Text color={"#fff"} fontWeight={"300"} fontSize={"md"}>
+              Send Request Link
+            </Text>
+          </Button>
+        </ModalFooter>
+      </ModalContent>
+    </Modal>
+  );
 }
 export default SearchStudentModal

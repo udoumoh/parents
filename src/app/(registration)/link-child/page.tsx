@@ -10,8 +10,11 @@ import {
   Button,
   Link,
   Icon,
+  useDisclosure,
+  Avatar,
 } from "@chakra-ui/react";
 import SearchResultItem from "@/components/shared/searchResultItem";
+import LinkRequestModal from "@/components/shared/linkRequestModal";
 import { IoIosSearch } from "react-icons/io";
 import { AiOutlinePlus } from "react-icons/ai";
 import { gql, useQuery } from "@apollo/client";
@@ -162,6 +165,11 @@ query GetStudent {
 }`);
 
 const Page: FC<PageProps> = ({}) => {
+const {
+  isOpen: isModalOpen,
+  onOpen: onModalOpen,
+  onClose: onModalClose,
+} = useDisclosure();
   const [searchInput, setSearchInput] = useState("");
   const [studentData, setStudentData] = useState([{
       name: "",
@@ -170,22 +178,36 @@ const Page: FC<PageProps> = ({}) => {
       gender: "",
       profileImageUrl:
         "",
+      id:"",
     }])
+  const [selectedStudent, setSelectedStudent] = useState({
+    name: "",
+    profileImageUrl: "",
+    age: 0 ,
+    gender: "",
+    className: "",
+    id:"",
+  });
   const {data:search} = useQuery(GET_STUDENTS)
   const handleSearchChange = (e: any) => {
     setSearchInput(e.target.value);
   };
+  const handleSelectedStudent = (student: any) => {
+    setSelectedStudent(student);
+  }
 
   useEffect( () => {
     const fetchData = async () => {
       try {
         const response = await search?.getStudent || [];
+        console.log(response);
         const data = response.map((student: any) => ({
           name: student.firstName + " " + student.lastName,
           age: student.ageInput,
           className: student.classroom.classroom.className,
           gender: student.gender,
           profileImageUrl: student.profileImgUrl,
+          id: student.id
         }));
         setStudentData(data)
       } catch (error) {
@@ -267,30 +289,91 @@ const Page: FC<PageProps> = ({}) => {
               justifyContent={"center"}
               mt={"1rem"}
             >
-              {filteredSearchData?.map((item, index) => (
-                <SearchResultItem student={item} key={index} />
-              ))}
+              {filteredSearchData.length == 0 ? (
+                <Text textAlign={"center"} fontSize={"xl"} color={"#484848"}>
+                  No results match your search criteria
+                </Text>
+              ) : (
+                filteredSearchData?.map((item, index) => (
+                  <Box key={index} onClick={() => handleSelectedStudent(item)}>
+                    <SearchResultItem student={item} key={index} />
+                  </Box>
+                ))
+              )}
             </Box>
           )}
+
+            {
+              selectedStudent.age == 0 ? (
+                <></>
+              ) : (
+
+          <Box
+            mt={"2rem"}
+            display={"flex"}
+            alignItems={"center"}
+            gap={3}
+            w={"full"}
+            rounded={"md"}
+            py={"0.5rem"}
+            px={"1rem"}
+            mb={"0.4rem"}
+            backgroundColor="#3F999830"
+          >
+            <Avatar
+              size={"md"}
+              src={selectedStudent.profileImageUrl}
+              pointerEvents={"none"}
+            />
+            <Box lineHeight={"20px"}>
+              <Text fontWeight={"700"} fontSize={"lg"}>
+                {`${selectedStudent.name}`}
+              </Text>
+              <Text fontSize={"sm"} color={"#AAAAAA"} fontWeight={"600"}>
+                {selectedStudent.gender} • {selectedStudent.age} •{" "}
+                {selectedStudent.className}
+              </Text>
+            </Box>
+          </Box>
+              )
+            }
 
           <Button
             mt="6rem"
             w={"70%"}
             py={"2rem"}
-            px={{base:'4rem', lg:"0rem"}}
+            px={{ base: "4rem", lg: "0rem" }}
             backgroundColor={"#007C7B"}
             color={"#fff"}
             colorScheme="teal"
             _hover={{ backgroundColor: "#044141" }}
-            rounded={{base:"md", lg:"lg"}}
+            rounded={{ base: "md", lg: "lg" }}
+            onClick={onModalOpen}
           >
-            <Icon as={AiOutlinePlus} color={'#fff'} boxSize={{base:"5", lg:'8'}}/>
-            <Text fontWeight={"light"} fontSize={{base:"md", lg:"2xl"}} pl="0.5rem">
+            <Icon
+              as={AiOutlinePlus}
+              color={"#fff"}
+              boxSize={{ base: "5", lg: "6" }}
+            />
+            <Text
+              fontWeight={"light"}
+              fontSize={{ base: "md", lg: "xl" }}
+              pl="0.5rem"
+            >
               Send Link Request
             </Text>
           </Button>
 
-          <Link color={"#B5B5B5"} fontSize={'xl'} mt={'2rem'}>Skip</Link>
+          <LinkRequestModal
+            student={selectedStudent}
+            isOpen={isModalOpen}
+            onOpen={onModalOpen}
+            onClose={onModalClose}
+          />
+
+          <Link color={"#B5B5B5"} fontSize={"xl"} mt={"2rem"}>
+            Skip
+          </Link>
         </Box>
       </Box>
     </Box>

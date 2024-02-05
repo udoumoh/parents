@@ -39,6 +39,7 @@ import { BiChevronRight } from "react-icons/bi";
 import { IconType } from "react-icons";
 import { useUserAPI } from "@/hooks/user/UserContext";
 import { UserChildren } from "@/hooks/user/UserContext";
+import SearchStudentModal from "@/components/shared/searchStudentModal";
 
 interface NavItemProps extends FlexProps {
   icon: IconType;
@@ -67,6 +68,11 @@ const LinkItems: Array<LinkItemProps> = [
 ];
 
 const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
+  const {
+    isOpen: isModalOpen,
+    onOpen: onModalOpen,
+    onClose: onModalClose,
+  } = useDisclosure();
   const {
     profileData,
     currentId,
@@ -186,6 +192,7 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
                     colorScheme="teal"
                     w={"90%"}
                     _hover={{ backgroundColor: "#044141" }}
+                    onClick={onModalOpen}
                   >
                     <AiOutlinePlus />
                     <Text fontWeight={"light"} pl="0.5rem">
@@ -200,6 +207,7 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
             display={{ base: "flex", md: "none" }}
             onClick={onClose}
           />
+          <SearchStudentModal isOpen={isModalOpen} onOpen={onModalOpen} onClose={onModalClose} />
         </Box>
         {LinkItems.map((item, index) => {
           return (
@@ -321,26 +329,6 @@ const SidebarWithHeader: FC<SidebarWithHeader> = ({ children }) => {
                 Link your Child
               </Text>
             </Button>
-
-            <Modal blockScrollOnMount={false} isOpen={isModalOpen} onClose={onModalClose}>
-              <ModalOverlay />
-              <ModalContent>
-                <ModalHeader>Modal Title</ModalHeader>
-                <ModalBody>
-                  <Text fontWeight="bold" mb="1rem">
-                    You can scroll the content behind the modal
-                  </Text>
-                  {/* <Lorem count={2} /> */}
-                </ModalBody>
-
-                <ModalFooter>
-                  <Button colorScheme="blue" mr={3} onClick={onModalClose}>
-                    Close
-                  </Button>
-                  <Button variant="ghost">Secondary Action</Button>
-                </ModalFooter>
-              </ModalContent>
-            </Modal>
 
           </Flex>
         </Box>

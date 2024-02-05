@@ -40,8 +40,7 @@ const Page: FC<PageProps> = ({}) => {
       variables: {
         otpCode: Number(...otp),
       },
-    });
-    console.log(response);
+    })
     if (!response.data) {
       toast({
         title: "Client Error",
