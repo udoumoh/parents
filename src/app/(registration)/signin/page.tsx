@@ -12,6 +12,7 @@ import {
 } from "@chakra-ui/react";
 import { useRouter } from 'next/navigation';
 import { gql, useMutation } from "@apollo/client";
+import { Console } from 'console';
 
 interface pageProps {
   
@@ -84,17 +85,18 @@ const Page: FC<pageProps> = ({}) => {
               toast({
                 title: "Server Error",
                 description:
-                  "An error occured while you were creating your account",
+                  response.data.loginParent.errors[0].message,
                 position: "top-right",
                 variant: "left-accent",
                 isClosable: true,
                 status: "error",
               });
             }
-            if (response.data.loginParent.errors.length == 0) {
+            if(response.data.loginParent.errors == null){
               toast({
                 title: "Login Successfull",
-                description: "You are being redirected to your dashboard",
+                description:
+                  "You are being redirected to your dashboard",
                 position: "top-right",
                 variant: "left-accent",
                 isClosable: true,
@@ -102,6 +104,7 @@ const Page: FC<pageProps> = ({}) => {
               });
               router.push("/dashboard/overview");
             }
+            console.log(response)
           }
   return (
     <Box
