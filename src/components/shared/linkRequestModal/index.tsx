@@ -230,7 +230,7 @@ const LinkRequestModal: FC<LinkRequestModalProps> = ({
             isClosable: true,
             status: "error",
           });
-        } else if (response.data.verifyParentCode.errors) {
+        } else if (response.data.createRequest.errors) {
           toast({
             title: "Server Error",
             description:
