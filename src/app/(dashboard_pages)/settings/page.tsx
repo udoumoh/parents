@@ -80,22 +80,39 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
     >
       <Box
         w={"full"}
-        px={"12%"}
+        px={"5%"}
         overflowY={"auto"}
         h={"100vh"}
         pt={"2rem"}
         pb={"5rem"}
       >
-        <Flex justifyContent={"space-between"} alignItems={"center"}>
-          <Flex alignItems={"center"} gap={5}>
+        <Flex
+          justifyContent={"space-between"}
+          alignItems={{ base: "center", lg: "start" }}
+          flexDir={{ base: "column", lg: "row" }}
+          // border={"1px solid #007C7B"}
+          rounded={"lg"}
+          p={"1rem"}
+        >
+          <Flex
+            alignItems={"center"}
+            gap={5}
+            flexDir={{ base: "column", lg: "row" }}
+            justifyContent={"center"}
+          >
             <Avatar
               src={profileData.userBio.profileImage}
-              size={{ base: "lg", lg: "2xl" }}
+              size={{ base: "xl", lg: "2xl" }}
               pointerEvents={"none"}
             />
-            <Box>
+            <Box
+              display={"flex"}
+              flexDir={"column"}
+              alignItems={{ base: "center", lg: "start" }}
+              justifyContent={"center"}
+            >
               <Flex alignItems={"center"} gap={2}>
-                <Text fontSize={{ base: "xs", lg: "2xl" }} fontWeight={"bold"}>
+                <Text fontSize={{ base: "lg", lg: "2xl" }} fontWeight={"bold"}>
                   {`${profileData.userBio.firstName} ${profileData.userBio.lastName}`}
                 </Text>
                 <Image
@@ -107,16 +124,18 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                 />
               </Flex>
 
-              <LegendBadge mt={{ base: "0.3rem", lg: "0.8rem" }} />
+              <LegendBadge
+                mt={{ base: "0.3rem", lg: "0.8rem" }}
+              />
 
               <Flex alignItems={"center"} gap={2} my="0.5rem">
                 <Icon as={AiFillClockCircle} color={"#747474"} />
-                <Text color={"#747474"} fontSize={{base:"2xs", lg:"sm"}}>
+                <Text color={"#747474"} fontSize={{ base: "2xs", lg: "sm" }}>
                   Created on 25th October 2022
                 </Text>
               </Flex>
               {/* Hidden on screen sizes bigger than lg */}
-              <Button
+              {/* <Button
                 display={{ base: "block", lg: "none" }}
                 backgroundColor={"#005D5D"}
                 size={"sm"}
@@ -126,11 +145,11 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                 <Text fontSize={"xs"} px={"1rem"}>
                   Edit Profile
                 </Text>
-              </Button>
+              </Button> */}
             </Box>
           </Flex>
           <Button
-            display={{ base: "none", lg: "block" }}
+            display={{ base: "block", lg: "block" }}
             backgroundColor={"#005D5D"}
             size={"sm"}
             color={"#fff"}
@@ -144,12 +163,20 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
 
         <Divider my={"2rem"} />
 
-        <Flex justifyContent={"space-between"} w={"full"} flexDir={{base:"column", lg:"row"}}>
-          <Flex flexDir={"column"} alignItems={'flex-start'}>
+        <Flex
+          justifyContent={"space-between"}
+          w={"full"}
+          flexDir={{ base: "column", lg: "row" }}
+        >
+          <Flex flexDir={"column"} alignItems={"flex-start"}>
             <Text fontSize={"sm"} fontWeight={"bold"}>
               Linked Students
             </Text>
-            <Flex flexDir={{base:"column", lg:"row"}} gap={{base:"5", lg:"20"}} mt={"1rem"}>
+            <Flex
+              flexDir={{ base: "column", lg: "row" }}
+              gap={{ base: "5", lg: "20" }}
+              mt={"1rem"}
+            >
               {wardData.map((item, index) => {
                 return (
                   <Flex
@@ -196,7 +223,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
             </Box>
           </Flex>
 
-          <Box mt={{base:"1.5rem", lg:"0rem"}}>
+          <Box mt={{ base: "1.5rem", lg: "0rem" }}>
             <Text fontSize={"sm"} fontWeight={"bold"} textAlign={"start"}>
               Invoices
             </Text>
