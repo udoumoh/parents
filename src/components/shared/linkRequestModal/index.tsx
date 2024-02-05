@@ -241,16 +241,18 @@ const LinkRequestModal: FC<LinkRequestModalProps> = ({
             status: "error",
           });
         }
-        toast({
-          title: "Email Verified",
-          description:
-            "Your request has been sent, you are being redirected to your dashboard.",
-          position: "bottom",
-          variant: "left-accent",
-          isClosable: true,
-          status: "success",
-        });
-        router.push("/dashboard/overview");
+        if(response.data.createRequest.errors.length == 0){
+            toast({
+              title: "Email Verified",
+              description:
+                "Your request has been sent, you are being redirected to your dashboard.",
+              position: "bottom",
+              variant: "left-accent",
+              isClosable: true,
+              status: "success",
+            });
+            router.push("/dashboard/overview");
+        }
         console.log(response);
     }
   return (
