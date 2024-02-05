@@ -330,7 +330,7 @@ const {
                 {`${selectedStudent.name}`}
               </Text>
               <Text fontSize={"sm"} color={"#AAAAAA"} fontWeight={"600"}>
-                {selectedStudent.gender} • {selectedStudent.age} •{" "}
+                {`${selectedStudent.age} years old`} • {selectedStudent.gender} •{" "}
                 {selectedStudent.className}
               </Text>
             </Box>
