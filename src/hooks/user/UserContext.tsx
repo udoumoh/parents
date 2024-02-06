@@ -214,7 +214,6 @@ export const UserApiProvider: FC<UserApiProviderProps> = ({ children }) => {
       },
     ],
   });
-
   // const isClient = typeof window !== "undefined";
 
   const defaultId = 0;
@@ -223,13 +222,27 @@ export const UserApiProvider: FC<UserApiProviderProps> = ({ children }) => {
     return defaultId;
   });
 
+  const updateUserBio = (newBio: any) => {
+    setProfileData((previousData) => {
+      return{
+        ...previousData,
+        userBio: newBio
+      }
+    })
+  }
+
   useEffect(() => {
       const fetchData = async () => {
         try {
           const response = (await parent) || [];
-          console.log(response);
+          const newData = {
+            firstName: response.parent.parent.firstName,
+            lastName: response.parent.parent.lastName,
+            profileImage: response.parent.parent.profileImgUrl,
+            email: response.parent.parent.email,
+          };
           
-          // setStudentData(data);
+          updateUserBio(newData)
         } catch (error) {
           console.error("Error fetching data:", error);
         }
