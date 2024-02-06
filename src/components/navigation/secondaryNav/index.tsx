@@ -207,7 +207,7 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
             display={{ base: "flex", md: "none" }}
             onClick={onClose}
           />
-          <SearchStudentModal isOpen={isModalOpen} onOpen={onModalOpen} onClose={onModalClose} />
+          <SearchStudentModal isSearchOpen={isModalOpen} onSearchOpen={onModalOpen} onSearchClose={onModalClose} />
         </Box>
         {LinkItems.map((item, index) => {
           return (

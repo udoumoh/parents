@@ -18,6 +18,7 @@ import {
   ModalHeader,
   ModalFooter,
   ModalCloseButton,
+  Avatar,
 } from "@chakra-ui/react";
 import SearchResultItem from '../searchResultItem';
 import { FaLink } from "react-icons/fa6";
@@ -25,12 +26,13 @@ import { IoIosSearch } from "react-icons/io";
 import {
   AiOutlinePlus,
 } from "react-icons/ai";
+import LinkRequestModal from '../linkRequestModal';
 import { gql, useQuery } from "@apollo/client";
 
 interface SearchStudentModalProps {
-  isOpen: boolean;
-  onOpen: () => void;
-  onClose: () => void;
+  isSearchOpen: boolean;
+  onSearchOpen: () => void;
+  onSearchClose: () => void;
 }
 
 const GET_STUDENTS = gql(`
@@ -176,8 +178,21 @@ query GetStudent {
   }
 }`);
 
-const SearchStudentModal: FC<SearchStudentModalProps> = ({isOpen, onOpen, onClose}) => {
+const SearchStudentModal: FC<SearchStudentModalProps> = ({isSearchOpen, onSearchOpen, onSearchClose}) => {
+    const {
+      isOpen: isModalOpen,
+      onOpen: onModalOpen,
+      onClose: onModalClose,
+    } = useDisclosure();
     const [searchInput, setSearchInput] = useState("");
+    const [selectedStudent, setSelectedStudent] = useState({
+      name: "",
+      profileImageUrl: "",
+      age: 0,
+      gender: "",
+      className: "",
+      id: "",
+    });
     const [studentData, setStudentData] = useState([{
       name: "",
       age: 0,
@@ -185,6 +200,7 @@ const SearchStudentModal: FC<SearchStudentModalProps> = ({isOpen, onOpen, onClos
       gender: "",
       profileImageUrl:
         "",
+        id: "",
     }])
     const {data:search} = useQuery(GET_STUDENTS)
     const handleSearchChange = (e: any) => {
@@ -201,6 +217,7 @@ const SearchStudentModal: FC<SearchStudentModalProps> = ({isOpen, onOpen, onClos
           className: student.classroom.classroom.className,
           gender: student.gender,
           profileImageUrl: student.profileImgUrl,
+          id: student.id,
         }));
         setStudentData(data)
       } catch (error) {
@@ -215,7 +232,7 @@ const SearchStudentModal: FC<SearchStudentModalProps> = ({isOpen, onOpen, onClos
     item?.name?.toLowerCase().includes(searchInput.toLowerCase())
   );
   return (
-    <Modal blockScrollOnMount={false} isOpen={isOpen} onClose={onClose}>
+    <Modal blockScrollOnMount={false} isOpen={isSearchOpen} onClose={onSearchClose}>
       <ModalOverlay />
       <ModalContent rounded={"xl"}>
         <ModalHeader>
@@ -244,20 +261,55 @@ const SearchStudentModal: FC<SearchStudentModalProps> = ({isOpen, onOpen, onClos
           </InputGroup>
           {searchInput && (
             <Box
+              w={"full"}
               display={"flex"}
               flexDir={"column"}
               justifyContent={"center"}
               mt={"1rem"}
             >
               {filteredSearchData.length == 0 ? (
-                <Text textAlign={"center"} fontSize={"lg"} color={"#484848"}>
+                <Text textAlign={"center"} fontSize={"xl"} color={"#484848"}>
                   No results match your search criteria
                 </Text>
               ) : (
                 filteredSearchData?.map((item, index) => (
-                  <SearchResultItem student={item} key={index} />
+                  <Box key={index} onClick={() => setSelectedStudent(item)}>
+                    <SearchResultItem student={item} key={index} />
+                  </Box>
                 ))
               )}
+            </Box>
+          )}
+
+          {selectedStudent.age == 0 ? (
+            <></>
+          ) : (
+            <Box
+              mt={"2rem"}
+              display={"flex"}
+              alignItems={"center"}
+              gap={3}
+              w={"full"}
+              rounded={"md"}
+              py={"0.5rem"}
+              px={"1rem"}
+              mb={"0.4rem"}
+              backgroundColor="#3F999830"
+            >
+              <Avatar
+                size={"md"}
+                src={selectedStudent.profileImageUrl}
+                pointerEvents={"none"}
+              />
+              <Box lineHeight={"20px"}>
+                <Text fontWeight={"700"} fontSize={"lg"}>
+                  {`${selectedStudent.name}`}
+                </Text>
+                <Text fontSize={"sm"} color={"#AAAAAA"} fontWeight={"600"}>
+                  {`${selectedStudent.age} years old`} •{" "}
+                  {selectedStudent.gender} • {selectedStudent.className}
+                </Text>
+              </Box>
             </Box>
           )}
         </ModalBody>
@@ -269,12 +321,14 @@ const SearchStudentModal: FC<SearchStudentModalProps> = ({isOpen, onOpen, onClos
             gap={2}
             px={"3rem"}
             _hover={{ backgroundColor: "#044141" }}
+            onClick={onModalOpen}
           >
             <Icon as={AiOutlinePlus} color={"#fff"} />
             <Text color={"#fff"} fontWeight={"300"} fontSize={"md"}>
               Send Request Link
             </Text>
           </Button>
+          <LinkRequestModal student={selectedStudent} isOpen={isModalOpen} onOpen={onModalOpen} onClose={onModalClose} />
         </ModalFooter>
       </ModalContent>
     </Modal>

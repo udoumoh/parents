@@ -54,8 +54,8 @@ import { PiPlus } from "react-icons/pi";
 import { IoClose } from "react-icons/io5";
 import { IconType } from "react-icons";
 import { useUserAPI } from "@/hooks/user/UserContext";
-import SearchResultItem from "@/components/shared/searchResultItem";
 import SearchStudentModal from "@/components/shared/searchStudentModal";
+
 
 interface MobileProps extends FlexProps {
   onOpen: () => void;
@@ -328,7 +328,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
         </Text>
       </Button>
 
-      <SearchStudentModal isOpen={isModalOpen} onClose={onModalClose} onOpen={onModalOpen} />
+      <SearchStudentModal isSearchOpen={isModalOpen} onSearchClose={onModalClose} onSearchOpen={onModalOpen} />
     </Flex>
   );
 };
