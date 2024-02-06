@@ -18,9 +18,12 @@ import ResultCard from "@/components/shared/resultCard";
 import { useUserAPI } from "@/hooks/user/UserContext";
 
 interface SettingsPageProps {}
+interface LegendBadgeProps {
+  role: string;
+  mt?: { base: string; lg: string };
+}
 
-const LegendBadge = ({ ...rest }) => {
-    
+const LegendBadge: React.FC<LegendBadgeProps> = ({ role, mt, ...rest }) => {
   return (
     <Flex
       justifyContent={"center"}
@@ -34,7 +37,7 @@ const LegendBadge = ({ ...rest }) => {
       {...rest}
     >
       <Text color={"#A3007F"} fontSize={"xs"} fontWeight={"600"}>
-        Mother
+        {role}
       </Text>
     </Flex>
   );
@@ -125,6 +128,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
               </Flex>
 
               <LegendBadge
+                role={profileData.userBio.parentRole}
                 mt={{ base: "0.3rem", lg: "0.8rem" }}
               />
 
@@ -134,18 +138,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                   Created on 25th October 2022
                 </Text>
               </Flex>
-              {/* Hidden on screen sizes bigger than lg */}
-              {/* <Button
-                display={{ base: "block", lg: "none" }}
-                backgroundColor={"#005D5D"}
-                size={"sm"}
-                color={"#fff"}
-                colorScheme="teal"
-              >
-                <Text fontSize={"xs"} px={"1rem"}>
-                  Edit Profile
-                </Text>
-              </Button> */}
+              
             </Box>
           </Flex>
           <Button

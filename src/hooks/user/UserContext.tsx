@@ -7,6 +7,7 @@ interface UserBio {
   lastName: string;
   profileImage: string;
   email: string;
+  parentRole: string;
 }
 
 export interface UserChildren {
@@ -101,6 +102,7 @@ export const UserApiProvider: FC<UserApiProviderProps> = ({ children }) => {
       profileImage:
         "https://media.istockphoto.com/id/1183107601/photo/african-american-lady-talking-on-phone-sitting-at-workplace.jpg?s=612x612&w=0&k=20&c=A5ABRClT_h8x-PkNlyP_fhMyH8BvlAfKuqygMGTL7OA=",
       email: "adenike.ali@mail.com",
+      parentRole: "Mother",
     },
     userChildren: [
       {
@@ -240,8 +242,9 @@ export const UserApiProvider: FC<UserApiProviderProps> = ({ children }) => {
             lastName: response.parent.parent.lastName,
             profileImage: response.parent.parent.profileImgUrl,
             email: response.parent.parent.email,
+            parentRole:response.parent.parent.parentRole,
           };
-          
+                    
           updateUserBio(newData)
         } catch (error) {
           console.error("Error fetching data:", error);
