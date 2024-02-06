@@ -1,5 +1,6 @@
 "use client";
 import { FC, useState, createContext, useContext, useEffect } from "react";
+import { gql, useQuery } from "@apollo/client";
 
 interface UserBio {
   firstName: string;
@@ -59,7 +60,40 @@ interface UserApiProviderProps {
   children: React.ReactNode;
 }
 
+const GET_PARENT = gql(`
+query Parent {
+  parent {
+    errors {
+      field
+      message
+    }
+    parent {
+      id
+      userId
+      status
+      isPaid
+      isVerified
+      isReferred
+      agreedTo
+      createdAt
+      firstName
+      middleName
+      lastName
+      parentRole
+      phoneNumber
+      email
+      relationToStudent
+      role
+      folder
+      isDisabled
+      profileImgUrl
+    }
+  }
+}
+`);
+
 export const UserApiProvider: FC<UserApiProviderProps> = ({ children }) => {
+  const { data: parent } = useQuery(GET_PARENT);
   const [profileData, setProfileData] = useState({
     userBio: {
       firstName: "Adenike",
@@ -190,9 +224,21 @@ export const UserApiProvider: FC<UserApiProviderProps> = ({ children }) => {
   });
 
   useEffect(() => {
+      const fetchData = async () => {
+        try {
+          const response = (await parent) || [];
+          console.log(response);
+          
+          // setStudentData(data);
+        } catch (error) {
+          console.error("Error fetching data:", error);
+        }
+      };
+
       const storedId = localStorage.getItem("currentId");
       setCurrentId(parseInt(storedId ?? `${defaultId}`, 10));
-  }, []);
+      fetchData()
+  }, [parent]);
 
   const currentWardProfile = profileData.userChildren.find(
     (wardProfile) => wardProfile.id === currentId

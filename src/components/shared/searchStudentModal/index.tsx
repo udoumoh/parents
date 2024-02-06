@@ -188,7 +188,7 @@ const SearchStudentModal: FC<SearchStudentModalProps> = ({isOpen, onOpen, onClos
     }])
     const {data:search} = useQuery(GET_STUDENTS)
     const handleSearchChange = (e: any) => {
-    setSearchInput(e.target.value);
+    setSearchInput(e.target.value)
   };
 
   useEffect( () => {
