@@ -97,12 +97,12 @@ export const UserApiProvider: FC<UserApiProviderProps> = ({ children }) => {
   const { data: parent } = useQuery(GET_PARENT);
   const [profileData, setProfileData] = useState({
     userBio: {
-      firstName: "Adenike",
-      lastName: "Ali-Williams",
+      firstName: "",
+      lastName: "",
       profileImage:
-        "https://media.istockphoto.com/id/1183107601/photo/african-american-lady-talking-on-phone-sitting-at-workplace.jpg?s=612x612&w=0&k=20&c=A5ABRClT_h8x-PkNlyP_fhMyH8BvlAfKuqygMGTL7OA=",
-      email: "adenike.ali@mail.com",
-      parentRole: "Mother",
+        "",
+      email: "",
+      parentRole: "",
     },
     userChildren: [
       {
@@ -245,6 +245,8 @@ export const UserApiProvider: FC<UserApiProviderProps> = ({ children }) => {
             parentRole:response.parent.parent.parentRole,
           };
                     
+          console.log(response);
+          
           updateUserBio(newData)
         } catch (error) {
           console.error("Error fetching data:", error);

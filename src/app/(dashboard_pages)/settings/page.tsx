@@ -16,12 +16,19 @@ import {
 import { AiFillClockCircle } from "react-icons/ai";
 import ResultCard from "@/components/shared/resultCard";
 import { useUserAPI } from "@/hooks/user/UserContext";
+import {gql, useMutation} from "@apollo/client"
 
 interface SettingsPageProps {}
 interface LegendBadgeProps {
   role: string;
   mt?: { base: string; lg: string };
 }
+
+const LOGOUT_PARENTS = gql(`
+mutation Mutation {
+  logoutParent
+}
+`);
 
 const LegendBadge: React.FC<LegendBadgeProps> = ({ role, mt, ...rest }) => {
   return (
@@ -44,6 +51,7 @@ const LegendBadge: React.FC<LegendBadgeProps> = ({ role, mt, ...rest }) => {
 };
 
 const SettingsPage: FC<SettingsPageProps> = ({}) => {
+    const [logout] = useMutation(LOGOUT_PARENTS)
     const { profileData } = useUserAPI()
     const [wardData, setWarddata] = useState([
       {
@@ -74,6 +82,11 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
         schoolLogo: "/images/schoollogo.png",
       },
     ]);
+
+    const handleLogout = async () => {
+      const response = await logout() 
+      console.log(response)
+    }
   return (
     <Box
       display={"flex"}
@@ -138,20 +151,23 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                   Created on 25th October 2022
                 </Text>
               </Flex>
-              
             </Box>
           </Flex>
-          <Button
-            display={{ base: "block", lg: "block" }}
-            backgroundColor={"#005D5D"}
-            size={"sm"}
-            color={"#fff"}
-            colorScheme="teal"
-          >
-            <Text fontSize={"xs"} px={"1rem"}>
+          <Flex gap={5}>
+            <Button
+              backgroundColor={"#005D5D"}
+              // size={"sm"}
+              color={"#fff"}
+              colorScheme="teal"
+              // fontSize={"xs"}
+              px={"1rem"}
+            >
               Edit Profile
-            </Text>
-          </Button>
+            </Button>
+
+            <Button
+            variant={'outline'} colorScheme="red" onClick={handleLogout}>Logout</Button>
+          </Flex>
         </Flex>
 
         <Divider my={"2rem"} />

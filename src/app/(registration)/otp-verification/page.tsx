@@ -53,23 +53,24 @@ const Page: FC<PageProps> = ({}) => {
     } else if (response.data.verifyParentCode.errors) {
       toast({
         title: "Server Error",
-        description: "An error occured while you were creating your account",
+        description: response.data.verifyParentCode.errors[0].message,
         position: "bottom",
         variant: "left-accent",
         isClosable: true,
         status: "error",
       });
+    } else {
+      toast({
+        title: "Email Verified",
+        description:
+          "Your email has been verified, you will be redirected soon.",
+        position: "bottom",
+        variant: "left-accent",
+        isClosable: true,
+        status: "success",
+      });
+      router.push("/link-child");
     }
-    toast({
-      title: "Email Verified",
-      description:
-        "Your email has been verified, you will be redirected soon.",
-      position: "bottom",
-      variant: "left-accent",
-      isClosable: true,
-      status: "success",
-    });
-    router.push("/link-child");
   }
   return (
     <>
@@ -84,7 +85,6 @@ const Page: FC<PageProps> = ({}) => {
           <Flex justifyContent={"center"}>
             <Image
               src={"/images/greylightBordered.svg"}
-              //   width={{ base: "10rem", md: "13rem" }}
               alt="'logo"
             />
           </Flex>

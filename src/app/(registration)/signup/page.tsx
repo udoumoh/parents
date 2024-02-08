@@ -88,7 +88,7 @@ const handleImageUpload = (
 
   const schema = Yup.object().shape({
     firstName: Yup.string().required("First name is required"),
-    middleName: Yup.string().required("First name is required"),
+    middleName: Yup.string(),
     lastName: Yup.string().required("Last name is required"),
     phoneNumber: Yup.number().required("Phone number is required"),
     email: Yup.string()
@@ -160,26 +160,27 @@ const handleImageUpload = (
             } else if (response.data.registerParent.errors) {
               toast({
                 title: "Server Error",
-                description:
-                  "An error occured while you were creating your account",
+                description: response.data.registerParent.errors[0].message,
                 position: "bottom",
                 variant: "left-accent",
                 isClosable: true,
                 status: "error",
               });
+            } else {
+              toast({
+                title: "Account created",
+                description:
+                  "Account created! Check your email for an OTP to verify your account.",
+                duration: 5000,
+                position: "bottom",
+                variant: "left-accent",
+                isClosable: true,
+                status: "success",
+              });
+              router.push("/otp-verification");
+              actions.setSubmitting(false);
+            }}
             }
-            toast({
-              title: "Account created",
-              description:
-                "Your account was created successfully, you will be redirected soon.",
-              position: "bottom",
-              variant: "left-accent",
-              isClosable: true,
-              status: "success",
-            });
-            router.push("/otpverification");
-            actions.setSubmitting(false);
-          }}
           validationSchema={schema}
         >
           {(props) => {
@@ -269,10 +270,6 @@ const handleImageUpload = (
                         <Field name="middleName">
                           {({ field, form }: any) => (
                             <FormControl
-                              isInvalid={
-                                form.errors.middleName &&
-                                form.touched.middleName
-                              }
                               mb="1.5rem"
                             >
                               <Box w={"full"}>
@@ -287,9 +284,6 @@ const handleImageUpload = (
                                   backgroundColor={"#F5F5F5"}
                                   autoComplete="true"
                                 />
-                                <FormErrorMessage>
-                                  {form.errors.middleName}
-                                </FormErrorMessage>
                               </Box>
                             </FormControl>
                           )}
@@ -533,12 +527,12 @@ const handleImageUpload = (
 
                         <Flex justifyContent={"center"}>
                           <Button
+                            type="submit"
                             mt={4}
                             px={"2rem"}
                             py={"1.5rem"}
                             backgroundColor={"#007C7B"}
                             color={"#fff"}
-                            type="submit"
                             fontWeight={"400"}
                             w={"17rem"}
                             _hover={{ backgroundColor: "#099C9B" }}

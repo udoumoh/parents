@@ -213,6 +213,8 @@ const LinkRequestModal: FC<LinkRequestModalProps> = ({
     }
 
     const handleSubmit = async () => {
+      try{
+
         const response = await request({
           variables: {
             message: message,
@@ -243,7 +245,7 @@ const LinkRequestModal: FC<LinkRequestModalProps> = ({
         }
         if(response.data.createRequest.errors.length == 0){
             toast({
-              title: "Email Verified",
+              title: "Request Sent",
               description:
                 "Your request has been sent, you are being redirected to your dashboard.",
               position: "bottom",
@@ -254,6 +256,16 @@ const LinkRequestModal: FC<LinkRequestModalProps> = ({
             router.push("/dashboard/overview");
         }
         console.log(response);
+      } catch(error) {
+        toast({
+          title: "Server Error",
+          description: "Please ensure all the fields are selected and a student is chosen",
+          position: "bottom",
+          variant: "left-accent",
+          isClosable: true,
+          status: "error",
+        });        
+      }
     }
   return (
     <Modal
@@ -309,6 +321,7 @@ const LinkRequestModal: FC<LinkRequestModalProps> = ({
                 rounded={"xl"}
                 border={"1px solid #D5D5D5"}
                 backgroundColor={"#F5F5F5"}
+                isReadOnly={true}
               />
             </FormControl>
 
