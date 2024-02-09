@@ -38,6 +38,9 @@ export default function RootLayout({
   });
   return (
     <html lang="en">
+      <head>
+        <link rel="icon" href="/images/greylightBordered.svg" />
+      </head>
       <body className={mulish.className}>
         <ApolloProvider client={client}>
           <Providers>
