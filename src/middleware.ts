@@ -8,7 +8,7 @@ export function middleware(request: NextRequest) {
     path === "/signup" ||
     path === "/verifyotp"
 
-  const token = request.cookies.get('redis_cookie')
+  const token = request.cookies.get('redis-cookie')?.value
   console.log(token)
   if (isPublicRoute && token) {
     return NextResponse.redirect(new URL('/', request.nextUrl))
