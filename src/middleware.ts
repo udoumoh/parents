@@ -2,21 +2,19 @@ import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
  
 export function middleware(request: NextRequest) {
-  const path = request.nextUrl.pathname
+//   const path = request.nextUrl.pathname
   
-  const isPublicRoute = path === "/signin" || 
-    path === "/signup" ||
-    path === "/verifyotp"
+//   const isPublicRoute = ["/signin", "/signup", "/verifyotp"].includes(path)
+  
+//   const token = request.cookies.get('userToken')?.value
+//   console.log(token)
+//   if (isPublicRoute && token) {
+//     return NextResponse.redirect(new URL('/', request.nextUrl))
+//   }
 
-  const token = request.cookies.get('redis-cookie')?.value
-  console.log(token)
-  if (isPublicRoute && token) {
-    return NextResponse.redirect(new URL('/', request.nextUrl))
-  }
-
-  if(!isPublicRoute && !token) {
-    return NextResponse.redirect(new URL('/signin', request.nextUrl))
-  }
+//   if(!isPublicRoute && !token) {
+//     return NextResponse.redirect(new URL('/signin', request.nextUrl))
+//   }
 }
  
 export const config = {
