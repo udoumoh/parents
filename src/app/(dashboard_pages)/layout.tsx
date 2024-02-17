@@ -42,18 +42,22 @@ query Parent {
 
 
 const Layout: React.FC<layoutProps> = ({ children }) => {
-  const router = useRouter()
+  const router = useRouter();
   const { data: parent } = useQuery(GET_PARENT);
 
-  const response = (parent) || []
-
-  if(!response.parent){
-    router.push('/signin')
+  const response = parent || [];
+  console.log(response?.parent?.errors);
+  
+  // Redirect to the signin page if there's no parent data
+  if (response?.parent?.errors) {
+    router.push("/signin");
+    return null; // Return null to avoid rendering the rest of the component
   }
+
   return (
     <MainNav>
-        {/* Your layout content */}
-        {children}
+      {/* Your layout content */}
+      {children}
     </MainNav>
   );
 };
