@@ -216,13 +216,10 @@ export const UserApiProvider: FC<UserApiProviderProps> = ({ children }) => {
       },
     ],
   });
-  // const isClient = typeof window !== "undefined";
 
-  const defaultId = 0;
+  // const defaultId = 0;
 
-  const [currentId, setCurrentId] = useState(() => {
-    return defaultId;
-  });
+  const [currentId, setCurrentId] = useState(0);
 
   const updateUserBio = (newBio: any) => {
     setProfileData((previousData) => {
@@ -254,9 +251,9 @@ export const UserApiProvider: FC<UserApiProviderProps> = ({ children }) => {
       };
 
       const storedId = localStorage.getItem("currentId");
-      setCurrentId(parseInt(storedId ?? `${defaultId}`, 10));
+      setCurrentId(parseInt(storedId ?? `${currentId}`, 10));
       fetchData()
-  }, [parent]);
+  }, [parent, currentId]);
 
   const currentWardProfile = profileData.userChildren.find(
     (wardProfile) => wardProfile.id === currentId

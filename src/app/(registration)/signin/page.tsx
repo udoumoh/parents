@@ -12,7 +12,6 @@ import {
 } from "@chakra-ui/react";
 import { useRouter } from 'next/navigation';
 import { gql, useMutation } from "@apollo/client";
-import { Console } from 'console';
 
 interface pageProps {
   
