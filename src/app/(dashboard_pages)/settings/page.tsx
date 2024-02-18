@@ -17,6 +17,7 @@ import { AiFillClockCircle } from "react-icons/ai";
 import ResultCard from "@/components/shared/resultCard";
 import { useUserAPI } from "@/hooks/user/UserContext";
 import {gql, useMutation} from "@apollo/client"
+import { useRouter } from "next/navigation";
 
 interface SettingsPageProps {}
 interface LegendBadgeProps {
@@ -51,6 +52,7 @@ const LegendBadge: React.FC<LegendBadgeProps> = ({ role, mt, ...rest }) => {
 };
 
 const SettingsPage: FC<SettingsPageProps> = ({}) => {
+    const router = useRouter()
     const [logout] = useMutation(LOGOUT_PARENTS)
     const { profileData } = useUserAPI()
     const [wardData, setWarddata] = useState([
@@ -85,6 +87,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
 
     const handleLogout = async () => {
       const response = await logout() 
+      router.refresh()
       console.log(response)
     }
   return (
