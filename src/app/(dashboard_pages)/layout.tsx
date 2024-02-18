@@ -1,5 +1,5 @@
 'use client'
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useEffect } from 'react';
 import MainNav from '@/components/navigation/mainNav';
 import { gql, useQuery } from "@apollo/client";
 import { useRouter } from 'next/navigation';
@@ -41,18 +41,30 @@ query Parent {
 `);
 
 
+// ... (previous imports)
+
 const Layout: React.FC<layoutProps> = ({ children }) => {
   const router = useRouter();
-  const { data: parent } = useQuery(GET_PARENT);
+  const { data: parent, loading } = useQuery(GET_PARENT);
 
   const response = parent || [];
   console.log(response?.parent?.errors);
-  
-  // Redirect to the signin page if there's no parent data
-  if (response?.parent?.errors) {
-    router.push("/signin");
-    return null; // Return null to avoid rendering the rest of the component
-  }
+
+  // Check for initial redirect when the component mounts
+  useEffect(() => {
+    if (response?.parent?.errors) {
+      router.push("/signin");
+    }
+  }, [response?.parent?.errors, router]);
+
+  // Use useEffect to handle redirects after the query has been executed
+  useEffect(() => {
+    if (!loading && !response?.parent?.errors) {
+      // Redirect logic after login or successful query
+      // For example, redirect to dashboard
+      router.push("/dashboard");
+    }
+  }, [loading, response?.parent?.errors, router]);
 
   return (
     <MainNav>
