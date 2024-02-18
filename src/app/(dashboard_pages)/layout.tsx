@@ -3,6 +3,7 @@ import React, { ReactNode, useEffect } from 'react';
 import MainNav from '@/components/navigation/mainNav';
 import { gql, useQuery } from "@apollo/client";
 import { useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 
 interface layoutProps {
   children: ReactNode;
@@ -44,8 +45,10 @@ query Parent {
 // ... (previous imports)
 
 const Layout: React.FC<layoutProps> = ({ children }) => {
+  const path = usePathname()
   const router = useRouter();
   const { data: parent, loading } = useQuery(GET_PARENT);
+  const isPublicRoute = ["/signin", "/signup", "/verifyotp"].includes(path);
 
   const response = parent || [];
   console.log(response?.parent?.errors);
@@ -55,7 +58,10 @@ const Layout: React.FC<layoutProps> = ({ children }) => {
     if (response?.parent?.errors) {
       router.push("/signin");
     }
-  }, [response?.parent?.errors, router]);
+    if(!response?.parent?.errors && isPublicRoute) {
+      router.push("/")
+    }
+  }, [response?.parent?.errors, router, isPublicRoute]);
 
   // Use useEffect to handle redirects after the query has been executed
   useEffect(() => {
