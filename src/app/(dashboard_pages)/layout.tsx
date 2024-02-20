@@ -21,13 +21,13 @@ const Layout: React.FC<layoutProps> = ({ children }) => {
   console.log(response?.parent?.errors);
 
   // Check for initial redirect when the component mounts
-  useEffect(() => {
-    if (response?.parent?.errors) {
-      redirect("/signin");
-    }else {
-      redirect("/")
-    }
-  }, [response?.parent?.errors, router, isPublicRoute]);
+  // useEffect(() => {
+  //   if (response?.parent?.errors) {
+  //     redirect("/signin");
+  //   }else {
+  //     redirect("/")
+  //   }
+  // }, [response?.parent?.errors, router, isPublicRoute]);
 
   return (
     <MainNav>

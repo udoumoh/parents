@@ -1,5 +1,5 @@
 'use client'
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import {
   Box,
   Flex,
@@ -14,14 +14,28 @@ import { PiChatTeardropTextLight } from "react-icons/pi";
 import { BsArrowRightShort } from "react-icons/bs";
 import EmptyStateCard from "@/components/shared/emptyStateCard";
 import { useUserAPI } from "@/hooks/user/UserContext";
+import { useQuery } from "@apollo/client";
+import { GET_PARENT } from "@/gql/queries/queries";
 
 interface DashboardPageProps {}
 
 const DashboardPage: FC<DashboardPageProps> = ({}) => {
+    const { data: parent } = useQuery(GET_PARENT);
+
     const { currentWardProfile } = useUserAPI();
+
+    useEffect(() => {
+      const response = parent
+      console.log(response)
+
+    }, [])
 
   return (
     <Flex gap={5} flexDir={"column"} mb={"5rem"}>
+      {/* <Flex>
+        Hi
+      </Flex> */}
+
       <Flex
         flexDir={{ base: "column", lg: "row" }}
         justifyContent={"space-between"}
