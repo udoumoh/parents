@@ -28,14 +28,6 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
       const fetchData = async () => {
         try {
           const response = (await parent) || [];
-          const newData = {
-            firstName: response.parent.parent.firstName,
-            lastName: response.parent.parent.lastName,
-            profileImage: response.parent.parent.profileImgUrl,
-            email: response.parent.parent.email,
-            parentRole: response.parent.parent.parentRole,
-          };
-
           console.log(response);
         } catch (error) {
           console.error("Error fetching data:", error);
