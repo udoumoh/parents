@@ -12,8 +12,7 @@ import {
 } from "@chakra-ui/react";
 import { useRouter } from 'next/navigation';
 import { gql, useMutation } from "@apollo/client";
-import { GET_PARENT } from '@/gql/queries/queries';
-import { useQuery } from "@apollo/client";
+import { useAuth } from '@/hooks/AuthContext';
 
 interface pageProps {
   
@@ -55,6 +54,7 @@ const Page: FC<pageProps> = ({}) => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [login] = useMutation(LOGIN_PARENT);
+    const {setIsAuthenticated} = useAuth()
 
     const handleEmailChange = (e:any) => {
         setEmail(e.target.value)
@@ -85,18 +85,19 @@ const Page: FC<pageProps> = ({}) => {
 
         if (loginErrors) {
           throw new Error(`Server Error: ${loginErrors[0].message}`);
+        } else {
+          toast({
+            title: "Login Successful",
+            description: "You are being redirected to your dashboard.",
+            position: "top-right",
+            variant: "left-accent",
+            isClosable: true,
+            status: "success",
+          });
+          setIsAuthenticated(true);
+          router.push("/dashboard/overview");
         }
 
-        toast({
-          title: "Login Successful",
-          description: "You are being redirected to your dashboard.",
-          position: "top-right",
-          variant: "left-accent",
-          isClosable: true,
-          status: "success",
-        });
-
-        router.push("/dashboard/overview");
       } catch (error: any) {
         toast({
           title: "Error",
