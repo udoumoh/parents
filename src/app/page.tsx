@@ -17,6 +17,8 @@ const Home = ({}) => {
 
        if (response.parent && response.parent.errors !== null) {
          router.push("/signin");
+       } else {
+        router.push("/dashboard/overview");
        }
      } catch (error) {
        console.error("Error fetching data:", error);
