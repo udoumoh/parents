@@ -65,7 +65,7 @@ const Page: FC<pageProps> = ({}) => {
           router.push("/dashboard/overview")
         }
       }
-    })
+    }, [parent, router])
 
     const handleEmailChange = (e:any) => {
         setEmail(e.target.value)
