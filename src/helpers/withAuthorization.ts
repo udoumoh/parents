@@ -1,5 +1,4 @@
-import { ReactNode, FC } from 'react';
-import { useEffect } from 'react';
+import { ReactNode, FC, useEffect, Component } from 'react';
 import { useAuth } from '@/hooks/AuthContext';
 import { useRouter } from 'next/navigation';
 
@@ -7,8 +6,9 @@ interface WithAuthorizationProps {
   children: ReactNode;
 }
 
+// Explicitly define the type for WrappedComponent
 export const withAuthorization = (WrappedComponent: FC<WithAuthorizationProps>) => {
-  return ({...props}: WithAuthorizationProps) => {
+  return () => {
     const router = useRouter();
     const { isAuthenticated } = useAuth();
 
@@ -20,8 +20,6 @@ export const withAuthorization = (WrappedComponent: FC<WithAuthorizationProps>) 
     }, [isAuthenticated, router]);
 
     // Render the wrapped component for authenticated users
-    return (
-      isAuthenticated ? WrappedComponent : null
-    )
+    return isAuthenticated ? WrappedComponent : null;
   };
 };
