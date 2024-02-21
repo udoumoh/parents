@@ -65,6 +65,9 @@ const Page: FC<pageProps> = ({}) => {
           router.push("/dashboard/overview")
         }
       }
+      if(!parent){
+        return <p>Loading</p>;
+      }
     }, [parent, router])
 
     const handleEmailChange = (e:any) => {
