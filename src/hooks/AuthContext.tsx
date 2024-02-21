@@ -1,10 +1,16 @@
-import { createContext, useContext, useState, useEffect, ReactNode } from "react";
+import {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  ReactNode,
+} from "react";
 import { useQuery } from "@apollo/client";
 import { GET_PARENT } from "@/gql/queries/queries";
 
 interface AuthContextProps {
   isAuthenticated: boolean;
-  setIsAuthenticated: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsAuthenticated: (value: boolean) => void;
 }
 
 interface AuthProviderProps {
@@ -14,25 +20,37 @@ interface AuthProviderProps {
 const AuthContext = createContext<AuthContextProps | undefined>(undefined);
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-  const { data: parent, loading } = useQuery(GET_PARENT);  
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const { data: parent, loading } = useQuery(GET_PARENT);
+  const [isAuthenticated, setIsAuthenticatedState] = useState(false);
+
+  const setIsAuthenticated = (value: boolean) => {
+    setIsAuthenticatedState(value);
+    localStorage.setItem("isAuthenticated", value.toString());
+  };
 
   useEffect(() => {
-    try{
-        if (parent) {
-          const response = parent;
-          if (response.parent.errors === null) {
-            setIsAuthenticated(true);
-          }
+    try {
+      if (parent) {
+        const response = parent;
+        if (response.parent.errors === null) {
+          setIsAuthenticated(true);
         }
-    } catch(err){
-        console.log(err);
+      }
+    } catch (err) {
+      console.error(err);
     }
   }, [parent]);
-  
-    if(loading){
-        return (<p>Loading...</p>)
+
+  useEffect(() => {
+    const storedIsAuthenticated = localStorage.getItem("isAuthenticated");
+    if (storedIsAuthenticated) {
+      setIsAuthenticatedState(storedIsAuthenticated === "true");
     }
+  }, []);
+
+  if (loading) {
+    return <p>Loading...</p>;
+  }
 
   return (
     <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated }}>
