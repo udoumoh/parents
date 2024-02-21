@@ -87,7 +87,9 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
 
     const handleLogout = async () => {
       const response = await logout() 
-      router.refresh()
+      if(response.data.logoutParent){
+        router.push("/signin")
+      }
       console.log(response)
     }
   return (

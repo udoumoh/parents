@@ -1,5 +1,5 @@
 'use client'
-import { FC, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
 import {
   Box,
   Image,
@@ -12,6 +12,8 @@ import {
 } from "@chakra-ui/react";
 import { useRouter } from 'next/navigation';
 import { gql, useMutation } from "@apollo/client";
+import { GET_PARENT } from '@/gql/queries/queries';
+import { useQuery } from "@apollo/client";
 
 interface pageProps {
   
@@ -53,6 +55,15 @@ const Page: FC<pageProps> = ({}) => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [login] = useMutation(LOGIN_PARENT);
+    const { data: parent, loading } = useQuery(GET_PARENT);
+
+    useEffect(() => {
+      const response = parent
+      const loginError = response.parent.errors
+      if(response && loginError === null){
+        router.push("/dashboard/overview")
+      }
+    }, [parent])
 
     const handleEmailChange = (e:any) => {
         setEmail(e.target.value)
@@ -63,50 +74,52 @@ const Page: FC<pageProps> = ({}) => {
     };
 
     const handleLogin = async () => {
-      const response = await login({
-        variables: {
-          password: password,
-          email: email,
-        },
-      })
-      console.log(response.data)
-      if (!response.data) {
-              toast({
-                title: "Client Error",
-                description:
-                  "An error occured while you were creating your account",
-                position: "top-right",
-                variant: "left-accent",
-                isClosable: true,
-                status: "error",
-              });
-            } else if (response.data.loginParent.errors) {
-              toast({
-                title: "Server Error",
-                description:
-                  response.data.loginParent.errors[0].message,
-                position: "top-right",
-                variant: "left-accent",
-                isClosable: true,
-                status: "error",
-              });
-            }
-            const data = await response.data
+      try {
+        const response = await login({
+          variables: {
+            password: password,
+            email: email,
+          },
+        });
 
-            if(data && data.loginParent.errors === null){
-              toast({
-                title: "Login Successfull",
-                description:
-                  "You are being redirected to your dashboard",
-                position: "top-right",
-                variant: "left-accent",
-                isClosable: true,
-                status: "success",
-              });
-            }
-            router.push("/dashboard/overview");
-            console.log(response)
-          }
+        console.log(response.data);
+
+        if (!response.data) {
+          throw new Error(
+            "Client Error: An error occurred while creating your account."
+          );
+        }
+
+        const loginErrors = response.data.loginParent.errors;
+
+        if (loginErrors) {
+          throw new Error(`Server Error: ${loginErrors[0].message}`);
+        }
+
+        toast({
+          title: "Login Successful",
+          description: "You are being redirected to your dashboard.",
+          position: "top-right",
+          variant: "left-accent",
+          isClosable: true,
+          status: "success",
+        });
+
+        router.push("/dashboard/overview");
+      } catch (error: any) {
+        toast({
+          title: "Error",
+          description: error.message,
+          position: "top-right",
+          variant: "left-accent",
+          isClosable: true,
+          status: "error",
+        });
+
+        console.error("Error during login:", error);
+      }
+    };
+
   return (
     <Box
       minH={"100vh"}
