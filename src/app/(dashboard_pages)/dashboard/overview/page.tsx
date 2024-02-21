@@ -22,30 +22,9 @@ interface DashboardPageProps {}
 
 const DashboardPage: FC<DashboardPageProps> = ({}) => {
     const router = useRouter()
-    const { data: parent } = useQuery(GET_PARENT);
+    const { data: parent, loading } = useQuery(GET_PARENT);
 
     const { currentWardProfile } = useUserAPI();
-
-     useEffect(() => {
-       // Check if the parent data has been loaded
-       if (parent) {
-         try {
-           const response = parent || {};
-
-           if (response.parent && response.parent.errors !== null) {
-             router.push("/signin");
-           }
-         } catch (error) {
-           console.error("Error fetching data:", error);
-           router.push("/signin");
-         }
-       }
-     }, [parent, router]);
-
-     // Return loading or placeholder content while data is being fetched
-     if (!parent) {
-       return <p>Loading...</p>;
-     }
 
   return (
     <Flex gap={5} flexDir={"column"} mb={"5rem"}>
