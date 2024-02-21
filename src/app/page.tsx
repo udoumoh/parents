@@ -13,7 +13,7 @@ const Home = ({}) => {
    const fetchData = async () => {
      try {
        const response = (await parent) || [];
-       if (response.parent.errors === null || !response) {
+       if (response.parent.errors !== null || !response) {
          router.push("/signin");
        } else {
         router.push("/dashboard/overview")

@@ -30,7 +30,7 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
       const fetchData = async () => {
         try {
           const response = (await parent) || [];
-          if(response.parent.errors === null){
+          if(response.parent.errors !== null){
             router.push('/signin')
           }
         } catch (error) {
