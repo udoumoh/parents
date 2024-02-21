@@ -91,7 +91,9 @@ const Page: FC<pageProps> = ({}) => {
                 status: "error",
               });
             }
-            if(response.data && response.data.loginParent.errors === null){
+            const data = await response.data
+
+            if(data && data.loginParent.errors === null){
               toast({
                 title: "Login Successfull",
                 description:
@@ -101,8 +103,8 @@ const Page: FC<pageProps> = ({}) => {
                 isClosable: true,
                 status: "success",
               });
-              router.push("/dashboard/overview");
             }
+            router.push("/dashboard/overview");
             console.log(response)
           }
   return (
