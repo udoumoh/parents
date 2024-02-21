@@ -13,17 +13,12 @@ import {
 import { PiChatTeardropTextLight } from "react-icons/pi";
 import { BsArrowRightShort } from "react-icons/bs";
 import EmptyStateCard from "@/components/shared/emptyStateCard";
-import { useUserAPI } from "@/hooks/user/UserContext";
-import { useQuery } from "@apollo/client";
-import { GET_PARENT } from "@/gql/queries/queries";
-import { useRouter } from "next/navigation";
+import { useUserAPI } from "@/hooks/UserContext";
+import { withAuthorization } from "@/helpers/withAuthorization";
 
 interface DashboardPageProps {}
 
 const DashboardPage: FC<DashboardPageProps> = ({}) => {
-    const router = useRouter()
-    const { data: parent, loading } = useQuery(GET_PARENT);
-
     const { currentWardProfile } = useUserAPI();
 
   return (
@@ -429,4 +424,4 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
   );
 };
 
-export default DashboardPage;
+export default withAuthorization(DashboardPage);

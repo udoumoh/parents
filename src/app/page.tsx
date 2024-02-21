@@ -1,35 +1,16 @@
-'use client'
-import { useEffect  } from 'react'
-import { useRouter } from 'next/navigation'
-import { GET_PARENT } from '@/gql/queries/queries'
-import { useQuery } from "@apollo/client";
+"use client";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
-
-const Home = ({}) => {
+const Home = () => {
   const router = useRouter();
-  const { data: parent } = useQuery(GET_PARENT);
 
- useEffect(() => {
-   // Check if the parent data has been loaded
-   if (parent) {
-     try {
-       const response = parent || {};
+  useEffect(() => {
+    // Redirect to "/dashboard/overview" when the component mounts
+    router.push("/dashboard/overview");
+  }, [router]);
 
-       if (response.parent && response.parent.errors !== null) {
-         router.push("/signin");
-       } else {
-        router.push("/dashboard/overview");
-       }
-     } catch (error) {
-       console.error("Error fetching data:", error);
-       router.push("/signin");
-     }
-   }
- }, [parent, router]);
-
- if (!parent) {
-   return <p>Loading...</p>;
- }
-}
+  return null;
+};
 
 export default Home;

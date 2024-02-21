@@ -19,8 +19,8 @@ import {
 } from "@chakra-ui/react";
 import { BsThreeDots, BsDot } from "react-icons/bs";
 import { AiOutlinePlus } from "react-icons/ai";
-import { useUserAPI } from "@/hooks/user/UserContext";
-import { UserChildren } from "@/hooks/user/UserContext";
+import { useUserAPI } from "@/hooks/UserContext";
+import { UserChildren } from "@/hooks/UserContext";
 
 interface ChatSidenavProps {
   children: React.ReactNode;

@@ -2,7 +2,7 @@
 import { FC, useState } from "react";
 import { Box } from "@chakra-ui/react";
 import ChatBox from "../component/ChatBox";
-import { useUserAPI } from "@/hooks/user/UserContext";
+import { useUserAPI } from "@/hooks/UserContext";
 
 interface chatProps {
   params: { id: string };

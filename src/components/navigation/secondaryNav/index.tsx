@@ -37,8 +37,8 @@ import { AiOutlineFile } from "react-icons/ai";
 import { RiContactsBookLine } from "react-icons/ri";
 import { BiChevronRight } from "react-icons/bi";
 import { IconType } from "react-icons";
-import { useUserAPI } from "@/hooks/user/UserContext";
-import { UserChildren } from "@/hooks/user/UserContext";
+import { useUserAPI } from "@/hooks/UserContext";
+import { UserChildren } from "@/hooks/UserContext";
 import SearchStudentModal from "@/components/shared/searchStudentModal";
 
 interface NavItemProps extends FlexProps {

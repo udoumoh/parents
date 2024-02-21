@@ -55,15 +55,6 @@ const Page: FC<pageProps> = ({}) => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [login] = useMutation(LOGIN_PARENT);
-    const { data: parent, loading } = useQuery(GET_PARENT);
-
-      if(parent){
-        const response = parent
-        const loginError = response.parent.errors
-        if(response && loginError === null){
-          router.push("/dashboard/overview")
-        }
-      }
 
     const handleEmailChange = (e:any) => {
         setEmail(e.target.value)

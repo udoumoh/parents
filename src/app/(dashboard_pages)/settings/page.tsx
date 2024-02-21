@@ -15,7 +15,7 @@ import {
 } from "@chakra-ui/react";
 import { AiFillClockCircle } from "react-icons/ai";
 import ResultCard from "@/components/shared/resultCard";
-import { useUserAPI } from "@/hooks/user/UserContext";
+import { useUserAPI } from "@/hooks/UserContext";
 import {gql, useMutation} from "@apollo/client"
 import { useRouter } from "next/navigation";
 
