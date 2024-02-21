@@ -10,21 +10,24 @@ const Home = ({}) => {
   const { data: parent } = useQuery(GET_PARENT);
 
  useEffect(() => {
-   const fetchData = async () => {
+   // Check if the parent data has been loaded
+   if (parent) {
      try {
-       const response = (await parent) || [];
-       if (response.parent.errors !== null || !response) {
+       const response = parent || {};
+
+       if (response.parent && response.parent.errors !== null) {
          router.push("/signin");
-       } else {
-        router.push("/dashboard/overview")
        }
      } catch (error) {
        console.error("Error fetching data:", error);
        router.push("/signin");
      }
-   };
-   fetchData();
+   }
  }, [parent, router]);
+
+ if (!parent) {
+   return <p>Loading...</p>;
+ }
 }
 
 export default Home;
