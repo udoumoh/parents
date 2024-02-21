@@ -91,7 +91,7 @@ const Page: FC<pageProps> = ({}) => {
                 status: "error",
               });
             }
-            if(response.data.loginParent.errors === null){
+            if(response.data && response.data.loginParent.errors === null){
               toast({
                 title: "Login Successfull",
                 description:
