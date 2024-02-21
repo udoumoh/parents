@@ -39,7 +39,6 @@ mutation LoginParent($password: String!, $email: String!) {
       parentRole
       phoneNumber
       email
-      relationToStudent
       role
       folder
       isDisabled
@@ -70,6 +69,7 @@ const Page: FC<pageProps> = ({}) => {
           email: email,
         },
       })
+      console.log(response.data)
       if (!response.data) {
               toast({
                 title: "Client Error",

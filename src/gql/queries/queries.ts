@@ -21,7 +21,6 @@ query Parent {
       parentRole
       phoneNumber
       email
-      relationToStudent
       role
       folder
       isDisabled
