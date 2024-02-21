@@ -58,12 +58,14 @@ const Page: FC<pageProps> = ({}) => {
     const { data: parent, loading } = useQuery(GET_PARENT);
 
     useEffect(() => {
-      const response = parent
-      const loginError = response.parent.errors
-      if(response && loginError === null){
-        router.push("/dashboard/overview")
+      if(parent){
+        const response = parent
+        const loginError = response.parent.errors
+        if(response && loginError === null){
+          router.push("/dashboard/overview")
+        }
       }
-    }, [parent])
+    })
 
     const handleEmailChange = (e:any) => {
         setEmail(e.target.value)
