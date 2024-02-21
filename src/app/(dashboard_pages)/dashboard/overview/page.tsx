@@ -16,10 +16,12 @@ import EmptyStateCard from "@/components/shared/emptyStateCard";
 import { useUserAPI } from "@/hooks/user/UserContext";
 import { useQuery } from "@apollo/client";
 import { GET_PARENT } from "@/gql/queries/queries";
+import { useRouter } from "next/navigation";
 
 interface DashboardPageProps {}
 
 const DashboardPage: FC<DashboardPageProps> = ({}) => {
+    const router = useRouter()
     const { data: parent } = useQuery(GET_PARENT);
 
     const { currentWardProfile } = useUserAPI();
@@ -28,14 +30,17 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
       const fetchData = async () => {
         try {
           const response = (await parent) || [];
-          console.log(response);
+          if(response.parent.errors === null || !response){
+            router.push('/signin')
+          }
         } catch (error) {
           console.error("Error fetching data:", error);
+          router.push("/signin");
         }
       };
       fetchData();
 
-    }, [parent])
+    }, [parent, router])
 
   return (
     <Flex gap={5} flexDir={"column"} mb={"5rem"}>
