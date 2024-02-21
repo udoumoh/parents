@@ -57,7 +57,6 @@ const Page: FC<pageProps> = ({}) => {
     const [login] = useMutation(LOGIN_PARENT);
     const { data: parent, loading } = useQuery(GET_PARENT);
 
-    useEffect(() => {
       if(parent){
         const response = parent
         const loginError = response.parent.errors
@@ -68,7 +67,6 @@ const Page: FC<pageProps> = ({}) => {
       if(!parent){
         return <p>Loading</p>;
       }
-    }, [parent, router])
 
     const handleEmailChange = (e:any) => {
         setEmail(e.target.value)
