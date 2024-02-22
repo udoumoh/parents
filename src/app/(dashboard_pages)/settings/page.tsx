@@ -88,6 +88,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
     const handleLogout = async () => {
       const response = await logout() 
       if(response.data.logoutParent){
+        localStorage.setItem("isAuthenticated", false.toString());
         router.push("/signin")
       }
       console.log(response)
