@@ -250,11 +250,20 @@ const LinkRequestModal: FC<LinkRequestModalProps> = ({
           },
         });
         console.log(response)
+        if (!response.data) {
+          toast({
+            title: "Client Error",
+            description: "An error occured while creating a request",
+            position: "bottom",
+            variant: "left-accent",
+            isClosable: true,
+            status: "error",
+          });
+        }
         if (response.data.createRequest.errors) {
           toast({
             title: "Server Error",
-            description:
-              response.data.createRequest.errors[0].message,
+            description: response.data.createRequest.errors[0].message,
             position: "bottom",
             variant: "left-accent",
             isClosable: true,
