@@ -15,11 +15,20 @@ import { BsArrowRightShort } from "react-icons/bs";
 import EmptyStateCard from "@/components/shared/emptyStateCard";
 import { useUserAPI } from "@/hooks/UserContext";
 import { withAuthorization } from "@/helpers/withAuthorization";
+import { useRouter } from "next/navigation";
 
 interface DashboardPageProps {}
 
 const DashboardPage: FC<DashboardPageProps> = ({}) => {
+    const router = useRouter()
+    const isAuthenticated = localStorage.getItem('isAuthenticated')
     const { currentWardProfile } = useUserAPI();
+
+    useEffect(() => {
+      if(!isAuthenticated){
+        router.push('/signin')
+      }
+    })
 
   return (
     <Flex gap={5} flexDir={"column"} mb={"5rem"}>
@@ -424,4 +433,4 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
   );
 };
 
-export default withAuthorization(DashboardPage);
+export default DashboardPage;
