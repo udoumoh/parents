@@ -64,6 +64,9 @@ mutation CreateRequest($message: String!, $purpose: String!, $studentId: Float!)
         isOwing
         isVisible
         isDuplicate
+        linkedAt
+        linkCount
+        isLinked
         startDate
         endDate
         birthDate
@@ -78,6 +81,7 @@ mutation CreateRequest($message: String!, $purpose: String!, $studentId: Float!)
             updatedAt
             classId
             className
+            classSubjects
             description
             isDisabled
             students {
@@ -93,6 +97,9 @@ mutation CreateRequest($message: String!, $purpose: String!, $studentId: Float!)
               isOwing
               isVisible
               isDuplicate
+              linkedAt
+              linkCount
+              isLinked
               startDate
               endDate
               birthDate
@@ -108,6 +115,22 @@ mutation CreateRequest($message: String!, $purpose: String!, $studentId: Float!)
               homeAddress
               lgaOrigin
               state
+            }
+            teacher {
+              id
+              userId
+              createdAt
+              status
+              firstName
+              middleName
+              lastName
+              phoneNumber
+              email
+              role
+              folder
+              isDisabled
+              isVisible
+              profileImgUrl
             }
           }
         }
@@ -191,7 +214,9 @@ mutation CreateRequest($message: String!, $purpose: String!, $studentId: Float!)
       accepted
       createdAt
       updatedAt
-      reqAdmin
+      nameOfRequesting
+      roleOfRequesting
+      funcOfRequesting
     }
   }
 }`);
