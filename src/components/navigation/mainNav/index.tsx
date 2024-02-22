@@ -24,21 +24,11 @@ import {
   DrawerBody,
   DrawerHeader,
   Divider,
-  Modal,
-  ModalContent,
-  ModalBody,
-  ModalOverlay,
-  ModalHeader,
-  ModalFooter,
-  FormControl,
-  FormLabel,
-  Avatar,
 } from "@chakra-ui/react";
 import { FiMenu } from "react-icons/fi";
 import { IoIosSearch, IoMdSettings } from "react-icons/io";
 import { PiChatsTeardrop, PiChatsTeardropFill } from "react-icons/pi";
 import { GoHome, GoHomeFill } from "react-icons/go";
-import { FaLink } from "react-icons/fa6";
 import {
   RiSearchFill,
   RiArrowDownSLine,

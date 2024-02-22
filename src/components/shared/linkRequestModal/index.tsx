@@ -250,17 +250,7 @@ const LinkRequestModal: FC<LinkRequestModalProps> = ({
           },
         });
         console.log(response)
-        if (!response.data) {
-          toast({
-            title: "Client Error",
-            description:
-              "An error occured while creating a request",
-            position: "bottom",
-            variant: "left-accent",
-            isClosable: true,
-            status: "error",
-          });
-        } else if (response.data.createRequest.errors) {
+        if (response.data.createRequest.errors) {
           toast({
             title: "Server Error",
             description:
@@ -271,7 +261,7 @@ const LinkRequestModal: FC<LinkRequestModalProps> = ({
             status: "error",
           });
         }
-        if(response.data.createRequest.errors.length == 0){
+        if(!response.data.createRequest.errors){
             toast({
               title: "Request Sent",
               description:
@@ -284,10 +274,11 @@ const LinkRequestModal: FC<LinkRequestModalProps> = ({
             router.push("/dashboard/overview");
         }
         console.log(response);
-      } catch(error) {
+      } catch(error: any) {
+        console.log(error)
         toast({
           title: "Server Error",
-          description: "Please ensure all the fields are selected and a student is chosen",
+          description: error,
           position: "bottom",
           variant: "left-accent",
           isClosable: true,
