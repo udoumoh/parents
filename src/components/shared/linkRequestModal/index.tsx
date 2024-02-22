@@ -237,6 +237,8 @@ const LinkRequestModal: FC<LinkRequestModalProps> = ({
         setMessage(e.target.value)
     }
 
+    console.log(student.id)
+
     const handleSubmit = async () => {
       try{
 
@@ -247,6 +249,7 @@ const LinkRequestModal: FC<LinkRequestModalProps> = ({
             studentId: student.id,
           },
         });
+        console.log(response)
         if (!response.data) {
           toast({
             title: "Client Error",
