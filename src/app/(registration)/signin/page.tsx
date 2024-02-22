@@ -54,7 +54,6 @@ const Page: FC<pageProps> = ({}) => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [login] = useMutation(LOGIN_PARENT);
-    const {setIsAuthenticated} = useAuth()
 
     const handleEmailChange = (e:any) => {
         setEmail(e.target.value)
@@ -94,7 +93,7 @@ const Page: FC<pageProps> = ({}) => {
             isClosable: true,
             status: "success",
           });
-          setIsAuthenticated(true);
+          localStorage.setItem("isAuthenticated", true.toString());
           router.push("/dashboard/overview");
         }
 
