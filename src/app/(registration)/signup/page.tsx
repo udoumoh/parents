@@ -296,7 +296,7 @@ const handleImageUpload = (
                 isClosable: true,
                 status: "success",
               });
-              router.push("/otp-verification")
+              router.push("/verifyotp")
             }
     } catch(err: any){
       toast({
