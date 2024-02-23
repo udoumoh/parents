@@ -25,8 +25,6 @@ const Page: FC<PageProps> = ({}) => {
   const router = useRouter()
   const toast = useToast()
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
-  
-  const [isVerified, setIsVerified] = useState(true);
   const [verifyotp] = useMutation(VERIFY_PARENT);
 
   const handleOtpChange = (value: string, index: number) => {
@@ -36,41 +34,53 @@ const Page: FC<PageProps> = ({}) => {
   };
 
   const handleSubmit = async () => {
-    const response = await verifyotp({
-      variables: {
-        otpCode: Number(...otp),
-      },
-    })
-    if (!response.data) {
+    try{
+const response = await verifyotp({
+  variables: {
+    otpCode: Number(...otp),
+  },
+});
+if (!response.data) {
+  toast({
+    title: "Client Error",
+    description: "An error occured while you were creating your account",
+    position: "bottom",
+    variant: "left-accent",
+    isClosable: true,
+    status: "error",
+  });
+} else if (response.data.verifyParentCode.errors) {
+  toast({
+    title: "Server Error",
+    description: response.data.verifyParentCode.errors[0].message,
+    position: "bottom",
+    variant: "left-accent",
+    isClosable: true,
+    status: "error",
+  });
+} else {
+  toast({
+    title: "Email Verified",
+    description: "Your email has been verified, you will be redirected soon.",
+    position: "bottom",
+    variant: "left-accent",
+    isClosable: true,
+    status: "success",
+  });
+  router.push("/link-child");
+}
+    } catch (e: any) {
       toast({
-        title: "Client Error",
-        description: "An error occured while you were creating your account",
-        position: "bottom",
-        variant: "left-accent",
-        isClosable: true,
-        status: "error",
-      });
-    } else if (response.data.verifyParentCode.errors) {
-      toast({
-        title: "Server Error",
-        description: response.data.verifyParentCode.errors[0].message,
-        position: "bottom",
-        variant: "left-accent",
-        isClosable: true,
-        status: "error",
-      });
-    } else {
-      toast({
-        title: "Email Verified",
+        title: "Error",
         description:
-          "Your email has been verified, you will be redirected soon.",
+          e?.message,
         position: "bottom",
         variant: "left-accent",
         isClosable: true,
-        status: "success",
+        status: "error",
       });
-      router.push("/link-child");
     }
+    
   }
   return (
     <>
