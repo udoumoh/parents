@@ -18,7 +18,6 @@ import ResultCard from "@/components/shared/resultCard";
 import { useUserAPI } from "@/hooks/UserContext";
 import {gql, useMutation} from "@apollo/client"
 import { useRouter } from "next/navigation";
-import { useAuth } from "@/hooks/AuthContext";
 
 interface SettingsPageProps {}
 interface LegendBadgeProps {
@@ -53,7 +52,6 @@ const LegendBadge: React.FC<LegendBadgeProps> = ({ role, mt, ...rest }) => {
 };
 
 const SettingsPage: FC<SettingsPageProps> = ({}) => {
-    const {logout} = useAuth()
     const router = useRouter()
     const [logoutParent] = useMutation(LOGOUT_PARENTS)
     const { profileData } = useUserAPI()
@@ -90,7 +88,6 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
     const handleLogout = async () => {
       const response = await logoutParent() 
       if(response.data.logoutParent){
-        logout()
         router.push("/signin")
       }
     }

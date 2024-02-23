@@ -12,7 +12,6 @@ import {
 } from "@chakra-ui/react";
 import { useRouter } from 'next/navigation';
 import { gql, useMutation } from "@apollo/client";
-import { useAuth } from '@/hooks/AuthContext';
 
 interface pageProps {
   
@@ -54,7 +53,6 @@ const Page: FC<pageProps> = ({}) => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [loginParent] = useMutation(LOGIN_PARENT);
-    const { isAuthenticated, login } = useAuth()
 
     const handleEmailChange = (e:any) => {
         setEmail(e.target.value)
@@ -94,8 +92,6 @@ const Page: FC<pageProps> = ({}) => {
             isClosable: true,
             status: "success",
           });
-          
-          login()
         }
 
       } catch (error: any) {

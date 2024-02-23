@@ -3,7 +3,6 @@ import {useState} from 'react'
 import { Mulish } from "next/font/google";
 import "./globals.css";
 import UserApiProvider from "@/hooks/UserContext";
-import { AuthProvider } from '@/hooks/AuthContext';
 import { Providers } from "./providers";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 import TopBarProgress from "react-topbar-progress-indicator";
@@ -45,12 +44,10 @@ export default function RootLayout({
       <body className={mulish.className}>
         <ApolloProvider client={client}>
           <Providers>
-            <AuthProvider>
             <UserApiProvider>
               {progress && <TopBarProgress />}
               {children}
             </UserApiProvider>
-            </AuthProvider>
           </Providers>
         </ApolloProvider>
       </body>

@@ -14,19 +14,13 @@ import { PiChatTeardropTextLight } from "react-icons/pi";
 import { BsArrowRightShort } from "react-icons/bs";
 import EmptyStateCard from "@/components/shared/emptyStateCard";
 import { useUserAPI } from "@/hooks/UserContext";
-import { withAuthorization } from "@/helpers/withAuthorization";
 import { useRouter } from "next/navigation";
-import { useAuth } from "@/hooks/AuthContext";
 
 interface DashboardPageProps {}
 
 const DashboardPage: FC<DashboardPageProps> = ({}) => {
     const router = useRouter();
     const { currentWardProfile } = useUserAPI();
-    const { isAuthenticated } = useAuth();
-    if (!isAuthenticated) {
-      router.push("/signin");
-    }
 
   return (
     <Flex gap={5} flexDir={"column"} mb={"5rem"}>
