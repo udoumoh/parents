@@ -1,5 +1,5 @@
 import { GET_PARENT } from "@/gql/queries/queries";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { useQuery } from "@apollo/client";
 
@@ -9,8 +9,9 @@ export const useIsAuth = () => {
 
   useEffect(()=>{
      const response = parent
-     if (!loading && !response?.parent?.errors) {
-      router.replace("/dashboard/overview");
+     console.log(response)
+     if (!loading && response?.parent?.errors !== null) {
+      router.push("/signin");
     }
   })
 }

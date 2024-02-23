@@ -24,7 +24,10 @@ interface DashboardPageProps {}
 const DashboardPage: FC<DashboardPageProps> = ({}) => {
     const router = useRouter();
     const { currentWardProfile } = useUserAPI();
-    useIsAuth()
+    const { data: parent, loading } = useQuery(GET_PARENT);
+
+    if(loading) return(<p>Loading...</p>)
+    if(!loading && parent.parent.errors !== null) router.push("/signin")
 
   return (
     <Flex gap={5} flexDir={"column"} mb={"5rem"}>
