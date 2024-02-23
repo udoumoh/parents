@@ -22,14 +22,16 @@ import Signin from "@/app/(registration)/signin/page";
 interface DashboardPageProps {}
 
 const DashboardPage: FC<DashboardPageProps> = ({}) => {
+    const router = useRouter();
     const { currentWardProfile } = useUserAPI();
     const { data: parent } = useQuery(GET_PARENT);
 
       if(parent){
         const response = parent
         if((response.parent.errors !== null)){
-          return <Signin />
+          router.push("/signin")
         }
+        // John likes semi
       }
 
   return (
