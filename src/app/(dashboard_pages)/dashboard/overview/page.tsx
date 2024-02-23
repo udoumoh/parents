@@ -17,21 +17,14 @@ import { useUserAPI } from "@/hooks/UserContext";
 import { GET_PARENT } from "@/gql/queries/queries";
 import { useQuery } from "@apollo/client";
 import { useRouter } from "next/navigation";
-import Signin from "@/app/(registration)/signin/page";
+import { useIsAuth } from "@/helpers/useIsAuth";
 
 interface DashboardPageProps {}
 
 const DashboardPage: FC<DashboardPageProps> = ({}) => {
     const router = useRouter();
     const { currentWardProfile } = useUserAPI();
-    const { data: parent } = useQuery(GET_PARENT);
-
-      if(parent){
-        const response = parent
-        if((response.parent.errors !== null)){
-          router.push("/signin")
-        }
-      }
+    useIsAuth()
 
   return (
     <Flex gap={5} flexDir={"column"} mb={"5rem"}>
