@@ -54,6 +54,10 @@ const Signin: FC<pageProps> = ({}) => {
     const [password, setPassword] = useState("")
     const [loginParent] = useMutation(LOGIN_PARENT);
     const [loading, setLoading] = useState(false)
+    // const { data: parent, loading } = useQuery(GET_PARENT);
+
+    // if (loading) return <p>Loading...</p>;
+    // if (!loading && parent.parent.errors !== null) router.push("/signin");
 
     const handleEmailChange = (e:any) => {
         setEmail(e.target.value)

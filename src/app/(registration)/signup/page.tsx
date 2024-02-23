@@ -64,7 +64,7 @@ const Page: FC<pageProps> = ({}) => {
   const [tabIndex, setTabIndex] = useState(0);
   const { isOpen, onClose, onOpen } = useDisclosure();
   const [profileUrl, setProfileUrl] = useState("");
-  const [file, setFile] = useState<string>("");
+  const [loading, setLoading] = useState(false);
   const [folder, setFolder] = useState<string>("");
   const [signup] = useMutation(REGISTER_PARENT);
   const [consent, setConsent] = useState(false);
@@ -85,6 +85,77 @@ const handleImageUpload = (
   const handleProfileUrlChange = (url: any) => {
     setProfileUrl(url);
   };
+
+  const handleFormSubmit = async (values: any) => {
+    setLoading(true)
+    try{
+      const response = await signup({
+              variables: {
+                options: {
+                  firstName: values.firstName,
+                  lastName: values.lastName,
+                  middleName: values.middleName,
+                  email: values.email,
+                  referralCode: "",
+                  phoneNumber: values.phoneNumber.toString(),
+                  password: values.password,
+                  parentRole: values.parentRole,
+                  profileImgUrl: profileUrl,
+                  agreedTo: consent,
+                },
+                folder: folder,
+              },
+            });
+            console.log(response);
+
+            if (!response?.data) {
+              toast({
+                title: "Client Error",
+                description:
+                  "An error occured while you were creating your account",
+                position: "bottom",
+                variant: "left-accent",
+                isClosable: true,
+                status: "error",
+              });
+            }
+            if (response.data.registerParent.errors) {
+              toast({
+                title: "Server Error",
+                description: response.data.registerParent.errors[0].message,
+                position: "bottom",
+                variant: "left-accent",
+                isClosable: true,
+                status: "error",
+              });
+            } else {
+              toast({
+                title: "Account created",
+                description:
+                  "Account created! Check your email for an OTP to verify your account.",
+                duration: 5000,
+                position: "bottom",
+                variant: "left-accent",
+                isClosable: true,
+                status: "success",
+              });
+              router.push("/otp-verification")
+            }
+    } catch(err: any){
+      toast({
+        title: "Error",
+        description:
+          err?.message,
+        duration: 5000,
+        position: "bottom",
+        variant: "left-accent",
+        isClosable: true,
+        status: "error",
+      });
+    } finally {
+      setLoading(false);
+    }
+  }
 
   const schema = Yup.object().shape({
     firstName: Yup.string().required("First name is required"),
@@ -126,61 +197,9 @@ const handleImageUpload = (
             password: "",
             parentRole: "",
           }}
-          onSubmit={async (values, actions) => {
-            const response = await signup({
-              variables: {
-                options: {
-                  firstName: values.firstName,
-                  lastName: values.lastName,
-                  middleName: values.middleName,
-                  email: values.email,
-                  referralCode: "",
-                  phoneNumber: values.phoneNumber.toString(),
-                  password: values.password,
-                  parentRole: values.parentRole,
-                  profileImgUrl: profileUrl,
-                  agreedTo: consent,
-                },
-                folder: folder,
-              },
-            });
-            console.log(response);
-
-            if (!response.data) {
-              toast({
-                title: "Client Error",
-                description:
-                  "An error occured while you were creating your account",
-                position: "bottom",
-                variant: "left-accent",
-                isClosable: true,
-                status: "error",
-              });
-              actions.setSubmitting(false);
-            } else if (response.data.registerParent.errors) {
-              toast({
-                title: "Server Error",
-                description: response.data.registerParent.errors[0].message,
-                position: "bottom",
-                variant: "left-accent",
-                isClosable: true,
-                status: "error",
-              });
-            } else {
-              toast({
-                title: "Account created",
-                description:
-                  "Account created! Check your email for an OTP to verify your account.",
-                duration: 5000,
-                position: "bottom",
-                variant: "left-accent",
-                isClosable: true,
-                status: "success",
-              });
-              router.push("/otp-verification");
-              actions.setSubmitting(false);
+          onSubmit={async (values) => {
+              handleFormSubmit(values)
             }}
-            }
           validationSchema={schema}
         >
           {(props) => {
@@ -536,7 +555,7 @@ const handleImageUpload = (
                             fontWeight={"400"}
                             w={"17rem"}
                             _hover={{ backgroundColor: "#099C9B" }}
-                            isLoading={props.isSubmitting}
+                            isLoading={loading}
                           >
                             Submit
                           </Button>
