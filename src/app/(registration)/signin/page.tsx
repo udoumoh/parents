@@ -94,6 +94,7 @@ const Signin: FC<pageProps> = ({}) => {
             isClosable: true,
             status: "success",
           });
+          router.push("/dashboard/overview");
         }
 
       } catch (error: any) {

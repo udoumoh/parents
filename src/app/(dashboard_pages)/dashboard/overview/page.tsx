@@ -31,7 +31,6 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
         if((response.parent.errors !== null)){
           router.push("/signin")
         }
-        // John likes semi
       }
 
   return (
