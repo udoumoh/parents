@@ -21,7 +21,12 @@ import { useAuth } from "@/hooks/AuthContext";
 interface DashboardPageProps {}
 
 const DashboardPage: FC<DashboardPageProps> = ({}) => {
+    const router = useRouter();
     const { currentWardProfile } = useUserAPI();
+    const { isAuthenticated } = useAuth();
+    if (!isAuthenticated) {
+      router.push("/signin");
+    }
 
   return (
     <Flex gap={5} flexDir={"column"} mb={"5rem"}>
