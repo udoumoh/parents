@@ -29,7 +29,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     }
     router.push("/dashboard/overview")
   }
-
+  console.log(isAuthenticated)
   const logout = () => {
     if (loading) return <p>Loading...</p>;
     const response = parent;

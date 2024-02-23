@@ -29,7 +29,7 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
       if(!isAuthenticated){
         router.push('/signin')
       }
-    })
+    }, [isAuthenticated, router])
 
   return (
     <Flex gap={5} flexDir={"column"} mb={"5rem"}>
