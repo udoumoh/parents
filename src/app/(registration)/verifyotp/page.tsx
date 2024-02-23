@@ -22,8 +22,8 @@ mutation VerifyParentCode($otpCode: Float!) {
 }`);
 
 const Page: FC<PageProps> = ({}) => {
-  const router = useRouter()
-  const toast = useToast()
+  const router = useRouter();
+  const toast = useToast();
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
   const [verifyotp] = useMutation(VERIFY_PARENT);
 
@@ -34,69 +34,68 @@ const Page: FC<PageProps> = ({}) => {
   };
 
   const handleSubmit = async () => {
-    try{
-const response = await verifyotp({
-  variables: {
-    otpCode: Number(...otp),
-  },
-});
-if (!response.data) {
-  toast({
-    title: "Client Error",
-    description: "An error occured while you were creating your account",
-    position: "bottom",
-    variant: "left-accent",
-    isClosable: true,
-    status: "error",
-  });
-} else if (response.data.verifyParentCode.errors) {
-  toast({
-    title: "Server Error",
-    description: response.data.verifyParentCode.errors[0].message,
-    position: "bottom",
-    variant: "left-accent",
-    isClosable: true,
-    status: "error",
-  });
-} else {
-  toast({
-    title: "Email Verified",
-    description: "Your email has been verified, you will be redirected soon.",
-    position: "bottom",
-    variant: "left-accent",
-    isClosable: true,
-    status: "success",
-  });
-  router.push("/link-child");
-}
+    try {
+      const response = await verifyotp({
+        variables: {
+          otpCode: Number(...otp),
+        },
+      });
+      console.log(response.data);
+      if (!response.data) {
+        toast({
+          title: "Client Error",
+          description: "An error occured while you were creating your account",
+          position: "bottom",
+          variant: "left-accent",
+          isClosable: true,
+          status: "error",
+        });
+      } else if (response.data.verifyParentCode.errors) {
+        console.log(response);
+        toast({
+          title: "Server Error",
+          description: response.data.verifyParentCode.errors[0].message,
+          position: "bottom",
+          variant: "left-accent",
+          isClosable: true,
+          status: "error",
+        });
+      } else {
+        toast({
+          title: "Email Verified",
+          description:
+            "Your email has been verified, you will be redirected soon.",
+          position: "bottom",
+          variant: "left-accent",
+          isClosable: true,
+          status: "success",
+        });
+        router.push("/link-child");
+      }
     } catch (e: any) {
+      console.log(e);
       toast({
         title: "Error",
-        description:
-          e?.message,
+        description: e?.message,
         position: "bottom",
         variant: "left-accent",
         isClosable: true,
         status: "error",
       });
     }
-    
-  }
+  };
   return (
     <>
       <Flex justifyContent={"center"} minH={"100vh"} alignItems={"center"}>
         <Box
-          px={'1rem'}
+          px={"1rem"}
           py={"1.5rem"}
           rounded={"lg"}
           w={{ base: "25rem", lg: "30rem" }}
           border={"1px solid #D5D5D5"}
         >
           <Flex justifyContent={"center"}>
-            <Image
-              src={"/images/greylightBordered.svg"}
-              alt="'logo"
-            />
+            <Image src={"/images/greylightBordered.svg"} alt="'logo" />
           </Flex>
           <Box my={"1.5rem"} textAlign={"center"}>
             <Text

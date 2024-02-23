@@ -445,12 +445,10 @@ const handleImageUpload = (
 
                         <Field name="middleName">
                           {({ field, form }: any) => (
-                            <FormControl
-                              mb="1.5rem"
-                            >
+                            <FormControl mb="1.5rem">
                               <Box w={"full"}>
                                 <FormLabel color={"#999999"}>
-                                  Middle Name
+                                  Middle Name(Optional)
                                 </FormLabel>
                                 <Input
                                   border={"1px solid #D5D5D5"}
@@ -567,7 +565,6 @@ const handleImageUpload = (
                             backgroundColor={"#007C7B"}
                             isLoading={props.isSubmitting}
                             //   isDisabled={!props.values.firstName ? true : false}
-                           
                           >
                             Continue
                           </Button>
@@ -694,6 +691,7 @@ const handleImageUpload = (
                                       Mother
                                     </option>
                                     <option value={"Father"}>Father</option>
+                                    <option value={"Father"}>Guardian</option>
                                   </Select>
                                 </Box>
                               </FormControl>

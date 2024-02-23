@@ -14,20 +14,12 @@ import { PiChatTeardropTextLight } from "react-icons/pi";
 import { BsArrowRightShort } from "react-icons/bs";
 import EmptyStateCard from "@/components/shared/emptyStateCard";
 import { useUserAPI } from "@/hooks/UserContext";
-import { GET_PARENT } from "@/gql/queries/queries";
-import { useQuery } from "@apollo/client";
 import { useRouter } from "next/navigation";
-import { useIsAuth } from "@/helpers/useIsAuth";
 
 interface DashboardPageProps {}
 
 const DashboardPage: FC<DashboardPageProps> = ({}) => {
-    const router = useRouter();
     const { currentWardProfile } = useUserAPI();
-    // const { data: parent, loading } = useQuery(GET_PARENT);
-
-    // if(loading) return(<p>Loading...</p>)
-    // if(!loading && parent.parent.errors !== null) router.push("/signin")
 
   return (
     <Flex gap={5} flexDir={"column"} mb={"5rem"}>
