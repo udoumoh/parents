@@ -1,16 +1,13 @@
-import {
-  createContext,
-  useContext,
-  useState,
-  useEffect,
-  ReactNode,
-} from "react";
+import { createContext, useContext, useState, useEffect, ReactNode } from "react";
 import { useQuery } from "@apollo/client";
 import { GET_PARENT } from "@/gql/queries/queries";
+import { useRouter } from "next/navigation";
 
 interface AuthContextProps {
   isAuthenticated: boolean;
-  setIsAuthenticated: (value: boolean) => void;
+  setIsAuthenticated: React.Dispatch<React.SetStateAction<boolean>>;
+  login: () => void;
+  logout: () => void;
 }
 
 interface AuthProviderProps {
@@ -20,40 +17,30 @@ interface AuthProviderProps {
 const AuthContext = createContext<AuthContextProps | undefined>(undefined);
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-  const { data: parent, loading } = useQuery(GET_PARENT);
-  const [isAuthenticated, setIsAuthenticatedState] = useState(false);
+    const router = useRouter()
+  const { data: parent, loading } = useQuery(GET_PARENT);  
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  const setIsAuthenticated = (value: boolean) => {
-    setIsAuthenticatedState(value);
-    localStorage.setItem("isAuthenticated", value.toString());
-  };
-
-  useEffect(() => {
-    try {
-      if (parent) {
-        const response = parent;
-        if (response.parent.errors === null) {
-          setIsAuthenticated(true);
-        }
-      }
-    } catch (err) {
-      console.error(err);
+  const login = () => {
+    if(loading) return (<p>Loading...</p>)
+    const response = parent
+    if (response && response.parent.errors === null){
+        setIsAuthenticated(true)
     }
-  }, [parent]);
+    router.push("/dashboard/overview")
+  }
 
-  useEffect(() => {
-    const storedIsAuthenticated = localStorage.getItem("isAuthenticated");
-    if (storedIsAuthenticated) {
-      setIsAuthenticatedState(storedIsAuthenticated === "true");
+  const logout = () => {
+    if (loading) return <p>Loading...</p>;
+    const response = parent;
+    if (response && response.parent.errors !== null) {
+      setIsAuthenticated(false);
     }
-  }, []);
-
-  if (loading) {
-    return <p>Loading...</p>;
+    router.push("/signin")
   }
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated }}>
+    <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

@@ -53,7 +53,8 @@ const Page: FC<pageProps> = ({}) => {
     const toast = useToast()
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
-    const [login] = useMutation(LOGIN_PARENT);
+    const [loginParent] = useMutation(LOGIN_PARENT);
+    const { isAuthenticated, login } = useAuth()
 
     const handleEmailChange = (e:any) => {
         setEmail(e.target.value)
@@ -65,7 +66,7 @@ const Page: FC<pageProps> = ({}) => {
 
     const handleLogin = async () => {
       try {
-        const response = await login({
+        const response = await loginParent({
           variables: {
             password: password,
             email: email,
@@ -93,8 +94,8 @@ const Page: FC<pageProps> = ({}) => {
             isClosable: true,
             status: "success",
           });
-          localStorage.setItem("isAuthenticated", true.toString());
-          router.push("/dashboard/overview");
+          
+          login()
         }
 
       } catch (error: any) {

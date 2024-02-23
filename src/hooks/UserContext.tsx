@@ -233,6 +233,7 @@ export const UserApiProvider: FC<UserApiProviderProps> = ({ children }) => {
       const fetchData = async () => {
         try {
           const response = (await parent) || [];
+          console.log(response)
           const newData = {
             firstName: response.parent.parent.firstName,
             lastName: response.parent.parent.lastName,
