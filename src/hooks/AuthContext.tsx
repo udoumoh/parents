@@ -23,23 +23,30 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     if (loading) return <p>Loading...</p>;
     const response = parent;
     if (response && response.parent.errors === null) {
-      // Set isAuthenticated to true in localStorage
-      localStorage.setItem("isAuthenticated", "true");
+      // Set isAuthenticated to true in localStorage if on the client side
+      if (typeof window !== "undefined") {
+        localStorage.setItem("isAuthenticated", "true");
+      }
       router.push("/dashboard/overview");
     }
   };
 
   const logout = () => {
     if (loading) return <p>Loading...</p>;
-    // Clear isAuthenticated from localStorage
-    localStorage.removeItem("isAuthenticated");
+    // Clear isAuthenticated from localStorage if on the client side
+    if (typeof window !== "undefined") {
+      localStorage.removeItem("isAuthenticated");
+    }
     router.push("/signin");
   };
 
   return (
     <AuthContext.Provider
       value={{
-        isAuthenticated: Boolean(localStorage.getItem("isAuthenticated")),
+        isAuthenticated:
+          typeof window !== "undefined"
+            ? Boolean(localStorage.getItem("isAuthenticated"))
+            : false,
         login,
         logout,
       }}
