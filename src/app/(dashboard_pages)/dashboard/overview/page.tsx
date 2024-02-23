@@ -16,13 +16,14 @@ import EmptyStateCard from "@/components/shared/emptyStateCard";
 import { useUserAPI } from "@/hooks/UserContext";
 import { withAuthorization } from "@/helpers/withAuthorization";
 import { useRouter } from "next/navigation";
+import { useAuth } from "@/hooks/AuthContext";
 
 interface DashboardPageProps {}
 
 const DashboardPage: FC<DashboardPageProps> = ({}) => {
     const router = useRouter()
-    const isAuthenticated = localStorage.getItem('isAuthenticated')
     const { currentWardProfile } = useUserAPI();
+    const {isAuthenticated} = useAuth()
 
     useEffect(() => {
       if(!isAuthenticated){
