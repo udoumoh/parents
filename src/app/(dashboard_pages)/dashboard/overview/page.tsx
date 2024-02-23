@@ -25,11 +25,9 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
     const { currentWardProfile } = useUserAPI();
     const {isAuthenticated} = useAuth()
 
-    useEffect(() => {
       if(!isAuthenticated){
         router.push('/signin')
       }
-    }, [isAuthenticated, router])
 
   return (
     <Flex gap={5} flexDir={"column"} mb={"5rem"}>
