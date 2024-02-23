@@ -1,10 +1,11 @@
 'use client'
-import { FC } from 'react'
 import {
   Box,
   Text,
   Avatar,
+  Icon,
 } from "@chakra-ui/react";
+
 interface SearchResultItemProps {
   student: {
     name: string;
@@ -15,7 +16,7 @@ interface SearchResultItemProps {
   };
 }
 
-const SearchResultItem = ({ student }: SearchResultItemProps) => {
+const SearchResultItem = ({ student}: SearchResultItemProps) => {
   return (
     <Box
       display={"flex"}

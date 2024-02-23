@@ -12,7 +12,9 @@ import {
   Icon,
   useDisclosure,
   Avatar,
+  Flex,
 } from "@chakra-ui/react";
+import { IoMdClose } from "react-icons/io";
 import SearchResultItem from "@/components/shared/searchResultItem";
 import LinkRequestModal from "@/components/shared/linkRequestModal";
 import { IoIosSearch } from "react-icons/io";
@@ -20,6 +22,15 @@ import { AiOutlinePlus } from "react-icons/ai";
 import { gql, useQuery } from "@apollo/client";
 
 interface PageProps {}
+
+interface Student {
+  name: string;
+  age: number;
+  className: string;
+  gender: string;
+  profileImageUrl: string;
+  id: string;
+}
 
 const GET_STUDENTS = gql(`
 query GetStudent {
@@ -180,20 +191,20 @@ const {
         "",
       id:"",
     }])
-  const [selectedStudent, setSelectedStudent] = useState({
-    name: "",
-    profileImageUrl: "",
-    age: 0 ,
-    gender: "",
-    className: "",
-    id:"",
-  });
+  const [selectedStudent, setSelectedStudent] = useState<Student[]>([]);
   const {data:search} = useQuery(GET_STUDENTS)
   const handleSearchChange = (e: any) => {
     setSearchInput(e.target.value);
   };
+
   const handleSelectedStudent = (student: any) => {
-    setSelectedStudent(student);
+    const newData = [...selectedStudent, student]
+    setSelectedStudent(newData);
+  }
+
+  const handleDelete = (item: any) => {
+    const newData = selectedStudent.filter((student, index) => index !== item)
+    setSelectedStudent(newData)
   }
 
   useEffect( () => {
@@ -296,47 +307,49 @@ const {
               ) : (
                 filteredSearchData?.map((item, index) => (
                   <Box key={index} onClick={() => handleSelectedStudent(item)}>
-                    <SearchResultItem student={item} key={index} />
+                    <SearchResultItem student={item} key={index}/>
                   </Box>
                 ))
               )}
             </Box>
           )}
 
-            {
-              selectedStudent.age == 0 ? (
-                <></>
-              ) : (
-
-          <Box
-            mt={"2rem"}
-            display={"flex"}
-            alignItems={"center"}
-            gap={3}
-            w={"full"}
-            rounded={"md"}
-            py={"0.5rem"}
-            px={"1rem"}
-            mb={"0.4rem"}
-            backgroundColor="#3F999830"
-          >
-            <Avatar
-              size={"md"}
-              src={selectedStudent.profileImageUrl}
-              pointerEvents={"none"}
-            />
-            <Box lineHeight={"20px"}>
-              <Text fontWeight={"700"} fontSize={"lg"}>
-                {`${selectedStudent.name}`}
-              </Text>
-              <Text fontSize={"sm"} color={"#AAAAAA"} fontWeight={"600"}>
-                {`${selectedStudent.age} years old`} • {selectedStudent.gender} •{" "}
-                {selectedStudent.className}
-              </Text>
-            </Box>
-          </Box>
-              )
-            }
+          {selectedStudent.map((item, index) => {
+            return (
+              <Box
+                key={index}
+                mt={"2rem"}
+                display={"flex"}
+                justifyContent={"space-between"}
+                alignItems={"center"}
+                w={"full"}
+                rounded={"md"}
+                py={"0.5rem"}
+                px={"1rem"}
+                mb={"0.4rem"}
+                backgroundColor="#3F999830"
+              >
+                <Flex gap={3} alignItems={"center"}>
+                  <Avatar
+                    size={"md"}
+                    src={item.profileImageUrl}
+                    pointerEvents={"none"}
+                  />
+                  <Box lineHeight={"20px"}>
+                    <Text fontWeight={"700"} fontSize={"lg"}>
+                      {`${item.name}`}
+                    </Text>
+                    <Text fontSize={"sm"} color={"#AAAAAA"} fontWeight={"600"}>
+                      {`${item.age} years old`} •{" "}
+                      {item.gender} • {item.className}
+                    </Text>
+                  </Box>
+                </Flex>
+                <Button backgroundColor={'transparent'} onClick={()=>handleDelete(index)}>
+                  <Icon as={IoMdClose} color={"#000"} boxSize={5} />
+                </Button>
+              </Box>
+          )})}
 
           <Button
             mt="6rem"
@@ -365,7 +378,7 @@ const {
           </Button>
 
           <LinkRequestModal
-            student={selectedStudent}
+            student={selectedStudent[0]}
             isOpen={isModalOpen}
             onOpen={onModalOpen}
             onClose={onModalClose}

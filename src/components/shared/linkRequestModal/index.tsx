@@ -320,15 +320,15 @@ const LinkRequestModal: FC<LinkRequestModalProps> = ({
           >
             <Avatar
               size={"xl"}
-              src={student.profileImageUrl}
+              src={student?.profileImageUrl}
               mb={"1rem"}
             />
             <Text fontSize={"2xl"} fontWeight={"700"}>
-              {student.name}
+              {student?.name}
             </Text>
             <Text fontSize={"sm"} color={"#AAAAAA"} fontWeight={"600"}>
-              {`${student.age} years old`} • {student.gender} •{" "}
-                {student.className}
+              {`${student?.age} years old`} • {student?.gender} •{" "}
+                {student?.className}
             </Text>
           </Box>
 
