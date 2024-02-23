@@ -47,12 +47,13 @@ mutation LoginParent($password: String!, $email: String!) {
   }
 }`);
 
-const Page: FC<pageProps> = ({}) => {
+const Signin: FC<pageProps> = ({}) => {
     const router = useRouter()
     const toast = useToast()
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [loginParent] = useMutation(LOGIN_PARENT);
+    const [loading, setLoading] = useState(false)
 
     const handleEmailChange = (e:any) => {
         setEmail(e.target.value)
@@ -63,6 +64,7 @@ const Page: FC<pageProps> = ({}) => {
     };
 
     const handleLogin = async () => {
+      setLoading(true);
       try {
         const response = await loginParent({
           variables: {
@@ -105,6 +107,8 @@ const Page: FC<pageProps> = ({}) => {
         });
 
         console.error("Error during login:", error);
+      } finally{
+        setLoading(false);
       }
     };
 
@@ -184,6 +188,7 @@ const Page: FC<pageProps> = ({}) => {
           color={"#fff"}
           fontSize={"2xl"}
           _hover={{ backgroundColor: "#0F5151" }}
+          isLoading={loading}
         >
           Login
         </Button>
@@ -192,4 +197,4 @@ const Page: FC<pageProps> = ({}) => {
   );
 }
 
-export default Page
+export default Signin
