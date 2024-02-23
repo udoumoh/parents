@@ -10,7 +10,7 @@ export const useIsAuth = () => {
   useEffect(()=>{
      const response = parent
      if (!loading && !response?.parent?.errors) {
-      router.replace("/login?next=" + router.pathname);
+      router.replace("/dashboard/overview");
     }
   })
 }
