@@ -18,6 +18,7 @@ import ResultCard from "@/components/shared/resultCard";
 import { useUserAPI } from "@/hooks/UserContext";
 import {gql, useMutation} from "@apollo/client"
 import { useRouter } from "next/navigation";
+import { useAuth } from "@/hooks/AuthContext";
 
 interface SettingsPageProps {}
 interface LegendBadgeProps {
@@ -52,8 +53,9 @@ const LegendBadge: React.FC<LegendBadgeProps> = ({ role, mt, ...rest }) => {
 };
 
 const SettingsPage: FC<SettingsPageProps> = ({}) => {
+    const {logout} = useAuth()
     const router = useRouter()
-    const [logout] = useMutation(LOGOUT_PARENTS)
+    const [logoutParent] = useMutation(LOGOUT_PARENTS)
     const { profileData } = useUserAPI()
     const [wardData, setWarddata] = useState([
       {
@@ -86,12 +88,11 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
     ]);
 
     const handleLogout = async () => {
-      const response = await logout() 
+      const response = await logoutParent() 
       if(response.data.logoutParent){
-        localStorage.setItem("isAuthenticated", false.toString());
+        logout()
         router.push("/signin")
       }
-      console.log(response)
     }
   return (
     <Box
