@@ -232,7 +232,7 @@ export const UserApiProvider: FC<UserApiProviderProps> = ({ children }) => {
   }
 
   const capitalizeFirstLetter = (name: string) => {
-    if (name.length === 0) {
+    if (name?.length === 0) {
       return name; // or throw an error, depending on your requirements
     }
 
@@ -248,7 +248,7 @@ export const UserApiProvider: FC<UserApiProviderProps> = ({ children }) => {
           console.log(response)
           const newData = {
             firstName: capitalizeFirstLetter(response?.parent?.parent?.firstName),
-            lastName: response?.parent?.parent?.lastName,
+            lastName: capitalizeFirstLetter(response?.parent?.parent?.lastName),
             // middleName: response?.parent?.middleName,
             profileImage: response?.parent?.parent?.profileImgUrl,
             email: response?.parent?.parent?.email,
