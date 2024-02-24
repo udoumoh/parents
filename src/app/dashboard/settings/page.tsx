@@ -18,6 +18,7 @@ import ResultCard from "@/components/shared/resultCard";
 import { useUserAPI } from "@/hooks/UserContext";
 import {gql, useMutation} from "@apollo/client"
 import { useRouter } from "next/navigation";
+import { formatDate } from "@/helpers/formatDate";
 
 interface SettingsPageProps {}
 interface LegendBadgeProps {
@@ -54,7 +55,7 @@ const LegendBadge: React.FC<LegendBadgeProps> = ({ role, mt, ...rest }) => {
 const SettingsPage: FC<SettingsPageProps> = ({}) => {
     const router = useRouter()
     const [logoutParent] = useMutation(LOGOUT_PARENTS)
-    const { profileData } = useUserAPI()
+    const { profileData, parentData } = useUserAPI()
     const [wardData, setWarddata] = useState([
       {
         name: "Chibuzor Ali-Williams",
@@ -152,7 +153,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
               <Flex alignItems={"center"} gap={2} my="0.5rem">
                 <Icon as={AiFillClockCircle} color={"#747474"} />
                 <Text color={"#747474"} fontSize={{ base: "2xs", lg: "sm" }}>
-                  Created on 25th October 2022
+                  Created on {formatDate(parentData?.createdAt)}
                 </Text>
               </Flex>
             </Box>

@@ -40,6 +40,27 @@ export interface UserChildren {
   }[];
 }
 
+interface ParentDataProps {
+    agreedTo: boolean;
+    createdAt: string;
+    email: string;
+    firstName: string;
+    folder: string;
+    id: number;
+    isDisabled: boolean;
+    isPaid: boolean;
+    isReferred: boolean;
+    isVerified: boolean;
+    lastName: string;
+    middleName: string;
+    parentRole: string;
+    phoneNumber: string;
+    profileImgUrl: string;
+    role: string;
+    status: string;
+    userId: string;
+}
+
 interface UserContextProps {
   profileData: {
     userBio: UserBio;
@@ -54,6 +75,7 @@ interface UserContextProps {
   >;
   setCurrentId: React.Dispatch<React.SetStateAction<number>>;
   currentWardProfile?: UserChildren;
+  parentData: ParentDataProps | undefined;
 }
 
 const UserContext = createContext<UserContextProps | undefined>(undefined);
@@ -218,6 +240,9 @@ export const UserApiProvider: FC<UserApiProviderProps> = ({ children }) => {
     ],
   });
 
+  const [parentData, setParentData] = useState<ParentDataProps | undefined>(
+    undefined
+  );
   // const defaultId = 0;
 
   const [currentId, setCurrentId] = useState(0);
@@ -246,6 +271,7 @@ export const UserApiProvider: FC<UserApiProviderProps> = ({ children }) => {
         try {
           const response = (await parent) || [];
           console.log(response)
+          setParentData(response?.parent?.parent)
           const newData = {
             firstName: capitalizeFirstLetter(response?.parent?.parent?.firstName),
             lastName: capitalizeFirstLetter(response?.parent?.parent?.lastName),
@@ -280,6 +306,7 @@ export const UserApiProvider: FC<UserApiProviderProps> = ({ children }) => {
         currentId,
         setCurrentId,
         currentWardProfile,
+        parentData,
       }}
     >
       {children}
