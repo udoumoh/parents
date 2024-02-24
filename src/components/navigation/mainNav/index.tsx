@@ -26,7 +26,7 @@ import {
   Divider,
 } from "@chakra-ui/react";
 import { FiMenu } from "react-icons/fi";
-import { IoIosSearch, IoMdSettings } from "react-icons/io";
+import { IoMdSettings } from "react-icons/io";
 import { PiChatsTeardrop, PiChatsTeardropFill } from "react-icons/pi";
 import { GoHome, GoHomeFill } from "react-icons/go";
 import {
@@ -317,6 +317,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
 };
 
 const MainNav: FC<MainNav> = ({ children }) => {
+  const router = useRouter()
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { profileData, setProfileData } = useUserAPI();
   const pathName = usePathname();
@@ -324,7 +325,7 @@ const MainNav: FC<MainNav> = ({ children }) => {
   const [isDropOpen, setDropOpen] = useState(false);
 
   useEffect(() => {
-    if (pathName.includes("/home/overview")) {
+    if (pathName.includes("dashboard/home/overview")) {
       setActive("Dashboard");
     } else if (pathName.includes("/home/results")) {
       setActive("Results");
@@ -413,7 +414,7 @@ const MainNav: FC<MainNav> = ({ children }) => {
                     my={"1rem"}
                     color={"#9FC2C2"}
                     ml={"1.7rem"}
-                    href={`${item.url}`}
+                    onClick={() => router.push(item.url)}
                     transition={"ease-in-out 1s"}
                   >
                     <Icon
@@ -440,7 +441,7 @@ const MainNav: FC<MainNav> = ({ children }) => {
                     gap={4}
                     my={"1rem"}
                     ml={"1rem"}
-                    href={`${item.url}`}
+                    onClick={() => router.push(item.url)}
                   >
                     <Icon as={item.iconLight} color={"#fff"} boxSize={6} />
                     <Text color={"#fff"} fontSize={"lg"}>
