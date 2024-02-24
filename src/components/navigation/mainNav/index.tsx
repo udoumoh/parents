@@ -86,7 +86,7 @@ const LinkItems: Array<LinkItemProps> = [
     name: "Dashboard",
     iconLight: GoHome,
     iconFill: GoHomeFill,
-    url: "/dashboard/home",
+    url: "/dashboard",
   },
   {
     name: "Inbox",
@@ -179,9 +179,7 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
                 }
                 link={item.url}
                 backgroundColor={
-                  pathName.includes(item.url)
-                    ? "#144646"
-                    : pathName === "/dashboard"
+                  pathName.includes(item.url) && pathName === "/dashboard"
                     ? "#144646"
                     : "transparent"
                 }
