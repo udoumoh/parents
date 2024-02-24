@@ -5,6 +5,7 @@ import { gql, useQuery } from "@apollo/client";
 interface UserBio {
   firstName: string;
   lastName: string;
+  middleName: string;
   profileImage: string;
   email: string;
   parentRole: string;
@@ -98,6 +99,7 @@ export const UserApiProvider: FC<UserApiProviderProps> = ({ children }) => {
     userBio: {
       firstName: "",
       lastName: "",
+      middleName:"",
       profileImage:
         "",
       email: "",
