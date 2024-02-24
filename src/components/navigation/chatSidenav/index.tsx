@@ -14,13 +14,14 @@ import {
   PopoverContent,
   PopoverTrigger,
   Icon,
-  Image,
   Link,
+  useDisclosure,
 } from "@chakra-ui/react";
 import { BsThreeDots, BsDot } from "react-icons/bs";
 import { AiOutlinePlus } from "react-icons/ai";
 import { useUserAPI } from "@/hooks/UserContext";
 import { UserChildren } from "@/hooks/UserContext";
+import SearchStudentModal from "@/components/shared/searchStudentModal";
 
 interface ChatSidenavProps {
   children: React.ReactNode;
@@ -109,6 +110,11 @@ const ChatContactItem: FC<ChatContactItemProps> = ({ chat }) => {
 };
 
 const ChatSidenav: FC<ChatSidenavProps> = ({ children }) => {
+  const {
+    isOpen: isModalOpen,
+    onOpen: onModalOpen,
+    onClose: onModalClose,
+  } = useDisclosure();
   const { profileData, currentId, setCurrentId, currentWardProfile } =
     useUserAPI();
   const [wardProfile, setWardprofile] = useState(profileData.userChildren);
@@ -225,6 +231,7 @@ const ChatSidenav: FC<ChatSidenavProps> = ({ children }) => {
                       colorScheme="teal"
                       w={"90%"}
                       _hover={{ backgroundColor: "#044141" }}
+                      onClick={onModalOpen}
                     >
                       <AiOutlinePlus />
                       <Text fontWeight={"light"} pl="0.5rem">
@@ -235,6 +242,11 @@ const ChatSidenav: FC<ChatSidenavProps> = ({ children }) => {
                 </PopoverBody>
               </PopoverContent>
             </Popover>
+                    <SearchStudentModal
+                      isSearchOpen={isModalOpen}
+                      onSearchOpen={onModalOpen}
+                      onSearchClose={onModalClose}
+                    />
           </Box>
 
           <Text

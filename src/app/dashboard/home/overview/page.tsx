@@ -10,7 +10,7 @@ import {
   Avatar,
   Card,
 } from "@chakra-ui/react";
-import { PiChatTeardropTextLight } from "react-icons/pi";
+import Attendance from "@/components/attendance";
 import { BsArrowRightShort } from "react-icons/bs";
 import EmptyStateCard from "@/components/shared/emptyStateCard";
 import { useUserAPI } from "@/hooks/UserContext";
@@ -21,7 +21,7 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
     const { currentWardProfile } = useUserAPI();
 
   return (
-    <Flex gap={5} flexDir={"column"} mb={{base:"8rem", lg:"5rem"}}>
+    <Flex gap={5} flexDir={"column"} mb={{ base: "8rem", lg: "5rem" }}>
       <Flex
         flexDir={{ base: "column", lg: "row" }}
         justifyContent={"space-between"}
@@ -29,62 +29,15 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
         columnGap={5}
       >
         <Box
-          width={{ base: "full", lg: "20rem" }}
+          width={"full"}
           rounded={"xl"}
-          border={"1px solid #C2C2C2"}
+          border={"1px solid #449c7c"}
           overflow={"hidden"}
-          shadow={"none"}
-        >
-          <Box
-            backgroundImage={"/images/dbimg.png"}
-            h={"4.6rem"}
-            backgroundSize="cover"
-            backgroundRepeat="no-repeat"
-            backgroundPosition="center"
-          />
-          <Image
-            src={currentWardProfile?.schoollogo}
-            alt="logo"
-            w={"5rem"}
-            h={"5rem"}
-            mx={"auto"}
-            mt={"-30px"}
-            border={"5px solid #fff"}
-            rounded={"2xl"}
-            pointerEvents={"none"}
-          />
-          <Box textAlign={"center"} my={"0.5rem"} px={"2rem"}>
-            <Text fontSize={"xl"} fontWeight={"600"}>
-              {currentWardProfile?.school}
-            </Text>
-            <Text fontSize="md" color={"#959595"}>
-              Your ward attends this school
-            </Text>
-            <Button
-              bg={"#005D5D"}
-              color={"#fff"}
-              my={"2rem"}
-              fontWeight={"light"}
-              colorScheme="teal"
-              _hover={{ backgroundColor: "#044141" }}
-            >
-              <PiChatTeardropTextLight size={"1.3rem"} />
-              <Text mx={"0.2rem"}>Contact School</Text>
-            </Button>
-          </Box>
-        </Box>
-
-        <Box
-          width={{ base: "full", lg: "69%" }}
-          rounded={"xl"}
-          border={"1px solid #C2C2C2"}
-          overflow={"hidden"}
+          backgroundColor={"#F4FFFB"}
           p={"1rem"}
           // bgImage={"/images/childcard.png"}
           bgSize={"cover"}
-          shadow={"none"}
           my={{ base: "10px", md: "0" }}
-          flex={1}
         >
           <Box display={"flex"} justifyContent={"space-between"}>
             <Box display={"flex"} alignItems={"center"} gap={3}>
@@ -93,12 +46,9 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
                 src={currentWardProfile?.profileImage}
                 pointerEvents={"none"}
               />
-              <Box lineHeight={"20px"}>
-                <Text fontWeight={"600"} fontSize={"lg"}>
+              <Box lineHeight={"30px"}>
+                <Text fontWeight={"600"} fontSize={"2xl"}>
                   {`${currentWardProfile?.firstName} ${currentWardProfile?.lastName}`}
-                </Text>
-                <Text fontSize={"1rem"} fontWeight={"600"} color={"#AAAAAA"}>
-                  GN24002
                 </Text>
               </Box>
             </Box>
@@ -111,96 +61,46 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
             />
           </Box>
           <Box>
-            <Text fontWeight={"600"} my={"0.5rem"}>
-              Student Cases
-            </Text>
-            <Box textAlign={"center"} display={"flex"} gap={10} mb={"1rem"}>
-              <Grid>
-                <Text fontSize={"lg"} fontWeight={"600"}>
-                  {currentWardProfile?.feesDefault}
-                </Text>
-                <Text color={"#8F8F8F"} fontWeight={"600"} fontSize={"0.7rem"}>
-                  Fees Default
-                </Text>
-              </Grid>
-              <Grid>
-                <Text fontSize={"lg"} fontWeight={"600"}>
-                  {currentWardProfile?.suspension}
-                </Text>
-                <Text color={"#8F8F8F"} fontWeight={"600"} fontSize={"0.7rem"}>
-                  Suspension
-                </Text>
-              </Grid>
-              <Grid>
-                <Text fontSize={"lg"} fontWeight={"600"}>
-                  {currentWardProfile?.expulsion}
-                </Text>
-                <Text color={"#8F8F8F"} fontWeight={"600"} fontSize={"0.7rem"}>
-                  Expulsion
-                </Text>
-              </Grid>
-            </Box>
-
             <Box
               textAlign={"start"}
               display={"flex"}
               gap={{ base: 2, md: 10 }}
               my={"1rem"}
             >
-              <Grid>
-                <Text color={"#8F8F8F"} fontSize={"0.8rem"} fontWeight={"600"}>
+              <Grid gap={1}>
+                <Text color={"#449c7c"} fontSize={"0.8rem"} fontWeight={"600"}>
                   Gender
                 </Text>
-                <Text fontWeight={"600"} fontSize={{ base: "xs", md: "lg" }}>
+                <Text
+                  fontWeight={"600"}
+                  fontSize={{ base: "xs", md: "lg" }}
+                  color={"#606162"}
+                >
                   {currentWardProfile?.gender}
                 </Text>
               </Grid>
-              <Grid>
-                <Text color={"#8F8F8F"} fontSize={"0.8rem"} fontWeight={"600"}>
+              <Grid gap={1}>
+                <Text color={"#449c7c"} fontSize={"0.8rem"} fontWeight={"600"}>
                   Class
                 </Text>
-                <Text fontWeight={"600"} fontSize={{ base: "xs", md: "lg" }}>
+                <Text
+                  fontWeight={"600"}
+                  fontSize={{ base: "xs", md: "lg" }}
+                  color={"#606162"}
+                >
                   {currentWardProfile?.class}
                 </Text>
               </Grid>
-              <Grid>
-                <Text color={"#8F8F8F"} fontSize={"0.8rem"} fontWeight={"600"}>
+              <Grid gap={1}>
+                <Text color={"#449c7c"} fontSize={"0.8rem"} fontWeight={"600"}>
                   Date of Birth
                 </Text>
-                <Text fontWeight={"600"} fontSize={{ base: "xs", md: "lg" }}>
+                <Text
+                  fontWeight={"600"}
+                  fontSize={{ base: "xs", md: "lg" }}
+                  color={"#606162"}
+                >
                   {currentWardProfile?.dateOfBirth}
-                </Text>
-              </Grid>
-            </Box>
-
-            <Box
-              textAlign={"start"}
-              display={"flex"}
-              gap={{ base: 2, md: 10 }}
-              my={"1rem"}
-            >
-              <Grid>
-                <Text color={"#8F8F8F"} fontSize={"0.8rem"} fontWeight={"600"}>
-                  Date Enrolled
-                </Text>
-                <Text fontWeight={"600"} fontSize={{ base: "xs", md: "lg" }}>
-                  {currentWardProfile?.dateEnrolled}
-                </Text>
-              </Grid>
-              <Grid>
-                <Text color={"#8F8F8F"} fontSize={"0.8rem"} fontWeight={"600"}>
-                  Expected Graduation
-                </Text>
-                <Text fontWeight={"600"} fontSize={{ base: "xs", md: "lg" }}>
-                  {currentWardProfile?.expectedGraduation}
-                </Text>
-              </Grid>
-              <Grid>
-                <Text color={"#8F8F8F"} fontSize={"0.8rem"} fontWeight={"600"}>
-                  Date Registered
-                </Text>
-                <Text fontWeight={"600"} fontSize={{ base: "xs", md: "lg" }}>
-                  {currentWardProfile?.dateRegistered}
                 </Text>
               </Grid>
             </Box>
@@ -214,7 +114,7 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
         gap={5}
         columnGap={5}
       >
-        <EmptyStateCard />
+        <Attendance />
 
         <Card
           border={"1px solid #C2C2C2"}

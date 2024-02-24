@@ -229,7 +229,7 @@ const LinkRequestModal: FC<LinkRequestModalProps> = ({
 }) => {
     const toast = useToast()
     const router = useRouter()
-    const purpose = "Link student profile to parent"
+    const purpose = "Link to parent"
     const [message, setMessage] = useState("")
     const [request] = useMutation(REQUEST_CHILD);
 

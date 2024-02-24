@@ -114,11 +114,6 @@ const DrawerNavLinkItems = {
       icon: HiOutlineArrowSmRight,
       url: "/dashboard/home/results",
     },
-    {
-      name: "Greycases",
-      icon: HiOutlineArrowSmRight,
-      url: "/dashboard/home/greycases",
-    },
   ],
   NavLinks: [
     {

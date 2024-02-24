@@ -118,7 +118,6 @@ const Results: FC<ResultsProps> = ({}) => {
       <Text>Result Type</Text>
       <Flex justifyContent={"space-between"} my={"1rem"}>
         <Box>
-          {resultsType}
           <Select
             placeholder="Generated"
             value={resultsType}
@@ -128,9 +127,7 @@ const Results: FC<ResultsProps> = ({}) => {
             fontSize={"sm"}
             color={"#747474"}
           >
-            <option value="option1">Option 1</option>
-            <option value="option2">Option 2</option>
-            <option value="option3">Option 3</option>
+            {/* <option value="option1">Option 1</option> */}
           </Select>
         </Box>
         <Button

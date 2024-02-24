@@ -23,18 +23,12 @@ import {
   PopoverTrigger,
   PopoverContent,
   PopoverBody,
-  Modal,
-  ModalContent,
-  ModalBody,
-  ModalOverlay,
-  ModalHeader,
-  ModalFooter,
 } from "@chakra-ui/react";
 import { HiOutlineHome } from "react-icons/hi";
 import { AiOutlinePlus } from "react-icons/ai";
-import { BsGrid, BsThreeDots } from "react-icons/bs";
-import { AiOutlineFile } from "react-icons/ai";
-import { RiContactsBookLine } from "react-icons/ri";
+import { CiGrid42 } from "react-icons/ci";
+import { BsThreeDots } from "react-icons/bs";
+import { TbFile } from "react-icons/tb";
 import { BiChevronRight } from "react-icons/bi";
 import { IconType } from "react-icons";
 import { useUserAPI } from "@/hooks/UserContext";
@@ -62,9 +56,8 @@ interface SidebarWithHeader {
 }
 
 const LinkItems: Array<LinkItemProps> = [
-  { name: "Dashboard", icon: BsGrid, url: "/dashboard/home/overview" },
-  { name: "Results", icon: AiOutlineFile, url: "/dashboard/home/results" },
-  { name: "Greycases", icon: RiContactsBookLine, url: "/dashboard/home/greycases" },
+  { name: "Overview", icon: CiGrid42, url: "/dashboard/home/overview" },
+  { name: "Academic Results", icon: TbFile, url: "/dashboard/home/results" },
 ];
 
 const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
@@ -270,69 +263,24 @@ const NavItem = ({ icon, children, link, ...rest }: NavItemProps) => {
 };
 
 const SidebarWithHeader: FC<SidebarWithHeader> = ({ children }) => {
-  const [profileData, setProfiledata] = useState({
+  const [profileData] = useState({
     name: "",
     numberOfChildren: 1,
   });
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [active, setActive] = useState("");
   const pathName = usePathname();
-  const { isOpen: isModalOpen, onOpen: onModalOpen, onClose: onModalClose } = useDisclosure();
 
   useEffect(() => {
     if (pathName.includes("/results")) {
       setActive("results");
-    } else if (pathName.includes("/graycases")) {
-      setActive("graycases");
     } else {
-      setActive("Dashboard");
+      setActive("overview");
     }
   }, [pathName]);
 
   return (
     <>
-      {profileData.numberOfChildren < 1 ? (
-        <Box overflowY={"auto"} h={"100vh"}>
-          <Flex
-            flexDir={"column"}
-            mb={"5rem"}
-            mt={"2rem"}
-            alignItems={"center"}
-            gap={"2rem"}
-            w={"full"}
-          >
-            <Image
-              src="/images/greylight2.png"
-              alt="logo"
-              w={"2rem"}
-              h={"2rem"}
-            />
-            <Image
-              src="/images/familyillustration.svg"
-              alt="parents"
-              w={"15rem"}
-              h={"15rem"}
-            />
-            <Text wordBreak={"break-word"} textAlign={"center"} w={"20rem"}>
-              Looks like you’re not linked to any child on Greynote, would you
-              like to connect with your child/ward now?
-            </Text>
-            <Button
-              backgroundColor={"#005D5D"}
-              color={"#fff"}
-              _hover={{ backgroundColor: "#03594A" }}
-              w={"10rem"}
-              onClick={onModalOpen}
-            >
-              <AiOutlinePlus />
-              <Text fontWeight={"light"} pl="0.5rem">
-                Link your Child
-              </Text>
-            </Button>
-
-          </Flex>
-        </Box>
-      ) : (
         <Box minH="100vh" bg={"#fff"}>
           <SidebarContent
             onClose={() => onClose}
@@ -360,7 +308,7 @@ const SidebarWithHeader: FC<SidebarWithHeader> = ({ children }) => {
               >
                 <BreadcrumbItem>
                   <BreadcrumbLink
-                    href="#"
+                    href="/"
                     fontSize={"sm"}
                     fontWeight={"600"}
                     display={"flex"}
@@ -386,7 +334,6 @@ const SidebarWithHeader: FC<SidebarWithHeader> = ({ children }) => {
             {children}
           </Box>
         </Box>
-      )}
     </>
   );
 };
