@@ -175,13 +175,11 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
               <NavItem
                 key={index}
                 icon={
-                  pathName.includes(item.url) ? item.iconFill : item.iconLight
+                  pathName === item.url ? item.iconFill : item.iconLight
                 }
                 link={item.url}
                 backgroundColor={
-                  pathName.includes(item.url) && pathName === "/dashboard"
-                    ? "#144646"
-                    : "transparent"
+                  pathName === item.url ? "#144646" : "transparent"
                 }
                 name={item.name}
               />
@@ -315,6 +313,11 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
 };
 
 const MainNav: FC<MainNav> = ({ children }) => {
+  const {
+    isOpen: isModalOpen,
+    onOpen: onModalOpen,
+    onClose: onModalClose,
+  } = useDisclosure();
   const router = useRouter()
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { profileData, setProfileData } = useUserAPI();
@@ -412,7 +415,10 @@ const MainNav: FC<MainNav> = ({ children }) => {
                     my={"1rem"}
                     color={"#9FC2C2"}
                     ml={"1.7rem"}
-                    onClick={() => {router.push(item.url); onClose();}}
+                    onClick={() => {
+                      router.push(item.url);
+                      onClose();
+                    }}
                     transition={"ease-in-out 1s"}
                   >
                     <Icon
@@ -439,7 +445,10 @@ const MainNav: FC<MainNav> = ({ children }) => {
                     gap={4}
                     my={"1rem"}
                     ml={"1rem"}
-                    onClick={() => {router.push(`/${item.url}`); onClose();}}
+                    onClick={() => {
+                      router.push(`/${item.url}`);
+                      onClose();
+                    }}
                   >
                     <Icon as={item.iconLight} color={"#fff"} boxSize={6} />
                     <Text color={"#fff"} fontSize={"lg"}>
@@ -452,12 +461,22 @@ const MainNav: FC<MainNav> = ({ children }) => {
 
             <Divider mt={"4rem"} mb={"1.5rem"} borderColor={"#2D6666"} />
 
-            <Button backgroundColor={"#E4B972"} w={"full"} borderRadius={"3"}>
+            <Button
+              backgroundColor={"#E4B972"}
+              w={"full"}
+              borderRadius={"3"}
+              onClick={onModalOpen}
+            >
               <Icon as={PiPlus} color={"#fff"} boxSize={5} mx={"0.3rem"} />
               <Text color={"#fff"} mx={"0.3rem"} fontWeight={"400"}>
                 Link your Child
               </Text>
             </Button>
+            <SearchStudentModal
+              isSearchOpen={isModalOpen}
+              onSearchClose={onModalClose}
+              onSearchOpen={onModalOpen}
+            />
           </DrawerBody>
 
           <DrawerFooter>
