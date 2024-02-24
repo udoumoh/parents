@@ -326,7 +326,7 @@ const MainNav: FC<MainNav> = ({ children }) => {
 
   useEffect(() => {
     if (pathName.includes("/home/overview")) {
-      setActive("Dashboard");
+      setActive("Overview");
     } else if (pathName.includes("/home/results")) {
       setActive("Results");
     } else if (pathName.includes("/home/greycases")) {
@@ -414,7 +414,7 @@ const MainNav: FC<MainNav> = ({ children }) => {
                     my={"1rem"}
                     color={"#9FC2C2"}
                     ml={"1.7rem"}
-                    onClick={() => router.push(item.url)}
+                    onClick={() => {router.push(item.url); onClose();}}
                     transition={"ease-in-out 1s"}
                   >
                     <Icon
@@ -441,7 +441,7 @@ const MainNav: FC<MainNav> = ({ children }) => {
                     gap={4}
                     my={"1rem"}
                     ml={"1rem"}
-                    onClick={() => router.push(item.url)}
+                    onClick={() => {router.push(`/${item.url}`); onClose();}}
                   >
                     <Icon as={item.iconLight} color={"#fff"} boxSize={6} />
                     <Text color={"#fff"} fontSize={"lg"}>
