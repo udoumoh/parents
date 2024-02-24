@@ -104,19 +104,20 @@ const Signin: FC<pageProps> = ({}) => {
 
         if (loginErrors) {
           throw new Error(`Server Error: ${loginErrors[0].message}`);
-        }
+        } else {
+          toast({
+            title: "Login Successful",
+            description: "You are being redirected to your dashboard.",
+            position: "top-right",
+            variant: "left-accent",
+            isClosable: true,
+            status: "success",
+          });
+          setIsLoggedIn(true)
           if(isParentAvailable){
-            toast({
-              title: "Login Successful",
-              description: "You are being redirected to your dashboard.",
-              position: "top-right",
-              variant: "left-accent",
-              isClosable: true,
-              status: "success",
-            });
-            setIsLoggedIn(true);
             router.push("/dashboard/overview");
           }
+        }
 
       } catch (error: any) {
         toast({
