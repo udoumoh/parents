@@ -9,9 +9,14 @@ import {
   FormLabel,
   Button,
   useToast,
+  Center,
+  Flex,
 } from "@chakra-ui/react";
 import { useRouter } from 'next/navigation';
 import { gql, useMutation } from "@apollo/client";
+import { GET_PARENT } from '@/gql/queries/queries';
+import { useQuery } from '@apollo/client';
+import { BarLoader } from 'react-spinners';
 
 interface pageProps {
   
@@ -53,11 +58,8 @@ const Signin: FC<pageProps> = ({}) => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [loginParent] = useMutation(LOGIN_PARENT);
-    const [loading, setLoading] = useState(false)
-    // const { data: parent, loading } = useQuery(GET_PARENT);
-
-    // if (loading) return <p>Loading...</p>;
-    // if (!loading && parent.parent.errors !== null) router.push("/signin");
+    const [isSubmitting, setIsSubmitting] = useState(false)
+    const { data: parent, loading } = useQuery(GET_PARENT);
 
     const handleEmailChange = (e:any) => {
         setEmail(e.target.value)
@@ -68,7 +70,7 @@ const Signin: FC<pageProps> = ({}) => {
     };
 
     const handleLogin = async () => {
-      setLoading(true);
+      setIsSubmitting(true);
       try {
         const response = await loginParent({
           variables: {
@@ -98,6 +100,8 @@ const Signin: FC<pageProps> = ({}) => {
             isClosable: true,
             status: "success",
           });
+          const response = parent
+          console.log(response)
           router.push("/dashboard/overview");
         }
 
@@ -113,7 +117,7 @@ const Signin: FC<pageProps> = ({}) => {
 
         console.error("Error during login:", error);
       } finally{
-        setLoading(false);
+        setIsSubmitting(false);
       }
     };
 
@@ -193,7 +197,7 @@ const Signin: FC<pageProps> = ({}) => {
           color={"#fff"}
           fontSize={"2xl"}
           _hover={{ backgroundColor: "#0F5151" }}
-          isLoading={loading}
+          isLoading={isSubmitting}
         >
           Login
         </Button>
