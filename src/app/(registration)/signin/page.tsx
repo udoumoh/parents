@@ -72,6 +72,7 @@ const Signin: FC<pageProps> = ({}) => {
     };
 
     const handleGetLoggedInParent = () => {
+      console.log(isLoggedIn)
       if (isLoggedIn) {
         const response = parent;
         if (response.parent.errors === null) {
@@ -89,11 +90,12 @@ const Signin: FC<pageProps> = ({}) => {
             email: email,
           },
         })
+
         console.log(response.data);
 
         if (!response.data) {
           throw new Error(
-            "Client Error: An error occurred while creating your account."
+            "Client Error: An error occurred while logging you in."
           );
         }
 
@@ -101,20 +103,30 @@ const Signin: FC<pageProps> = ({}) => {
 
         if (loginErrors) {
           throw new Error(`Server Error: ${loginErrors[0].message}`);
-        } else {
+        }
+
+        const parentResponse = parent
+        if(parentResponse.parent.errors !== null){
+          toast({
+            title: "Error loggin in",
+            description: parentResponse.parent.errors[0].message,
+            position: "top-right",
+            variant: "left-accent",
+            isClosable: true,
+            status: "error",
+          });
+        }
+
+        if(parentResponse.parent.errors === null){
           toast({
             title: "Login Successful",
-            description: "You are being redirected to your dashboard.",
+            description: "You will be redirected to your dashboard shortly",
             position: "top-right",
             variant: "left-accent",
             isClosable: true,
             status: "success",
           });
-          setIsLoggedIn(true)
-          handleGetLoggedInParent
-          if(isParentAvailable){
-            router.push("/dashboard/overview");
-          }
+          router.push("/dashboard/overview")
         }
 
       } catch (error: any) {
