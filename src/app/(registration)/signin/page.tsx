@@ -71,17 +71,14 @@ const Signin: FC<pageProps> = ({}) => {
       setPassword(e.target.value);
     };
 
-    useEffect(() => {
-      if(isLoggedIn){
-        const response = parent
-        if(!response) {
-          setIsParentAvailable(false);
-        }
-        if(response.parent.errors === null){
+    const handleGetLoggedInParent = () => {
+      if (isLoggedIn) {
+        const response = parent;
+        if (response.parent.errors === null) {
           setIsParentAvailable(true);
         }
       }
-    }, [isLoggedIn, parent]);
+    }
 
     const handleLogin = async () => {
       setIsSubmitting(true);
@@ -114,6 +111,7 @@ const Signin: FC<pageProps> = ({}) => {
             status: "success",
           });
           setIsLoggedIn(true)
+          handleGetLoggedInParent
           if(isParentAvailable){
             router.push("/dashboard/overview");
           }
