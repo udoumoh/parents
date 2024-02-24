@@ -229,14 +229,20 @@ export const UserApiProvider: FC<UserApiProviderProps> = ({ children }) => {
     })
   }
 
+  const capitalizeFirstLetter = (name: string) => {
+    const newName = name[0].toUpperCase() + name.substring(1, name.length)
+    return newName
+  }
+
   useEffect(() => {
       const fetchData = async () => {
         try {
           const response = (await parent) || [];
           console.log(response)
           const newData = {
-            firstName: response?.parent?.parent?.firstName,
-            lastName: response?.parent?.parent?.lastName,
+            firstName: capitalizeFirstLetter(response?.parent?.parent?.firstName),
+            lastName: capitalizeFirstLetter(response?.parent?.parent?.lastName),
+            middleName: capitalizeFirstLetter(response?.parent?.middleName),
             profileImage: response?.parent?.parent?.profileImgUrl,
             email: response?.parent?.parent?.email,
             parentRole:response?.parent?.parent?.parentRole,
