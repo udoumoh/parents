@@ -5,7 +5,7 @@ import { gql, useQuery } from "@apollo/client";
 interface UserBio {
   firstName: string;
   lastName: string;
-  middleName: string;
+  // middleName: string;
   profileImage: string;
   email: string;
   parentRole: string;
@@ -99,7 +99,7 @@ export const UserApiProvider: FC<UserApiProviderProps> = ({ children }) => {
     userBio: {
       firstName: "",
       lastName: "",
-      middleName:"",
+      // middleName:"",
       profileImage:
         "",
       email: "",
@@ -231,14 +231,14 @@ export const UserApiProvider: FC<UserApiProviderProps> = ({ children }) => {
     })
   }
 
-  const capitalizeFirstLetter = (name: string) => {
-    if (name.length === 0) {
-      return name; // or throw an error, depending on your requirements
-    }
+  // const capitalizeFirstLetter = (name: string) => {
+  //   if (name.length === 0) {
+  //     return name; // or throw an error, depending on your requirements
+  //   }
 
-    const newName = name[0].toUpperCase() + name.substring(1);
-    return newName;
-  };
+  //   const newName = name[0].toUpperCase() + name.substring(1);
+  //   return newName;
+  // };
 
 
   useEffect(() => {
@@ -247,9 +247,9 @@ export const UserApiProvider: FC<UserApiProviderProps> = ({ children }) => {
           const response = (await parent) || [];
           console.log(response)
           const newData = {
-            firstName: capitalizeFirstLetter(response?.parent?.parent?.firstName),
-            lastName: capitalizeFirstLetter(response?.parent?.parent?.lastName),
-            middleName: capitalizeFirstLetter(response?.parent?.middleName),
+            firstName: response?.parent?.parent?.firstName,
+            lastName: response?.parent?.parent?.lastName,
+            // middleName: response?.parent?.middleName,
             profileImage: response?.parent?.parent?.profileImgUrl,
             email: response?.parent?.parent?.email,
             parentRole:response?.parent?.parent?.parentRole,
