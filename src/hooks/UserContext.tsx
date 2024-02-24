@@ -43,6 +43,7 @@ export interface UserChildren {
 
 interface ParentDataProps {
     agreedTo: boolean;
+    children: [];
     createdAt: string;
     email: string;
     firstName: string;
@@ -213,7 +214,6 @@ export const UserApiProvider: FC<UserApiProviderProps> = ({ children }) => {
   const [parentData, setParentData] = useState<ParentDataProps | undefined>(
     undefined
   );
-  // const defaultId = 0;
 
   const [currentId, setCurrentId] = useState(0);
 

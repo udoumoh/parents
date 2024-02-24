@@ -1,12 +1,19 @@
 import { FC } from 'react'
 import SidebarWithHeader from '@/components/navigation/secondaryNav';
-import MainNav from '@/components/navigation/mainNav';
+import { useRouter } from 'next/navigation';
+import { useUserAPI } from '@/hooks/UserContext';
 
-interface layoutProps {
+interface LayoutProps {
   children: React.ReactNode;
 }
 
-const layout: FC<layoutProps> = ({children}) => {
+const Layout: FC<LayoutProps> = ({children}) => {
+  const router = useRouter()
+  const {parentData} = useUserAPI()
+
+  if(parentData?.children.length === 0){
+    router.push("/dashboard")
+  }
   return (
     <SidebarWithHeader>
     {children}
@@ -14,4 +21,4 @@ const layout: FC<layoutProps> = ({children}) => {
   );
 }
 
-export default layout
+export default Layout

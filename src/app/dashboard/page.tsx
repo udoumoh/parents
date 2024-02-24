@@ -12,17 +12,25 @@ import {
    AiOutlinePlus,
  } from "react-icons/ai";
  import SearchStudentModal from '@/components/shared/searchStudentModal';
+ import { useRouter } from 'next/navigation';
+ import { useUserAPI } from '@/hooks/UserContext';
 
 interface pageProps {
   
 }
 
 const Page: FC<pageProps> = ({}) => {
+    const router = useRouter()
+    const {parentData} = useUserAPI()
     const {
       isOpen: isModalOpen,
       onOpen: onModalOpen,
       onClose: onModalClose,
     } = useDisclosure();
+
+    if(parentData?.children.length !== 0){
+      router.push("/dashboard/home/overview")
+    }
     
   return (
     <Flex minH={"100vh"}>
