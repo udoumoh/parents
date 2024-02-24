@@ -175,13 +175,13 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
               <NavItem
                 key={index}
                 icon={
-                  pathName.includes(item.url)
-                    ? item.iconFill
-                    : item.iconLight
+                  pathName.includes(item.url) ? item.iconFill : item.iconLight
                 }
                 link={item.url}
                 backgroundColor={
                   pathName.includes(item.url)
+                    ? "#144646"
+                    : pathName === "/dashboard"
                     ? "#144646"
                     : "transparent"
                 }
