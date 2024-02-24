@@ -1,3 +1,4 @@
+'use client'
 import { FC } from 'react'
 import SidebarWithHeader from '@/components/navigation/secondaryNav';
 import { useRouter } from 'next/navigation';
