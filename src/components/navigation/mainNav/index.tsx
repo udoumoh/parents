@@ -325,7 +325,7 @@ const MainNav: FC<MainNav> = ({ children }) => {
   const [isDropOpen, setDropOpen] = useState(false);
 
   useEffect(() => {
-    if (pathName.includes("dashboard/home/overview")) {
+    if (pathName.includes("/home/overview")) {
       setActive("Dashboard");
     } else if (pathName.includes("/home/results")) {
       setActive("Results");
