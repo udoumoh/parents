@@ -1,6 +1,7 @@
 "use client";
 import { FC, useState, createContext, useContext, useEffect } from "react";
 import { gql, useQuery } from "@apollo/client";
+import { GET_PARENT } from "@/gql/queries/queries";
 
 interface UserBio {
   firstName: string;
@@ -83,37 +84,6 @@ const UserContext = createContext<UserContextProps | undefined>(undefined);
 interface UserApiProviderProps {
   children: React.ReactNode;
 }
-
-const GET_PARENT = gql(`
-query Parent {
-  parent {
-    errors {
-      field
-      message
-    }
-    parent {
-      id
-      userId
-      status
-      isPaid
-      isVerified
-      isReferred
-      agreedTo
-      createdAt
-      firstName
-      middleName
-      lastName
-      parentRole
-      phoneNumber
-      email
-      role
-      folder
-      isDisabled
-      profileImgUrl
-    }
-  }
-}
-`);
 
 export const UserApiProvider: FC<UserApiProviderProps> = ({ children }) => {
   const { data: parent } = useQuery(GET_PARENT);
