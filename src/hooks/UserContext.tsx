@@ -232,9 +232,14 @@ export const UserApiProvider: FC<UserApiProviderProps> = ({ children }) => {
   }
 
   const capitalizeFirstLetter = (name: string) => {
-    const newName = name[0].toUpperCase() + name.substring(1, name.length)
-    return newName
-  }
+    if (name.length === 0) {
+      return name; // or throw an error, depending on your requirements
+    }
+
+    const newName = name[0].toUpperCase() + name.substring(1);
+    return newName;
+  };
+
 
   useEffect(() => {
       const fetchData = async () => {
