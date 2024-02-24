@@ -231,14 +231,14 @@ export const UserApiProvider: FC<UserApiProviderProps> = ({ children }) => {
     })
   }
 
-  // const capitalizeFirstLetter = (name: string) => {
-  //   if (name.length === 0) {
-  //     return name; // or throw an error, depending on your requirements
-  //   }
+  const capitalizeFirstLetter = (name: string) => {
+    if (name.length === 0) {
+      return name; // or throw an error, depending on your requirements
+    }
 
-  //   const newName = name[0].toUpperCase() + name.substring(1);
-  //   return newName;
-  // };
+    const newName = name[0].toUpperCase() + name.substring(1);
+    return newName;
+  };
 
 
   useEffect(() => {
@@ -247,7 +247,7 @@ export const UserApiProvider: FC<UserApiProviderProps> = ({ children }) => {
           const response = (await parent) || [];
           console.log(response)
           const newData = {
-            firstName: response?.parent?.parent?.firstName,
+            firstName: capitalizeFirstLetter(response?.parent?.parent?.firstName),
             lastName: response?.parent?.parent?.lastName,
             // middleName: response?.parent?.middleName,
             profileImage: response?.parent?.parent?.profileImgUrl,
