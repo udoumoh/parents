@@ -235,11 +235,11 @@ export const UserApiProvider: FC<UserApiProviderProps> = ({ children }) => {
           const response = (await parent) || [];
           console.log(response)
           const newData = {
-            firstName: response.parent.parent.firstName,
-            lastName: response.parent.parent.lastName,
-            profileImage: response.parent.parent.profileImgUrl,
-            email: response.parent.parent.email,
-            parentRole:response.parent.parent.parentRole,
+            firstName: response?.parent?.parent?.firstName,
+            lastName: response?.parent?.parent?.lastName,
+            profileImage: response?.parent?.parent?.profileImgUrl,
+            email: response?.parent?.parent?.email,
+            parentRole:response?.parent?.parent?.parentRole,
           };
                     
           console.log(response);

@@ -44,7 +44,7 @@ const ChatContactItem: FC<ChatContactItemProps> = ({ chat }) => {
   return (
     <Link
       my={"0.5rem"}
-      backgroundColor={usePathname() === `/inbox/${chat.id}` ? "#2A938C30" : ""}
+      backgroundColor={usePathname() === `/dashboard/inbox/${chat.id}` ? "#2A938C30" : ""}
       display={"flex"}
       gap={2}
       p={"0.7rem"}
@@ -53,7 +53,7 @@ const ChatContactItem: FC<ChatContactItemProps> = ({ chat }) => {
         backgroundColor: "#2A938C30",
         transition: "0.3s",
       }}
-      onClick={() => router.push(`/inbox/${chat.id}`)}
+      onClick={() => router.push(`/dashboard/inbox/${chat.id}`)}
       borderRadius="5"
     >
       <Avatar size={{ base: "sm", md: "md" }} src={chat.profileImage} />

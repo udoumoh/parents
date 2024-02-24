@@ -30,7 +30,6 @@ import { IoIosSearch, IoMdSettings } from "react-icons/io";
 import { PiChatsTeardrop, PiChatsTeardropFill } from "react-icons/pi";
 import { GoHome, GoHomeFill } from "react-icons/go";
 import {
-  RiSearchFill,
   RiArrowDownSLine,
   RiArrowRightSLine,
 } from "react-icons/ri";
@@ -87,38 +86,38 @@ const LinkItems: Array<LinkItemProps> = [
     name: "Dashboard",
     iconLight: GoHome,
     iconFill: GoHomeFill,
-    url: "/dashboard/overview",
+    url: "/dashboard/home",
   },
   {
     name: "Inbox",
     iconLight: PiChatsTeardrop,
     iconFill: PiChatsTeardropFill,
-    url: "/inbox",
+    url: "/dashboard/inbox",
   },
   {
     name: "Settings",
     iconLight: AiOutlineSetting,
     iconFill: IoMdSettings,
-    url: "/settings",
+    url: "/dashboard/settings",
   },
 ];
 
 const DrawerNavLinkItems = {
   HomeSubLinks: [
     {
-      name: "Dashboard",
+      name: "Overview",
       icon: HiOutlineArrowSmRight,
-      url: "/dashboard/overview",
+      url: "/dashboard/home/overview",
     },
     {
       name: "Results",
       icon: HiOutlineArrowSmRight,
-      url: "/dashboard/results",
+      url: "/dashboard/home/results",
     },
     {
       name: "Greycases",
       icon: HiOutlineArrowSmRight,
-      url: "/dashboard/greycases",
+      url: "/dashboard/home/greycases",
     },
   ],
   NavLinks: [
@@ -126,19 +125,13 @@ const DrawerNavLinkItems = {
       name: "Inbox",
       iconLight: PiChatsTeardrop,
       iconFill: PiChatsTeardropFill,
-      url: "/inbox",
-    },
-    {
-      name: "Search",
-      iconLight: IoIosSearch,
-      iconFill: RiSearchFill,
-      url: "/search",
+      url: "dashboard/inbox",
     },
     {
       name: "Settings",
       iconLight: AiOutlineSetting,
       iconFill: IoMdSettings,
-      url: "/settings",
+      url: "dashboard/settings",
     },
   ],
 };
@@ -182,13 +175,13 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
               <NavItem
                 key={index}
                 icon={
-                  pathName.includes(item.name.toLowerCase())
+                  pathName.includes(item.url)
                     ? item.iconFill
                     : item.iconLight
                 }
                 link={item.url}
                 backgroundColor={
-                  pathName.includes(item.name.toLowerCase())
+                  pathName.includes(item.url)
                     ? "#144646"
                     : "transparent"
                 }
@@ -331,17 +324,15 @@ const MainNav: FC<MainNav> = ({ children }) => {
   const [isDropOpen, setDropOpen] = useState(false);
 
   useEffect(() => {
-    if (pathName.includes("/dashboard/overview")) {
+    if (pathName.includes("/home/overview")) {
       setActive("Dashboard");
-    } else if (pathName.includes("/dashboard/results")) {
+    } else if (pathName.includes("/home/results")) {
       setActive("Results");
-    } else if (pathName.includes("/dashboard/greycases")) {
+    } else if (pathName.includes("/home/greycases")) {
       setActive("Greycases");
-    } else if (pathName.includes("/inbox")) {
+    } else if (pathName.includes("/dashboard/inbox")) {
       setActive("Inbox");
-    } else if (pathName.includes("/search")) {
-      setActive("Search");
-    } else if (pathName.includes("/settings")) {
+    } else if (pathName.includes("/dashboard/settings")) {
       setActive("Settings");
     } else {
       setActive("/");

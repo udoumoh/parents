@@ -6,8 +6,7 @@ const Home = () => {
   const router = useRouter();
 
   useEffect(() => {
-    // Redirect to "/dashboard/overview" when the component mounts
-    router.push("/dashboard/overview");
+    router.push("/dashboard/home/overview");
   }, [router]);
 
   return null;

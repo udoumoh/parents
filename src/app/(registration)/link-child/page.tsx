@@ -215,7 +215,7 @@ const {
         const data = response.map((student: any) => ({
           name: student.firstName + " " + student.lastName,
           age: student.ageInput,
-          className: student.classroom.classroom.className,
+          className: student?.classroom?.classroom?.className,
           gender: student.gender,
           profileImageUrl: student.profileImgUrl,
           id: student.id
@@ -300,7 +300,7 @@ const {
               justifyContent={"center"}
               mt={"1rem"}
             >
-              {filteredSearchData.length == 0 ? (
+              {filteredSearchData.length === 0 ? (
                 <Text textAlign={"center"} fontSize={"xl"} color={"#484848"}>
                   No results match your search criteria
                 </Text>

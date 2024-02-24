@@ -59,8 +59,6 @@ const Signin: FC<pageProps> = ({}) => {
     const [password, setPassword] = useState("")
     const [loginParent] = useMutation(LOGIN_PARENT);
     const [isSubmitting, setIsSubmitting] = useState(false)
-    const [isLoggedIn, setIsLoggedIn] = useState(false)
-    const [isParentAvailable, setIsParentAvailable] = useState(false)
     const { data: parent, loading } = useQuery(GET_PARENT);
 
     const handleEmailChange = (e:any) => {
@@ -71,16 +69,6 @@ const Signin: FC<pageProps> = ({}) => {
       setPassword(e.target.value);
     };
 
-    const handleGetLoggedInParent = () => {
-      console.log(isLoggedIn)
-      if (isLoggedIn) {
-        const response = parent;
-        if (response.parent.errors === null) {
-          setIsParentAvailable(true);
-        }
-      }
-    }
-
     const handleLogin = async () => {
       setIsSubmitting(true);
       try {
@@ -90,8 +78,6 @@ const Signin: FC<pageProps> = ({}) => {
             email: email,
           },
         })
-
-        console.log(response.data);
 
         if (!response.data) {
           throw new Error(
@@ -126,7 +112,7 @@ const Signin: FC<pageProps> = ({}) => {
             isClosable: true,
             status: "success",
           });
-          router.push("/dashboard/overview")
+          router.push("/dashboard/home/overview")
         }
 
       } catch (error: any) {

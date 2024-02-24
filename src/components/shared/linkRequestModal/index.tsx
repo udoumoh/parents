@@ -236,7 +236,7 @@ const LinkRequestModal: FC<LinkRequestModalProps> = ({
     const handleMessageChange = (e: any) => {
         setMessage(e.target.value)
     }
-
+    console.log(student)
     const handleSubmit = async () => {
       try{
         const response = await request({
@@ -276,7 +276,7 @@ const LinkRequestModal: FC<LinkRequestModalProps> = ({
               isClosable: true,
               status: "success",
             });
-            router.push("/dashboard/overview");
+            router.push("/dashboard/home/overview");
         }
         console.log(response);
       } catch(error: any) {

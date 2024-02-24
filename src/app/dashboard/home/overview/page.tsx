@@ -14,7 +14,6 @@ import { PiChatTeardropTextLight } from "react-icons/pi";
 import { BsArrowRightShort } from "react-icons/bs";
 import EmptyStateCard from "@/components/shared/emptyStateCard";
 import { useUserAPI } from "@/hooks/UserContext";
-import { useRouter } from "next/navigation";
 
 interface DashboardPageProps {}
 
@@ -22,7 +21,7 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
     const { currentWardProfile } = useUserAPI();
 
   return (
-    <Flex gap={5} flexDir={"column"} mb={"5rem"}>
+    <Flex gap={5} flexDir={"column"} mb={{base:"8rem", lg:"5rem"}}>
       <Flex
         flexDir={{ base: "column", lg: "row" }}
         justifyContent={"space-between"}
