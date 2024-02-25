@@ -276,7 +276,8 @@ const LinkRequestModal: FC<LinkRequestModalProps> = ({
               isClosable: true,
               status: "success",
             });
-            router.push("/dashboard/home/overview");
+          window.location.replace("/dashboard/home/overview");
+
         }
         console.log(response);
       } catch(error: any) {
