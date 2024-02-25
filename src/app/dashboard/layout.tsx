@@ -22,32 +22,32 @@ const Layout: React.FC<layoutProps> = ({ children }) => {
       const router = useRouter()
       const { data: parent, loading } = useQuery(GET_PARENT);
 
-      // try{
-      //   if (loading) return (
-      //     <Center>
-      //       <Box minW="full" mt={{ base: 60, md: 60, lg: 40 }}>
-      //         <Flex
-      //           direction="column"
-      //           align="center"
-      //           minW={{ base: "full", lg: "650px" }}
-      //         >
-      //           <Image src="/images/greylightBordered.svg" alt="logo" w={40} mb={3} />
-      //           <BarLoader color="#ffd880" width="150px" />
-      //         </Flex>
-      //       </Box>
-      //     </Center>
-      //   );
-      //   if (!loading && parent.parent.errors !== null) router.push("/signin");
-      // } catch (e: any) {
-      //   toast({
-      //     title: "Error",
-      //     description: e.message,
-      //     position: "top-right",
-      //     variant: "left-accent",
-      //     isClosable: true,
-      //     status: "error",
-      //   });
-      // }
+      try{
+        if (loading) return (
+          <Center>
+            <Box minW="full" mt={{ base: 60, md: 60, lg: 40 }}>
+              <Flex
+                direction="column"
+                align="center"
+                minW={{ base: "full", lg: "650px" }}
+              >
+                <Image src="/images/greylightBordered.svg" alt="logo" w={40} mb={3} />
+                <BarLoader color="#ffd880" width="150px" />
+              </Flex>
+            </Box>
+          </Center>
+        );
+        if (!loading && parent.parent.errors !== null) router.push("/signin");
+      } catch (e: any) {
+        toast({
+          title: "Error",
+          description: e.message,
+          position: "top-right",
+          variant: "left-accent",
+          isClosable: true,
+          status: "error",
+        });
+      }
   return (
     <MainNav>
       {/* Your layout content */}
