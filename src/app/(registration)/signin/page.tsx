@@ -93,7 +93,7 @@ const Signin: FC<pageProps> = ({}) => {
       if (loginErrors) {
         toast({
           title: "Server Error",
-          description: `Server Error: ${loginErrors[0].message}`,
+          description: loginErrors[0].message,
           position: "top-right",
           variant: "left-accent",
           isClosable: true,
@@ -106,7 +106,7 @@ const Signin: FC<pageProps> = ({}) => {
         const parentResponse = parent;
         if (parentResponse.parent.errors !== null) {
           toast({
-            title: "Error loggin in",
+            title: "Error logging in",
             description: parentResponse.parent.errors[0].message,
             position: "top-right",
             variant: "left-accent",
