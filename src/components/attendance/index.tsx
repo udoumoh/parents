@@ -7,6 +7,7 @@ import {
     Button,
     Icon,
     Avatar,
+    Image,
  } from '@chakra-ui/react';
 import { BsArchive, BsDot } from "react-icons/bs";
 import { PrimaryBadge } from '../shared/badge';
@@ -110,79 +111,86 @@ const Attendance: FC<AttendanceProps> = ({}) => {
 
       <Divider color={"#E2E2E2"} my={"0.8rem"} />
 
-      {/* Section for absent pupils */}
-      <Box>
-        <Text fontSize={"sm"} color={"#747474"}>
-          Absent
-        </Text>
+      {attendance.length > 0 ? (
+        <>
+          {/* Section for absent pupils */}
+          <Box>
+            <Text fontSize={"sm"} color={"#747474"}>
+              Absent
+            </Text>
 
-        {attendance.map((item, index) =>
-          item.present === false ? (
-            <Flex justifyContent={"space-between"} my={"1rem"} key={index}>
-              <Box display={"flex"} alignItems={"center"} gap={2}>
-                <Avatar size={"sm"} src={item.profileUrl} />
-                <Box>
-                  <Text fontSize={"sm"} fontWeight={"500"}>
-                    {item.name}
-                  </Text>
-                  <Flex alignItems={"flex-end"}>
-                    <Text color={"#747474"} fontSize={"2xs"}>
-                      {item.regNo}
+            {attendance.map((item, index) =>
+              item.present === false ? (
+                <Flex justifyContent={"space-between"} my={"1rem"} key={index}>
+                  <Box display={"flex"} flexDir={"column"}>
+                    <Text
+                      fontSize={{ base: "sm", lg: "md" }}
+                      fontWeight={"500"}
+                    >
+                      Moday 12th February 2024
                     </Text>
-                    <Icon as={BsDot} color={"#747474"} />
-                    <Text color={"#747474"} fontSize={"2xs"}>
-                      {item.gender}
+                    <Text
+                      fontSize={{ base: "2xs", lg: "xs" }}
+                      color={"#747474"}
+                    >
+                      Marked Absent by Korede Nelson, JSS 1 Teacher
                     </Text>
-                    <Icon as={BsDot} color={"#747474"} />
-                    <Text color={"#747474"} fontSize={"2xs"}>
-                      {item.age} Years
-                    </Text>
-                  </Flex>
-                </Box>
-              </Box>
-              {item.present ? <PrimaryBadge /> : <SecondaryBadge />}
-            </Flex>
-          ) : null
-        )}
-      </Box>
+                  </Box>
+                  {item.present ? <PrimaryBadge /> : <SecondaryBadge />}
+                </Flex>
+              ) : null
+            )}
+          </Box>
 
-      <Divider size={"10"} />
+          <Divider size={"10"} />
 
-      {/* Section for present pupils */}
-      <Box>
-        <Text fontSize={"sm"} color={"#747474"} mt={"1rem"}>
-          Present
-        </Text>
+          {/* Section for present pupils */}
+          <Box>
+            <Text fontSize={"sm"} color={"#747474"} mt={"1rem"}>
+              Present
+            </Text>
 
-        {attendance.map((item, index) =>
-          item.present === true ? (
-            <Flex justifyContent={"space-between"} my={"1rem"} key={index}>
-              <Box display={"flex"} alignItems={"center"} gap={2}>
-                <Avatar size={"sm"} src={item.profileUrl} />
-                <Box>
-                  <Text fontSize={"sm"} fontWeight={"500"}>
-                    {item.name}
-                  </Text>
-                  <Flex alignItems={"flex-end"}>
-                    <Text color={"#747474"} fontSize={"2xs"}>
-                      {item.regNo}
+            {attendance.map((item, index) =>
+              item.present === true ? (
+                <Flex justifyContent={"space-between"} my={"1rem"} key={index}>
+                  <Box display={"flex"} flexDir={"column"}>
+                    <Text
+                      fontSize={{ base: "sm", lg: "md" }}
+                      fontWeight={"500"}
+                    >
+                      Tuesday 13th February 2024
                     </Text>
-                    <Icon as={BsDot} color={"#747474"} />
-                    <Text color={"#747474"} fontSize={"2xs"}>
-                      {item.gender}
+                    <Text
+                      fontSize={{ base: "2xs", lg: "xs" }}
+                      color={"#747474"}
+                    >
+                      Marked Present by Korede Nelson, JSS 1 Teacher
                     </Text>
-                    <Icon as={BsDot} color={"#747474"} />
-                    <Text color={"#747474"} fontSize={"2xs"}>
-                      {item.age} Years
-                    </Text>
-                  </Flex>
-                </Box>
-              </Box>
-              {item.present ? <PrimaryBadge /> : <SecondaryBadge />}
-            </Flex>
-          ) : null
-        )}
-      </Box>
+                  </Box>
+                  {item.present ? <PrimaryBadge /> : <SecondaryBadge />}
+                </Flex>
+              ) : null
+            )}
+          </Box>
+        </>
+      ) : (
+        <Box
+          display={"flex"}
+          flexDir={"column"}
+          alignItems={"center"}
+          justifyContent={"center"}
+          mt={"3rem"}
+        >
+          <Image
+            src="/images/attendanceEmptyState.svg"
+            alt="No invoice card"
+            width={"300px"}
+          />
+          <Text color={"#747474"} mt={"2rem"}>
+            Your ward has no active invoice
+          </Text>
+        </Box>
+      )}
     </Box>
   );
 }

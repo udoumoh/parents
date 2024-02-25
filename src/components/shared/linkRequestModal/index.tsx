@@ -246,7 +246,7 @@ const LinkRequestModal: FC<LinkRequestModalProps> = ({
             studentId: student.id,
           },
         });
-        if (!response.data) {
+        if (!response) {
           toast({
             title: "Client Error",
             description: "An error occured while creating a request",

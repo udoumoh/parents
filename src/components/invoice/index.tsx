@@ -1,5 +1,5 @@
-'use client'
-import { FC, useState } from 'react'
+"use client";
+import { FC, useState } from "react";
 import {
   Box,
   Text,
@@ -11,6 +11,15 @@ import {
   Tooltip,
   ScaleFade,
   useDisclosure,
+  Image,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  Button,
 } from "@chakra-ui/react";
 import { IoReceiptOutline } from "react-icons/io5";
 import { FaCheck } from "react-icons/fa6";
@@ -22,9 +31,7 @@ interface InvoiceItemProps {
   mouseLeave: () => void; // Define the type for mouseLeave
   hovered: boolean;
 }
-interface InvoiceProps {
-
-}
+interface InvoiceProps {}
 
 interface StudentInvoiceProps {
   term: string;
@@ -39,11 +46,13 @@ const InvoiceItem: FC<InvoiceItemProps> = ({
   mouseLeave,
   hovered,
 }) => {
-  const { isOpen, onToggle } = useDisclosure();
+  
+  const { isOpen,  onToggle } = useDisclosure();
+  const { isOpen: isModalOpen, onOpen: onModalOpen, onClose: onModalClose } = useDisclosure();
   return (
     <Box
       height={"100%"}
-      border={"1px solid #449c7c"}
+      border={"1px solid #C2C2C2"}
       rounded={"lg"}
       p={"0.4rem"}
       w={"full"}
@@ -110,6 +119,7 @@ const InvoiceItem: FC<InvoiceItemProps> = ({
                 colorScheme="green"
                 aria-label="Search database"
                 icon={<FaCheck />}
+                onClick={onModalOpen}
               />
             </Tooltip>
             <Tooltip
@@ -127,6 +137,22 @@ const InvoiceItem: FC<InvoiceItemProps> = ({
             </Tooltip>
           </Flex>
         </ScaleFade>
+        <Modal isOpen={isModalOpen} onClose={onModalClose}>
+          <ModalOverlay />
+          <ModalContent>
+            <ModalHeader>Modal Title</ModalHeader>
+            <ModalCloseButton />
+            <ModalBody>
+            </ModalBody>
+
+            <ModalFooter>
+              <Button colorScheme="blue" mr={3} onClick={()=>{onModalClose(); mouseLeave(); isOpen }}>
+                Close
+              </Button>
+              <Button variant="ghost">Secondary Action</Button>
+            </ModalFooter>
+          </ModalContent>
+        </Modal>
       </Flex>
     </Box>
   );
@@ -167,9 +193,9 @@ const Invoice: FC<InvoiceProps> = ({}) => {
   const handleMouseLeave = (index: number) => {
     const newHoveredStates = [...hoveredStates];
     newHoveredStates[index] = false;
-    setHoveredStates(newHoveredStates);
+    setHoveredStates(newHoveredStates)
   };
-  
+
   return (
     <Box
       p={"1rem"}
@@ -189,21 +215,30 @@ const Invoice: FC<InvoiceProps> = ({}) => {
 
       <Divider color={"#C2C2C2"} my={"0.8rem"} />
 
-      <Box display={{ base: "column", xl: "flex" }} gap={3}>
-        {studentInvoiceData.map((student, index) => {
-          return (
-            <InvoiceItem
-              studentInvoice={student}
-              key={index}
-              mouseEnter={() => handleMouseEnter(index)}
-              mouseLeave={() => handleMouseLeave(index)}
-              hovered={hoveredStates[index]}
-            />
-          );
-        })}
-      </Box>
+      {studentInvoiceData.length > 0 ? (
+        <Box display={{ base: "column", xl: "flex" }} gap={3}>
+          {studentInvoiceData.map((student, index) => {
+            return (
+              <InvoiceItem
+                studentInvoice={student}
+                key={index}
+                mouseEnter={() => handleMouseEnter(index)}
+                mouseLeave={() => handleMouseLeave(index)}
+                hovered={hoveredStates[index]}
+              />
+            );
+          })}
+        </Box>
+      ) : (
+        <Box display={'flex'} flexDir={'column'} alignItems={'center'} justifyContent={'center'} mt={'3rem'}>
+          <Image src="/images/emptyStateInvoice.svg" alt="No invoice card" width={'300px'}/>
+          <Text color={"#747474"} mt={"2rem"}>
+            Your ward has no active invoice
+          </Text>
+        </Box>
+      )}
     </Box>
   );
-}
+};
 
-export default Invoice
+export default Invoice;
