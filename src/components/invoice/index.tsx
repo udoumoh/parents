@@ -176,7 +176,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
       backgroundColor={"#fff"}
       rounded={"lg"}
       w={"full"}
-      border={"1px solid #449c7c"}
+      border={"1px solid #C2C2C2"}
     >
       <Flex>
         <Box display={"flex"} alignItems={"center"} gap={2}>
@@ -187,9 +187,9 @@ const Invoice: FC<InvoiceProps> = ({}) => {
         </Box>
       </Flex>
 
-      <Divider color={"#E2E2E2"} my={"0.8rem"} />
+      <Divider color={"#C2C2C2"} my={"0.8rem"} />
 
-      <Box display={{base:"column", xl:"flex"}} gap={3}>
+      <Box display={{ base: "column", xl: "flex" }} gap={3}>
         {studentInvoiceData.map((student, index) => {
           return (
             <InvoiceItem
