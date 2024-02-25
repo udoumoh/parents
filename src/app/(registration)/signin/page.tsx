@@ -90,6 +90,7 @@ const Signin: FC<pageProps> = ({}) => {
       }
 
       const loginErrors = response.data.loginParent.errors;
+
       if (loginErrors) {
         toast({
           title: "Server Error",
@@ -102,40 +103,16 @@ const Signin: FC<pageProps> = ({}) => {
         return;
       }
 
-      try {
-        const parentResponse = parent;
-        if (parentResponse.parent.errors !== null) {
-          toast({
-            title: "Error logging in",
-            description: parentResponse.parent.errors[0].message,
-            position: "top-right",
-            variant: "left-accent",
-            isClosable: true,
-            status: "error",
-          });
-        }
+      toast({
+        title: "Login successful",
+        description: "You are being redirected to your dashboard",
+        position: "top-right",
+        variant: "left-accent",
+        isClosable: true,
+        status: "success",
+      });
+      window.location.replace("/dashboard/home/overview")
 
-        if (parentResponse.parent.errors === null) {
-          toast({
-            title: "Login Successful",
-            description: "You will be redirected to your dashboard shortly",
-            position: "top-right",
-            variant: "left-accent",
-            isClosable: true,
-            status: "success",
-          });
-          router.push("/dashboard/home/overview");
-        }
-      } catch (error: any) {
-        toast({
-          title: "Error",
-          description: error.message,
-          position: "top-right",
-          variant: "left-accent",
-          isClosable: true,
-          status: "error",
-        });
-      }
     } catch (error: any) {
       toast({
         title: "Error",
