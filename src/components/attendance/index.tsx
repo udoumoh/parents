@@ -97,24 +97,15 @@ const Attendance: FC<AttendanceProps> = ({}) => {
       rounded={"lg"}
       w={"full"}
       border={"1px solid #449c7c"}
+      maxW={{ base: "auto", xl: "550px" }}
     >
-      <Flex justifyContent={"space-between"}>
-        <Box display={"flex"} alignItems={"center"} gap={2}>
+      <Flex>
+        <Box display={"flex"} alignItems={"center"} gap={3}>
           <Icon as={BsArchive} boxSize={"5"} color={"#189879"} />
           <Text fontWeight={"600"} fontSize={"xl"}>
             {"Weekly Attendance"}
           </Text>
         </Box>
-        <Button
-          backgroundColor={"transparent"}
-          rounded={"md"}
-          border={"1px solid #E2E2E2"}
-          size={"md"}
-        >
-          <Text fontSize={"sm"} color={"#747474"}>
-            See All
-          </Text>
-        </Button>
       </Flex>
 
       <Divider color={"#E2E2E2"} my={"0.8rem"} />
