@@ -33,11 +33,13 @@ const Page: FC<PageProps> = ({}) => {
     setOtp(newPin);
   };
 
+  const numArray: number[] = otp.map((str) => parseInt(str, 10));
+  
   const handleSubmit = async () => {
     try {
       const response = await verifyotp({
         variables: {
-          otpCode: Number(...otp),
+          otpCode: parseInt(numArray.join("")),
         },
       });
       console.log(response.data);
