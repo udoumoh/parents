@@ -28,9 +28,9 @@ const Page: FC<pageProps> = ({}) => {
       onClose: onModalClose,
     } = useDisclosure();
 
-    if(parentData?.children.length !== 0){
+    // if(parentData?.children.length !== 0){
       router.push("/dashboard/home/overview")
-    }
+    // }
     
   return (
     <Flex minH={"100vh"}>
