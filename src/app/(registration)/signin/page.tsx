@@ -11,6 +11,7 @@ import {
   useToast,
   Center,
   Flex,
+  Link,
 } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
 import { gql, useMutation } from "@apollo/client";
@@ -214,6 +215,18 @@ const Signin: FC<pageProps> = ({}) => {
           Login
         </Button>
       </Box>
+        <Text
+          color={"#747474"}
+          fontSize={{ base: "xs", lg: "md" }}
+          mt={"2rem"}
+          fontWeight={"600"}
+          textAlign={"center"}
+        >
+         Don&apos;t have an account?{" "}
+          <Link color={"#007C7B"} onClick={() => router.push("/signup")}>
+            {`Sign Up ->`}
+          </Link>
+        </Text>
     </Box>
   );
 };

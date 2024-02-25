@@ -237,36 +237,6 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
               </Wrap>
             </Box>
           </Flex>
-
-          <Box mt={{ base: "1.5rem", lg: "0rem" }}>
-            <Text fontSize={"sm"} fontWeight={"bold"} textAlign={"start"}>
-              Invoices
-            </Text>
-            <VStack
-              border={"1px solid #E2E2E2"}
-              py={"1rem"}
-              px={"2rem"}
-              rounded={"lg"}
-              justifyContent={"center"}
-              mt={"1rem"}
-              pb={"10rem"}
-            >
-              <Image
-                src="/images/invoiceillustration.svg"
-                alt="invoice"
-                boxSize={"28"}
-                pointerEvents={"none"}
-              />
-              <Box mt={"2rem"}>
-                <Text color={"#747474"} fontSize={"xs"} textAlign={"center"}>
-                  No invoice has been sent to you.
-                </Text>
-                <Text color={"#747474"} fontSize={"xs"} textAlign={"center"}>
-                  You&apos;ll see them here once they are sent
-                </Text>
-              </Box>
-            </VStack>
-          </Box>
         </Flex>
       </Box>
     </Box>
