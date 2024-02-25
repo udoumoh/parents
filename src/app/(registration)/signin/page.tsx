@@ -59,7 +59,7 @@ const Signin: FC<pageProps> = ({}) => {
     const [password, setPassword] = useState("")
     const [loginParent] = useMutation(LOGIN_PARENT);
     const [isSubmitting, setIsSubmitting] = useState(false)
-    const { data: parent, loading } = useQuery(GET_PARENT);
+    const { data: parent } = useQuery(GET_PARENT);
 
     const handleEmailChange = (e:any) => {
         setEmail(e.target.value)
@@ -79,17 +79,30 @@ const Signin: FC<pageProps> = ({}) => {
           },
         })
 
-        if (!response.data) {
-          throw new Error(
-            "Client Error: An error occurred while logging you in."
-          );
-        }
+       if (!response.data) {
+         toast({
+           title: "Client Error",
+           description: "An error occurred while logging you in.",
+           position: "top-right",
+           variant: "left-accent",
+           isClosable: true,
+           status: "error",
+         });
+         return;
+       }
 
-        const loginErrors = response.data.loginParent.errors;
-
-        if (loginErrors) {
-          throw new Error(`Server Error: ${loginErrors[0].message}`);
-        }
+       const loginErrors = response.data.loginParent.errors;
+       if (loginErrors) {
+         toast({
+           title: "Server Error",
+           description: `Server Error: ${loginErrors[0].message}`,
+           position: "top-right",
+           variant: "left-accent",
+           isClosable: true,
+           status: "error",
+         });
+         return;
+       }
 
         const parentResponse = parent
         if(parentResponse.parent.errors !== null){
