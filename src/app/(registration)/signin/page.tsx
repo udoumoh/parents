@@ -1,5 +1,5 @@
-'use client'
-import { FC, useEffect, useState } from 'react'
+"use client";
+import { FC, useEffect, useState } from "react";
 import {
   Box,
   Image,
@@ -12,15 +12,13 @@ import {
   Center,
   Flex,
 } from "@chakra-ui/react";
-import { useRouter } from 'next/navigation';
+import { useRouter } from "next/navigation";
 import { gql, useMutation } from "@apollo/client";
-import { GET_PARENT } from '@/gql/queries/queries';
-import { useQuery } from '@apollo/client';
-import { BarLoader } from 'react-spinners';
+import { GET_PARENT } from "@/gql/queries/queries";
+import { useQuery } from "@apollo/client";
+import { BarLoader } from "react-spinners";
 
-interface pageProps {
-  
-}
+interface pageProps {}
 
 const LOGIN_PARENT = gql(`
 mutation LoginParent($password: String!, $email: String!) {
@@ -53,59 +51,60 @@ mutation LoginParent($password: String!, $email: String!) {
 }`);
 
 const Signin: FC<pageProps> = ({}) => {
-    const router = useRouter()
-    const toast = useToast()
-    const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("")
-    const [loginParent] = useMutation(LOGIN_PARENT);
-    const [isSubmitting, setIsSubmitting] = useState(false)
-    const { data: parent } = useQuery(GET_PARENT);
+  const router = useRouter();
+  const toast = useToast();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loginParent] = useMutation(LOGIN_PARENT);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { data: parent } = useQuery(GET_PARENT);
 
-    const handleEmailChange = (e:any) => {
-        setEmail(e.target.value)
-    }
+  const handleEmailChange = (e: any) => {
+    setEmail(e.target.value);
+  };
 
-    const handlePasswordChange = (e: any) => {
-      setPassword(e.target.value);
-    };
+  const handlePasswordChange = (e: any) => {
+    setPassword(e.target.value);
+  };
 
-    const handleLogin = async () => {
-      setIsSubmitting(true);
+  const handleLogin = async () => {
+    setIsSubmitting(true);
+    try {
+      const response = await loginParent({
+        variables: {
+          password: password,
+          email: email,
+        },
+      });
+
+      if (!response.data) {
+        toast({
+          title: "Client Error",
+          description: "An error occurred while logging you in.",
+          position: "top-right",
+          variant: "left-accent",
+          isClosable: true,
+          status: "error",
+        });
+        return;
+      }
+
+      const loginErrors = response.data.loginParent.errors;
+      if (loginErrors) {
+        toast({
+          title: "Server Error",
+          description: `Server Error: ${loginErrors[0].message}`,
+          position: "top-right",
+          variant: "left-accent",
+          isClosable: true,
+          status: "error",
+        });
+        return;
+      }
+
       try {
-        const response = await loginParent({
-          variables: {
-            password: password,
-            email: email,
-          },
-        })
-
-       if (!response.data) {
-         toast({
-           title: "Client Error",
-           description: "An error occurred while logging you in.",
-           position: "top-right",
-           variant: "left-accent",
-           isClosable: true,
-           status: "error",
-         });
-         return;
-       }
-
-       const loginErrors = response.data.loginParent.errors;
-       if (loginErrors) {
-         toast({
-           title: "Server Error",
-           description: `Server Error: ${loginErrors[0].message}`,
-           position: "top-right",
-           variant: "left-accent",
-           isClosable: true,
-           status: "error",
-         });
-         return;
-       }
-
-        const parentResponse = parent
-        if(parentResponse.parent.errors !== null){
+        const parentResponse = parent;
+        if (parentResponse.parent.errors !== null) {
           toast({
             title: "Error loggin in",
             description: parentResponse.parent.errors[0].message,
@@ -116,7 +115,7 @@ const Signin: FC<pageProps> = ({}) => {
           });
         }
 
-        if(parentResponse.parent.errors === null){
+        if (parentResponse.parent.errors === null) {
           toast({
             title: "Login Successful",
             description: "You will be redirected to your dashboard shortly",
@@ -125,9 +124,8 @@ const Signin: FC<pageProps> = ({}) => {
             isClosable: true,
             status: "success",
           });
-          router.push("/dashboard/home/overview")
+          router.push("/dashboard/home/overview");
         }
-
       } catch (error: any) {
         toast({
           title: "Error",
@@ -137,12 +135,22 @@ const Signin: FC<pageProps> = ({}) => {
           isClosable: true,
           status: "error",
         });
-
-        console.error("Error during login:", error);
-      } finally{
-        setIsSubmitting(false);
       }
-    };
+    } catch (error: any) {
+      toast({
+        title: "Error",
+        description: error.message,
+        position: "top-right",
+        variant: "left-accent",
+        isClosable: true,
+        status: "error",
+      });
+
+      console.error("Error during login:", error);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <Box
@@ -158,11 +166,11 @@ const Signin: FC<pageProps> = ({}) => {
         justifyContent={"center"}
         alignItems={"center"}
         gap={20}
-        py={{base:"2rem", lg:"0"}}
+        py={{ base: "2rem", lg: "0" }}
       >
         <Image src="/images/greylightBordered.svg" alt="logo" />
         <Box
-          rounded={'xl'}
+          rounded={"xl"}
           display={"flex"}
           alignItems={"center"}
           justifyContent={"center"}
@@ -170,11 +178,15 @@ const Signin: FC<pageProps> = ({}) => {
           backgroundSize="cover"
           backgroundPosition="center"
           backgroundRepeat="no-repeat"
-          w={{base:"auto", lg:"670px"}}
-          h={{base:"auto", lg:"176px"}}
-          p={{base:"3rem", lg:"0rem"}}
+          w={{ base: "auto", lg: "670px" }}
+          h={{ base: "auto", lg: "176px" }}
+          p={{ base: "3rem", lg: "0rem" }}
         >
-          <Text fontWeight={"700"} fontSize={{base:"xl", lg:"4xl"}} color={"#fff"}>
+          <Text
+            fontWeight={"700"}
+            fontSize={{ base: "xl", lg: "4xl" }}
+            color={"#fff"}
+          >
             Login to your account
           </Text>
         </Box>
@@ -227,6 +239,6 @@ const Signin: FC<pageProps> = ({}) => {
       </Box>
     </Box>
   );
-}
+};
 
-export default Signin
+export default Signin;
