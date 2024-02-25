@@ -256,17 +256,17 @@ const LinkRequestModal: FC<LinkRequestModalProps> = ({
             status: "error",
           });
         }
-        if (response.data.createRequest.errors) {
+        if (response?.data?.createRequest?.errors) {
           toast({
             title: "Server Error",
-            description: response.data.createRequest.errors[0].message,
+            description: response?.data?.createRequest?.errors[0]?.message,
             position: "bottom",
             variant: "left-accent",
             isClosable: true,
             status: "error",
           });
         }
-        if(!response.data.createRequest.errors){
+        if(!response?.data?.createRequest?.errors){
             toast({
               title: "Request Sent",
               description:
@@ -280,10 +280,10 @@ const LinkRequestModal: FC<LinkRequestModalProps> = ({
         }
         console.log(response);
       } catch(error: any) {
-        console.log(error)
+        console.log(error.message)
         toast({
           title: "Server Error",
-          description: error,
+          description: error.message,
           position: "bottom",
           variant: "left-accent",
           isClosable: true,
