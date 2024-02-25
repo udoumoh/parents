@@ -212,12 +212,12 @@ const SearchStudentModal: FC<SearchStudentModalProps> = ({isSearchOpen, onSearch
       try {
         const response = await search?.getStudent || [];
         const data = response.map((student: any) => ({
-          name: student.firstName + " " + student.lastName,
-          age: student.ageInput,
-          className: student.classroom.classroom.className,
-          gender: student.gender,
-          profileImageUrl: student.profileImgUrl,
-          id: student.id,
+          name: student?.firstName + " " + student.lastName,
+          age: student?.ageInput,
+          className: student?.classroom?.classroom?.className || "",
+          gender: student?.gender,
+          profileImageUrl: student?.profileImgUrl,
+          id: student?.id,
         }));
         setStudentData(data)
       } catch (error) {
