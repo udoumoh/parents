@@ -91,6 +91,7 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({
           const uploadedImageUrl = response.data.secure_url;
           const uploadedFolder = folder;
           onUpload(uploadedImageUrl, uploadedFolder);
+          onModalClose()
           console.log("Folder: ", folder);
         } catch (error) {
           if (error) {
