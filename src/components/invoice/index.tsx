@@ -12,24 +12,15 @@ import {
   ScaleFade,
   useDisclosure,
   Image,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
   Button,
 } from "@chakra-ui/react";
 import { IoReceiptOutline } from "react-icons/io5";
 import { FaCheck } from "react-icons/fa6";
 import { IoClose } from "react-icons/io5";
+import AcceptInvoiceModal from "../shared/acceptInvoiceModal";
 
 interface InvoiceItemProps {
   studentInvoice: StudentInvoiceProps;
-  mouseEnter: () => void; // Define the type for mouseEnter
-  mouseLeave: () => void; // Define the type for mouseLeave
-  hovered: boolean;
 }
 interface InvoiceProps {}
 
@@ -38,16 +29,12 @@ interface StudentInvoiceProps {
   year: string;
   billType: string;
   amountPaid: string;
+  id:number;
 }
 
 const InvoiceItem: FC<InvoiceItemProps> = ({
-  studentInvoice,
-  mouseEnter,
-  mouseLeave,
-  hovered,
+  studentInvoice
 }) => {
-  
-  const { isOpen,  onToggle } = useDisclosure();
   const { isOpen: isModalOpen, onOpen: onModalOpen, onClose: onModalClose } = useDisclosure();
   return (
     <Box
@@ -56,14 +43,6 @@ const InvoiceItem: FC<InvoiceItemProps> = ({
       rounded={"lg"}
       p={"0.4rem"}
       w={"full"}
-      onMouseEnter={() => {
-        mouseEnter();
-        onToggle();
-      }}
-      onMouseLeave={() => {
-        mouseLeave();
-        onToggle();
-      }}
       mb={"1rem"}
     >
       <Box backgroundColor={"#E2E2E2"} rounded={"lg"} p={"0.6rem"} pb={"2rem"}>
@@ -106,8 +85,7 @@ const InvoiceItem: FC<InvoiceItemProps> = ({
         <Text color={"#C2C2C2"} fontSize={"2xs"}>
           Generated on 14th Jan, 2024
         </Text>
-        <ScaleFade initialScale={0.9} in={isOpen}>
-          <Flex gap={3} display={hovered ? "flex" : "none"}>
+          <Flex gap={3}>
             <Tooltip
               hasArrow
               label="Accept Invoice"
@@ -136,23 +114,7 @@ const InvoiceItem: FC<InvoiceItemProps> = ({
               />
             </Tooltip>
           </Flex>
-        </ScaleFade>
-        <Modal isOpen={isModalOpen} onClose={onModalClose}>
-          <ModalOverlay />
-          <ModalContent>
-            <ModalHeader>Modal Title</ModalHeader>
-            <ModalCloseButton />
-            <ModalBody>
-            </ModalBody>
-
-            <ModalFooter>
-              <Button colorScheme="blue" mr={3} onClick={()=>{onModalClose(); mouseLeave(); isOpen }}>
-                Close
-              </Button>
-              <Button variant="ghost">Secondary Action</Button>
-            </ModalFooter>
-          </ModalContent>
-        </Modal>
+        <AcceptInvoiceModal isOpen={isModalOpen} onOpen={onModalOpen} onClose={onModalClose} invoiceId = {studentInvoice.id}/>
       </Flex>
     </Box>
   );
@@ -165,36 +127,23 @@ const Invoice: FC<InvoiceProps> = ({}) => {
       year: "2023/2024",
       billType: "Extra-Curricular",
       amountPaid: "265,000",
+      id:1,
     },
     {
       term: "1st Term",
       year: "2023/2024",
       billType: "Extra-Curricular",
       amountPaid: "265,000",
+      id:2,
     },
     {
       term: "1st Term",
       year: "2023/2024",
       billType: "Extra-Curricular",
       amountPaid: "265,000",
+      id:3,
     },
   ];
-
-  const [hoveredStates, setHoveredStates] = useState(
-    new Array(studentInvoiceData.length).fill(false)
-  );
-
-  const handleMouseEnter = (index: number) => {
-    const newHoveredStates = [...hoveredStates];
-    newHoveredStates[index] = true;
-    setHoveredStates(newHoveredStates);
-  };
-
-  const handleMouseLeave = (index: number) => {
-    const newHoveredStates = [...hoveredStates];
-    newHoveredStates[index] = false;
-    setHoveredStates(newHoveredStates)
-  };
 
   return (
     <Box
@@ -222,9 +171,6 @@ const Invoice: FC<InvoiceProps> = ({}) => {
               <InvoiceItem
                 studentInvoice={student}
                 key={index}
-                mouseEnter={() => handleMouseEnter(index)}
-                mouseLeave={() => handleMouseLeave(index)}
-                hovered={hoveredStates[index]}
               />
             );
           })}

@@ -50,7 +50,6 @@ const Layout: React.FC<layoutProps> = ({ children }) => {
       }
   return (
     <MainNav>
-      {/* Your layout content */}
       {children}
     </MainNav>
   );
