@@ -2,7 +2,7 @@
 import { FC, useState, createContext, useContext, useEffect } from "react";
 import { useQuery } from "@apollo/client";
 import { GET_PARENT } from "@/gql/queries/queries";
-import { format } from "date-fns"
+import { format } from "date-fns";
 
 interface UserBio {
   firstName: string;
@@ -36,25 +36,25 @@ export interface UserChildren {
 }
 
 interface ParentDataProps {
-    agreedTo: boolean;
-    children: [];
-    createdAt: string;
-    email: string;
-    firstName: string;
-    folder: string;
-    id: number;
-    isDisabled: boolean;
-    isPaid: boolean;
-    isReferred: boolean;
-    isVerified: boolean;
-    lastName: string;
-    middleName: string;
-    parentRole: string;
-    phoneNumber: string;
-    profileImgUrl: string;
-    role: string;
-    status: string;
-    userId: string;
+  agreedTo: boolean;
+  children: [];
+  createdAt: string;
+  email: string;
+  firstName: string;
+  folder: string;
+  id: number;
+  isDisabled: boolean;
+  isPaid: boolean;
+  isReferred: boolean;
+  isVerified: boolean;
+  lastName: string;
+  middleName: string;
+  parentRole: string;
+  phoneNumber: string;
+  profileImgUrl: string;
+  role: string;
+  status: string;
+  userId: string;
 }
 
 interface UserContextProps {
@@ -72,20 +72,22 @@ interface UserContextProps {
   setCurrentId: React.Dispatch<React.SetStateAction<number>>;
   currentWardProfile?: UserChildren;
   parentData: ParentDataProps | undefined;
-  childData: [
-    {
-      firstName: string;
-      lastName: string;
-      greynoteNumber: string;
-      profileImage: string;
-      gender: string;
-      class: string;
-      dateOfBirth: string;
-      school: string;
-      schoollogo: string;
-      id: number;
-    }
-  ] | undefined;
+  childData:
+    | [
+        {
+          firstName: string;
+          lastName: string;
+          greynoteNumber: string;
+          profileImage: string;
+          gender: string;
+          class: string;
+          dateOfBirth: string;
+          school: string;
+          schoollogo: string;
+          id: number;
+        }
+      ]
+    | undefined;
 }
 
 const UserContext = createContext<UserContextProps | undefined>(undefined);
@@ -100,8 +102,7 @@ export const UserApiProvider: FC<UserApiProviderProps> = ({ children }) => {
     userBio: {
       firstName: "",
       lastName: "",
-      profileImage:
-        "",
+      profileImage: "",
       email: "",
       parentRole: "",
     },
@@ -117,90 +118,93 @@ export const UserApiProvider: FC<UserApiProviderProps> = ({ children }) => {
         school: "",
         schoollogo: "",
         id: 0,
-      }
+      },
     ],
   });
   const [parentData, setParentData] = useState<ParentDataProps | undefined>(
     undefined
   );
-  const [currentId, setCurrentId] = useState(0);
   const [childData, setChildData] = useState<
-  | [
-      {
-        firstName: string;
-        lastName: string;
-        greynoteNumber: string;
-        profileImage: string;
-        gender: string;
-        class: string;
-        dateOfBirth: string;
-        school: string;
-        schoollogo: string;
-        id: number;
-      }
-    ]
-  | undefined
->(undefined);
+    | [
+        {
+          firstName: string;
+          lastName: string;
+          greynoteNumber: string;
+          profileImage: string;
+          gender: string;
+          class: string;
+          dateOfBirth: string;
+          school: string;
+          schoollogo: string;
+          id: number;
+        }
+      ]
+    | undefined
+  >(undefined);
+  const [currentId, setCurrentId] = useState<number>(
+    childData?.[0]?.id || 0
+  );
+
 
   const updateUserBio = (newBio: any) => {
     setProfileData((previousData) => {
-      return{
+      return {
         ...previousData,
-        userBio: newBio
-      }
-    })
-  }
+        userBio: newBio,
+      };
+    });
+  };
 
   const capitalizeFirstLetter = (name: string) => {
     if (name?.length === 0) {
-      return name; // or throw an error, depending on your requirements
+      return name;
     }
 
     const newName = name[0].toUpperCase() + name.substring(1);
     return newName;
   };
 
-
   useEffect(() => {
-      const fetchData = async () => {
-        try {
-          const response = (await parent) || [];
-          console.log(response)
-          setParentData(response?.parent?.parent)
-          const newData = {
-            firstName: capitalizeFirstLetter(response?.parent?.parent?.firstName),
-            lastName: capitalizeFirstLetter(response?.parent?.parent?.lastName),
-            profileImage: response?.parent?.parent?.profileImgUrl,
-            email: response?.parent?.parent?.email,
-            parentRole:response?.parent?.parent?.parentRole,
-          };
+    const fetchData = async () => {
+      try {
+        const response = (await parent) || [];
+        console.log(response);
+        setParentData(response?.parent?.parent);
+        const newData = {
+          firstName: capitalizeFirstLetter(response?.parent?.parent?.firstName),
+          lastName: capitalizeFirstLetter(response?.parent?.parent?.lastName),
+          profileImage: response?.parent?.parent?.profileImgUrl,
+          email: response?.parent?.parent?.email,
+          parentRole: response?.parent?.parent?.parentRole,
+        };
 
-          const userChildren = (response?.parent?.parent?.children || []).map(
-            (child: any, index: number) => ({
-              firstName: child.firstName || "",
-              lastName: child.lastName || "",
-              greynoteNumber: child.grayId || "",
-              profileImage: child.profileImgUrl || "",
-              gender: child.gender || "",
-              class: child?.classroom?.classroom?.className || "",
-              dateOfBirth: format(new Date(child?.birthDate), 'do MMMM yyyy') || "",
-              school: child?.school?.school?.schoolName || 0,
-              schoollogo: child?.school?.school?.logoImgUrl || 0,
-              id: child.id || 0,
-            })
-          );
+        const userChildren = (response?.parent?.parent?.children || []).map(
+          (child: any) => ({
+            firstName: child.firstName || "",
+            lastName: child.lastName || "",
+            greynoteNumber: child.grayId || "",
+            profileImage: child.profileImgUrl || "",
+            gender: child.gender || "",
+            class: child?.classroom?.classroom?.className || "",
+            dateOfBirth:
+              format(new Date(child?.birthDate), "do MMMM yyyy") || "",
+            school: child?.school?.school?.schoolName || 0,
+            schoollogo: child?.school?.school?.logoImgUrl || 0,
+            id: child.id || 0,
+          })
+        );
 
-          setChildData(userChildren);
-          
-          updateUserBio(newData)
-        } catch (error) {
-          console.error("Error fetching data:", error);
-        }
-      };
+        setChildData(userChildren);
 
-      const storedId = localStorage.getItem("currentId");
-      setCurrentId(parseInt(storedId ?? `${currentId}`, 10));
-      fetchData()
+        updateUserBio(newData);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    const storedId = localStorage.getItem("currentId");
+    setCurrentId(parseInt(storedId ?? `${currentId}`, 10));
+    fetchData();
   }, [parent, currentId]);
 
   const currentWardProfile = (childData || []).find(
@@ -223,7 +227,6 @@ export const UserApiProvider: FC<UserApiProviderProps> = ({ children }) => {
     </UserContext.Provider>
   );
 };
-
 
 export const useUserAPI = () => {
   const context = useContext(UserContext);
