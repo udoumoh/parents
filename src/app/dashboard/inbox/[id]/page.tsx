@@ -13,7 +13,7 @@ const Chat: FC<chatProps> = ({ params }: { params: { id: string } }) => {
     useUserAPI();
   const [wardProfile, setWardprofile] = useState(profileData.userChildren);
   const message = wardProfile.find((item: any) => item.id === currentId);
-  const chatMessage = message?.chats.find((item: any) => item.id === Number(params.id)) || {
+  const chatMessage = {
     profileImage: "",
     firstName: "",
     lastName: "",
