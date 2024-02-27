@@ -72,20 +72,20 @@ interface UserContextProps {
   setCurrentId: React.Dispatch<React.SetStateAction<number>>;
   currentWardProfile?: UserChildren;
   parentData: ParentDataProps | undefined;
-  // childData: [
-  //   {
-  //     firstName: string;
-  //     lastName: string;
-  //     greynoteNumber: string;
-  //     profileImage: string;
-  //     gender: string;
-  //     class: string;
-  //     dateOfBirth: string;
-  //     school: string;
-  //     schoollogo: string;
-  //     id: number;
-  //   }
-  // ] | undefined;
+  childData: [
+    {
+      firstName: string;
+      lastName: string;
+      greynoteNumber: string;
+      profileImage: string;
+      gender: string;
+      class: string;
+      dateOfBirth: string;
+      school: string;
+      schoollogo: string;
+      id: number;
+    }
+  ] | undefined;
 }
 
 const UserContext = createContext<UserContextProps | undefined>(undefined);
@@ -216,6 +216,7 @@ export const UserApiProvider: FC<UserApiProviderProps> = ({ children }) => {
         setCurrentId,
         currentWardProfile,
         parentData,
+        childData,
       }}
     >
       {children}
