@@ -195,15 +195,13 @@ export const UserApiProvider: FC<UserApiProviderProps> = ({ children }) => {
         );
 
         setChildData(userChildren);
-
+        setCurrentId(userChildren[0].id);
         updateUserBio(newData);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
 
-    const storedId = localStorage.getItem("currentId");
-    setCurrentId(parseInt(storedId ?? `${currentId}`, 10));
     fetchData();
   }, [parent, currentId]);
 
