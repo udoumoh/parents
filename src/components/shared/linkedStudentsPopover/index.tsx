@@ -66,7 +66,7 @@ const LinkedStudentsPopover: FC<LinkedStudentsPopoverProps> = ({}) => {
                   justifyContent={"center"}
                   gap={2}
                   bgColor={
-                    currentId === profileData.userChildren[index].id
+                    currentId === ward.id
                       ? "#3F999830"
                       : ""
                   }
@@ -81,12 +81,12 @@ const LinkedStudentsPopover: FC<LinkedStudentsPopoverProps> = ({}) => {
                   onClick={() => {
                     localStorage.setItem(
                       "currentId",
-                      `${profileData.userChildren[index].id}`
+                      `${ward.id}`
                     );
                     setCurrentId(
                       parseInt(
                         localStorage.getItem("currentId") ??
-                          `${profileData.userChildren[0]?.id}`,
+                          `${childData[0].id}`,
                         10
                       )
                     );
