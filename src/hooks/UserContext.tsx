@@ -1,12 +1,12 @@
 "use client";
 import { FC, useState, createContext, useContext, useEffect } from "react";
-import { gql, useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import { GET_PARENT } from "@/gql/queries/queries";
+import { formatDate } from "date-fns"
 
 interface UserBio {
   firstName: string;
   lastName: string;
-  // middleName: string;
   profileImage: string;
   email: string;
   parentRole: string;
@@ -17,28 +17,22 @@ export interface UserChildren {
   lastName: string;
   greynoteNumber: string;
   profileImage: string;
-  feesDefault: number;
-  suspension: number;
-  expulsion: number;
   gender: string;
   class: string;
   dateOfBirth: string;
-  dateEnrolled: string;
-  expectedGraduation: string;
-  dateRegistered: string;
   school: string;
   schoollogo: string;
   id: number;
-  chats: {
-    profileImage: string;
-    firstName: string;
-    lastName: string;
-    schoolName: string;
-    lastMessage: string;
-    timeSent: string;
-    position: string;
-    id: number;
-  }[];
+  // chats: {
+  //   profileImage: string;
+  //   firstName: string;
+  //   lastName: string;
+  //   schoolName: string;
+  //   lastMessage: string;
+  //   timeSent: string;
+  //   position: string;
+  //   id: number;
+  // }[];
 }
 
 interface ParentDataProps {
@@ -78,6 +72,20 @@ interface UserContextProps {
   setCurrentId: React.Dispatch<React.SetStateAction<number>>;
   currentWardProfile?: UserChildren;
   parentData: ParentDataProps | undefined;
+  // childData: [
+  //   {
+  //     firstName: string;
+  //     lastName: string;
+  //     greynoteNumber: string;
+  //     profileImage: string;
+  //     gender: string;
+  //     class: string;
+  //     dateOfBirth: string;
+  //     school: string;
+  //     schoollogo: string;
+  //     id: number;
+  //   }
+  // ] | undefined;
 }
 
 const UserContext = createContext<UserContextProps | undefined>(undefined);
@@ -92,7 +100,6 @@ export const UserApiProvider: FC<UserApiProviderProps> = ({ children }) => {
     userBio: {
       firstName: "",
       lastName: "",
-      // middleName:"",
       profileImage:
         "",
       email: "",
@@ -100,122 +107,40 @@ export const UserApiProvider: FC<UserApiProviderProps> = ({ children }) => {
     },
     userChildren: [
       {
-        firstName: "Chibuzor",
-        lastName: "Ali-Williams",
-        greynoteNumber: "GN24002",
-        profileImage: "/images/profileImg.jpeg",
-        feesDefault: 5,
-        suspension: 1,
-        expulsion: 0,
-        gender: "Male",
-        class: "Jss 1",
-        dateOfBirth: "15th July 2010",
-        dateEnrolled: "13th August 2019",
-        expectedGraduation: "15th July 2025",
-        dateRegistered: "21st July 2023",
-        school: "Green Springs High School",
-        schoollogo: "/images/schoollogo.png",
-        id: 1,
-        chats: [
-          {
-            profileImage:
-              "https://th.bing.com/th/id/OIP.KdBSw8TPL34eU6T7bjhpAAHaLH?rs=1&pid=ImgDetMain",
-            firstName: "Mayowa",
-            lastName: "Chinedu",
-            schoolName: "Greeenfield High School",
-            lastMessage: "Oga Mayowa, my childs result is still not verified",
-            timeSent: "3m",
-            position: "Admin",
-            id: 1,
-          },
-          {
-            profileImage:
-              "https://th.bing.com/th/id/OIP._glmrtIyzUtogxZCkpiQBwHaLH?rs=1&pid=ImgDetMain",
-            firstName: "Mary-Anne",
-            lastName: "Ayodele",
-            schoolName: "Greeenfield High School",
-            lastMessage:
-              "Ma, Chibuzor is still owing the school almost 300 thousand naira",
-            timeSent: "17m",
-            position: "Bursar",
-            id: 2,
-          },
-          {
-            profileImage:
-              "https://th.bing.com/th/id/R.310437da9c381f5c5342434ff6a31107?rik=0CsDgDc9kcOspw&pid=ImgRaw&r=0",
-            firstName: "Zainab",
-            lastName: "Kayode",
-            schoolName: "Greeenfield High School",
-            lastMessage: "I am not authorized to verify any student’s result",
-            timeSent: "Yesterday",
-            position: "Teacher",
-            id: 3,
-          },
-        ],
-      },
-      {
-        firstName: "Chiamaka",
-        lastName: "Ali-Williams",
-        greynoteNumber: "GN24025",
-        profileImage:
-          "https://th.bing.com/th/id/R.5dcfec967642191443ae9a4b04c55d47?rik=oahz060yDmOp%2bA&pid=ImgRaw&r=0",
-        feesDefault: 2,
-        suspension: 3,
-        expulsion: 0,
-        gender: "Female",
-        class: "SSS 2",
-        dateOfBirth: "15th July 2004",
-        dateEnrolled: "13th August 2014",
-        expectedGraduation: "15th July 2020",
-        dateRegistered: "21st July 2018",
-        school: "Green Springs High School",
-        schoollogo: "/images/schoollogo.png",
-        id: 2,
-        chats: [
-          {
-            profileImage:
-              "https://th.bing.com/th/id/OIP.KdBSw8TPL34eU6T7bjhpAAHaLH?rs=1&pid=ImgDetMain",
-            firstName: "Tunde",
-            lastName: "Oluwagbenga",
-            schoolName: "Luthran High School",
-            lastMessage: "Oga Tunde, my childs result is still not verified",
-            timeSent: "3m",
-            position: "Admin",
-            id: 1,
-          },
-          {
-            profileImage:
-              "https://th.bing.com/th/id/OIP._glmrtIyzUtogxZCkpiQBwHaLH?rs=1&pid=ImgDetMain",
-            firstName: "Grace",
-            lastName: "Owoade",
-            schoolName: "Luthran High School",
-            lastMessage:
-              "Ma, chiamaka is still not doing her homework, please assis",
-            timeSent: "17m",
-            position: "Bursar",
-            id: 2,
-          },
-          {
-            profileImage:
-              "https://th.bing.com/th/id/R.310437da9c381f5c5342434ff6a31107?rik=0CsDgDc9kcOspw&pid=ImgRaw&r=0",
-            firstName: "George",
-            lastName: "Saviour",
-            schoolName: "Luthran High School",
-            lastMessage: "Your child was not in school today, hope all is well.",
-            timeSent: "Yesterday",
-            position: "Teacher",
-            id: 3,
-          },
-        ],
-      },
+        firstName: "",
+        lastName: "",
+        greynoteNumber: "",
+        profileImage: "",
+        gender: "",
+        class: "",
+        dateOfBirth: "",
+        school: "",
+        schoollogo: "",
+        id: 0,
+      }
     ],
   });
-
   const [parentData, setParentData] = useState<ParentDataProps | undefined>(
     undefined
   );
-
   const [currentId, setCurrentId] = useState(0);
+  const [childData, setChildData] = useState<
+  | [
+      {
+        firstName: string;
+        lastName: string;
+        greynoteNumber: string;
+        profileImage: string;
+        gender: string;
+        class: string;
+        dateOfBirth: string;
+        school: string;
+        schoollogo: string;
+        id: number;
+      }
+    ]
+  | undefined
+>(undefined);
 
   const updateUserBio = (newBio: any) => {
     setProfileData((previousData) => {
@@ -245,13 +170,27 @@ export const UserApiProvider: FC<UserApiProviderProps> = ({ children }) => {
           const newData = {
             firstName: capitalizeFirstLetter(response?.parent?.parent?.firstName),
             lastName: capitalizeFirstLetter(response?.parent?.parent?.lastName),
-            // middleName: response?.parent?.middleName,
             profileImage: response?.parent?.parent?.profileImgUrl,
             email: response?.parent?.parent?.email,
             parentRole:response?.parent?.parent?.parentRole,
           };
-                    
-          console.log(response);
+
+          const userChildren = (response?.parent?.parent?.children || []).map(
+            (child: any, index: number) => ({
+              firstName: child.firstName || "",
+              lastName: child.lastName || "",
+              greynoteNumber: child.grayId || "",
+              profileImage: child.profileImgUrl || "",
+              gender: child.gender || "",
+              class: child?.classroom?.classroom?.className || "",
+              dateOfBirth: formatDate(new Date(child?.birthDate), 'do MMMM yyyy') || "",
+              school: child?.school?.school?.schoolName || 0,
+              schoollogo: child?.school?.school?.logoImgUrl || 0,
+              id: child.id || 0,
+            })
+          );
+
+          setChildData(userChildren);
           
           updateUserBio(newData)
         } catch (error) {
@@ -264,8 +203,8 @@ export const UserApiProvider: FC<UserApiProviderProps> = ({ children }) => {
       fetchData()
   }, [parent, currentId]);
 
-  const currentWardProfile = profileData.userChildren.find(
-    (wardProfile) => wardProfile.id === currentId
+  const currentWardProfile = (childData || []).find(
+    (child) => child.id === currentId
   );
 
   return (
