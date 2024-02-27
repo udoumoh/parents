@@ -2,7 +2,7 @@
 import { FC, useState, createContext, useContext, useEffect } from "react";
 import { useQuery } from "@apollo/client";
 import { GET_PARENT } from "@/gql/queries/queries";
-import { formatDate } from "date-fns"
+import { format } from "date-fns"
 
 interface UserBio {
   firstName: string;
@@ -183,7 +183,7 @@ export const UserApiProvider: FC<UserApiProviderProps> = ({ children }) => {
               profileImage: child.profileImgUrl || "",
               gender: child.gender || "",
               class: child?.classroom?.classroom?.className || "",
-              dateOfBirth: formatDate(new Date(child?.birthDate), 'do MMMM yyyy') || "",
+              dateOfBirth: format(new Date(child?.birthDate), 'do MMMM yyyy') || "",
               school: child?.school?.school?.schoolName || 0,
               schoollogo: child?.school?.school?.logoImgUrl || 0,
               id: child.id || 0,
