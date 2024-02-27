@@ -12,6 +12,7 @@ import {
   useToast,
 } from '@chakra-ui/react'
 import { BarLoader } from 'react-spinners';
+import { useUserAPI } from '@/hooks/UserContext';
 
 interface layoutProps {
   children: ReactNode;
@@ -21,6 +22,7 @@ const Layout: React.FC<layoutProps> = ({ children }) => {
       const toast = useToast()
       const router = useRouter()
       const { data: parent, loading } = useQuery(GET_PARENT);
+      const {parentData} = useUserAPI()
 
       try{
         if (loading) return (
@@ -37,7 +39,10 @@ const Layout: React.FC<layoutProps> = ({ children }) => {
             </Box>
           </Center>
         );
-        if (!loading && parent?.parent?.errors !== null) router.push("/signin");
+        if (!loading && parent?.parent?.errors !== null) window.location.replace("/signin");
+        if (parentData?.children.length === 0) {
+          window.location.replace("/dashboard");
+        }
       } catch (e: any) {
         toast({
           title: "Error",

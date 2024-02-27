@@ -9,12 +9,6 @@ interface LayoutProps {
 }
 
 const Layout: FC<LayoutProps> = ({children}) => {
-  const router = useRouter()
-  const {parentData} = useUserAPI()
-
-  if(parentData?.children.length === 0){
-    router.push("/dashboard")
-  }
   return (
     <SidebarWithHeader>
     {children}
