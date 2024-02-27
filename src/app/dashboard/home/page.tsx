@@ -4,7 +4,10 @@ import { redirect } from "next/navigation";
 interface PageProps {}
 
 const Page: FC<PageProps> = ({}) => {
-  redirect("/dashboard/home/overview");
+  // redirect("/dashboard/home/overview");
+  return(
+    <></>
+  )
 };
 
 export default Page;
