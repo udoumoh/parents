@@ -252,7 +252,7 @@ const AcceptInvoiceModal: FC<AcceptInvoiceModalProps> = ({
                   </FormControl>
 
                   <Button
-                    mt={'2rem'}
+                    my={'2rem'}
                     w={"full"}
                     py={"1.5rem"}
                     backgroundColor={"#007C7B"}
