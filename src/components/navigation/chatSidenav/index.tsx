@@ -119,7 +119,7 @@ const ChatSidenav: FC<ChatSidenavProps> = ({ children }) => {
     useUserAPI();
   const [wardProfile, setWardprofile] = useState(profileData.userChildren);
   const message = wardProfile.find((item: any) => item.id === currentId);
-  const chats = message?.chats || [];
+  const chats = [];
   
   return (
     <>
@@ -258,11 +258,11 @@ const ChatSidenav: FC<ChatSidenavProps> = ({ children }) => {
             Inbox
           </Text>
 
-          <Box px={"0.8rem"} mt={"1rem"}>
+          {/* <Box px={"0.8rem"} mt={"1rem"}>
             {chats.map((item, index) => {
               return <ChatContactItem chat={item} key={index} />;
             })}
-          </Box>
+          </Box> */}
         </Box>
         <Box
           flex={"1"}
