@@ -92,14 +92,7 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
         mx={"0.5rem"}
         gap={2}
       >
-        <Box display={"flex"} w={"full"} mb={10} alignItems={"center"}>
-          <LinkedStudentsPopover />
-          <CloseButton
-            display={{ base: "flex", md: "none" }}
-            onClick={onClose}
-          />
-          <SearchStudentModal isSearchOpen={isModalOpen} onSearchOpen={onModalOpen} onSearchClose={onModalClose} />
-        </Box>
+          <LinkedStudentsPopover onClose={onClose}/>
         {LinkItems.map((item, index) => {
           return (
             <NavItem

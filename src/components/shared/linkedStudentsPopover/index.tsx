@@ -16,12 +16,13 @@ import {
 import { BsThreeDots } from "react-icons/bs";
 import { useUserAPI } from '@/hooks/UserContext';
 import { AiOutlinePlus } from "react-icons/ai";
+import SearchStudentModal from '../searchStudentModal';
 
 interface LinkedStudentsPopoverProps {
-  
+  onClose: () => void;
 }
 
-const LinkedStudentsPopover: FC<LinkedStudentsPopoverProps> = ({}) => {
+const LinkedStudentsPopover: FC<LinkedStudentsPopoverProps> = ({onClose}) => {
     const {
       isOpen: isModalOpen,
       onOpen: onModalOpen,
@@ -30,6 +31,7 @@ const LinkedStudentsPopover: FC<LinkedStudentsPopoverProps> = ({}) => {
     const { profileData, currentId, setCurrentId, currentWardProfile, childData } =
       useUserAPI();
   return (
+    <Box display={"flex"} w={"full"} mb={10} alignItems={"center"}>
       <Popover isLazy matchWidth={true}>
         <PopoverTrigger>
           <Box
@@ -65,11 +67,7 @@ const LinkedStudentsPopover: FC<LinkedStudentsPopoverProps> = ({}) => {
                   alignItems={"center"}
                   justifyContent={"center"}
                   gap={2}
-                  bgColor={
-                    currentId === ward.id
-                      ? "#3F999830"
-                      : ""
-                  }
+                  bgColor={currentId === ward.id ? "#3F999830" : ""}
                   rounded={"md"}
                   py={"0.5rem"}
                   mb={"0.4rem"}
@@ -79,10 +77,7 @@ const LinkedStudentsPopover: FC<LinkedStudentsPopoverProps> = ({}) => {
                   }}
                   key={index}
                   onClick={() => {
-                    localStorage.setItem(
-                      "currentId",
-                      `${ward.id}`
-                    );
+                    localStorage.setItem("currentId", `${ward.id}`);
                     setCurrentId(
                       parseInt(
                         localStorage.getItem("currentId") ??
@@ -130,6 +125,13 @@ const LinkedStudentsPopover: FC<LinkedStudentsPopoverProps> = ({}) => {
           </PopoverBody>
         </PopoverContent>
       </Popover>
+      <CloseButton display={{ base: "flex", md: "none" }} onClick={onClose} />
+      <SearchStudentModal
+        isSearchOpen={isModalOpen}
+        onSearchOpen={onModalOpen}
+        onSearchClose={onModalClose}
+      />
+    </Box>
   );
 }
 
