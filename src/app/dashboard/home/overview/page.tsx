@@ -1,17 +1,14 @@
 'use client'
-import { FC, useEffect } from "react";
+import { FC } from "react";
 import {
   Box,
   Flex,
   Text,
   Image,
-  Button,
   Grid,
   Avatar,
-  Card,
 } from "@chakra-ui/react";
 import Attendance from "@/components/attendance";
-import { BsArrowRightShort } from "react-icons/bs";
 import Invoice from "@/components/invoice";
 import { useUserAPI } from "@/hooks/UserContext";
 
@@ -35,7 +32,6 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
           overflow={"hidden"}
           backgroundColor={"#F4FFFB"}
           p={"1rem"}
-          // bgImage={"/images/childcard.png"}
           bgSize={"cover"}
           my={{ base: "10px", md: "0" }}
         >
@@ -53,7 +49,7 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
               </Box>
             </Box>
             <Image
-              src="/images/schoollogo.png"
+              src={currentWardProfile?.schoollogo}
               alt="profileImg"
               w={"4.5rem"}
               h={"4.5rem"}
