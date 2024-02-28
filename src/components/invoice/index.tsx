@@ -13,6 +13,8 @@ import {
   useDisclosure,
   Image,
   Button,
+  Wrap,
+  WrapItem,
 } from "@chakra-ui/react";
 import { IoReceiptOutline } from "react-icons/io5";
 import { FaCheck } from "react-icons/fa6";
@@ -165,16 +167,17 @@ const Invoice: FC<InvoiceProps> = ({}) => {
       <Divider color={"#C2C2C2"} my={"0.8rem"} />
 
       {studentInvoiceData.length > 0 ? (
-        <Box display={{ base: "column", xl: "flex" }} gap={3}>
+        <Wrap spacing={'15px'}>
           {studentInvoiceData.map((student, index) => {
             return (
-              <InvoiceItem
-                studentInvoice={student}
-                key={index}
-              />
+              <WrapItem key={index} w={'auto'}>
+                <InvoiceItem
+                  studentInvoice={student}
+                />
+              </WrapItem>
             );
           })}
-        </Box>
+        </Wrap>
       ) : (
         <Box display={'flex'} flexDir={'column'} alignItems={'center'} justifyContent={'center'} mt={'3rem'}>
           <Image src="/images/emptyStateInvoice.svg" alt="No invoice card" width={'300px'}/>
