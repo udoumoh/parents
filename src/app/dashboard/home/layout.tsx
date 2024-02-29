@@ -9,11 +9,11 @@ interface LayoutProps {
 }
 
 const Layout: FC<LayoutProps> = ({children}) => {
-  return (
-    <SidebarWithHeader>
-    {children}
-    </SidebarWithHeader>
-  );
+  const {parentData} = useUserAPI()
+  if(parentData?.children.length === 0){
+    window.location.replace('/dashboard')
+  }
+  return <SidebarWithHeader>{children}</SidebarWithHeader>;
 }
 
 export default Layout
