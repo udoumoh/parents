@@ -40,9 +40,6 @@ const Layout: React.FC<layoutProps> = ({ children }) => {
           </Center>
         );
         if (!loading && parent?.parent?.errors !== null) window.location.replace("/signin");
-        // if (parentData?.children.length === 0) {
-        //   window.location.replace("/dashboard");
-        // }
       } catch (e: any) {
         toast({
           title: "Error",
