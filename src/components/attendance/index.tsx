@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, useEffect } from 'react'
 import { 
     Box,
     Text,
@@ -9,9 +9,11 @@ import {
     Avatar,
     Image,
  } from '@chakra-ui/react';
-import { BsArchive, BsDot } from "react-icons/bs";
+import { BsArchive } from "react-icons/bs";
 import { PrimaryBadge } from '../shared/badge';
 import { SecondaryBadge } from '../shared/badge';
+import { useQuery } from '@apollo/client';
+import { FETCH_STUDENT_ATTENDANCE } from '@/gql/queries/queries';
 
 interface AttendanceProps {
   
@@ -19,6 +21,17 @@ interface AttendanceProps {
 
 
 const Attendance: FC<AttendanceProps> = ({}) => {
+  const {data: getattendance} = useQuery(FETCH_STUDENT_ATTENDANCE)
+
+  useEffect(() => {
+    try{
+      const response = getattendance
+      console.log(response)
+    } catch(err: any){
+      console.log(err.message)
+    }
+  })
+
     const attendance = [
       {
         id: 1,
