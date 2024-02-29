@@ -39,7 +39,7 @@ const Layout: React.FC<layoutProps> = ({ children }) => {
             </Box>
           </Center>
         );
-        if (!loading && parent?.parent?.errors !== null) window.location.replace("/signin");
+        // if (!loading && parent?.parent?.errors !== null) window.location.replace("/signin");
         // if (parentData?.children.length === 0) {
         //   window.location.replace("/dashboard");
         // }
