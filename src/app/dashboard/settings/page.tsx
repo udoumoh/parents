@@ -55,7 +55,7 @@ const LegendBadge: React.FC<LegendBadgeProps> = ({ role, mt, ...rest }) => {
 const SettingsPage: FC<SettingsPageProps> = ({}) => {
     const router = useRouter()
     const [logoutParent] = useMutation(LOGOUT_PARENTS)
-    const { profileData, parentData } = useUserAPI()
+    const { profileData, parentData, childData } = useUserAPI()
     const [wardData, setWarddata] = useState([
       {
         name: "Chibuzor Ali-Williams",
@@ -123,7 +123,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
             justifyContent={"center"}
           >
             <Avatar
-              src={profileData?.userBio?.profileImage}
+              src={parentData?.profileImgUrl}
               size={{ base: "xl", lg: "2xl" }}
               pointerEvents={"none"}
             />
@@ -135,7 +135,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
             >
               <Flex alignItems={"center"} gap={2}>
                 <Text fontSize={{ base: "lg", lg: "2xl" }} fontWeight={"bold"}>
-                  {`${profileData?.userBio?.firstName} ${profileData?.userBio?.lastName}`}
+                  {`${parentData?.firstName} ${parentData?.lastName}`}
                 </Text>
                 <Image
                   src="/images/verifiedtag.png"
@@ -147,7 +147,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
               </Flex>
 
               <LegendBadge
-                role={profileData.userBio.parentRole}
+                role={parentData?.parentRole || ""}
                 mt={{ base: "0.3rem", lg: "0.8rem" }}
               />
 
@@ -162,10 +162,8 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
           <Flex gap={5}>
             <Button
               backgroundColor={"#005D5D"}
-              // size={"sm"}
               color={"#fff"}
               colorScheme="teal"
-              // fontSize={"xs"}
               px={"1rem"}
             >
               Edit Profile
@@ -192,7 +190,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
               gap={{ base: "5", lg: "20" }}
               mt={"1rem"}
             >
-              {wardData.map((item, index) => {
+              {childData?.map((item, index) => {
                 return (
                   <Flex
                     alignItems={"center"}
@@ -207,7 +205,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                     />
                     <Box lineHeight={"20px"}>
                       <Text fontWeight={"600"} fontSize={"sm"}>
-                        {item.name}
+                        {item.firstName} {" "} {item.lastName}
                       </Text>
                       <Text
                         fontSize={"12px"}
