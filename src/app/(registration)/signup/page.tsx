@@ -234,6 +234,7 @@ const handleImageUpload = (
   setFolder(uploadedFolder); // Set the folder received from the upload component
   console.log(profileUrl);
 };
+console.log("This is the profileimageurl", profileUrl)
 
   const handleTabsChange = () => {
     setTabIndex(tabIndex + 1);
