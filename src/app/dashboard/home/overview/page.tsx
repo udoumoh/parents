@@ -15,7 +15,10 @@ import { useUserAPI } from "@/hooks/UserContext";
 interface DashboardPageProps {}
 
 const DashboardPage: FC<DashboardPageProps> = ({}) => {
-    const { currentWardProfile } = useUserAPI();
+    const { currentWardProfile, parentData } = useUserAPI();
+    if(parentData?.children.length === 0){
+      window.location.replace('/dashboard')
+    }
 
   return (
     <Flex gap={5} flexDir={"column"} mb={{ base: "8rem", lg: "5rem" }}>

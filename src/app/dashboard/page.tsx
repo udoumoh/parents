@@ -29,7 +29,7 @@ const Page: FC<pageProps> = ({}) => {
     } = useDisclosure();
 
     // if(parentData?.children.length !== 0){
-      router.push("/dashboard/home/overview")
+      // router.push("/dashboard/home/overview")
     // }
     
   return (
