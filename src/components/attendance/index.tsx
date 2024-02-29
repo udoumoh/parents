@@ -26,7 +26,7 @@ const Attendance: FC<AttendanceProps> = ({}) => {
   useEffect(() => {
     try{
       const response = getattendance
-      console.log(response)
+      console.log("attendance data", response)
     } catch(err: any){
       console.log(err.message)
     }
