@@ -135,7 +135,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
             >
               <Flex alignItems={"center"} gap={2}>
                 <Text fontSize={{ base: "lg", lg: "2xl" }} fontWeight={"bold"}>
-                  {`${profileData.userBio.firstName} ${profileData.userBio.lastName}`}
+                  {`${parentData?.firstName} ${parentData?.lastName}`}
                 </Text>
                 <Image
                   src="/images/verifiedtag.png"
