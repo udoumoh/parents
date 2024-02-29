@@ -651,7 +651,7 @@ console.log("This is the profileimageurl", profileUrl)
                             onModalClose={onClose}
                             type="parentImg"
                             imageFolder={folder}
-                            onUpload={handleImageUpload}
+                            onUpload={() => {handleProfileUrlChange; handleImageUpload}}
                           />
                         </Flex>
 
