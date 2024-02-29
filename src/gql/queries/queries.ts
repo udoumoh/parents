@@ -368,3 +368,8 @@ mutation AcceptInvoice($document: String!, $fileType: String!, $amountPaid: Floa
   }
 }
 `)
+
+export const REJECT_INVOICE = gql(`
+mutation RejectInvoice($response: String!, $invoiceid: Float!) {
+  rejectInvoice(response: $response, invoiceid: $invoiceid)
+}`)

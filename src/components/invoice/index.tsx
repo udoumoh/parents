@@ -20,6 +20,7 @@ import { IoReceiptOutline } from "react-icons/io5";
 import { FaCheck } from "react-icons/fa6";
 import { IoClose } from "react-icons/io5";
 import AcceptInvoiceModal from "../shared/acceptInvoiceModal";
+import RejectInvoiceModal from "../shared/rejectinvoicemodal";
 
 interface InvoiceItemProps {
   studentInvoice: StudentInvoiceProps;
@@ -37,7 +38,12 @@ interface StudentInvoiceProps {
 const InvoiceItem: FC<InvoiceItemProps> = ({
   studentInvoice
 }) => {
-  const { isOpen: isModalOpen, onOpen: onModalOpen, onClose: onModalClose } = useDisclosure();
+  const { isOpen: isAcceptModalOpen, onOpen: onAcceptModalOpen, onClose: onAcceptModalClose } = useDisclosure();
+  const {
+    isOpen: isRejectModalOpen,
+    onOpen: onRejectModalOpen,
+    onClose: onRejectModalClose,
+  } = useDisclosure();
   return (
     <Box
       height={"100%"}
@@ -87,36 +93,48 @@ const InvoiceItem: FC<InvoiceItemProps> = ({
         <Text color={"#C2C2C2"} fontSize={"2xs"}>
           Generated on 14th Jan, 2024
         </Text>
-          <Flex gap={3}>
-            <Tooltip
-              hasArrow
-              label="Accept Invoice"
-              bg="green.300"
-              color="black"
-              placement="left-start"
-            >
-              <IconButton
-                colorScheme="green"
-                aria-label="Search database"
-                icon={<FaCheck />}
-                onClick={onModalOpen}
-              />
-            </Tooltip>
-            <Tooltip
-              hasArrow
-              label="Reject Invoice"
-              bg="red.300"
-              color="black"
-              placement="right-start"
-            >
-              <IconButton
-                colorScheme="red"
-                aria-label="Search database"
-                icon={<IoClose size="24" />}
-              />
-            </Tooltip>
-          </Flex>
-        <AcceptInvoiceModal isOpen={isModalOpen} onOpen={onModalOpen} onClose={onModalClose} invoiceId = {studentInvoice.id}/>
+        <Flex gap={3}>
+          <Tooltip
+            hasArrow
+            label="Accept Invoice"
+            bg="green.300"
+            color="black"
+            placement="left-start"
+          >
+            <IconButton
+              colorScheme="green"
+              aria-label="Search database"
+              icon={<FaCheck />}
+              onClick={onAcceptModalOpen}
+            />
+          </Tooltip>
+          <Tooltip
+            hasArrow
+            label="Reject Invoice"
+            bg="red.300"
+            color="black"
+            placement="right-start"
+          >
+            <IconButton
+              colorScheme="red"
+              aria-label="Search database"
+              icon={<IoClose size="24" />}
+              onClick={onRejectModalOpen}
+            />
+          </Tooltip>
+        </Flex>
+        <AcceptInvoiceModal
+          isOpen={isAcceptModalOpen}
+          onOpen={onAcceptModalOpen}
+          onClose={onAcceptModalClose}
+          invoiceId={studentInvoice.id}
+        />
+        <RejectInvoiceModal
+          isOpen={isRejectModalOpen}
+          onOpen={onRejectModalOpen}
+          onClose={onRejectModalClose}
+          invoiceId={studentInvoice.id}
+        />
       </Flex>
     </Box>
   );
