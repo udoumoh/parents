@@ -126,6 +126,8 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
         isClosable: true,
         status: "error",
       });
+    } finally {
+      setUploading(false);
     }
   }
 
@@ -408,6 +410,7 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
                     backgroundColor={"#007C7B"}
                     px={"3rem"}
                     _hover={{ backgroundColor: "#044141" }}
+                    isLoading={loading}
                     type="submit"
                   >
                     <Text color={"#fff"} fontWeight={"400"} fontSize={"lg"}>
