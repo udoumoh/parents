@@ -85,6 +85,7 @@ interface UserContextProps {
           school: string;
           schoollogo: string;
           id: number;
+          ageInput: number;
         }
       ]
     | undefined;
@@ -137,6 +138,7 @@ export const UserApiProvider: FC<UserApiProviderProps> = ({ children }) => {
           school: string;
           schoollogo: string;
           id: number;
+          ageInput: number;
         }
       ]
     | undefined
@@ -177,8 +179,6 @@ export const UserApiProvider: FC<UserApiProviderProps> = ({ children }) => {
           parentRole: response?.parent?.parent?.parentRole,
         };
 
-        console.log(response)
-
         const userChildren = (response?.parent?.parent?.children || []).map(
           (child: any) => ({
             firstName: child.firstName || "",
@@ -192,6 +192,7 @@ export const UserApiProvider: FC<UserApiProviderProps> = ({ children }) => {
             school: child?.school?.school?.schoolName || 0,
             schoollogo: child?.school?.school?.logoImgUrl || 0,
             id: child.id || 0,
+            age: child?.ageInput,
           })
         );
 
