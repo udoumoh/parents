@@ -160,6 +160,7 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
           const schools = (response.getSchools || []).map((school: any) => ({
             schoolname: school?.schoolName, 
             schoollogo: school?.logoImgUrl,
+            schoolId: school?.id
           }))
           setSchool(schools)
         }
@@ -167,6 +168,8 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
         console.log(error.message)
       }
   }, [getschools, toast])
+
+  console.log(school)
 
   const filteredSearchData: any = school.filter((item: any) =>
     item?.schoolname?.toLowerCase().includes(searchInput?.toLowerCase())
