@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, useState, useEffect } from "react";
 import {
   Box,
   Modal,
@@ -19,8 +19,6 @@ import {
   Button,
   Select,
   useDisclosure,
-  InputGroup,
-  InputLeftAddon,
   useToast,
   Avatar,
   Checkbox,
@@ -30,6 +28,8 @@ import { FileUpload } from "../fileUpload";
 import { useMutation } from "@apollo/client";
 import { ACCEPT_INVOICE } from "@/gql/queries/queries";
 import { useUserAPI } from "@/hooks/UserContext";
+import { useQuery } from "@apollo/client";
+import { GET_SCHOOLS } from "@/gql/queries/queries";
 
 interface UploadResultModalProps {
   isOpen: boolean;
@@ -47,18 +47,26 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
     onClose: onFileClose,
     onOpen: onFileOpen,
   } = useDisclosure();
+  const { data: getschools } = useQuery(GET_SCHOOLS);
   const [file, setFile] = useState<string>("");
   const [folder, setFolder] = useState<string>("");
   const [fileName, setFileName] = useState<string>("");
   const [summary, setSummary] = useState<string>("");
   const [loading, setUploading] = useState(false);
-  const [school, setSchool] = useState("")
+  const [school, setSchool] = useState([]);
+  const [searchInput, setSearchInput] = useState("");
+  const [selectedSchool, setSelectedSchool] = useState("");
+  const [isChecked, setCheckked] = useState(false);
   const [acceptinvoice] = useMutation(ACCEPT_INVOICE);
   const toast = useToast();
-  const {currentWardProfile} = useUserAPI()
+  const { currentWardProfile } = useUserAPI();
 
   const handleSummaryChange = (event: any) => {
-    setSummary(event.target.value);
+    setSummary(event.target.checked);
+  };
+
+  const handleCheck = () => {
+    setCheckked(!isChecked);
   };
 
   const handleFileUpload = (
@@ -93,6 +101,19 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
       });
     }
   };
+
+  const filteredSearchData: any = school.filter((item: any) =>
+    item?.schoolname?.toLowerCase().includes(searchInput?.toLowerCase())
+  );
+
+  useEffect(() => {
+    const response = getschools;
+    const schools = (response.getSchools || []).map((school: any) => ({
+      schoolname: school?.schoolName,
+      schoollogo: school?.logoImgUrl,
+    }));
+    setSchool(schools);
+  }, [getschools, toast]);
 
   return (
     <Modal
@@ -145,7 +166,12 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
               mb={"0.3rem"}
             >
               <Text fontSize={"lg"}>Select School</Text>
-              <Checkbox size={"lg"} colorScheme="green" color={"#B2B2B2"}>
+              <Checkbox
+                size={"lg"}
+                colorScheme="green"
+                color={"#B2B2B2"}
+                onChange={handleCheck}
+              >
                 Upload for current school
               </Checkbox>
             </Box>
@@ -155,8 +181,42 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
               border={"1px solid #D5D5D5"}
               rounded="md"
               backgroundColor={"#F5F5F5"}
+              onChange={(e) => {
+                setSearchInput(e.target.value);
+              }}
               _focus={{ border: "1px solid #6ACAA7" }}
+              isReadOnly={isChecked}
             />
+            {searchInput && (
+              <Box backgroundColor={"#F5F5F5"} p={"0.5rem"} shadow={"md"}>
+                {filteredSearchData.map((item: any, index: number) => {
+                  return (
+                    <Box
+                      key={index}
+                      display={"flex"}
+                      alignItems={"center"}
+                      gap={3}
+                      my={"1rem"}
+                      p={"0.5rem"}
+                      rounded={"md"}
+                      _hover={{
+                        backgroundColor: "#3F999830",
+                        cursor: "pointer",
+                        transitionDuration: "0.2s",
+                      }}
+                      onClick={() => {
+                        setSelectedSchool(item.schoolname);
+                      }}
+                    >
+                      <Avatar src={item.schoollogo} />
+                      <Text fontSize={"lg"} py={"0.5rem"}>
+                        {item.schoolname}
+                      </Text>
+                    </Box>
+                  );
+                })}
+              </Box>
+            )}
           </Box>
           <Box>
             <Formik
@@ -165,11 +225,11 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
                 docType: "",
                 file: file,
                 summary: summary,
-                school: school,
+                school: isChecked ? currentWardProfile?.school : selectedSchool,
               }}
               onSubmit={async (values, actions) => {
                 // handleSubmit(values);
-                console.log(values)
+                console.log(values);
               }}
             >
               {(props) => (

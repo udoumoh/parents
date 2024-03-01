@@ -740,3 +740,61 @@ query GetStudentInvoice($studentId: Float!) {
     }
   }
 }`)
+
+export const GET_SCHOOLS = gql(`
+query GetSchools {
+  getSchools {
+    id
+    createdAt
+    isDisabled
+    isVerified
+    schoolName
+    rcnumber
+    address
+    type
+    lgarea
+    folder
+    state
+    country
+    description
+    phonenumber
+    email
+    websiteUrl
+    instagramUrl
+    facebookUrl
+    twitterUrl
+    linkedinUrl
+    logoImgUrl
+    bannerImgUrl
+    license
+    creator {
+      errors {
+        field
+        message
+      }
+      admin {
+        id
+        isPaid
+        userId
+        folder
+        status
+        plan
+        isReferred
+        isDisabled
+        agreedTo
+        referralCode
+        createdAt
+        firstName
+        middleName
+        lastName
+        phoneNumber
+        email
+        profileImgUrl
+        role
+        school
+        schoolImg
+        statusCode
+      }
+    }
+  }
+}`)
