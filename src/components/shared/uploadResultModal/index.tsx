@@ -115,7 +115,7 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
           setSchool(schools)
         }
       } catch (error: any) {
-        console.log(error.message)
+        // console.log(error.message)
       }
   }, [getschools, toast])
 
