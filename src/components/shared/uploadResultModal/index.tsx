@@ -101,13 +101,12 @@ console.log(selectedSchool)
           studentId: currentWardProfile?.id,
           resultType: values.resultType,
           fileType: values.docType,
-          folder: values.folder,
-          document: values.file,
+          folder: folder,
+          document: file,
           remark: summary,
           schoolId: selectedSchool?.id,
         },
       });
-      console.log(response)
       if(!response){
         toast({
           title: "Client Error",
@@ -118,7 +117,7 @@ console.log(selectedSchool)
           status: "error",
         });
       }
-
+      
       console.log(response);
     } catch (err: any) {
       toast({
@@ -137,6 +136,9 @@ console.log(selectedSchool)
   useEffect(() => {
       try{
         const response = getschools
+        if(!response){
+          console.log("Couldn't fetch from server")
+        }
         if(response.getSchools){
           const schools = (response.getSchools || []).map((school: any) => ({
             schoolname: school?.schoolName, 
@@ -276,9 +278,6 @@ console.log(selectedSchool)
               initialValues={{
                 resultType: "",
                 docType: "",
-                file: file,
-                summary: summary,
-                school: selectedSchool?.schoolName,
               }}
               onSubmit={async (values) => {
                 handleSubmit(values);
