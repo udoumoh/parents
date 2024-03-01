@@ -23,6 +23,7 @@ export interface UserChildren {
   school: string;
   schoollogo: string;
   id: number;
+  age: number;
   // chats: {
   //   profileImage: string;
   //   firstName: string;
@@ -85,7 +86,7 @@ interface UserContextProps {
           school: string;
           schoollogo: string;
           id: number;
-          ageInput: number;
+          age: number;
         }
       ]
     | undefined;
@@ -138,7 +139,7 @@ export const UserApiProvider: FC<UserApiProviderProps> = ({ children }) => {
           school: string;
           schoollogo: string;
           id: number;
-          ageInput: number;
+          age: number;
         }
       ]
     | undefined
@@ -192,7 +193,7 @@ export const UserApiProvider: FC<UserApiProviderProps> = ({ children }) => {
             school: child?.school?.school?.schoolName || 0,
             schoollogo: child?.school?.school?.logoImgUrl || 0,
             id: child.id || 0,
-            age: child?.ageInput,
+            age: child?.ageInput || 0,
           })
         );
 
