@@ -105,6 +105,18 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
           schoolId: selectedSchool?.id,
         },
       });
+      console.log(response)
+      if(!response){
+        toast({
+          title: "Client Error",
+          description: 'A client error occurred',
+          position: "bottom",
+          variant: "left-accent",
+          isClosable: true,
+          status: "error",
+        });
+      }
+
       console.log(response);
     } catch (err: any) {
       toast({
@@ -266,8 +278,8 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
                 summary: summary,
                 school: isChecked ? currentWardProfile?.school : selectedSchool,
               }}
-              onSubmit={async (values, actions) => {
-                // handleSubmit(values);
+              onSubmit={async (values) => {
+                handleSubmit(values);
                 console.log(values);
               }}
             >
