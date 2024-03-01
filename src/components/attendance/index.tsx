@@ -31,12 +31,14 @@ interface AttendanceItemProps {
 const Attendance: FC<AttendanceProps> = ({}) => {
   const {currentWardProfile} = useUserAPI()
   const [attendance, setAttendance] = useState<AttendanceItemProps[]>([]);
-  const {data: getattendance} = useQuery(FETCH_STUDENT_ATTENDANCE, {variables: {studentId:currentWardProfile?.id}})
+  const { data: getattendance } = useQuery(FETCH_STUDENT_ATTENDANCE, {
+    variables: { studentId: currentWardProfile?.id },
+  });
   useEffect(() => {
     const fetchData = async() => {
       try{
         const response = await getattendance
-        const parsedAttendance = response.map((item: any) => ({
+        const parsedAttendance = response?.fetchStudentAttendance?.map((item: any) => ({
             id: item.id,
             createdAt: item.createdAt,
             present: item.isPresent,
@@ -49,7 +51,7 @@ const Attendance: FC<AttendanceProps> = ({}) => {
       }
     }
     fetchData()
-  })
+  }, [getattendance])
 
  return (
     <Box
@@ -71,7 +73,7 @@ const Attendance: FC<AttendanceProps> = ({}) => {
 
       <Divider color={"#E2E2E2"} my={"0.8rem"} />
 
-      {attendance.length > 0 ? (
+      {attendance?.length > 0 ? (
         <>
           {/* Section for absent pupils */}
           <Box>
