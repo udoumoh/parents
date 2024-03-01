@@ -77,9 +77,8 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
     setChecked(!isChecked);
     setSelectedSchool({
       schoolName: currentWardProfile?.school || "",
-      id: selectedSchool?.id || 0,
+      id: currentWardProfile?.schoolId || 0,
     });
-
   }
 
   const handleFileUpload = (
@@ -117,7 +116,7 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
         status: "error",
       });
     }
-  };
+  }
 
   const filteredSearchData: any = school.filter((item:any) => item?.schoolname?.toLowerCase().includes(searchInput?.toLowerCase()))
 

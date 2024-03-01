@@ -24,6 +24,7 @@ export interface UserChildren {
   schoollogo: string;
   id: number;
   age: number;
+  schoolId: number;
   // chats: {
   //   profileImage: string;
   //   firstName: string;
@@ -87,6 +88,7 @@ interface UserContextProps {
           schoollogo: string;
           id: number;
           age: number;
+          schoolId: number;
         }
       ]
     | undefined;
@@ -121,6 +123,7 @@ export const UserApiProvider: FC<UserApiProviderProps> = ({ children }) => {
         schoollogo: "",
         id: 0,
         age: 0,
+        schoolId: 0,
       },
     ],
   });
@@ -141,6 +144,7 @@ export const UserApiProvider: FC<UserApiProviderProps> = ({ children }) => {
           schoollogo: string;
           id: number;
           age: number;
+          schoolId: number;
         }
       ]
     | undefined
@@ -148,7 +152,6 @@ export const UserApiProvider: FC<UserApiProviderProps> = ({ children }) => {
   const [currentId, setCurrentId] = useState<number>(
     childData?.[0]?.id || 0
   );
-
 
   const updateUserBio = (newBio: any) => {
     setProfileData((previousData) => {
@@ -197,6 +200,7 @@ export const UserApiProvider: FC<UserApiProviderProps> = ({ children }) => {
             schoollogo: child?.school?.school?.logoImgUrl || 0,
             id: child.id || 0,
             age: child?.ageInput || 0,
+            schoolId: child?.school?.school?.id || 0
           })
         );
 
