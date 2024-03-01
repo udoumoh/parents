@@ -18,14 +18,17 @@ import {
   Avatar,
   Wrap,
   WrapItem,
+  useDisclosure,
 } from "@chakra-ui/react";
 
 import { AiOutlinePlus } from "react-icons/ai";
 import ResultCard from "@/components/shared/resultCard";
+import UploadResultModal from "@/components/shared/uploadResultModal";
 
 interface ResultsProps {};
 
 const Results: FC<ResultsProps> = ({}) => {
+  const {isOpen: isModalOpen, onClose: onModalClose, onOpen: onModalOpen} = useDisclosure()
   const [resultsType, setResultstype] = useState("");
   const [resultsData, setResultsdata] = useState([
     {
@@ -135,12 +138,14 @@ const Results: FC<ResultsProps> = ({}) => {
           color={"#fff"}
           colorScheme="teal"
           size={"md"}
+          onClick={onModalOpen}
         >
           <AiOutlinePlus />
           <Text fontWeight={"light"} pl="0.5rem" fontSize={"sm"}>
             Upload Result
           </Text>
         </Button>
+        <UploadResultModal isOpen={isModalOpen} onOpen={onModalOpen} onClose={onModalClose} />
       </Flex>
 
       <Box>

@@ -177,6 +177,8 @@ export const UserApiProvider: FC<UserApiProviderProps> = ({ children }) => {
           parentRole: response?.parent?.parent?.parentRole,
         };
 
+        console.log(response)
+
         const userChildren = (response?.parent?.parent?.children || []).map(
           (child: any) => ({
             firstName: child.firstName || "",
