@@ -183,7 +183,7 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
         </Grid>
         <Box justifyContent={"center"} display={"flex"} alignItems={"center"}>
           <Image
-            src={parentData?.profileImage}
+            src={parentData?.profileImgUrl}
             width={"2.7rem"}
             height={"2.7rem"}
             alt="profile"
