@@ -107,6 +107,9 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
   useEffect(() => {
       try{
         const response = getschools
+        if(!response){
+          alert('client error')
+        }
         if(response.getSchools){
           const schools = (response.getSchools || []).map((school: any) => ({
             schoolname: school?.schoolName, 
@@ -115,7 +118,7 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
           setSchool(schools)
         }
       } catch (error: any) {
-        // console.log(error.message)
+        console.log(error.message)
       }
   }, [getschools, toast])
 
