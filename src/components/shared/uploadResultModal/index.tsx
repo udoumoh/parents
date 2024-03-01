@@ -26,10 +26,10 @@ import {
 import { Formik, Form, Field } from "formik";
 import { FileUpload } from "../fileUpload";
 import { useMutation } from "@apollo/client";
-import { ACCEPT_INVOICE } from "@/gql/queries/queries";
 import { useUserAPI } from "@/hooks/UserContext";
 import { useQuery } from "@apollo/client";
 import { GET_SCHOOLS } from "@/gql/queries/queries";
+import { UPLOAD_RESULT } from "@/gql/queries/queries";
 
 interface UploadResultModalProps {
   isOpen: boolean;
@@ -57,9 +57,16 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
   const [school, setSchool] = useState([])
   const [searchInput, setSearchInput] = useState("")
   const {currentWardProfile} = useUserAPI() 
-  const [selectedSchool, setSelectedSchool] = useState("")
+  const [selectedSchool, setSelectedSchool] = useState<
+    |
+        {
+          schoolName: string;
+          id: number;
+        }
+    | undefined
+  >(undefined);
   const [isChecked, setChecked] = useState(false)
-  const [acceptinvoice] = useMutation(ACCEPT_INVOICE);
+  const [uploadresult] = useMutation(UPLOAD_RESULT);
   const toast = useToast();
 
   const handleSummaryChange = (event: any) => {
@@ -68,7 +75,11 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
 
   const handleCheck = () => {
     setChecked(!isChecked);
-    setSelectedSchool(currentWardProfile?.school || "")
+    setSelectedSchool({
+      schoolName: currentWardProfile?.school || "",
+      id: selectedSchool?.id || 0,
+    });
+
   }
 
   const handleFileUpload = (
@@ -84,11 +95,15 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
   const handleSubmit = (values: any) => {
     setUploading(true);
     try {
-      const response = acceptinvoice({
+      const response = uploadresult({
         variables: {
-          document: file,
+          studentId: currentWardProfile?.id,
+          resultType: values.resultType,
           fileType: values.docType,
-          amountPaid: Number(values.amountPaid),
+          folder: values.folder,
+          document: values.file,
+          remark: summary,
+          schoolId: selectedSchool?.id,
         },
       });
       console.log(response);
@@ -218,7 +233,7 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
                         transitionDuration: "0.2s",
                       }}
                       onClick={() => {
-                        setSelectedSchool(item.schoolname);
+                        setSelectedSchool({schoolName: item?.schoolname, id: item?.id});
                         setIsHidden(!isHidden);
                       }}
                     >
@@ -239,7 +254,7 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
               backgroundColor = "#3F999830"
             >
               <Text fontSize={"lg"} py={"0.5rem"}>
-                {selectedSchool}
+                {selectedSchool?.schoolName || ""}
               </Text>
             </Box>
           </Box>

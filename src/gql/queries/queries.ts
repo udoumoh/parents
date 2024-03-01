@@ -798,3 +798,33 @@ query GetSchools {
     }
   }
 }`)
+
+export const UPLOAD_RESULT = gql(`
+mutation UploadResult($studentId: Float!, $resultType: String!, $fileType: String!, $folder: String!, $document: String!, $schoolId: Float, $remark: String) {
+  uploadResult(studentId: $studentId, resultType: $resultType, fileType: $fileType, folder: $folder, document: $document, schoolId: $schoolId, remark: $remark) {
+    errors {
+      field
+      message
+    }
+    result {
+      id
+      isOfficial
+      wasEdited
+      createdAt
+      approvedAt
+      updatedAt
+      remark
+      fileType
+      resultType
+      document
+      folder
+      verifiedBy
+      studentName
+      isAcknowledged
+      creator
+      creatorRole
+      creatorPicture
+      creatorName
+    }
+  }
+}`)
