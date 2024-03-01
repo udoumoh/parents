@@ -120,6 +120,7 @@ export const UserApiProvider: FC<UserApiProviderProps> = ({ children }) => {
         school: "",
         schoollogo: "",
         id: 0,
+        age: 0,
       },
     ],
   });

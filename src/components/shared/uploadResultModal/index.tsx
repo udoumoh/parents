@@ -121,9 +121,18 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
         <ModalBody pb={6} px={{ base: "3rem", md: "6rem", lg: "8rem" }}>
           <Box pb={"1rem"}>
             <Box rounded={"md"} textAlign={"center"}>
-              <Avatar src={currentWardProfile?.profileImage} size={'lg'} my={'1rem'}/>
-              <Text fontSize={'lg'} fontWeight={'500'}>{currentWardProfile?.firstName} {currentWardProfile?.lastName}</Text>
-              <Text>{currentWardProfile?.firstName} • {currentWardProfile?.class} • {currentWardProfile?.age}</Text>
+              <Avatar
+                src={currentWardProfile?.profileImage}
+                size={"lg"}
+                my={"1rem"}
+              />
+              <Text fontSize={"lg"} fontWeight={"500"}>
+                {currentWardProfile?.firstName} {currentWardProfile?.lastName}
+              </Text>
+              <Text color={"#747474"}>
+                {currentWardProfile?.firstName} • {currentWardProfile?.class} •{" "}
+                {currentWardProfile?.age}
+              </Text>
             </Box>
           </Box>
           <Box>
