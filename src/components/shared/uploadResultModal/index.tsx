@@ -73,8 +73,6 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
     setSummary(event.target.checked);
   };
 
-console.log(selectedSchool)
-
   const handleCheck = () => {
     setChecked(!isChecked);
     setSelectedSchool({
@@ -281,7 +279,6 @@ console.log(selectedSchool)
               }}
               onSubmit={async (values) => {
                 handleSubmit(values);
-                console.log(values);
               }}
             >
               {(props) => (
