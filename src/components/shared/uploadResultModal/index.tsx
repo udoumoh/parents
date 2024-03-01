@@ -274,7 +274,7 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
                         transitionDuration: "0.2s",
                       }}
                       onClick={() => {
-                        setSelectedSchool({schoolName: item?.schoolname, id: item?.id});
+                        setSelectedSchool({schoolName: item?.schoolname, id: item?.schoolId});
                         setIsHidden(!isHidden);
                       }}
                     >
