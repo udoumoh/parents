@@ -20,9 +20,7 @@ interface layoutProps {
 
 const Layout: React.FC<layoutProps> = ({ children }) => {
       const toast = useToast()
-      const router = useRouter()
       const { data: parent, loading } = useQuery(GET_PARENT);
-      const {parentData} = useUserAPI()
 
       try{
         if (loading) return (

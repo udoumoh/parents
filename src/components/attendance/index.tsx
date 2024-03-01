@@ -4,16 +4,14 @@ import {
     Text,
     Flex,
     Divider,
-    Button,
     Icon,
-    Avatar,
     Image,
  } from '@chakra-ui/react';
 import { BsArchive } from "react-icons/bs";
 import { PrimaryBadge } from '../shared/badge';
 import { SecondaryBadge } from '../shared/badge';
 import { useQuery } from '@apollo/client';
-import { FETCH_STUDENT_ATTENDANCE } from '@/gql/queries/queries';
+import { GET_STUDENT_ATTENDANCE } from '@/gql/queries/queries';
 import { useUserAPI } from '@/hooks/UserContext';
 
 interface AttendanceProps {
@@ -31,7 +29,7 @@ interface AttendanceItemProps {
 const Attendance: FC<AttendanceProps> = ({}) => {
   const {currentWardProfile} = useUserAPI()
   const [attendance, setAttendance] = useState<AttendanceItemProps[]>([]);
-  const { data: getattendance } = useQuery(FETCH_STUDENT_ATTENDANCE, {
+  const { data: getattendance } = useQuery(GET_STUDENT_ATTENDANCE, {
     variables: { studentId: currentWardProfile?.id },
   });
   useEffect(() => {
@@ -45,7 +43,6 @@ const Attendance: FC<AttendanceProps> = ({}) => {
             note: item.note,
           }))
           setAttendance(parsedAttendance)
-        console.log("attendance data", response)
       } catch(err: any){
         console.log(err.message)
       }

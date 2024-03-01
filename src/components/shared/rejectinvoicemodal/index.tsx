@@ -52,7 +52,7 @@ const RejectInvoiceModal: FC<RejectInvoiceModalProps> = ({
                   status: "error",
                 });
         }
-        // if(response.errors !== null)
+        console.log(response)
     } catch (e: any) {
         console.log(e.message)
     }

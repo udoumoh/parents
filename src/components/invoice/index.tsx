@@ -1,5 +1,5 @@
 "use client";
-import { FC, useState } from "react";
+import { FC, useState, useEffect } from "react";
 import {
   Box,
   Text,
@@ -21,6 +21,9 @@ import { FaCheck } from "react-icons/fa6";
 import { IoClose } from "react-icons/io5";
 import AcceptInvoiceModal from "../shared/acceptInvoiceModal";
 import RejectInvoiceModal from "../shared/rejectinvoicemodal";
+import { GET_STUDENT_INVOICE } from "@/gql/queries/queries";
+import { useQuery } from "@apollo/client";
+import { useUserAPI } from "@/hooks/UserContext";
 
 interface InvoiceItemProps {
   studentInvoice: StudentInvoiceProps;
@@ -141,29 +144,31 @@ const InvoiceItem: FC<InvoiceItemProps> = ({
 };
 
 const Invoice: FC<InvoiceProps> = ({}) => {
-  const studentInvoiceData = [
-    {
-      term: "1st Term",
-      year: "2023/2024",
-      billType: "Extra-Curricular",
-      amountPaid: "265,000",
-      id:1,
-    },
-    {
-      term: "1st Term",
-      year: "2023/2024",
-      billType: "Extra-Curricular",
-      amountPaid: "265,000",
-      id:2,
-    },
-    {
-      term: "1st Term",
-      year: "2023/2024",
-      billType: "Extra-Curricular",
-      amountPaid: "265,000",
-      id:3,
-    },
-  ];
+  const {currentWardProfile} = useUserAPI()
+  const [invoiceData, setInvoiceData] = useState([])
+  const { data: getinvoice } = useQuery(GET_STUDENT_INVOICE, {
+    variables: { studentId: currentWardProfile?.id },
+  });
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await getinvoice;
+        const parsedInvoiceData = response?.getStudentInvoice?.map(
+          (item: any) => ({
+            term: item.academicTerm,
+            year: item.academicYear,
+            billType: item.category,
+            amountPaid: item.amount,
+            id: item.id
+          })
+        );
+        setInvoiceData(parsedInvoiceData);
+      } catch (err: any) {
+        console.log(err.message);
+      }
+    };
+    fetchData();
+  }, [getinvoice]);
 
   return (
     <Box
@@ -184,9 +189,9 @@ const Invoice: FC<InvoiceProps> = ({}) => {
 
       <Divider color={"#C2C2C2"} my={"0.8rem"} />
 
-      {studentInvoiceData.length > 0 ? (
+      {invoiceData.length > 0 ? (
         <Wrap spacing={'15px'}>
-          {studentInvoiceData.map((student, index) => {
+          {invoiceData.map((student, index) => {
             return (
               <WrapItem key={index} w={'auto'}>
                 <InvoiceItem
