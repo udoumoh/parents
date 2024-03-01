@@ -23,6 +23,7 @@ import {
   InputLeftAddon,
   useToast,
   Avatar,
+  Checkbox,
 } from "@chakra-ui/react";
 import { Formik, Form, Field } from "formik";
 import { FileUpload } from "../fileUpload";
@@ -51,6 +52,7 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
   const [fileName, setFileName] = useState<string>("");
   const [summary, setSummary] = useState<string>("");
   const [loading, setUploading] = useState(false);
+  const [school, setSchool] = useState("")
   const [acceptinvoice] = useMutation(ACCEPT_INVOICE);
   const toast = useToast();
   const {currentWardProfile} = useUserAPI()
@@ -97,7 +99,7 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
       blockScrollOnMount={false}
       isOpen={isOpen}
       onClose={onClose}
-      size={{ base: "lg", md: "xl", lg: "3xl" }}
+      size={{ base: "lg", md: "xl", lg: "2xl" }}
     >
       <ModalOverlay />
       <ModalContent rounded={"xl"}>
@@ -118,7 +120,7 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
           <Divider color={"#C2C2C2"} mt={"0.8rem"} />
           <ModalCloseButton />
         </ModalHeader>
-        <ModalBody pb={6} px={{ base: "3rem", md: "6rem", lg: "8rem" }}>
+        <ModalBody pb={6} px={{ base: "3rem", md: "4rem" }}>
           <Box pb={"1rem"}>
             <Box rounded={"md"} textAlign={"center"}>
               <Avatar
@@ -135,47 +137,89 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
               </Text>
             </Box>
           </Box>
+
+          <Box>
+            <Box
+              display={"flex"}
+              justifyContent={"space-between"}
+              mb={"0.3rem"}
+            >
+              <Text fontSize={"lg"}>Select School</Text>
+              <Checkbox size={"lg"} colorScheme="green" color={"#B2B2B2"}>
+                Upload for current school
+              </Checkbox>
+            </Box>
+            <Input
+              type="text"
+              size={"lg"}
+              border={"1px solid #D5D5D5"}
+              rounded="md"
+              backgroundColor={"#F5F5F5"}
+              _focus={{ border: "1px solid #6ACAA7" }}
+            />
+          </Box>
           <Box>
             <Formik
               initialValues={{
-                amountPaid: "",
+                resultType: "",
                 docType: "",
                 file: file,
                 summary: summary,
+                school: school,
               }}
               onSubmit={async (values, actions) => {
-                handleSubmit(values);
+                // handleSubmit(values);
+                console.log(values)
               }}
             >
               {(props) => (
                 <Form>
-                  <Flex direction="column">
-                    <Flex mb={"1rem"}>
-                      <Field name="amountPaid">
-                        {({ field, form }: any) => (
-                          <FormControl
-                          // isInvalid={form.errors.name && form.touched.name}
+                  <Field name="resultType">
+                    {({ field, form }: any) => (
+                      <FormControl>
+                        <Box w={"full"} mt={"1rem"}>
+                          <Text fontSize={"lg"} mb={"0.3rem"}>
+                            Result Type
+                          </Text>
+                          <Select
+                            placeholder="Select Result Type"
+                            {...field}
+                            border={"1px solid #D5D5D5"}
+                            size={{ base: "sm", md: "lg" }}
+                            rounded={"md"}
+                            fontSize={"md"}
+                            backgroundColor={"#F5F5F5"}
+                            _focus={{ border: "1px solid #6ACAA7" }}
                           >
-                            <Box w={"full"}>
-                              <Text mb={"0.5rem"}>Amount Paid</Text>
-                              <InputGroup
-                                backgroundColor={"#F5F5F5"}
-                                size={"lg"}
-                              >
-                                <InputLeftAddon backgroundColor={"#E8E8E8"}>
-                                  ₦
-                                </InputLeftAddon>
-                                <Input
-                                  {...field}
-                                  type="tel"
-                                  placeholder="How much did you pay?"
-                                />
-                              </InputGroup>
-                            </Box>
-                          </FormControl>
-                        )}
-                      </Field>
-                    </Flex>
+                            <option value="First Term Final Exam" color="#fff">
+                              First Term Final Exam
+                            </option>
+                            <option value={"First Term MidTerm"}>
+                              First Term MidTerm
+                            </option>
+                            <option value={"Second Term Final Exam"}>
+                              Second Term Final Exam
+                            </option>
+                            <option value={"Second Term MidTerm"}>
+                              Second Term MidTerm
+                            </option>
+                            <option value={"Third Term Final exam"}>
+                              Third Term Final exam
+                            </option>
+                            <option value={"Third Term mid term"}>
+                              Third Term mid term
+                            </option>
+                            <option value={"WAEC"}>WAEC</option>
+                            <option value={"JAMB"}>JAMB</option>
+                            <option value={"NECO"}>NECO</option>
+                            <option value={"GCSE"}>GCSE</option>
+                          </Select>
+                        </Box>
+                      </FormControl>
+                    )}
+                  </Field>
+
+                  <Flex direction="column" mt={"1rem"}>
                     <Box>
                       <Text mb={"0.5rem"}>File Type</Text>
                       <Flex gap={5} flexDir={{ base: "column", md: "row" }}>
@@ -186,14 +230,14 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
                             >
                               <Box w={"full"}>
                                 <Select
-                                  placeholder="Select document"
+                                  placeholder="Select File Type"
                                   {...field}
                                   border={"1px solid #D5D5D5"}
                                   size={{ base: "sm", md: "lg" }}
-                                  h={"2.3rem"}
-                                  rounded={"sm"}
-                                  fontSize={"sm"}
-                                  variant={"filled"}
+                                  rounded={"md"}
+                                  fontSize={"md"}
+                                  backgroundColor={"#F5F5F5"}
+                                  _focus={{ border: "1px solid #6ACAA7" }}
                                 >
                                   <option value="PDF" color="#fff">
                                     PDF
@@ -211,6 +255,7 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
                             color={"#fff"}
                             fontWeight={"400"}
                             w={"17rem"}
+                            size="lg"
                             onClick={onFileOpen}
                             _hover={{ backgroundColor: "#099C9B" }}
                           >
@@ -243,6 +288,7 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
                       border={"1px solid #D5D5D5"}
                       rounded={"xl"}
                       backgroundColor={"#F5F5F5"}
+                      _focus={{ border: "1px solid #6ACAA7" }}
                     />
                   </FormControl>
 
