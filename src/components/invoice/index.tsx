@@ -149,7 +149,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
   const {currentWardProfile} = useUserAPI()
   const [invoiceData, setInvoiceData] = useState([])
   const { data: getinvoice } = useQuery(GET_STUDENT_INVOICE, {
-    variables: { studentId: 1 },
+    variables: { studentId: currentWardProfile?.id, limit: 3 },
   });
   useEffect(() => {
     const fetchData = async () => {
