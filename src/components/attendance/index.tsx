@@ -23,14 +23,12 @@ interface AttendanceProps {
 const Attendance: FC<AttendanceProps> = ({}) => {
   const {data: getattendance} = useQuery(FETCH_STUDENT_ATTENDANCE)
 
-  useEffect(() => {
     try{
       const response = getattendance
       console.log("attendance data", response)
     } catch(err: any){
       console.log(err.message)
     }
-  })
 
     const attendance = [
       {
