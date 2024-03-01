@@ -79,8 +79,6 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
     });
   };
 
-  console.log(selectedSchool);
-
   const handleFileUpload = (
     uploadedFileUrl: string,
     uploadedFolder: string,
