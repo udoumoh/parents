@@ -53,20 +53,22 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
   const [fileName, setFileName] = useState<string>("");
   const [summary, setSummary] = useState<string>("");
   const [loading, setUploading] = useState(false);
+  const [isHidden, setIsHidden] = useState(false);
   const [school, setSchool] = useState([])
   const [searchInput, setSearchInput] = useState("")
+  const {currentWardProfile} = useUserAPI() 
   const [selectedSchool, setSelectedSchool] = useState("")
-  const [isChecked, setCheckked] = useState(false)
+  const [isChecked, setChecked] = useState(false)
   const [acceptinvoice] = useMutation(ACCEPT_INVOICE);
   const toast = useToast();
-  const {currentWardProfile} = useUserAPI()
 
   const handleSummaryChange = (event: any) => {
     setSummary(event.target.checked);
   };
 
   const handleCheck = () => {
-    setCheckked(!isChecked);
+    setChecked(!isChecked);
+    setSelectedSchool(currentWardProfile?.school || "")
   }
 
   const handleFileUpload = (
@@ -107,9 +109,6 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
   useEffect(() => {
       try{
         const response = getschools
-        if(!response){
-          alert('client error')
-        }
         if(response.getSchools){
           const schools = (response.getSchools || []).map((school: any) => ({
             schoolname: school?.schoolName, 
@@ -193,9 +192,16 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
               }}
               _focus={{ border: "1px solid #6ACAA7" }}
               isReadOnly={isChecked}
+              _hover={{ cursor: isChecked ? "not-allowed" : "text" }}
+              value={searchInput}
             />
             {searchInput && (
-              <Box backgroundColor={"#F5F5F5"} p={'0.5rem'} shadow={'md'} >
+              <Box
+                backgroundColor={"#F5F5F5"}
+                p={"0.5rem"}
+                shadow={"md"}
+                display={isHidden ? "none" : "block"}
+              >
                 {filteredSearchData.map((item: any, index: number) => {
                   return (
                     <Box
@@ -209,9 +215,12 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
                       _hover={{
                         backgroundColor: "#3F999830",
                         cursor: "pointer",
-                        transitionDuration: '0.2s',
+                        transitionDuration: "0.2s",
                       }}
-                      onClick={()=>{setSelectedSchool(item.schoolname)}}
+                      onClick={() => {
+                        setSelectedSchool(item.schoolname);
+                        setIsHidden(!isHidden);
+                      }}
                     >
                       <Avatar src={item.schoollogo} />
                       <Text fontSize={"lg"} py={"0.5rem"}>
@@ -222,6 +231,17 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
                 })}
               </Box>
             )}
+            <Box
+              display={selectedSchool ? 'block' : 'none'}
+              my={"1rem"}
+              p={"0.5rem"}
+              rounded={"md"}
+              backgroundColor = "#3F999830"
+            >
+              <Text fontSize={"lg"} py={"0.5rem"}>
+                {selectedSchool}
+              </Text>
+            </Box>
           </Box>
           <Box>
             <Formik
