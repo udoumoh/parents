@@ -15,6 +15,7 @@ import {
   Button,
   Wrap,
   WrapItem,
+  useToast,
 } from "@chakra-ui/react";
 import { IoReceiptOutline } from "react-icons/io5";
 import { FaCheck } from "react-icons/fa6";
@@ -144,6 +145,7 @@ const InvoiceItem: FC<InvoiceItemProps> = ({
 };
 
 const Invoice: FC<InvoiceProps> = ({}) => {
+  const toast = useToast()
   const {currentWardProfile} = useUserAPI()
   const [invoiceData, setInvoiceData] = useState([])
   const { data: getinvoice } = useQuery(GET_STUDENT_INVOICE, {
@@ -155,7 +157,14 @@ const Invoice: FC<InvoiceProps> = ({}) => {
         const response = await getinvoice;
         console.log(response);
         if(!response){
-          console.log('No response')
+          toast({
+            title: "Client Error",
+            description: "An error occurred fetching invoice data.",
+            position: "top-right",
+            variant: "left-accent",
+            isClosable: true,
+            status: "error",
+          });
         }
         const parsedInvoiceData = response?.getStudentInvoice?.map(
           (item: any) => ({
@@ -172,7 +181,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
       }
     };
     fetchData();
-  }, [getinvoice]);
+  }, [getinvoice, toast]);
 
   return (
     <Box
