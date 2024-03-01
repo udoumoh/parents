@@ -1,4 +1,4 @@
-import { FC, useEffect } from 'react'
+import { FC, useEffect, useState } from 'react'
 import { 
     Box,
     Text,
@@ -20,14 +20,29 @@ interface AttendanceProps {
   
 }
 
+interface AttendanceItemProps {
+  id: number | undefined;
+  createdAt: string | undefined;
+  present: boolean | undefined;
+  note: string | undefined;
+};
+
 
 const Attendance: FC<AttendanceProps> = ({}) => {
   const {currentWardProfile} = useUserAPI()
+  const [attendance, setAttendance] = useState<AttendanceItemProps[]>([]);
   const {data: getattendance} = useQuery(FETCH_STUDENT_ATTENDANCE, {variables: {studentId:currentWardProfile?.id}})
   useEffect(() => {
     const fetchData = async() => {
       try{
         const response = await getattendance
+        const parsedAttendance = response.map((item: any) => ({
+            id: item.id,
+            createdAt: item.createdAt,
+            present: item.isPresent,
+            note: item.note,
+          }))
+          setAttendance(parsedAttendance)
         console.log("attendance data", response)
       } catch(err: any){
         console.log(err.message)
@@ -36,79 +51,7 @@ const Attendance: FC<AttendanceProps> = ({}) => {
     fetchData()
   })
 
-    const attendance = [
-      {
-        id: 1,
-        profileUrl:
-          "https://th.bing.com/th/id/OIP.R1WC47OEbMS_UFtDf7s22AHaI_?pid=ImgDet&rs=1",
-        name: "Ajayi Samuel",
-        regNo: "GN0230030",
-        gender: "Male",
-        age: 9,
-        present: false,
-      },
-      {
-        id: 2,
-        profileUrl:
-          "https://th.bing.com/th/id/OIP.R1WC47OEbMS_UFtDf7s22AHaI_?pid=ImgDet&rs=1",
-        name: "Ajayi Samuel",
-        regNo: "GN0230030",
-        gender: "Male",
-        age: 9,
-        present: false,
-      },
-      {
-        id: 3,
-        profileUrl:
-          "https://th.bing.com/th/id/OIP.R1WC47OEbMS_UFtDf7s22AHaI_?pid=ImgDet&rs=1",
-        name: "Ajayi Samuel",
-        regNo: "GN0230030",
-        gender: "Male",
-        age: 9,
-        present: true,
-      },
-      {
-        id: 4,
-        profileUrl:
-          "https://th.bing.com/th/id/OIP.R1WC47OEbMS_UFtDf7s22AHaI_?pid=ImgDet&rs=1",
-        name: "Ajayi Samuel",
-        regNo: "GN0230030",
-        gender: "Male",
-        age: 9,
-        present: true,
-      },
-      {
-        id: 5,
-        profileUrl:
-          "https://th.bing.com/th/id/OIP.R1WC47OEbMS_UFtDf7s22AHaI_?pid=ImgDet&rs=1",
-        name: "Ajayi Samuel",
-        regNo: "GN0230030",
-        gender: "Male",
-        age: 9,
-        present: true,
-      },
-      {
-        id: 6,
-        profileUrl:
-          "https://th.bing.com/th/id/OIP.R1WC47OEbMS_UFtDf7s22AHaI_?pid=ImgDet&rs=1",
-        name: "Ajayi Samuel",
-        regNo: "GN0230030",
-        gender: "Male",
-        age: 9,
-        present: true,
-      },
-      {
-        id: 7,
-        profileUrl:
-          "https://th.bing.com/th/id/OIP.R1WC47OEbMS_UFtDf7s22AHaI_?pid=ImgDet&rs=1",
-        name: "Ajayi Samuel",
-        regNo: "GN0230030",
-        gender: "Male",
-        age: 9,
-        present: true,
-      },
-    ];
-  return (
+ return (
     <Box
       p={"1rem"}
       backgroundColor={"#fff"}
@@ -144,13 +87,13 @@ const Attendance: FC<AttendanceProps> = ({}) => {
                       fontSize={{ base: "sm", lg: "md" }}
                       fontWeight={"500"}
                     >
-                      Moday 12th February 2024
+                      {item.createdAt}
                     </Text>
                     <Text
                       fontSize={{ base: "2xs", lg: "xs" }}
                       color={"#747474"}
                     >
-                      Marked Absent by Korede Nelson, JSS 1 Teacher
+                      {item.note}
                     </Text>
                   </Box>
                   {item.present ? <PrimaryBadge /> : <SecondaryBadge />}
@@ -175,13 +118,13 @@ const Attendance: FC<AttendanceProps> = ({}) => {
                       fontSize={{ base: "sm", lg: "md" }}
                       fontWeight={"500"}
                     >
-                      Tuesday 13th February 2024
+                      {item.createdAt}
                     </Text>
                     <Text
                       fontSize={{ base: "2xs", lg: "xs" }}
                       color={"#747474"}
                     >
-                      Marked Present by Korede Nelson, JSS 1 Teacher
+                      {item.note}
                     </Text>
                   </Box>
                   {item.present ? <PrimaryBadge /> : <SecondaryBadge />}
