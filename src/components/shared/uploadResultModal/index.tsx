@@ -276,7 +276,7 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
                 docType: "",
                 file: file,
                 summary: summary,
-                school: isChecked ? currentWardProfile?.school : selectedSchool,
+                school: selectedSchool?.schoolName,
               }}
               onSubmit={async (values) => {
                 handleSubmit(values);
