@@ -14,6 +14,7 @@ import { PrimaryBadge } from '../shared/badge';
 import { SecondaryBadge } from '../shared/badge';
 import { useQuery } from '@apollo/client';
 import { FETCH_STUDENT_ATTENDANCE } from '@/gql/queries/queries';
+import { useUserAPI } from '@/hooks/UserContext';
 
 interface AttendanceProps {
   
@@ -21,7 +22,8 @@ interface AttendanceProps {
 
 
 const Attendance: FC<AttendanceProps> = ({}) => {
-  const {data: getattendance} = useQuery(FETCH_STUDENT_ATTENDANCE)
+  const {currentWardProfile} = useUserAPI()
+  const {data: getattendance} = useQuery(FETCH_STUDENT_ATTENDANCE, {variables: {studentId:currentWardProfile?.id}})
   useEffect(() => {
     const fetchData = async() => {
       try{
