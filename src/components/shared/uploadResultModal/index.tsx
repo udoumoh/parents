@@ -122,7 +122,7 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
           <Box pb={"1rem"}>
             <Box rounded={"md"} textAlign={"center"}>
               <Avatar src={currentWardProfile?.profileImage} size={'lg'} my={'1rem'}/>
-              <Text fontSize={'lg'}>{currentWardProfile?.firstName} {currentWardProfile?.lastName}</Text>
+              <Text fontSize={'lg'} fontWeight={'500'}>{currentWardProfile?.firstName} {currentWardProfile?.lastName}</Text>
               <Text>{currentWardProfile?.firstName} • {currentWardProfile?.class} • {currentWardProfile?.age}</Text>
             </Box>
           </Box>
