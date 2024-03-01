@@ -131,7 +131,7 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
               </Text>
               <Text color={"#747474"}>
                 {currentWardProfile?.firstName} • {currentWardProfile?.class} •{" "}
-                {currentWardProfile?.age}
+                {`${currentWardProfile?.age} Years old`}
               </Text>
             </Box>
           </Box>
