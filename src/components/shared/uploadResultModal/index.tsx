@@ -150,8 +150,6 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
     }
   }
 
-  const filteredSearchData: any = school.filter((item:any) => item?.schoolname?.toLowerCase().includes(searchInput?.toLowerCase()))
-
   useEffect(() => {
       try{
         const response = getschools
@@ -169,6 +167,11 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
         console.log(error.message)
       }
   }, [getschools, toast])
+
+  const filteredSearchData: any = school.filter((item: any) =>
+    item?.schoolname?.toLowerCase().includes(searchInput?.toLowerCase())
+  );
+  console.log(filteredSearchData);
 
   return (
     <Modal
@@ -238,6 +241,7 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
               backgroundColor={"#F5F5F5"}
               onChange={(e) => {
                 setSearchInput(e.target.value);
+                setIsHidden(false);
               }}
               _focus={{ border: "1px solid #6ACAA7" }}
               isReadOnly={isChecked}
