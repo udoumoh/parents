@@ -80,6 +80,8 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
     });
   }
 
+  console.log(selectedSchool)
+
   const handleFileUpload = (
     uploadedFileUrl: string,
     uploadedFolder: string,
@@ -123,14 +125,17 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
           status: "error",
         });
       }
-      toast({
-        title: "Success",
-        description: 'Result for this student has been successfully uploaded',
-        position: "bottom",
-        variant: "left-accent",
-        isClosable: true,
-        status: "success",
-      });
+      if (response.data.uploadResult.errors === null){
+        toast({
+          title: "Success",
+          description: "Result for this student has been successfully uploaded",
+          position: "bottom",
+          variant: "left-accent",
+          isClosable: true,
+          status: "success",
+        });
+      // window.location.replace("dashboard/home/results");
+      }
       
       console.log(response);
     } catch (err: any) {
