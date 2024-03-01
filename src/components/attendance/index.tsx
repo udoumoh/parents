@@ -147,7 +147,7 @@ const Attendance: FC<AttendanceProps> = ({}) => {
             width={"300px"}
           />
           <Text color={"#747474"} mt={"2rem"}>
-            Your ward has no active invoice
+            No attendance has been recorded for your ward
           </Text>
         </Box>
       )}
