@@ -133,7 +133,7 @@ const DrawerNavLinkItems = {
 
 
 const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
-  const { profileData, setProfileData } = useUserAPI();
+  const { parentData, setProfileData } = useUserAPI();
   const pathName = usePathname();
 
   return (
@@ -183,7 +183,7 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
         </Grid>
         <Box justifyContent={"center"} display={"flex"} alignItems={"center"}>
           <Image
-            src={profileData.userBio.profileImage}
+            src={parentData?.profileImage}
             width={"2.7rem"}
             height={"2.7rem"}
             alt="profile"

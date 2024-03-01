@@ -62,18 +62,6 @@ const LinkItems: Array<LinkItemProps> = [
 ];
 
 const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
-  const {
-    isOpen: isModalOpen,
-    onOpen: onModalOpen,
-    onClose: onModalClose,
-  } = useDisclosure();
-  const {
-    profileData,
-    currentId,
-    setCurrentId,
-    currentWardProfile,
-  } = useUserAPI();
-  const [wardProfile, setWardprofile] = useState(profileData.userChildren);
   const pathName = usePathname();
   return (
     <Box
