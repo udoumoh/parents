@@ -47,19 +47,19 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
     onClose: onFileClose,
     onOpen: onFileOpen,
   } = useDisclosure();
-  const { data: getschools } = useQuery(GET_SCHOOLS);
+  const {data: getschools} = useQuery(GET_SCHOOLS)
   const [file, setFile] = useState<string>("");
   const [folder, setFolder] = useState<string>("");
   const [fileName, setFileName] = useState<string>("");
   const [summary, setSummary] = useState<string>("");
   const [loading, setUploading] = useState(false);
-  const [school, setSchool] = useState([]);
-  const [searchInput, setSearchInput] = useState("");
-  const [selectedSchool, setSelectedSchool] = useState("");
-  const [isChecked, setCheckked] = useState(false);
+  const [school, setSchool] = useState([])
+  const [searchInput, setSearchInput] = useState("")
+  const [selectedSchool, setSelectedSchool] = useState("")
+  const [isChecked, setCheckked] = useState(false)
   const [acceptinvoice] = useMutation(ACCEPT_INVOICE);
   const toast = useToast();
-  const { currentWardProfile } = useUserAPI();
+  const {currentWardProfile} = useUserAPI()
 
   const handleSummaryChange = (event: any) => {
     setSummary(event.target.checked);
@@ -67,7 +67,7 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
 
   const handleCheck = () => {
     setCheckked(!isChecked);
-  };
+  }
 
   const handleFileUpload = (
     uploadedFileUrl: string,
@@ -102,18 +102,22 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
     }
   };
 
-  const filteredSearchData: any = school.filter((item: any) =>
-    item?.schoolname?.toLowerCase().includes(searchInput?.toLowerCase())
-  );
+  const filteredSearchData: any = school.filter((item:any) => item?.schoolname?.toLowerCase().includes(searchInput?.toLowerCase()))
 
   useEffect(() => {
-    const response = getschools;
-    const schools = (response.getSchools || []).map((school: any) => ({
-      schoolname: school?.schoolName,
-      schoollogo: school?.logoImgUrl,
-    }));
-    setSchool(schools);
-  }, [getschools, toast]);
+      try{
+        const response = getschools
+        if(response.getSchools){
+          const schools = (response.getSchools || []).map((school: any) => ({
+            schoolname: school?.schoolName, 
+            schoollogo: school?.logoImgUrl,
+          }))
+          setSchool(schools)
+        }
+      } catch (error: any) {
+        console.log(error.message)
+      }
+  }, [getschools, toast])
 
   return (
     <Modal
@@ -188,7 +192,7 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
               isReadOnly={isChecked}
             />
             {searchInput && (
-              <Box backgroundColor={"#F5F5F5"} p={"0.5rem"} shadow={"md"}>
+              <Box backgroundColor={"#F5F5F5"} p={'0.5rem'} shadow={'md'} >
                 {filteredSearchData.map((item: any, index: number) => {
                   return (
                     <Box
@@ -202,11 +206,9 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
                       _hover={{
                         backgroundColor: "#3F999830",
                         cursor: "pointer",
-                        transitionDuration: "0.2s",
+                        transitionDuration: '0.2s',
                       }}
-                      onClick={() => {
-                        setSelectedSchool(item.schoolname);
-                      }}
+                      onClick={()=>{setSelectedSchool(item.schoolname)}}
                     >
                       <Avatar src={item.schoollogo} />
                       <Text fontSize={"lg"} py={"0.5rem"}>
