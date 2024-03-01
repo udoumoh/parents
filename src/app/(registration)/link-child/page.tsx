@@ -211,7 +211,6 @@ const {
     const fetchData = async () => {
       try {
         const response = await search?.getStudent || [];
-        console.log(response);
         const data = response.map((student: any) => ({
           name: student.firstName + " " + student.lastName,
           age: student.ageInput,

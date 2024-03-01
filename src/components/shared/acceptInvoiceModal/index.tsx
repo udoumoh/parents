@@ -148,7 +148,6 @@ const AcceptInvoiceModal: FC<AcceptInvoiceModalProps> = ({
                 summary: summary,
               }}
               onSubmit={async (values, actions) => {
-                console.log(values);
                 handleSubmit(values);
               }}
             >

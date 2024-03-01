@@ -236,7 +236,6 @@ const LinkRequestModal: FC<LinkRequestModalProps> = ({
     const handleMessageChange = (e: any) => {
         setMessage(e.target.value)
     }
-    console.log(student)
     const handleSubmit = async () => {
       try{
         const response = await request({
@@ -281,9 +280,7 @@ const LinkRequestModal: FC<LinkRequestModalProps> = ({
             }, 5000)
 
         }
-        console.log(response);
       } catch(error: any) {
-        console.log(error.message)
         toast({
           title: "Server Error",
           description: error.message,

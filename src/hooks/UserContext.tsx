@@ -168,7 +168,6 @@ export const UserApiProvider: FC<UserApiProviderProps> = ({ children }) => {
     const fetchData = async () => {
       try {
         const response = (await parent) || [];
-        console.log(response);
         setParentData(response?.parent?.parent);
         const newData = {
           firstName: capitalizeFirstLetter(response?.parent?.parent?.firstName),
@@ -208,7 +207,6 @@ export const UserApiProvider: FC<UserApiProviderProps> = ({ children }) => {
   const currentWardProfile = (childData || []).find(
     (child) => child.id === currentId
   );
-  console.log(currentWardProfile)
 
   return (
     <UserContext.Provider

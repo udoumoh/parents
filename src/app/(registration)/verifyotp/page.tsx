@@ -42,7 +42,6 @@ const Page: FC<PageProps> = ({}) => {
           otpCode: parseInt(numArray.join("")),
         },
       });
-      console.log(response.data);
       if (!response.data) {
         toast({
           title: "Client Error",
@@ -53,7 +52,6 @@ const Page: FC<PageProps> = ({}) => {
           status: "error",
         });
       } else if (response.data.verifyParentCode.errors) {
-        console.log(response);
         toast({
           title: "Server Error",
           description: response.data.verifyParentCode.errors[0].message,
@@ -75,7 +73,6 @@ const Page: FC<PageProps> = ({}) => {
         router.push("/link-child");
       }
     } catch (e: any) {
-      console.log(e);
       toast({
         title: "Error",
         description: e?.message,

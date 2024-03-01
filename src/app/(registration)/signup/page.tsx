@@ -232,7 +232,6 @@ const handleImageUpload = (
 ) => {
   setProfileUrl(uploadedImageUrl); // Set the image URL received from the upload component
   setFolder(uploadedFolder); // Set the folder received from the upload component
-  console.log(profileUrl);
 };
 console.log("This is the profileimageurl", profileUrl)
 
@@ -264,7 +263,6 @@ console.log("This is the profileimageurl", profileUrl)
                 folder: folder,
               },
             });
-            console.log(response);
 
             if (!response?.data) {
               toast({

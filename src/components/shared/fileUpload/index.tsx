@@ -94,7 +94,6 @@ export const FileUpload: React.FC<FileUploadProps> = ({
           const uploadedFileName = response.data.original_filename
           const uploadedFolder = folder;
           onUpload(uploadedfileUrl, uploadedFolder, uploadedFileName);
-          console.log("Folder: ", folder);
         } catch (error) {
           if (error) {
             setUploading(false);

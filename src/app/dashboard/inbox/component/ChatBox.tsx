@@ -28,8 +28,6 @@ interface ChatBoxProps {
 }
 
 const ChatBox: FC<ChatBoxProps> = ({ ward, id }) => {
-  console.log(ward);
-  
 
   return (
     <Flex
