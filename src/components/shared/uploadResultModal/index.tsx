@@ -52,7 +52,6 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
   const [folder, setFolder] = useState<string>("");
   const [fileName, setFileName] = useState<string>("");
   const [summary, setSummary] = useState<string>("");
-  const [loading, setUploading] = useState(false);
   const [isHidden, setIsHidden] = useState(false);
   const [school, setSchool] = useState([])
   const [searchInput, setSearchInput] = useState("")
@@ -66,7 +65,7 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
     | undefined
   >(undefined);
   const [isChecked, setChecked] = useState(false)
-  const [uploadresult] = useMutation(UPLOAD_RESULT);
+  const [uploadresult,{loading}] = useMutation(UPLOAD_RESULT);
   const toast = useToast();
 
   const handleSummaryChange = (event: any) => {
@@ -91,10 +90,9 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
     setFileName(uploadedFileName);
   };
 
-  const handleSubmit = (values: any) => {
-    setUploading(true);
+  const handleSubmit = async (values: any) => {
     try {
-      const response = uploadresult({
+      const response = await uploadresult({
         variables: {
           studentId: currentWardProfile?.id,
           resultType: values.resultType,
@@ -115,6 +113,24 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
           status: "error",
         });
       }
+      if(response.data.uploadResult.errors !== null){
+        toast({
+          title: "Error",
+          description: response?.data?.uploadResult?.errors[0]?.message,
+          position: "bottom",
+          variant: "left-accent",
+          isClosable: true,
+          status: "error",
+        });
+      }
+      toast({
+        title: "Success",
+        description: 'Result for this student has been successfully uploaded',
+        position: "bottom",
+        variant: "left-accent",
+        isClosable: true,
+        status: "success",
+      });
       
       console.log(response);
     } catch (err: any) {
@@ -126,8 +142,6 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
         isClosable: true,
         status: "error",
       });
-    } finally {
-      setUploading(false);
     }
   }
 
