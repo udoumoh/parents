@@ -47,25 +47,24 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
     onClose: onFileClose,
     onOpen: onFileOpen,
   } = useDisclosure();
-  const {data: getschools} = useQuery(GET_SCHOOLS)
+  const { data: getschools } = useQuery(GET_SCHOOLS);
   const [file, setFile] = useState<string>("");
   const [folder, setFolder] = useState<string>("");
   const [fileName, setFileName] = useState<string>("");
   const [summary, setSummary] = useState<string>("");
   const [isHidden, setIsHidden] = useState(false);
-  const [school, setSchool] = useState([])
-  const [searchInput, setSearchInput] = useState("")
-  const {currentWardProfile} = useUserAPI() 
+  const [school, setSchool] = useState([]);
+  const [searchInput, setSearchInput] = useState("");
+  const { currentWardProfile } = useUserAPI();
   const [selectedSchool, setSelectedSchool] = useState<
-    |
-        {
-          schoolName: string;
-          id: number;
-        }
+    | {
+        schoolName: string;
+        id: number;
+      }
     | undefined
   >(undefined);
-  const [isChecked, setChecked] = useState(false)
-  const [uploadresult,{loading}] = useMutation(UPLOAD_RESULT);
+  const [isChecked, setChecked] = useState(false);
+  const [uploadresult, { loading }] = useMutation(UPLOAD_RESULT);
   const toast = useToast();
 
   const handleSummaryChange = (event: any) => {
@@ -78,9 +77,9 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
       schoolName: currentWardProfile?.school || "",
       id: currentWardProfile?.schoolId || 0,
     });
-  }
+  };
 
-  console.log(selectedSchool)
+  console.log(selectedSchool);
 
   const handleFileUpload = (
     uploadedFileUrl: string,
@@ -105,17 +104,17 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
           schoolId: selectedSchool?.id,
         },
       });
-      if(!response){
+      if (!response) {
         toast({
           title: "Client Error",
-          description: 'A client error occurred',
+          description: "A client error occurred",
           position: "bottom",
           variant: "left-accent",
           isClosable: true,
           status: "error",
         });
       }
-      if(response.data.uploadResult.errors !== null){
+      if (response.data.uploadResult.errors !== null) {
         toast({
           title: "Error",
           description: response?.data?.uploadResult?.errors[0]?.message,
@@ -125,7 +124,7 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
           status: "error",
         });
       }
-      if (response.data.uploadResult.errors === null){
+      if (response.data.uploadResult.errors === null) {
         toast({
           title: "Success",
           description: "Result for this student has been successfully uploaded",
@@ -134,10 +133,11 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
           isClosable: true,
           status: "success",
         });
-      // window.location.replace("dashboard/home/results");
+        setTimeout(() => {
+          window.location.replace("dashboard/home/results");
+        }, 3000)
       }
-      
-      console.log(response);
+
     } catch (err: any) {
       toast({
         title: "Error",
@@ -148,33 +148,30 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
         status: "error",
       });
     }
-  }
+  };
 
   useEffect(() => {
-      try{
-        const response = getschools
-        if(!response){
-          console.log("Couldn't fetch from server")
-        }
-        if(response.getSchools){
-          const schools = (response.getSchools || []).map((school: any) => ({
-            schoolname: school?.schoolName, 
-            schoollogo: school?.logoImgUrl,
-            schoolId: school?.id
-          }))
-          setSchool(schools)
-        }
-      } catch (error: any) {
-        console.log(error.message)
+    try {
+      const response = getschools;
+      if (!response) {
+        console.log("Couldn't fetch from server");
       }
-  }, [getschools, toast])
-
-  console.log(school)
+      if (response.getSchools) {
+        const schools = (response.getSchools || []).map((school: any) => ({
+          schoolname: school?.schoolName,
+          schoollogo: school?.logoImgUrl,
+          schoolId: school?.id,
+        }));
+        setSchool(schools);
+      }
+    } catch (error: any) {
+      console.log(error.message);
+    }
+  }, [getschools, toast]);
 
   const filteredSearchData: any = school.filter((item: any) =>
     item?.schoolname?.toLowerCase().includes(searchInput?.toLowerCase())
   );
-  console.log(filteredSearchData);
 
   return (
     <Modal
@@ -274,7 +271,10 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
                         transitionDuration: "0.2s",
                       }}
                       onClick={() => {
-                        setSelectedSchool({schoolName: item?.schoolname, id: item?.schoolId});
+                        setSelectedSchool({
+                          schoolName: item?.schoolname,
+                          id: item?.schoolId,
+                        });
                         setIsHidden(!isHidden);
                       }}
                     >
@@ -288,11 +288,11 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
               </Box>
             )}
             <Box
-              display={selectedSchool ? 'block' : 'none'}
+              display={selectedSchool ? "block" : "none"}
               my={"1rem"}
               p={"0.5rem"}
               rounded={"md"}
-              backgroundColor = "#3F999830"
+              backgroundColor="#3F999830"
             >
               <Text fontSize={"lg"} py={"0.5rem"}>
                 {selectedSchool?.schoolName || ""}
@@ -363,7 +363,6 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
                         <Field name="docType">
                           {({ field, form }: any) => (
                             <FormControl
-                            // isInvalid={form.errors.name && form.touched.name}
                             >
                               <Box w={"full"}>
                                 <Select
