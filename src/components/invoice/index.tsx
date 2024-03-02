@@ -165,7 +165,6 @@ const Invoice: FC<InvoiceProps> = ({}) => {
     const fetchData = async () => {
       try {
         const response = await getinvoice;
-        console.log(response);
         const parsedInvoiceData = response?.getStudentInvoice?.map(
           (item: any) => ({
             term: item.academicTerm,

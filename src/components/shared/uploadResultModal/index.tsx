@@ -131,9 +131,7 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
           isClosable: true,
           status: "success",
         });
-        setTimeout(() => {
-          window.location.replace("dashboard/home/results");
-        }, 3000)
+        onClose();
       }
 
     } catch (err: any) {
@@ -360,8 +358,7 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
                       <Flex gap={5} flexDir={{ base: "column", md: "row" }}>
                         <Field name="docType">
                           {({ field, form }: any) => (
-                            <FormControl
-                            >
+                            <FormControl>
                               <Box w={"full"}>
                                 <Select
                                   placeholder="Select File Type"
@@ -432,7 +429,7 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
                     py={"1.5rem"}
                     backgroundColor={"#007C7B"}
                     px={"3rem"}
-                    _hover={{ backgroundColor: "#044141" }}
+                    _hover={{ backgroundColor: "#007C6A" }}
                     isLoading={loading}
                     type="submit"
                   >

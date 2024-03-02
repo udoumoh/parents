@@ -77,30 +77,39 @@ const AcceptInvoiceModal: FC<AcceptInvoiceModalProps> = ({
                 invoiceid: Number(invoiceId),
                 summary: summary,
               },
-            });
-            console.log(response)
-            // if(!response){
-            //     toast({
-            //       title: "Client Error",
-            //       description:
-            //         "An error occured while sending your request",
-            //       position: "bottom",
-            //       variant: "left-accent",
-            //       isClosable: true,
-            //       status: "error",
-            //     });
-            // }
-            // if(response?.data?.error !== null){
-            //     toast({
-            //       title: "Error",
-            //       description: response?.data?.error?.message,
-            //       position: "bottom",
-            //       variant: "left-accent",
-            //       isClosable: true,
-            //       status: "error",
-            //     });
-            // }
-            console.log(response)
+            })
+            if(!response){
+                toast({
+                  title: "Client Error",
+                  description:
+                    "An error occured while sending your request",
+                  position: "bottom",
+                  variant: "left-accent",
+                  isClosable: true,
+                  status: "error",
+                });
+            }
+            if(response?.data?.acceptInvoice?.errors !== null){
+                toast({
+                  title: "Error",
+                  description: response?.data?.acceptInvoice?.errors[0]?.message,
+                  position: "bottom",
+                  variant: "left-accent",
+                  isClosable: true,
+                  status: "error",
+                });
+            }
+            if (response?.data?.acceptInvoice?.errors === null) {
+              toast({
+                title: "Success",
+                description: 'Receipt has been sent successfully',
+                position: "bottom",
+                variant: "left-accent",
+                isClosable: true,
+                status: "success",
+              });
+              onClose();
+            }
             } catch(err: any){
                 toast({
                   title: "Error",
@@ -154,8 +163,7 @@ const AcceptInvoiceModal: FC<AcceptInvoiceModalProps> = ({
                     <Flex mb={"1rem"}>
                       <Field name="amountPaid">
                         {({ field, form }: any) => (
-                          <FormControl
-                          >
+                          <FormControl>
                             <Box w={"full"}>
                               <Text mb={"0.5rem"}>Amount Paid</Text>
                               <InputGroup
@@ -247,12 +255,12 @@ const AcceptInvoiceModal: FC<AcceptInvoiceModalProps> = ({
                   </FormControl>
 
                   <Button
-                    my={'2rem'}
+                    my={"2rem"}
                     w={"full"}
                     py={"1.5rem"}
                     backgroundColor={"#007C7B"}
                     px={"3rem"}
-                    _hover={{ backgroundColor: "#044141" }}
+                    _hover={{ backgroundColor: "#007C6A" }}
                     type="submit"
                     isLoading={loading}
                   >
