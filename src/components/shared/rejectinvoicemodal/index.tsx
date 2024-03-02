@@ -37,9 +37,9 @@ const RejectInvoiceModal: FC<RejectInvoiceModalProps> = ({
     setSummary(e.target.value);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async() => {
     try{
-        const response = rejectinvoice({
+        const response = await rejectinvoice({
           variables: { response: summary, invoiceid: Number(invoiceId) },
         });
         console.log(response);
