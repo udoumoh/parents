@@ -68,10 +68,10 @@ const AcceptInvoiceModal: FC<AcceptInvoiceModalProps> = ({
       setFileName(uploadedFileName);
     };
 
-    const handleSubmit = (values: any) => {
+    const handleSubmit = async (values: any) => {
         setUploading(true)
         try{
-            const response = acceptinvoice({
+            const response = await acceptinvoice({
               variables: {
                 document: file ,
                 fileType: values.docType,

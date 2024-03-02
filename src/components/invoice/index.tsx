@@ -24,6 +24,7 @@ import RejectInvoiceModal from "../shared/rejectinvoicemodal";
 import { GET_STUDENT_INVOICE } from "@/gql/queries/queries";
 import { useQuery } from "@apollo/client";
 import { useUserAPI } from "@/hooks/UserContext";
+import { formatDate } from "@/helpers/formatDate";
 
 interface InvoiceItemProps {
   studentInvoice: StudentInvoiceProps;
@@ -36,6 +37,9 @@ interface StudentInvoiceProps {
   billType: string;
   amountPaid: string;
   id:number;
+  status: string;
+  summary: string;
+  createdAt: string;
 }
 
 const InvoiceItem: FC<InvoiceItemProps> = ({
@@ -78,7 +82,7 @@ const InvoiceItem: FC<InvoiceItemProps> = ({
           Summary
         </Text>
         <Text fontSize={"16px"} color={"#000000"}>
-          Excursion to Regus Mulliner Towers
+          {studentInvoice.summary}
         </Text>
 
         <Badge
@@ -88,13 +92,13 @@ const InvoiceItem: FC<InvoiceItemProps> = ({
           py={"0.1rem"}
           fontSize={"2xs"}
         >
-          Active
+          {studentInvoice.status}
         </Badge>
       </Box>
 
       <Flex alignItems={"end"} justifyContent={"space-between"} mt={"1rem"}>
         <Text color={"#C2C2C2"} fontSize={"2xs"}>
-          Generated on 14th Jan, 2024
+          Generated on {formatDate(studentInvoice?.createdAt)}
         </Text>
         <Flex gap={3}>
           <Tooltip
@@ -147,7 +151,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
   const {currentWardProfile} = useUserAPI()
   const [invoiceData, setInvoiceData] = useState([])
   const { data: getinvoice } = useQuery(GET_STUDENT_INVOICE, {
-    variables: { studentId: currentWardProfile?.id },
+    variables: { studentId: currentWardProfile?.id || 1 },
   });
   useEffect(() => {
     const fetchData = async () => {
@@ -160,7 +164,10 @@ const Invoice: FC<InvoiceProps> = ({}) => {
             year: item.academicYear,
             billType: item.category,
             amountPaid: item.amount,
-            id: item.id
+            id: item.id,
+            createdAt: item.createdAt,
+            summary: item.summary,
+            status: item.status,
           })
         );
         setInvoiceData(parsedInvoiceData);
