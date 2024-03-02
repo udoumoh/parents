@@ -30,33 +30,54 @@ const RejectInvoiceModal: FC<RejectInvoiceModalProps> = ({
   onClose,
   invoiceId,
 }) => {
-  const toast = useToast()
-  const [rejectinvoice, {loading}] = useMutation(REJECT_INVOICE);
+  const toast = useToast();
+  const [rejectinvoice, { loading }] = useMutation(REJECT_INVOICE);
   const [summary, setSummary] = useState("");
   const handleSummaryChange = (e: any) => {
     setSummary(e.target.value);
   };
 
-  const handleSubmit = async() => {
-    try{
-        const response = await rejectinvoice({
-          variables: { response: summary, invoiceid: Number(invoiceId) },
+  const handleSubmit = async () => {
+    try {
+      const response = await rejectinvoice({
+        variables: { response: summary, invoiceid: Number(invoiceId) },
+      });
+      console.log(response);
+      if (!response) {
+        toast({
+          title: "Error",
+          description: "A client side error has occurred",
+          position: "bottom",
+          variant: "left-accent",
+          isClosable: true,
+          status: "error",
         });
-        console.log(response);
-        if(!response){
-            toast({
-                  title: "Error",
-                  description: "A client side error has occurred",
-                  position: "bottom",
-                  variant: "left-accent",
-                  isClosable: true,
-                  status: "error",
-                });
-        }
+      }
+      if (!response?.data?.rejectInvoice) {
+        toast({
+          title: "Error",
+          description: "Reject Invoice Failed",
+          position: "bottom",
+          variant: "left-accent",
+          isClosable: true,
+          status: "error",
+        });
+      }
+      if (response?.data?.rejectInvoice) {
+        toast({
+          title: "Success",
+          description: "Succssfully rejected invoice",
+          position: "bottom",
+          variant: "left-accent",
+          isClosable: true,
+          status: "success",
+        });
+        onClose();
+      }
     } catch (e: any) {
-        console.log(e.message)
+      console.log(e.message);
     }
-  }
+  };
   return (
     <Modal
       blockScrollOnMount={false}

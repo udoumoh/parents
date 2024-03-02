@@ -133,7 +133,6 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
         });
         onClose();
       }
-
     } catch (err: any) {
       toast({
         title: "Error",

@@ -1,4 +1,4 @@
-import { FC, useState } from 'react'
+import { FC, useState } from "react";
 import {
   Box,
   Modal,
@@ -24,15 +24,15 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { Formik, Form, Field } from "formik";
-import { FileUpload } from '../fileUpload';
-import { useMutation } from '@apollo/client';
-import { ACCEPT_INVOICE } from '@/gql/queries/queries';
+import { FileUpload } from "../fileUpload";
+import { useMutation } from "@apollo/client";
+import { ACCEPT_INVOICE } from "@/gql/queries/queries";
 
 interface AcceptInvoiceModalProps {
   isOpen: boolean;
   onOpen: () => void;
   onClose: () => void;
-  invoiceId:number;
+  invoiceId: number;
 }
 
 const AcceptInvoiceModal: FC<AcceptInvoiceModalProps> = ({
@@ -41,87 +41,85 @@ const AcceptInvoiceModal: FC<AcceptInvoiceModalProps> = ({
   onClose,
   invoiceId,
 }) => {
-    const {
-      isOpen: isFileOpen,
-      onClose: onFileClose,
-      onOpen: onFileOpen,
-    } = useDisclosure();
-    const [file, setFile] = useState<string>("");
-    const [folder, setFolder] = useState<string>("");
-    const [fileName, setFileName] = useState<string>("");
-    const [summary, setSummary] = useState<string>("");
-    const [acceptinvoice, {loading}] = useMutation(ACCEPT_INVOICE)
-    const toast = useToast()
+  const {
+    isOpen: isFileOpen,
+    onClose: onFileClose,
+    onOpen: onFileOpen,
+  } = useDisclosure();
+  const [file, setFile] = useState<string>("");
+  const [folder, setFolder] = useState<string>("");
+  const [fileName, setFileName] = useState<string>("");
+  const [summary, setSummary] = useState<string>("");
+  const [acceptinvoice, { loading }] = useMutation(ACCEPT_INVOICE);
+  const toast = useToast();
 
-    const handleSummaryChange = (event: any) => {
-        setSummary(event.target.value)
-    }
-    
-    const handleFileUpload = (
-      uploadedFileUrl: string,
-      uploadedFolder: string,
-      uploadedFileName: string,
-    ) => {
-      setFile(uploadedFileUrl); // Set the file URL received from the upload component
-      setFolder(uploadedFolder); // Set the folder received from the upload component
-      setFileName(uploadedFileName);
-    };
+  const handleSummaryChange = (event: any) => {
+    setSummary(event.target.value);
+  };
 
-    const handleSubmit = async (values: any) => {
-        try{
-            const response = await acceptinvoice({
-              variables: {
-                document: file,
-                fileType: values.docType,
-                amountPaid: Number(values.amountPaid) ,
-                invoiceid: Number(invoiceId),
-                summary: summary,
-              },
-            })
-            if(!response){
-                toast({
-                  title: "Client Error",
-                  description:
-                    "An error occured while sending your request",
-                  position: "bottom",
-                  variant: "left-accent",
-                  isClosable: true,
-                  status: "error",
-                });
-            }
-            if(response?.data?.acceptInvoice?.errors !== null){
-                toast({
-                  title: "Error",
-                  description: response?.data?.acceptInvoice?.errors[0]?.message,
-                  position: "bottom",
-                  variant: "left-accent",
-                  isClosable: true,
-                  status: "error",
-                });
-            }
-            if (response?.data?.acceptInvoice?.errors === null) {
-              toast({
-                title: "Success",
-                description: 'Receipt has been sent successfully',
-                position: "bottom",
-                variant: "left-accent",
-                isClosable: true,
-                status: "success",
-              });
-              onClose();
-            }
-            } catch(err: any){
-                toast({
-                  title: "Error",
-                  description:
-                    err.message,
-                  position: "bottom",
-                  variant: "left-accent",
-                  isClosable: true,
-                  status: "error",
-                })
-        }
+  const handleFileUpload = (
+    uploadedFileUrl: string,
+    uploadedFolder: string,
+    uploadedFileName: string
+  ) => {
+    setFile(uploadedFileUrl); // Set the file URL received from the upload component
+    setFolder(uploadedFolder); // Set the folder received from the upload component
+    setFileName(uploadedFileName);
+  };
+
+  const handleSubmit = async (values: any) => {
+    try {
+      const response = await acceptinvoice({
+        variables: {
+          document: file,
+          fileType: values.docType,
+          amountPaid: Number(values.amountPaid),
+          invoiceid: Number(invoiceId),
+          summary: summary,
+        },
+      });
+      if (!response) {
+        toast({
+          title: "Client Error",
+          description: "An error occured while sending your request",
+          position: "bottom",
+          variant: "left-accent",
+          isClosable: true,
+          status: "error",
+        });
+      }
+      if (response?.data?.acceptInvoice?.errors !== null) {
+        toast({
+          title: "Error",
+          description: response?.data?.acceptInvoice?.errors[0]?.message,
+          position: "bottom",
+          variant: "left-accent",
+          isClosable: true,
+          status: "error",
+        });
+      }
+      if (response?.data?.acceptInvoice?.errors === null) {
+        toast({
+          title: "Success",
+          description: "Receipt has been sent successfully",
+          position: "bottom",
+          variant: "left-accent",
+          isClosable: true,
+          status: "success",
+        });
+        onClose();
+      }
+    } catch (err: any) {
+      toast({
+        title: "Error",
+        description: err.message,
+        position: "bottom",
+        variant: "left-accent",
+        isClosable: true,
+        status: "error",
+      });
     }
+  };
   return (
     <Modal
       blockScrollOnMount={false}
@@ -278,4 +276,4 @@ const AcceptInvoiceModal: FC<AcceptInvoiceModalProps> = ({
   );
 };
 
-export default AcceptInvoiceModal
+export default AcceptInvoiceModal;
