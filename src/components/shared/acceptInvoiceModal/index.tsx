@@ -50,8 +50,7 @@ const AcceptInvoiceModal: FC<AcceptInvoiceModalProps> = ({
     const [folder, setFolder] = useState<string>("");
     const [fileName, setFileName] = useState<string>("");
     const [summary, setSummary] = useState<string>("");
-    const [loading, setUploading] = useState(false)
-    const [acceptinvoice] = useMutation(ACCEPT_INVOICE)
+    const [acceptinvoice, {loading}] = useMutation(ACCEPT_INVOICE)
     const toast = useToast()
 
     const handleSummaryChange = (event: any) => {
@@ -69,17 +68,17 @@ const AcceptInvoiceModal: FC<AcceptInvoiceModalProps> = ({
     };
 
     const handleSubmit = async (values: any) => {
-        setUploading(true)
         try{
             const response = await acceptinvoice({
               variables: {
-                document: file ,
+                document: file,
                 fileType: values.docType,
                 amountPaid: Number(values.amountPaid) ,
                 invoiceid: Number(invoiceId),
+                summary: summary,
               },
             });
-            
+            console.log(response)
             // if(!response){
             //     toast({
             //       title: "Client Error",
@@ -144,10 +143,8 @@ const AcceptInvoiceModal: FC<AcceptInvoiceModalProps> = ({
               initialValues={{
                 amountPaid: "",
                 docType: "",
-                file: file,
-                summary: summary,
               }}
-              onSubmit={async (values, actions) => {
+              onSubmit={async (values) => {
                 handleSubmit(values);
               }}
             >
@@ -158,7 +155,6 @@ const AcceptInvoiceModal: FC<AcceptInvoiceModalProps> = ({
                       <Field name="amountPaid">
                         {({ field, form }: any) => (
                           <FormControl
-                          // isInvalid={form.errors.name && form.touched.name}
                           >
                             <Box w={"full"}>
                               <Text mb={"0.5rem"}>Amount Paid</Text>
@@ -258,6 +254,7 @@ const AcceptInvoiceModal: FC<AcceptInvoiceModalProps> = ({
                     px={"3rem"}
                     _hover={{ backgroundColor: "#044141" }}
                     type="submit"
+                    isLoading={loading}
                   >
                     <Text color={"#fff"} fontWeight={"400"} fontSize={"lg"}>
                       Accept & Send Receipt

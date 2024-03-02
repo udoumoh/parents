@@ -189,8 +189,8 @@ query Parent {
 `);
 
 export const ACCEPT_INVOICE = gql(`
-mutation AcceptInvoice($document: String!, $fileType: String!, $amountPaid: Float!, $invoiceid: Float!) {
-  acceptInvoice(document: $document, fileType: $fileType, amountPaid: $amountPaid, invoiceid: $invoiceid) {
+mutation AcceptInvoice($document: String!, $fileType: String!, $amountPaid: Float!, $invoiceid: Float!, $summary: String) {
+  acceptInvoice(document: $document, fileType: $fileType, amountPaid: $amountPaid, invoiceid: $invoiceid, summary: $summary) {
     errors {
       field
       message

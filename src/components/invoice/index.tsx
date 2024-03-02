@@ -25,6 +25,7 @@ import { GET_STUDENT_INVOICE } from "@/gql/queries/queries";
 import { useQuery } from "@apollo/client";
 import { useUserAPI } from "@/hooks/UserContext";
 import { formatDate } from "@/helpers/formatDate";
+import formatNumberWithCommas from "@/helpers/formatNumberWithCommas";
 
 interface InvoiceItemProps {
   studentInvoice: StudentInvoiceProps;
@@ -55,12 +56,13 @@ const InvoiceItem: FC<InvoiceItemProps> = ({
     <Box
       height={"100%"}
       border={"1px solid #C2C2C2"}
-      rounded={"lg"}
+      rounded={"xl"}
       p={"0.4rem"}
-      w={"full"}
       mb={"1rem"}
+      minW={"300px"}
+      h={"auto"}
     >
-      <Box backgroundColor={"#E2E2E2"} rounded={"lg"} p={"0.6rem"} pb={"2rem"}>
+      <Box backgroundColor={"#E2E2E2"} rounded={"lg"} p={"0.6rem"} pb={"1rem"}>
         <Box display={"flex"} gap={1} alignItems={"center"}>
           <Text fontSize={"sm"} color={"#666666"}>
             {studentInvoice.term}
@@ -70,33 +72,39 @@ const InvoiceItem: FC<InvoiceItemProps> = ({
             {studentInvoice.year}
           </Text>
         </Box>
-        <Text color={"#666666"} mt={"1.8rem"} fontSize={"xs"}>
+        <Text color={"#666666"} mt={"1.3rem"} fontSize={"xs"}>
           {studentInvoice.billType}
         </Text>
         <Text color={"#000"} fontSize={"2xl"} fontWeight={"500"}>
-          ₦ {studentInvoice.amountPaid}
+          ₦ {formatNumberWithCommas(studentInvoice.amountPaid)}
         </Text>
       </Box>
       <Box px={"0.5rem"}>
         <Text color={"#666666"} fontSize={"xs"} fontWeight={"400"} mt={"1rem"}>
           Summary
         </Text>
-        <Text fontSize={"16px"} color={"#000000"}>
-          {studentInvoice.summary}
+        <Text fontSize={"16px"} fontWeight={"500"} color={"#000000"}>
+          {`${studentInvoice.summary || studentInvoice.billType}`}
         </Text>
 
         <Badge
           variant={"solid"}
-          colorScheme="green"
+          colorScheme={studentInvoice.status === "active" ? "green" : "yellow"}
           px={"1rem"}
           py={"0.1rem"}
           fontSize={"2xs"}
+          borderRadius={"3px"}
         >
           {studentInvoice.status}
         </Badge>
       </Box>
 
-      <Flex alignItems={"end"} justifyContent={"space-between"} mt={"1rem"}>
+      <Flex
+        alignItems={"end"}
+        justifyContent={"space-between"}
+        px={"0.5rem"}
+        mt={"0.3rem"}
+      >
         <Text color={"#C2C2C2"} fontSize={"2xs"}>
           Generated on {formatDate(studentInvoice?.createdAt)}
         </Text>
@@ -198,7 +206,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
       <Divider color={"#C2C2C2"} my={"0.8rem"} />
 
       {invoiceData?.length > 0 ? (
-        <Wrap spacing={'15px'}>
+        <Wrap spacing={'15px'} >
           {invoiceData?.map((student, index) => {
             return (
               <WrapItem key={index} w={'auto'}>
