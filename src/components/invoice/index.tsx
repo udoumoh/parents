@@ -83,7 +83,7 @@ const InvoiceItem: FC<InvoiceItemProps> = ({
         <Text color={"#666666"} fontSize={"xs"} fontWeight={"400"} mt={"1rem"}>
           Summary
         </Text>
-        <Text fontSize={"16px"} fontWeight={"500"} color={"#000000"}>
+        <Text fontSize={"16px"} fontWeight={"500"} color={"#000000"} isTruncated>
           {`${studentInvoice.summary || studentInvoice.billType}`}
         </Text>
 
