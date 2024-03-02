@@ -42,17 +42,17 @@ const RejectInvoiceModal: FC<RejectInvoiceModalProps> = ({
         const response = rejectinvoice({
           variables: { response: summary, invoiceid: Number(invoiceId) },
         });
+        console.log(response);
         if(!response){
             toast({
                   title: "Error",
-                  description: "Client Error",
+                  description: "A client side error has occurred",
                   position: "bottom",
                   variant: "left-accent",
                   isClosable: true,
                   status: "error",
                 });
         }
-        console.log(response)
     } catch (e: any) {
         console.log(e.message)
     }
