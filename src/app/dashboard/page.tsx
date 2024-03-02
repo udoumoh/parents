@@ -33,13 +33,21 @@ const Page: FC<pageProps> = ({}) => {
     // }
     
   return (
-    <Flex minH={"100vh"}>
-      <Flex flexDir={"column"} alignItems={"center"} w={"full"} mt={"3rem"} mb={{base:"3rem", lg:"0.5rem"}} px={'1rem'}>
+    <Flex h={"100vh"} overflowY={"auto"}>
+      <Box h={'100vh'} overflowY={'auto'} w={'full'} pb={'5rem'}>
+      <Flex
+        flexDir={"column"}
+        alignItems={"center"}
+        w={"full"}
+        my={"3rem"}
+        mb={"0.5rem"}
+        px={"1rem"}
+      >
         <Image src="/images/greylight2.png" alt="logo" w={"4rem"} h={"4rem"} />
         <Image src="/images/undrawFamily.svg" alt="illustration" />
         <Text
           textAlign={"center"}
-          fontSize={{base:"md", lg:"xl"}}
+          fontSize={{ base: "md", lg: "xl" }}
           maxW={"475px"}
           fontWeight={"400"}
         >
@@ -52,7 +60,7 @@ const Page: FC<pageProps> = ({}) => {
           colorScheme="teal"
           _hover={{ backgroundColor: "#044141" }}
           onClick={onModalOpen}
-          mt={'2rem'}
+          mt={"2rem"}
         >
           <AiOutlinePlus />
           <Text fontWeight={"light"} pl="0.5rem">
@@ -66,6 +74,7 @@ const Page: FC<pageProps> = ({}) => {
           onSearchOpen={onModalOpen}
         />
       </Flex>
+      </Box>
     </Flex>
   );
 }
