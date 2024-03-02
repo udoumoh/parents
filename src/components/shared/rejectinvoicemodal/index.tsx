@@ -42,7 +42,6 @@ const RejectInvoiceModal: FC<RejectInvoiceModalProps> = ({
       const response = await rejectinvoice({
         variables: { response: summary, invoiceid: Number(invoiceId) },
       });
-      console.log(response);
       if (!response) {
         toast({
           title: "Error",
