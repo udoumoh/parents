@@ -146,22 +146,25 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
   };
 
   useEffect(() => {
-    try {
-      const response = getschools;
-      if (!response) {
-        console.log("Couldn't fetch from server");
+    const fetchData = async() => {
+      try {
+        const response = await getschools;
+        if (!response) {
+          console.log("Couldn't fetch from server");
+        }
+        if (response?.getSchools) {
+          const schools = (response?.getSchools || []).map((school: any) => ({
+            schoolname: school?.schoolName,
+            schoollogo: school?.logoImgUrl,
+            schoolId: school?.id,
+          }));
+          setSchool(schools);
+        }
+      } catch (error: any) {
+        console.log(error?.message);
       }
-      if (response.getSchools) {
-        const schools = (response.getSchools || []).map((school: any) => ({
-          schoolname: school?.schoolName,
-          schoollogo: school?.logoImgUrl,
-          schoolId: school?.id,
-        }));
-        setSchool(schools);
-      }
-    } catch (error: any) {
-      console.log(error.message);
     }
+    fetchData()
   }, [getschools, toast]);
 
   const filteredSearchData: any = school.filter((item: any) =>
