@@ -183,7 +183,7 @@ export const UserApiProvider: FC<UserApiProviderProps> = ({ children }) => {
           email: response?.parent?.parent?.email || "",
           parentRole: response?.parent?.parent?.parentRole || "",
         };
-
+        updateUserBio(newData);
         console.log(response?.parent?.parent)
 
         const userChildren = (response?.parent?.parent?.children || []).map(
@@ -206,7 +206,6 @@ export const UserApiProvider: FC<UserApiProviderProps> = ({ children }) => {
 
         setChildData(userChildren);
         setCurrentId(userChildren[0].id);
-        updateUserBio(newData);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
