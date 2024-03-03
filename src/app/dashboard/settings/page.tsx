@@ -16,7 +16,7 @@ import {
 import { AiFillClockCircle } from "react-icons/ai";
 import ResultCard from "@/components/shared/resultCard";
 import { useUserAPI } from "@/hooks/UserContext";
-import {gql, useMutation} from "@apollo/client"
+import { gql, useMutation } from "@apollo/client";
 import { useRouter } from "next/navigation";
 import { formatDate } from "@/helpers/formatDate";
 
@@ -53,52 +53,52 @@ const LegendBadge: React.FC<LegendBadgeProps> = ({ role, mt, ...rest }) => {
 };
 
 const SettingsPage: FC<SettingsPageProps> = ({}) => {
-    const router = useRouter()
-    const [logoutParent] = useMutation(LOGOUT_PARENTS)
-    const { profileData, parentData, childData } = useUserAPI()
-    const [wardData, setWarddata] = useState([
-      {
-        name: "Chibuzor Ali-Williams",
-        profileImage:
-          "https://th.bing.com/th/id/R.5dcfec967642191443ae9a4b04c55d47?rik=oahz060yDmOp%2bA&pid=ImgRaw&r=0",
-        greynoteNumber: "GN24002",
-      },
-      {
-        name: "Chiamaka Ali-Williams",
-        profileImage: "/images/profileImg.jpeg",
-        greynoteNumber: "GN24002",
-      },
-    ]);
-    const [resultsData, setResultsdata] = useState([
-      {
-        schoolName: "Green Springs High School",
-        dateGenerated: "12th August 2023",
-        term: "Results",
-        examType: "Verified",
-        schoolLogo: "/images/schoollogo.png",
-      },
-      {
-        schoolName: "Green Springs High School",
-        dateGenerated: "10th April 2023",
-        term: "Results",
-        examType: "Verified",
-        schoolLogo: "/images/schoollogo.png",
-      },
-    ]);
+  const router = useRouter();
+  const [logoutParent] = useMutation(LOGOUT_PARENTS);
+  const { profileData, parentData, childData } = useUserAPI();
+  const [wardData, setWarddata] = useState([
+    {
+      name: "Chibuzor Ali-Williams",
+      profileImage:
+        "https://th.bing.com/th/id/R.5dcfec967642191443ae9a4b04c55d47?rik=oahz060yDmOp%2bA&pid=ImgRaw&r=0",
+      greynoteNumber: "GN24002",
+    },
+    {
+      name: "Chiamaka Ali-Williams",
+      profileImage: "/images/profileImg.jpeg",
+      greynoteNumber: "GN24002",
+    },
+  ]);
+  const [resultsData, setResultsdata] = useState([
+    {
+      schoolName: "Green Springs High School",
+      dateGenerated: "12th August 2023",
+      term: "Results",
+      examType: "Verified",
+      schoolLogo: "/images/schoollogo.png",
+    },
+    {
+      schoolName: "Green Springs High School",
+      dateGenerated: "10th April 2023",
+      term: "Results",
+      examType: "Verified",
+      schoolLogo: "/images/schoollogo.png",
+    },
+  ]);
 
-    const handleLogout = async () => {
-      const response = await logoutParent() 
-      if(response.data.logoutParent){
-        router.push("/signin")
-      }
+  const handleLogout = async () => {
+    const response = await logoutParent();
+    if (response.data.logoutParent) {
+      router.push("/signin");
     }
+  };
   return (
     <Box
       display={"flex"}
       flexDir={"column"}
       justifyContent={"center"}
       alignItems={"center"}
-      mb={'10rem'}
+      mb={"10rem"}
     >
       <Box
         w={"full"}
@@ -170,7 +170,12 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
             </Button>
 
             <Button
-            variant={'outline'} colorScheme="red" onClick={handleLogout}>Logout</Button>
+              variant={"outline"}
+              colorScheme="red"
+              onClick={handleLogout}
+            >
+              Logout
+            </Button>
           </Flex>
         </Flex>
 
@@ -190,34 +195,50 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
               gap={{ base: "5", lg: "20" }}
               mt={"1rem"}
             >
-              {childData?.map((item, index) => {
-                return (
-                  <Flex
-                    alignItems={"center"}
-                    justifyContent={"center"}
-                    gap={2}
-                    key={index}
-                  >
-                    <Avatar
-                      size={"md"}
-                      src={item.profileImage}
-                      pointerEvents={"none"}
-                    />
-                    <Box lineHeight={"20px"}>
-                      <Text fontWeight={"600"} fontSize={"sm"}>
-                        {item.firstName} {" "} {item.lastName}
-                      </Text>
-                      <Text
-                        fontSize={"12px"}
-                        color={"#AAAAAA"}
-                        fontWeight={"600"}
-                      >
-                        {item.greynoteNumber}
-                      </Text>
-                    </Box>
-                  </Flex>
-                );
-              })}
+              {(childData ?? []).length === 0 ? (
+                <Box
+                  backgroundColor={"#CCE7E7"}
+                  display={"flex"}
+                  alignItems={"center"}
+                  px={"1.3rem"}
+                  rounded={"md"}
+                  py={"1rem"}
+                  minW={{ base: "auto", lg: "550px" }}
+                >
+                  <Text fontSize={"lg"}>
+                    No child has been linked to your account
+                  </Text>
+                </Box>
+              ) : (
+                childData?.map((item, index) => {
+                  return (
+                    <Flex
+                      alignItems={"center"}
+                      justifyContent={"center"}
+                      gap={2}
+                      key={index}
+                    >
+                      <Avatar
+                        size={"md"}
+                        src={item.profileImage}
+                        pointerEvents={"none"}
+                      />
+                      <Box lineHeight={"20px"}>
+                        <Text fontWeight={"600"} fontSize={"sm"}>
+                          {item.firstName} {item.lastName}
+                        </Text>
+                        <Text
+                          fontSize={"12px"}
+                          color={"#AAAAAA"}
+                          fontWeight={"600"}
+                        >
+                          {item.greynoteNumber}
+                        </Text>
+                      </Box>
+                    </Flex>
+                  );
+                })
+              )}
             </Flex>
 
             <Box mt={"2rem"}>

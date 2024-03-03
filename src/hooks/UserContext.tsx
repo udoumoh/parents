@@ -25,16 +25,6 @@ export interface UserChildren {
   id: number;
   age: number;
   schoolId: number;
-  // chats: {
-  //   profileImage: string;
-  //   firstName: string;
-  //   lastName: string;
-  //   schoolName: string;
-  //   lastMessage: string;
-  //   timeSent: string;
-  //   position: string;
-  //   id: number;
-  // }[];
 }
 
 interface ParentDataProps {
