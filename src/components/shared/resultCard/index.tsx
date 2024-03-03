@@ -64,6 +64,7 @@ const ResultCard: FC<ResultCardProps> = ({ result }) => {
         alignItems={"baseline"}
         justifyContent={"space-between"}
         mt={"2rem"}
+        gap={'6'}
       >
         <Box>
           <Flex gap={3}>

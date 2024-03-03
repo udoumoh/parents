@@ -118,6 +118,7 @@ const Results: FC<ResultsProps> = ({}) => {
             border={"2px solid #747474"}
             fontSize={"sm"}
             color={"#747474"}
+            rounded={"md"}
           >
             {/* <option value="option1">Option 1</option> */}
           </Select>
@@ -143,18 +144,26 @@ const Results: FC<ResultsProps> = ({}) => {
 
       <Box>
         <Text mb={"1rem"}>Most Recent</Text>
-        <Wrap gap={5} flexDir={{ base: "column", lg: "row" }}>
-          {generatedResults.map((result, index) => {
-            return (
-              <WrapItem key={index}>
-                <ResultCard key={index} result={result} />
-              </WrapItem>
-            );
-          })}
-        </Wrap>
+        {generatedResults.length === 0 ? (
+          <>
+            <Text fontSize={"xl"}>
+              There are no results available for this student
+            </Text>
+          </>
+        ) : (
+          <Wrap gap={5} flexDir={{ base: "column", lg: "row" }}>
+            {generatedResults.map((result, index) => {
+              return (
+                <WrapItem key={index}>
+                  <ResultCard key={index} result={result} />
+                </WrapItem>
+              );
+            })}
+          </Wrap>
+        )}
       </Box>
 
-      <Box mt={{ base: "12" }}>
+      <Box mt={{ base: "12" }} display={generatedResults.length === 0 ? "none" : "block"}>
         <TableContainer>
           <Table
             size={{ base: "sm", xl: "md" }}
@@ -196,7 +205,7 @@ const Results: FC<ResultsProps> = ({}) => {
                       </Flex>
                     </Td>
                     <Td key={index} color={"#000"}>
-                      {data?.status ? "Official" : "Unnofficial"}
+                      {data?.status ? "Official" : "Unofficial"}
                     </Td>
                     <Td key={index} color={"#000"}>
                       {data?.term}
