@@ -179,9 +179,9 @@ export const UserApiProvider: FC<UserApiProviderProps> = ({ children }) => {
         const newData = {
           firstName: capitalizeFirstLetter(response?.parent?.parent?.firstName || ""),
           lastName: capitalizeFirstLetter(response?.parent?.parent?.lastName || ""),
-          profileImage: response?.parent?.parent?.profileImgUrl,
-          email: response?.parent?.parent?.email,
-          parentRole: response?.parent?.parent?.parentRole,
+          profileImage: response?.parent?.parent?.profileImgUrl || "",
+          email: response?.parent?.parent?.email || "",
+          parentRole: response?.parent?.parent?.parentRole || "",
         };
 
         console.log(response?.parent?.parent)
