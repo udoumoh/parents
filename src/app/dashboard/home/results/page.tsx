@@ -62,24 +62,29 @@ const Results: FC<ResultsProps> = ({}) => {
     const fetchData = async () => {
       try {
         const response = await getgeneratedresult;
-        const parsedResultsData = response?.studentGeneratedResult?.map(
-          (item: any) => ({
-            dateGenerated: formatDate(item?.createdAt || ""),
-            term: item.academicTerm || "",
-            examType: item.resultType || "",
-            schoolLogo: item?.school?.logoImgUrl || "",
-            schoolName: item?.school?.schoolName || "",
-            status: item?.isOfficial || "",
-            sharerProfileUrl:
-              item?.student?.creator?.admin?.profileImgUrl || "",
-            sharerFirstName: item?.student?.creator?.admin?.firstName || "",
-            sharerLastName: item?.student?.creator?.admin?.lastName || "",
-            shareDate: formatDate(
-              item?.student?.creator?.admin?.createdAt || ""
-            ),
-          })
-        );
-        setGeneratedResults(parsedResultsData);
+        if(!response){
+          console.log('failed to fetch results data')
+        }
+        if (response){
+          const parsedResultsData = response?.studentGeneratedResult?.map(
+            (item: any) => ({
+              dateGenerated: formatDate(item?.createdAt || ""),
+              term: item.academicTerm || "",
+              examType: item.resultType || "",
+              schoolLogo: item?.school?.logoImgUrl || "",
+              schoolName: item?.school?.schoolName || "",
+              status: item?.isOfficial || "",
+              sharerProfileUrl:
+                item?.student?.creator?.admin?.profileImgUrl || "",
+              sharerFirstName: item?.student?.creator?.admin?.firstName || "",
+              sharerLastName: item?.student?.creator?.admin?.lastName || "",
+              shareDate: formatDate(
+                item?.student?.creator?.admin?.createdAt || ""
+              ),
+            })
+          );
+          setGeneratedResults(parsedResultsData);
+        }
       } catch (err: any) {
         console.log(err.message);
       }
