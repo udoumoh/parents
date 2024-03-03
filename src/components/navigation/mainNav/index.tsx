@@ -133,7 +133,7 @@ const DrawerNavLinkItems = {
 
 
 const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
-  const { parentData, setProfileData } = useUserAPI();
+  const { profileData, setProfileData } = useUserAPI();
   const pathName = usePathname();
 
   return (
@@ -169,9 +169,7 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
             return (
               <NavItem
                 key={index}
-                icon={
-                  pathName === item.url ? item.iconFill : item.iconLight
-                }
+                icon={pathName === item.url ? item.iconFill : item.iconLight}
                 link={item.url}
                 backgroundColor={
                   pathName === item.url ? "#144646" : "transparent"
@@ -183,7 +181,7 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
         </Grid>
         <Box justifyContent={"center"} display={"flex"} alignItems={"center"}>
           <Image
-            src={parentData?.profileImgUrl}
+            src={profileData?.userBio?.profileImage}
             width={"2.7rem"}
             height={"2.7rem"}
             alt="profile"

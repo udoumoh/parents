@@ -123,7 +123,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
             justifyContent={"center"}
           >
             <Avatar
-              src={parentData?.profileImgUrl}
+              src={profileData?.userBio?.profileImage}
               size={{ base: "xl", lg: "2xl" }}
               pointerEvents={"none"}
             />
@@ -135,7 +135,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
             >
               <Flex alignItems={"center"} gap={2}>
                 <Text fontSize={{ base: "lg", lg: "2xl" }} fontWeight={"bold"}>
-                  {`${profileData.userBio?.firstName} ${parentData?.lastName}`}
+                  {`${profileData?.userBio?.firstName} ${profileData?.userBio?.lastName}`}
                 </Text>
                 <Image
                   src="/images/verifiedtag.png"
@@ -147,7 +147,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
               </Flex>
 
               <LegendBadge
-                role={parentData?.parentRole || ""}
+                role={profileData?.userBio?.parentRole || ""}
                 mt={{ base: "0.3rem", lg: "0.8rem" }}
               />
 
