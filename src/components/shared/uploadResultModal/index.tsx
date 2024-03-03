@@ -89,24 +89,24 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
     setFileName(uploadedFileName);
   };
 
-  // useEffect(() => {
-  //   try {
-  //         const response = getschools;
-  //         if (!response) {
-  //           console.log("Couldn't fetch from server");
-  //         }
-  //         if (response?.getSchools) {
-  //           const schools = (response?.getSchools || []).map((school: any) => ({
-  //             schoolname: school?.schoolName,
-  //             schoollogo: school?.logoImgUrl,
-  //             schoolId: school?.id,
-  //           }));
-  //           setSchool(schools);
-  //         }
-  //       } catch (error: any) {
-  //         console.log(error?.message);
-  //       }
-  // }, [getschools])
+  useEffect(() => {
+    try {
+          const response = getschools;
+          if (!response) {
+            console.log("Couldn't fetch from server");
+          }
+          if (response?.getSchools) {
+            const schools = response?.getSchools?.map((school: any) => ({
+              schoolname: school?.schoolName,
+              schoollogo: school?.logoImgUrl,
+              schoolId: school?.id,
+            }));
+            setSchool(schools);
+          }
+        } catch (error: any) {
+          console.log(error?.message);
+        }
+  }, [getschools])
 
   const handleSubmit = async (values: any) => {
     try {
@@ -250,7 +250,7 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
                 shadow={"md"}
                 display={isHidden ? "none" : "block"}
               >
-                {filteredSearchData.map((item: any, index: number) => {
+                {filteredSearchData?.map((item: any, index: number) => {
                   return (
                     <Box
                       key={index}
