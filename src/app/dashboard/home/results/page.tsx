@@ -196,7 +196,7 @@ const Results: FC<ResultsProps> = ({}) => {
                       </Flex>
                     </Td>
                     <Td key={index} color={"#000"}>
-                      {data?.status}
+                      {data?.status ? "Official" : "Unnofficial"}
                     </Td>
                     <Td key={index} color={"#000"}>
                       {data?.term}
