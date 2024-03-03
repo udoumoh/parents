@@ -828,3 +828,194 @@ mutation UploadResult($studentId: Float!, $resultType: String!, $fileType: Strin
     }
   }
 }`)
+
+export const GET_STUDENT_GENERATED_RESULT = gql(`
+query StudentGeneratedResult($studentId: Float!) {
+  studentGeneratedResult(studentId: $studentId) {
+    id
+    isOfficial
+    isVerified
+    wasEdited
+    createdAt
+    approvedAt
+    updatedAt
+    verifiedBy
+    remark
+    academicTerm
+    resultType
+    creator
+    student {
+      id
+      createdAt
+      transferedAt
+      firstName
+      middleName
+      lastName
+      gender
+      ageInput
+      folder
+      isOwing
+      isVisible
+      isDuplicate
+      linkedAt
+      linkCount
+      isLinked
+      startDate
+      endDate
+      birthDate
+      isArchived
+      profileImgUrl
+      classroom {
+        errors {
+          field
+          message
+        }
+        classroom {
+          id
+          isValid
+          wasEdited
+          createdAt
+          updatedAt
+          classId
+          className
+          classSubjects
+          description
+          isDisabled
+          students {
+            id
+            createdAt
+            transferedAt
+            firstName
+            middleName
+            lastName
+            gender
+            ageInput
+            folder
+            isOwing
+            isVisible
+            isDuplicate
+            linkedAt
+            linkCount
+            isLinked
+            startDate
+            endDate
+            birthDate
+            isArchived
+            profileImgUrl
+            grayId
+            fatherName
+            fatherEmail
+            fatherNumber
+            motherName
+            motherEmail
+            motherNumber
+            homeAddress
+            lgaOrigin
+            state
+          }
+          teacher {
+            id
+            userId
+            createdAt
+            status
+            firstName
+            middleName
+            lastName
+            phoneNumber
+            email
+            role
+            folder
+            isDisabled
+            isVisible
+            profileImgUrl
+          }
+        }
+      }
+      creator {
+        admin {
+          id
+          isPaid
+          userId
+          folder
+          status
+          plan
+          isReferred
+          isDisabled
+          agreedTo
+          referralCode
+          createdAt
+          firstName
+          middleName
+          lastName
+          phoneNumber
+          email
+          profileImgUrl
+          role
+          school
+          schoolImg
+          statusCode
+        }
+      }
+      studentCase {
+        grayCase {
+          id
+          createdAt
+          updatedAt
+          category
+          owingAmount
+          note
+          isActive
+          wasEdited
+        }
+      }
+      grayId
+      fatherName
+      fatherEmail
+      fatherNumber
+      motherName
+      motherEmail
+      motherNumber
+      homeAddress
+      lgaOrigin
+      state
+    }
+    school {
+      id
+      createdAt
+      isDisabled
+      isVerified
+      schoolName
+      rcnumber
+      address
+      type
+      lgarea
+      folder
+      state
+      country
+      description
+      phonenumber
+      email
+      websiteUrl
+      instagramUrl
+      facebookUrl
+      twitterUrl
+      linkedinUrl
+      logoImgUrl
+      bannerImgUrl
+      license
+    }
+    studentName
+    studentAge
+    attendance
+    classStudents
+    className
+    subjects
+    grades
+    scores
+    test1
+    test2
+    test3
+    test4
+  }
+}
+`)

@@ -1,5 +1,5 @@
 "use client";
-import { FC, useState } from "react";
+import { FC, useState, useEffect } from "react";
 import {
   Box,
   Flex,
@@ -24,100 +24,84 @@ import {
 import { AiOutlinePlus } from "react-icons/ai";
 import ResultCard from "@/components/shared/resultCard";
 import UploadResultModal from "@/components/shared/uploadResultModal";
+import { GET_STUDENT_GENERATED_RESULT } from "@/gql/queries/queries";
+import { useQuery } from "@apollo/client";
+import { useUserAPI } from "@/hooks/UserContext";
+import { formatDate } from "@/helpers/formatDate";
 
-interface ResultsProps {};
+interface ResultsProps {}
+
+interface GeneratedResultsProps {
+  dateGenerated: string;
+  term: string;
+  examType: string;
+  schoolLogo: string;
+  schoolName: string;
+  status: string;
+  sharerProfileUrl: string;
+  sharerFirstName: string;
+  sharerLastName: string;
+  shareDate: string;
+}
 
 const Results: FC<ResultsProps> = ({}) => {
-  const {isOpen: isModalOpen, onClose: onModalClose, onOpen: onModalOpen} = useDisclosure()
-  const [resultsType, setResultstype] = useState("");
-  const [resultsData, setResultsdata] = useState([
-    {
-      schoolName: "Green Springs High School",
-      dateGenerated: "12th August 2023",
-      term: "3rd Term",
-      examType: "Final Exams",
-      schoolLogo: "/images/schoollogo.png",
-    },
-    {
-      schoolName: "Green Springs High School",
-      dateGenerated: "5th June 2023",
-      term: "3rd Term",
-      examType: "Mid-Term",
-      schoolLogo: "/images/schoollogo.png",
-    },
-    {
-      schoolName: "Green Springs High School",
-      dateGenerated: "10th April 2023",
-      term: "2nd Term",
-      examType: "Final Exams",
-      schoolLogo: "/images/schoollogo.png",
-    },
-  ]);
-
-  const [studentsTableData, setStudentsTableData] = useState({
-    columnNames: [
-      "School",
-      "Status",
-      "Term",
-      "Type",
-      "Shared by",
-      "Shared date",
-    ],
-    columnData: [
-      {
-        school: {
-          schoolName: "Green Springs High School",
-          schoolLogo: "/images/schoollogo.png",
-        },
-        status: "unofficial",
-        term: "3rd Term",
-        type: "Final Exams",
-        sharedBy: {
-          sharerProfileUrl:
-            "https://static.showit.co/1200/xB1lV1mcSc2pFszaHaQMCw/82976/janel-lee_photography_cincinnati_ohio_professional_headshots_personal_branding_bryen_pinkard.jpg",
-          sharerName: "Mayowa Chinedu",
-        },
-        shareDate: "12 August 2023",
-      },
-      {
-        school: {
-          schoolName: "Green Springs High School",
-          schoolLogo: "/images/schoollogo.png",
-        },
-        status: "unofficial",
-        term: "3rd Term",
-        type: "Final Exams",
-        sharedBy: {
-          sharerProfileUrl:
-            "https://static.showit.co/1200/xB1lV1mcSc2pFszaHaQMCw/82976/janel-lee_photography_cincinnati_ohio_professional_headshots_personal_branding_bryen_pinkard.jpg",
-          sharerName: "Mayowa Chinedu",
-        },
-        shareDate: "12 August 2023",
-      },
-      {
-        school: {
-          schoolName: "Green Springs High School",
-          schoolLogo: "/images/schoollogo.png",
-        },
-        status: "unofficial",
-        term: "3rd Term",
-        type: "Final Exams",
-        sharedBy: {
-          sharerProfileUrl:
-            "https://static.showit.co/1200/xB1lV1mcSc2pFszaHaQMCw/82976/janel-lee_photography_cincinnati_ohio_professional_headshots_personal_branding_bryen_pinkard.jpg",
-          sharerName: "Mayowa Chinedu",
-        },
-        shareDate: "12 August 2023",
-      },
-    ],
+  const {
+    isOpen: isModalOpen,
+    onClose: onModalClose,
+    onOpen: onModalOpen,
+  } = useDisclosure();
+  const { currentWardProfile } = useUserAPI();
+  const { data: getgeneratedresult } = useQuery(GET_STUDENT_GENERATED_RESULT, {
+    variables: { studentId: currentWardProfile?.id },
   });
+  const [resultsType, setResultstype] = useState("");
+  const [generatedResults, setGeneratedResults] = useState<
+    GeneratedResultsProps[]
+  >([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await getgeneratedresult;
+        const parsedResultsData = response?.studentGeneratedResult?.map(
+          (item: any) => ({
+            dateGenerated: formatDate(item?.createdAt || ""),
+            term: item.academicTerm || "",
+            examType: item.resultType || "",
+            schoolLogo: item?.school?.logoImgUrl || "",
+            schoolName: item?.school?.schoolName || "",
+            status: item?.isOfficial || "",
+            sharerProfileUrl:
+              item?.student?.creator?.admin?.profileImgUrl || "",
+            sharerFirstName: item?.student?.creator?.admin?.firstName || "",
+            sharerLastName: item?.student?.creator?.admin?.lastName || "",
+            shareDate: formatDate(
+              item?.student?.creator?.admin?.createdAt || ""
+            ),
+          })
+        );
+        setGeneratedResults(parsedResultsData);
+      } catch (err: any) {
+        console.log(err.message);
+      }
+    };
+    fetchData();
+  }, [getgeneratedresult]);
+
+  const columnNames = [
+    "School",
+    "Status",
+    "Term",
+    "Type",
+    "Shared by",
+    "Shared date",
+  ];
 
   const handleResultsTypeChange = (e: any) => {
     setResultstype(e.target.value);
   };
 
   return (
-    <Box mb={{base:"8rem", lg:"5rem"}}>
+    <Box mb={{ base: "8rem", lg: "5rem" }}>
       <Text>Result Type</Text>
       <Flex justifyContent={"space-between"} my={"1rem"}>
         <Box>
@@ -145,13 +129,17 @@ const Results: FC<ResultsProps> = ({}) => {
             Upload Result
           </Text>
         </Button>
-        <UploadResultModal isOpen={isModalOpen} onOpen={onModalOpen} onClose={onModalClose} />
+        <UploadResultModal
+          isOpen={isModalOpen}
+          onOpen={onModalOpen}
+          onClose={onModalClose}
+        />
       </Flex>
 
       <Box>
         <Text mb={"1rem"}>Most Recent</Text>
         <Wrap gap={5} flexDir={{ base: "column", lg: "row" }}>
-          {resultsData.map((result, index) => {
+          {generatedResults.map((result, index) => {
             return (
               <WrapItem key={index}>
                 <ResultCard key={index} result={result} />
@@ -171,7 +159,7 @@ const Results: FC<ResultsProps> = ({}) => {
           >
             <Thead>
               <Tr>
-                {studentsTableData.columnNames.map((column, index) => {
+                {columnNames.map((column, index) => {
                   return (
                     <Th
                       key={index}
@@ -187,43 +175,40 @@ const Results: FC<ResultsProps> = ({}) => {
               </Tr>
             </Thead>
             <Tbody>
-              {studentsTableData.columnData.map((data, index) => {
+              {generatedResults.map((data, index) => {
                 return (
                   <Tr key={index}>
                     <Td key={index} color={"#000"}>
                       <Flex gap={2} alignItems={"center"}>
                         <Image
                           boxSize={"6"}
-                          src={data.school.schoolLogo}
+                          src={data?.schoolLogo}
                           alt="logo"
                         />
                         <Text fontSize={"sm"} fontWeight={"500"}>
-                          {data.school.schoolName}
+                          {data?.schoolName}
                         </Text>
                       </Flex>
                     </Td>
                     <Td key={index} color={"#000"}>
-                      {data.status}
+                      {data?.status}
                     </Td>
                     <Td key={index} color={"#000"}>
-                      {data.term}
+                      {data?.term}
                     </Td>
                     <Td key={index} color={"#000"}>
-                      {data.type}
+                      {data?.examType}
                     </Td>
                     <Td key={index}>
                       <Flex gap={2} alignItems={"center"}>
-                        <Avatar
-                          size={"xs"}
-                          src={data.sharedBy.sharerProfileUrl}
-                        />
+                        <Avatar size={"xs"} src={data?.sharerProfileUrl} />
                         <Text fontSize={"md"} fontWeight={"400"}>
-                          {data.sharedBy.sharerName}
+                          {data?.sharerFirstName} {data?.sharerLastName}
                         </Text>
                       </Flex>
                     </Td>
                     <Td key={index} color={"#000"}>
-                      {data.shareDate}
+                      {data?.shareDate}
                     </Td>
                   </Tr>
                 );
