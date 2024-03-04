@@ -176,50 +176,51 @@ query GetStudent {
 }`);
 
 const Page: FC<PageProps> = ({}) => {
-const {
-  isOpen: isModalOpen,
-  onOpen: onModalOpen,
-  onClose: onModalClose,
-} = useDisclosure();
+  const {
+    isOpen: isModalOpen,
+    onOpen: onModalOpen,
+    onClose: onModalClose,
+  } = useDisclosure();
   const [searchInput, setSearchInput] = useState("");
-  const [studentData, setStudentData] = useState([{
+  const [studentData, setStudentData] = useState([
+    {
       name: "",
       age: 0,
       className: "",
       gender: "",
-      profileImageUrl:
-        "",
-      id:"",
-    }])
+      profileImageUrl: "",
+      id: "",
+    },
+  ]);
   const [selectedStudent, setSelectedStudent] = useState<Student[]>([]);
-  const {data:search} = useQuery(GET_STUDENTS)
+  const { data: search } = useQuery(GET_STUDENTS);
   const handleSearchChange = (e: any) => {
     setSearchInput(e.target.value);
   };
 
   const handleSelectedStudent = (student: any) => {
-    const newData = [...selectedStudent, student]
+    const newData = [...selectedStudent, student];
     setSelectedStudent(newData);
-  }
+  };
 
   const handleDelete = (item: any) => {
-    const newData = selectedStudent.filter((student, index) => index !== item)
-    setSelectedStudent(newData)
-  }
+    const newData = selectedStudent.filter((student, index) => index !== item);
+    setSelectedStudent(newData);
+  };
 
-  useEffect( () => {
+  useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await search?.getStudent || [];
+        const response = (await search?.getStudent) || [];
         const data = response.map((student: any) => ({
           name: student.firstName + " " + student.lastName,
           age: student.ageInput,
           className: student?.classroom?.classroom?.className,
           gender: student.gender,
           profileImageUrl: student.profileImgUrl,
-          id: student.id
+          id: student.id,
         }));
-        setStudentData(data)
+        setStudentData(data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }

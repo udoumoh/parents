@@ -216,7 +216,7 @@ mutation RegisterParent($folder: String!, $options: parentRegInput!) {
 }`);
 
 const Page: FC<pageProps> = ({}) => {
-  const toast = useToast()
+  const toast = useToast();
   const router = useRouter();
   const [tabIndex, setTabIndex] = useState(0);
   const { isOpen, onClose, onOpen } = useDisclosure();
@@ -226,82 +226,80 @@ const Page: FC<pageProps> = ({}) => {
   const [signup] = useMutation(REGISTER_PARENT);
   const [consent, setConsent] = useState(false);
 
-const handleImageUpload = (
-  uploadedImageUrl: string,
-  uploadedFolder: string
-) => {
-  setProfileUrl(uploadedImageUrl); // Set the image URL received from the upload component
-  setFolder(uploadedFolder); // Set the folder received from the upload component
-};
-console.log("This is the profileimageurl", profileUrl)
+  const handleImageUpload = (
+    uploadedImageUrl: string,
+    uploadedFolder: string
+  ) => {
+    setProfileUrl(uploadedImageUrl); // Set the image URL received from the upload component
+    setFolder(uploadedFolder); // Set the folder received from the upload component
+  };
+  console.log("This is the profileimageurl", profileUrl);
 
   const handleTabsChange = () => {
     setTabIndex(tabIndex + 1);
-    setConsent(true)
+    setConsent(true);
   };
   const handleProfileUrlChange = (url: any) => {
     setProfileUrl(url);
   };
 
   const handleFormSubmit = async (values: any) => {
-    setLoading(true)
-    try{
+    setLoading(true);
+    try {
       const response = await signup({
-              variables: {
-                options: {
-                  firstName: values.firstName,
-                  lastName: values.lastName,
-                  middleName: values.middleName,
-                  email: values.email,
-                  referralCode: "",
-                  phoneNumber: values.phoneNumber.toString(),
-                  password: values.password,
-                  parentRole: values.parentRole,
-                  profileImgUrl: profileUrl,
-                  agreedTo: consent,
-                },
-                folder: folder,
-              },
-            });
+        variables: {
+          options: {
+            firstName: values.firstName,
+            lastName: values.lastName,
+            middleName: values.middleName,
+            email: values.email,
+            referralCode: "",
+            phoneNumber: values.phoneNumber.toString(),
+            password: values.password,
+            parentRole: values.parentRole,
+            profileImgUrl: profileUrl,
+            agreedTo: consent,
+          },
+          folder: folder,
+        },
+      });
 
-            if (!response?.data) {
-              toast({
-                title: "Client Error",
-                description:
-                  "An error occured while you were creating your account",
-                position: "bottom",
-                variant: "left-accent",
-                isClosable: true,
-                status: "error",
-              });
-            }
-            if (response.data.registerParent.errors) {
-              toast({
-                title: "Server Error",
-                description: response.data.registerParent.errors[0].message,
-                position: "bottom",
-                variant: "left-accent",
-                isClosable: true,
-                status: "error",
-              });
-            } else {
-              toast({
-                title: "Account created",
-                description:
-                  "Account created! Check your email for an OTP to verify your account.",
-                duration: 5000,
-                position: "bottom",
-                variant: "left-accent",
-                isClosable: true,
-                status: "success",
-              });
-              router.push("/verifyotp")
-            }
-    } catch(err: any){
+      if (!response?.data) {
+        toast({
+          title: "Client Error",
+          description: "An error occured while you were creating your account",
+          position: "bottom",
+          variant: "left-accent",
+          isClosable: true,
+          status: "error",
+        });
+      }
+      if (response.data.registerParent.errors) {
+        toast({
+          title: "Server Error",
+          description: response.data.registerParent.errors[0].message,
+          position: "bottom",
+          variant: "left-accent",
+          isClosable: true,
+          status: "error",
+        });
+      } else {
+        toast({
+          title: "Account created",
+          description:
+            "Account created! Check your email for an OTP to verify your account.",
+          duration: 5000,
+          position: "bottom",
+          variant: "left-accent",
+          isClosable: true,
+          status: "success",
+        });
+        router.push("/verifyotp");
+      }
+    } catch (err: any) {
       toast({
         title: "Error",
-        description:
-          err?.message,
+        description: err?.message,
         duration: 5000,
         position: "bottom",
         variant: "left-accent",
@@ -311,7 +309,7 @@ console.log("This is the profileimageurl", profileUrl)
     } finally {
       setLoading(false);
     }
-  }
+  };
 
   const schema = Yup.object().shape({
     firstName: Yup.string().required("First name is required"),

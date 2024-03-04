@@ -62,10 +62,10 @@ const Results: FC<ResultsProps> = ({}) => {
     const fetchData = async () => {
       try {
         const response = await getgeneratedresult;
-        if(!response){
-          console.log('failed to fetch results data')
+        if (!response) {
+          console.log("failed to fetch results data");
         }
-        if (response){
+        if (response) {
           const parsedResultsData = response?.studentGeneratedResult?.map(
             (item: any) => ({
               dateGenerated: formatDate(item?.createdAt || ""),
@@ -163,7 +163,10 @@ const Results: FC<ResultsProps> = ({}) => {
         )}
       </Box>
 
-      <Box mt={{ base: "12" }} display={generatedResults.length === 0 ? "none" : "block"}>
+      <Box
+        mt={{ base: "12" }}
+        display={generatedResults.length === 0 ? "none" : "block"}
+      >
         <TableContainer>
           <Table
             size={{ base: "sm", xl: "md" }}

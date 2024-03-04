@@ -1,13 +1,6 @@
-'use client'
+"use client";
 import { FC } from "react";
-import {
-  Box,
-  Flex,
-  Text,
-  Image,
-  Grid,
-  Avatar,
-} from "@chakra-ui/react";
+import { Box, Flex, Text, Image, Grid, Avatar } from "@chakra-ui/react";
 import Attendance from "@/components/attendance";
 import Invoice from "@/components/invoice";
 import { useUserAPI } from "@/hooks/UserContext";
@@ -15,7 +8,7 @@ import { useUserAPI } from "@/hooks/UserContext";
 interface DashboardPageProps {}
 
 const DashboardPage: FC<DashboardPageProps> = ({}) => {
-    const { currentWardProfile } = useUserAPI();
+  const { currentWardProfile } = useUserAPI();
 
   return (
     <Flex gap={5} flexDir={"column"} mb={{ base: "8rem", lg: "5rem" }}>

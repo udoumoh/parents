@@ -112,8 +112,7 @@ const Signin: FC<pageProps> = ({}) => {
         isClosable: true,
         status: "success",
       });
-      window.location.replace("/dashboard/home/overview")
-
+      window.location.replace("/dashboard/home/overview");
     } catch (error: any) {
       toast({
         title: "Error",
