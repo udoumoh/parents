@@ -77,14 +77,7 @@ const LinkedStudentsPopover: FC<LinkedStudentsPopoverProps> = ({onClose}) => {
                   }}
                   key={index}
                   onClick={() => {
-                    localStorage.setItem("currentId", `${ward.id}`);
-                    setCurrentId(
-                      parseInt(
-                        localStorage.getItem("currentId") ??
-                          `${childData[0].id}`,
-                        10
-                      )
-                    );
+                    setCurrentId(ward?.id)
                   }}
                 >
                   <Avatar
