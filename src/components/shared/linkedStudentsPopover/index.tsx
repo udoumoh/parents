@@ -78,7 +78,7 @@ const LinkedStudentsPopover: FC<LinkedStudentsPopoverProps> = ({onClose}) => {
                   }}
                   key={index}
                   onClick={() => {
-                    setCurrentId(ward?.id)
+                    setCurrentId(ward?.id || 0)
                   }}
                 >
                   <Avatar
