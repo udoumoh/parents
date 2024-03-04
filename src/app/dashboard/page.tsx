@@ -21,16 +21,16 @@ interface pageProps {
 
 const Page: FC<pageProps> = ({}) => {
     const router = useRouter()
-    const {parentData} = useUserAPI()
+    const {childData} = useUserAPI()
     const {
       isOpen: isModalOpen,
       onOpen: onModalOpen,
       onClose: onModalClose,
     } = useDisclosure();
 
-    // if(parentData?.children.length !== 0){
-      // router.push("/dashboard/home/overview")
-    // }
+    if((childData ?? []).length !== 0){
+      window.location.replace("/dashboard/home/overview")
+    }
     
   return (
     <Flex h={"100vh"} overflowY={"auto"}>
