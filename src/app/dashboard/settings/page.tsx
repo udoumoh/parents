@@ -241,7 +241,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                 display={"flex"}
                 alignItems={"center"}
                 justifyContent={"center"}
-                w={"full"}
+                minW={{ base: "auto", lg: "550px" }}
                 border={"1px solid #E2E2E2"}
                 rounded={"md"}
                 flexDir={"column"}
