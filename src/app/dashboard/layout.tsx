@@ -38,7 +38,7 @@ const Layout: React.FC<layoutProps> = ({ children }) => {
           </Box>
         </Center>
       );
-    // if (!loading && parent?.parent?.errors !== null) window.location.replace("/signin");
+    if (!loading && parent?.parent?.errors !== null) window.location.replace("/signin");
   } catch (e: any) {
     toast({
       title: "Error",
