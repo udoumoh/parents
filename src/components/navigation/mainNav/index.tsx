@@ -283,7 +283,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
         <InputLeftElement pointerEvents="none">
           <AiOutlineSearch color="gray.300" />
         </InputLeftElement>
-        <Input placeholder="Search" pl={10} borderColor={"gray.400"} />
+        <Input placeholder="Search" pl={10} borderColor={"gray.400"} isDisabled/>
       </InputGroup>
 
       <Button
