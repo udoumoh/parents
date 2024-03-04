@@ -79,7 +79,7 @@ const InvoiceItem: FC<InvoiceItemProps> = ({
           ₦ {formatNumberWithCommas(studentInvoice.amountPaid)}
         </Text>
       </Box>
-      <Box px={"0.5rem"}>
+      <Box px={"0.5rem"} w={'auto'}>
         <Text color={"#666666"} fontSize={"xs"} fontWeight={"400"} mt={"1rem"}>
           Summary
         </Text>
