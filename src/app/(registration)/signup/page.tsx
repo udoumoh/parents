@@ -232,15 +232,11 @@ const Page: FC<pageProps> = ({}) => {
   ) => {
     setProfileUrl(uploadedImageUrl); // Set the image URL received from the upload component
     setFolder(uploadedFolder); // Set the folder received from the upload component
-  };
-  console.log("This is the profileimageurl", profileUrl);
+  }
 
   const handleTabsChange = () => {
     setTabIndex(tabIndex + 1);
     setConsent(true);
-  };
-  const handleProfileUrlChange = (url: any) => {
-    setProfileUrl(url);
   };
 
   const handleFormSubmit = async (values: any) => {
@@ -651,10 +647,7 @@ const Page: FC<pageProps> = ({}) => {
                             onModalClose={onClose}
                             type="parentImg"
                             imageFolder={folder}
-                            onUpload={() => {
-                              handleProfileUrlChange;
-                              handleImageUpload;
-                            }}
+                            onUpload={handleImageUpload}
                           />
                         </Flex>
 

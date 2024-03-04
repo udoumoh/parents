@@ -87,7 +87,7 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({
               isClosable: true,
             });
           }
-          const uploadedImageUrl = response.data.secure_url;
+          const uploadedImageUrl = response?.data?.secure_url;
           const uploadedFolder = folder;
           onUpload(uploadedImageUrl, uploadedFolder);
           onModalClose()

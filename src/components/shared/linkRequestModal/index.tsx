@@ -275,7 +275,6 @@ const LinkRequestModal: FC<LinkRequestModalProps> = ({
               status: "success",
             });
             onClose()
-
         }
       } catch(error: any) {
         toast({
