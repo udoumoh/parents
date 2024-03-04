@@ -274,9 +274,7 @@ const LinkRequestModal: FC<LinkRequestModalProps> = ({
               isClosable: true,
               status: "success",
             });
-            setTimeout(() => {
-              window.location.replace("/dashboard/home/overview");
-            }, 5000)
+            onClose()
 
         }
       } catch(error: any) {
