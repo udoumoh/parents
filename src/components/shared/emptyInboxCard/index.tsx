@@ -24,6 +24,7 @@ const EmptyInboxCard: FC<emptyInboxCardProps> = ({}) => {
         alt="No message"
         my={"1rem"}
         boxSize={"32"}
+        pointerEvents={"none"}
       />
       <Text fontSize={"xl"} fontWeight={"bold"} my={"0.8rem"}>
         Your Inbox

@@ -120,7 +120,7 @@ export const FileUpload: React.FC<FileUploadProps> = ({
   });
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <Modal isOpen={isOpen} onClose={onClose} scrollBehavior={"inside"}>
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>

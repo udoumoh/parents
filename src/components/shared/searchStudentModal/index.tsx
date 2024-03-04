@@ -232,7 +232,12 @@ const SearchStudentModal: FC<SearchStudentModalProps> = ({isSearchOpen, onSearch
     item?.name?.toLowerCase().includes(searchInput.toLowerCase())
   );
   return (
-    <Modal blockScrollOnMount={false} isOpen={isSearchOpen} onClose={onSearchClose}>
+    <Modal
+      blockScrollOnMount={false}
+      isOpen={isSearchOpen}
+      onClose={onSearchClose}
+      scrollBehavior={"inside"}
+    >
       <ModalOverlay />
       <ModalContent rounded={"xl"}>
         <ModalHeader>
@@ -328,7 +333,12 @@ const SearchStudentModal: FC<SearchStudentModalProps> = ({isSearchOpen, onSearch
               Send Request Link
             </Text>
           </Button>
-          <LinkRequestModal student={selectedStudent} isOpen={isModalOpen} onOpen={onModalOpen} onClose={onModalClose} />
+          <LinkRequestModal
+            student={selectedStudent}
+            isOpen={isModalOpen}
+            onOpen={onModalOpen}
+            onClose={onModalClose}
+          />
         </ModalFooter>
       </ModalContent>
     </Modal>

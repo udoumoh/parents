@@ -246,7 +246,11 @@ const {
         flexDir={"column"}
         gap={10}
       >
-        <Image src="/images/greylightBordered.svg" alt="logo" />
+        <Image
+          src="/images/greylightBordered.svg"
+          alt="logo"
+          pointerEvents={"none"}
+        />
         <Box
           display={"flex"}
           justifyContent={"center"}
@@ -306,7 +310,7 @@ const {
               ) : (
                 filteredSearchData?.map((item, index) => (
                   <Box key={index} onClick={() => handleSelectedStudent(item)}>
-                    <SearchResultItem student={item} key={index}/>
+                    <SearchResultItem student={item} key={index} />
                   </Box>
                 ))
               )}
@@ -339,16 +343,20 @@ const {
                       {`${item.name}`}
                     </Text>
                     <Text fontSize={"sm"} color={"#AAAAAA"} fontWeight={"600"}>
-                      {`${item.age} years old`} •{" "}
-                      {item.gender} • {item.className}
+                      {`${item.age} years old`} • {item.gender} •{" "}
+                      {item.className}
                     </Text>
                   </Box>
                 </Flex>
-                <Button backgroundColor={'transparent'} onClick={()=>handleDelete(index)}>
+                <Button
+                  backgroundColor={"transparent"}
+                  onClick={() => handleDelete(index)}
+                >
                   <Icon as={IoMdClose} color={"#000"} boxSize={5} />
                 </Button>
               </Box>
-          )})}
+            );
+          })}
 
           <Button
             mt="6rem"

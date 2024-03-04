@@ -125,6 +125,7 @@ const AcceptInvoiceModal: FC<AcceptInvoiceModalProps> = ({
       blockScrollOnMount={false}
       isOpen={isOpen}
       onClose={onClose}
+      scrollBehavior={"inside"}
       size={{ base: "lg", md: "xl", lg: "3xl" }}
     >
       <ModalOverlay />

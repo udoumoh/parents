@@ -174,6 +174,7 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
       isOpen={isOpen}
       onClose={onClose}
       size={{ base: "lg", md: "xl", lg: "2xl" }}
+      scrollBehavior={"inside"}
     >
       <ModalOverlay />
       <ModalContent rounded={"xl"}>

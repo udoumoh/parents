@@ -341,7 +341,11 @@ console.log("This is the profileimageurl", profileUrl)
         py={{ base: "2rem", lg: "0" }}
         mx={"2rem"}
       >
-        <Image src="/images/greylightBordered.svg" alt="logo" />
+        <Image
+          src="/images/greylightBordered.svg"
+          alt="logo"
+          pointerEvents={"none"}
+        />
 
         <Formik
           initialValues={{
@@ -354,8 +358,8 @@ console.log("This is the profileimageurl", profileUrl)
             parentRole: "",
           }}
           onSubmit={async (values) => {
-              handleFormSubmit(values)
-            }}
+            handleFormSubmit(values);
+          }}
           validationSchema={schema}
         >
           {(props) => {
@@ -649,7 +653,10 @@ console.log("This is the profileimageurl", profileUrl)
                             onModalClose={onClose}
                             type="parentImg"
                             imageFolder={folder}
-                            onUpload={() => {handleProfileUrlChange; handleImageUpload}}
+                            onUpload={() => {
+                              handleProfileUrlChange;
+                              handleImageUpload;
+                            }}
                           />
                         </Flex>
 

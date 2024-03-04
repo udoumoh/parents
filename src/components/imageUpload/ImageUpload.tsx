@@ -117,7 +117,11 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({
   });
 
   return (
-    <Modal isOpen={isModalOpen} onClose={onModalClose}>
+    <Modal
+      isOpen={isModalOpen}
+      onClose={onModalClose}
+      scrollBehavior={'inside'}
+    >
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>

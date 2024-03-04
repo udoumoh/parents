@@ -83,6 +83,7 @@ const RejectInvoiceModal: FC<RejectInvoiceModalProps> = ({
       isOpen={isOpen}
       onClose={onClose}
       size={"xl"}
+      scrollBehavior={"inside"}
     >
       <ModalOverlay />
       <ModalContent rounded={"xl"}>

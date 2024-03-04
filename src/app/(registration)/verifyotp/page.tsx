@@ -94,7 +94,11 @@ const Page: FC<PageProps> = ({}) => {
           border={"1px solid #D5D5D5"}
         >
           <Flex justifyContent={"center"}>
-            <Image src={"/images/greylightBordered.svg"} alt="'logo" />
+            <Image
+              src={"/images/greylightBordered.svg"}
+              alt="'logo"
+              pointerEvents={"none"}
+            />
           </Flex>
           <Box my={"1.5rem"} textAlign={"center"}>
             <Text

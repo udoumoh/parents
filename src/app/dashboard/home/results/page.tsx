@@ -198,6 +198,7 @@ const Results: FC<ResultsProps> = ({}) => {
                           boxSize={"6"}
                           src={data?.schoolLogo}
                           alt="logo"
+                          pointerEvents={"none"}
                         />
                         <Text fontSize={"sm"} fontWeight={"500"}>
                           {data?.schoolName}

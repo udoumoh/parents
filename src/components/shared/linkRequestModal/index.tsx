@@ -296,6 +296,7 @@ const LinkRequestModal: FC<LinkRequestModalProps> = ({
       isOpen={isOpen}
       onClose={onClose}
       size={"xl"}
+      scrollBehavior={"inside"}
     >
       <ModalOverlay />
       <ModalContent rounded={"xl"}>
@@ -317,17 +318,13 @@ const LinkRequestModal: FC<LinkRequestModalProps> = ({
             alignItems={"center"}
             my={"0.5rem"}
           >
-            <Avatar
-              size={"xl"}
-              src={student?.profileImageUrl}
-              mb={"1rem"}
-            />
+            <Avatar size={"xl"} src={student?.profileImageUrl} mb={"1rem"} />
             <Text fontSize={"2xl"} fontWeight={"700"}>
               {student?.name}
             </Text>
             <Text fontSize={"sm"} color={"#AAAAAA"} fontWeight={"600"}>
               {`${student?.age} years old`} • {student?.gender} •{" "}
-                {student?.className}
+              {student?.className}
             </Text>
           </Box>
 
@@ -363,10 +360,10 @@ const LinkRequestModal: FC<LinkRequestModalProps> = ({
           </Box>
         </ModalBody>
 
-        <ModalFooter justifyContent={"center"} pb={'2rem'} px={'3rem'}>
+        <ModalFooter justifyContent={"center"} pb={"2rem"} px={"3rem"}>
           <Button
-            w={'full'}
-            py={'1.5rem'}
+            w={"full"}
+            py={"1.5rem"}
             backgroundColor={"#005D5D"}
             px={"3rem"}
             _hover={{ backgroundColor: "#044141" }}

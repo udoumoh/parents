@@ -205,20 +205,29 @@ const Invoice: FC<InvoiceProps> = ({}) => {
       <Divider color={"#C2C2C2"} my={"0.8rem"} />
 
       {invoiceData?.length > 0 ? (
-        <Wrap spacing={'15px'} >
+        <Wrap spacing={"15px"}>
           {invoiceData?.map((student, index) => {
             return (
-              <WrapItem key={index} w={'auto'}>
-                <InvoiceItem
-                  studentInvoice={student}
-                />
+              <WrapItem key={index} w={"auto"}>
+                <InvoiceItem studentInvoice={student} />
               </WrapItem>
             );
           })}
         </Wrap>
       ) : (
-        <Box display={'flex'} flexDir={'column'} alignItems={'center'} justifyContent={'center'} mt={'3rem'}>
-          <Image src="/images/emptyStateInvoice.svg" alt="No invoice card" width={'300px'}/>
+        <Box
+          display={"flex"}
+          flexDir={"column"}
+          alignItems={"center"}
+          justifyContent={"center"}
+          mt={"3rem"}
+        >
+          <Image
+            src="/images/emptyStateInvoice.svg"
+            alt="No invoice card"
+            width={"300px"}
+            pointerEvents={"none"}
+          />
           <Text color={"#747474"} mt={"2rem"}>
             Your ward has no active invoice
           </Text>

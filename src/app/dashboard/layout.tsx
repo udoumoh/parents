@@ -31,6 +31,7 @@ const Layout: React.FC<layoutProps> = ({ children }) => {
                 alt="logo"
                 w={40}
                 mb={3}
+                pointerEvents={"none"}
               />
               <BarLoader color="#ffd880" width="150px" />
             </Flex>
