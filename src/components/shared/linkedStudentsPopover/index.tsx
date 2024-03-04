@@ -62,6 +62,7 @@ const LinkedStudentsPopover: FC<LinkedStudentsPopoverProps> = ({onClose}) => {
         <PopoverContent rounded={"xl"} w={"auto"} shadow={"lg"}>
           <PopoverBody p={"0.4rem"}>
             {childData?.map((ward: any, index: number) => {
+              console.log(ward.id)
               return (
                 <Flex
                   alignItems={"center"}
