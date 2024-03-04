@@ -59,7 +59,7 @@ const InvoiceItem: FC<InvoiceItemProps> = ({
       rounded={"xl"}
       p={"0.4rem"}
       mb={"1rem"}
-      w={{base:"auto", lg:"300px"}}
+      w={{base:"full", lg:"300px"}}
       h={"auto"}
     >
       <Box backgroundColor={"#E2E2E2"} rounded={"lg"} p={"0.6rem"} pb={"1rem"}>
