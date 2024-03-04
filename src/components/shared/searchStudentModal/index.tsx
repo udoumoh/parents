@@ -327,6 +327,7 @@ const SearchStudentModal: FC<SearchStudentModalProps> = ({isSearchOpen, onSearch
             px={"3rem"}
             _hover={{ backgroundColor: "#044141" }}
             onClick={onModalOpen}
+            isDisabled={selectedStudent?.age === 0 ? true : false}
           >
             <Icon as={AiOutlinePlus} color={"#fff"} />
             <Text color={"#fff"} fontWeight={"300"} fontSize={"md"}>

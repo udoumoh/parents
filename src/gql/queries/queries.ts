@@ -1200,3 +1200,146 @@ mutation CreateRequest($message: String!, $purpose: String!, $studentId: Float!)
     }
   }
 }`);
+
+export const GET_STUDENTS = gql(`
+query GetStudent {
+  getStudent {
+    id
+    createdAt
+    transferedAt
+    firstName
+    middleName
+    lastName
+    gender
+    ageInput
+    folder
+    isOwing
+    isVisible
+    isDuplicate
+    startDate
+    endDate
+    birthDate
+    isArchived
+    profileImgUrl
+    classroom {
+      errors {
+        field
+        message
+      }
+      classroom {
+        id
+        isValid
+        wasEdited
+        createdAt
+        updatedAt
+        classId
+        className
+        description
+        isDisabled
+        students {
+          id
+          createdAt
+          transferedAt
+          firstName
+          middleName
+          lastName
+          gender
+          ageInput
+          folder
+          isOwing
+          isVisible
+          isDuplicate
+          startDate
+          endDate
+          birthDate
+          isArchived
+          profileImgUrl
+          grayId
+          fatherName
+          fatherEmail
+          fatherNumber
+          motherName
+          motherEmail
+          motherNumber
+          homeAddress
+          lgaOrigin
+          state
+        }
+      }
+    }
+    school {
+      school {
+        id
+        createdAt
+        isDisabled
+        isVerified
+        schoolName
+        rcnumber
+        address
+        type
+        lgarea
+        folder
+        state
+        country
+        description
+        phonenumber
+        email
+        websiteUrl
+        instagramUrl
+        facebookUrl
+        twitterUrl
+        linkedinUrl
+        logoImgUrl
+        bannerImgUrl
+        license
+      }
+    }
+    creator {
+      admin {
+        id
+        isPaid
+        userId
+        folder
+        status
+        plan
+        isReferred
+        isDisabled
+        agreedTo
+        referralCode
+        createdAt
+        firstName
+        middleName
+        lastName
+        phoneNumber
+        email
+        profileImgUrl
+        role
+        school
+        schoolImg
+        statusCode
+      }
+    }
+    studentCase {
+      grayCase {
+        id
+        createdAt
+        updatedAt
+        category
+        owingAmount
+        note
+        isActive
+        wasEdited
+      }
+    }
+    grayId
+    fatherName
+    fatherEmail
+    fatherNumber
+    motherName
+    motherEmail
+    motherNumber
+    homeAddress
+    lgaOrigin
+    state
+  }
+}`);

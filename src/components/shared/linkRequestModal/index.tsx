@@ -23,7 +23,6 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { FaLink } from "react-icons/fa6";
-import { useRouter } from "next/navigation";
 import { useMutation } from "@apollo/client";
 import { REQUEST_CHILD } from "@/gql/queries/queries";
 
@@ -32,12 +31,12 @@ interface LinkRequestModalProps {
   onOpen: () => void;
   onClose: () => void;
   student: {
-    profileImageUrl: string;
-    name: string;
-    age: number;
-    gender: string;
-    className: string;
-    id: string;
+    profileImageUrl?: string;
+    name?: string;
+    age?: number;
+    gender?: string;
+    className?: string;
+    id?: string;
   }
 }
 
