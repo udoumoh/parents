@@ -83,7 +83,7 @@ const InvoiceItem: FC<InvoiceItemProps> = ({
         <Text color={"#666666"} fontSize={"xs"} fontWeight={"400"} mt={"1rem"}>
           Summary
         </Text>
-        <Text fontSize={"16px"} fontWeight={"500"} color={"#000000"} isTruncated>
+        <Text fontSize={{base:"sm", lg:"16px"}} fontWeight={"500"} color={"#000000"} isTruncated>
           {`${studentInvoice.summary || studentInvoice.billType}`}
         </Text>
 
@@ -104,6 +104,7 @@ const InvoiceItem: FC<InvoiceItemProps> = ({
         justifyContent={"space-between"}
         px={"0.5rem"}
         mt={"0.3rem"}
+        gap={3}
       >
         <Text color={"#C2C2C2"} fontSize={"2xs"}>
           Generated on {formatDate(studentInvoice?.createdAt)}
