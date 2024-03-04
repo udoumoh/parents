@@ -61,7 +61,7 @@ interface UserContextProps {
       userChildren: UserChildren[];
     }>
   >;
-  setCurrentId: React.Dispatch<React.SetStateAction<number>>;
+  setCurrentId: React.Dispatch<React.SetStateAction<number | undefined>>;
   currentWardProfile?: UserChildren;
   parentData: ParentDataProps | undefined;
   childData:
@@ -139,8 +139,8 @@ export const UserApiProvider: FC<UserApiProviderProps> = ({ children }) => {
       ]
     | undefined
   >(undefined);
-  const [currentId, setCurrentId] = useState<number>(
-    childData?.[0]?.id || 0
+  const [currentId, setCurrentId] = useState<number | undefined>(
+    childData?.[0]?.id
   );
 
   const updateUserBio = (newBio: any) => {
