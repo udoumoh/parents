@@ -145,7 +145,7 @@ const AcceptInvoiceModal: FC<AcceptInvoiceModalProps> = ({
           <Divider color={"#C2C2C2"} my={"0.8rem"} />
           <ModalCloseButton />
         </ModalHeader>
-        <ModalBody pb={6} px={{ base: "3rem", md: "6rem", lg: "8rem" }}>
+        <ModalBody pb={6} px={{ base: "3rem", lg: "5rem" }}>
           <Box>
             <Formik
               initialValues={{
