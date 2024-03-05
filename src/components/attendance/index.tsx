@@ -92,7 +92,7 @@ const Attendance: FC<AttendanceProps> = ({}) => {
                </Flex>
              ) : (
                <>
-                 <Text>
+                 <Text my={'1rem'}>
                    No absences reported for this week for this child.🌟
                  </Text>
                </>
@@ -123,7 +123,7 @@ const Attendance: FC<AttendanceProps> = ({}) => {
                </Flex>
              ) : (
                <>
-                 <Text>
+                 <Text my={'1rem'}>
                    ⚠️ Your child has not been in school this week.
                  </Text>
                </>
