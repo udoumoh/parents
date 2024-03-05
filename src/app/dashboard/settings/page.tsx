@@ -214,6 +214,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                       rounded={"md"}
                       py={"0.5rem"}
                       pl={"1rem"}
+                      pr={'3rem'}
                     >
                       <Avatar
                         size={"md"}
