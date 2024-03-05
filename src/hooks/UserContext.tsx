@@ -210,8 +210,10 @@ export const UserApiProvider: FC<UserApiProviderProps> = ({ children }) => {
   }
 
   const currentWardProfile = (childData || []).find(
-    (child) => child.id === currentId
+    (child) => child.id === Number(localStorage.getItem("currentId") || 0)
   );
+
+  console.log(currentWardProfile)
 
   return (
     <UserContext.Provider
