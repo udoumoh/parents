@@ -210,11 +210,10 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                       gap={2}
                       key={index}
                       mb={"0.5rem"}
-                      border={"1px solid #1F8E74"}
+                      backgroundColor={"#3F999830"}
                       rounded={"md"}
                       py={"0.5rem"}
                       pl={"1rem"}
-                      pr={'2rem'}
                     >
                       <Avatar
                         size={"md"}
