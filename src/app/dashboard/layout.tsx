@@ -99,7 +99,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
             Hello {`${parentData?.firstName} ${parentData?.lastName}`}🙃
           </ModalHeader>
           <ModalBody>
-            <Text>Kindly select a childs profile to view his/her data</Text>
+            <Text mb={'2rem'}>Kindly select a childs profile to view his/her data</Text>
 
             {childData?.map((ward: any, index: number) => {
               console.log(ward.id);
