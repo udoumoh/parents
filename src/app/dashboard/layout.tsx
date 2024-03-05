@@ -84,7 +84,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
 
    const Overlay = () => (
      <ModalOverlay
-       bg="blackAlpha.300"
+       bg="green.300"
        backdropFilter="blur(10px) hue-rotate(90deg)"
      />
    );
