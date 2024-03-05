@@ -1,9 +1,9 @@
-'use client'
+"use client";
 import "./globals.css";
 import UserApiProvider from "@/hooks/UserContext";
 import { Providers } from "./providers";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
-import './globals.css'
+import "./globals.css";
 
 const client = new ApolloClient({
   uri: "https://api.greynote.app/graphql",
@@ -15,8 +15,14 @@ export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
-}
-) {
+}) {
+  // Check if window is defined before rendering
+  if (typeof window === "undefined") {
+    // Return placeholder or loading state for server-side rendering
+    return <div>Loading...</div>;
+  }
+
+  // If on the client side, render the main layout
   return (
     <html lang="en">
       <head>
@@ -25,9 +31,7 @@ export default function RootLayout({
       <body>
         <ApolloProvider client={client}>
           <Providers>
-            <UserApiProvider>
-              {children}
-            </UserApiProvider>
+            <UserApiProvider>{children}</UserApiProvider>
           </Providers>
         </ApolloProvider>
       </body>

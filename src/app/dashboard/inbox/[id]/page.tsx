@@ -9,7 +9,7 @@ interface chatProps {
 }
 
 const Chat: FC<chatProps> = ({ params }: { params: { id: string } }) => {
-  const { profileData, currentId, setCurrentId, currentWardProfile } =
+  const { profileData, currentId, currentWardProfile } =
     useUserAPI();
   const [wardProfile, setWardprofile] = useState(profileData.userChildren);
   const message = wardProfile.find((item: any) => item.id === currentId);

@@ -115,7 +115,7 @@ const ChatSidenav: FC<ChatSidenavProps> = ({ children }) => {
     onOpen: onModalOpen,
     onClose: onModalClose,
   } = useDisclosure();
-  const { profileData, currentId, setCurrentId, currentWardProfile } =
+  const { profileData, currentId, setLocalstorageId, currentWardProfile } =
     useUserAPI();
   const [wardProfile, setWardprofile] = useState(profileData.userChildren);
   const message = wardProfile.find((item: any) => item.id === currentId);
@@ -195,7 +195,7 @@ const ChatSidenav: FC<ChatSidenavProps> = ({ children }) => {
                             "currentId",
                             `${profileData.userChildren[index].id}`
                           );
-                          setCurrentId(
+                          setLocalstorageId(
                             parseInt(
                               localStorage.getItem("currentId") ??
                                 `${profileData.userChildren[0]?.id}`,
