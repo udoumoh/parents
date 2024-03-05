@@ -31,7 +31,7 @@ interface LayoutProps {
 }
 
 const Layout: FC<LayoutProps> = ({ children }) => {
-  const { data: loading } = useQuery(GET_PARENT);
+  const { data: parents, loading } = useQuery(GET_PARENT);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { parentData, childData, setLocalstorageId, currentId } = useUserAPI();
   const router = useRouter();
@@ -44,28 +44,28 @@ const Layout: FC<LayoutProps> = ({ children }) => {
     }
   }, [onOpen]);
 
-  if (loading) {
-    return (
-      <Center>
-        <Box minW="full" mt={{ base: 60, md: 60, lg: 40 }}>
-          <Flex
-            direction="column"
-            align="center"
-            minW={{ base: "full", lg: "650px" }}
-          >
-            <Image
-              src="/images/greylightBordered.svg"
-              alt="logo"
-              w={40}
-              mb={3}
-              pointerEvents={"none"}
-            />
-            <BarLoader color="#ffd880" width="150px" />
-          </Flex>
-        </Box>
-      </Center>
-    );
-  }
+  // if (loading) {
+  //   return (
+  //     <Center>
+  //       <Box minW="full" mt={{ base: 60, md: 60, lg: 40 }}>
+  //         <Flex
+  //           direction="column"
+  //           align="center"
+  //           minW={{ base: "full", lg: "650px" }}
+  //         >
+  //           <Image
+  //             src="/images/greylightBordered.svg"
+  //             alt="logo"
+  //             w={40}
+  //             mb={3}
+  //             pointerEvents={"none"}
+  //           />
+  //           <BarLoader color="#ffd880" width="150px" />
+  //         </Flex>
+  //       </Box>
+  //     </Center>
+  //   );
+  // }
 
   if (parentData?.children.length === 0) {
     window.location.replace("/dashboard");
