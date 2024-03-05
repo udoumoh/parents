@@ -122,6 +122,7 @@ const InvoiceItem: FC<InvoiceItemProps> = ({
               aria-label="Search database"
               icon={<FaCheck />}
               onClick={onAcceptModalOpen}
+              isDisabled={studentInvoice.status === 'active' ? false : true}
             />
           </Tooltip>
           <Tooltip
