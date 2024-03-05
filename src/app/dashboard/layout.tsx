@@ -92,14 +92,21 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
     <MainNav>
       {/* ... Your modal content ... */}
-      <Modal isCentered isOpen={isOpen} onClose={onClose}>
+      <Modal
+        isCentered
+        isOpen={isOpen}
+        onClose={onClose}
+        closeOnOverlayClick={false}
+      >
         <Overlay />
         <ModalContent>
           <ModalHeader>
             Hello {`${parentData?.firstName} ${parentData?.lastName}`}🙃
           </ModalHeader>
           <ModalBody>
-            <Text mb={'2rem'}>Kindly select a childs profile to view his/her data</Text>
+            <Text mb={"2rem"}>
+              Kindly select a childs profile to view his/her data
+            </Text>
 
             {childData?.map((ward: any, index: number) => {
               console.log(ward.id);
