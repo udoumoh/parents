@@ -68,11 +68,11 @@ const LinkedStudentsPopover: FC<LinkedStudentsPopoverProps> = ({onClose}) => {
               return (
                 <Flex
                   alignItems={"center"}
-                  justifyContent={"center"}
                   gap={2}
                   bgColor={currentId === ward.id ? "#3F999830" : ""}
                   rounded={"md"}
                   py={"0.5rem"}
+                  px={'0.5rem'}
                   mb={"0.4rem"}
                   _hover={{
                     backgroundColor: "#3F999830",
