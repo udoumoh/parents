@@ -1,25 +1,9 @@
 "use client";
-import React, { ReactNode } from "react";
+import React, { ReactNode, useEffect } from "react";
 import MainNav from "@/components/navigation/mainNav";
 import { useQuery } from "@apollo/client";
 import { GET_PARENT } from "@/gql/queries/queries";
-import {
-  Center,
-  Box,
-  Flex,
-  Image,
-  useToast,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
-  Text,
-  Button,
-  useDisclosure,
-} from "@chakra-ui/react";
+import { Center, Box, Flex, Image, useToast } from "@chakra-ui/react";
 import { BarLoader } from "react-spinners";
 
 interface layoutProps {
@@ -29,7 +13,7 @@ interface layoutProps {
 const Layout: React.FC<layoutProps> = ({ children }) => {
   const toast = useToast();
   const { data: parent, loading } = useQuery(GET_PARENT);
-  const { isOpen, onOpen, onClose } = useDisclosure();
+
   try {
     if (loading)
       return (
@@ -63,34 +47,7 @@ const Layout: React.FC<layoutProps> = ({ children }) => {
       status: "error",
     });
   }
-
-  const Overlay = () => (
-    <ModalOverlay
-      bg="blackAlpha.300"
-      backdropFilter="blur(10px) hue-rotate(90deg)"
-    />
-  );
-
-  return (
-    <MainNav>
-      {localStorage.getItem("currentId") === null && (
-        <Modal isCentered isOpen={isOpen} onClose={onClose}>
-          <Overlay />
-          <ModalContent>
-            <ModalHeader>Modal Title</ModalHeader>
-            <ModalCloseButton />
-            <ModalBody>
-              <Text>Custom backdrop filters!</Text>
-            </ModalBody>
-            <ModalFooter>
-              <Button onClick={onClose}>Close</Button>
-            </ModalFooter>
-          </ModalContent>
-        </Modal>
-      )}
-      {children}
-    </MainNav>
-  );
+  return <MainNav>{children}</MainNav>;
 };
 
 export default Layout;

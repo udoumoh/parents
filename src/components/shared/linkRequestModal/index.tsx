@@ -49,7 +49,7 @@ const LinkRequestModal: FC<LinkRequestModalProps> = ({
     const toast = useToast()
     const purpose = "Link to parent"
     const [message, setMessage] = useState("")
-    const [request] = useMutation(REQUEST_CHILD);
+    const [request, {loading}] = useMutation(REQUEST_CHILD);
 
     const handleMessageChange = (e: any) => {
         setMessage(e.target.value)
@@ -187,6 +187,7 @@ const LinkRequestModal: FC<LinkRequestModalProps> = ({
             px={"3rem"}
             _hover={{ backgroundColor: "#044141" }}
             onClick={handleSubmit}
+            isLoading={loading}
           >
             <Text color={"#fff"} fontWeight={"300"} fontSize={"md"}>
               Send Request
