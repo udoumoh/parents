@@ -105,23 +105,23 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
               console.log(ward.id);
               return (
                 <Flex
-                  justifyContent={"center"}
+                  alignItems={"center"}
                   gap={2}
                   bgColor={currentId === ward.id ? "#3F999830" : ""}
                   rounded={"md"}
                   py={"0.5rem"}
-                  px={'1rem'}
+                  px={"1rem"}
                   mb={"0.4rem"}
+                  border={"1px solid #1F8E74"}
                   _hover={{
                     backgroundColor: "#3F999830",
                     cursor: "pointer",
                   }}
-                  mt={'2rem'}
                   key={index}
                   onClick={() => {
                     setLocalstorageId(ward?.id || 0);
                     router.refresh();
-                    onClose()
+                    onClose();
                   }}
                 >
                   <Avatar
