@@ -73,7 +73,7 @@ const Layout: React.FC<layoutProps> = ({ children }) => {
 
   return (
     <MainNav>
-      {!localStorage.getItem("currentId") && (
+      {localStorage.getItem("currentId") === null && (
         <Modal isCentered isOpen={isOpen} onClose={onClose}>
           <Overlay />
           <ModalContent>
