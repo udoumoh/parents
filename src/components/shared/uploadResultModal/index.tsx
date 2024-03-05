@@ -434,7 +434,7 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
                     type="submit"
                   >
                     <Text color={"#fff"} fontWeight={"400"} fontSize={"lg"}>
-                      Accept & Send Receipt
+                      Upload Result
                     </Text>
                   </Button>
                 </Form>

@@ -3,6 +3,7 @@ import { FC, useState, createContext, useContext, useEffect } from "react";
 import { useQuery } from "@apollo/client";
 import { GET_PARENT } from "@/gql/queries/queries";
 import { format } from "date-fns";
+import { capitalizeFirstLetter } from "@/helpers/capitalizeFirstLetter";
 
 interface UserBio {
   firstName: string;
@@ -148,15 +149,6 @@ export const UserApiProvider: FC<UserApiProviderProps> = ({ children }) => {
         userBio: newBio,
       };
     });
-  };
-
-  const capitalizeFirstLetter = (name: string) => {
-    if (name?.length === 0) {
-      return name;
-    }
-
-    const newName = name[0].toUpperCase() + name.substring(1);
-    return newName;
   };
 
   useEffect(() => {

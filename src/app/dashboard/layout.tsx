@@ -24,6 +24,7 @@ import {
 import { BarLoader } from "react-spinners";
 import { useUserAPI } from "@/hooks/UserContext";
 import { useRouter } from "next/navigation";
+import { capitalizeFirstLetter } from "@/helpers/capitalizeFirstLetter";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -101,7 +102,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         <Overlay />
         <ModalContent>
           <ModalHeader>
-            Hello {`${parentData?.firstName} ${parentData?.lastName}`}🙃
+            Hello {`${capitalizeFirstLetter(parentData?.firstName || "")} ${parentData?.lastName}`}🙃
           </ModalHeader>
           <ModalBody>
             <Text mb={"2rem"}>
