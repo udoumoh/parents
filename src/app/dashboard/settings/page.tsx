@@ -90,6 +90,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
     const response = await logoutParent();
     if (response.data.logoutParent) {
       router.push("/signin");
+      localStorage.removeItem('currentId')
     }
   };
   return (
