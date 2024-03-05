@@ -17,6 +17,7 @@ import { BsThreeDots } from "react-icons/bs";
 import { useUserAPI } from '@/hooks/UserContext';
 import { AiOutlinePlus } from "react-icons/ai";
 import SearchStudentModal from '../searchStudentModal';
+import { useRouter } from 'next/navigation';
 
 interface LinkedStudentsPopoverProps {
   onClose: () => void;
@@ -30,6 +31,7 @@ const LinkedStudentsPopover: FC<LinkedStudentsPopoverProps> = ({onClose}) => {
     } = useDisclosure();
     const { profileData, currentId, setLocalstorageId, currentWardProfile, childData } =
       useUserAPI();
+    const router = useRouter();
   return (
     <Box display={"flex"} w={"full"} mb={10} alignItems={"center"}>
       <Popover isLazy matchWidth={true}>
@@ -78,7 +80,8 @@ const LinkedStudentsPopover: FC<LinkedStudentsPopoverProps> = ({onClose}) => {
                   }}
                   key={index}
                   onClick={() => {
-                    setLocalstorageId(ward?.id || 0)
+                    setLocalstorageId(ward?.id || 0);
+                    router.refresh();
                   }}
                 >
                   <Avatar
