@@ -209,8 +209,12 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                       alignItems={"center"}
                       gap={2}
                       key={index}
-                      mb={"1rem"}
+                      mb={"0.5rem"}
                       border={"1px solid #1F8E74"}
+                      rounded={"md"}
+                      py={"0.5rem"}
+                      pl={"1rem"}
+                      pr={'2rem'}
                     >
                       <Avatar
                         size={"md"}
