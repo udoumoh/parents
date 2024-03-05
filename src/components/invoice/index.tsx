@@ -59,8 +59,6 @@ const InvoiceItem: FC<InvoiceItemProps> = ({
       rounded={"xl"}
       p={"0.4rem"}
       mb={"1rem"}
-      w={{ base: "full", lg: "300px" }}
-      h={"auto"}
     >
       <Box backgroundColor={"#E2E2E2"} rounded={"lg"} p={"0.6rem"} pb={"1rem"}>
         <Box display={"flex"} gap={1} alignItems={"center"}>
@@ -87,7 +85,7 @@ const InvoiceItem: FC<InvoiceItemProps> = ({
           fontSize={{ base: "sm", lg: "16px" }}
           fontWeight={"500"}
           color={"#000000"}
-          isTruncated
+          isTruncated={true}
         >
           {`${studentInvoice.summary || studentInvoice.billType}`}
         </Text>

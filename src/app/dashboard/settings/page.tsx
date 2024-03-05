@@ -207,9 +207,10 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                   return (
                     <Flex
                       alignItems={"center"}
-                      justifyContent={"center"}
                       gap={2}
                       key={index}
+                      mb={"1rem"}
+                      border={"1px solid #1F8E74"}
                     >
                       <Avatar
                         size={"md"}
