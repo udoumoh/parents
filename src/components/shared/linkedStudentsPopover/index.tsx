@@ -28,7 +28,7 @@ const LinkedStudentsPopover: FC<LinkedStudentsPopoverProps> = ({onClose}) => {
       onOpen: onModalOpen,
       onClose: onModalClose,
     } = useDisclosure();
-    const { profileData, currentId, setCurrentId, currentWardProfile, childData } =
+    const { profileData, currentId, setLocalstorageId, currentWardProfile, childData } =
       useUserAPI();
   return (
     <Box display={"flex"} w={"full"} mb={10} alignItems={"center"}>
@@ -78,7 +78,7 @@ const LinkedStudentsPopover: FC<LinkedStudentsPopoverProps> = ({onClose}) => {
                   }}
                   key={index}
                   onClick={() => {
-                    setCurrentId(ward?.id || 0)
+                    setLocalstorageId(ward?.id || 0)
                   }}
                 >
                   <Avatar

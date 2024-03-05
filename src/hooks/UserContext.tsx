@@ -54,14 +54,14 @@ interface UserContextProps {
     userBio: UserBio;
     userChildren: UserChildren[];
   };
+  setLocalstorageId: (id: any) => void;
   currentId: number | undefined;
   setProfileData: React.Dispatch<
     React.SetStateAction<{
       userBio: UserBio;
       userChildren: UserChildren[];
     }>
-  >;
-  setCurrentId: React.Dispatch<React.SetStateAction<number | undefined>>;
+  >
   currentWardProfile?: UserChildren;
   parentData: ParentDataProps | undefined;
   childData:
@@ -139,9 +139,7 @@ export const UserApiProvider: FC<UserApiProviderProps> = ({ children }) => {
       ]
     | undefined
   >(undefined);
-  const [currentId, setCurrentId] = useState<number | undefined>(
-    childData?.[0]?.id
-  );
+  const currentId = Number(localStorage.getItem('currentId') || 0)
 
   const updateUserBio = (newBio: any) => {
     setProfileData((previousData) => {
@@ -203,8 +201,13 @@ export const UserApiProvider: FC<UserApiProviderProps> = ({ children }) => {
       }
     };
 
+    
     fetchData();
-  }, [parent, currentId]);
+  }, [parent]);
+  
+  const setLocalstorageId = (id: any) => {
+    localStorage.setItem('currentId', id)
+  }
 
   const currentWardProfile = (childData || []).find(
     (child) => child.id === currentId
@@ -216,10 +219,10 @@ export const UserApiProvider: FC<UserApiProviderProps> = ({ children }) => {
         profileData,
         setProfileData,
         currentId,
-        setCurrentId,
         currentWardProfile,
         parentData,
         childData,
+        setLocalstorageId,
       }}
     >
       {children}
