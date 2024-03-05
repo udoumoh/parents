@@ -195,14 +195,16 @@ export const UserApiProvider: FC<UserApiProviderProps> = ({ children }) => {
         );
 
         setChildData(userChildren);
-        // setCurrentId(userChildren[0].id);
+        if((childData ?? []).length !== 0) {
+          setCurrentId(userChildren[0].id);
+        }
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
 
     fetchData();
-  }, [parent, currentId]);
+  }, [parent, currentId, childData]);
 
   const currentWardProfile = (childData || []).find(
     (child) => child.id === currentId
