@@ -19,8 +19,11 @@ import {
   Text,
   Button,
   useDisclosure,
+  Avatar,
 } from "@chakra-ui/react";
 import { BarLoader } from "react-spinners";
+import { useUserAPI } from "@/hooks/UserContext";
+import { useRouter } from "next/navigation";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -30,6 +33,8 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   const toast = useToast();
   const { data: parent, loading } = useQuery(GET_PARENT);
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const {parentData, childData, setLocalstorageId, currentId} = useUserAPI()
+  const router = useRouter()
 
   useEffect(() => {
     const currentId = localStorage.getItem("currentId");
@@ -40,7 +45,26 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   }, [onOpen]);
 
   if (loading) {
-    return <Center>{/* ... Loading spinner code ... */}</Center>;
+    return (
+      <Center>
+        <Box minW="full" mt={{ base: 60, md: 60, lg: 40 }}>
+          <Flex
+            direction="column"
+            align="center"
+            minW={{ base: "full", lg: "650px" }}
+          >
+            <Image
+              src="/images/greylightBordered.svg"
+              alt="logo"
+              w={40}
+              mb={3}
+              pointerEvents={"none"}
+            />
+            <BarLoader color="#ffd880" width="150px" />
+          </Flex>
+        </Box>
+      </Center>
+    );
   }
 
   try {
@@ -71,14 +95,55 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
       <Modal isCentered isOpen={isOpen} onClose={onClose}>
         <Overlay />
         <ModalContent>
-          <ModalHeader>Modal Title</ModalHeader>
-          <ModalCloseButton />
+          <ModalHeader>
+            Hello {`${parentData?.firstName} ${parentData?.lastName}`}🙃
+          </ModalHeader>
           <ModalBody>
-            <Text>Custom backdrop filters!</Text>
+            <Text>Kindly select a childs profile to view his/her data</Text>
+
+            {childData?.map((ward: any, index: number) => {
+              console.log(ward.id);
+              return (
+                <Flex
+                  alignItems={"center"}
+                  justifyContent={"center"}
+                  gap={2}
+                  bgColor={currentId === ward.id ? "#3F999830" : ""}
+                  rounded={"md"}
+                  py={"0.5rem"}
+                  mb={"0.4rem"}
+                  _hover={{
+                    backgroundColor: "#3F999830",
+                    cursor: "pointer",
+                  }}
+                  key={index}
+                  onClick={() => {
+                    setLocalstorageId(ward?.id || 0);
+                    router.refresh();
+                  }}
+                >
+                  <Avatar
+                    size={"md"}
+                    src={ward.profileImage}
+                    pointerEvents={"none"}
+                  />
+                  <Box lineHeight={"20px"}>
+                    <Text fontWeight={"600"} fontSize={"sm"}>
+                      {`${ward.firstName} ${ward.lastName}`}
+                    </Text>
+                    <Text
+                      fontSize={"12px"}
+                      color={"#AAAAAA"}
+                      fontWeight={"600"}
+                    >
+                      {ward.greynoteNumber}
+                    </Text>
+                  </Box>
+                </Flex>
+              );
+            })}
           </ModalBody>
-          <ModalFooter>
-            <Button onClick={onClose}>Close</Button>
-          </ModalFooter>
+          <ModalFooter></ModalFooter>
         </ModalContent>
       </Modal>
       {children}

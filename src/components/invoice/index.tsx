@@ -59,7 +59,7 @@ const InvoiceItem: FC<InvoiceItemProps> = ({
       rounded={"xl"}
       p={"0.4rem"}
       mb={"1rem"}
-      w={{base:"full", lg:"300px"}}
+      w={{ base: "full", lg: "300px" }}
       h={"auto"}
     >
       <Box backgroundColor={"#E2E2E2"} rounded={"lg"} p={"0.6rem"} pb={"1rem"}>
@@ -79,11 +79,16 @@ const InvoiceItem: FC<InvoiceItemProps> = ({
           ₦ {formatNumberWithCommas(studentInvoice.amountPaid)}
         </Text>
       </Box>
-      <Box px={"0.5rem"} w={'auto'}>
+      <Box px={"0.5rem"} w={"auto"}>
         <Text color={"#666666"} fontSize={"xs"} fontWeight={"400"} mt={"1rem"}>
           Summary
         </Text>
-        <Text fontSize={{base:"sm", lg:"16px"}} fontWeight={"500"} color={"#000000"} isTruncated>
+        <Text
+          fontSize={{ base: "sm", lg: "16px" }}
+          fontWeight={"500"}
+          color={"#000000"}
+          isTruncated
+        >
           {`${studentInvoice.summary || studentInvoice.billType}`}
         </Text>
 
@@ -122,7 +127,7 @@ const InvoiceItem: FC<InvoiceItemProps> = ({
               aria-label="Search database"
               icon={<FaCheck />}
               onClick={onAcceptModalOpen}
-              isDisabled={studentInvoice.status === 'active' ? false : true}
+              isDisabled={studentInvoice.status === "active" ? false : true}
             />
           </Tooltip>
           <Tooltip
@@ -137,6 +142,7 @@ const InvoiceItem: FC<InvoiceItemProps> = ({
               aria-label="Search database"
               icon={<IoClose size="24" />}
               onClick={onRejectModalOpen}
+              isDisabled={studentInvoice.status === "active" ? false : true}
             />
           </Tooltip>
         </Flex>
