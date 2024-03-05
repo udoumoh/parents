@@ -1,3 +1,4 @@
+'use client'
 import React, { useEffect } from "react";
 import MainNav from "@/components/navigation/mainNav";
 import { useQuery } from "@apollo/client";
