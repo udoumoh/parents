@@ -214,6 +214,11 @@ const Signin: FC<pageProps> = ({}) => {
           fontSize={"2xl"}
           _hover={{ backgroundColor: "#0F5151" }}
           isLoading={isSubmitting}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              handleLogin
+            }
+          }}
         >
           Login
         </Button>

@@ -77,7 +77,6 @@ const Attendance: FC<AttendanceProps> = ({}) => {
            <Text fontSize={"sm"} color={"#747474"}>
              Absent
            </Text>
-
            {attendance.map((item, index) =>
              item.present === false ? (
                <Flex justifyContent={"space-between"} my={"1rem"} key={index}>
@@ -91,7 +90,13 @@ const Attendance: FC<AttendanceProps> = ({}) => {
                  </Box>
                  {item.present ? <PrimaryBadge /> : <SecondaryBadge />}
                </Flex>
-             ) : null
+             ) : (
+               <>
+                 <Text>
+                   No absences reported for this week for this child.🌟
+                 </Text>
+               </>
+             )
            )}
          </Box>
 
@@ -116,7 +121,13 @@ const Attendance: FC<AttendanceProps> = ({}) => {
                  </Box>
                  {item.present ? <PrimaryBadge /> : <SecondaryBadge />}
                </Flex>
-             ) : null
+             ) : (
+               <>
+                 <Text>
+                   ⚠️ Your child has not been in school this week.
+                 </Text>
+               </>
+             )
            )}
          </Box>
        </>
