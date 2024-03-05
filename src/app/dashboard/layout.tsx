@@ -120,6 +120,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                   onClick={() => {
                     setLocalstorageId(ward?.id || 0);
                     router.refresh();
+                    onClose()
                   }}
                 >
                   <Avatar
