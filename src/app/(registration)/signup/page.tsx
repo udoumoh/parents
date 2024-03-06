@@ -634,7 +634,6 @@ const Page: FC<pageProps> = ({}) => {
                             fontWeight={"400"}
                             w={"17rem"}
                             onClick={() => {
-                              handleTabsChange;
                               onOpen();
                             }}
                             _hover={{ backgroundColor: "#099C9B" }}

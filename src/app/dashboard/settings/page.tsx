@@ -9,9 +9,7 @@ import {
   Image,
   Icon,
   Divider,
-  Wrap,
-  WrapItem,
-  VStack,
+  useDisclosure,
 } from "@chakra-ui/react";
 import { AiFillClockCircle } from "react-icons/ai";
 import ResultCard from "@/components/shared/resultCard";
@@ -19,6 +17,7 @@ import { useUserAPI } from "@/hooks/UserContext";
 import { gql, useMutation } from "@apollo/client";
 import { useRouter } from "next/navigation";
 import { formatDate } from "@/helpers/formatDate";
+import EditProfileModal from "@/components/shared/editProfileModal";
 
 interface SettingsPageProps {}
 interface LegendBadgeProps {
@@ -53,6 +52,7 @@ const LegendBadge: React.FC<LegendBadgeProps> = ({ role, mt, ...rest }) => {
 };
 
 const SettingsPage: FC<SettingsPageProps> = ({}) => {
+  const {isOpen: isModalOpen, onOpen: onModalOpen, onClose: onModalClose} = useDisclosure();
   const router = useRouter();
   const [logoutParent] = useMutation(LOGOUT_PARENTS);
   const { profileData, parentData, childData } = useUserAPI();
@@ -123,11 +123,13 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
             flexDir={{ base: "column", lg: "row" }}
             justifyContent={"center"}
           >
-            <Avatar
-              src={profileData?.userBio?.profileImage}
-              size={{ base: "xl", lg: "2xl" }}
-              pointerEvents={"none"}
-            />
+            <Box border={"3px solid #12B77B"} rounded={"full"} p={"0.2rem"}>
+              <Avatar
+                src={profileData?.userBio?.profileImage}
+                size={{ base: "xl", lg: "2xl" }}
+                pointerEvents={"none"}
+              />
+            </Box>
             <Box
               display={"flex"}
               flexDir={"column"}
@@ -161,15 +163,24 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
               </Flex>
             </Box>
           </Flex>
-          <Flex>
+          <Flex gap={"6"}>
             <Button
               variant={"outline"}
+              border={"1.5px solid #000"}
+              onClick={onModalOpen}
+            >
+              Upload new photo
+            </Button>
+            <Button
+              variant={"outline"}
+              borderWidth={"1.5px"}
               colorScheme="red"
               onClick={handleLogout}
             >
               Logout
             </Button>
           </Flex>
+          <EditProfileModal isOpen={isModalOpen} onOpen={onModalOpen} onClose={onModalClose} />
         </Flex>
 
         <Divider my={"2rem"} />
@@ -214,7 +225,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                       rounded={"md"}
                       py={"0.5rem"}
                       pl={"1rem"}
-                      pr={'3rem'}
+                      pr={"3rem"}
                     >
                       <Avatar
                         size={"md"}
