@@ -42,8 +42,8 @@ const Attendance: FC<AttendanceProps> = ({}) => {
     fetchData();
   }, [getattendance]);
 
-  const presentDays = attendance.filter((item) => item.present === true);
-  const absentDays = attendance.filter((item) => item.present === false);
+  const presentDays = attendance?.filter((item) => item.present === true);
+  const absentDays = attendance?.filter((item) => item.present === false);
 
   return (
     <Box
