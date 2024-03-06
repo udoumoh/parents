@@ -54,7 +54,6 @@ const InvoiceItem: FC<InvoiceItemProps> = ({
   } = useDisclosure();
   return (
     <Box
-      height={"100%"}
       border={"1px solid #C2C2C2"}
       rounded={"xl"}
       p={"0.4rem"}
