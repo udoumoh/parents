@@ -166,14 +166,14 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
           <Flex gap={"6"}>
             <Button
               variant={"outline"}
-              border={"1.5px solid #000"}
+              border={"2px solid #000"}
               onClick={onModalOpen}
             >
               Upload new photo
             </Button>
             <Button
               variant={"outline"}
-              borderWidth={"1.5px"}
+              borderWidth={"2px"}
               colorScheme="red"
               onClick={handleLogout}
             >
