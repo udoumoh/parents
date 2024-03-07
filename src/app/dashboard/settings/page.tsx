@@ -93,6 +93,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
       localStorage.removeItem('currentId')
     }
   };
+
   return (
     <Box
       display={"flex"}

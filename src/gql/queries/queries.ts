@@ -1343,3 +1343,8 @@ query GetStudent {
     state
   }
 }`);
+
+export const UPDATE_PARENT = gql(`
+mutation UpdateParentDetails($profileImgUrl: String!, $email: String!, $phoneNumber: String!, $lastName: String!, $middleName: String!, $firstName: String!) {
+  updateParentDetails(profileImgUrl: $profileImgUrl, email: $email, phoneNumber: $phoneNumber, lastName: $lastName, middleName: $middleName, firstName: $firstName)
+}`)
