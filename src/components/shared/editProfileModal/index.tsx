@@ -51,6 +51,7 @@ const EditProfileModal: FC<EditProfileModalProps> = ({isOpen, onOpen, onClose}) 
                 firstName: null,
               },
             });
+            console.log(response);
 
             if(!response){
                 toast({
@@ -63,9 +64,8 @@ const EditProfileModal: FC<EditProfileModalProps> = ({isOpen, onOpen, onClose}) 
                   status: "error",
                 });
             }
-            console.log(response);
-        } catch {
-
+        } catch(err: any) {
+            console.log(err.message)
         }
     }
 
