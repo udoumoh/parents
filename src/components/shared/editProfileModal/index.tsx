@@ -39,6 +39,7 @@ const EditProfileModal: FC<EditProfileModalProps> = ({isOpen, onOpen, onClose}) 
       setFolder(uploadedFolder); // Set the folder received from the upload component
     };
 
+    console.log(profileUrl)
     const handleProfileUpdate = async() => {
         try{
             const response = await updateparent({
@@ -97,7 +98,7 @@ const EditProfileModal: FC<EditProfileModalProps> = ({isOpen, onOpen, onClose}) 
               backgroundColor={"#007C7B"}
               color={"#fff"}
               fontWeight={"400"}
-              onClick={handleProfileUpdate}
+              onClick={()=>handleProfileUpdate}
               _hover={{ backgroundColor: "#099C9B" }}
             >
               Update profile image
@@ -107,7 +108,7 @@ const EditProfileModal: FC<EditProfileModalProps> = ({isOpen, onOpen, onClose}) 
               onModalClose={onModalClose}
               type="parentImg"
               imageFolder={folder}
-              onUpload={()=>handleImageUpload}
+              onUpload={handleImageUpload}
             />
           </Flex>
         </ModalBody>
