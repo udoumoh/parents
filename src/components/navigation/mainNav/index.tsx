@@ -194,70 +194,79 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
             );
           })}
         </Grid>
-        <Box justifyContent={"center"} display={"flex"} alignItems={"center"}>
-          <Popover>
-            <PopoverTrigger>
-              <Image
-                src={profileData?.userBio?.profileImage}
-                width={"2.7rem"}
-                height={"2.7rem"}
-                alt="profile"
-                pointerEvents={"none"}
-                rounded={"md"}
-              />
-            </PopoverTrigger>
-            <PopoverContent
-              p={2}
-              borderRadius="15px"
-              justifyContent="center"
-              alignItems="center"
-              gap={2}
+        <Popover>
+          <PopoverTrigger>
+            <Box
+              justifyContent={"center"}
+              display={"flex"}
+              alignItems={"center"}
             >
-              <Flex
-                direction="column"
-                justify="center"
-                align="center"
-                border="1px solid #e3e3e3"
-                borderRadius={"10px"}
-                p={3}
-              >
-                <Avatar src={profileData?.userBio?.profileImage} name={`${profileData?.userBio?.firstName} ${profileData?.userBio?.lastName}`} />
-                <Flex align="center" justify="center" mt={2} gap={1}>
-                  <Text textTransform={"capitalize"}>{`${profileData?.userBio?.firstName} ${profileData?.userBio?.lastName}`}</Text>
-                  <Image
-                    src="/images/verifytag.png"
-                    w="5%"
-                    pointerEvents={"none"}
-                    alt="verified badge"
-                  />
-                </Flex>
-                <Text color="#A7A7A7" fontSize="12">
-                  {profileData?.userBio?.email}
-                </Text>
+            <Image
+              src={profileData?.userBio?.profileImage}
+              width={"2.7rem"}
+              height={"2.7rem"}
+              alt="profile"
+              pointerEvents={"none"}
+              rounded={"md"}
+            />
+            </Box>
+          </PopoverTrigger>
+          <PopoverContent
+            p={2}
+            borderRadius="15px"
+            justifyContent="center"
+            alignItems="center"
+            gap={2}
+          >
+            <Flex
+              direction="column"
+              justify="center"
+              align="center"
+              border="1px solid #e3e3e3"
+              borderRadius={"10px"}
+              p={3}
+            >
+              <Avatar
+                src={profileData?.userBio?.profileImage}
+                name={`${profileData?.userBio?.firstName} ${profileData?.userBio?.lastName}`}
+              />
+              <Flex align="center" justify="center" mt={2} gap={1}>
+                <Text
+                  textTransform={"capitalize"}
+                >{`${profileData?.userBio?.firstName} ${profileData?.userBio?.lastName}`}</Text>
+                <Image
+                  src="/images/verifytag.png"
+                  w="5%"
+                  pointerEvents={"none"}
+                  alt="verified badge"
+                />
               </Flex>
-              <Button
-                leftIcon={<IoHelpCircleOutline />}
-                variant="ghost"
-                fontWeight={400}
-                w="full"
-                color="#747474"
-              >
-                Contact Support
-              </Button>
-              <Button
-                mb={4}
-                bg="#FFC5C5"
-                color="#E03F3F"
-                _hover={{ bg: "#E03F3F", color: "white" }}
-                onClick={handleLogout}
-                fontWeight={400}
-                w="full"
-              >
-                Logout
-              </Button>
-            </PopoverContent>
-          </Popover>
-        </Box>
+              <Text color="#A7A7A7" fontSize="12">
+                {profileData?.userBio?.email}
+              </Text>
+            </Flex>
+            <Button
+              leftIcon={<IoHelpCircleOutline />}
+              variant="ghost"
+              fontWeight={400}
+              w="full"
+              color="#747474"
+            >
+              Contact Support
+            </Button>
+            <Button
+              mb={4}
+              bg="#FFC5C5"
+              color="#E03F3F"
+              _hover={{ bg: "#E03F3F", color: "white" }}
+              onClick={handleLogout}
+              fontWeight={400}
+              w="full"
+            >
+              Logout
+            </Button>
+          </PopoverContent>
+        </Popover>
       </Box>
     </Box>
   );
