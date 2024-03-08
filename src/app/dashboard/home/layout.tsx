@@ -61,7 +61,7 @@ const Layout: FC<LayoutProps> = ({ children }) => {
         <Overlay />
         <ModalContent>
           <ModalHeader>
-            Hello{" ,"}
+            Hello{", "}
             {`${capitalizeFirstLetter(parentData?.firstName || "")} ${
               parentData?.lastName
             }`}
