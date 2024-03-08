@@ -19,9 +19,9 @@ import { useFormik } from "formik";
 import { useDropzone } from "react-dropzone";
 import axios from "axios";
 import { RxUpload, RxFile } from "react-icons/rx";
-import React, { useState, useEffect, Suspense } from "react";
+import React, { useState } from "react";
 import TopBarProgress from "react-topbar-progress-indicator";
-import { IoFolderOpenOutline, IoImagesOutline } from "react-icons/io5";
+import { IoImagesOutline } from "react-icons/io5";
 import { TbUpload } from "react-icons/tb";
 
 interface FormValues {
