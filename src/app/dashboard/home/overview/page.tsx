@@ -28,7 +28,7 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
           bgSize={"cover"}
           my={{ base: "10px", md: "0" }}
         >
-          <Box display={"flex"} justifyContent={"space-between"}>
+          <Box display={"flex"} justifyContent={"space-between"} gap={3}>
             <Box display={"flex"} alignItems={"center"} gap={3}>
               <Avatar
                 size={"lg"}
@@ -36,7 +36,7 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
                 pointerEvents={"none"}
               />
               <Box lineHeight={"30px"}>
-                <Text fontWeight={"600"} fontSize={"2xl"}>
+                <Text fontWeight={"600"} fontSize={{base:"lg", lg:"2xl"}}>
                   {`${currentWardProfile?.firstName} ${currentWardProfile?.lastName}`}
                 </Text>
               </Box>
@@ -44,8 +44,8 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
             <Image
               src={currentWardProfile?.schoollogo}
               alt="profileImg"
-              w={"4.5rem"}
-              h={"4.5rem"}
+              w={{base:"2.5rem", lg:"4.5rem"}}
+              h={{base:"2.5rem", lg:"4.5rem"}}
               pointerEvents={"none"}
             />
           </Box>
