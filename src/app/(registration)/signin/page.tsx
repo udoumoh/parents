@@ -178,7 +178,7 @@ const Signin: FC<pageProps> = ({}) => {
             </FormLabel>
             <Input
               fontSize={"xl"}
-              py={"2rem"}
+              py={{ base: "0rem", lg: "1.5rem" }}
               rounded={"xl"}
               type="email"
               value={email}
@@ -194,7 +194,7 @@ const Signin: FC<pageProps> = ({}) => {
             </FormLabel>
             <Input
               fontSize={"xl"}
-              py={"2rem"}
+              py={{ base: "0rem", lg: "1.5rem" }}
               rounded={"xl"}
               type="password"
               value={password}
@@ -209,14 +209,14 @@ const Signin: FC<pageProps> = ({}) => {
           onClick={handleLogin}
           backgroundColor={"#007C7B"}
           w={"full"}
-          py={"2rem"}
+          py={{ base: "0rem", lg: "1.5rem" }}
           color={"#fff"}
           fontSize={"2xl"}
           _hover={{ backgroundColor: "#0F5151" }}
           isLoading={isSubmitting}
           onKeyDown={(e) => {
             if (e.key === "Enter") {
-              handleLogin
+              handleLogin;
             }
           }}
         >
