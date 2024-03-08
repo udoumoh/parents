@@ -36,16 +36,18 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
                 pointerEvents={"none"}
               />
               <Box lineHeight={"30px"}>
-                <Text fontWeight={"600"} fontSize={{base:"lg", lg:"2xl"}}>
-                  {`${currentWardProfile?.firstName} ${currentWardProfile?.lastName}`}
+                <Text fontWeight={"600"} fontSize={{ base: "lg", lg: "2xl" }}>
+                  {`${currentWardProfile?.firstName || ""} ${
+                    currentWardProfile?.lastName || ""
+                  }`}
                 </Text>
               </Box>
             </Box>
             <Image
               src={currentWardProfile?.schoollogo}
               alt="profileImg"
-              w={{base:"2.5rem", lg:"4.5rem"}}
-              h={{base:"2.5rem", lg:"4.5rem"}}
+              w={{ base: "2.5rem", lg: "4.5rem" }}
+              h={{ base: "2.5rem", lg: "4.5rem" }}
               pointerEvents={"none"}
             />
           </Box>

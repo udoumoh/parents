@@ -29,7 +29,7 @@ const LinkedStudentsPopover: FC<LinkedStudentsPopoverProps> = ({onClose}) => {
       onOpen: onModalOpen,
       onClose: onModalClose,
     } = useDisclosure();
-    const { profileData, currentId, setLocalstorageId, currentWardProfile, childData } =
+    const { currentId, setLocalstorageId, currentWardProfile, childData } =
       useUserAPI();
     const router = useRouter();
   return (
@@ -51,10 +51,12 @@ const LinkedStudentsPopover: FC<LinkedStudentsPopoverProps> = ({onClose}) => {
               />
               <Box lineHeight={"20px"}>
                 <Text fontWeight={"600"} fontSize={"sm"}>
-                  {`${currentWardProfile?.firstName} ${currentWardProfile?.lastName}`}
+                  {`${currentWardProfile?.firstName || ""} ${
+                    currentWardProfile?.lastName || ""
+                  }`}
                 </Text>
                 <Text fontSize={"12px"} color={"#AAAAAA"} fontWeight={"600"}>
-                  {currentWardProfile?.greynoteNumber}
+                  {currentWardProfile?.greynoteNumber || ""}
                 </Text>
               </Box>
             </Flex>
@@ -71,7 +73,7 @@ const LinkedStudentsPopover: FC<LinkedStudentsPopoverProps> = ({onClose}) => {
                   bgColor={currentId === ward.id ? "#3F999830" : ""}
                   rounded={"md"}
                   py={"0.5rem"}
-                  px={'0.5rem'}
+                  px={"0.5rem"}
                   mb={"0.4rem"}
                   _hover={{
                     backgroundColor: "#3F999830",
