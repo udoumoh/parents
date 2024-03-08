@@ -148,7 +148,7 @@ const Signin: FC<pageProps> = ({}) => {
         </Box>
         <Box w={"full"} display={"flex"} flexDir={"column"} gap={5}>
           <FormControl>
-            <FormLabel color={"#484848"} fontSize={"xl"}>
+            <FormLabel color={"#484848"} fontSize={{base:"md", lg:"xl"}}>
               Email Address
             </FormLabel>
             <Input
@@ -164,7 +164,7 @@ const Signin: FC<pageProps> = ({}) => {
           </FormControl>
 
           <FormControl>
-            <FormLabel color={"#484848"} fontSize={"xl"}>
+            <FormLabel color={"#484848"} fontSize={{base:"md", lg:"xl"}}>
               Password
             </FormLabel>
             <Input
