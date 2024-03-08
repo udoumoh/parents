@@ -194,24 +194,35 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
             );
           })}
         </Grid>
-        <Popover>
+        <Box justifyContent={"center"} display={"flex"} alignItems={"center"}>
+          <Image
+            src={profileData?.userBio?.profileImage}
+            width={"2.7rem"}
+            height={"2.7rem"}
+            alt="profile"
+            pointerEvents={"none"}
+            rounded={"md"}
+          />
+        </Box>
+        {/* <Popover>
           <PopoverTrigger>
             <Box
               justifyContent={"center"}
               display={"flex"}
               alignItems={"center"}
             >
-            <Image
-              src={profileData?.userBio?.profileImage}
-              width={"2.7rem"}
-              height={"2.7rem"}
-              alt="profile"
-              pointerEvents={"none"}
-              rounded={"md"}
-            />
+              <Image
+                src={profileData?.userBio?.profileImage}
+                width={"2.7rem"}
+                height={"2.7rem"}
+                alt="profile"
+                pointerEvents={"none"}
+                rounded={"md"}
+              />
             </Box>
           </PopoverTrigger>
           <PopoverContent
+            style={{ zIndex: "10" }}
             p={2}
             borderRadius="15px"
             justifyContent="center"
@@ -266,7 +277,7 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
               Logout
             </Button>
           </PopoverContent>
-        </Popover>
+        </Popover> */}
       </Box>
     </Box>
   );
