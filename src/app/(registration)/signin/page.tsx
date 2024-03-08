@@ -15,9 +15,7 @@ import {
 } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
 import { gql, useMutation } from "@apollo/client";
-import { GET_PARENT } from "@/gql/queries/queries";
-import { useQuery } from "@apollo/client";
-import { BarLoader } from "react-spinners";
+import { useUserAPI } from "@/hooks/UserContext";
 
 interface pageProps {}
 
@@ -58,7 +56,8 @@ const Signin: FC<pageProps> = ({}) => {
   const [password, setPassword] = useState("");
   const [loginParent] = useMutation(LOGIN_PARENT);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const { data: parent } = useQuery(GET_PARENT);
+  const {childData} = useUserAPI()
+  
 
   const handleEmailChange = (e: any) => {
     setEmail(e.target.value);
@@ -112,7 +111,14 @@ const Signin: FC<pageProps> = ({}) => {
         isClosable: true,
         status: "success",
       });
-      window.location.replace("/dashboard");
+      if(( childData ?? []).length === 0){
+        window.location.replace("/dashboard");
+      }else if(( childData ?? []).length > 0){
+        window.location.replace("/dashboard/home/overview");
+      } else{
+        window.location.replace("/dashboard");
+      }
+      
     } catch (error: any) {
       toast({
         title: "Error",
