@@ -170,8 +170,6 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
     item?.schoolname?.toLowerCase().includes(searchInput?.toLowerCase())
   );
 
-  console.log(filteredSearchData)
-
   return (
     <Modal
       blockScrollOnMount={false}
