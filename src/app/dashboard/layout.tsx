@@ -12,13 +12,13 @@ interface layoutProps {
 const Layout: React.FC<layoutProps> = ({ children }) => {
   const { data: parent, loading } = useQuery(GET_PARENT);
 
-  useEffect(() => {
-    if (loading) {
-      <Loading />;
-    } else if (!loading && parent?.parent?.errors !== null) {
-      window.location.replace("/signin");
-    }
-  });
+  // useEffect(() => {
+  //   if (loading) {
+  //     <Loading />;
+  //   } else if (!loading && parent?.parent?.errors !== null) {
+  //     window.location.replace("/signin");
+  //   }
+  // });
 
   return loading ? (
     <Loading />
