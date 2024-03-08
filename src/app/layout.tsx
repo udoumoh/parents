@@ -22,7 +22,13 @@ export default function RootLayout({
   if (typeof window === "undefined") {
     // Return placeholder or loading state for server-side rendering
     return (
+       <html lang="en">
+      <head>
+        <link rel="icon" href="/images/greylightBordered.svg" />
+      </head>
+      <body>
       <Center>
+        <Providers>
         <Box minW="full" mt={{ base: 60, md: 60, lg: 40 }}>
           <Flex
             direction="column"
@@ -39,7 +45,10 @@ export default function RootLayout({
             <BarLoader color="#ffd880" width="150px" />
           </Flex>
         </Box>
+        </Providers>
       </Center>
+      </body>
+      </html>
     );
   }
 
