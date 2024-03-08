@@ -403,7 +403,7 @@ const MainNav: FC<MainNav> = ({ children }) => {
   } = useDisclosure();
   const router = useRouter()
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { profileData, setProfileData } = useUserAPI();
+  const { profileData, setProfileData, childData, currentId, setLocalstorageId } = useUserAPI();
   const pathName = usePathname();
   const [active, setActive] = useState("");
   const [isDropOpen, setDropOpen] = useState(false);
@@ -544,7 +544,7 @@ const MainNav: FC<MainNav> = ({ children }) => {
 
             <Divider mt={"4rem"} mb={"1.5rem"} borderColor={"#2D6666"} />
 
-            <Button
+            {/* <Button
               backgroundColor={"#E4B972"}
               w={"full"}
               borderRadius={"3"}
@@ -559,9 +559,64 @@ const MainNav: FC<MainNav> = ({ children }) => {
               isSearchOpen={isModalOpen}
               onSearchClose={onModalClose}
               onSearchOpen={onModalOpen}
-            />
-
-            <LinkedStudentsPopover onClose={onModalClose}/>
+            /> */}
+            <Box mt={"2rem"} p={"0.4rem"} backgroundColor={'#ffffff'} rounded={'lg'} overflowY={'auto'}>
+              {childData?.map((ward: any, index: number) => {
+                return (
+                  <Flex
+                    alignItems={"center"}
+                    gap={2}
+                    bgColor={currentId === ward.id ? "#3F999830" : ""}
+                    rounded={"md"}
+                    py={"0.5rem"}
+                    px={"0.5rem"}
+                    mb={"0.4rem"}
+                    _hover={{
+                      backgroundColor: "#3F999830",
+                      cursor: "pointer",
+                    }}
+                    key={index}
+                    onClick={() => {
+                      setLocalstorageId(ward?.id || 0);
+                      router.refresh();
+                    }}
+                  >
+                    <Avatar
+                      size={"md"}
+                      src={ward.profileImage}
+                      pointerEvents={"none"}
+                    />
+                    <Box lineHeight={"20px"}>
+                      <Text fontWeight={"600"} fontSize={"sm"}>
+                        {`${ward.firstName} ${ward.lastName}`}
+                      </Text>
+                      <Text
+                        fontSize={"12px"}
+                        color={"#AAAAAA"}
+                        fontWeight={"600"}
+                      >
+                        {ward.greynoteNumber}
+                      </Text>
+                    </Box>
+                  </Flex>
+                );
+              })}
+              <Flex justifyContent={"center"} mb={"1rem"} mt={"2rem"}>
+                <Button
+                  backgroundColor={"#005D5D"}
+                  color={"#fff"}
+                  colorScheme="teal"
+                  w={"90%"}
+                  _hover={{ backgroundColor: "#044141" }}
+                  onClick={onModalOpen}
+                >
+                  <AiOutlinePlus />
+                  <Text fontWeight={"light"} pl="0.5rem">
+                    Link your Child
+                  </Text>
+                </Button>
+              </Flex>
+            </Box>
           </DrawerBody>
 
           <DrawerFooter>
