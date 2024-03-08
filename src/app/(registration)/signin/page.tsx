@@ -142,7 +142,7 @@ const Signin: FC<pageProps> = ({}) => {
         flexDir={"column"}
         justifyContent={"center"}
         alignItems={"center"}
-        gap={20}
+        gap={10}
         py={{ base: "2rem", lg: "0" }}
       >
         <Image
