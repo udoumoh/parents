@@ -24,6 +24,10 @@ import {
   DrawerBody,
   DrawerHeader,
   Divider,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  Avatar,
 } from "@chakra-ui/react";
 import { FiMenu } from "react-icons/fi";
 import { IoMdSettings } from "react-icons/io";
@@ -40,11 +44,12 @@ import {
 } from "react-icons/ai";
 import { HiOutlineArrowSmRight } from "react-icons/hi";
 import { PiPlus } from "react-icons/pi";
-import { IoClose } from "react-icons/io5";
+import { IoClose, IoHelpCircleOutline } from "react-icons/io5";
 import { IconType } from "react-icons";
 import { useUserAPI } from "@/hooks/UserContext";
 import SearchStudentModal from "@/components/shared/searchStudentModal";
-
+import { LOGOUT_PARENTS } from "@/gql/mutations";
+import { useMutation } from "@apollo/client";
 
 interface MobileProps extends FlexProps {
   onOpen: () => void;
@@ -133,8 +138,18 @@ const DrawerNavLinkItems = {
 
 
 const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
+  const router = useRouter()
   const { profileData, setProfileData } = useUserAPI();
   const pathName = usePathname();
+  const [logoutParent] = useMutation(LOGOUT_PARENTS);
+
+  const handleLogout = async () => {
+    const response = await logoutParent();
+    if (response.data.logoutParent) {
+      router.push("/signin");
+      localStorage.removeItem("currentId");
+    }
+  };
 
   return (
     <Box
@@ -180,14 +195,68 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
           })}
         </Grid>
         <Box justifyContent={"center"} display={"flex"} alignItems={"center"}>
-          <Image
-            src={profileData?.userBio?.profileImage}
-            width={"2.7rem"}
-            height={"2.7rem"}
-            alt="profile"
-            pointerEvents={"none"}
-            rounded={"md"}
-          />
+          <Popover>
+            <PopoverTrigger>
+              <Image
+                src={profileData?.userBio?.profileImage}
+                width={"2.7rem"}
+                height={"2.7rem"}
+                alt="profile"
+                pointerEvents={"none"}
+                rounded={"md"}
+              />
+            </PopoverTrigger>
+            <PopoverContent
+              p={2}
+              borderRadius="15px"
+              justifyContent="center"
+              alignItems="center"
+              gap={2}
+            >
+              <Flex
+                direction="column"
+                justify="center"
+                align="center"
+                border="1px solid #e3e3e3"
+                borderRadius={"10px"}
+                p={3}
+              >
+                <Avatar src={profileData?.userBio?.profileImage} name={`${profileData?.userBio?.firstName} ${profileData?.userBio?.lastName}`} />
+                <Flex align="center" justify="center" mt={2} gap={1}>
+                  <Text textTransform={"capitalize"}>{`${profileData?.userBio?.firstName} ${profileData?.userBio?.lastName}`}</Text>
+                  <Image
+                    src="/images/verifytag.png"
+                    w="5%"
+                    pointerEvents={"none"}
+                    alt="verified badge"
+                  />
+                </Flex>
+                <Text color="#A7A7A7" fontSize="12">
+                  {profileData?.userBio?.email}
+                </Text>
+              </Flex>
+              <Button
+                leftIcon={<IoHelpCircleOutline />}
+                variant="ghost"
+                fontWeight={400}
+                w="full"
+                color="#747474"
+              >
+                Contact Support
+              </Button>
+              <Button
+                mb={4}
+                bg="#FFC5C5"
+                color="#E03F3F"
+                _hover={{ bg: "#E03F3F", color: "white" }}
+                onClick={handleLogout}
+                fontWeight={400}
+                w="full"
+              >
+                Logout
+              </Button>
+            </PopoverContent>
+          </Popover>
         </Box>
       </Box>
     </Box>

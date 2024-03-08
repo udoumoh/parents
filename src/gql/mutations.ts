@@ -29,3 +29,9 @@ mutation LoginParent($password: String!, $email: String!) {
     }
   }
 }`);
+
+export const LOGOUT_PARENTS = gql(`
+mutation Mutation {
+  logoutParent
+}
+`);
