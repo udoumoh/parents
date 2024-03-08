@@ -588,6 +588,7 @@ const MainNav: FC<MainNav> = ({ children }) => {
                   border="1px solid #e3e3e3"
                   borderRadius={"10px"}
                   p={3}
+                  w={'full'}
                 >
                   <Avatar
                     src={profileData?.userBio?.profileImage}
