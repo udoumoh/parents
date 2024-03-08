@@ -73,7 +73,6 @@ const Layout: FC<LayoutProps> = ({ children }) => {
             </Text>
 
             {childData?.map((ward: any, index: number) => {
-              console.log(ward.id);
               return (
                 <Flex
                   alignItems={"center"}

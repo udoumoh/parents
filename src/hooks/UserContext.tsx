@@ -164,7 +164,6 @@ export const UserApiProvider: FC<UserApiProviderProps> = ({ children }) => {
           parentRole: response?.parent?.parent?.parentRole || "",
         };
         updateUserBio(newData);
-        // console.log(response?.parent?.parent)
 
         const userChildren = (response?.parent?.parent?.children || []).map(
           (child: any) => ({
@@ -204,8 +203,6 @@ export const UserApiProvider: FC<UserApiProviderProps> = ({ children }) => {
   const currentWardProfile = (childData || []).find(
     (child) => child.id === Number(localStorage.getItem("currentId") || 0)
   );
-
-  console.log(currentWardProfile)
 
   return (
     <UserContext.Provider
