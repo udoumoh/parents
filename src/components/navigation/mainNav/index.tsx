@@ -50,7 +50,6 @@ import { useUserAPI } from "@/hooks/UserContext";
 import SearchStudentModal from "@/components/shared/searchStudentModal";
 import { LOGOUT_PARENTS } from "@/gql/mutations";
 import { useMutation } from "@apollo/client";
-import LinkedStudentsPopover from "@/components/shared/linkedStudentsPopover";
 
 interface MobileProps extends FlexProps {
   onOpen: () => void;
@@ -407,6 +406,15 @@ const MainNav: FC<MainNav> = ({ children }) => {
   const pathName = usePathname();
   const [active, setActive] = useState("");
   const [isDropOpen, setDropOpen] = useState(false);
+  const [logoutParent] = useMutation(LOGOUT_PARENTS);
+
+  const handleLogout = async () => {
+    const response = await logoutParent();
+    if (response.data.logoutParent) {
+      router.push("/signin");
+      localStorage.removeItem("currentId");
+    }
+  };
 
   useEffect(() => {
     if (pathName.includes("/home/overview")) {
@@ -560,7 +568,13 @@ const MainNav: FC<MainNav> = ({ children }) => {
               onSearchClose={onModalClose}
               onSearchOpen={onModalOpen}
             /> */}
-            <Box mt={"2rem"} p={"0.4rem"} backgroundColor={'#ffffff'} rounded={'lg'} overflowY={'auto'}>
+            <Box
+              mt={"2rem"}
+              p={"0.4rem"}
+              backgroundColor={"#ffffff"}
+              rounded={"lg"}
+              overflowY={"auto"}
+            >
               {childData?.map((ward: any, index: number) => {
                 return (
                   <Flex
@@ -617,39 +631,104 @@ const MainNav: FC<MainNav> = ({ children }) => {
                 </Button>
               </Flex>
             </Box>
+            <SearchStudentModal
+              isSearchOpen={isModalOpen}
+              onSearchOpen={onModalOpen}
+              onSearchClose={onModalClose}
+            />
           </DrawerBody>
 
           <DrawerFooter>
-            <Box
-              as={"a"}
-              w={"full"}
-              display={"flex"}
-              justifyContent={"space-between"}
-              alignItems={"center"}
-              href="#"
-            >
-              <Box display={"flex"} alignItems={"center"} gap={2}>
-                <Image
-                  src={profileData.userBio.profileImage}
-                  width={"2.5rem"}
-                  height={"2.5rem"}
-                  alt="profile"
-                  pointerEvents={"none"}
-                  rounded={"md"}
-                />
-                <Grid lineHeight={"1rem"}>
-                  <Text
-                    color={"#fff"}
-                    fontWeight={"600"}
-                    fontSize={"sm"}
-                  >{`${profileData.userBio.firstName} ${profileData.userBio.lastName}`}</Text>
-                  <Text color={"#629B9B"} fontSize={"xs"}>
-                    {profileData.userBio.email}
+            <Popover>
+              <PopoverTrigger>
+                <Box
+                  as={"a"}
+                  w={"full"}
+                  display={"flex"}
+                  justifyContent={"space-between"}
+                  alignItems={"center"}
+                  href="#"
+                >
+                  <Box display={"flex"} alignItems={"center"} gap={2}>
+                    <Image
+                      src={profileData.userBio.profileImage}
+                      width={"2.5rem"}
+                      height={"2.5rem"}
+                      alt="profile"
+                      pointerEvents={"none"}
+                      rounded={"md"}
+                    />
+                    <Grid lineHeight={"1rem"}>
+                      <Text
+                        color={"#fff"}
+                        fontWeight={"600"}
+                        fontSize={"sm"}
+                      >{`${profileData.userBio.firstName} ${profileData.userBio.lastName}`}</Text>
+                      <Text color={"#629B9B"} fontSize={"xs"}>
+                        {profileData.userBio.email}
+                      </Text>
+                    </Grid>
+                  </Box>
+                  <Icon as={RiArrowRightSLine} color={"#fff"} boxSize={6} />
+                </Box>
+              </PopoverTrigger>
+              <PopoverContent
+                style={{ zIndex: "10" }}
+                p={2}
+                borderRadius="15px"
+                justifyContent="center"
+                alignItems="center"
+                gap={2}
+              >
+                <Flex
+                  direction="column"
+                  justify="center"
+                  align="center"
+                  border="1px solid #e3e3e3"
+                  borderRadius={"10px"}
+                  p={3}
+                >
+                  <Avatar
+                    src={profileData?.userBio?.profileImage}
+                    name={`${profileData?.userBio?.firstName} ${profileData?.userBio?.lastName}`}
+                  />
+                  <Flex align="center" justify="center" mt={2} gap={1}>
+                    <Text
+                      textTransform={"capitalize"}
+                    >{`${profileData?.userBio?.firstName} ${profileData?.userBio?.lastName}`}</Text>
+                    <Image
+                      src="/images/verifytag.png"
+                      w="5%"
+                      pointerEvents={"none"}
+                      alt="verified badge"
+                    />
+                  </Flex>
+                  <Text color="#A7A7A7" fontSize="12">
+                    {profileData?.userBio?.email}
                   </Text>
-                </Grid>
-              </Box>
-              <Icon as={RiArrowRightSLine} color={"#fff"} boxSize={6} />
-            </Box>
+                </Flex>
+                <Button
+                  leftIcon={<IoHelpCircleOutline />}
+                  variant="ghost"
+                  fontWeight={400}
+                  w="full"
+                  color="#747474"
+                >
+                  Contact Support
+                </Button>
+                <Button
+                  mb={4}
+                  bg="#FFC5C5"
+                  color="#E03F3F"
+                  _hover={{ bg: "#E03F3F", color: "white" }}
+                  onClick={handleLogout}
+                  fontWeight={400}
+                  w="full"
+                >
+                  Logout
+                </Button>
+              </PopoverContent>
+            </Popover>
           </DrawerFooter>
         </DrawerContent>
       </Drawer>
