@@ -186,7 +186,7 @@ const Signin: FC<pageProps> = ({}) => {
           w={"full"}
           py={{ base: "1rem", lg: "1.5rem" }}
           color={"#fff"}
-          fontSize={"2xl"}
+          fontSize={"lg"}
           _hover={{ backgroundColor: "#0F5151" }}
           isLoading={isSubmitting}
           onKeyDown={(e) => {
