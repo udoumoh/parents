@@ -14,11 +14,19 @@ const Layout: React.FC<layoutProps> = ({ children }) => {
 
   useEffect(() => {
     if (loading) {
-      <Loading/>
-    } else if (!loading && parent?.parent?.errors !== null) {window.location.replace("/signin")}
-  })
+      <Loading />;
+    } else if (!loading && parent?.parent?.errors !== null) {
+      window.location.replace("/signin");
+    }
+  });
 
-  return <MainNav>{children}</MainNav>;
+  return loading ? (
+    <Loading />
+  ) : !loading && parent?.parent?.errors !== null ? (
+    <>{window.location.replace("/signin")}</>
+  ) : (
+    <MainNav>{children}</MainNav>
+  );
 };
 
 export default Layout;
