@@ -288,7 +288,7 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
                         setSelectedSchool({
                           schoolName: item?.schoolname,
                           id: item?.schoolId,
-                          logo: item?.profileImgUrl,
+                          logo: item?.schoollogo,
                         });
                         setIsHidden(!isHidden);
                       }}
