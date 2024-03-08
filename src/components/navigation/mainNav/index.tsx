@@ -574,12 +574,12 @@ const MainNav: FC<MainNav> = ({ children }) => {
                 </Box>
               </PopoverTrigger>
               <PopoverContent
-                style={{ zIndex: "10" }}
                 p={2}
                 borderRadius="15px"
                 justifyContent="center"
                 alignItems="center"
                 gap={2}
+                maxW={"270px"}
               >
                 <Flex
                   direction="column"
@@ -596,10 +596,13 @@ const MainNav: FC<MainNav> = ({ children }) => {
                   <Flex align="center" justify="center" mt={2} gap={1}>
                     <Text
                       textTransform={"capitalize"}
+                      fontSize={{ base: "lg", lg: "2xl" }}
+                      fontWeight={"bold"}
                     >{`${profileData?.userBio?.firstName} ${profileData?.userBio?.lastName}`}</Text>
                     <Image
                       src="/images/verifiedtag.png"
-                      w="5%"
+                      w={"1rem"}
+                      h={"1rem"}
                       pointerEvents={"none"}
                       alt="verified tag"
                     />
