@@ -151,7 +151,7 @@ const Signin: FC<pageProps> = ({}) => {
           pointerEvents={"none"}
         />
         <Box
-          rounded={"xl"}
+          rounded={"md"}
           display={"flex"}
           alignItems={"center"}
           justifyContent={"center"}
@@ -171,7 +171,7 @@ const Signin: FC<pageProps> = ({}) => {
             Login to your account
           </Text>
         </Box>
-        <Box w={"full"} display={"flex"} flexDir={"column"} gap={10}>
+        <Box w={"full"} display={"flex"} flexDir={"column"} gap={5}>
           <FormControl>
             <FormLabel color={"#484848"} fontSize={"xl"}>
               Email Address
@@ -179,7 +179,7 @@ const Signin: FC<pageProps> = ({}) => {
             <Input
               fontSize={"xl"}
               py={{ base: "0rem", lg: "1.5rem" }}
-              rounded={"xl"}
+              rounded={"md"}
               type="email"
               value={email}
               border={"1px solid #D5D5D5"}
@@ -195,7 +195,7 @@ const Signin: FC<pageProps> = ({}) => {
             <Input
               fontSize={"xl"}
               py={{ base: "0rem", lg: "1.5rem" }}
-              rounded={"xl"}
+              rounded={"md"}
               type="password"
               value={password}
               border={"1px solid #D5D5D5"}
@@ -209,7 +209,7 @@ const Signin: FC<pageProps> = ({}) => {
           onClick={handleLogin}
           backgroundColor={"#007C7B"}
           w={"full"}
-          py={{ base: "0rem", lg: "1.5rem" }}
+          py={{ base: "1rem", lg: "1.5rem" }}
           color={"#fff"}
           fontSize={"2xl"}
           _hover={{ backgroundColor: "#0F5151" }}
