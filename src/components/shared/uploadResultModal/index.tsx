@@ -28,8 +28,8 @@ import { FileUpload } from "../fileUpload";
 import { useMutation } from "@apollo/client";
 import { useUserAPI } from "@/hooks/UserContext";
 import { useQuery } from "@apollo/client";
-import { GET_SCHOOLS } from "@/gql/queries";
-import { UPLOAD_RESULT } from "@/gql/queries";
+import { GET_SCHOOLS } from "@/gql/queries/queries";
+import { UPLOAD_RESULT } from "@/gql/queries/queries";
 
 interface UploadResultModalProps {
   isOpen: boolean;
@@ -60,6 +60,7 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
     | {
         schoolName: string;
         id: number;
+        logo: string;
       }
     | undefined
   >(undefined);
@@ -76,6 +77,7 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
     setSelectedSchool({
       schoolName: currentWardProfile?.school || "",
       id: currentWardProfile?.schoolId || 0,
+      logo: currentWardProfile?.profileImage || "",
     });
   };
 
@@ -284,12 +286,13 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
                         setSelectedSchool({
                           schoolName: item?.schoolname,
                           id: item?.schoolId,
+                          logo: item?.profileImgUrl,
                         });
                         setIsHidden(!isHidden);
                       }}
                     >
                       <Avatar src={item.schoollogo} />
-                      <Text fontSize={"lg"} py={"0.5rem"}>
+                      <Text fontSize={{ base: "sm", lg: "lg" }} py={"0.5rem"}>
                         {item.schoolname}
                       </Text>
                     </Box>
@@ -298,13 +301,15 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
               </Box>
             )}
             <Box
-              display={selectedSchool ? "block" : "none"}
+              display={selectedSchool ? "flex" : "none"}
               my={"1rem"}
               p={"0.5rem"}
               rounded={"md"}
               backgroundColor="#3F999830"
+              gap={3}
             >
-              <Text fontSize={"lg"} py={"0.5rem"}>
+              <Avatar src={selectedSchool?.logo} />
+              <Text fontSize={{ base: "sm", lg: "lg" }} py={"0.5rem"}>
                 {selectedSchool?.schoolName || ""}
               </Text>
             </Box>

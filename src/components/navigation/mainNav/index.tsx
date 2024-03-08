@@ -427,6 +427,7 @@ const MainNav: FC<MainNav> = ({ children }) => {
                       onClose();
                     }}
                     transition={"ease-in-out 1s"}
+                    _hover={{ cursor: "pointer" }}
                   >
                     <Icon
                       as={item.icon}
@@ -456,6 +457,7 @@ const MainNav: FC<MainNav> = ({ children }) => {
                       router.push(`/${item.url}`);
                       onClose();
                     }}
+                    _hover={{cursor:"pointer"}}
                   >
                     <Icon as={item.iconLight} color={"#fff"} boxSize={6} />
                     <Text color={"#fff"} fontSize={"lg"}>

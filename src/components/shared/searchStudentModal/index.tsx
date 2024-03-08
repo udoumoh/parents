@@ -28,7 +28,7 @@ import {
 } from "react-icons/ai";
 import LinkRequestModal from '../linkRequestModal';
 import { gql, useQuery } from "@apollo/client";
-import { GET_STUDENTS } from '@/gql/queries';
+import { GET_STUDENTS } from '@/gql/queries/queries';
 
 interface SearchStudentModalProps {
   isSearchOpen: boolean;
