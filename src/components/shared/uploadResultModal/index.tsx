@@ -173,7 +173,7 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
       blockScrollOnMount={false}
       isOpen={isOpen}
       onClose={onClose}
-      size={{ base: "lg", md: "xl", lg: "2xl" }}
+      size={{ base: "xs", sm: "lg", md: "xl" }}
       scrollBehavior={"inside"}
     >
       <ModalOverlay />
@@ -195,7 +195,21 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
           <Divider color={"#C2C2C2"} mt={"0.8rem"} />
           <ModalCloseButton />
         </ModalHeader>
-        <ModalBody pb={6} px={{ base: "3rem", md: "4rem" }}>
+        <ModalBody
+          pb={6}
+          px={{ base: "1.5rem", md: "4rem" }}
+          sx={{
+            "&::-webkit-scrollbar": {
+              width: "6px",
+              borderRadius: "6px",
+              backgroundColor: "#007C7B20",
+            },
+            "&::-webkit-scrollbar-thumb": {
+              backgroundColor: "#007C7B80",
+              borderRadius: "8px",
+            },
+          }}
+        >
           <Box pb={"1rem"}>
             <Box rounded={"md"} textAlign={"center"}>
               <Avatar
@@ -219,9 +233,9 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
               justifyContent={"space-between"}
               mb={"0.3rem"}
             >
-              <Text fontSize={"lg"}>Select School</Text>
+              <Text fontSize={{ base: "sm", lg: "lg" }}>Select School</Text>
               <Checkbox
-                size={"lg"}
+                size={{ base: "sm", lg: "lg" }}
                 colorScheme="green"
                 color={"#B2B2B2"}
                 onChange={handleCheck}
@@ -231,7 +245,7 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
             </Box>
             <Input
               type="text"
-              size={"lg"}
+              size={{ base: "md", lg: "lg" }}
               border={"1px solid #D5D5D5"}
               rounded="md"
               backgroundColor={"#F5F5F5"}
@@ -311,14 +325,17 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
                     {({ field, form }: any) => (
                       <FormControl>
                         <Box w={"full"} mt={"1rem"}>
-                          <Text fontSize={"lg"} mb={"0.3rem"}>
+                          <Text
+                            fontSize={{ base: "sm", lg: "lg" }}
+                            mb={"0.3rem"}
+                          >
                             Result Type
                           </Text>
                           <Select
                             placeholder="Select Result Type"
                             {...field}
                             border={"1px solid #D5D5D5"}
-                            size={{ base: "sm", md: "lg" }}
+                            size={{ base: "md", md: "lg" }}
                             rounded={"md"}
                             fontSize={"md"}
                             backgroundColor={"#F5F5F5"}
@@ -354,7 +371,9 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
 
                   <Flex direction="column" mt={"1rem"}>
                     <Box>
-                      <Text mb={"0.5rem"}>File Type</Text>
+                      <Text mb={"0.5rem"} fontSize={{ base: "sm", lg: "lg" }}>
+                        File Type
+                      </Text>
                       <Flex gap={5} flexDir={{ base: "column", md: "row" }}>
                         <Field name="docType">
                           {({ field, form }: any) => (
@@ -364,7 +383,7 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
                                   placeholder="Select File Type"
                                   {...field}
                                   border={"1px solid #D5D5D5"}
-                                  size={{ base: "sm", md: "lg" }}
+                                  size={{ base: "md", md: "lg" }}
                                   rounded={"md"}
                                   fontSize={"md"}
                                   backgroundColor={"#F5F5F5"}
@@ -410,7 +429,10 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
                   </Flex>
 
                   <FormControl>
-                    <FormLabel fontWeight={"normal"} fontSize={"md"}>
+                    <FormLabel
+                      fontWeight={"normal"}
+                      fontSize={{ base: "sm", lg: "lg" }}
+                    >
                       Summary
                     </FormLabel>
                     <Textarea

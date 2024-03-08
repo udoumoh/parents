@@ -114,7 +114,7 @@ const LinkRequestModal: FC<LinkRequestModalProps> = ({
       blockScrollOnMount={false}
       isOpen={isOpen}
       onClose={onClose}
-      size={"xl"}
+      size={{ base: "xs", sm: "lg", md: "xl" }}
       scrollBehavior={"inside"}
     >
       <ModalOverlay />

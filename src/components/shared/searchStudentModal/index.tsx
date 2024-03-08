@@ -95,7 +95,7 @@ const SearchStudentModal: FC<SearchStudentModalProps> = ({isSearchOpen, onSearch
       isOpen={isSearchOpen}
       onClose={onSearchClose}
       scrollBehavior={"inside"}
-      size={{base:"xs", sm:"sm", md:"lg", lg:"xl"}}
+      size={{base:"xs", sm:"sm", md:"lg"}}
     >
       <ModalOverlay />
       <ModalContent rounded={"xl"}>
