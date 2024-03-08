@@ -50,6 +50,7 @@ import { useUserAPI } from "@/hooks/UserContext";
 import SearchStudentModal from "@/components/shared/searchStudentModal";
 import { LOGOUT_PARENTS } from "@/gql/mutations";
 import { useMutation } from "@apollo/client";
+import LinkedStudentsPopover from "@/components/shared/linkedStudentsPopover";
 
 interface MobileProps extends FlexProps {
   onOpen: () => void;
@@ -559,6 +560,8 @@ const MainNav: FC<MainNav> = ({ children }) => {
               onSearchClose={onModalClose}
               onSearchOpen={onModalOpen}
             />
+
+            <LinkedStudentsPopover onClose={onModalClose}/>
           </DrawerBody>
 
           <DrawerFooter>
