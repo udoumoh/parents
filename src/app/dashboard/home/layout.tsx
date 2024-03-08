@@ -22,7 +22,7 @@ import {
 import { useRouter } from "next/navigation";
 import { useUserAPI } from "@/hooks/UserContext";
 import { useQuery } from "@apollo/client";
-import { GET_PARENT } from "@/gql/queries/queries";
+import { GET_PARENT } from "@/gql/queries";
 import { capitalizeFirstLetter } from "@/helpers/capitalizeFirstLetter";
 import { BarLoader } from "react-spinners";
 

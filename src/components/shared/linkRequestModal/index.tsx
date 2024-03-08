@@ -24,7 +24,7 @@ import {
 } from "@chakra-ui/react";
 import { FaLink } from "react-icons/fa6";
 import { useMutation } from "@apollo/client";
-import { REQUEST_CHILD } from "@/gql/queries/queries";
+import { REQUEST_CHILD } from "@/gql/queries";
 
 interface LinkRequestModalProps {
   isOpen: boolean;

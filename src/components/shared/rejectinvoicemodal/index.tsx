@@ -15,7 +15,7 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { useMutation } from "@apollo/client";
-import { REJECT_INVOICE } from "@/gql/queries/queries";
+import { REJECT_INVOICE } from "@/gql/queries";
 
 interface RejectInvoiceModalProps {
   isOpen: boolean;

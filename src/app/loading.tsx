@@ -23,7 +23,7 @@ const Loading = () => {
           w="15%"
           mb={10}
         />
-        <BarLoader color="#007C7B" width="150px" />
+        <BarLoader color="#ffd880" width="150px" />
       </Flex>
     </Flex>
   );

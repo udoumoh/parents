@@ -16,7 +16,7 @@ import {
 } from "@chakra-ui/react";
 import { ImageUpload } from '@/components/imageUpload/ImageUpload';
 import { useMutation } from '@apollo/client';
-import { UPDATE_PARENT } from '@/gql/queries/queries';
+import { UPDATE_PARENT } from '@/gql/queries';
 import { useUserAPI } from '@/hooks/UserContext';
 
 interface EditProfileModalProps {

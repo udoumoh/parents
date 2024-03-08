@@ -24,7 +24,7 @@ import {
 import { AiOutlinePlus } from "react-icons/ai";
 import ResultCard from "@/components/shared/resultCard";
 import UploadResultModal from "@/components/shared/uploadResultModal";
-import { GET_STUDENT_GENERATED_RESULT } from "@/gql/queries/queries";
+import { GET_STUDENT_GENERATED_RESULT } from "@/gql/queries";
 import { useQuery } from "@apollo/client";
 import { useUserAPI } from "@/hooks/UserContext";
 import { formatDate } from "@/helpers/formatDate";

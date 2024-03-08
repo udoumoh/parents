@@ -9,45 +9,14 @@ import {
   FormLabel,
   Button,
   useToast,
-  Center,
-  Flex,
   Link,
 } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
 import { gql, useMutation } from "@apollo/client";
 import { useUserAPI } from "@/hooks/UserContext";
+import { LOGIN_PARENT } from "@/gql/mutations";
 
 interface pageProps {}
-
-const LOGIN_PARENT = gql(`
-mutation LoginParent($password: String!, $email: String!) {
-  loginParent(password: $password, email: $email) {
-    errors {
-      field
-      message
-    }
-    parent {
-      id
-      userId
-      status
-      isPaid
-      isVerified
-      isReferred
-      agreedTo
-      createdAt
-      firstName
-      middleName
-      lastName
-      parentRole
-      phoneNumber
-      email
-      role
-      folder
-      isDisabled
-      profileImgUrl
-    }
-  }
-}`);
 
 const Signin: FC<pageProps> = ({}) => {
   const router = useRouter();

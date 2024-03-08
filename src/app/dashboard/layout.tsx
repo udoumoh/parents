@@ -2,11 +2,12 @@
 import React, { ReactNode, useEffect } from "react";
 import MainNav from "@/components/navigation/mainNav";
 import { useQuery } from "@apollo/client";
-import { GET_PARENT } from "@/gql/queries/queries";
+import { GET_PARENT } from "@/gql/queries";
 import { useRouter } from "next/navigation";
 import { Center, Box, Flex, Image, useToast } from "@chakra-ui/react";
 import { BarLoader } from "react-spinners";
 import { useUserAPI } from "@/hooks/UserContext";
+import Loading from "../loading";
 
 interface layoutProps {
   children: ReactNode;
@@ -19,24 +20,7 @@ const Layout: React.FC<layoutProps> = ({ children }) => {
   try {
     if (loading)
       return (
-        <Center>
-          <Box minW="full" mt={{ base: 60, md: 60, lg: 40 }}>
-            <Flex
-              direction="column"
-              align="center"
-              minW={{ base: "full", lg: "650px" }}
-            >
-              <Image
-                src="/images/greylightBordered.svg"
-                alt="logo"
-                w={40}
-                mb={3}
-                pointerEvents={"none"}
-              />
-              <BarLoader color="#ffd880" width="150px" />
-            </Flex>
-          </Box>
-        </Center>
+        <Loading/>
       );
     if (!loading && parent?.parent?.errors !== null) window.location.replace("/signin");
   } catch (e: any) {
