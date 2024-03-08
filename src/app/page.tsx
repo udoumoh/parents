@@ -1,13 +1,17 @@
 "use client";
 import { useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useUserAPI } from "@/hooks/UserContext";
 
 const Home = () => {
-  const router = useRouter();
+  const {parentData} = useUserAPI();
 
   useEffect(() => {
-    router.push("/dashboard/home/overview");
-  }, [router]);
+    if(parentData){
+      window.location.replace("/dashboard/home/overview"); 
+    } else {
+      window.location.replace('/signin')
+    }
+  }, [parentData]);
 
   return null;
 };
