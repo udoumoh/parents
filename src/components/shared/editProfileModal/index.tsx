@@ -17,6 +17,7 @@ import {
 import { ImageUpload } from '@/components/imageUpload/ImageUpload';
 import { useMutation } from '@apollo/client';
 import { UPDATE_PARENT } from '@/gql/queries/queries';
+import { useUserAPI } from '@/hooks/UserContext';
 
 interface EditProfileModalProps {
   isOpen: boolean;
@@ -29,6 +30,7 @@ const EditProfileModal: FC<EditProfileModalProps> = ({isOpen, onOpen, onClose}) 
     const [updateparent ] = useMutation(UPDATE_PARENT);
     const [profileUrl, setProfileUrl] = useState("");
     const [folder, setFolder] = useState<string>("");
+    const {parentData} = useUserAPI()
     const toast = useToast()
 
     const handleImageUpload = (
@@ -45,11 +47,11 @@ const EditProfileModal: FC<EditProfileModalProps> = ({isOpen, onOpen, onClose}) 
             const response = await updateparent({
               variables: {
                 profileImgUrl: profileUrl,
-                email: null,
-                phoneNumber: null,
-                lastName: null,
-                middleName: null,
-                firstName: null,
+                email: parentData?.email,
+                phoneNumber: parentData?.phoneNumber,
+                lastName: parentData?.lastName,
+                middleName: parentData?.middleName,
+                firstName: parentData?.firstName,
               },
             });
             console.log(response);
