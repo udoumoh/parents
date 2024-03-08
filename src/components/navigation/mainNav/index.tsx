@@ -139,17 +139,8 @@ const DrawerNavLinkItems = {
 
 const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
   const router = useRouter()
-  const { profileData, setProfileData } = useUserAPI();
+  const { profileData } = useUserAPI();
   const pathName = usePathname();
-  const [logoutParent] = useMutation(LOGOUT_PARENTS);
-
-  const handleLogout = async () => {
-    const response = await logoutParent();
-    if (response.data.logoutParent) {
-      router.push("/signin");
-      localStorage.removeItem("currentId");
-    }
-  };
 
   return (
     <Box
@@ -204,80 +195,6 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
             rounded={"md"}
           />
         </Box>
-        {/* <Popover>
-          <PopoverTrigger>
-            <Box
-              justifyContent={"center"}
-              display={"flex"}
-              alignItems={"center"}
-            >
-              <Image
-                src={profileData?.userBio?.profileImage}
-                width={"2.7rem"}
-                height={"2.7rem"}
-                alt="profile"
-                pointerEvents={"none"}
-                rounded={"md"}
-              />
-            </Box>
-          </PopoverTrigger>
-          <PopoverContent
-            style={{ zIndex: "10" }}
-            p={2}
-            borderRadius="15px"
-            justifyContent="center"
-            alignItems="center"
-            gap={2}
-          >
-            <Flex
-              direction="column"
-              justify="center"
-              align="center"
-              border="1px solid #e3e3e3"
-              borderRadius={"10px"}
-              p={3}
-            >
-              <Avatar
-                src={profileData?.userBio?.profileImage}
-                name={`${profileData?.userBio?.firstName} ${profileData?.userBio?.lastName}`}
-              />
-              <Flex align="center" justify="center" mt={2} gap={1}>
-                <Text
-                  textTransform={"capitalize"}
-                >{`${profileData?.userBio?.firstName} ${profileData?.userBio?.lastName}`}</Text>
-                <Image
-                  src="/images/verifytag.png"
-                  w="5%"
-                  pointerEvents={"none"}
-                  alt="verified badge"
-                />
-              </Flex>
-              <Text color="#A7A7A7" fontSize="12">
-                {profileData?.userBio?.email}
-              </Text>
-            </Flex>
-            <Button
-              leftIcon={<IoHelpCircleOutline />}
-              variant="ghost"
-              fontWeight={400}
-              w="full"
-              color="#747474"
-            >
-              Contact Support
-            </Button>
-            <Button
-              mb={4}
-              bg="#FFC5C5"
-              color="#E03F3F"
-              _hover={{ bg: "#E03F3F", color: "white" }}
-              onClick={handleLogout}
-              fontWeight={400}
-              w="full"
-            >
-              Logout
-            </Button>
-          </PopoverContent>
-        </Popover> */}
       </Box>
     </Box>
   );
@@ -402,7 +319,7 @@ const MainNav: FC<MainNav> = ({ children }) => {
   } = useDisclosure();
   const router = useRouter()
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { profileData, setProfileData, childData, currentId, setLocalstorageId } = useUserAPI();
+  const { profileData, childData, currentId, setLocalstorageId } = useUserAPI();
   const pathName = usePathname();
   const [active, setActive] = useState("");
   const [isDropOpen, setDropOpen] = useState(false);
@@ -550,24 +467,8 @@ const MainNav: FC<MainNav> = ({ children }) => {
               })}
             </Box>
 
-            <Divider mt={"4rem"} mb={"1.5rem"} borderColor={"#2D6666"} />
+            <Divider mt={"1.5rem"} mb={"1.5rem"} borderColor={"#2D6666"} />
 
-            {/* <Button
-              backgroundColor={"#E4B972"}
-              w={"full"}
-              borderRadius={"3"}
-              onClick={onModalOpen}
-            >
-              <Icon as={PiPlus} color={"#fff"} boxSize={5} mx={"0.3rem"} />
-              <Text color={"#fff"} mx={"0.3rem"} fontWeight={"400"}>
-                Link your Child
-              </Text>
-            </Button>
-            <SearchStudentModal
-              isSearchOpen={isModalOpen}
-              onSearchClose={onModalClose}
-              onSearchOpen={onModalOpen}
-            /> */}
             <Box
               mt={"2rem"}
               p={"0.4rem"}
@@ -697,10 +598,10 @@ const MainNav: FC<MainNav> = ({ children }) => {
                       textTransform={"capitalize"}
                     >{`${profileData?.userBio?.firstName} ${profileData?.userBio?.lastName}`}</Text>
                     <Image
-                      src="/images/verifytag.png"
+                      src="/images/verifiedtag.png"
                       w="5%"
                       pointerEvents={"none"}
-                      alt="verified badge"
+                      alt="verified tag"
                     />
                   </Flex>
                   <Text color="#A7A7A7" fontSize="12">
