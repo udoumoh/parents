@@ -107,7 +107,7 @@ const EditProfileModal: FC<EditProfileModalProps> = ({isOpen, onOpen, onClose}) 
               onModalClose={onModalClose}
               type="parentImg"
               imageFolder={folder}
-              onUpload={handleImageUpload}
+              onUpload={()=>handleImageUpload}
             />
           </Flex>
         </ModalBody>
