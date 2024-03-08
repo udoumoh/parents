@@ -43,7 +43,6 @@ import {
   AiOutlineSetting,
 } from "react-icons/ai";
 import { HiOutlineArrowSmRight } from "react-icons/hi";
-import { PiPlus } from "react-icons/pi";
 import { IoClose, IoHelpCircleOutline } from "react-icons/io5";
 import { IconType } from "react-icons";
 import { useUserAPI } from "@/hooks/UserContext";

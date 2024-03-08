@@ -28,155 +28,13 @@ import {
 } from "react-icons/ai";
 import LinkRequestModal from '../linkRequestModal';
 import { gql, useQuery } from "@apollo/client";
+import { GET_STUDENTS } from '@/gql/queries';
 
 interface SearchStudentModalProps {
   isSearchOpen: boolean;
   onSearchOpen: () => void;
   onSearchClose: () => void;
 }
-
-const GET_STUDENTS = gql(`
-query GetStudent {
-  getStudent {
-    id
-    createdAt
-    transferedAt
-    firstName
-    middleName
-    lastName
-    gender
-    ageInput
-    folder
-    isOwing
-    isVisible
-    isDuplicate
-    startDate
-    endDate
-    birthDate
-    isArchived
-    profileImgUrl
-    classroom {
-      errors {
-        field
-        message
-      }
-      classroom {
-        id
-        isValid
-        wasEdited
-        createdAt
-        updatedAt
-        classId
-        className
-        description
-        isDisabled
-        students {
-          id
-          createdAt
-          transferedAt
-          firstName
-          middleName
-          lastName
-          gender
-          ageInput
-          folder
-          isOwing
-          isVisible
-          isDuplicate
-          startDate
-          endDate
-          birthDate
-          isArchived
-          profileImgUrl
-          grayId
-          fatherName
-          fatherEmail
-          fatherNumber
-          motherName
-          motherEmail
-          motherNumber
-          homeAddress
-          lgaOrigin
-          state
-        }
-      }
-    }
-    school {
-      school {
-        id
-        createdAt
-        isDisabled
-        isVerified
-        schoolName
-        rcnumber
-        address
-        type
-        lgarea
-        folder
-        state
-        country
-        description
-        phonenumber
-        email
-        websiteUrl
-        instagramUrl
-        facebookUrl
-        twitterUrl
-        linkedinUrl
-        logoImgUrl
-        bannerImgUrl
-        license
-      }
-    }
-    creator {
-      admin {
-        id
-        isPaid
-        userId
-        folder
-        status
-        plan
-        isReferred
-        isDisabled
-        agreedTo
-        referralCode
-        createdAt
-        firstName
-        middleName
-        lastName
-        phoneNumber
-        email
-        profileImgUrl
-        role
-        school
-        schoolImg
-        statusCode
-      }
-    }
-    studentCase {
-      grayCase {
-        id
-        createdAt
-        updatedAt
-        category
-        owingAmount
-        note
-        isActive
-        wasEdited
-      }
-    }
-    grayId
-    fatherName
-    fatherEmail
-    fatherNumber
-    motherName
-    motherEmail
-    motherNumber
-    homeAddress
-    lgaOrigin
-    state
-  }
-}`);
 
 const SearchStudentModal: FC<SearchStudentModalProps> = ({isSearchOpen, onSearchOpen, onSearchClose}) => {
     const {
@@ -237,6 +95,7 @@ const SearchStudentModal: FC<SearchStudentModalProps> = ({isSearchOpen, onSearch
       isOpen={isSearchOpen}
       onClose={onSearchClose}
       scrollBehavior={"inside"}
+      size={{base:"xs", sm:"sm", md:"lg", lg:"xl"}}
     >
       <ModalOverlay />
       <ModalContent rounded={"xl"}>
