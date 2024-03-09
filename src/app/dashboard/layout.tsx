@@ -2,7 +2,7 @@
 import React, { ReactNode, useEffect } from "react";
 import MainNav from "@/components/navigation/mainNav";
 import { useQuery } from "@apollo/client";
-import { GET_PARENT } from "@/gql/queries/queries";
+import { GET_PARENT } from "@/gql/queries";
 import Loading from "../loading";
 
 interface layoutProps {

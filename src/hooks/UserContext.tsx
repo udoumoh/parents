@@ -1,7 +1,7 @@
 "use client";
 import { FC, useState, createContext, useContext, useEffect } from "react";
 import { useQuery } from "@apollo/client";
-import { GET_PARENT } from "@/gql/queries/queries";
+import { GET_PARENT } from "@/gql/queries";
 import { format } from "date-fns";
 import { capitalizeFirstLetter } from "@/helpers/capitalizeFirstLetter";
 

@@ -19,7 +19,7 @@ import { FaCheck } from "react-icons/fa6";
 import { IoClose } from "react-icons/io5";
 import AcceptInvoiceModal from "../shared/acceptInvoiceModal";
 import RejectInvoiceModal from "../shared/rejectinvoicemodal";
-import { GET_STUDENT_INVOICE } from "@/gql/queries/queries";
+import { GET_STUDENT_INVOICE } from "@/gql/queries";
 import { useQuery } from "@apollo/client";
 import { useUserAPI } from "@/hooks/UserContext";
 import { formatDate } from "@/helpers/formatDate";

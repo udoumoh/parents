@@ -30,8 +30,8 @@ import { FileUpload } from "../fileUpload";
 import { useMutation } from "@apollo/client";
 import { useUserAPI } from "@/hooks/UserContext";
 import { useQuery } from "@apollo/client";
-import { GET_SCHOOLS } from "@/gql/queries/queries";
-import { UPLOAD_RESULT } from "@/gql/queries/queries";
+import { GET_SCHOOLS } from "@/gql/queries";
+import { UPLOAD_RESULT } from "@/gql/queries";
 import { AiOutlineSearch } from "react-icons/ai";
 
 interface UploadResultModalProps {

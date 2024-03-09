@@ -26,7 +26,7 @@ import {
 import { Formik, Form, Field } from "formik";
 import { FileUpload } from "../fileUpload";
 import { useMutation } from "@apollo/client";
-import { ACCEPT_INVOICE } from "@/gql/queries/queries";
+import { ACCEPT_INVOICE } from "@/gql/queries";
 
 interface AcceptInvoiceModalProps {
   isOpen: boolean;

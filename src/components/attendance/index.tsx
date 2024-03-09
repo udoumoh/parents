@@ -4,7 +4,7 @@ import { BsArchive } from "react-icons/bs";
 import { PrimaryBadge } from "../shared/badge";
 import { SecondaryBadge } from "../shared/badge";
 import { useQuery } from "@apollo/client";
-import { GET_STUDENT_ATTENDANCE } from "@/gql/queries/queries";
+import { GET_STUDENT_ATTENDANCE } from "@/gql/queries";
 import { useUserAPI } from "@/hooks/UserContext";
 
 interface AttendanceProps {}
