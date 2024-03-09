@@ -27,7 +27,7 @@ import {
   AiOutlinePlus,
 } from "react-icons/ai";
 import LinkRequestModal from '../linkRequestModal';
-import { gql, useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import { GET_STUDENTS } from '@/gql/queries';
 
 interface SearchStudentModalProps {
@@ -132,7 +132,7 @@ const SearchStudentModal: FC<SearchStudentModalProps> = ({isSearchOpen, onSearch
               mt={"1rem"}
             >
               {filteredSearchData.length == 0 ? (
-                <Text textAlign={"center"} fontSize={"xl"} color={"#484848"}>
+                <Text textAlign={"center"} fontSize={"lg"} color={"#484848"}>
                   No results match your search criteria
                 </Text>
               ) : (
