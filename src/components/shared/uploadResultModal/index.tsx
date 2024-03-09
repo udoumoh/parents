@@ -223,13 +223,14 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
             <Box textAlign={"center"}>
               <Avatar src={currentWardProfile?.profileImage} size={"lg"} />
               <Text
-                fontSize={{ base: "sm", md: "md" }}
+                fontSize={{ base: "md", md: "lg" }}
                 fontWeight={"500"}
                 mt={"0.5rem"}
               >
                 {currentWardProfile?.firstName} {currentWardProfile?.lastName}
               </Text>
               <Text color={"#747474"}>
+                fontSize={{ base: "xs", md: "md" }}
                 {currentWardProfile?.firstName} • {currentWardProfile?.class} •{" "}
                 {`${currentWardProfile?.age} Years old`}
               </Text>
