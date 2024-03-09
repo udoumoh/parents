@@ -284,7 +284,7 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
                     borderRadius: "8px",
                   },
                 }}
-                h={"400px"}
+                maxH={"400px"}
                 overflowY={"auto"}
                 mt={"0.3rem"}
                 p={"0.5rem"}
