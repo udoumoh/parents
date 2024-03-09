@@ -315,7 +315,10 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
                         setIsHidden(!isHidden);
                       }}
                     >
-                      <Avatar src={item.schoollogo} size={{base:"xs", lg:"lg"}}/>
+                      <Avatar
+                        src={item.schoollogo}
+                        size={{ base: "xs", lg: "lg" }}
+                      />
                       <Text fontSize={{ base: "xs", lg: "md" }} py={"0.5rem"}>
                         {item.schoolname}
                       </Text>
@@ -333,8 +336,11 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
               alignItems={"center"}
               gap={3}
             >
-              <Avatar src={selectedSchool?.logo} />
-              <Text fontSize={{ base: "sm", lg: "md" }}>
+              <Avatar
+                src={selectedSchool?.logo}
+                size={{ base: "xs", lg: "lg" }}
+              />
+              <Text fontSize={{ base: "xs", lg: "md" }}>
                 {selectedSchool?.schoolName || ""}
               </Text>
             </Box>
