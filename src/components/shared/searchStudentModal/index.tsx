@@ -95,7 +95,7 @@ const SearchStudentModal: FC<SearchStudentModalProps> = ({isSearchOpen, onSearch
       isOpen={isSearchOpen}
       onClose={onSearchClose}
       scrollBehavior={"inside"}
-      size={{base:"xs", sm:"sm", md:"lg"}}
+      size={{ base: "xs", sm: "sm", md: "lg" }}
     >
       <ModalOverlay />
       <ModalContent rounded={"xl"}>
@@ -109,7 +109,20 @@ const SearchStudentModal: FC<SearchStudentModalProps> = ({isSearchOpen, onSearch
         </ModalHeader>
         <ModalCloseButton />
         <Divider />
-        <ModalBody pb={6}>
+        <ModalBody
+          pb={6}
+          sx={{
+            "&::-webkit-scrollbar": {
+              width: "10px",
+              borderRadius: "4px",
+              backgroundColor: "#007C7B20",
+            },
+            "&::-webkit-scrollbar-thumb": {
+              backgroundColor: "#007C7B80",
+              borderRadius: "4px",
+            },
+          }}
+        >
           <InputGroup>
             <InputLeftElement pointerEvents="none">
               <IoIosSearch color="#C2C2C2" size="20" />
