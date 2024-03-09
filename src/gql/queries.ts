@@ -931,9 +931,6 @@ query StudentGeneratedResult($studentId: Float!) {
           }
         }
       }
-      school {
-        
-      }
       creator {
         admin {
           id
