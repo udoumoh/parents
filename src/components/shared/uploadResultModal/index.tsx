@@ -32,9 +32,7 @@ import { useUserAPI } from "@/hooks/UserContext";
 import { useQuery } from "@apollo/client";
 import { GET_SCHOOLS } from "@/gql/queries/queries";
 import { UPLOAD_RESULT } from "@/gql/queries/queries";
-import {
-  AiOutlineSearch,
-} from "react-icons/ai";
+import { AiOutlineSearch } from "react-icons/ai";
 
 interface UploadResultModalProps {
   isOpen: boolean;
@@ -98,22 +96,22 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
 
   useEffect(() => {
     try {
-          const response = getschools;
-          if (!response) {
-            console.log("Couldn't fetch from server");
-          }
-          if (response?.getSchools) {
-            const schools = response?.getSchools?.map((school: any) => ({
-              schoolname: school?.schoolName,
-              schoollogo: school?.logoImgUrl,
-              schoolId: school?.id,
-            }));
-            setSchool(schools);
-          }
-        } catch (error: any) {
-          console.log(error?.message);
-        }
-  }, [getschools])
+      const response = getschools;
+      if (!response) {
+        console.log("Couldn't fetch from server");
+      }
+      if (response?.getSchools) {
+        const schools = response?.getSchools?.map((school: any) => ({
+          schoolname: school?.schoolName,
+          schoollogo: school?.logoImgUrl,
+          schoolId: school?.id,
+        }));
+        setSchool(schools);
+      }
+    } catch (error: any) {
+      console.log(error?.message);
+    }
+  }, [getschools]);
 
   const handleSubmit = async (values: any) => {
     try {
@@ -188,10 +186,10 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
         <ModalHeader>
           <Flex>
             <Box alignItems={"center"} gap={2}>
-              <Text fontWeight={"600"} fontSize={"xl"}>
+              <Text fontWeight={"700"} fontSize={"xl"} color={"#007C7B"}>
                 {"Upload Result"}
               </Text>
-              <Text fontWeight={"500"} fontSize={"sm"} color={"#8F8F8F"}>
+              <Text fontWeight={"400"} fontSize={"sm"} color={"#8F8F8F"}>
                 {
                   "Upload your wards academic record, results will be sent to the school’s admin"
                 }
@@ -218,13 +216,9 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
           }}
         >
           <Box pb={"1rem"}>
-            <Box rounded={"md"} textAlign={"center"}>
-              <Avatar
-                src={currentWardProfile?.profileImage}
-                size={"lg"}
-                my={"1rem"}
-              />
-              <Text fontSize={"lg"} fontWeight={"500"}>
+            <Box textAlign={"center"}>
+              <Avatar src={currentWardProfile?.profileImage} size={"lg"} />
+              <Text fontSize={"lg"} fontWeight={"500"} mt={"0.5rem"}>
                 {currentWardProfile?.firstName} {currentWardProfile?.lastName}
               </Text>
               <Text color={"#747474"}>
@@ -235,31 +229,29 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
           </Box>
 
           <Box>
-            <Box
-              display={"flex"}
-              justifyContent={"space-between"}
-              mb={"0.3rem"}
-            >
-              {/* <Text fontSize={{ base: "sm", lg: "lg" }}>Select School</Text> */}
+            <Box justifyContent={"space-between"} mb={"0.5rem"}>
               <Checkbox
-                size={{ base: "sm", lg: "lg" }}
+                size={{ base: "sm", lg: "md" }}
                 colorScheme="green"
-                color={"#B2B2B2"}
+                borderColor={"#007C7B"}
                 onChange={handleCheck}
               >
                 Upload for current school
               </Checkbox>
             </Box>
-            <InputGroup w={{ base: "60%", md: "30%" }}>
-              <InputLeftElement pointerEvents="none">
-                <AiOutlineSearch color="gray.300" />
+            <InputGroup>
+              <InputLeftElement
+                pointerEvents="none"
+                pt={"0.5rem"}
+                pl={"0.5rem"}
+              >
+                <AiOutlineSearch color="#C2C2C2" size={20} />
               </InputLeftElement>
               <Input
                 type="text"
                 size={{ base: "md", lg: "lg" }}
-                border={"1px solid #D5D5D5"}
+                border={"1px solid #007C7B"}
                 rounded="md"
-                backgroundColor={"#F5F5F5"}
                 onChange={(e) => {
                   setSearchInput(e.target.value);
                   setIsHidden(false);
@@ -273,11 +265,23 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
             </InputGroup>
             {searchInput && (
               <Box
-                // backgroundColor={"#F5F5F5"}
+                sx={{
+                  "&::-webkit-scrollbar": {
+                    width: "6px",
+                    borderRadius: "6px",
+                    backgroundColor: "#007C7B20",
+                  },
+                  "&::-webkit-scrollbar-thumb": {
+                    backgroundColor: "#007C7B80",
+                    borderRadius: "8px",
+                  },
+                }}
+                h={"400px"}
+                overflowY={"auto"}
+                mt={"0.3rem"}
                 p={"0.5rem"}
-                shadow={"md"}
-                border={"1px solid #D5D5D5"}
-                rounded={'md'}
+                border={"1px solid #007C7B"}
+                rounded={"lg"}
                 display={isHidden ? "none" : "block"}
               >
                 {filteredSearchData?.map((item: any, index: number) => {
@@ -287,7 +291,6 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
                       display={"flex"}
                       alignItems={"center"}
                       gap={3}
-                      my={"0.5rem"}
                       p={"0.5rem"}
                       rounded={"md"}
                       _hover={{
@@ -305,7 +308,7 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
                       }}
                     >
                       <Avatar src={item.schoollogo} />
-                      <Text fontSize={{ base: "sm", lg: "lg" }} py={"0.5rem"}>
+                      <Text fontSize={{ base: "sm", lg: "md" }} py={"0.5rem"}>
                         {item.schoolname}
                       </Text>
                     </Box>
@@ -319,10 +322,11 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
               p={"0.5rem"}
               rounded={"md"}
               backgroundColor="#3F999830"
+              alignItems={"center"}
               gap={3}
             >
               <Avatar src={selectedSchool?.logo} />
-              <Text fontSize={{ base: "sm", lg: "lg" }} py={"0.5rem"}>
+              <Text fontSize={{ base: "sm", lg: "md" }}>
                 {selectedSchool?.schoolName || ""}
               </Text>
             </Box>
@@ -342,21 +346,22 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
                   <Field name="resultType">
                     {({ field, form }: any) => (
                       <FormControl>
-                        <Box w={"full"} mt={"1rem"}>
-                          {/* <Text
-                            fontSize={{ base: "sm", lg: "lg" }}
+                        <Box w={"full"} mt={"1.5rem"}>
+                          <Text
+                            fontSize={{ base: "sm", lg: "md" }}
+                            fontWeight={"500"}
+                            color={"#007C7B"}
                             mb={"0.3rem"}
                           >
                             Result Type
-                          </Text> */}
+                          </Text>
                           <Select
                             placeholder="Select Result Type"
                             {...field}
-                            border={"1px solid #D5D5D5"}
+                            border={"1px solid #007C7B"}
                             size={{ base: "md", md: "lg" }}
                             rounded={"md"}
                             fontSize={"md"}
-                            backgroundColor={"#F5F5F5"}
                             _focus={{ border: "1px solid #6ACAA7" }}
                           >
                             <option value="First Term Final Exam" color="#fff">
@@ -389,9 +394,14 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
 
                   <Flex direction="column" mt={"1rem"}>
                     <Box>
-                      {/* <Text mb={"0.5rem"} fontSize={{ base: "sm", lg: "lg" }}>
+                      <Text
+                        mb={"0.5rem"}
+                        fontSize={{ base: "sm", lg: "md" }}
+                        fontWeight={"500"}
+                        color={"#007C7B"}
+                      >
                         File Type
-                      </Text> */}
+                      </Text>
                       <Flex gap={5} flexDir={{ base: "column", md: "row" }}>
                         <Field name="docType">
                           {({ field, form }: any) => (
@@ -400,11 +410,10 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
                                 <Select
                                   placeholder="Select File Type"
                                   {...field}
-                                  border={"1px solid #D5D5D5"}
+                                  border={"1px solid #007C7B"}
                                   size={{ base: "md", md: "lg" }}
                                   rounded={"md"}
                                   fontSize={"md"}
-                                  backgroundColor={"#F5F5F5"}
                                   _focus={{ border: "1px solid #6ACAA7" }}
                                 >
                                   <option value="PDF" color="#fff">
@@ -431,7 +440,7 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
                               ? "Document Uploaded"
                               : "Upload proof of payment"}
                           </Button>
-                          <Text fontSize={"sm"} color={"#999999"} mt={"0.5rem"}>
+                          <Text fontSize={"sm"} color={"#007C7B"} mt={"0.5rem"}>
                             File name: {fileName}
                           </Text>
                         </Box>
@@ -448,17 +457,18 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
 
                   <FormControl>
                     <FormLabel
-                      fontWeight={"normal"}
-                      fontSize={{ base: "sm", lg: "lg" }}
+                      mb={"0.5rem"}
+                      fontSize={{ base: "sm", lg: "md" }}
+                      fontWeight={"500"}
+                      color={"#007C7B"}
                     >
                       Summary
                     </FormLabel>
                     <Textarea
                       onChange={handleSummaryChange}
                       h={"150px"}
-                      border={"1px solid #D5D5D5"}
+                      border={"1px solid #007C7B"}
                       rounded={"xl"}
-                      backgroundColor={"#F5F5F5"}
                       _focus={{ border: "1px solid #6ACAA7" }}
                     />
                   </FormControl>
