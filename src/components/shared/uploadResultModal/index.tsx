@@ -189,7 +189,11 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
               <Text fontWeight={"700"} fontSize={"xl"} color={"#007C7B"}>
                 {"Upload Result"}
               </Text>
-              <Text fontWeight={"400"} fontSize={"sm"} color={"#8F8F8F"}>
+              <Text
+                fontWeight={"400"}
+                fontSize={{ base: "xs", md: "sm" }}
+                color={"#8F8F8F"}
+              >
                 {
                   "Upload your wards academic record, results will be sent to the school’s admin"
                 }
@@ -218,7 +222,11 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
           <Box pb={"1rem"}>
             <Box textAlign={"center"}>
               <Avatar src={currentWardProfile?.profileImage} size={"lg"} />
-              <Text fontSize={"lg"} fontWeight={"500"} mt={"0.5rem"}>
+              <Text
+                fontSize={{ base: "sm", md: "md" }}
+                fontWeight={"500"}
+                mt={"0.5rem"}
+              >
                 {currentWardProfile?.firstName} {currentWardProfile?.lastName}
               </Text>
               <Text color={"#747474"}>
@@ -242,7 +250,7 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
             <InputGroup>
               <InputLeftElement
                 pointerEvents="none"
-                pt={"0.5rem"}
+                pt={{ base: "0rem", lg: "0.5rem" }}
                 pl={"0.5rem"}
               >
                 <AiOutlineSearch color="#C2C2C2" size={20} />
@@ -361,7 +369,7 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
                             border={"1px solid #007C7B"}
                             size={{ base: "md", md: "lg" }}
                             rounded={"md"}
-                            fontSize={"md"}
+                            fontSize={{ base: "sm", lg: "md" }}
                             _focus={{ border: "1px solid #6ACAA7" }}
                           >
                             <option value="First Term Final Exam" color="#fff">
@@ -413,7 +421,7 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
                                   border={"1px solid #007C7B"}
                                   size={{ base: "md", md: "lg" }}
                                   rounded={"md"}
-                                  fontSize={"md"}
+                                  fontSize={{ base: "sm", lg: "md" }}
                                   _focus={{ border: "1px solid #6ACAA7" }}
                                 >
                                   <option value="PDF" color="#fff">
@@ -428,6 +436,7 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
 
                         <Box>
                           <Button
+                            fontSize={{ base: "sm", lg: "md" }}
                             backgroundColor={"#007C7B"}
                             color={"#fff"}
                             fontWeight={"400"}
@@ -455,7 +464,7 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
                     </Box>
                   </Flex>
 
-                  <FormControl>
+                  <FormControl mt={{ base: "1rem", md: "0rem" }}>
                     <FormLabel
                       mb={"0.5rem"}
                       fontSize={{ base: "sm", lg: "md" }}
@@ -483,7 +492,11 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
                     isLoading={loading}
                     type="submit"
                   >
-                    <Text color={"#fff"} fontWeight={"400"} fontSize={"lg"}>
+                    <Text
+                      color={"#fff"}
+                      fontWeight={"400"}
+                      fontSize={{ base: "sm", lg: "md" }}
+                    >
                       Upload Result
                     </Text>
                   </Button>
