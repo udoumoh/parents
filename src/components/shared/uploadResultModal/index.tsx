@@ -315,8 +315,8 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
                         setIsHidden(!isHidden);
                       }}
                     >
-                      <Avatar src={item.schoollogo} />
-                      <Text fontSize={{ base: "sm", lg: "md" }} py={"0.5rem"}>
+                      <Avatar src={item.schoollogo} size={{base:"xs", lg:"lg"}}/>
+                      <Text fontSize={{ base: "xs", lg: "md" }} py={"0.5rem"}>
                         {item.schoolname}
                       </Text>
                     </Box>
