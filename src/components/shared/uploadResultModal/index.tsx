@@ -229,8 +229,7 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
               >
                 {currentWardProfile?.firstName} {currentWardProfile?.lastName}
               </Text>
-              <Text color={"#747474"}>
-                fontSize={{ base: "xs", md: "md" }}
+              <Text color={"#747474"} fontSize={{ base: "xs", md: "md" }}>
                 {currentWardProfile?.firstName} • {currentWardProfile?.class} •{" "}
                 {`${currentWardProfile?.age} Years old`}
               </Text>
