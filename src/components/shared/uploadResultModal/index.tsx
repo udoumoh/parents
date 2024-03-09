@@ -22,6 +22,8 @@ import {
   useToast,
   Avatar,
   Checkbox,
+  InputGroup,
+  InputLeftElement,
 } from "@chakra-ui/react";
 import { Formik, Form, Field } from "formik";
 import { FileUpload } from "../fileUpload";
@@ -30,6 +32,9 @@ import { useUserAPI } from "@/hooks/UserContext";
 import { useQuery } from "@apollo/client";
 import { GET_SCHOOLS } from "@/gql/queries/queries";
 import { UPLOAD_RESULT } from "@/gql/queries/queries";
+import {
+  AiOutlineSearch,
+} from "react-icons/ai";
 
 interface UploadResultModalProps {
   isOpen: boolean;
@@ -175,7 +180,7 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
       blockScrollOnMount={false}
       isOpen={isOpen}
       onClose={onClose}
-      size={{ base: "xs", sm: "lg", md: "xl" }}
+      size={{ base: "xs", sm: "lg", md: "2xl" }}
       scrollBehavior={"inside"}
     >
       <ModalOverlay />
@@ -235,7 +240,7 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
               justifyContent={"space-between"}
               mb={"0.3rem"}
             >
-              <Text fontSize={{ base: "sm", lg: "lg" }}>Select School</Text>
+              {/* <Text fontSize={{ base: "sm", lg: "lg" }}>Select School</Text> */}
               <Checkbox
                 size={{ base: "sm", lg: "lg" }}
                 colorScheme="green"
@@ -245,26 +250,34 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
                 Upload for current school
               </Checkbox>
             </Box>
-            <Input
-              type="text"
-              size={{ base: "md", lg: "lg" }}
-              border={"1px solid #D5D5D5"}
-              rounded="md"
-              backgroundColor={"#F5F5F5"}
-              onChange={(e) => {
-                setSearchInput(e.target.value);
-                setIsHidden(false);
-              }}
-              _focus={{ border: "1px solid #6ACAA7" }}
-              isReadOnly={isChecked}
-              _hover={{ cursor: isChecked ? "not-allowed" : "text" }}
-              value={searchInput}
-            />
+            <InputGroup w={{ base: "60%", md: "30%" }}>
+              <InputLeftElement pointerEvents="none">
+                <AiOutlineSearch color="gray.300" />
+              </InputLeftElement>
+              <Input
+                type="text"
+                size={{ base: "md", lg: "lg" }}
+                border={"1px solid #D5D5D5"}
+                rounded="md"
+                backgroundColor={"#F5F5F5"}
+                onChange={(e) => {
+                  setSearchInput(e.target.value);
+                  setIsHidden(false);
+                }}
+                placeholder="search school"
+                _focus={{ border: "1px solid #6ACAA7" }}
+                isReadOnly={isChecked}
+                _hover={{ cursor: isChecked ? "not-allowed" : "text" }}
+                value={searchInput}
+              />
+            </InputGroup>
             {searchInput && (
               <Box
-                backgroundColor={"#F5F5F5"}
+                // backgroundColor={"#F5F5F5"}
                 p={"0.5rem"}
                 shadow={"md"}
+                border={"1px solid #D5D5D5"}
+                rounded={'md'}
                 display={isHidden ? "none" : "block"}
               >
                 {filteredSearchData?.map((item: any, index: number) => {
@@ -274,7 +287,7 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
                       display={"flex"}
                       alignItems={"center"}
                       gap={3}
-                      my={"1rem"}
+                      my={"0.5rem"}
                       p={"0.5rem"}
                       rounded={"md"}
                       _hover={{
@@ -330,12 +343,12 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
                     {({ field, form }: any) => (
                       <FormControl>
                         <Box w={"full"} mt={"1rem"}>
-                          <Text
+                          {/* <Text
                             fontSize={{ base: "sm", lg: "lg" }}
                             mb={"0.3rem"}
                           >
                             Result Type
-                          </Text>
+                          </Text> */}
                           <Select
                             placeholder="Select Result Type"
                             {...field}
@@ -376,9 +389,9 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
 
                   <Flex direction="column" mt={"1rem"}>
                     <Box>
-                      <Text mb={"0.5rem"} fontSize={{ base: "sm", lg: "lg" }}>
+                      {/* <Text mb={"0.5rem"} fontSize={{ base: "sm", lg: "lg" }}>
                         File Type
-                      </Text>
+                      </Text> */}
                       <Flex gap={5} flexDir={{ base: "column", md: "row" }}>
                         <Field name="docType">
                           {({ field, form }: any) => (
