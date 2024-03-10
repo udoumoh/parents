@@ -56,7 +56,7 @@ const Layout: FC<LayoutProps> = ({ children }) => {
         isOpen={isOpen}
         onClose={onClose}
         closeOnOverlayClick={false}
-        size={{base:"xs", md:"md"}}
+        // size={{base:"xs", md:"md"}}
       >
         <Overlay />
         <ModalContent>
