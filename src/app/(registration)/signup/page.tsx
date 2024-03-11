@@ -333,7 +333,7 @@ const Page: FC<pageProps> = ({}) => {
         alignItems={"center"}
         gap={5}
         py={{ base: "2rem", lg: "0" }}
-        mx={"2rem"}
+        mx={{base:"1rem", md:"2rem"}}
       >
         <Image
           src="/images/greylightBordered.svg"
