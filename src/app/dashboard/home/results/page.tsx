@@ -7,7 +7,6 @@ import {
   Select,
   Button,
   Image,
-  IconButton,
   Table,
   Thead,
   TableContainer,
@@ -24,6 +23,7 @@ import {
 import { AiOutlinePlus } from "react-icons/ai";
 import ResultCard from "@/components/shared/resultCard";
 import UploadResultModal from "@/components/shared/uploadResultModal";
+import { GET_STUDENT_UPLOADED_RESULT } from "@/gql/queries";
 import { GET_STUDENT_GENERATED_RESULT } from "@/gql/queries";
 import { useQuery } from "@apollo/client";
 import { useUserAPI } from "@/hooks/UserContext";
@@ -54,12 +54,23 @@ const Results: FC<ResultsProps> = ({}) => {
   const { data: getgeneratedresult } = useQuery(GET_STUDENT_GENERATED_RESULT, {
     variables: { studentId: currentWardProfile?.id },
   });
+  const {data: getUploadedResult} = useQuery(GET_STUDENT_UPLOADED_RESULT, {
+    variables: { studentId: currentWardProfile?.id, limit:4,},
+  })
   const [resultsType, setResultstype] = useState("");
   const [generatedResults, setGeneratedResults] = useState<
     GeneratedResultsProps[]
   >([]);
+  const [uploadedResults, setUploadedResults] = useState<
+    GeneratedResultsProps[]
+  >([]);
+  const [currentResult, setCurrentResult] = useState<
+    GeneratedResultsProps[]
+  >([]);
+
+  console.log(resultsType);
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchGeneratedResult = async () => {
       try {
         const response = await getgeneratedresult;
         if (!response) {
@@ -89,8 +100,48 @@ const Results: FC<ResultsProps> = ({}) => {
         console.log(err.message);
       }
     };
-    fetchData();
-  }, [getgeneratedresult]);
+
+    const fetchUploadedResult = async () => {
+      try {
+        const response = await getUploadedResult;
+        if (!response) {
+          console.log("failed to fetch results data");
+        }
+        if (response) {
+          const parsedResultsData = response?.studentResult?.map(
+            (item: any) => ({
+              dateGenerated: formatDate(item?.createdAt || ""),
+              term: item.academicTerm || "",
+              examType: item.resultType || "",
+              schoolLogo: item?.school?.logoImgUrl || "",
+              schoolName: item?.school?.schoolName || "",
+              status: item?.isOfficial || "",
+              sharerProfileUrl:
+                item?.student?.creator?.admin?.profileImgUrl || "",
+              sharerFirstName: item?.student?.creator?.admin?.firstName || "",
+              sharerLastName: item?.student?.creator?.admin?.lastName || "",
+              shareDate: formatDate(
+                item?.student?.creator?.admin?.createdAt || ""
+              ),
+            })
+          );
+          setUploadedResults(parsedResultsData);
+        }
+      } catch (err: any) {
+        console.log(err.message);
+      }
+    };
+    fetchUploadedResult();
+    fetchGeneratedResult();
+  }, [getgeneratedresult, getUploadedResult]);
+
+  useEffect(() => {
+    if(resultsType === "uploaded"){
+      setCurrentResult(uploadedResults)
+    } else if(resultsType === 'generated'){
+      setCurrentResult(generatedResults)
+    }
+  }, [resultsType]);
 
   const columnNames = [
     "School",
@@ -111,7 +162,7 @@ const Results: FC<ResultsProps> = ({}) => {
       <Flex justifyContent={"space-between"} my={"1rem"}>
         <Box>
           <Select
-            placeholder="Generated"
+            placeholder="Select Type"
             value={resultsType}
             onChange={handleResultsTypeChange}
             size={"md"}
@@ -120,7 +171,8 @@ const Results: FC<ResultsProps> = ({}) => {
             color={"#747474"}
             rounded={"md"}
           >
-            {/* <option value="option1">Option 1</option> */}
+            <option value="uploaded">Uploaded</option>
+            <option value="generated">Generated</option>
           </Select>
         </Box>
         <Button
@@ -144,7 +196,8 @@ const Results: FC<ResultsProps> = ({}) => {
 
       <Box>
         <Text mb={"1rem"}>Most Recent</Text>
-        {generatedResults.length === 0 ? (
+        
+        {currentResult.length === 0 ? (
           <>
             <Text fontSize={"xl"}>
               There are no results available for this student
@@ -152,7 +205,7 @@ const Results: FC<ResultsProps> = ({}) => {
           </>
         ) : (
           <Wrap gap={5} flexDir={{ base: "column", lg: "row" }}>
-            {generatedResults.map((result, index) => {
+            {currentResult.map((result, index) => {
               return (
                 <WrapItem key={index}>
                   <ResultCard key={index} result={result} />
@@ -165,7 +218,7 @@ const Results: FC<ResultsProps> = ({}) => {
 
       <Box
         mt={{ base: "12" }}
-        display={generatedResults.length === 0 ? "none" : "block"}
+        display={currentResult.length === 0 ? "none" : "block"}
       >
         <TableContainer>
           <Table

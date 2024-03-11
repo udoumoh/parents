@@ -1390,3 +1390,32 @@ export const UPDATE_PARENT = gql(`
 mutation UpdateParentDetails($profileImgUrl: String!, $email: String!, $phoneNumber: String!, $lastName: String!, $middleName: String!, $firstName: String!) {
   updateParentDetails(profileImgUrl: $profileImgUrl, email: $email, phoneNumber: $phoneNumber, lastName: $lastName, middleName: $middleName, firstName: $firstName)
 }`)
+
+export const GET_STUDENT_UPLOADED_RESULT = gql(`
+query StudentResult($studentId: Float!, $limit: Float!, $sortBy: String, $cursor: Float) {
+  studentResult(studentId: $studentId, limit: $limit, sortBy: $sortBy, cursor: $cursor) {
+    results {
+      id
+      isOfficial
+      wasEdited
+      createdAt
+      approvedAt
+      updatedAt
+      remark
+      fileType
+      resultType
+      document
+      folder
+      verifiedBy
+      studentName
+      isAcknowledged
+      creator
+      creatorRole
+      creatorPicture
+      creatorName
+    }
+    hasMore
+    cursor
+  }
+}
+`)
