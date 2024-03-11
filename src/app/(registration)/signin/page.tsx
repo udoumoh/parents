@@ -2,19 +2,23 @@
 import { FC, useEffect, useState } from "react";
 import {
   Box,
-  Image,
   Text,
+  InputGroup,
+  InputLeftElement,
+  InputRightElement,
   Input,
-  FormControl,
-  FormLabel,
   Button,
-  useToast,
+  Image,
   Link,
+  Icon,
+  useToast,
 } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
 import { gql, useMutation } from "@apollo/client";
 import { useUserAPI } from "@/hooks/UserContext";
 import { LOGIN_PARENT } from "@/gql/mutations";
+import { MdEmail } from "react-icons/md";
+import { IoMdLock, IoMdEyeOff, IoMdEye } from "react-icons/io";
 
 interface pageProps {}
 
@@ -26,7 +30,7 @@ const Signin: FC<pageProps> = ({}) => {
   const [loginParent] = useMutation(LOGIN_PARENT);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const {childData} = useUserAPI()
-  
+  const [show, setShow] = useState(false);
 
   const handleEmailChange = (e: any) => {
     setEmail(e.target.value);
@@ -106,110 +110,110 @@ const Signin: FC<pageProps> = ({}) => {
 
   return (
     <Box
-      minH={"100vh"}
       display={"flex"}
-      flexDir={"column"}
-      justifyContent={"center"}
       alignItems={"center"}
+      justifyContent={"center"}
+      minH={"100vh"}
+      backgroundColor={"#005D5D20"}
+      backdropBlur={"30px"}
     >
       <Box
         display={"flex"}
         flexDir={"column"}
-        justifyContent={"center"}
         alignItems={"center"}
+        justifyContent={"center"}
         gap={10}
-        py={{ base: "2rem", lg: "0" }}
+        p={5}
       >
-        <Image
-          src="/images/greylightBordered.svg"
-          alt="logo"
-          pointerEvents={"none"}
-        />
+        <Image src="/images/greylightBordered.svg" alt="logo"/>
         <Box
+          backgroundColor={"#fff"}
+          minW={{ base: "auto", md: "500px" }}
+          py={5}
+          px={{ base: "2rem", md: "3rem" }}
           rounded={"md"}
-          display={"flex"}
-          alignItems={"center"}
-          justifyContent={"center"}
-          backgroundImage={"/images/loginbg.png"}
-          backgroundSize="cover"
-          backgroundPosition="center"
-          backgroundRepeat="no-repeat"
-          w={{ base: "auto", lg: "670px" }}
-          h={{ base: "auto", lg: "176px" }}
-          p={{ base: "3rem", lg: "0rem" }}
         >
-          <Text
-            fontWeight={"700"}
-            fontSize={{ base: "xl", lg: "4xl" }}
-            color={"#fff"}
+          <Box textAlign={"center"}>
+            <Text color={"#005D5D"} fontWeight={"bold"} fontSize={"2xl"}>
+              Welcome back
+            </Text>
+            <Text color={"#005D5D90"} fontWeight={"600"} fontSize={"sm"}>
+              Enter your credentials to access your account
+            </Text>
+          </Box>
+
+          <Box
+            display={"flex"}
+            flexDir={"column"}
+            gap={6}
+            mb={"1rem"}
+            mt={"2rem"}
           >
-            Login to your account
+            <InputGroup>
+              <InputLeftElement pointerEvents="none">
+                <MdEmail color="#005D5D" size={20} />
+              </InputLeftElement>
+              <Input
+                onChange={handleEmailChange}
+                type="email"
+                placeholder="Enter your email"
+                pl={"2.5rem"}
+                _focus={{ border: "1px solid #005D5D80" }}
+                border={"1px solid #005D5D30"}
+              />
+            </InputGroup>
+
+            <InputGroup>
+              <InputLeftElement pointerEvents="none">
+                <IoMdLock color="#005D5D" size={20} />
+              </InputLeftElement>
+              <Input
+                onChange={handlePasswordChange}
+                type={show ? "text" : "password"}
+                placeholder="Enter your password"
+                pl={"2.5rem"}
+                _focus={{ border: "1px solid #005D5D80" }}
+                border={"1px solid #005D5D30"}
+              />
+              <InputRightElement width="4.5rem">
+                <Icon
+                  _hover={{ cursor: "pointer" }}
+                  boxSize={5}
+                  as={show ? IoMdEyeOff : IoMdEye}
+                  onClick={() => {
+                    setShow(!show);
+                  }}
+                  color={"#005D5D"}
+                />
+              </InputRightElement>
+            </InputGroup>
+
+            <Button
+              backgroundColor={"#005D5D"}
+              color={"#fff"}
+              w={"full"}
+              _hover={{ backgroundColor: "#005D5D90" }}
+              isLoading={isSubmitting}
+              onClick={handleLogin}
+            >
+              Sign in
+            </Button>
+          </Box>
+        </Box>
+        <Box>
+          <Text
+            color={"gray.600"}
+            fontSize={"sm"}
+            fontWeight={"600"}
+            textAlign={"center"}
+          >
+            Don&apos;t have an account?{" "}
+            <Link color={"#007C7B"} onClick={() => router.push("/signup")}>
+              {`Sign Up ->`}
+            </Link>
           </Text>
         </Box>
-        <Box w={"full"} display={"flex"} flexDir={"column"} gap={5}>
-          <FormControl>
-            <FormLabel color={"#484848"} fontSize={{base:"md", lg:"xl"}}>
-              Email Address
-            </FormLabel>
-            <Input
-              fontSize={"xl"}
-              py={{ base: "0rem", lg: "1.5rem" }}
-              rounded={"md"}
-              type="email"
-              value={email}
-              border={"1px solid #D5D5D5"}
-              backgroundColor={"#F5F5F5"}
-              onChange={handleEmailChange}
-            />
-          </FormControl>
-
-          <FormControl>
-            <FormLabel color={"#484848"} fontSize={{base:"md", lg:"xl"}}>
-              Password
-            </FormLabel>
-            <Input
-              fontSize={"xl"}
-              py={{ base: "0rem", lg: "1.5rem" }}
-              rounded={"md"}
-              type="password"
-              value={password}
-              border={"1px solid #D5D5D5"}
-              backgroundColor={"#F5F5F5"}
-              onChange={handlePasswordChange}
-            />
-          </FormControl>
-        </Box>
-
-        <Button
-          onClick={handleLogin}
-          backgroundColor={"#007C7B"}
-          w={"full"}
-          py={{ base: "1rem", lg: "1.5rem" }}
-          color={"#fff"}
-          fontSize={"lg"}
-          _hover={{ backgroundColor: "#0F5151" }}
-          isLoading={isSubmitting}
-          onKeyDown={(e) => {
-            if (e.key === "Enter") {
-              handleLogin;
-            }
-          }}
-        >
-          Login
-        </Button>
       </Box>
-      <Text
-        color={"#747474"}
-        fontSize={{ base: "xs", lg: "md" }}
-        mt={"2rem"}
-        fontWeight={"600"}
-        textAlign={"center"}
-      >
-        Don&apos;t have an account?{" "}
-        <Link color={"#007C7B"} onClick={() => router.push("/signup")}>
-          {`Sign Up ->`}
-        </Link>
-      </Text>
     </Box>
   );
 };

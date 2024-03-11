@@ -70,6 +70,9 @@ const Attendance: FC<AttendanceProps> = ({}) => {
           {/* Section for absent pupils */}
           {absentDays.length === 0 ? (
             <>
+              <Text fontSize={"sm"} color={"#747474"} mt={"1rem"}>
+                Present
+              </Text>
               <Text my={"1rem"} color={"#747474"}>
                 No absences reported for this week for this child.🌟
               </Text>
