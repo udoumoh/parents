@@ -113,15 +113,16 @@ const Results: FC<ResultsProps> = ({}) => {
               dateGenerated: formatDate(item?.createdAt || ""),
               term: item.academicTerm || "",
               examType: item.resultType || "",
-              schoolLogo: item?.school?.logoImgUrl || "",
-              schoolName: item?.school?.schoolName || "",
+              schoolLogo: currentWardProfile?.schoollogo || "",
+              schoolName: currentWardProfile?.school,
               status: item?.isOfficial || "",
               sharerProfileUrl:
-                item?.student?.creator?.admin?.profileImgUrl || "",
-              sharerFirstName: item?.student?.creator?.admin?.firstName || "",
+                item?.creatorPicture ||
+                "https://th.bing.com/th/id/OIP.Nyre9GBOmmL4Vfkg_9GCLgHaFg?rs=1&pid=ImgDetMain",
+              sharerFirstName: item?.creatorName || "",
               sharerLastName: item?.student?.creator?.admin?.lastName || "",
               shareDate: formatDate(
-                item?.student?.creator?.admin?.createdAt || ""
+                item?.createdAt || ""
               ),
             })
           );
@@ -133,7 +134,7 @@ const Results: FC<ResultsProps> = ({}) => {
     };
     fetchUploadedResult();
     fetchGeneratedResult();
-  }, [getgeneratedresult, getUploadedResult]);
+  }, [getgeneratedresult, getUploadedResult, currentWardProfile]);
 
   useEffect(() => {
     if(resultsType === "uploaded"){
@@ -245,7 +246,7 @@ const Results: FC<ResultsProps> = ({}) => {
               </Tr>
             </Thead>
             <Tbody>
-              {generatedResults.map((data, index) => {
+              {currentResult.map((data, index) => {
                 return (
                   <Tr key={index}>
                     <Td key={index} color={"#000"}>
