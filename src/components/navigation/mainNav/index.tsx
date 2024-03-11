@@ -296,10 +296,10 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
       />
 
       <InputGroup w={{ base: "60%", md: "30%" }}>
-        <InputLeftElement pointerEvents="none">
+        {/* <InputLeftElement pointerEvents="none">
           <AiOutlineSearch color="gray.300" />
         </InputLeftElement>
-        <Input placeholder="Search" pl={10} borderColor={"gray.400"} isDisabled/>
+        <Input placeholder="Search" pl={10} borderColor={"gray.400"} isDisabled/> */}
       </InputGroup>
 
       <Button

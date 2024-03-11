@@ -20,6 +20,7 @@ import LinkRequestModal from "@/components/shared/linkRequestModal";
 import { IoIosSearch } from "react-icons/io";
 import { AiOutlinePlus } from "react-icons/ai";
 import { gql, useQuery } from "@apollo/client";
+import { useRouter } from "next/navigation";
 
 interface PageProps {}
 
@@ -176,6 +177,7 @@ query GetStudent {
 }`);
 
 const Page: FC<PageProps> = ({}) => {
+  const router = useRouter()
   const {
     isOpen: isModalOpen,
     onOpen: onModalOpen,
@@ -392,7 +394,7 @@ const Page: FC<PageProps> = ({}) => {
             onClose={onModalClose}
           />
 
-          <Link color={"#B5B5B5"} fontSize={"xl"} mt={"2rem"}>
+          <Link color={"#B5B5B5"} fontSize={"xl"} mt={"2rem"} onClick={() => {router.push('/dashboard')}}>
             Skip
           </Link>
         </Box>
