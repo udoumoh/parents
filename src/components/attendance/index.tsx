@@ -71,7 +71,7 @@ const Attendance: FC<AttendanceProps> = ({}) => {
           {absentDays.length === 0 ? (
             <>
               <Text fontSize={"sm"} color={"#747474"} mt={"1rem"}>
-                Present
+                Absent
               </Text>
               <Text my={"1rem"} color={"#747474"}>
                 No absences reported for this week for this child.🌟
@@ -110,6 +110,9 @@ const Attendance: FC<AttendanceProps> = ({}) => {
           {/* Section for present pupils */}
           {presentDays.length === 0 ? (
             <>
+              <Text fontSize={"sm"} color={"#747474"} mt={"1rem"}>
+                Present
+              </Text>
               <Text my={"1rem"} color={"#747474"}>
                 ⚠️ Your child has not been in school this week.
               </Text>
