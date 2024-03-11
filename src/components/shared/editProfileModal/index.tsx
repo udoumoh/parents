@@ -11,7 +11,6 @@ import {
   useDisclosure,
   Avatar,
   Flex,
-  Box,
   useToast,
 } from "@chakra-ui/react";
 import { ImageUpload } from '@/components/imageUpload/ImageUpload';
@@ -46,11 +45,11 @@ const EditProfileModal: FC<EditProfileModalProps> = ({isOpen, onOpen, onClose}) 
             const response = await updateparent({
               variables: {
                 profileImgUrl: profileUrl,
-                email: parentData?.email,
-                phoneNumber: parentData?.phoneNumber,
-                lastName: parentData?.lastName,
-                middleName: parentData?.middleName,
-                firstName: parentData?.firstName,
+                email: "",
+                phoneNumber: "",
+                lastName: "",
+                middleName: "",
+                firstName: "",
               },
             });
             console.log(response);
