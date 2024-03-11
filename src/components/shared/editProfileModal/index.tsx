@@ -82,7 +82,8 @@ const EditProfileModal: FC<EditProfileModalProps> = ({
           isClosable: true,
           status: "success",
         });
-        onClose()
+        onClose();
+        window.location.reload()
       }
     } catch (err: any) {
       console.log(err.message);

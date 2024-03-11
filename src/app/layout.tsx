@@ -8,6 +8,7 @@ import Loading from "./loading";
 
 const client = new ApolloClient({
   uri: "https://api.greynote.app/graphql",
+  // uri: "http://localhost:4000/graphql",
   credentials: "include",
   cache: new InMemoryCache(),
 });
