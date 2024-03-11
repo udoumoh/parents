@@ -1,5 +1,6 @@
 import { FC } from 'react'
 import ChatSidenav from '@/components/navigation/chatSidenav';
+import { Flex } from '@chakra-ui/react';
 
 interface layoutProps {
   children: React.ReactNode;
@@ -7,7 +8,7 @@ interface layoutProps {
 
 const layout: FC<layoutProps> = ({children}) => {
   return (
-    <ChatSidenav>{children}</ChatSidenav>
+    <Flex w="full">{children}</Flex>
   )
 }
 

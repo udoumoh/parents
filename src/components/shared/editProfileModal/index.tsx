@@ -65,6 +65,20 @@ const EditProfileModal: FC<EditProfileModalProps> = ({isOpen, onOpen, onClose}) 
                   status: "error",
                 });
             }
+            if(response.data.updateParentDetails === true){
+              toast({
+                title: "Profile Picture Updated",
+                description:
+                  "You have successfully updated your profile picture",
+                position: "bottom",
+                variant: "left-accent",
+                isClosable: true,
+                status: "success",
+              });
+              setTimeout(() => {
+                window.location.reload();
+              }, 1000)
+          }
         } catch(err: any) {
             console.log(err.message)
         }
@@ -98,7 +112,7 @@ const EditProfileModal: FC<EditProfileModalProps> = ({isOpen, onOpen, onClose}) 
               backgroundColor={"#007C7B"}
               color={"#fff"}
               fontWeight={"400"}
-              onClick={()=>handleProfileUpdate}
+              onClick={handleProfileUpdate}
               _hover={{ backgroundColor: "#099C9B" }}
             >
               Update profile image
