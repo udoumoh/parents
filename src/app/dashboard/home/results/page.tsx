@@ -108,7 +108,7 @@ const Results: FC<ResultsProps> = ({}) => {
           console.log("failed to fetch results data");
         }
         if (response) {
-          const parsedResultsData = response?.studentResult?.map(
+          const parsedResultsData = response?.studentResult?.results?.map(
             (item: any) => ({
               dateGenerated: formatDate(item?.createdAt || ""),
               term: item.academicTerm || "",
