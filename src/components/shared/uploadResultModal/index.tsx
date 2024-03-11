@@ -452,8 +452,8 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
                             _hover={{ backgroundColor: "#099C9B" }}
                           >
                             {file.length > 1
-                              ? "Document Uploaded"
-                              : "Upload proof of payment"}
+                              ? "File Uploaded"
+                              : "Upload file"}
                           </Button>
                           <Text fontSize={"sm"} color={"#007C7B"} mt={"0.5rem"}>
                             File name: {fileName}
