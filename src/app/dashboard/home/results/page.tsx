@@ -167,10 +167,11 @@ const Results: FC<ResultsProps> = ({}) => {
             value={resultsType}
             onChange={handleResultsTypeChange}
             size={"md"}
-            border={"2px solid #747474"}
+            border={"2px solid #007C7B"}
             fontSize={"sm"}
             color={"#747474"}
             rounded={"md"}
+            _hover={{cursor:"pointer"}}
           >
             <option value="uploaded">Uploaded</option>
             <option value="generated">Generated</option>
@@ -197,7 +198,7 @@ const Results: FC<ResultsProps> = ({}) => {
 
       <Box>
         <Text mb={"1rem"}>Most Recent</Text>
-        
+
         {currentResult.length === 0 ? (
           <>
             <Text fontSize={"xl"}>
