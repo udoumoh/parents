@@ -158,9 +158,6 @@ mutation RegisterParent($folder: String!, $options: parentRegInput!) {
             facebookUrl
             twitterUrl
             linkedinUrl
-            accountName
-            accountNumber
-            bankName
             logoImgUrl
             bannerImgUrl
             license
@@ -186,45 +183,6 @@ mutation RegisterParent($folder: String!, $options: parentRegInput!) {
             email
             profileImgUrl
             role
-            accountOfficer {
-              id
-              userId
-              isDisabled
-              isSuper
-              isDirector
-              createdAt
-              fullName
-              username
-              phoneNumber
-              role
-              status
-              department
-              email
-              profileImgUrl
-              greyAdmin {
-                id
-                isPaid
-                userId
-                folder
-                status
-                plan
-                isReferred
-                isDisabled
-                agreedTo
-                referralCode
-                createdAt
-                firstName
-                middleName
-                lastName
-                phoneNumber
-                email
-                profileImgUrl
-                role
-                school
-                schoolImg
-                statusCode
-              }
-            }
             school
             schoolImg
             statusCode
