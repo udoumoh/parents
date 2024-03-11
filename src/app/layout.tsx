@@ -1,10 +1,13 @@
 "use client";
 import "./globals.css";
 import UserApiProvider from "@/hooks/UserContext";
+import { Mulish } from "next/font/google";
 import { Providers } from "./providers";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 import "./globals.css";
 import Loading from "./loading";
+
+const mulish = Mulish({ subsets: ["cyrillic"] });
 
 const client = new ApolloClient({
   uri: "https://api.greynote.app/graphql",
@@ -23,7 +26,7 @@ export default function RootLayout({
       <head>
         <link rel="icon" href="/images/greylightBordered.svg" />
       </head>
-      <body>
+      <body className={mulish.className}>
         <ApolloProvider client={client}>
           <Providers>
             {typeof window === "undefined" ? (
