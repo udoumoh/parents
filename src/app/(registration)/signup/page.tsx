@@ -377,7 +377,7 @@ const Page: FC<pageProps> = ({}) => {
                         Create your account
                       </Text>
                       <Box
-                        border={"1px solid #D5D5D5"}
+                        border={"1px solid #005D5D"}
                         px={{ base: "1rem", lg: "2rem" }}
                         py={"4rem"}
                         rounded={"xl"}
@@ -551,6 +551,7 @@ const Page: FC<pageProps> = ({}) => {
                             mb={"1rem"}
                             color={"#fff"}
                             backgroundColor={"#007C7B"}
+                            _hover={{backgroundColor:"#005D5D80"}}
                             isLoading={props.isSubmitting}
                             //   isDisabled={!props.values.firstName ? true : false}
                           >
