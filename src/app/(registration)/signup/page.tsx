@@ -333,7 +333,8 @@ const Page: FC<pageProps> = ({}) => {
         alignItems={"center"}
         gap={5}
         py={{ base: "2rem", lg: "0" }}
-        mx={{base:"1rem", md:"2rem"}}
+        mx={{base:"0.5rem", md:"2rem"}}
+        minW={{base:"auto", md:"600px"}}
       >
         <Image
           src="/images/greylightBordered.svg"
@@ -371,6 +372,7 @@ const Page: FC<pageProps> = ({}) => {
                         fontWeight={"700"}
                         textAlign={"center"}
                         mb={"2rem"}
+                        color="#005D5D"
                       >
                         Create your account
                       </Text>
@@ -392,15 +394,13 @@ const Page: FC<pageProps> = ({}) => {
                                 mb="1.5rem"
                               >
                                 <Box w={"full"}>
-                                  <FormLabel color={"#999999"}>
+                                  <FormLabel color={"#005D5D"}>
                                     First Name
                                   </FormLabel>
                                   <Input
-                                    border={"1px solid #D5D5D5"}
+                                    border={"1px solid #005D5D40"}
                                     {...field}
-                                    py={"1.5rem"}
                                     type="text"
-                                    backgroundColor={"#F5F5F5"}
                                     autoComplete="true"
                                   />
                                   <FormErrorMessage>
@@ -420,15 +420,13 @@ const Page: FC<pageProps> = ({}) => {
                                 mb="1.5rem"
                               >
                                 <Box w={"full"}>
-                                  <FormLabel color={"#999999"}>
+                                  <FormLabel color={"#005D5D"}>
                                     Last Name
                                   </FormLabel>
                                   <Input
-                                    border={"1px solid #D5D5D5"}
+                                    border={"1px solid #005D5D40"}
                                     {...field}
-                                    py={"1.5rem"}
                                     type="text"
-                                    backgroundColor={"#F5F5F5"}
                                     autoComplete="true"
                                   />
                                   <FormErrorMessage>
@@ -444,15 +442,13 @@ const Page: FC<pageProps> = ({}) => {
                           {({ field, form }: any) => (
                             <FormControl mb="1.5rem">
                               <Box w={"full"}>
-                                <FormLabel color={"#999999"}>
+                                <FormLabel color={"#005D5D"}>
                                   Middle Name(Optional)
                                 </FormLabel>
                                 <Input
-                                  border={"1px solid #D5D5D5"}
+                                  border={"1px solid #005D5D40"}
                                   {...field}
-                                  py={"1.5rem"}
                                   type="text"
-                                  backgroundColor={"#F5F5F5"}
                                   autoComplete="true"
                                 />
                               </Box>
@@ -470,13 +466,11 @@ const Page: FC<pageProps> = ({}) => {
                                 mb="1.5rem"
                               >
                                 <Box w={"full"}>
-                                  <FormLabel color={"#999999"}>Email</FormLabel>
+                                  <FormLabel color={"#005D5D"}>Email</FormLabel>
                                   <Input
-                                    border={"1px solid #D5D5D5"}
+                                    border={"1px solid #005D5D40"}
                                     {...field}
-                                    py={"1.5rem"}
-                                    type="email"
-                                    backgroundColor={"#F5F5F5"}
+                                    type="text"
                                     autoComplete="true"
                                   />
                                   <FormErrorMessage>
@@ -497,14 +491,13 @@ const Page: FC<pageProps> = ({}) => {
                                 mb="1.5rem"
                               >
                                 <Box w={"full"}>
-                                  <FormLabel color={"#999999"}>
+                                  <FormLabel color={"#005D5D"}>
                                     Phone Number
                                   </FormLabel>
                                   <Input
-                                    border={"1px solid #D5D5D5"}
+                                    border={"1px solid #005D5D40"}
                                     {...field}
-                                    py={"1.5rem"}
-                                    backgroundColor={"#F5F5F5"}
+                                    type="text"
                                     autoComplete="true"
                                   />
                                   <FormErrorMessage>
@@ -525,15 +518,13 @@ const Page: FC<pageProps> = ({}) => {
                               mb="1.5rem"
                             >
                               <Box w={"full"}>
-                                <FormLabel color={"#999999"}>
+                                <FormLabel color={"#005D5D"}>
                                   Password
                                 </FormLabel>
                                 <Input
-                                  border={"1px solid #D5D5D5"}
+                                  border={"1px solid #005D5D40"}
                                   {...field}
-                                  py={"1.5rem"}
-                                  type="password"
-                                  backgroundColor={"#F5F5F5"}
+                                  type="text"
                                   autoComplete="true"
                                 />
                                 <FormErrorMessage>
@@ -571,7 +562,8 @@ const Page: FC<pageProps> = ({}) => {
                             fontSize={{ base: "xs", lg: "sm" }}
                             textAlign={"center"}
                           >
-                            By continuing, you agree to our Terms of use
+                            By continuing, you agree to our{" "}
+                            <Link color={'#005D5D'}>Terms of use</Link>
                           </Text>
 
                           <Text
