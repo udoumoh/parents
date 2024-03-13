@@ -297,6 +297,18 @@ const Page: FC<PageProps> = ({}) => {
               mt={"1rem"}
               maxH={"500px"}
               overflowY={"auto"}
+              sx={{
+                "&::-webkit-scrollbar": {
+                  width: "6px",
+                  borderRadius: "6px",
+                  backgroundColor: "#007C7B20",
+                },
+                "&::-webkit-scrollbar-thumb": {
+                  backgroundColor: "#007C7B80",
+                  borderRadius: "8px",
+                },
+              }}
+              border={"1px solid #007C7B"}
             >
               {filteredSearchData.length === 0 ? (
                 <Text textAlign={"center"} fontSize={"xl"} color={"#484848"}>
@@ -335,7 +347,8 @@ const Page: FC<PageProps> = ({}) => {
                     {`${selectedStudent.name}`}
                   </Text>
                   <Text fontSize={"sm"} color={"#AAAAAA"} fontWeight={"600"}>
-                    {`${selectedStudent.age} years old`} • {selectedStudent.gender} • {selectedStudent.className}
+                    {`${selectedStudent.age} years old`} •{" "}
+                    {selectedStudent.gender} • {selectedStudent.className}
                   </Text>
                 </Box>
               </Flex>
