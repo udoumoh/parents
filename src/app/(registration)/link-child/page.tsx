@@ -177,7 +177,7 @@ query GetStudent {
 }`);
 
 const Page: FC<PageProps> = ({}) => {
-  const router = useRouter()
+  const router = useRouter();
   const {
     isOpen: isModalOpen,
     onOpen: onModalOpen,
@@ -309,6 +309,36 @@ const Page: FC<PageProps> = ({}) => {
                   </Box>
                 ))
               )}
+            </Box>
+          )}
+
+          {selectedStudent && (
+            <Box
+              mt={"2rem"}
+              display={"flex"}
+              alignItems={"center"}
+              w={"full"}
+              rounded={"md"}
+              py={"0.5rem"}
+              px={"1rem"}
+              mb={"0.4rem"}
+              backgroundColor="#3F999830"
+            >
+              <Flex gap={3} alignItems={"center"}>
+                <Avatar
+                  size={"md"}
+                  src={selectedStudent.profileImageUrl}
+                  pointerEvents={"none"}
+                />
+                <Box lineHeight={"20px"}>
+                  <Text fontWeight={"700"} fontSize={"lg"}>
+                    {`${selectedStudent.name}`}
+                  </Text>
+                  <Text fontSize={"sm"} color={"#AAAAAA"} fontWeight={"600"}>
+                    {`${selectedStudent.age} years old`} • {selectedStudent.gender} • {selectedStudent.className}
+                  </Text>
+                </Box>
+              </Flex>
             </Box>
           )}
 
