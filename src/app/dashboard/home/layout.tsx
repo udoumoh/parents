@@ -1,36 +1,28 @@
 "use client";
 import { FC, useEffect } from "react";
-import SidebarWithHeader from "@/components/navigation/secondaryNav";
 import {
-  Center,
   Box,
   Flex,
-  Image,
-  useToast,
   Modal,
   ModalOverlay,
   ModalContent,
   ModalHeader,
   ModalFooter,
   ModalBody,
-  ModalCloseButton,
   Text,
-  Button,
   useDisclosure,
   Avatar,
 } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
 import { useUserAPI } from "@/hooks/UserContext";
-import { useQuery } from "@apollo/client";
-import { GET_PARENT } from "@/gql/queries";
 import { capitalizeFirstLetter } from "@/helpers/capitalizeFirstLetter";
+import SidebarWithHeader from "@/components/navigation/secondaryNav";
 
 interface LayoutProps {
   children: React.ReactNode;
 }
 
 const Layout: FC<LayoutProps> = ({ children }) => {
-  const { data: parents, loading } = useQuery(GET_PARENT);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { parentData, childData, setLocalstorageId, currentId } = useUserAPI();
   const router = useRouter();

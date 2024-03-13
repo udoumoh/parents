@@ -11,29 +11,17 @@ import {
   useDisclosure,
   BoxProps,
   FlexProps,
-  Image,
-  Button,
-  Avatar,
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbLink,
-  CloseButton,
   Icon,
-  Popover,
-  PopoverTrigger,
-  PopoverContent,
-  PopoverBody,
 } from "@chakra-ui/react";
 import { HiOutlineHome } from "react-icons/hi";
-import { AiOutlinePlus } from "react-icons/ai";
+import { IoReceipt } from "react-icons/io5";
 import { CiGrid42 } from "react-icons/ci";
-import { BsThreeDots } from "react-icons/bs";
 import { TbFile } from "react-icons/tb";
 import { BiChevronRight } from "react-icons/bi";
 import { IconType } from "react-icons";
-import { useUserAPI } from "@/hooks/UserContext";
-import { UserChildren } from "@/hooks/UserContext";
-import SearchStudentModal from "@/components/shared/searchStudentModal";
 import LinkedStudentsPopover from "@/components/shared/linkedStudentsPopover";
 
 interface NavItemProps extends FlexProps {
@@ -59,6 +47,7 @@ interface SidebarWithHeader {
 const LinkItems: Array<LinkItemProps> = [
   { name: "Overview", icon: CiGrid42, url: "/dashboard/home/overview" },
   { name: "Academic Results", icon: TbFile, url: "/dashboard/home/results" },
+  { name: "Invoice", icon: IoReceipt, url: "/dashboard/home/invoice" },
 ];
 
 const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
