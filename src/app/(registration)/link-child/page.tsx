@@ -308,7 +308,6 @@ const Page: FC<PageProps> = ({}) => {
                   borderRadius: "8px",
                 },
               }}
-              border={"1px solid #007C7B"}
             >
               {filteredSearchData.length === 0 ? (
                 <Text textAlign={"center"} fontSize={"xl"} color={"#484848"}>
