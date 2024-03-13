@@ -194,20 +194,10 @@ const Page: FC<PageProps> = ({}) => {
       id: "",
     },
   ]);
-  const [selectedStudent, setSelectedStudent] = useState<Student[]>([]);
+  const [selectedStudent, setSelectedStudent] = useState<Student | undefined>();
   const { data: search } = useQuery(GET_STUDENTS);
   const handleSearchChange = (e: any) => {
     setSearchInput(e.target.value);
-  };
-
-  const handleSelectedStudent = (student: any) => {
-    const newData = [...selectedStudent, student];
-    setSelectedStudent(newData);
-  };
-
-  const handleDelete = (item: any) => {
-    const newData = selectedStudent.filter((student, index) => index !== item);
-    setSelectedStudent(newData);
   };
 
   useEffect(() => {
@@ -312,54 +302,13 @@ const Page: FC<PageProps> = ({}) => {
                 </Text>
               ) : (
                 filteredSearchData?.map((item, index) => (
-                  <Box key={index} onClick={() => handleSelectedStudent(item)}>
+                  <Box key={index} onClick={() => setSelectedStudent(item)} maxH={'600px'} overflowY={'auto'}>
                     <SearchResultItem student={item} key={index} />
                   </Box>
                 ))
               )}
             </Box>
           )}
-
-          {selectedStudent.map((item, index) => {
-            return (
-              <Box
-                key={index}
-                mt={"2rem"}
-                display={"flex"}
-                justifyContent={"space-between"}
-                alignItems={"center"}
-                w={"full"}
-                rounded={"md"}
-                py={"0.5rem"}
-                px={"1rem"}
-                mb={"0.4rem"}
-                backgroundColor="#3F999830"
-              >
-                <Flex gap={3} alignItems={"center"}>
-                  <Avatar
-                    size={"md"}
-                    src={item.profileImageUrl}
-                    pointerEvents={"none"}
-                  />
-                  <Box lineHeight={"20px"}>
-                    <Text fontWeight={"700"} fontSize={"lg"}>
-                      {`${item.name}`}
-                    </Text>
-                    <Text fontSize={"sm"} color={"#AAAAAA"} fontWeight={"600"}>
-                      {`${item.age} years old`} • {item.gender} •{" "}
-                      {item.className}
-                    </Text>
-                  </Box>
-                </Flex>
-                <Button
-                  backgroundColor={"transparent"}
-                  onClick={() => handleDelete(index)}
-                >
-                  <Icon as={IoMdClose} color={"#000"} boxSize={5} />
-                </Button>
-              </Box>
-            );
-          })}
 
           <Button
             mt="6rem"
@@ -387,14 +336,23 @@ const Page: FC<PageProps> = ({}) => {
             </Text>
           </Button>
 
-          <LinkRequestModal
-            student={selectedStudent[0]}
-            isOpen={isModalOpen}
-            onOpen={onModalOpen}
-            onClose={onModalClose}
-          />
+          {selectedStudent && (
+            <LinkRequestModal
+              student={selectedStudent}
+              isOpen={isModalOpen}
+              onOpen={onModalOpen}
+              onClose={onModalClose}
+            />
+          )}
 
-          <Link color={"#B5B5B5"} fontSize={"xl"} mt={"2rem"} onClick={() => {router.push('/dashboard')}}>
+          <Link
+            color={"#B5B5B5"}
+            fontSize={"xl"}
+            mt={"2rem"}
+            onClick={() => {
+              router.push("/dashboard");
+            }}
+          >
             Skip
           </Link>
         </Box>

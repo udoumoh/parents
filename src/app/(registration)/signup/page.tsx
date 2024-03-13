@@ -553,7 +553,6 @@ const Page: FC<pageProps> = ({}) => {
                             backgroundColor={"#007C7B"}
                             _hover={{backgroundColor:"#005D5D80"}}
                             isLoading={props.isSubmitting}
-                            //   isDisabled={!props.values.firstName ? true : false}
                           >
                             Continue
                           </Button>
