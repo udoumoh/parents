@@ -292,39 +292,45 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
                 rounded={"lg"}
                 display={isHidden ? "none" : "block"}
               >
-                {filteredSearchData?.map((item: any, index: number) => {
-                  return (
-                    <Box
-                      key={index}
-                      display={"flex"}
-                      alignItems={"center"}
-                      gap={3}
-                      p={"0.5rem"}
-                      rounded={"md"}
-                      _hover={{
-                        backgroundColor: "#3F999830",
-                        cursor: "pointer",
-                        transitionDuration: "0.2s",
-                      }}
-                      onClick={() => {
-                        setSelectedSchool({
-                          schoolName: item?.schoolname,
-                          id: item?.schoolId,
-                          logo: item?.schoollogo,
-                        });
-                        setIsHidden(!isHidden);
-                      }}
-                    >
-                      <Avatar
-                        src={item.schoollogo}
-                        size={{ base: "xs", lg: "lg" }}
-                      />
-                      <Text fontSize={{ base: "xs", lg: "md" }} py={"0.5rem"}>
-                        {item.schoolname}
-                      </Text>
-                    </Box>
-                  );
-                })}
+                {filteredSearchData.length === 0 ? (
+                  <Text textAlign={"center"} fontSize={"lg"} color={"#484848"}>
+                    No results match your search criteria
+                  </Text>
+                ) : (
+                  filteredSearchData?.map((item: any, index: number) => {
+                    return (
+                      <Box
+                        key={index}
+                        display={"flex"}
+                        alignItems={"center"}
+                        gap={3}
+                        p={"0.5rem"}
+                        rounded={"md"}
+                        _hover={{
+                          backgroundColor: "#3F999830",
+                          cursor: "pointer",
+                          transitionDuration: "0.2s",
+                        }}
+                        onClick={() => {
+                          setSelectedSchool({
+                            schoolName: item?.schoolname,
+                            id: item?.schoolId,
+                            logo: item?.schoollogo,
+                          });
+                          setIsHidden(!isHidden);
+                        }}
+                      >
+                        <Avatar
+                          src={item.schoollogo}
+                          size={{ base: "xs", lg: "lg" }}
+                        />
+                        <Text fontSize={{ base: "xs", lg: "md" }} py={"0.5rem"}>
+                          {item.schoolname}
+                        </Text>
+                      </Box>
+                    );
+                  })
+                )}
               </Box>
             )}
             <Box
@@ -451,9 +457,7 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
                             onClick={onFileOpen}
                             _hover={{ backgroundColor: "#099C9B" }}
                           >
-                            {file.length > 1
-                              ? "File Uploaded"
-                              : "Upload file"}
+                            {file.length > 1 ? "File Uploaded" : "Upload file"}
                           </Button>
                           <Text fontSize={"sm"} color={"#007C7B"} mt={"0.5rem"}>
                             File name: {fileName}
