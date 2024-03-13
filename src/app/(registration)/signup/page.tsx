@@ -222,6 +222,8 @@ const Page: FC<pageProps> = ({}) => {
                                     border={"1px solid #005D5D40"}
                                     {...field}
                                     type="text"
+                                    focusBorderColor="#005D5D95"
+                                    errorBorderColor="#005D5D40"
                                     autoComplete="true"
                                   />
                                   <FormErrorMessage>
@@ -249,6 +251,8 @@ const Page: FC<pageProps> = ({}) => {
                                     {...field}
                                     type="text"
                                     autoComplete="true"
+                                    focusBorderColor="#005D5D95"
+                                    errorBorderColor="#005D5D40"
                                   />
                                   <FormErrorMessage>
                                     {form.errors.lastName}
@@ -260,7 +264,7 @@ const Page: FC<pageProps> = ({}) => {
                         </Flex>
 
                         <Field name="middleName">
-                          {({ field, form }: any) => (
+                          {({ field }: any) => (
                             <FormControl mb="1.5rem">
                               <Box w={"full"}>
                                 <FormLabel color={"#005D5D"} fontSize={"sm"}>
@@ -270,6 +274,8 @@ const Page: FC<pageProps> = ({}) => {
                                   border={"1px solid #005D5D40"}
                                   {...field}
                                   type="text"
+                                  focusBorderColor="#005D5D95"
+                                  errorBorderColor="#005D5D40"
                                   autoComplete="true"
                                 />
                               </Box>
@@ -295,6 +301,8 @@ const Page: FC<pageProps> = ({}) => {
                                     {...field}
                                     type="text"
                                     autoComplete="true"
+                                    focusBorderColor="#005D5D95"
+                                    errorBorderColor="#005D5D40"
                                   />
                                   <FormErrorMessage>
                                     {form.errors.email}
@@ -322,6 +330,8 @@ const Page: FC<pageProps> = ({}) => {
                                     {...field}
                                     type="number"
                                     autoComplete="true"
+                                    focusBorderColor="#005D5D95"
+                                    errorBorderColor="#005D5D40"
                                   />
                                   <FormErrorMessage>
                                     {form.errors.phoneNumber}
@@ -347,9 +357,10 @@ const Page: FC<pageProps> = ({}) => {
                                 <InputGroup>
                                   <Input
                                     type={show ? "text" : "password"}
-                                    _focus={{ border: "1px solid #005D5D80" }}
                                     border={"1px solid #005D5D40"}
                                     {...field}
+                                    focusBorderColor="#005D5D95"
+                                    errorBorderColor="#005D5D40"
                                   />
                                   <InputRightElement width="4.5rem">
                                     <Icon
@@ -387,7 +398,7 @@ const Page: FC<pageProps> = ({}) => {
                             mb={"1rem"}
                             color={"#fff"}
                             backgroundColor={"#007C7B"}
-                            _hover={{ backgroundColor: "#005D5D80" }}
+                            _hover={{ backgroundColor: "#005D5D95" }}
                             isLoading={props.isSubmitting}
                           >
                             Continue
@@ -448,7 +459,7 @@ const Page: FC<pageProps> = ({}) => {
                             backgroundColor={"#007C7B"}
                             color={"#fff"}
                             fontWeight={"400"}
-                            w={'auto'}
+                            w={"auto"}
                             onClick={() => {
                               onOpen();
                             }}

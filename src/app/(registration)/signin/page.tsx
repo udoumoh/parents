@@ -125,7 +125,7 @@ const Signin: FC<pageProps> = ({}) => {
         gap={10}
         p={5}
       >
-        <Image src="/images/greylightBordered.svg" alt="logo"/>
+        <Image src="/images/greylightBordered.svg" alt="logo" />
         <Box
           backgroundColor={"#fff"}
           minW={{ base: "auto", md: "500px" }}
@@ -158,7 +158,7 @@ const Signin: FC<pageProps> = ({}) => {
                 type="email"
                 placeholder="Enter your email"
                 pl={"2.5rem"}
-                _focus={{ border: "1px solid #005D5D80" }}
+                focusBorderColor="#005D5D80"
                 border={"1px solid #005D5D30"}
               />
             </InputGroup>
@@ -172,7 +172,7 @@ const Signin: FC<pageProps> = ({}) => {
                 type={show ? "text" : "password"}
                 placeholder="Enter your password"
                 pl={"2.5rem"}
-                _focus={{ border: "1px solid #005D5D80" }}
+                focusBorderColor="#005D5D80"
                 border={"1px solid #005D5D30"}
               />
               <InputRightElement width="4.5rem">
