@@ -316,7 +316,7 @@ const Page: FC<PageProps> = ({}) => {
                 </Text>
               ) : (
                 filteredSearchData?.map((item, index) => (
-                  <Box key={index} onClick={() => setSelectedStudent(item)}>
+                  <Box key={index} onClick={()=>{setSelectedStudent(item)}}>
                     <SearchResultItem student={item} key={index} />
                   </Box>
                 ))
