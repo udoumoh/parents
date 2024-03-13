@@ -295,6 +295,8 @@ const Page: FC<PageProps> = ({}) => {
               flexDir={"column"}
               justifyContent={"center"}
               mt={"1rem"}
+              maxH={"500px"}
+              overflowY={"auto"}
             >
               {filteredSearchData.length === 0 ? (
                 <Text textAlign={"center"} fontSize={"xl"} color={"#484848"}>
@@ -302,7 +304,7 @@ const Page: FC<PageProps> = ({}) => {
                 </Text>
               ) : (
                 filteredSearchData?.map((item, index) => (
-                  <Box key={index} onClick={() => setSelectedStudent(item)} maxH={'600px'} overflowY={'auto'}>
+                  <Box key={index} onClick={() => setSelectedStudent(item)}>
                     <SearchResultItem student={item} key={index} />
                   </Box>
                 ))
