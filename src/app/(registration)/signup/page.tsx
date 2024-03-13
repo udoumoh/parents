@@ -18,202 +18,19 @@ import {
   Avatar,
   useDisclosure,
   useToast,
+  InputGroup,
+  InputRightElement,
+  Icon,
 } from "@chakra-ui/react";
 import * as Yup from "yup";
 import { Formik, Form, Field } from "formik";
 import { useRouter } from "next/navigation";
 import { ImageUpload } from "@/components/imageUpload/ImageUpload";
 import { gql, useMutation } from "@apollo/client";
+import { REGISTER_PARENT } from "@/gql/mutations";
+import { IoMdEyeOff, IoMdEye } from "react-icons/io";
 
 interface pageProps {}
-
-const REGISTER_PARENT = gql(`
-mutation RegisterParent($folder: String!, $options: parentRegInput!) {
-  registerParent(folder: $folder, options: $options) {
-    errors {
-      field
-      message
-    }
-    parent {
-      id
-      userId
-      status
-      isPaid
-      isVerified
-      isReferred
-      agreedTo
-      createdAt
-      firstName
-      middleName
-      lastName
-      parentRole
-      phoneNumber
-      email
-      role
-      folder
-      isDisabled
-      profileImgUrl
-      children {
-        id
-        createdAt
-        transferedAt
-        firstName
-        middleName
-        lastName
-        gender
-        ageInput
-        folder
-        isOwing
-        isVisible
-        isDuplicate
-        linkedAt
-        linkCount
-        isLinked
-        startDate
-        endDate
-        birthDate
-        isArchived
-        profileImgUrl
-        classroom {
-          classroom {
-            id
-            isValid
-            wasEdited
-            createdAt
-            updatedAt
-            classId
-            className
-            classSubjects
-            description
-            isDisabled
-            students {
-              id
-              createdAt
-              transferedAt
-              firstName
-              middleName
-              lastName
-              gender
-              ageInput
-              folder
-              isOwing
-              isVisible
-              isDuplicate
-              linkedAt
-              linkCount
-              isLinked
-              startDate
-              endDate
-              birthDate
-              isArchived
-              profileImgUrl
-              grayId
-              fatherName
-              fatherEmail
-              fatherNumber
-              motherName
-              motherEmail
-              motherNumber
-              homeAddress
-              lgaOrigin
-              state
-            }
-            teacher {
-              id
-              userId
-              createdAt
-              status
-              firstName
-              middleName
-              lastName
-              phoneNumber
-              email
-              role
-              folder
-              isDisabled
-              isVisible
-              profileImgUrl
-            }
-          }
-        }
-        school {
-          school {
-            id
-            createdAt
-            isDisabled
-            isVerified
-            schoolName
-            rcnumber
-            address
-            type
-            lgarea
-            folder
-            state
-            country
-            description
-            phonenumber
-            email
-            websiteUrl
-            instagramUrl
-            facebookUrl
-            twitterUrl
-            linkedinUrl
-            logoImgUrl
-            bannerImgUrl
-            license
-          }
-        }
-        creator {
-          admin {
-            id
-            isPaid
-            userId
-            folder
-            status
-            plan
-            isReferred
-            isDisabled
-            agreedTo
-            referralCode
-            createdAt
-            firstName
-            middleName
-            lastName
-            phoneNumber
-            email
-            profileImgUrl
-            role
-            school
-            schoolImg
-            statusCode
-          }
-        }
-        studentCase {
-          grayCase {
-            id
-            createdAt
-            updatedAt
-            category
-            owingAmount
-            note
-            isActive
-            wasEdited
-          }
-        }
-        grayId
-        fatherName
-        fatherEmail
-        fatherNumber
-        motherName
-        motherEmail
-        motherNumber
-        homeAddress
-        lgaOrigin
-        state
-      }
-    }
-  }
-}`);
 
 const Page: FC<pageProps> = ({}) => {
   const toast = useToast();
@@ -225,6 +42,7 @@ const Page: FC<pageProps> = ({}) => {
   const [folder, setFolder] = useState<string>("");
   const [signup] = useMutation(REGISTER_PARENT);
   const [consent, setConsent] = useState(false);
+  const [show, setShow] = useState(false);
 
   const handleImageUpload = (
     uploadedImageUrl: string,
@@ -325,6 +143,8 @@ const Page: FC<pageProps> = ({}) => {
       flexDir={"column"}
       justifyContent={"center"}
       alignItems={"center"}
+      backgroundColor={"#005D5D20"}
+      backdropBlur={"30px"}
     >
       <Box
         display={"flex"}
@@ -333,8 +153,8 @@ const Page: FC<pageProps> = ({}) => {
         alignItems={"center"}
         gap={5}
         py={{ base: "2rem", lg: "0" }}
-        mx={{base:"0.5rem", md:"2rem"}}
-        minW={{base:"auto", md:"600px"}}
+        mx={{ base: "0.5rem", md: "2rem" }}
+        minW={{ base: "auto", md: "600px" }}
       >
         <Image
           src="/images/greylightBordered.svg"
@@ -367,22 +187,23 @@ const Page: FC<pageProps> = ({}) => {
                 >
                   <TabPanels>
                     <TabPanel p={0}>
-                      <Text
-                        fontSize={{ base: "xl", lg: "3xl" }}
-                        fontWeight={"700"}
-                        textAlign={"center"}
-                        mb={"2rem"}
-                        color="#005D5D"
-                      >
-                        Create your account
-                      </Text>
                       <Box
-                        border={"1px solid #005D5D"}
+                        backgroundColor={"#FFFFFF"}
                         px={{ base: "1rem", lg: "2rem" }}
-                        py={"4rem"}
-                        rounded={"xl"}
+                        py={"2rem"}
+                        rounded={"md"}
                         mx={"3rem"}
                       >
+                        <Text
+                          fontSize={{ base: "xl", lg: "3xl" }}
+                          fontWeight={"700"}
+                          textAlign={"center"}
+                          mb={"2rem"}
+                          color="#005D5D"
+                        >
+                          Create your account
+                        </Text>
+
                         <Flex gap={5} display={{ base: "column", lg: "flex" }}>
                           <Field name="firstName">
                             {({ field, form }: any) => (
@@ -394,7 +215,7 @@ const Page: FC<pageProps> = ({}) => {
                                 mb="1.5rem"
                               >
                                 <Box w={"full"}>
-                                  <FormLabel color={"#005D5D"}>
+                                  <FormLabel color={"#005D5D"} fontSize={"sm"}>
                                     First Name
                                   </FormLabel>
                                   <Input
@@ -420,7 +241,7 @@ const Page: FC<pageProps> = ({}) => {
                                 mb="1.5rem"
                               >
                                 <Box w={"full"}>
-                                  <FormLabel color={"#005D5D"}>
+                                  <FormLabel color={"#005D5D"} fontSize={"sm"}>
                                     Last Name
                                   </FormLabel>
                                   <Input
@@ -442,7 +263,7 @@ const Page: FC<pageProps> = ({}) => {
                           {({ field, form }: any) => (
                             <FormControl mb="1.5rem">
                               <Box w={"full"}>
-                                <FormLabel color={"#005D5D"}>
+                                <FormLabel color={"#005D5D"} fontSize={"sm"}>
                                   Middle Name(Optional)
                                 </FormLabel>
                                 <Input
@@ -466,7 +287,9 @@ const Page: FC<pageProps> = ({}) => {
                                 mb="1.5rem"
                               >
                                 <Box w={"full"}>
-                                  <FormLabel color={"#005D5D"}>Email</FormLabel>
+                                  <FormLabel color={"#005D5D"} fontSize={"sm"}>
+                                    Email
+                                  </FormLabel>
                                   <Input
                                     border={"1px solid #005D5D40"}
                                     {...field}
@@ -491,13 +314,13 @@ const Page: FC<pageProps> = ({}) => {
                                 mb="1.5rem"
                               >
                                 <Box w={"full"}>
-                                  <FormLabel color={"#005D5D"}>
+                                  <FormLabel color={"#005D5D"} fontSize={"sm"}>
                                     Phone Number
                                   </FormLabel>
                                   <Input
                                     border={"1px solid #005D5D40"}
                                     {...field}
-                                    type="text"
+                                    type="number"
                                     autoComplete="true"
                                   />
                                   <FormErrorMessage>
@@ -518,15 +341,28 @@ const Page: FC<pageProps> = ({}) => {
                               mb="1.5rem"
                             >
                               <Box w={"full"}>
-                                <FormLabel color={"#005D5D"}>
+                                <FormLabel color={"#005D5D"} fontSize={"sm"}>
                                   Password
                                 </FormLabel>
-                                <Input
-                                  border={"1px solid #005D5D40"}
-                                  {...field}
-                                  type="text"
-                                  autoComplete="true"
-                                />
+                                <InputGroup>
+                                  <Input
+                                    type={show ? "text" : "password"}
+                                    _focus={{ border: "1px solid #005D5D80" }}
+                                    border={"1px solid #005D5D40"}
+                                    {...field}
+                                  />
+                                  <InputRightElement width="4.5rem">
+                                    <Icon
+                                      _hover={{ cursor: "pointer" }}
+                                      boxSize={5}
+                                      as={show ? IoMdEyeOff : IoMdEye}
+                                      onClick={() => {
+                                        setShow(!show);
+                                      }}
+                                      color={"#005D5D"}
+                                    />
+                                  </InputRightElement>
+                                </InputGroup>
                                 <FormErrorMessage>
                                   {form.errors.password}
                                 </FormErrorMessage>
@@ -551,7 +387,7 @@ const Page: FC<pageProps> = ({}) => {
                             mb={"1rem"}
                             color={"#fff"}
                             backgroundColor={"#007C7B"}
-                            _hover={{backgroundColor:"#005D5D80"}}
+                            _hover={{ backgroundColor: "#005D5D80" }}
                             isLoading={props.isSubmitting}
                           >
                             Continue
@@ -563,7 +399,7 @@ const Page: FC<pageProps> = ({}) => {
                             textAlign={"center"}
                           >
                             By continuing, you agree to our{" "}
-                            <Link color={'#005D5D'}>Terms of use</Link>
+                            <Link color={"#005D5D"}>Terms of use</Link>
                           </Text>
 
                           <Text
@@ -586,33 +422,21 @@ const Page: FC<pageProps> = ({}) => {
                     </TabPanel>
                     <TabPanel p={0}>
                       <Box
-                        display={"flex"}
-                        flexDir={"column"}
-                        alignItems={"center"}
-                        justifyContent={"center"}
-                        gap={7}
+                        backgroundColor={"#FFFFFF"}
+                        px={{ base: "1rem", lg: "2rem" }}
+                        py={"2rem"}
+                        rounded={"md"}
+                        mx={"3rem"}
                       >
-                        <Box
-                          backgroundImage={"/images/loginbg2.png"}
-                          rounded={"xl"}
-                          display={"flex"}
-                          alignItems={"center"}
-                          justifyContent={"center"}
-                          backgroundSize="cover"
-                          backgroundPosition="center"
-                          backgroundRepeat="no-repeat"
-                          w={{ base: "auto", lg: "670px" }}
-                          h={{ base: "auto", lg: "113px" }}
-                          p={{ base: "3rem", lg: "0rem" }}
+                        <Text
+                          fontSize={{ base: "xl", lg: "3xl" }}
+                          fontWeight={"700"}
+                          textAlign={"center"}
+                          mb={"2rem"}
+                          color="#005D5D"
                         >
-                          <Text
-                            fontWeight={"700"}
-                            fontSize={{ base: "xl", lg: "4xl" }}
-                            color={"#fff"}
-                          >
-                            Complete your profile
-                          </Text>
-                        </Box>
+                          Complete your profile
+                        </Text>
                         <Flex justifyContent={"center"} mt={"1rem"}>
                           <Avatar size={"xl"} src={profileUrl} />
                         </Flex>
@@ -620,16 +444,15 @@ const Page: FC<pageProps> = ({}) => {
                         <Flex justifyContent={"center"} mb={"1.5rem"}>
                           <Button
                             mt={4}
-                            fontSize={"xl"}
+                            fontSize={"lg"}
                             backgroundColor={"#007C7B"}
                             color={"#fff"}
                             fontWeight={"400"}
-                            w={"17rem"}
+                            w={'auto'}
                             onClick={() => {
                               onOpen();
                             }}
                             _hover={{ backgroundColor: "#099C9B" }}
-                            py={"1.5rem"}
                           >
                             Add profile picture
                           </Button>
@@ -650,9 +473,9 @@ const Page: FC<pageProps> = ({}) => {
                           justifyContent={"center"}
                         >
                           <Text
-                            color={"#747474"}
+                            color={"gray.600"}
                             fontWeight={"600"}
-                            fontSize={{ base: "md", lg: "xl" }}
+                            fontSize={{ base: "md", lg: "lg" }}
                           >
                             What is your relationship to the student?
                           </Text>
@@ -662,18 +485,16 @@ const Page: FC<pageProps> = ({}) => {
                               // isInvalid={form.errors.name && form.touched.name}
                               >
                                 <Box w={"full"}>
-                                  <FormLabel color={"#999999"} fontSize={"md"}>
+                                  <FormLabel color={"#005D5D"} fontSize={"md"}>
                                     Relationship to student
                                   </FormLabel>
                                   <Select
                                     placeholder=" "
                                     {...field}
-                                    border={"1px solid #747474"}
+                                    border={"1px solid #005D5D"}
                                     size={{ base: "sm", md: "lg" }}
-                                    h={"3rem"}
                                     rounded={"md"}
                                     fontSize={"sm"}
-                                    variant={"filled"}
                                   >
                                     <option value="Mother" color="#fff">
                                       Mother
