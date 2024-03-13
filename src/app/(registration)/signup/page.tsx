@@ -63,15 +63,15 @@ const Page: FC<pageProps> = ({}) => {
       const response = await signup({
         variables: {
           options: {
-            firstName: values.firstName,
-            lastName: values.lastName,
-            middleName: values.middleName,
-            email: values.email,
+            firstName: values.firstName.trim(),
+            lastName: values.lastName.trim(),
+            middleName: values.middleName.trim(),
+            email: values.email.trim(),
             referralCode: "",
-            phoneNumber: values.phoneNumber.toString(),
-            password: values.password,
-            parentRole: values.parentRole,
-            profileImgUrl: profileUrl,
+            phoneNumber: values.phoneNumber.toString().trim(),
+            password: values.password.trim(),
+            parentRole: values.parentRole.trim(),
+            profileImgUrl: profileUrl.trim(),
             agreedTo: consent,
           },
           folder: folder,
