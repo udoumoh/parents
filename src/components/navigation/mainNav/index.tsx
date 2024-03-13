@@ -137,7 +137,6 @@ const DrawerNavLinkItems = {
 
 
 const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
-  const router = useRouter()
   const { profileData } = useUserAPI();
   const pathName = usePathname();
 

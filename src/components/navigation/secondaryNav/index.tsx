@@ -17,10 +17,10 @@ import {
   Icon,
 } from "@chakra-ui/react";
 import { HiOutlineHome } from "react-icons/hi";
-import { IoReceipt } from "react-icons/io5";
-import { CiGrid42 } from "react-icons/ci";
-import { TbFile } from "react-icons/tb";
+import { IoReceiptOutline, IoReceipt  } from "react-icons/io5";
+import { TbFile, TbFileFilled } from "react-icons/tb";
 import { BiChevronRight } from "react-icons/bi";
+import { BsFillGridFill, BsGrid } from "react-icons/bs";
 import { IconType } from "react-icons";
 import LinkedStudentsPopover from "@/components/shared/linkedStudentsPopover";
 
@@ -32,7 +32,8 @@ interface NavItemProps extends FlexProps {
 
 interface LinkItemProps {
   name: string;
-  icon: IconType;
+  iconLight: IconType;
+  iconFill: IconType;
   url: string;
 }
 
@@ -45,9 +46,24 @@ interface SidebarWithHeader {
 }
 
 const LinkItems: Array<LinkItemProps> = [
-  { name: "Overview", icon: CiGrid42, url: "/dashboard/home/overview" },
-  { name: "Academic Results", icon: TbFile, url: "/dashboard/home/results" },
-  { name: "Invoice", icon: IoReceipt, url: "/dashboard/home/invoice" },
+  {
+    name: "Overview",
+    iconLight: BsGrid,
+    iconFill: BsFillGridFill,
+    url: "/dashboard/home/overview",
+  },
+  {
+    name: "Academic Results",
+    iconLight: TbFile,
+    iconFill: TbFileFilled,
+    url: "/dashboard/home/results",
+  },
+  {
+    name: "Invoice",
+    iconLight: IoReceiptOutline,
+    iconFill: IoReceipt,
+    url: "/dashboard/home/invoice",
+  },
 ];
 
 const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
@@ -74,7 +90,7 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
           return (
             <NavItem
               key={index}
-              icon={item.icon}
+              icon={pathName === item.url ? item.iconFill : item.iconLight}
               link={item.url}
               bg={pathName === item.url ? "#005D5D" : ""}
             >
