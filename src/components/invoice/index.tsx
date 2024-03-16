@@ -33,7 +33,7 @@ interface InvoiceProps {}
 interface StudentInvoiceProps {
   term: string;
   year: string;
-  billType: string;
+  category: string;
   amountPaid: string;
   id:number;
   status: string;
@@ -68,7 +68,7 @@ const InvoiceItem: FC<InvoiceItemProps> = ({
           </Text>
         </Box>
         <Text color={"#666666"} mt={"1.3rem"} fontSize={"xs"}>
-          {studentInvoice.billType}
+          {studentInvoice.category}
         </Text>
         <Text color={"#000"} fontSize={"2xl"} fontWeight={"500"}>
           ₦ {formatNumberWithCommas(studentInvoice.amountPaid)}
@@ -85,7 +85,7 @@ const InvoiceItem: FC<InvoiceItemProps> = ({
           isTruncated={true}
           maxW={'180px'}
         >
-          {`${studentInvoice.summary || studentInvoice.billType}`}
+          {`${studentInvoice.summary || studentInvoice.category}`}
         </Text>
 
         <Badge
@@ -108,7 +108,7 @@ const InvoiceItem: FC<InvoiceItemProps> = ({
         gap={3}
       >
         <Text color={"#C2C2C2"} fontSize={"2xs"}>
-          Generated on {formatDate(studentInvoice?.createdAt)}
+          Generated on {studentInvoice?.createdAt}
         </Text>
         <Flex gap={3}>
           <Tooltip
@@ -173,10 +173,10 @@ const Invoice: FC<InvoiceProps> = ({}) => {
           (item: any) => ({
             term: item.academicTerm,
             year: item.academicYear,
-            billType: item.category,
+            category: item.category,
             amountPaid: item.amount,
             id: item.id,
-            createdAt: item.createdAt,
+            createdAt: formatDate(item.createdAt),
             summary: item.summary,
             status: item.status,
           })
