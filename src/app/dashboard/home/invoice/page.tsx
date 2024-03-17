@@ -85,7 +85,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
   } = useDisclosure();
   const [invoiceData, setInvoiceData] = useState<StudentInvoiceProps[]>([]);
   const { data: getinvoice } = useQuery(GET_STUDENT_INVOICE, {
-    variables: { studentId: currentWardProfile?.id},
+    variables: { studentId: currentWardProfile?.id },
   });
   useEffect(() => {
     const fetchData = async () => {
@@ -420,10 +420,22 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                   />
                                 </MenuButton>
                                 <MenuList>
-                                  <MenuItem icon={<FaCheck />} onClick={onAcceptModalOpen}>
+                                  <MenuItem
+                                    icon={<FaCheck />}
+                                    isDisabled={
+                                      item.status === "active" ? false : true
+                                    }
+                                    onClick={onAcceptModalOpen}
+                                  >
                                     Accept Invoice
                                   </MenuItem>
-                                  <MenuItem icon={<MdOutlineClose />} onClick={onRejectModalOpen}>
+                                  <MenuItem
+                                    icon={<MdOutlineClose />}
+                                    isDisabled={
+                                      item.status === "active" ? false : true
+                                    }
+                                    onClick={onRejectModalOpen}
+                                  >
                                     Reject Invoice
                                   </MenuItem>
                                 </MenuList>
@@ -504,11 +516,43 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                     ? "red"
                                     : item.status === "processing"
                                     ? "yellow"
-                                    : "pueple"
+                                    : "purple"
                                 }
                               >
                                 {item.status}
                               </Badge>
+                            </Td>
+                            <Td>
+                              <Menu size={"sm"}>
+                                <MenuButton>
+                                  <Icon
+                                    p={1}
+                                    as={BsThreeDots}
+                                    _hover={{ cursor: "pointer" }}
+                                    boxSize={6}
+                                  />
+                                </MenuButton>
+                                <MenuList>
+                                  <MenuItem
+                                    icon={<FaCheck />}
+                                    isDisabled={
+                                      item.status === "active" ? false : true
+                                    }
+                                    onClick={onAcceptModalOpen}
+                                  >
+                                    Accept Invoice
+                                  </MenuItem>
+                                  <MenuItem
+                                    icon={<MdOutlineClose />}
+                                    isDisabled={
+                                      item.status === "active" ? false : true
+                                    }
+                                    onClick={onRejectModalOpen}
+                                  >
+                                    Reject Invoice
+                                  </MenuItem>
+                                </MenuList>
+                              </Menu>
                             </Td>
                           </Tr>
                         );
@@ -573,11 +617,43 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                     ? "red"
                                     : item.status === "processing"
                                     ? "yellow"
-                                    : "pueple"
+                                    : "purple"
                                 }
                               >
                                 {item.status}
                               </Badge>
+                            </Td>
+                            <Td>
+                              <Menu size={"sm"}>
+                                <MenuButton>
+                                  <Icon
+                                    p={1}
+                                    as={BsThreeDots}
+                                    _hover={{ cursor: "pointer" }}
+                                    boxSize={6}
+                                  />
+                                </MenuButton>
+                                <MenuList>
+                                  <MenuItem
+                                    icon={<FaCheck />}
+                                    isDisabled={
+                                      item.status === "active" ? false : true
+                                    }
+                                    onClick={onAcceptModalOpen}
+                                  >
+                                    Accept Invoice
+                                  </MenuItem>
+                                  <MenuItem
+                                    icon={<MdOutlineClose />}
+                                    isDisabled={
+                                      item.status === "active" ? false : true
+                                    }
+                                    onClick={onRejectModalOpen}
+                                  >
+                                    Reject Invoice
+                                  </MenuItem>
+                                </MenuList>
+                              </Menu>
                             </Td>
                           </Tr>
                         );
@@ -642,11 +718,43 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                     ? "red"
                                     : item.status === "processing"
                                     ? "yellow"
-                                    : "pueple"
+                                    : "purple"
                                 }
                               >
                                 {item.status}
                               </Badge>
+                            </Td>
+                            <Td>
+                              <Menu size={"sm"}>
+                                <MenuButton>
+                                  <Icon
+                                    p={1}
+                                    as={BsThreeDots}
+                                    _hover={{ cursor: "pointer" }}
+                                    boxSize={6}
+                                  />
+                                </MenuButton>
+                                <MenuList>
+                                  <MenuItem
+                                    icon={<FaCheck />}
+                                    isDisabled={
+                                      item.status === "active" ? false : true
+                                    }
+                                    onClick={onAcceptModalOpen}
+                                  >
+                                    Accept Invoice
+                                  </MenuItem>
+                                  <MenuItem
+                                    icon={<MdOutlineClose />}
+                                    isDisabled={
+                                      item.status === "active" ? false : true
+                                    }
+                                    onClick={onRejectModalOpen}
+                                  >
+                                    Reject Invoice
+                                  </MenuItem>
+                                </MenuList>
+                              </Menu>
                             </Td>
                           </Tr>
                         );
@@ -711,11 +819,43 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                     ? "red"
                                     : item.status === "processing"
                                     ? "yellow"
-                                    : "pueple"
+                                    : "purple"
                                 }
                               >
                                 {item.status}
                               </Badge>
+                            </Td>
+                            <Td>
+                              <Menu size={"sm"}>
+                                <MenuButton>
+                                  <Icon
+                                    p={1}
+                                    as={BsThreeDots}
+                                    _hover={{ cursor: "pointer" }}
+                                    boxSize={6}
+                                  />
+                                </MenuButton>
+                                <MenuList>
+                                  <MenuItem
+                                    icon={<FaCheck />}
+                                    isDisabled={
+                                      item.status === "active" ? false : true
+                                    }
+                                    onClick={onAcceptModalOpen}
+                                  >
+                                    Accept Invoice
+                                  </MenuItem>
+                                  <MenuItem
+                                    icon={<MdOutlineClose />}
+                                    isDisabled={
+                                      item.status === "active" ? false : true
+                                    }
+                                    onClick={onRejectModalOpen}
+                                  >
+                                    Reject Invoice
+                                  </MenuItem>
+                                </MenuList>
+                              </Menu>
                             </Td>
                           </Tr>
                         );

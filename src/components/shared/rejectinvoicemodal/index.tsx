@@ -82,7 +82,7 @@ const RejectInvoiceModal: FC<RejectInvoiceModalProps> = ({
       blockScrollOnMount={false}
       isOpen={isOpen}
       onClose={onClose}
-      size={"xl"}
+      size={{ base: "sm", md: "md", lg: "xl" }}
       scrollBehavior={"inside"}
     >
       <ModalOverlay />
@@ -104,21 +104,21 @@ const RejectInvoiceModal: FC<RejectInvoiceModalProps> = ({
         </ModalHeader>
         <ModalBody pb={6} px={"2rem"}>
           <Box>
-            <Text fontSize={"lg"} fontWeight={"500"}>
+            <Text fontSize={"lg"} fontWeight={"400"}>
               You have selected to reject the invoice. Can you tell the school
               admin why you rejected the invoice?
             </Text>
             <Box mt={"2rem"}>
               <Box>
-                <Text fontSize={"lg"} mb={"0.5rem"}>
+                <Text fontSize={"lg"} mb={"0.5rem"} color={"#005D5D"}>
                   Reason
                 </Text>
                 <Textarea
                   onChange={handleSummaryChange}
                   h={"100px"}
-                  border={"1px solid #D5D5D5"}
+                  border={"1px solid #005D5D"}
                   rounded={"lg"}
-                  backgroundColor={"#F5F5F5"}
+                  backgroundColor={"#FFF"}
                 />
               </Box>
 
@@ -128,7 +128,7 @@ const RejectInvoiceModal: FC<RejectInvoiceModalProps> = ({
                 py={"1.5rem"}
                 backgroundColor={"#007C7B"}
                 px={"3rem"}
-                _hover={{ backgroundColor: "#044141" }}
+                _hover={{ backgroundColor: "#099C9B" }}
                 onClick={handleSubmit}
                 isLoading={loading}
               >

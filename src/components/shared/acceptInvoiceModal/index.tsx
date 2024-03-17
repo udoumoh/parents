@@ -126,7 +126,7 @@ const AcceptInvoiceModal: FC<AcceptInvoiceModalProps> = ({
       isOpen={isOpen}
       onClose={onClose}
       scrollBehavior={"inside"}
-      size={{ base: "lg", md: "xl", lg: "3xl" }}
+      size={{ base: "sm", md: "md", lg: "xl" }}
     >
       <ModalOverlay />
       <ModalContent rounded={"xl"}>
@@ -145,7 +145,7 @@ const AcceptInvoiceModal: FC<AcceptInvoiceModalProps> = ({
           <Divider color={"#C2C2C2"} my={"0.8rem"} />
           <ModalCloseButton />
         </ModalHeader>
-        <ModalBody pb={6} px={{ base: "3rem", lg: "5rem" }}>
+        <ModalBody pb={6} px={"2rem"}>
           <Box>
             <Formik
               initialValues={{
@@ -164,18 +164,23 @@ const AcceptInvoiceModal: FC<AcceptInvoiceModalProps> = ({
                         {({ field, form }: any) => (
                           <FormControl>
                             <Box w={"full"}>
-                              <Text mb={"0.5rem"}>Amount Paid</Text>
-                              <InputGroup
-                                backgroundColor={"#F5F5F5"}
-                                size={"lg"}
-                              >
-                                <InputLeftAddon backgroundColor={"#E8E8E8"}>
+                              <Text mb={"0.5rem"} color={"#005D5D"}>
+                                Amount Paid
+                              </Text>
+                              <InputGroup backgroundColor={"#FFF"} size={"md"}>
+                                <InputLeftAddon
+                                  backgroundColor={"#005D5D10"}
+                                  border={"1px solid #005D5D"}
+                                >
                                   ₦
                                 </InputLeftAddon>
                                 <Input
+                                  border={"1px solid #005D5D"}
                                   {...field}
                                   type="tel"
                                   placeholder="How much did you pay?"
+                                  _hover={{ border: "1px solid #005D5D" }}
+                                  focusBorderColor="#005D5D"
                                 />
                               </InputGroup>
                             </Box>
@@ -184,7 +189,9 @@ const AcceptInvoiceModal: FC<AcceptInvoiceModalProps> = ({
                       </Field>
                     </Flex>
                     <Box>
-                      <Text mb={"0.5rem"}>File Type</Text>
+                      <Text mb={"0.5rem"} color={"#005D5D"}>
+                        File Type
+                      </Text>
                       <Flex gap={5} flexDir={{ base: "column", md: "row" }}>
                         <Field name="docType">
                           {({ field, form }: any) => (
@@ -195,12 +202,12 @@ const AcceptInvoiceModal: FC<AcceptInvoiceModalProps> = ({
                                 <Select
                                   placeholder="Select document"
                                   {...field}
-                                  border={"1px solid #D5D5D5"}
-                                  size={{ base: "sm", md: "lg" }}
-                                  h={"2.3rem"}
-                                  rounded={"sm"}
+                                  border={"1px solid #005D5D"}
+                                  size={"md"}
+                                  rounded={"md"}
                                   fontSize={"sm"}
-                                  variant={"filled"}
+                                  backgroundColor={"#fff"}
+                                  focusBorderColor="#005D5D"
                                 >
                                   <option value="PDF" color="#fff">
                                     PDF
@@ -225,7 +232,7 @@ const AcceptInvoiceModal: FC<AcceptInvoiceModalProps> = ({
                               ? "Document Uploaded"
                               : "Upload proof of payment"}
                           </Button>
-                          <Text fontSize={"sm"} color={"#999999"} mt={"0.5rem"}>
+                          <Text fontSize={"sm"} color={"#005D5D"} mt={"0.5rem"}>
                             File name: {fileName}
                           </Text>
                         </Box>
@@ -241,15 +248,20 @@ const AcceptInvoiceModal: FC<AcceptInvoiceModalProps> = ({
                   </Flex>
 
                   <FormControl>
-                    <FormLabel fontWeight={"normal"} fontSize={"md"}>
+                    <FormLabel
+                      fontWeight={"normal"}
+                      color={"#005D5D"}
+                      fontSize={"md"}
+                    >
                       Summary
                     </FormLabel>
                     <Textarea
                       onChange={handleSummaryChange}
                       h={"150px"}
-                      border={"1px solid #D5D5D5"}
+                      border={"1px solid #005D5D"}
                       rounded={"xl"}
-                      backgroundColor={"#F5F5F5"}
+                      backgroundColor={"#fff"}
+                      focusBorderColor="#005D5D"
                     />
                   </FormControl>
 
@@ -259,7 +271,7 @@ const AcceptInvoiceModal: FC<AcceptInvoiceModalProps> = ({
                     py={"1.5rem"}
                     backgroundColor={"#007C7B"}
                     px={"3rem"}
-                    _hover={{ backgroundColor: "#007C6A" }}
+                    _hover={{ backgroundColor: "#099C9B" }}
                     type="submit"
                     isLoading={loading}
                   >
