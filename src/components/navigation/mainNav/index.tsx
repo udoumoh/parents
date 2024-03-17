@@ -43,12 +43,17 @@ import {
   AiOutlineSetting,
 } from "react-icons/ai";
 import { HiOutlineArrowSmRight } from "react-icons/hi";
-import { IoClose, IoHelpCircleOutline } from "react-icons/io5";
+import {
+  IoClose,
+  IoHelpCircleOutline,
+  IoReceiptOutline,
+} from "react-icons/io5";
 import { IconType } from "react-icons";
 import { useUserAPI } from "@/hooks/UserContext";
 import SearchStudentModal from "@/components/shared/searchStudentModal";
 import { LOGOUT_PARENTS } from "@/gql/mutations";
 import { useMutation } from "@apollo/client";
+
 
 interface MobileProps extends FlexProps {
   onOpen: () => void;
@@ -117,6 +122,11 @@ const DrawerNavLinkItems = {
       name: "Results",
       icon: HiOutlineArrowSmRight,
       url: "/dashboard/home/results",
+    },
+    {
+      name: "Invoice",
+      icon: IoReceiptOutline,
+      url: "/dashboard/home/invoice",
     },
   ],
   NavLinks: [
