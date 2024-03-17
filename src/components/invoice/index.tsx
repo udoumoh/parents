@@ -95,6 +95,7 @@ const InvoiceItem: FC<InvoiceItemProps> = ({
           py={"0.1rem"}
           fontSize={"2xs"}
           borderRadius={"3px"}
+          my={'0.5rem'}
         >
           {studentInvoice.status}
         </Badge>

@@ -80,10 +80,10 @@ const Attendance: FC<AttendanceProps> = ({}) => {
           ) : (
             <Box>
               <Text fontSize={"sm"} color={"#747474"} mt={"1rem"}>
-                Present
+                Absent
               </Text>
 
-              {presentDays?.map((item, index) => (
+              {absentDays?.map((item, index) => (
                 <Flex justifyContent={"space-between"} my={"1rem"} key={index}>
                   <Box display={"flex"} flexDir={"column"}>
                     <Text
