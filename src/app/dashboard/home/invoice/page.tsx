@@ -28,6 +28,7 @@ import {
   MenuGroup,
   MenuOptionGroup,
   MenuDivider,
+  useDisclosure,
 } from "@chakra-ui/react";
 import { GET_STUDENT_INVOICE } from "@/gql/queries";
 import { BsThreeDots } from "react-icons/bs";
@@ -35,6 +36,10 @@ import { useUserAPI } from "@/hooks/UserContext";
 import { useQuery } from "@apollo/client";
 import { formatDate } from "@/helpers/formatDate";
 import formatNumberWithCommas from "@/helpers/formatNumberWithCommas";
+import { FaCheck } from "react-icons/fa6";
+import { MdOutlineClose } from "react-icons/md";
+import AcceptInvoiceModal from "@/components/shared/acceptInvoiceModal";
+import RejectInvoiceModal from "@/components/shared/rejectinvoicemodal";
 
 interface InvoiceProps {}
 
@@ -50,13 +55,37 @@ interface StudentInvoiceProps {
   invoiceId: string;
   schoolname: string;
   schoollogo: string;
+  receipt: [
+    {
+      amountPaid: number;
+      createdAt: string;
+      creator: string;
+      filtType: string;
+      id: number;
+      parentInvoiceId: string;
+      status: string;
+      summary: string;
+      updatedAt: string;
+      uploadedDocument: string;
+    }
+  ]
 }
 
 const Invoice: FC<InvoiceProps> = ({}) => {
   const { currentWardProfile } = useUserAPI();
+  const {
+    isOpen: isAcceptModalOpen,
+    onOpen: onAcceptModalOpen,
+    onClose: onAcceptModalClose,
+  } = useDisclosure();
+  const {
+    isOpen: isRejectModalOpen,
+    onOpen: onRejectModalOpen,
+    onClose: onRejectModalClose,
+  } = useDisclosure();
   const [invoiceData, setInvoiceData] = useState<StudentInvoiceProps[]>([]);
   const { data: getinvoice } = useQuery(GET_STUDENT_INVOICE, {
-    variables: { studentId: currentWardProfile?.id },
+    variables: { studentId: currentWardProfile?.id},
   });
   useEffect(() => {
     const fetchData = async () => {
@@ -76,6 +105,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
             status: item.status,
             schoolname: item.creatorSchool,
             schoollogo: item?.student?.creator?.admin?.schoolImg,
+            receipt: item?.receipt
           })
         );
         setInvoiceData(parsedInvoiceData);
@@ -91,10 +121,6 @@ const Invoice: FC<InvoiceProps> = ({}) => {
   const rejectedInvoice = invoiceData?.filter(invoice => invoice.status === 'rejected');
   const processingInvoice = invoiceData?.filter(invoice => invoice.status === 'processing');
 
-  const totalCompletedAmount = completedInvoice?.reduce(
-    (accumulator, invoice) => accumulator + invoice.amountPaid,
-    0
-  );
   const totalActiveAmount = activeInvoice?.reduce(
     (accumulator, invoice) => accumulator + invoice.amountPaid,
     0
@@ -108,10 +134,19 @@ const Invoice: FC<InvoiceProps> = ({}) => {
     0
   );
 
-  console.log(invoiceData);
+  console.log(invoiceData)
+
+  const nonEmptyReceipts = invoiceData
+    ?.map((invoice) => invoice?.receipt)
+    ?.filter((receipt: any) => receipt?.length !== 0);
+  const totalAmountPaid = nonEmptyReceipts
+    ?.map((receiptItem) =>
+      receiptItem?.reduce((acc, item) => acc + item?.amountPaid, 0)
+    )
+    .reduce((acc, item) => acc + item, 0);
 
   return (
-    <Box>
+    <Box mb={{ base: "8rem", lg: "5rem" }}>
       <Box>
         <Box>
           <Text
@@ -135,13 +170,13 @@ const Invoice: FC<InvoiceProps> = ({}) => {
             w={"full"}
           >
             <Text fontSize={"sm"} color={"blue.800"} fontWeight={"500"}>
-              Completed
+              Total Amount Paid
             </Text>
             <Text fontSize={"3xl"} fontWeight={"700"} color={"gray.700"}>
               ₦
-              {totalCompletedAmount === undefined
+              {totalAmountPaid === undefined
                 ? 0
-                : formatNumberWithCommas(totalCompletedAmount)}
+                : formatNumberWithCommas(totalAmountPaid)}
             </Text>
             <Badge
               backgroundColor={"black"}
@@ -368,19 +403,44 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                     ? "red"
                                     : item.status === "processing"
                                     ? "yellow"
-                                    : "pueple"
+                                    : "purple"
                                 }
                               >
                                 {item.status}
                               </Badge>
                             </Td>
                             <Td>
-                              <Icon
-                                p={1}
-                                as={BsThreeDots}
-                                _hover={{ backgroundColor: "gray.200" }}
-                              />
+                              <Menu size={"sm"}>
+                                <MenuButton>
+                                  <Icon
+                                    p={1}
+                                    as={BsThreeDots}
+                                    _hover={{ cursor: "pointer" }}
+                                    boxSize={6}
+                                  />
+                                </MenuButton>
+                                <MenuList>
+                                  <MenuItem icon={<FaCheck />} onClick={onAcceptModalOpen}>
+                                    Accept Invoice
+                                  </MenuItem>
+                                  <MenuItem icon={<MdOutlineClose />} onClick={onRejectModalOpen}>
+                                    Reject Invoice
+                                  </MenuItem>
+                                </MenuList>
+                              </Menu>
                             </Td>
+                            <AcceptInvoiceModal
+                              isOpen={isAcceptModalOpen}
+                              onOpen={onAcceptModalOpen}
+                              onClose={onAcceptModalClose}
+                              invoiceId={item.id}
+                            />
+                            <RejectInvoiceModal
+                              isOpen={isRejectModalOpen}
+                              onOpen={onRejectModalOpen}
+                              onClose={onRejectModalClose}
+                              invoiceId={item.id}
+                            />
                           </Tr>
                         );
                       })}
