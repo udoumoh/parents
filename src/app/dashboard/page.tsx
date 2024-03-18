@@ -192,7 +192,7 @@ const Page: FC<pageProps> = ({}) => {
               >
                 Link Child Request Status
               </Text>
-              <Flex flexDir={"column"} gap={4}>
+              <Flex flexDir={{base:"column", lg:"row"}} gap={4}>
                 {requestData.map((data, index) => (
                   <Flex
                     key={index}
@@ -217,7 +217,7 @@ const Page: FC<pageProps> = ({}) => {
                       textAlign={"center"}
                       fontSize={{ base: "sm", md: "lg" }}
                       color={"gray.600"}
-                      w={{base:"auto", md:"300px"}}
+                      // w={{base:"auto", md:"300px"}}
                     >
                       {data?.message}
                     </Text>
