@@ -16,6 +16,7 @@
     "@fontsource-variable/mulish": "^5.0.17",
     "@fontsource/mulish": "^5.0.16",
     "@react-pdf-viewer/core": "^3.8.0",
+    "pdfjs-dist": "^3.0.279",
     "axios": "^1.6.7",
     "date-fns": "^3.3.1",
     "formik": "^2.4.5",
