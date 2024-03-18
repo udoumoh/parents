@@ -27,7 +27,7 @@ const Page: FC<pageProps> = ({}) => {
     const router = useRouter()
     const {childData, parentData} = useUserAPI()
     const { data: getRequests } = useQuery(PARENT_REQUESTS, {
-      variables: { parentId: parentData?.id },
+      variables: { parentId: parentData?.userId },
     });
     const [requestData, setRequestData] = useState([])
     const {
