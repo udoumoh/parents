@@ -8,24 +8,35 @@ import {
   useDisclosure,
   Button,
   Avatar,
-  Card,
+  useToast,
 } from "@chakra-ui/react";
 import { AiOutlinePlus } from "react-icons/ai";
 import SearchStudentModal from "@/components/shared/searchStudentModal";
 import { useRouter } from "next/navigation";
 import { useUserAPI } from "@/hooks/UserContext";
 import { PARENT_REQUESTS } from "@/gql/queries";
-import { useQuery } from "@apollo/client";
+import { useQuery, useMutation } from "@apollo/client";
+import { DELETE_REQUEST } from "@/gql/mutations";
 
 interface pageProps {}
 
+interface RequestDataProps {
+  studentFirstName: string;
+  studentLastName: string;
+  studentProfileImgUrl: string;
+  message: string;
+  status: string;
+  id: number;
+}
+
 const Page: FC<pageProps> = ({}) => {
-  const router = useRouter();
+  const toast = useToast()
   const { childData, parentData } = useUserAPI();
   const { data: getRequests } = useQuery(PARENT_REQUESTS, {
     variables: { parentId: parentData?.userId },
   });
-  const [requestData, setRequestData] = useState([]);
+  const [deleteRequest] = useMutation(DELETE_REQUEST)
+  const [requestData, setRequestData] = useState<RequestDataProps[]>([]);
   const {
     isOpen: isModalOpen,
     onOpen: onModalOpen,
@@ -36,11 +47,52 @@ const Page: FC<pageProps> = ({}) => {
     window.location.replace("/dashboard/home/overview");
   }
 
+  const handleRequestDelete = async(requestId: any) => {
+    try{
+      const response = await deleteRequest({
+        variables: {deleteRequestId: requestId}
+      });
+      console.log(response)
+      if(!response){
+        toast({
+          title: "Error",
+          description: "A client side error has occurred",
+          position: "bottom",
+          variant: "left-accent",
+          isClosable: true,
+          status: "error",
+        });
+      }
+    } catch (err: any) {
+        console.log(err);
+        toast({
+          title: "Error",
+          description: err?.message,
+          position: "bottom",
+          variant: "left-accent",
+          isClosable: true,
+          status: "error",
+        });
+    }
+  }
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await getRequests;
-        console.log(response);
+        if(!response){
+          console.log('client error')
+        } else {
+          const newData = response?.parentRequests.map((item: any) => ({
+            studentFirstName: item?.student?.firstName,
+            studentLastName: item?.student?.lastName,
+            studentProfileImgUrl: item?.student?.profileImgUrl,
+            message: item?.message,
+            status: item?.status,
+            id: item?.id,
+          }))
+          setRequestData(newData)
+        }
       } catch (err: any) {
         console.log(err);
       }
@@ -113,26 +165,26 @@ const Page: FC<pageProps> = ({}) => {
           </Flex>
         ) : (
           <>
-          {
-            requestData.map((data, index) => {
-              <Flex
-                w={"full"}
-                alignItems={"center"}
-                justifyContent={"center"}
-                my={"4rem"}
-                flexDir={"column"}
-                rounded={"xl"}
-                p={"10"}
+            <Flex
+              w={"full"}
+              alignItems={"center"}
+              justifyContent={"center"}
+              my={"4rem"}
+              flexDir={"column"}
+              rounded={"xl"}
+              p={"10"}
+            >
+              <Text
+                fontSize={"2xl"}
+                color={"#005D5D"}
+                fontWeight={"600"}
+                mb={"2rem"}
               >
-                <Text
-                  fontSize={"2xl"}
-                  color={"#005D5D"}
-                  fontWeight={"600"}
-                  mb={"2rem"}
-                >
-                  Link Child Request Status
-                </Text>
+                Link Child Request Status
+              </Text>
+              {requestData.map((data, index) => (
                 <Flex
+                  key={index}
                   overflow="hidden"
                   flexDir={"column"}
                   alignItems={"center"}
@@ -147,7 +199,7 @@ const Page: FC<pageProps> = ({}) => {
                   />
 
                   <Text fontSize={"2xl"} fontWeight={"600"}>
-                    Ahmadu Bello
+                    {data?.studentFirstName} {data?.studentLastName}
                   </Text>
 
                   <Text
@@ -155,8 +207,7 @@ const Page: FC<pageProps> = ({}) => {
                     fontSize={{ base: "sm", md: "lg" }}
                     color={"gray.600"}
                   >
-                    I am requesting for this student on behalf of my village
-                    people
+                    {data?.message}
                   </Text>
 
                   <Flex gap={"5"}>
@@ -165,25 +216,44 @@ const Page: FC<pageProps> = ({}) => {
                       mt={"1rem"}
                       rounded={"full"}
                       px={"3rem"}
-                      color={"orange.700"}
-                      backgroundColor={"orange.300"}
-                      _hover={{ backgroundColor: "orange.300" }}
+                      color={
+                        data?.status === "PENDING"
+                          ? "orange.700"
+                          : data?.status === "ACCEPTED"
+                          ? "green.700"
+                          : "red.700"
+                      }
+                      backgroundColor={
+                        data?.status === "PENDING"
+                          ? "orange.300"
+                          : data?.status === "ACCEPTED"
+                          ? "green.300"
+                          : "red.300"
+                      }
+                      _hover={{
+                        backgroundColor:
+                          data?.status === "PENDING"
+                            ? "orange.300"
+                            : data?.status === "ACCEPTED"
+                            ? "green.300"
+                            : "red.300",
+                      }}
                     >
-                      Pending
+                      {data?.status}
                     </Button>
                     <Button
                       size={{ base: "sm", md: "lg" }}
                       mt={"1rem"}
                       rounded={"full"}
                       colorScheme="red"
+                      onClick={handleRequestDelete(data?.id)}
                     >
                       Withdraw Request
                     </Button>
                   </Flex>
                 </Flex>
-              </Flex>;
-            })
-          }
+              ))}
+            </Flex>
           </>
         )}
       </Box>

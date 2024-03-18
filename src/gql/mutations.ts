@@ -223,3 +223,7 @@ mutation RegisterParent($folder: String!, $options: parentRegInput!) {
     }
   }
 }`);
+
+export const DELETE_REQUEST = gql(`mutation DeleteRequest($deleteRequestId: Float!) {
+  deleteRequest(id: $deleteRequestId)
+}`)
