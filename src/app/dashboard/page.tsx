@@ -42,11 +42,13 @@ const Page: FC<pageProps> = ({}) => {
         const response = await getRequests;
         console.log(response);
       } catch (err: any) {
-        console.log(err?.message);
+        console.log(err);
       }
     };
     fetchData();
   }, [getRequests]);
+
+  console.log(parentData)
 
   return (
     <Flex h={"100vh"} overflowY={"auto"}>
