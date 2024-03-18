@@ -63,6 +63,16 @@ const Page: FC<pageProps> = ({}) => {
           status: "error",
         });
       }
+      if(response?.data?.deleteRequest){
+        toast({
+          title: "Success",
+          description: "Your request was successfully deleted.",
+          position: "bottom",
+          variant: "left-accent",
+          isClosable: true,
+          status: "success",
+        });
+      }
     } catch (err: any) {
         console.log(err);
         toast({
@@ -192,6 +202,7 @@ const Page: FC<pageProps> = ({}) => {
                   py={"1.5rem"}
                   px={{ base: "1rem", md: "5rem" }}
                   rounded={"xl"}
+                  gap={4}
                 >
                   <Avatar
                     size={"2xl"}
@@ -242,7 +253,7 @@ const Page: FC<pageProps> = ({}) => {
                       {data?.status}
                     </Button>
                     <Button
-                      size={{ base: "sm", md: "lg" }}
+                      size={{ base: "sm", md: "md" }}
                       mt={"1rem"}
                       rounded={"full"}
                       colorScheme="red"
