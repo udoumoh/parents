@@ -473,7 +473,7 @@ const MainNav: FC<MainNav> = ({ children }) => {
                       router.push(`/${item.url}`);
                       onClose();
                     }}
-                    _hover={{cursor:"pointer"}}
+                    _hover={{ cursor: "pointer" }}
                   >
                     <Icon as={item.iconLight} color={"#fff"} boxSize={6} />
                     <Text color={"#fff"} fontSize={"lg"}>
@@ -605,7 +605,7 @@ const MainNav: FC<MainNav> = ({ children }) => {
                   border="1px solid #e3e3e3"
                   borderRadius={"10px"}
                   p={3}
-                  w={'full'}
+                  w={"full"}
                 >
                   <Avatar
                     src={profileData?.userBio?.profileImage}
@@ -619,10 +619,13 @@ const MainNav: FC<MainNav> = ({ children }) => {
                     >{`${profileData?.userBio?.firstName} ${profileData?.userBio?.lastName}`}</Text>
                     <Image
                       src="/images/verifiedtag.png"
+                      alt="badge"
                       w={"1rem"}
                       h={"1rem"}
                       pointerEvents={"none"}
-                      alt="verified tag"
+                      display={
+                        (childData ?? []).length === 0 ? "none" : "block"
+                      }
                     />
                   </Flex>
                   <Text color="#A7A7A7" fontSize="12">

@@ -55,35 +55,6 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
   const router = useRouter();
   const [logoutParent] = useMutation(LOGOUT_PARENTS);
   const { profileData, parentData, childData } = useUserAPI();
-  const [wardData, setWarddata] = useState([
-    {
-      name: "Chibuzor Ali-Williams",
-      profileImage:
-        "https://th.bing.com/th/id/R.5dcfec967642191443ae9a4b04c55d47?rik=oahz060yDmOp%2bA&pid=ImgRaw&r=0",
-      greynoteNumber: "GN24002",
-    },
-    {
-      name: "Chiamaka Ali-Williams",
-      profileImage: "/images/profileImg.jpeg",
-      greynoteNumber: "GN24002",
-    },
-  ]);
-  const [resultsData, setResultsdata] = useState([
-    {
-      schoolName: "Green Springs High School",
-      dateGenerated: "12th August 2023",
-      term: "Results",
-      examType: "Verified",
-      schoolLogo: "/images/schoollogo.png",
-    },
-    {
-      schoolName: "Green Springs High School",
-      dateGenerated: "10th April 2023",
-      term: "Results",
-      examType: "Verified",
-      schoolLogo: "/images/schoollogo.png",
-    },
-  ]);
 
   const handleLogout = async () => {
     const response = await logoutParent();

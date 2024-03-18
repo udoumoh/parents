@@ -110,72 +110,79 @@ const Page: FC<pageProps> = ({}) => {
             />
           </Flex>
         ) : (
-          <Flex
-            w={"full"}
-            alignItems={"center"}
-            justifyContent={"center"}
-            my={"4rem"}
-            flexDir={"column"}
-            rounded={"xl"}
-            p={"10"}
-          >
-            <Text
-              fontSize={"2xl"}
-              color={"#005D5D"}
-              fontWeight={"600"}
-              mb={"2rem"}
-            >
-              Link Child Request Status
-            </Text>
-            <Flex
-              overflow="hidden"
-              flexDir={"column"}
-              alignItems={"center"}
-              border={"1px solid #005D5D40"}
-              py={"1.5rem"}
-              px={{ base: "1rem", md: "5rem" }}
-              rounded={"xl"}
-            >
-              <Avatar
-                size={"2xl"}
-                src="https://media.licdn.com/dms/image/C5603AQG3DQjHDiI_wA/profile-displayphoto-shrink_800_800/0/1632845327933?e=2147483647&v=beta&t=3DDQ9XC3-92cSa-7ohy7s4FWx2_wfD8uHpk2sqINojM"
-              />
-
-              <Text fontSize={"2xl"} fontWeight={"600"}>
-                Ahmadu Bello
-              </Text>
-
-              <Text
-                textAlign={"center"}
-                fontSize={{ base: "sm", md: "lg" }}
-                color={"gray.600"}
+          <>
+          {
+            requestData.map((data, index) => {
+              <Flex
+                w={"full"}
+                alignItems={"center"}
+                justifyContent={"center"}
+                my={"4rem"}
+                flexDir={"column"}
+                rounded={"xl"}
+                p={"10"}
               >
-                I am requesting for this student on behalf of my village people
-              </Text>
+                <Text
+                  fontSize={"2xl"}
+                  color={"#005D5D"}
+                  fontWeight={"600"}
+                  mb={"2rem"}
+                >
+                  Link Child Request Status
+                </Text>
+                <Flex
+                  overflow="hidden"
+                  flexDir={"column"}
+                  alignItems={"center"}
+                  border={"1px solid #005D5D40"}
+                  py={"1.5rem"}
+                  px={{ base: "1rem", md: "5rem" }}
+                  rounded={"xl"}
+                >
+                  <Avatar
+                    size={"2xl"}
+                    src="https://media.licdn.com/dms/image/C5603AQG3DQjHDiI_wA/profile-displayphoto-shrink_800_800/0/1632845327933?e=2147483647&v=beta&t=3DDQ9XC3-92cSa-7ohy7s4FWx2_wfD8uHpk2sqINojM"
+                  />
 
-              <Flex gap={"5"}>
-                <Button
-                  size={{ base: "sm", md: "lg" }}
-                  mt={"1rem"}
-                  rounded={"full"}
-                  px={"3rem"}
-                  color={"orange.700"}
-                  backgroundColor={"orange.300"}
-                  _hover={{ backgroundColor: "orange.300" }}
-                >
-                  Pending
-                </Button>
-                <Button
-                  size={{ base: "sm", md: "lg" }}
-                  mt={"1rem"}
-                  rounded={"full"}
-                  colorScheme="red"
-                >
-                  Withdraw Request
-                </Button>
-              </Flex>
-            </Flex>
-          </Flex>
+                  <Text fontSize={"2xl"} fontWeight={"600"}>
+                    Ahmadu Bello
+                  </Text>
+
+                  <Text
+                    textAlign={"center"}
+                    fontSize={{ base: "sm", md: "lg" }}
+                    color={"gray.600"}
+                  >
+                    I am requesting for this student on behalf of my village
+                    people
+                  </Text>
+
+                  <Flex gap={"5"}>
+                    <Button
+                      size={{ base: "sm", md: "lg" }}
+                      mt={"1rem"}
+                      rounded={"full"}
+                      px={"3rem"}
+                      color={"orange.700"}
+                      backgroundColor={"orange.300"}
+                      _hover={{ backgroundColor: "orange.300" }}
+                    >
+                      Pending
+                    </Button>
+                    <Button
+                      size={{ base: "sm", md: "lg" }}
+                      mt={"1rem"}
+                      rounded={"full"}
+                      colorScheme="red"
+                    >
+                      Withdraw Request
+                    </Button>
+                  </Flex>
+                </Flex>
+              </Flex>;
+            })
+          }
+          </>
         )}
       </Box>
     </Flex>
