@@ -40,6 +40,8 @@ const Page: FC<pageProps> = ({}) => {
       window.location.replace("/dashboard/home/overview")
     }
 
+    console.log(parentData)
+
     useEffect(() => {
       const fetchData = async() => {
           try{
