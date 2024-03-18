@@ -246,7 +246,7 @@ const Page: FC<pageProps> = ({}) => {
                       mt={"1rem"}
                       rounded={"full"}
                       colorScheme="red"
-                      onClick={handleRequestDelete(data?.id)}
+                      onClick={()=>handleRequestDelete(data?.id)}
                     >
                       Withdraw Request
                     </Button>
