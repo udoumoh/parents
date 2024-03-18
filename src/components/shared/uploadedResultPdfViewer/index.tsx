@@ -23,7 +23,7 @@ export const PDFViewer = ({ isOpen, onClose, path }: any) => {
         <ModalHeader>Student Academic Result</ModalHeader>
         <ModalCloseButton />
         <ModalBody overflow="auto" maxH="30rem">
-          <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.15.349/build/pdf.worker.js">
+          <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
             <Viewer fileUrl={path} onZoom={handleZoom} />
           </Worker>
         </ModalBody>
