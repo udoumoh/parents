@@ -74,7 +74,7 @@ const Attendance: FC<AttendanceProps> = ({}) => {
                 Absent
               </Text>
               <Text my={"1rem"} color={"#747474"}>
-                No absences reported for this week for this child.🌟
+                No absences reported this week for this child.🌟
               </Text>
             </>
           ) : (
