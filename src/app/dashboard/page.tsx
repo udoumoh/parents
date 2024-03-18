@@ -217,7 +217,7 @@ const Page: FC<pageProps> = ({}) => {
                       textAlign={"center"}
                       fontSize={{ base: "sm", md: "lg" }}
                       color={"gray.600"}
-                      // w={{base:"auto", md:"300px"}}
+                      w={{base:"auto", md:"300px"}}
                     >
                       {data?.message}
                     </Text>
