@@ -53,10 +53,10 @@ const Results: FC<ResultsProps> = ({}) => {
   } = useDisclosure();
   const { currentWardProfile } = useUserAPI();
   const { data: getgeneratedresult } = useQuery(GET_STUDENT_GENERATED_RESULT, {
-    variables: { studentId: currentWardProfile?.id },
+    variables: { studentId: currentWardProfile?.id || 2 },
   });
   const {data: getUploadedResult} = useQuery(GET_STUDENT_UPLOADED_RESULT, {
-    variables: { studentId: currentWardProfile?.id, limit:4,},
+    variables: { studentId: currentWardProfile?.id || 2, limit:4,},
   })
   const [resultsType, setResultstype] = useState("");
   const [generatedResults, setGeneratedResults] = useState<

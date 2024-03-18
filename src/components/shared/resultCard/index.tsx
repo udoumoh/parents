@@ -1,4 +1,5 @@
-import { FC } from 'react'
+'use client'
+import { FC, useState } from 'react'
 import {
     Box,
     Image,
@@ -9,6 +10,7 @@ import {
 } from '@chakra-ui/react'
 import { PDFViewer } from '../uploadedResultPdfViewer';
 import {MdOutlineFileDownload} from 'react-icons/md'
+import ImgViewer from '../imageViewer';
 
 interface ResultCardProps {
   result: {
@@ -23,6 +25,16 @@ interface ResultCardProps {
 
 const ResultCard: FC<ResultCardProps> = ({ result }) => {
   const {isOpen: isModalOpen, onClose: onModalClose, onOpen} = useDisclosure()
+  const [isImageViewerOpen, setIsImageViewerOpen] = useState(false);
+
+  const openImageViewer = () => {
+    setIsImageViewerOpen(true);
+  };
+
+  const closeImageViewer = () => {
+    setIsImageViewerOpen(false);
+  };
+
   return (
     <Box
       backgroundColor={"#E2F2F2"}
@@ -33,7 +45,7 @@ const ResultCard: FC<ResultCardProps> = ({ result }) => {
         cursor: "pointer",
         transition: "0.5s",
       }}
-      onClick={onOpen}
+      onClick={!result?.documentPath?.endsWith(".pdf") ? openImageViewer : onOpen}
     >
       <Flex
         backgroundColor={"#fff"}
@@ -101,6 +113,7 @@ const ResultCard: FC<ResultCardProps> = ({ result }) => {
           backgroundColor={"#BDDEDE"}
         /> */}
       </Flex>
+      <ImgViewer path={result?.documentPath} isViewerOpen={isImageViewerOpen} openImageViewer={openImageViewer} closeImageViewer={closeImageViewer} />
       <PDFViewer isOpen={isModalOpen} onClose={onModalClose} path={result?.documentPath}/>
     </Box>
   );
