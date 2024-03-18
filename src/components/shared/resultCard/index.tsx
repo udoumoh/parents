@@ -4,8 +4,10 @@ import {
     Image,
     Text,
     Flex,
-    IconButton
+    IconButton, 
+    useDisclosure,
 } from '@chakra-ui/react'
+import { PDFViewer } from '../uploadedResultPdfViewer';
 import {MdOutlineFileDownload} from 'react-icons/md'
 
 interface ResultCardProps {
@@ -96,6 +98,7 @@ const ResultCard: FC<ResultCardProps> = ({ result }) => {
           backgroundColor={"#BDDEDE"}
         /> */}
       </Flex>
+      <PDFViewer  />
     </Box>
   );
 };
