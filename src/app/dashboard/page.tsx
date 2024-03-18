@@ -40,8 +40,6 @@ const Page: FC<pageProps> = ({}) => {
       window.location.replace("/dashboard/home/overview")
     }
 
-    console.log(parentData)
-
     useEffect(() => {
       const fetchData = async() => {
           try{
@@ -52,7 +50,7 @@ const Page: FC<pageProps> = ({}) => {
           }
       }
       fetchData()
-    })
+    }, [getRequests])
     
   return (
     <Flex h={"100vh"} overflowY={"auto"}>
