@@ -118,7 +118,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
 
   const completedInvoice = invoiceData?.filter(invoice => invoice.status === 'completed');
   const activeInvoice = invoiceData?.filter(invoice => invoice.status === 'active');
-  const rejectedInvoice = invoiceData?.filter(invoice => invoice.status === 'rejected');
+  const rejectedInvoice = invoiceData?.filter(invoice => invoice.status === 'rejected by parent');
   const processingInvoice = invoiceData?.filter(invoice => invoice.status === 'processing');
 
   const totalActiveAmount = activeInvoice?.reduce(
@@ -399,7 +399,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                 colorScheme={
                                   item.status === "active"
                                     ? "green"
-                                    : item.status === "rejected"
+                                    : item.status === "rejected by parent"
                                     ? "red"
                                     : item.status === "processing"
                                     ? "yellow"
