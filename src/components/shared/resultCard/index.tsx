@@ -90,11 +90,11 @@ const ResultCard: FC<ResultCardProps> = ({ result }) => {
             </Box>
           </Flex>
         </Box>
-        <IconButton
+        {/* <IconButton
           icon={<MdOutlineFileDownload color={"#007C7B"} />}
           aria-label="download file"
           backgroundColor={"#BDDEDE"}
-        />
+        /> */}
       </Flex>
     </Box>
   );
