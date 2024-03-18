@@ -94,7 +94,7 @@ const LinkRequestModal: FC<LinkRequestModalProps> = ({
               status: "success",
             });
             setTimeout(() => {
-              window.location.replace('/dashboard/home/overview')
+              window.location.reload();
               onClose()
             }, 3000)
         }
