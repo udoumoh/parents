@@ -17,10 +17,12 @@ interface ResultCardProps {
     term: string;
     examType: string;
     schoolLogo: string;
+    documentPath: string;
   };
 }
 
 const ResultCard: FC<ResultCardProps> = ({ result }) => {
+  const {isOpen: isModalOpen, onClose: onModalClose, onOpen} = useDisclosure()
   return (
     <Box
       backgroundColor={"#E2F2F2"}
@@ -31,6 +33,7 @@ const ResultCard: FC<ResultCardProps> = ({ result }) => {
         cursor: "pointer",
         transition: "0.5s",
       }}
+      onClick={onOpen}
     >
       <Flex
         backgroundColor={"#fff"}
@@ -98,7 +101,7 @@ const ResultCard: FC<ResultCardProps> = ({ result }) => {
           backgroundColor={"#BDDEDE"}
         /> */}
       </Flex>
-      <PDFViewer  />
+      <PDFViewer isOpen={isModalOpen} onClose={onModalClose} path={result?.documentPath}/>
     </Box>
   );
 };

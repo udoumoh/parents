@@ -42,6 +42,7 @@ interface GeneratedResultsProps {
   sharerFirstName: string;
   sharerLastName: string;
   shareDate: string;
+  documentPath: string;
 }
 
 const Results: FC<ResultsProps> = ({}) => {
@@ -125,6 +126,7 @@ const Results: FC<ResultsProps> = ({}) => {
               shareDate: formatDate(
                 item?.createdAt || ""
               ),
+              documentPath: item?.document
             })
           );
           setUploadedResults(parsedResultsData);
