@@ -224,7 +224,7 @@ const Page: FC<pageProps> = ({}) => {
 
                     <Flex gap={"5"}>
                       <Button
-                        size={{ base: "sm", md: "lg" }}
+                        size={{ base: "sm", md: "md" }}
                         mt={"1rem"}
                         rounded={"full"}
                         px={"3rem"}
