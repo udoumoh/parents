@@ -192,78 +192,80 @@ const Page: FC<pageProps> = ({}) => {
               >
                 Link Child Request Status
               </Text>
-              {requestData.map((data, index) => (
-                <Flex
-                  key={index}
-                  overflow="hidden"
-                  flexDir={"column"}
-                  alignItems={"center"}
-                  border={"1px solid #005D5D40"}
-                  py={"1.5rem"}
-                  px={{ base: "1rem", md: "5rem" }}
-                  rounded={"xl"}
-                  gap={4}
-                >
-                  <Avatar
-                    size={"2xl"}
-                    src="https://media.licdn.com/dms/image/C5603AQG3DQjHDiI_wA/profile-displayphoto-shrink_800_800/0/1632845327933?e=2147483647&v=beta&t=3DDQ9XC3-92cSa-7ohy7s4FWx2_wfD8uHpk2sqINojM"
-                  />
-
-                  <Text fontSize={"2xl"} fontWeight={"600"}>
-                    {data?.studentFirstName} {data?.studentLastName}
-                  </Text>
-
-                  <Text
-                    textAlign={"center"}
-                    fontSize={{ base: "sm", md: "lg" }}
-                    color={"gray.600"}
+              <Flex flexDir={"column"} gap={4}>
+                {requestData.map((data, index) => (
+                  <Flex
+                    key={index}
+                    overflow="hidden"
+                    flexDir={"column"}
+                    alignItems={"center"}
+                    border={"1px solid #005D5D40"}
+                    py={"1.5rem"}
+                    px={{ base: "1rem", md: "5rem" }}
+                    rounded={"xl"}
                   >
-                    {data?.message}
-                  </Text>
+                    <Avatar
+                      size={"2xl"}
+                      src="https://media.licdn.com/dms/image/C5603AQG3DQjHDiI_wA/profile-displayphoto-shrink_800_800/0/1632845327933?e=2147483647&v=beta&t=3DDQ9XC3-92cSa-7ohy7s4FWx2_wfD8uHpk2sqINojM"
+                    />
 
-                  <Flex gap={"5"}>
-                    <Button
-                      size={{ base: "sm", md: "lg" }}
-                      mt={"1rem"}
-                      rounded={"full"}
-                      px={"3rem"}
-                      color={
-                        data?.status === "PENDING"
-                          ? "orange.700"
-                          : data?.status === "ACCEPTED"
-                          ? "green.700"
-                          : "red.700"
-                      }
-                      backgroundColor={
-                        data?.status === "PENDING"
-                          ? "orange.300"
-                          : data?.status === "ACCEPTED"
-                          ? "green.300"
-                          : "red.300"
-                      }
-                      _hover={{
-                        backgroundColor:
+                    <Text fontSize={"2xl"} fontWeight={"600"}>
+                      {data?.studentFirstName} {data?.studentLastName}
+                    </Text>
+
+                    <Text
+                      textAlign={"center"}
+                      fontSize={{ base: "sm", md: "lg" }}
+                      color={"gray.600"}
+                      w={{base:"auto", md:"300px"}}
+                    >
+                      {data?.message}
+                    </Text>
+
+                    <Flex gap={"5"}>
+                      <Button
+                        size={{ base: "sm", md: "lg" }}
+                        mt={"1rem"}
+                        rounded={"full"}
+                        px={"3rem"}
+                        color={
+                          data?.status === "PENDING"
+                            ? "orange.700"
+                            : data?.status === "ACCEPTED"
+                            ? "green.700"
+                            : "red.700"
+                        }
+                        backgroundColor={
                           data?.status === "PENDING"
                             ? "orange.300"
                             : data?.status === "ACCEPTED"
                             ? "green.300"
-                            : "red.300",
-                      }}
-                    >
-                      {data?.status}
-                    </Button>
-                    <Button
-                      size={{ base: "sm", md: "md" }}
-                      mt={"1rem"}
-                      rounded={"full"}
-                      colorScheme="red"
-                      onClick={()=>handleRequestDelete(data?.id)}
-                    >
-                      Withdraw Request
-                    </Button>
+                            : "red.300"
+                        }
+                        _hover={{
+                          backgroundColor:
+                            data?.status === "PENDING"
+                              ? "orange.300"
+                              : data?.status === "ACCEPTED"
+                              ? "green.300"
+                              : "red.300",
+                        }}
+                      >
+                        {data?.status}
+                      </Button>
+                      <Button
+                        size={{ base: "sm", md: "md" }}
+                        mt={"1rem"}
+                        rounded={"full"}
+                        colorScheme="red"
+                        onClick={() => handleRequestDelete(data?.id)}
+                      >
+                        Withdraw Request
+                      </Button>
+                    </Flex>
                   </Flex>
-                </Flex>
-              ))}
+                ))}
+              </Flex>
             </Flex>
           </>
         )}
