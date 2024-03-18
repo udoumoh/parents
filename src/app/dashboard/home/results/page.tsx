@@ -53,10 +53,10 @@ const Results: FC<ResultsProps> = ({}) => {
   } = useDisclosure();
   const { currentWardProfile } = useUserAPI();
   const { data: getgeneratedresult } = useQuery(GET_STUDENT_GENERATED_RESULT, {
-    variables: { studentId: currentWardProfile?.id || 2 },
+    variables: { studentId: currentWardProfile?.id },
   });
   const {data: getUploadedResult} = useQuery(GET_STUDENT_UPLOADED_RESULT, {
-    variables: { studentId: currentWardProfile?.id || 2, limit:4,},
+    variables: { studentId: currentWardProfile?.id, limit:100,},
   })
   const [resultsType, setResultstype] = useState("");
   const [generatedResults, setGeneratedResults] = useState<
@@ -145,7 +145,7 @@ const Results: FC<ResultsProps> = ({}) => {
     } else if(resultsType === 'generated'){
       setCurrentResult(generatedResults)
     }
-  }, [resultsType]);
+  }, [resultsType, generatedResults, uploadedResults ]);
 
   const columnNames = [
     "School",
@@ -174,7 +174,7 @@ const Results: FC<ResultsProps> = ({}) => {
             fontSize={"sm"}
             color={"#747474"}
             rounded={"md"}
-            _hover={{cursor:"pointer"}}
+            _hover={{ cursor: "pointer" }}
           >
             <option value="uploaded">Uploaded</option>
             <option value="generated">Generated</option>
@@ -224,12 +224,16 @@ const Results: FC<ResultsProps> = ({}) => {
       <Box
         mt={{ base: "12" }}
         display={currentResult.length === 0 ? "none" : "block"}
+        height={"600px"}
+        overflowY={'auto'}
+        border={'1px solid #005D5D'}
+        rounded={'lg'}
+        p={'1rem'}
       >
         <TableContainer>
           <Table
             size={{ base: "sm", xl: "md" }}
             variant="striped"
-            colorScheme="gray"
             borderColor={"#454545"}
           >
             <Thead>
@@ -239,9 +243,7 @@ const Results: FC<ResultsProps> = ({}) => {
                     <Th
                       key={index}
                       color={"#000"}
-                      textTransform={"none"}
                       fontWeight={"600"}
-                      fontSize={"lg"}
                     >
                       {column}
                     </Th>
