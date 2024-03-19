@@ -293,11 +293,12 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
       bg={"#fff"}
       borderBottom={"1px solid #C2C2C2"}
       justifyContent={"space-between"}
+      w={'full'}
       {...rest}
     >
       <Flex
         alignItems={"center"}
-        justifyContent={"space-between"}
+        justifyContent={'space-between'}
         display={{ base: "flex", md: "none" }}
         w='full'
       >
