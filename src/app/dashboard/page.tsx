@@ -17,6 +17,7 @@ import { useUserAPI } from "@/hooks/UserContext";
 import { PARENT_REQUESTS } from "@/gql/queries";
 import { useQuery, useMutation } from "@apollo/client";
 import { DELETE_REQUEST } from "@/gql/mutations";
+import Loading from "../loading";
 
 interface pageProps {}
 
@@ -32,7 +33,7 @@ interface RequestDataProps {
 const Page: FC<pageProps> = ({}) => {
   const toast = useToast()
   const { childData, parentData } = useUserAPI();
-  const { data: getRequests } = useQuery(PARENT_REQUESTS, {
+  const { data: getRequests, loading } = useQuery(PARENT_REQUESTS, {
     variables: { parentId: parentData?.userId },
   });
   const [deleteRequest] = useMutation(DELETE_REQUEST)
@@ -112,6 +113,10 @@ const Page: FC<pageProps> = ({}) => {
     };
     fetchData();
   }, [getRequests]);
+
+  if(loading){
+    return (<Loading />)
+  }
 
   return (
     <Flex h={"100vh"} overflowY={"auto"}>
