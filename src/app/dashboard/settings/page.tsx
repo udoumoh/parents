@@ -1,5 +1,5 @@
 "use client";
-import { FC, useState } from "react";
+import { FC, useState, useEffect } from "react";
 import {
   Box,
   Flex,
@@ -10,18 +10,31 @@ import {
   Icon,
   Divider,
   useDisclosure,
+  Badge,
+  useToast,
 } from "@chakra-ui/react";
 import { AiFillClockCircle } from "react-icons/ai";
 import { useUserAPI } from "@/hooks/UserContext";
-import { gql, useMutation } from "@apollo/client";
+import { gql, useQuery, useMutation } from "@apollo/client";
 import { useRouter } from "next/navigation";
 import { formatDate } from "@/helpers/formatDate";
+import { PARENT_REQUESTS } from "@/gql/queries";
 import EditProfileModal from "@/components/shared/editProfileModal";
+import { DELETE_REQUEST } from "@/gql/mutations";
 
 interface SettingsPageProps {}
 interface LegendBadgeProps {
   role: string;
   mt?: { base: string; lg: string };
+}
+
+interface RequestDataProps {
+  studentFirstName: string;
+  studentLastName: string;
+  studentProfileImgUrl: string;
+  message: string;
+  status: string;
+  id: number;
 }
 
 const LOGOUT_PARENTS = gql(`
@@ -51,10 +64,16 @@ const LegendBadge: React.FC<LegendBadgeProps> = ({ role, mt, ...rest }) => {
 };
 
 const SettingsPage: FC<SettingsPageProps> = ({}) => {
+  const toast = useToast()
+  const [requestData, setRequestData] = useState<RequestDataProps[]>([]);
   const {isOpen: isModalOpen, onOpen: onModalOpen, onClose: onModalClose} = useDisclosure();
   const router = useRouter();
   const [logoutParent] = useMutation(LOGOUT_PARENTS);
   const { profileData, parentData, childData } = useUserAPI();
+  const { data: getRequests, loading } = useQuery(PARENT_REQUESTS, {
+    variables: { parentId: parentData?.userId },
+  });
+  const [deleteRequest] = useMutation(DELETE_REQUEST);
 
   const handleLogout = async () => {
     const response = await logoutParent();
@@ -63,6 +82,72 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
       localStorage.removeItem('currentId')
     }
   };
+
+  const handleRequestDelete = async (requestId: any) => {
+    try {
+      const response = await deleteRequest({
+        variables: { deleteRequestId: requestId },
+      });
+      console.log(response);
+      if (!response) {
+        toast({
+          title: "Error",
+          description: "A client side error has occurred",
+          position: "top-right",
+          variant: "left-accent",
+          isClosable: true,
+          status: "error",
+        });
+      }
+      if (response?.data?.deleteRequest) {
+        toast({
+          title: "Success",
+          description: "Your request was successfully deleted.",
+          position: "top-right",
+          variant: "left-accent",
+          isClosable: true,
+          status: "success",
+        });
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000);
+      }
+    } catch (err: any) {
+      console.log(err);
+      toast({
+        title: "Error",
+        description: err?.message,
+        position: "top-right",
+        variant: "left-accent",
+        isClosable: true,
+        status: "error",
+      });
+    }
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await getRequests;
+        if (!response) {
+          console.log("client error");
+        } else {
+          const newData = response?.parentRequests.map((item: any) => ({
+            studentFirstName: item?.student?.firstName,
+            studentLastName: item?.student?.lastName,
+            studentProfileImgUrl: item?.student?.profileImgUrl,
+            message: item?.message,
+            status: item?.status,
+            id: item?.id,
+          }));
+          setRequestData(newData);
+        }
+      } catch (err: any) {
+        console.log(err);
+      }
+    };
+    fetchData();
+  }, [getRequests]);
 
   return (
     <Box
@@ -160,23 +245,23 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
 
         <Divider my={"2rem"} />
 
-        <Flex
-          justifyContent={"space-between"}
-          w={"full"}
-          flexDir={{ base: "column", lg: "row" }}
-        >
-          <Flex flexDir={"column"} alignItems={"flex-start"}>
-            <Text fontSize={"sm"} fontWeight={"bold"}>
-              Linked Students
-            </Text>
+        <Flex w={"full"} flexDir={"column"}>
+          {/* Linked students */}
+          <Flex
+            flexDir={"column"}
+            alignItems={"flex-start"}
+            my={"1rem"}
+            gap={3}
+          >
+            <Text fontWeight={"500"}>Linked Students</Text>
             <Flex
               flexDir={{ base: "column", lg: "row" }}
               gap={{ base: "5", lg: "20" }}
-              mt={"1rem"}
             >
               {(childData ?? []).length === 0 ? (
                 <Box
-                  backgroundColor={"#CCE7E7"}
+                  backgroundColor={"#005D5D10"}
+                  border={"1px solid #005D5D"}
                   display={"flex"}
                   alignItems={"center"}
                   px={"1.3rem"}
@@ -218,6 +303,98 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                         >
                           {item.greynoteNumber}
                         </Text>
+                      </Box>
+                    </Flex>
+                  );
+                })
+              )}
+            </Flex>
+          </Flex>
+
+          {/* Link requests */}
+          <Flex
+            flexDir={"column"}
+            alignItems={"flex-start"}
+            my={"1rem"}
+            gap={3}
+          >
+            <Text fontWeight={"500"}>Link Requests</Text>
+            <Flex
+              flexDir={{ base: "column", lg: "row" }}
+              gap={{ base: "5", lg: "20" }}
+            >
+              {(requestData ?? []).length === 0 ? (
+                <Box
+                  backgroundColor={"#005D5D10"}
+                  border={"1px solid #005D5D"}
+                  display={"flex"}
+                  alignItems={"center"}
+                  px={"1.3rem"}
+                  rounded={"md"}
+                  py={"1rem"}
+                  minW={{ base: "auto", lg: "550px" }}
+                >
+                  <Text fontSize={"lg"}>You have no active requests</Text>
+                </Box>
+              ) : (
+                requestData?.map((item, index) => {
+                  return (
+                    <Flex
+                      gap={2}
+                      key={index}
+                      mb={"0.5rem"}
+                      backgroundColor={"#005D5D10"}
+                      rounded={"lg"}
+                      border={"1px solid #005D5D"}
+                      py={"1rem"}
+                      pl={"1rem"}
+                      pr={"3rem"}
+                    >
+                      <Avatar
+                        size={"lg"}
+                        src={"https://jooinn.com/images/model-photo-3.jpg"}
+                        pointerEvents={"none"}
+                      />
+                      <Box
+                        lineHeight={"20px"}
+                        display={"flex"}
+                        flexDir={"column"}
+                      >
+                        <Text fontWeight={"600"} fontSize={"lg"}>
+                          Mike Oxsmaul
+                        </Text>
+                        <Text
+                          fontSize={"sm"}
+                          color={"gray.500"}
+                          fontWeight={"600"}
+                          maxW={"300px"}
+                        >
+                          I want my child to be linked to me as soon as possible
+                        </Text>
+                        <Flex mt={"1rem"} gap={3}>
+                          <Button
+                            size={"sm"}
+                            rounded={"full"}
+                            backgroundColor={"orange.400"}
+                            color={"#FFFFFF"}
+                            _hover={{ backgroundColor: "orange.400" }}
+                          >
+                            Pending
+                          </Button>
+                          <Button
+                            size={"sm"}
+                            colorScheme="red"
+                            _hover={{
+                              backgroundColor: "red.600",
+                              color: "#FFFFFF",
+                            }}
+                            variant={"outline"}
+                            rounded={"full"}
+                            onClick={handleRequestDelete}
+                          >
+                            Withdraw request
+                          </Button>
+                        </Flex>
                       </Box>
                     </Flex>
                   );
