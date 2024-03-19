@@ -295,17 +295,29 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
       justifyContent={"space-between"}
       {...rest}
     >
-      <IconButton
-        color={"#000"}
+      <Flex
+        alignItems={"center"}
+        justifyContent={"space-between"}
         display={{ base: "flex", md: "none" }}
-        onClick={onOpen}
-        variant="outline"
-        aria-label="open menu"
-        icon={<FiMenu />}
-      />
+      >
+        <IconButton
+          color={"#000"}
+          onClick={onOpen}
+          variant="outline"
+          aria-label="open menu"
+          icon={<FiMenu />}
+        />
 
-      <InputGroup w={{ base: "60%", md: "30%" }}>
-      </InputGroup>
+        <Image
+          src={"/images/greylight.svg"}
+          width={"2rem"}
+          height={"2rem"}
+          alt="logolight"
+          pointerEvents={"none"}
+        />
+      </Flex>
+
+      <InputGroup w={{ base: "60%", md: "30%" }}></InputGroup>
 
       <Button
         backgroundColor={"#005D5D"}
@@ -321,7 +333,11 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
         </Text>
       </Button>
 
-      <SearchStudentModal isSearchOpen={isModalOpen} onSearchClose={onModalClose} onSearchOpen={onModalOpen} />
+      <SearchStudentModal
+        isSearchOpen={isModalOpen}
+        onSearchClose={onModalClose}
+        onSearchOpen={onModalOpen}
+      />
     </Flex>
   );
 };
