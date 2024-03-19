@@ -347,7 +347,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
             </Text>
             <Avatar
               src={profileData.userBio.profileImage}
-              size={"md"}
+              size={"sm"}
               pointerEvents={"none"}
             />
             <Icon as={RiArrowDownSLine} color={"#000"} boxSize={6} />
@@ -355,32 +355,38 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
         </MenuButton>
         <MenuList>
           <MenuItem
-            p={"1rem"}
+            px={"1rem"}
             onClick={() => router.push("/dashboard/settings")}
             display={"flex"}
             gap={"3"}
           >
             <Icon as={IoMdSettings} boxSize={"4"} color={"#005D5D"} />
-            <Text color={"#005D5D"}>Settings</Text>
+            <Text color={"#005D5D"} fontWeight={"600"}>
+              Settings
+            </Text>
           </MenuItem>
           <MenuItem
-            p={"1rem"}
+            px={"1rem"}
             onClick={() => router.push("/dashboard/inbox")}
             display={"flex"}
             gap={"3"}
           >
             <Icon as={RiMailOpenFill} boxSize={"4"} color={"#005D5D"} />
-            <Text color={"#005D5D"}>Messages</Text>
+            <Text color={"#005D5D"} fontWeight={"600"}>
+              Messages
+            </Text>
           </MenuItem>
           <MenuDivider />
           <MenuItem
-            p={"1rem"}
+            px={"1rem"}
             onClick={handleLogout}
             display={"flex"}
             gap={"3"}
           >
             <Icon as={IoLogOut} boxSize={"4"} color={"red.600"} />
-            <Text color={"#005D5D"}>Logout</Text>
+            <Text color={"#005D5D"} fontWeight={"600"}>
+              Logout
+            </Text>
           </MenuItem>
         </MenuList>
       </Menu>
