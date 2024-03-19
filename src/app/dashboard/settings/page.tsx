@@ -320,8 +320,12 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
             gap={3}
           >
             <Text fontWeight={"500"}>Link Requests</Text>
-            <Flex w={'full'}>
-              <SimpleGrid minChildWidth={{base:"200px", md:"350px"}} spacing={"20px"} w={'full'}>
+            <Flex w={"full"} mb={"0.5rem"}>
+              <SimpleGrid
+                minChildWidth={{ base: "230px", md: "350px" }}
+                spacing={"20px"}
+                w={"full"}
+              >
                 {(requestData ?? []).length === 0 ? (
                   <Box
                     backgroundColor={"#005D5D10"}
@@ -342,13 +346,11 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                         <Flex
                           gap={2}
                           key={index}
-                          mb={"0.5rem"}
                           backgroundColor={"#005D5D10"}
                           rounded={"lg"}
                           border={"1px solid #005D5D"}
-                          py={"1rem"}
-                          px={"1rem"}
-                          w={"full"}
+                          p={"1rem"}
+                          w={"auto"}
                         >
                           <Avatar
                             size={"lg"}
@@ -360,7 +362,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                             display={"flex"}
                             flexDir={"column"}
                             justifyContent={"space-between"}
-                            w={'full'}
+                            w={"full"}
                           >
                             <Box>
                               <Flex
@@ -385,7 +387,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                                   px={"0.5rem"}
                                   py={"0.1rem"}
                                   fontSize={"2xs"}
-                                  rounded={'2xl'}
+                                  rounded={"2xl"}
                                 >
                                   {item?.status}
                                 </Badge>

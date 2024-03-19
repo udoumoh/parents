@@ -323,26 +323,6 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
         icon={<FiMenu />}
       />
 
-      <Menu>
-        <MenuButton>
-          <Box display={"flex"} alignItems={"center"} gap={2}>
-            <Text fontWeight={"500"}>
-              Hi, {profileData.userBio.firstName} {profileData.userBio.lastName}
-            </Text>
-            <Avatar
-              src={profileData.userBio.profileImage}
-              size={"sm"}
-              pointerEvents={"none"}
-            />
-            <Icon as={RiArrowDownSLine} color={"#fff"} boxSize={6} />
-          </Box>
-        </MenuButton>
-        <MenuList p={'1rem'}>
-          <MenuItem onClick={() => router.push('/dashboard/settings')}>Settings</MenuItem>
-          <MenuItem onClick={handleLogout}>Logout</MenuItem>
-        </MenuList>
-      </Menu>
-
       <Button
         backgroundColor={"#005D5D"}
         color={"#fff"}
@@ -356,6 +336,36 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
           Link your Child
         </Text>
       </Button>
+
+      <Menu>
+        <MenuButton>
+          <Box display={"flex"} alignItems={"center"} gap={2}>
+            <Text fontWeight={"600"}>
+              Hi, {profileData.userBio.firstName} {profileData.userBio.lastName}
+            </Text>
+            <Avatar
+              src={profileData.userBio.profileImage}
+              size={"sm"}
+              pointerEvents={"none"}
+            />
+            <Icon as={RiArrowDownSLine} color={"#000"} boxSize={6} />
+          </Box>
+        </MenuButton>
+        <MenuList p={"0.5rem"}>
+          <MenuItem
+            _hover={{ backgroundColor: "#005D5D30" }}
+            onClick={() => router.push("/dashboard/settings")}
+          >
+            Settings
+          </MenuItem>
+          <MenuItem
+            onClick={handleLogout}
+            _hover={{ backgroundColor: "#005D5D30" }}
+          >
+            Logout
+          </MenuItem>
+        </MenuList>
+      </Menu>
 
       <SearchStudentModal
         isSearchOpen={isModalOpen}
