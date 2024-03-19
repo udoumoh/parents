@@ -227,10 +227,11 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
               variant={"outline"}
               border={"1px solid #005D5D30"}
               onClick={onModalOpen}
-              _groupHover={{color:"#FFFFFF", backgroundColor:"#005D5D"}}
+              colorScheme="green"
+              gap={'2'}
             >
-              <Icon as={GoPencil} color={'gray.600'} boxSize={6} />
-              <Text color={'gray.600'}>Edit</Text>
+              <Icon as={GoPencil} boxSize={4} />
+              <Text >Edit</Text>
             </Button>
           </Flex>
           <EditProfileModal
