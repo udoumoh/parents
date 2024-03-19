@@ -28,6 +28,14 @@ import {
   PopoverTrigger,
   PopoverContent,
   Avatar,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  MenuItemOption,
+  MenuGroup,
+  MenuOptionGroup,
+  MenuDivider,
 } from "@chakra-ui/react";
 import { FiMenu } from "react-icons/fi";
 import { IoMdSettings } from "react-icons/io";
@@ -278,11 +286,22 @@ const NavItem = ({ icon, link, name, ...rest }: NavItemProps) => {
 };
 
 const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
+  const router = useRouter()
   const {
     isOpen: isModalOpen,
     onOpen: onModalOpen,
     onClose: onModalClose,
   } = useDisclosure();
+  const [logoutParent] = useMutation(LOGOUT_PARENTS);
+
+  const handleLogout = async () => {
+    const response = await logoutParent();
+    if (response.data.logoutParent) {
+      router.push("/signin");
+      localStorage.removeItem("currentId");
+    }
+  };
+  const {profileData} = useUserAPI()
 
   return (
     <Flex
@@ -304,7 +323,25 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
         icon={<FiMenu />}
       />
 
-      <InputGroup w={{ base: "60%", md: "30%" }}></InputGroup>
+      <Menu>
+        <MenuButton>
+          <Box display={"flex"} alignItems={"center"} gap={2}>
+            <Text fontWeight={"500"}>
+              Hi, {profileData.userBio.firstName} {profileData.userBio.lastName}
+            </Text>
+            <Avatar
+              src={profileData.userBio.profileImage}
+              size={"sm"}
+              pointerEvents={"none"}
+            />
+            <Icon as={RiArrowDownSLine} color={"#fff"} boxSize={6} />
+          </Box>
+        </MenuButton>
+        <MenuList p={'1rem'}>
+          <MenuItem onClick={() => router.push('/dashboard/settings')}>Settings</MenuItem>
+          <MenuItem onClick={handleLogout}>Logout</MenuItem>
+        </MenuList>
+      </Menu>
 
       <Button
         backgroundColor={"#005D5D"}

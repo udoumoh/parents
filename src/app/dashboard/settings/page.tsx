@@ -321,7 +321,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
           >
             <Text fontWeight={"500"}>Link Requests</Text>
             <Flex w={'full'}>
-              <SimpleGrid minChildWidth="400px" spacing={"10px"} w={'full'}>
+              <SimpleGrid minChildWidth={{base:"200px", md:"350px"}} spacing={"20px"} w={'full'}>
                 {(requestData ?? []).length === 0 ? (
                   <Box
                     backgroundColor={"#005D5D10"}
@@ -360,6 +360,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                             display={"flex"}
                             flexDir={"column"}
                             justifyContent={"space-between"}
+                            w={'full'}
                           >
                             <Box>
                               <Flex
@@ -402,7 +403,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                               <Button
                                 display={{ base: "none", md: "block" }}
                                 size={{ base: "xs", md: "sm" }}
-                                rounded={"full"}
+                                rounded={"lg"}
                                 color={
                                   item?.status === "PENDING"
                                     ? "orange.700"
@@ -436,7 +437,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                                   color: "#FFFFFF",
                                 }}
                                 variant={"outline"}
-                                rounded={"full"}
+                                rounded={"lg"}
                                 onClick={() => handleRequestDelete(item?.id)}
                               >
                                 Withdraw request
