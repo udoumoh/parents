@@ -53,7 +53,7 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
                 pointerEvents={"none"}
               />
               <Box>
-                <Text fontSize={{ base: "sm", lg: "md" }}>
+                <Text fontSize={{ base: "sm", lg: "md" }} maxW={'150px'}>
                   {currentWardProfile?.school}
                 </Text>
               </Box>

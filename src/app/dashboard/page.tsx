@@ -190,6 +190,7 @@ const Page: FC<pageProps> = ({}) => {
                 color={"#005D5D"}
                 fontWeight={"600"}
                 mb={"2rem"}
+                textAlign={'center'}
               >
                 Link Child Request Status
               </Text>
@@ -226,7 +227,6 @@ const Page: FC<pageProps> = ({}) => {
                         size={"sm"}
                         mt={"1rem"}
                         rounded={"full"}
-                        px={"3rem"}
                         color={
                           data?.status === "PENDING"
                             ? "orange.700"

@@ -151,7 +151,11 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
               Logout
             </Button>
           </Flex>
-          <EditProfileModal isOpen={isModalOpen} onOpen={onModalOpen} onClose={onModalClose} />
+          <EditProfileModal
+            isOpen={isModalOpen}
+            onOpen={onModalOpen}
+            onClose={onModalClose}
+          />
         </Flex>
 
         <Divider my={"2rem"} />
@@ -220,35 +224,37 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                 })
               )}
             </Flex>
+          </Flex>
+        </Flex>
 
-            <Box mt={"2rem"} w={"full"}>
-              <Text fontWeight={"500"} mb={"1rem"}>
-                Uploaded Files
-              </Text>
-              <Box
-                display={"flex"}
-                alignItems={"center"}
-                justifyContent={"center"}
-                minW={{ base: "auto", lg: "550px" }}
-                border={"1px solid #E2E2E2"}
-                rounded={"md"}
-                flexDir={"column"}
-                gap={3}
-                py={"1rem"}
-                px={"0.5rem"}
-              >
-                <Image
-                  alt="No files"
-                  src="/images/nofile.svg"
-                  pointerEvents={"none"}
-                  w={"150px"}
-                  h={"150px"}
-                />
-                <Text color={"#8A8A8A"} fontSize={"lg"} textAlign={"center"}>
-                  No files have been uploaded yet
-                </Text>
-              </Box>
-              {/* <Wrap gap={5} flexDir={{ base: "column", lg: "row" }}>
+        <Box mt={"2rem"} w={"full"}>
+          <Text fontWeight={"500"} mb={"1rem"}>
+            Uploaded Files
+          </Text>
+          <Box
+            display={"flex"}
+            alignItems={"center"}
+            justifyContent={"center"}
+            w={"full"}
+            border={"1px solid #005D5D30"}
+            rounded={"xl"}
+            flexDir={"column"}
+            gap={3}
+            py={"3rem"}
+            px={"0.5rem"}
+          >
+            <Image
+              alt="No files"
+              src="/images/nofile.svg"
+              pointerEvents={"none"}
+              w={"200px"}
+              h={"300px"}
+            />
+            <Text color={"#8A8A8A"} fontSize={"lg"} textAlign={"center"}>
+              No files have been uploaded yet
+            </Text>
+          </Box>
+          {/* <Wrap gap={5} flexDir={{ base: "column", lg: "row" }}>
                 {resultsData.map((result, index) => {
                   return (
                     <WrapItem key={index}>
@@ -257,9 +263,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                   );
                 })}
               </Wrap> */}
-            </Box>
-          </Flex>
-        </Flex>
+        </Box>
       </Box>
     </Box>
   );

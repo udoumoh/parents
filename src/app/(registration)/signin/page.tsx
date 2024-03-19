@@ -46,7 +46,7 @@ const Signin: FC<pageProps> = ({}) => {
       const response = await loginParent({
         variables: {
           password: password,
-          email: email,
+          email: email.toLowerCase(),
         },
       });
 
