@@ -26,6 +26,7 @@ export interface UserChildren {
   id: number;
   age: number;
   schoolId: number;
+  graycase:any;
 }
 
 interface ParentDataProps {
@@ -65,24 +66,7 @@ interface UserContextProps {
   >
   currentWardProfile?: UserChildren;
   parentData: ParentDataProps | undefined;
-  childData:
-    | [
-        {
-          firstName: string;
-          lastName: string;
-          greynoteNumber: string;
-          profileImage: string;
-          gender: string;
-          class: string;
-          dateOfBirth: string;
-          school: string;
-          schoollogo: string;
-          id: number;
-          age: number;
-          schoolId: number;
-        }
-      ]
-    | undefined;
+  childData: UserChildren[] | undefined;
 }
 
 const UserContext = createContext<UserContextProps | undefined>(undefined);
@@ -115,32 +99,16 @@ export const UserApiProvider: FC<UserApiProviderProps> = ({ children }) => {
         id: 0,
         age: 0,
         schoolId: 0,
+        graycase: null,
       },
     ],
   });
   const [parentData, setParentData] = useState<ParentDataProps | undefined>(
     undefined
   );
-  const [childData, setChildData] = useState<
-    | [
-        {
-          firstName: string;
-          lastName: string;
-          greynoteNumber: string;
-          profileImage: string;
-          gender: string;
-          class: string;
-          dateOfBirth: string;
-          school: string;
-          schoollogo: string;
-          id: number;
-          age: number;
-          schoolId: number;
-        }
-      ]
-    | undefined
-  >(undefined);
-  const currentId = Number(localStorage.getItem('currentId') || 0)
+  const [childData, setChildData] = useState<UserChildren[]>([]);
+
+  const currentId = Number(localStorage.getItem("currentId") || 0);
 
   const updateUserBio = (newBio: any) => {
     setProfileData((previousData) => {
@@ -157,8 +125,12 @@ export const UserApiProvider: FC<UserApiProviderProps> = ({ children }) => {
         const response = await parent;
         setParentData(response?.parent?.parent);
         const newData = {
-          firstName: capitalizeFirstLetter(response?.parent?.parent?.firstName || ""),
-          lastName: capitalizeFirstLetter(response?.parent?.parent?.lastName || ""),
+          firstName: capitalizeFirstLetter(
+            response?.parent?.parent?.firstName || ""
+          ),
+          lastName: capitalizeFirstLetter(
+            response?.parent?.parent?.lastName || ""
+          ),
           profileImage: response?.parent?.parent?.profileImgUrl || "",
           email: response?.parent?.parent?.email || "",
           parentRole: response?.parent?.parent?.parentRole || "",
@@ -179,7 +151,8 @@ export const UserApiProvider: FC<UserApiProviderProps> = ({ children }) => {
             schoollogo: child?.school?.school?.logoImgUrl || 0,
             id: child.id || 0,
             age: child?.ageInput || 0,
-            schoolId: child?.school?.school?.id || 0
+            schoolId: child?.school?.school?.id || 0,
+            graycase: child?.studentCase?.grayCase || null,
           })
         );
 
@@ -192,13 +165,12 @@ export const UserApiProvider: FC<UserApiProviderProps> = ({ children }) => {
       }
     };
 
-    
     fetchData();
   }, [parent]);
-  
+
   const setLocalstorageId = (id: any) => {
-    localStorage.setItem('currentId', id)
-  }
+    localStorage.setItem("currentId", id);
+  };
 
   const currentWardProfile = (childData || []).find(
     (child) => child.id === Number(localStorage.getItem("currentId") || 0)

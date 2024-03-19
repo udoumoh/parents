@@ -167,8 +167,9 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
           flexDir={{ base: "column", md: "row" }}
           rounded={"xl"}
           p={"2rem"}
-          border={"1px solid #005D5D70"}
-          backgroundColor={"#005D5D20"}
+          // border={"1px solid #005D5D70"}
+          shadow={"lg"}
+          backgroundColor={"#334854"}
         >
           <Flex
             alignItems={"center"}
@@ -176,13 +177,13 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
             flexDir={{ base: "column", lg: "row" }}
             justifyContent={"center"}
           >
-            <Box border={"3px solid #12B77B"} rounded={"full"} p={"0.2rem"}>
-              <Avatar
-                src={profileData?.userBio?.profileImage}
-                size={{ base: "xl", lg: "2xl" }}
-                pointerEvents={"none"}
-              />
-            </Box>
+            {/* <Box border={"3px solid #12B77B"} rounded={"full"} p={"0.2rem"}> */}
+            <Avatar
+              src={profileData?.userBio?.profileImage}
+              size={{ base: "xl", lg: "2xl" }}
+              pointerEvents={"none"}
+            />
+            {/* </Box> */}
             <Box
               display={"flex"}
               flexDir={"column"}
@@ -190,8 +191,12 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
               justifyContent={"center"}
             >
               <Flex alignItems={"center"} gap={2}>
-                <Text fontSize={{ base: "lg", lg: "2xl" }} fontWeight={"bold"}>
-                  {`${profileData?.userBio?.firstName} ${profileData?.userBio?.lastName}`}
+                <Text
+                  fontSize={{ base: "lg", lg: "3xl" }}
+                  fontWeight={"bold"}
+                  color={"#FCF4D9"}
+                >
+                  {`${profileData?.userBio?.firstName} ${profileData?.userBio?.lastName}`}{" "}
                 </Text>
                 <Image
                   src="/images/verifiedtag.png"
@@ -203,14 +208,18 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                 />
               </Flex>
 
-              <LegendBadge
+              {/* <LegendBadge
                 role={profileData?.userBio?.parentRole || ""}
                 mt={{ base: "0.3rem", lg: "0.8rem" }}
-              />
+              /> */}
+
+              <Text fontSize={"lg"} fontWeight={"700"} color={"#FCF4D990"}>
+                {profileData?.userBio?.parentRole}
+              </Text>
 
               <Flex alignItems={"center"} gap={2} my="0.5rem">
-                <Icon as={AiFillClockCircle} color={"#747474"} />
-                <Text color={"#747474"} fontSize={{ base: "2xs", lg: "sm" }}>
+                <Icon as={AiFillClockCircle} color={"#FFF"} />
+                <Text color={"#FFF"} fontSize={{ base: "2xs", lg: "sm" }}>
                   Created on {formatDate(parentData?.createdAt)}
                 </Text>
               </Flex>
@@ -219,10 +228,11 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
           <Flex gap={"6"}>
             <Button
               variant={"outline"}
-              border={"1px solid gray.600"}
+              border={"1px solid #FCF4D9"}
               onClick={onModalOpen}
-              colorScheme="green"
-              gap={'2'}
+              gap={"2"}
+              color="#FCF4D9"
+              _hover={{color:"green", backgroundColor:"green.100"}}
             >
               <Icon as={GoPencil} boxSize={4} />
               <Text>Edit</Text>
@@ -278,7 +288,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                       py={"0.5rem"}
                       pl={"1rem"}
                       pr={"3rem"}
-                      _hover={{boxShadow:"lg"}}
+                      _hover={{ boxShadow: "lg" }}
                     >
                       <Avatar
                         size={"md"}
