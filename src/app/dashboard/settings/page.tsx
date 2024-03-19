@@ -170,7 +170,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
         <Flex
           justifyContent={"space-between"}
           alignItems={{ base: "center", lg: "start" }}
-          flexDir={{ base: "column", lg: "row" }}
+          flexDir={{ base: "column", md: "row" }}
           rounded={"xl"}
           p={"1rem"}
           border={"1px solid #005D5D70"}
