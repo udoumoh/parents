@@ -18,15 +18,16 @@ import {
   Avatar,
   useDisclosure,
   useToast,
-  InputGroup,
   InputRightElement,
   Icon,
+  InputGroup,
+  InputLeftAddon,
 } from "@chakra-ui/react";
 import * as Yup from "yup";
 import { Formik, Form, Field } from "formik";
 import { useRouter } from "next/navigation";
 import { ImageUpload } from "@/components/imageUpload/ImageUpload";
-import { gql, useMutation } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 import { REGISTER_PARENT } from "@/gql/mutations";
 import { IoMdEyeOff, IoMdEye } from "react-icons/io";
 
@@ -325,14 +326,22 @@ const Page: FC<pageProps> = ({}) => {
                                   <FormLabel color={"#005D5D"} fontSize={"sm"}>
                                     Phone Number
                                   </FormLabel>
-                                  <Input
-                                    border={"1px solid #005D5D40"}
-                                    {...field}
-                                    type="number"
-                                    autoComplete="true"
-                                    focusBorderColor="#005D5D95"
-                                    errorBorderColor="#005D5D40"
-                                  />
+                                  <InputGroup>
+                                    <InputLeftAddon
+                                      border={"1px solid #005D5D40"}
+                                      backgroundColor={'transparent'}
+                                    >
+                                      +234
+                                    </InputLeftAddon>
+                                    <Input
+                                      border={"1px solid #005D5D40"}
+                                      {...field}
+                                      type="number"
+                                      autoComplete="true"
+                                      focusBorderColor="#005D5D95"
+                                      errorBorderColor="#005D5D40"
+                                    />
+                                  </InputGroup>
                                   <FormErrorMessage>
                                     {form.errors.phoneNumber}
                                   </FormErrorMessage>
