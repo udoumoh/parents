@@ -166,9 +166,9 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
           alignItems={{ base: "center", lg: "start" }}
           flexDir={{ base: "column", md: "row" }}
           rounded={"xl"}
-          p={"1rem"}
+          p={"2rem"}
           border={"1px solid #005D5D70"}
-          backgroundColor={"#005D5D"}
+          backgroundColor={"#005D5D20"}
         >
           <Flex
             alignItems={"center"}
