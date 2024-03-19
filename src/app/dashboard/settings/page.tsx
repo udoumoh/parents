@@ -348,7 +348,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                         py={"1rem"}
                         pl={"1rem"}
                         pr={"3rem"}
-                        w={'full'}
+                        w={"full"}
                       >
                         <Avatar
                           size={"lg"}
@@ -376,7 +376,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                           </Box>
                           <Flex mt={"1rem"} gap={3}>
                             <Button
-                              size={"sm"}
+                              size={{ base: "xs", md: "sm" }}
                               rounded={"full"}
                               color={
                                 item?.status === "PENDING"
@@ -404,7 +404,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                               {item?.status}
                             </Button>
                             <Button
-                              size={"sm"}
+                              size={{ base: "xs", md: "sm" }}
                               colorScheme="red"
                               _hover={{
                                 backgroundColor: "red.600",
