@@ -12,6 +12,7 @@ import {
   useDisclosure,
   Badge,
   useToast,
+  SimpleGrid
 } from "@chakra-ui/react";
 import { AiFillClockCircle } from "react-icons/ai";
 import { useUserAPI } from "@/hooks/UserContext";
@@ -319,10 +320,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
             gap={3}
           >
             <Text fontWeight={"500"}>Link Requests</Text>
-            <Flex
-              flexDir={{ base: "column", lg: "row" }}
-              gap={{ base: "5", lg: "20" }}
-            >
+            <SimpleGrid minChildWidth="200px" spacing={"10px"}>
               {(requestData ?? []).length === 0 ? (
                 <Box
                   backgroundColor={"#005D5D10"}
@@ -339,87 +337,92 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
               ) : (
                 requestData?.map((item, index) => {
                   return (
-                    <Flex
-                      gap={2}
-                      key={index}
-                      mb={"0.5rem"}
-                      backgroundColor={"#005D5D10"}
-                      rounded={"lg"}
-                      border={"1px solid #005D5D"}
-                      py={"1rem"}
-                      pl={"1rem"}
-                      pr={"3rem"}
-                    >
-                      <Avatar
-                        size={"lg"}
-                        src={item?.studentProfileImgUrl}
-                        pointerEvents={"none"}
-                      />
-                      <Box
-                        lineHeight={"20px"}
-                        display={"flex"}
-                        flexDir={"column"}
+                    item?.status !== "ACTIVE" && (
+                      <Flex
+                        gap={2}
+                        key={index}
+                        mb={"0.5rem"}
+                        backgroundColor={"#005D5D10"}
+                        rounded={"lg"}
+                        border={"1px solid #005D5D"}
+                        py={"1rem"}
+                        pl={"1rem"}
+                        pr={"3rem"}
                       >
-                        <Text fontWeight={"600"} fontSize={"lg"}>
-                          {item?.studentFirstName} {item?.studentLastName}
-                        </Text>
-                        <Text
-                          fontSize={"sm"}
-                          color={"gray.500"}
-                          fontWeight={"600"}
-                          maxW={"300px"}
+                        <Avatar
+                          size={"lg"}
+                          src={item?.studentProfileImgUrl}
+                          pointerEvents={"none"}
+                        />
+                        <Box
+                          lineHeight={"20px"}
+                          display={"flex"}
+                          flexDir={"column"}
+                          justifyContent={"space-between"}
                         >
-                          {item?.message}
-                        </Text>
-                        <Flex mt={"1rem"} gap={3}>
-                          <Button
-                            size={"sm"}
-                            rounded={"full"}
-                            color={
-                              item?.status === "PENDING"
-                                ? "orange.700"
-                                : item?.status === "ACCEPTED"
-                                ? "green.700"
-                                : "red.700"
-                            }
-                            backgroundColor={
-                              item?.status === "PENDING"
-                                ? "orange.300"
-                                : item?.status === "ACCEPTED"
-                                ? "green.300"
-                                : "red.300"
-                            }
-                            _hover={{
-                              backgroundColor:
+                          <Box>
+                            <Text fontWeight={"600"} fontSize={"lg"}>
+                              {item?.studentFirstName} {item?.studentLastName}
+                            </Text>
+                            <Text
+                              fontSize={"sm"}
+                              color={"gray.500"}
+                              fontWeight={"600"}
+                              maxW={"300px"}
+                            >
+                              {item?.message}
+                            </Text>
+                          </Box>
+                          <Flex mt={"1rem"} gap={3}>
+                            <Button
+                              size={"sm"}
+                              rounded={"full"}
+                              color={
+                                item?.status === "PENDING"
+                                  ? "orange.700"
+                                  : item?.status === "ACCEPTED"
+                                  ? "green.700"
+                                  : "red.700"
+                              }
+                              backgroundColor={
                                 item?.status === "PENDING"
                                   ? "orange.300"
                                   : item?.status === "ACCEPTED"
                                   ? "green.300"
-                                  : "red.300",
-                            }}
-                          >
-                            {item?.status}
-                          </Button>
-                          <Button
-                            size={"sm"}
-                            colorScheme="red"
-                            _hover={{
-                              backgroundColor: "red.600",
-                              color: "#FFFFFF",
-                            }}
-                            variant={"outline"}
-                            rounded={"full"}
-                            onClick={()=>handleRequestDelete(item?.id)}
-                          >
-                            Withdraw request
-                          </Button>
-                        </Flex>
-                      </Box>
-                    </Flex>
+                                  : "red.300"
+                              }
+                              _hover={{
+                                backgroundColor:
+                                  item?.status === "PENDING"
+                                    ? "orange.300"
+                                    : item?.status === "ACCEPTED"
+                                    ? "green.300"
+                                    : "red.300",
+                              }}
+                            >
+                              {item?.status}
+                            </Button>
+                            <Button
+                              size={"sm"}
+                              colorScheme="red"
+                              _hover={{
+                                backgroundColor: "red.600",
+                                color: "#FFFFFF",
+                              }}
+                              variant={"outline"}
+                              rounded={"full"}
+                              onClick={() => handleRequestDelete(item?.id)}
+                            >
+                              Withdraw request
+                            </Button>
+                          </Flex>
+                        </Box>
+                      </Flex>
+                    )
                   );
                 })
               )}
-            </Flex>
+            </SimpleGrid>
           </Flex>
         </Flex>
 

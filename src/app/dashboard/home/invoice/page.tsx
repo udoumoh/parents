@@ -163,7 +163,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
             flexDir={"column"}
             backgroundColor={"#005D5D15"}
             border={"1px solid #005D5D"}
-            rounded={"md"}
+            rounded={"lg"}
             px={5}
             py={2}
             gap={"2"}
@@ -194,7 +194,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
             flexDir={"column"}
             backgroundColor={"#005D5D15"}
             border={"1px solid #005D5D"}
-            rounded={"md"}
+            rounded={"lg"}
             px={5}
             py={2}
             gap={"2"}
@@ -225,7 +225,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
             flexDir={"column"}
             backgroundColor={"#005D5D15"}
             border={"1px solid #005D5D"}
-            rounded={"md"}
+            rounded={"lg"}
             px={5}
             py={2}
             gap={"2"}
@@ -256,7 +256,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
             flexDir={"column"}
             backgroundColor={"#005D5D15"}
             border={"1px solid #005D5D"}
-            rounded={"md"}
+            rounded={"lg"}
             px={5}
             py={2}
             gap={"2"}
