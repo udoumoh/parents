@@ -299,6 +299,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
         alignItems={"center"}
         justifyContent={"space-between"}
         display={{ base: "flex", md: "none" }}
+        w='full'
       >
         <IconButton
           color={"#000"}
