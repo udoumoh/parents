@@ -43,9 +43,9 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
                 </Text>
               </Box>
             </Box>
-            <Box display={'flex'} gap={2}>
+            <Box display={'flex'} gap={2} alignItems={'center'}>
               <Image
-                rounded={'md'}
+                rounded={'lg'}
                 src={currentWardProfile?.schoollogo}
                 alt="profileImg"
                 w={{ base: "2.5rem", lg: "4.5rem" }}
