@@ -43,13 +43,21 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
                 </Text>
               </Box>
             </Box>
-            <Image
-              src={currentWardProfile?.schoollogo}
-              alt="profileImg"
-              w={{ base: "2.5rem", lg: "4.5rem" }}
-              h={{ base: "2.5rem", lg: "4.5rem" }}
-              pointerEvents={"none"}
-            />
+            <Box display={'flex'} flexDir={'column'} gap={2}>
+              <Image
+                rounded={'md'}
+                src={currentWardProfile?.schoollogo}
+                alt="profileImg"
+                w={{ base: "2.5rem", lg: "4.5rem" }}
+                h={{ base: "2.5rem", lg: "4.5rem" }}
+                pointerEvents={"none"}
+              />
+              <Box>
+                <Text fontSize={{ base: "sm", lg: "xl" }}>
+                  {currentWardProfile?.school}
+                </Text>
+              </Box>
+            </Box>
           </Box>
           <Box>
             <Box
