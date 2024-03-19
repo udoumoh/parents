@@ -174,7 +174,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
           rounded={"xl"}
           p={"1rem"}
           border={"1px solid #005D5D70"}
-          backgroundColor={"#005D5D"}
+          backgroundColor={"#403441"}
         >
           <Flex
             alignItems={"center"}
@@ -196,7 +196,11 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
               justifyContent={"center"}
             >
               <Flex alignItems={"center"} gap={2}>
-                <Text fontSize={{ base: "lg", lg: "2xl" }} fontWeight={"bold"} color={'#FFFFFF'}>
+                <Text
+                  fontSize={{ base: "lg", lg: "2xl" }}
+                  fontWeight={"bold"}
+                  color={"#FFFFFF"}
+                >
                   {`${profileData?.userBio?.firstName} ${profileData?.userBio?.lastName}`}
                 </Text>
                 <Image
@@ -228,10 +232,10 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
               border={"1px solid #005D5D30"}
               onClick={onModalOpen}
               colorScheme="white"
-              gap={'2'}
+              gap={"2"}
             >
               <Icon as={GoPencil} boxSize={4} />
-              <Text >Edit</Text>
+              <Text>Edit</Text>
             </Button>
           </Flex>
           <EditProfileModal

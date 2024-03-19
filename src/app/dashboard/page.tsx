@@ -212,15 +212,15 @@ const Page: FC<pageProps> = ({}) => {
                     rounded={"xl"}
                     shadow={"lg"}
                   >
-                    <Avatar size={"xl"} src={data?.studentProfileImgUrl} />
+                    <Avatar size={"lg"} src={data?.studentProfileImgUrl} />
 
-                    <Text fontSize={"xl"} fontWeight={"600"}>
+                    <Text fontSize={"lg"} fontWeight={"600"}>
                       {data?.studentFirstName} {data?.studentLastName}
                     </Text>
 
                     <Text
                       textAlign={"center"}
-                      fontSize={{ base: "sm", md: "md" }}
+                      fontSize={{ base: "xs", md: "sm" }}
                       color={"gray.600"}
                       w={{ base: "auto", md: "300px" }}
                     >
