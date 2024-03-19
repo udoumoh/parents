@@ -1456,6 +1456,102 @@ query StudentResult($studentId: Float!, $limit: Float!, $sortBy: String, $cursor
       creatorRole
       creatorPicture
       creatorName
+      school {
+        id
+        createdAt
+        isDisabled
+        isVerified
+        schoolName
+        rcnumber
+        address
+        type
+        lgarea
+        folder
+        state
+        country
+        description
+        phonenumber
+        email
+        websiteUrl
+        instagramUrl
+        facebookUrl
+        twitterUrl
+        linkedinUrl
+        accountName
+        accountNumber
+        bankName
+        logoImgUrl
+        bannerImgUrl
+        license
+        creator {
+          errors {
+            field
+            message
+          }
+          admin {
+            id
+            isPaid
+            userId
+            folder
+            status
+            plan
+            isReferred
+            isDisabled
+            agreedTo
+            referralCode
+            createdAt
+            firstName
+            middleName
+            lastName
+            phoneNumber
+            email
+            profileImgUrl
+            role
+            accountOfficer {
+              id
+              userId
+              isDisabled
+              isSuper
+              isDirector
+              createdAt
+              fullName
+              username
+              phoneNumber
+              role
+              status
+              department
+              email
+              profileImgUrl
+              greyAdmin {
+                id
+                isPaid
+                userId
+                folder
+                status
+                plan
+                isReferred
+                isDisabled
+                agreedTo
+                referralCode
+                createdAt
+                firstName
+                middleName
+                lastName
+                phoneNumber
+                email
+                profileImgUrl
+                role
+                school
+                schoolImg
+                statusCode
+              }
+            }
+            school
+            schoolImg
+            statusCode
+          }
+        }
+      }
     }
     hasMore
     cursor

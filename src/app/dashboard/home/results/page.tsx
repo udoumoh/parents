@@ -31,18 +31,39 @@ import { formatDate } from "@/helpers/formatDate";
 
 interface ResultsProps {}
 
-interface GeneratedResultsProps {
-  dateGenerated: string;
-  term: string;
-  examType: string;
+interface GeneratedResultProps {
+  test1: [];
+  test2: [];
+  test3: [];
+  test4: [];
+  scores: [];
+  authorsFirstName: string;
+  authorsSchoolName: string;
+  authorsLastName: string;
+  authorsMiddleName: string;
+  studentsFirstName: string;
+  studentsLastName: string;
+  academicTerm: string;
+  resultType: string;
+  creator: string;
   schoolLogo: string;
   schoolName: string;
-  status: string;
-  sharerProfileUrl: string;
-  sharerFirstName: string;
-  sharerLastName: string;
-  shareDate: string;
+  studentProfileImgUrl: string;
+  studentAge: number;
+  className: string;
+  classStudents: number;
+  attendance: number;
+  subjects: [];
+  grades: [];
+  remark: string;
+  authorsProfileImgUrl: string;
   documentPath: string;
+  authorsCreatedAt: string;
+  isOfficial: string;
+  examType: string;
+  sharerFirstName: string;
+  shareDate: string;
+  createdAt: string;
 }
 
 const Results: FC<ResultsProps> = ({}) => {
@@ -55,21 +76,14 @@ const Results: FC<ResultsProps> = ({}) => {
   const { data: getgeneratedresult } = useQuery(GET_STUDENT_GENERATED_RESULT, {
     variables: { studentId: currentWardProfile?.id },
   });
-  const {data: getUploadedResult} = useQuery(GET_STUDENT_UPLOADED_RESULT, {
-    variables: { studentId: currentWardProfile?.id, limit:100,},
-  })
-  const [resultsType, setResultstype] = useState("");
-  const [generatedResults, setGeneratedResults] = useState<
-    GeneratedResultsProps[]
-  >([]);
-  const [uploadedResults, setUploadedResults] = useState<
-    GeneratedResultsProps[]
-  >([]);
-  const [currentResult, setCurrentResult] = useState<
-    GeneratedResultsProps[]
-  >([]);
+  const { data: getUploadedResult } = useQuery(GET_STUDENT_UPLOADED_RESULT, {
+    variables: { studentId: currentWardProfile?.id, limit: 10 },
+  });
+  const [resultsType, setResultstype] = useState("uploaded");
+  const [pdfResult, setPdfResult] = useState<GeneratedResultProps[]>([]);
+  const [uploadedResults, setUploadedResults] = useState<GeneratedResultProps[]>([]);
+  const [currentResult, setCurrentResult] = useState<GeneratedResultProps[]>([]);
 
-  console.log(resultsType);
   useEffect(() => {
     const fetchGeneratedResult = async () => {
       try {
@@ -78,25 +92,43 @@ const Results: FC<ResultsProps> = ({}) => {
           console.log("failed to fetch results data");
         }
         if (response) {
-          console.log(response)
-          const parsedResultsData = response?.studentGeneratedResult?.map(
-            (item: any) => ({
-              dateGenerated: formatDate(item?.createdAt || ""),
-              term: item.academicTerm || "",
-              examType: item.resultType || "",
-              schoolLogo: item?.school?.logoImgUrl || "",
-              schoolName: item?.school?.schoolName || "",
-              status: item?.isOfficial || "",
-              sharerProfileUrl:
-                item?.student?.creator?.admin?.profileImgUrl || "",
-              sharerFirstName: item?.student?.creator?.admin?.firstName || "",
-              sharerLastName: item?.student?.creator?.admin?.lastName || "",
-              shareDate: formatDate(
-                item?.student?.creator?.admin?.createdAt || ""
-              ),
+          const pdfViewData = response?.studentGeneratedResult?.map(
+            (result: any) => ({
+              test1: result?.test1,
+              test2: result?.test2,
+              test3: result?.test3,
+              test4: result?.test4,
+              scores: result?.scores,
+              authorsFirstName:
+                result?.student?.creator?.admin?.firstName,
+              authorsSchoolName: result?.student?.creator?.admin?.school,
+              authorsLastName: result?.student?.creator?.admin?.lastName,
+              authorsMiddleName:
+                result?.student?.creator?.admin?.middleName,
+              studentsFirstName: result?.student?.firstName,
+              studentsLastName: result?.student?.lastName,
+              academicTerm: result?.academicTerm,
+              resultType: result?.resultType,
+              creator: result?.creator,
+              schoolLogo: result?.school?.logoImgUrl,
+              schoolName: result?.school?.schoolName,
+              studentProfileImgUrl: result?.student?.profileImgUrl,
+              studentAge: result?.student?.ageInput,
+              className: result?.className,
+              classStudents: result?.classStudents,
+              attendance: result?.attendance,
+              subjects: result?.subjects,
+              grades: result?.grades,
+              remark: result?.remark,
+              authorsProfileImgUrl:
+              result?.student?.creator?.admin?.profileImgUrl,
+              documentPath: "",
+              authorsCreatedAt:
+              formatDate(result?.student?.creator?.admin?.createdAt),
+              isOfficial: result?.isOfficial,
             })
           );
-          setGeneratedResults(parsedResultsData);
+          setPdfResult(pdfViewData);
         }
       } catch (err: any) {
         console.log(err.message);
@@ -110,24 +142,20 @@ const Results: FC<ResultsProps> = ({}) => {
           console.log("failed to fetch results data");
         }
         if (response) {
-          console.log(response);
+          console.log(response)
           const parsedResultsData = response?.studentResult?.results?.map(
             (item: any) => ({
-              dateGenerated: formatDate(item?.createdAt || ""),
-              term: item.academicTerm || "",
-              examType: item.resultType || "",
-              schoolLogo: currentWardProfile?.schoollogo || "",
-              schoolName: currentWardProfile?.school,
-              status: item?.isOfficial || "",
+              term: item.academicTerm,
+              examType: item.resultType,
+              schoolLogo: item?.school?.logoImgUrl,
+              schoolName: item?.school?.schoolName,
+              status: item?.isOfficial,
               sharerProfileUrl:
-                item?.creatorPicture ||
-                "https://th.bing.com/th/id/OIP.Nyre9GBOmmL4Vfkg_9GCLgHaFg?rs=1&pid=ImgDetMain",
-              sharerFirstName: item?.creatorName || "",
-              sharerLastName: item?.student?.creator?.admin?.lastName || "",
-              shareDate: formatDate(
-                item?.createdAt || ""
-              ),
-              documentPath: item?.document
+                item?.school?.creator?.admin?.profileImgUrl,
+              sharerFirstName: item?.creatorName,
+              sharerLastName: item?.student?.creator?.admin?.lastName,
+              shareDate: formatDate(item?.createdAt),
+              documentPath: item?.document,
             })
           );
           setUploadedResults(parsedResultsData);
@@ -141,12 +169,12 @@ const Results: FC<ResultsProps> = ({}) => {
   }, [getgeneratedresult, getUploadedResult, currentWardProfile]);
 
   useEffect(() => {
-    if(resultsType === "uploaded"){
-      setCurrentResult(uploadedResults)
-    } else if(resultsType === 'generated'){
-      setCurrentResult(generatedResults)
+    if (resultsType === "uploaded") {
+      setCurrentResult(uploadedResults);
+    } else if (resultsType === "generated") {
+      setCurrentResult(pdfResult);
     }
-  }, [resultsType, generatedResults, uploadedResults ]);
+  }, [resultsType, pdfResult, uploadedResults]);
 
   const columnNames = [
     "School",
@@ -214,7 +242,10 @@ const Results: FC<ResultsProps> = ({}) => {
             {currentResult.map((result, index) => {
               return (
                 <WrapItem key={index}>
-                  <ResultCard key={index} result={result} />
+                  <ResultCard
+                    key={index}
+                    generatedresult={result}
+                  />
                 </WrapItem>
               );
             })}
@@ -225,11 +256,11 @@ const Results: FC<ResultsProps> = ({}) => {
       <Box
         mt={{ base: "12" }}
         display={currentResult.length === 0 ? "none" : "block"}
-        height={"600px"}
-        overflowY={'auto'}
-        border={'1px solid #005D5D'}
-        rounded={'lg'}
-        p={'1rem'}
+        maxHeight={"600px"}
+        overflowY={"auto"}
+        border={"1px solid #005D5D"}
+        rounded={"lg"}
+        p={"1rem"}
       >
         <TableContainer>
           <Table
@@ -241,11 +272,7 @@ const Results: FC<ResultsProps> = ({}) => {
               <Tr>
                 {columnNames.map((column, index) => {
                   return (
-                    <Th
-                      key={index}
-                      color={"#000"}
-                      fontWeight={"600"}
-                    >
+                    <Th key={index} color={"#000"} fontWeight={"600"}>
                       {column}
                     </Th>
                   );
@@ -254,9 +281,10 @@ const Results: FC<ResultsProps> = ({}) => {
             </Thead>
             <Tbody>
               {currentResult.map((data, index) => {
+                // console.log("This is", data)
                 return (
                   <Tr key={index}>
-                    <Td key={index} color={"#000"}>
+                    <Td color={"#000"}>
                       <Flex gap={2} alignItems={"center"}>
                         <Image
                           boxSize={"6"}
@@ -269,25 +297,25 @@ const Results: FC<ResultsProps> = ({}) => {
                         </Text>
                       </Flex>
                     </Td>
-                    <Td key={index} color={"#000"}>
-                      {data?.status ? "Official" : "Unofficial"}
+                    <Td color={"#000"}>
+                      {data?.isOfficial ? "Official" : "Unofficial"}
                     </Td>
-                    <Td key={index} color={"#000"}>
-                      {data?.term}
+                    <Td color={"#000"}>
+                      {data?.academicTerm}
                     </Td>
-                    <Td key={index} color={"#000"}>
-                      {data?.examType}
+                    <Td color={"#000"}>
+                      {data?.resultType || data?.examType}
                     </Td>
-                    <Td key={index}>
+                    <Td>
                       <Flex gap={2} alignItems={"center"}>
-                        <Avatar size={"xs"} src={data?.sharerProfileUrl} />
+                        <Avatar size={"xs"} src={data?.authorsProfileImgUrl} />
                         <Text fontSize={"md"} fontWeight={"400"}>
-                          {data?.sharerFirstName} {data?.sharerLastName}
+                          {data?.authorsFirstName || data?.sharerFirstName} {data?.authorsLastName}
                         </Text>
                       </Flex>
                     </Td>
-                    <Td key={index} color={"#000"}>
-                      {data?.shareDate}
+                    <Td color={"#000"}>
+                      {data?.shareDate || data?.authorsCreatedAt}
                     </Td>
                   </Tr>
                 );

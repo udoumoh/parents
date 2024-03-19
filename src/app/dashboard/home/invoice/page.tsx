@@ -512,7 +512,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                 colorScheme={
                                   item.status === "active"
                                     ? "green"
-                                    : item.status === "rejected"
+                                    : item.status === "rejected by parent"
                                     ? "red"
                                     : item.status === "processing"
                                     ? "yellow"
@@ -613,7 +613,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                 colorScheme={
                                   item.status === "active"
                                     ? "green"
-                                    : item.status === "rejected"
+                                    : item.status === "rejected by parent"
                                     ? "red"
                                     : item.status === "processing"
                                     ? "yellow"
@@ -714,7 +714,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                 colorScheme={
                                   item.status === "active"
                                     ? "green"
-                                    : item.status === "rejected"
+                                    : item.status === "rejected by parent"
                                     ? "red"
                                     : item.status === "processing"
                                     ? "yellow"
@@ -815,7 +815,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                 colorScheme={
                                   item.status === "active"
                                     ? "green"
-                                    : item.status === "rejected"
+                                    : item.status === "rejected by parent"
                                     ? "red"
                                     : item.status === "processing"
                                     ? "yellow"

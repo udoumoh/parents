@@ -1,30 +1,69 @@
-'use client'
-import { FC, useState } from 'react'
+"use client";
+import { FC, useState } from "react";
 import {
-    Box,
-    Image,
-    Text,
-    Flex,
-    IconButton, 
-    useDisclosure,
-} from '@chakra-ui/react'
-import { PDFViewer } from '../uploadedResultPdfViewer';
-import {MdOutlineFileDownload} from 'react-icons/md'
-import ImgViewer from '../imageViewer';
+  Box,
+  Image,
+  Text,
+  Flex,
+  IconButton,
+  useDisclosure,
+} from "@chakra-ui/react";
+import { PDFViewer } from "../uploadedResultPdfViewer";
+import ImgViewer from "../imageViewer";
+import GeneratedResults from "../generatedResults";
 
 interface ResultCardProps {
-  result: {
-    schoolName: string;
-    dateGenerated: string;
-    term: string;
-    examType: string;
+  generatedresult: {
+    test1: [];
+    test2: [];
+    test3: [];
+    test4: [];
+    scores: [];
+    authorsFirstName: string;
+    authorsSchoolName: string;
+    authorsLastName: string;
+    authorsMiddleName: string;
+    studentsFirstName: string;
+    studentsLastName: string;
+    academicTerm: string;
+    resultType: string;
+    creator: string;
     schoolLogo: string;
+    schoolName: string;
+    studentProfileImgUrl: string;
+    studentAge: number;
+    className: string;
+    classStudents: number;
+    attendance: number;
+    subjects: [];
+    grades: [];
+    remark: string;
+    authorsProfileImgUrl: string;
     documentPath: string;
+    authorsCreatedAt: string;
+    isOfficial: string;
+    examType: string;
+    shareDate: string;
+    createdAt: string;
   };
 }
 
-const ResultCard: FC<ResultCardProps> = ({ result }) => {
-  const {isOpen: isModalOpen, onClose: onModalClose, onOpen} = useDisclosure()
+const ResultCard: FC<ResultCardProps> = ({ generatedresult }) => {
+  const {
+    isOpen: isModalOpen,
+    onClose: onModalClose,
+    onOpen: onModalOpen,
+  } = useDisclosure();
+  const {
+    isOpen: isUploadedModalOpen,
+    onClose: onUploadedModalClose,
+    onOpen: onUploadedModalOpen,
+  } = useDisclosure();
+  const {
+    isOpen: isImageModalOpen,
+    onClose: onImageModalClose,
+    onOpen: onImageModalOpen,
+  } = useDisclosure();
   const [isImageViewerOpen, setIsImageViewerOpen] = useState(false);
 
   const openImageViewer = () => {
@@ -45,7 +84,11 @@ const ResultCard: FC<ResultCardProps> = ({ result }) => {
         cursor: "pointer",
         transition: "0.5s",
       }}
-      onClick={!result?.documentPath?.endsWith(".pdf") ? openImageViewer : onOpen}
+      onClick={
+        generatedresult?.documentPath?.endsWith(".pdf")
+          ? onUploadedModalOpen : generatedresult?.documentPath?.endsWith(".jpg") ? onImageModalOpen 
+          : onModalOpen
+      }
     >
       <Flex
         backgroundColor={"#fff"}
@@ -64,16 +107,17 @@ const ResultCard: FC<ResultCardProps> = ({ result }) => {
       </Flex>
       <Flex alignItems={"center"} gap={2} mt={"0.6rem"}>
         <Image
-          src={result.schoolLogo}
+          src={generatedresult?.schoolLogo}
           alt="logo"
           height={"2.5rem"}
           width={"2.5rem"}
           pointerEvents={"none"}
         />
         <Box>
-          <Text fontSize={"md"}>{result.schoolName}</Text>
+          <Text fontSize={"md"}>{generatedresult.schoolName}</Text>
           <Text color={"#959595"} fontSize={"xs"}>
-            Generated on {result.dateGenerated}
+            Generated on{" "}
+            {generatedresult?.shareDate || generatedresult.authorsCreatedAt}
           </Text>
         </Box>
       </Flex>
@@ -81,7 +125,7 @@ const ResultCard: FC<ResultCardProps> = ({ result }) => {
         alignItems={"baseline"}
         justifyContent={"space-between"}
         mt={"2rem"}
-        gap={'6'}
+        gap={"6"}
       >
         <Box>
           <Flex gap={3}>
@@ -90,9 +134,10 @@ const ResultCard: FC<ResultCardProps> = ({ result }) => {
               px={"1rem"}
               rounded={"md"}
               py={"0.3rem"}
+              display={generatedresult.academicTerm ? "block" : "none"}
             >
               <Text color="#fff" fontSize={"2xs"}>
-                {result.term}
+                {generatedresult.academicTerm}
               </Text>
             </Box>
             <Box
@@ -102,7 +147,7 @@ const ResultCard: FC<ResultCardProps> = ({ result }) => {
               py={"0.3rem"}
             >
               <Text color="#fff" fontSize={"2xs"}>
-                {result.examType}
+                {generatedresult.resultType || generatedresult.examType}
               </Text>
             </Box>
           </Flex>
@@ -113,10 +158,23 @@ const ResultCard: FC<ResultCardProps> = ({ result }) => {
           backgroundColor={"#BDDEDE"}
         /> */}
       </Flex>
-      <ImgViewer path={result?.documentPath} isViewerOpen={isImageViewerOpen} openImageViewer={openImageViewer} closeImageViewer={closeImageViewer} />
-      <PDFViewer isOpen={isModalOpen} onClose={onModalClose} path={result?.documentPath}/>
+      <ImgViewer
+        path={generatedresult?.documentPath}
+        isOpen={isImageModalOpen}
+        onClose={onImageModalClose}
+      />
+      <PDFViewer
+        isOpen={isUploadedModalOpen}
+        onClose={onUploadedModalClose}
+        path={generatedresult?.documentPath}
+      />
+      <GeneratedResults
+        result={generatedresult}
+        isOpen={isModalOpen}
+        onClose={onModalClose}
+      />
     </Box>
   );
 };
 
-export default ResultCard
+export default ResultCard;

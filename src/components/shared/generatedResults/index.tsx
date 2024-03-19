@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/alt-text */
 import {
   Button,
   Divider,
@@ -9,6 +10,7 @@ import {
   ModalHeader,
   ModalOverlay,
   VStack,
+  useDisclosure,
 } from "@chakra-ui/react";
 import {
   Document,
@@ -20,14 +22,15 @@ import {
   PDFViewer,
 } from "@react-pdf/renderer";
 import React from "react";
+import { formatDate } from "@/helpers/formatDate";
 
 interface GeneratedResultsProps {
   result: {
-    test1: Array<number>;
-    test2: Array<number>;
-    test3: Array<number>;
-    test4: Array<number>;
-    scores: Array<number>;
+    test1: [];
+    test2: [];
+    test3: [];
+    test4: [];
+    scores: [];
     authorsFirstName: string;
     authorsSchoolName: string;
     authorsLastName: string;
@@ -44,8 +47,8 @@ interface GeneratedResultsProps {
     className: string;
     classStudents: number;
     attendance: number;
-    subjects: Array<string>;
-    grades: Array<string>;
+    subjects: [];
+    grades: [];
     remark: string;
     createdAt: string;
     authorsProfileImgUrl: string;
@@ -186,9 +189,11 @@ const GeneratedResults: React.FC<GeneratedResultsProps> = ({
     "Total",
     "Grade",
   ];
+  // console.log("stud result: ", result)
   const author = `${result?.authorsFirstName} ${
     result?.authorsMiddleName?.length! > 1 ? result?.authorsMiddleName : ""
-  } ${result?.authorsLastName}`;
+  } ${result?.authorsLastName}`
+
   return (
     <Modal isOpen={isOpen} onClose={onClose} isCentered size="3xl">
       <ModalOverlay />
@@ -449,8 +454,7 @@ const GeneratedResults: React.FC<GeneratedResultsProps> = ({
 
                             <View style={styles.cell}>
                               <Text>
-                                {(result?.test1 && result?.test1[index]) ||
-                                  0}
+                                {(result?.test1 && result?.test1[index]) || 0}
                               </Text>
                             </View>
                             <View
@@ -463,8 +467,7 @@ const GeneratedResults: React.FC<GeneratedResultsProps> = ({
 
                             <View style={styles.cell}>
                               <Text>
-                                {(result?.test2 && result?.test2[index]) ||
-                                  0}
+                                {(result?.test2 && result?.test2[index]) || 0}
                               </Text>
                             </View>
                             <View
@@ -477,8 +480,7 @@ const GeneratedResults: React.FC<GeneratedResultsProps> = ({
 
                             <View style={styles.cell}>
                               <Text>
-                                {(result?.test3 && result?.test3[index]) ||
-                                  0}
+                                {(result?.test3 && result?.test3[index]) || 0}
                               </Text>
                             </View>
                             <View
@@ -491,8 +493,7 @@ const GeneratedResults: React.FC<GeneratedResultsProps> = ({
 
                             <View style={styles.cell}>
                               <Text>
-                                {(result?.test4 && result?.test4![index]) ||
-                                  0}
+                                {(result?.test4 && result?.test4![index]) || 0}
                               </Text>
                             </View>
                             <View
@@ -527,8 +528,7 @@ const GeneratedResults: React.FC<GeneratedResultsProps> = ({
                                     0) +
                                   ((result?.test4 && result?.test4[index]) ||
                                     0) +
-                                  ((result?.scores &&
-                                    result?.scores[index]) ||
+                                  ((result?.scores && result?.scores[index]) ||
                                     0)}
                               </Text>
                             </View>
@@ -642,7 +642,7 @@ const GeneratedResults: React.FC<GeneratedResultsProps> = ({
 
                     <Text style={styles.footer}>
                       Generated with Greynote -{" "}
-                      {new Date(parseInt(result?.createdAt)).toString()}
+                      {formatDate(result?.createdAt)}
                     </Text>
                   </View>
                 </Page>

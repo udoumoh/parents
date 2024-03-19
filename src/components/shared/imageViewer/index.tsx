@@ -1,31 +1,40 @@
 import { FC } from 'react'
 import ImageViewer from "react-simple-image-viewer";
-import { Box, Image } from '@chakra-ui/react'
+import {
+  Box,
+  Image,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+} from "@chakra-ui/react";
 
 interface ImgViewerProps {
-  isViewerOpen: boolean;
-  openImageViewer: () => void;
-  closeImageViewer: () => void;
+  isOpen: boolean;
+  onClose: () => void;
   path: string;
 }
 
-const ImgViewer: FC<ImgViewerProps> = ({path, isViewerOpen, closeImageViewer}) => {
-    const images = [
-        path,
-    ];
-
+const ImgViewer: FC<ImgViewerProps> = ({path, isOpen, onClose}) => {
 
   return (
     <Box>
-      {isViewerOpen && (
-        <ImageViewer
-          src={images}
-          currentIndex={0}
-          disableScroll={false}
-          closeOnClickOutside={true}
-          onClose={closeImageViewer}
-        />
-      )}
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Image Viewer</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <Image src={path} alt='logo' />
+          </ModalBody>
+
+          <ModalFooter>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </Box>
   );
 }
