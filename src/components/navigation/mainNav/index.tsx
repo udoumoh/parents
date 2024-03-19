@@ -293,31 +293,16 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
       bg={"#fff"}
       borderBottom={"1px solid #C2C2C2"}
       justifyContent={"space-between"}
-      w={'full'}
       {...rest}
     >
-      <Flex
-        alignItems={"center"}
-        justifyContent={'space-between'}
+      <IconButton
+        color={"#000"}
         display={{ base: "flex", md: "none" }}
-        w='full'
-      >
-        <IconButton
-          color={"#000"}
-          onClick={onOpen}
-          variant="outline"
-          aria-label="open menu"
-          icon={<FiMenu />}
-        />
-
-        <Image
-          src={"/images/greylightBordered.svg"}
-          width={"2rem"}
-          height={"2rem"}
-          alt="logolight"
-          pointerEvents={"none"}
-        />
-      </Flex>
+        onClick={onOpen}
+        variant="outline"
+        aria-label="open menu"
+        icon={<FiMenu />}
+      />
 
       <InputGroup w={{ base: "60%", md: "30%" }}></InputGroup>
 
