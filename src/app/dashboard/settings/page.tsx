@@ -85,6 +85,8 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
     }
   };
 
+  console.log(parentData)
+
   const handleRequestDelete = async (requestId: any) => {
     try {
       const response = await deleteRequest({
