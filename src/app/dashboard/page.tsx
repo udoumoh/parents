@@ -110,8 +110,6 @@ const Page: FC<pageProps> = ({}) => {
     fetchData();
   }, [getRequests]);
 
-  console.log(parentData)
-
   return (
     <Flex h={"100vh"} overflowY={"auto"}>
       <Box
@@ -192,7 +190,7 @@ const Page: FC<pageProps> = ({}) => {
               >
                 Link Child Request Status
               </Text>
-              <Flex flexDir={{base:"column", lg:"row"}} gap={4}>
+              <Flex flexDir={{ base: "column", lg: "row" }} gap={4}>
                 {requestData.map((data, index) => (
                   <Flex
                     key={index}
@@ -203,28 +201,26 @@ const Page: FC<pageProps> = ({}) => {
                     py={"1.5rem"}
                     px={{ base: "1rem", md: "5rem" }}
                     rounded={"xl"}
+                    shadow={"lg"}
                   >
-                    <Avatar
-                      size={"2xl"}
-                      src="https://media.licdn.com/dms/image/C5603AQG3DQjHDiI_wA/profile-displayphoto-shrink_800_800/0/1632845327933?e=2147483647&v=beta&t=3DDQ9XC3-92cSa-7ohy7s4FWx2_wfD8uHpk2sqINojM"
-                    />
+                    <Avatar size={"xl"} src={data?.studentProfileImgUrl} />
 
-                    <Text fontSize={"2xl"} fontWeight={"600"}>
+                    <Text fontSize={"xl"} fontWeight={"600"}>
                       {data?.studentFirstName} {data?.studentLastName}
                     </Text>
 
                     <Text
                       textAlign={"center"}
-                      fontSize={{ base: "sm", md: "lg" }}
+                      fontSize={{ base: "sm", md: "md" }}
                       color={"gray.600"}
-                      w={{base:"auto", md:"300px"}}
+                      w={{ base: "auto", md: "300px" }}
                     >
                       {data?.message}
                     </Text>
 
                     <Flex gap={"5"}>
                       <Button
-                        size={{ base: "sm", md: "md" }}
+                        size={"sm"}
                         mt={"1rem"}
                         rounded={"full"}
                         px={"3rem"}
@@ -254,7 +250,7 @@ const Page: FC<pageProps> = ({}) => {
                         {data?.status}
                       </Button>
                       <Button
-                        size={{ base: "sm", md: "md" }}
+                        size={"sm"}
                         mt={"1rem"}
                         rounded={"full"}
                         colorScheme="red"

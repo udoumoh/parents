@@ -81,8 +81,12 @@ const Results: FC<ResultsProps> = ({}) => {
   });
   const [resultsType, setResultstype] = useState("uploaded");
   const [pdfResult, setPdfResult] = useState<GeneratedResultProps[]>([]);
-  const [uploadedResults, setUploadedResults] = useState<GeneratedResultProps[]>([]);
-  const [currentResult, setCurrentResult] = useState<GeneratedResultProps[]>([]);
+  const [uploadedResults, setUploadedResults] = useState<
+    GeneratedResultProps[]
+  >([]);
+  const [currentResult, setCurrentResult] = useState<GeneratedResultProps[]>(
+    []
+  );
 
   useEffect(() => {
     const fetchGeneratedResult = async () => {
@@ -99,12 +103,10 @@ const Results: FC<ResultsProps> = ({}) => {
               test3: result?.test3,
               test4: result?.test4,
               scores: result?.scores,
-              authorsFirstName:
-                result?.student?.creator?.admin?.firstName,
+              authorsFirstName: result?.student?.creator?.admin?.firstName,
               authorsSchoolName: result?.student?.creator?.admin?.school,
               authorsLastName: result?.student?.creator?.admin?.lastName,
-              authorsMiddleName:
-                result?.student?.creator?.admin?.middleName,
+              authorsMiddleName: result?.student?.creator?.admin?.middleName,
               studentsFirstName: result?.student?.firstName,
               studentsLastName: result?.student?.lastName,
               academicTerm: result?.academicTerm,
@@ -121,10 +123,11 @@ const Results: FC<ResultsProps> = ({}) => {
               grades: result?.grades,
               remark: result?.remark,
               authorsProfileImgUrl:
-              result?.student?.creator?.admin?.profileImgUrl,
+                result?.student?.creator?.admin?.profileImgUrl,
               documentPath: "",
-              authorsCreatedAt:
-              formatDate(result?.student?.creator?.admin?.createdAt),
+              authorsCreatedAt: formatDate(
+                result?.student?.creator?.admin?.createdAt
+              ),
               isOfficial: result?.isOfficial,
             })
           );
@@ -142,7 +145,6 @@ const Results: FC<ResultsProps> = ({}) => {
           console.log("failed to fetch results data");
         }
         if (response) {
-          console.log(response)
           const parsedResultsData = response?.studentResult?.results?.map(
             (item: any) => ({
               term: item.academicTerm,
@@ -150,8 +152,7 @@ const Results: FC<ResultsProps> = ({}) => {
               schoolLogo: item?.school?.logoImgUrl,
               schoolName: item?.school?.schoolName,
               status: item?.isOfficial,
-              sharerProfileUrl:
-                item?.school?.creator?.admin?.profileImgUrl,
+              sharerProfileUrl: item?.school?.creator?.admin?.profileImgUrl,
               sharerFirstName: item?.creatorName,
               sharerLastName: item?.student?.creator?.admin?.lastName,
               shareDate: formatDate(item?.createdAt),
@@ -242,10 +243,7 @@ const Results: FC<ResultsProps> = ({}) => {
             {currentResult.map((result, index) => {
               return (
                 <WrapItem key={index}>
-                  <ResultCard
-                    key={index}
-                    generatedresult={result}
-                  />
+                  <ResultCard key={index} generatedresult={result} />
                 </WrapItem>
               );
             })}
@@ -281,7 +279,6 @@ const Results: FC<ResultsProps> = ({}) => {
             </Thead>
             <Tbody>
               {currentResult.map((data, index) => {
-                // console.log("This is", data)
                 return (
                   <Tr key={index}>
                     <Td color={"#000"}>
@@ -300,17 +297,14 @@ const Results: FC<ResultsProps> = ({}) => {
                     <Td color={"#000"}>
                       {data?.isOfficial ? "Official" : "Unofficial"}
                     </Td>
-                    <Td color={"#000"}>
-                      {data?.academicTerm}
-                    </Td>
-                    <Td color={"#000"}>
-                      {data?.resultType || data?.examType}
-                    </Td>
+                    <Td color={"#000"}>{data?.academicTerm}</Td>
+                    <Td color={"#000"}>{data?.resultType || data?.examType}</Td>
                     <Td>
                       <Flex gap={2} alignItems={"center"}>
                         <Avatar size={"xs"} src={data?.authorsProfileImgUrl} />
                         <Text fontSize={"md"} fontWeight={"400"}>
-                          {data?.authorsFirstName || data?.sharerFirstName} {data?.authorsLastName}
+                          {data?.authorsFirstName || data?.sharerFirstName}{" "}
+                          {data?.authorsLastName}
                         </Text>
                       </Flex>
                     </Td>

@@ -189,10 +189,10 @@ const GeneratedResults: React.FC<GeneratedResultsProps> = ({
     "Total",
     "Grade",
   ];
-  // console.log("stud result: ", result)
+
   const author = `${result?.authorsFirstName} ${
     result?.authorsMiddleName?.length! > 1 ? result?.authorsMiddleName : ""
-  } ${result?.authorsLastName}`
+  } ${result?.authorsLastName}`;
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} isCentered size="3xl">
@@ -641,8 +641,7 @@ const GeneratedResults: React.FC<GeneratedResultsProps> = ({
                     </View>
 
                     <Text style={styles.footer}>
-                      Generated with Greynote -{" "}
-                      {formatDate(result?.createdAt)}
+                      Generated with Greynote - {formatDate(result?.createdAt)}
                     </Text>
                   </View>
                 </Page>
