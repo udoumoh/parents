@@ -352,7 +352,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                     >
                       <Avatar
                         size={"lg"}
-                        src={"https://jooinn.com/images/model-photo-3.jpg"}
+                        src={item?.studentProfileImgUrl}
                         pointerEvents={"none"}
                       />
                       <Box
@@ -361,7 +361,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                         flexDir={"column"}
                       >
                         <Text fontWeight={"600"} fontSize={"lg"}>
-                          Mike Oxsmaul
+                          {item?.studentFirstName} {item?.studentLastName}
                         </Text>
                         <Text
                           fontSize={"sm"}
@@ -369,17 +369,36 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                           fontWeight={"600"}
                           maxW={"300px"}
                         >
-                          I want my child to be linked to me as soon as possible
+                          {item?.message}
                         </Text>
                         <Flex mt={"1rem"} gap={3}>
                           <Button
                             size={"sm"}
                             rounded={"full"}
-                            backgroundColor={"orange.400"}
-                            color={"#FFFFFF"}
-                            _hover={{ backgroundColor: "orange.400" }}
+                            color={
+                              item?.status === "PENDING"
+                                ? "orange.700"
+                                : item?.status === "ACCEPTED"
+                                ? "green.700"
+                                : "red.700"
+                            }
+                            backgroundColor={
+                              item?.status === "PENDING"
+                                ? "orange.300"
+                                : item?.status === "ACCEPTED"
+                                ? "green.300"
+                                : "red.300"
+                            }
+                            _hover={{
+                              backgroundColor:
+                                item?.status === "PENDING"
+                                  ? "orange.300"
+                                  : item?.status === "ACCEPTED"
+                                  ? "green.300"
+                                  : "red.300",
+                            }}
                           >
-                            Pending
+                            {item?.status}
                           </Button>
                           <Button
                             size={"sm"}
