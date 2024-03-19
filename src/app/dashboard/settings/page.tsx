@@ -278,6 +278,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                       py={"0.5rem"}
                       pl={"1rem"}
                       pr={"3rem"}
+                      _hover={{boxShadow:"lg"}}
                     >
                       <Avatar
                         size={"md"}
