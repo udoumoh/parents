@@ -321,7 +321,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
           >
             <Text fontWeight={"500"}>Link Requests</Text>
             <Flex w={'full'}>
-              <SimpleGrid minChildWidth="200px" spacing={"10px"} w={'full'}>
+              <SimpleGrid minChildWidth="300px" spacing={"10px"} w={'full'}>
                 {(requestData ?? []).length === 0 ? (
                   <Box
                     backgroundColor={"#005D5D10"}
@@ -331,7 +331,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                     px={"1.3rem"}
                     rounded={"md"}
                     py={"1rem"}
-                    minW={{ base: "auto", lg: "550px" }}
+                    maxW={{ base: "auto", lg: "550px" }}
                   >
                     <Text fontSize={"lg"}>You have no active requests</Text>
                   </Box>
@@ -363,9 +363,33 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                             justifyContent={"space-between"}
                           >
                             <Box>
-                              <Text fontWeight={"600"} fontSize={"lg"}>
-                                {item?.studentFirstName} {item?.studentLastName}
-                              </Text>
+                              <Flex
+                                alignItems={"center"}
+                                justifyContent={"space-between"}
+                                gap={2}
+                              >
+                                <Text fontWeight={"600"} fontSize={"lg"}>
+                                  {item?.studentFirstName}{" "}
+                                  {item?.studentLastName}
+                                </Text>
+                                <Badge
+                                  display={{ base: "block", md: "none" }}
+                                  variant={"solid"}
+                                  backgroundColor={
+                                    item?.status === "PENDING"
+                                      ? "orange.300"
+                                      : item?.status === "ACCEPTED"
+                                      ? "green.300"
+                                      : "red.300"
+                                  }
+                                  px={"1rem"}
+                                  py={"0.1rem"}
+                                  fontSize={"2xs"}
+                                  borderRadius={"3px"}
+                                >
+                                  {item?.status}
+                                </Badge>
+                              </Flex>
                               <Text
                                 fontSize={"sm"}
                                 color={"gray.500"}
@@ -377,6 +401,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                             </Box>
                             <Flex mt={"1rem"} gap={3}>
                               <Button
+                                display={{ base: "none", md: "block" }}
                                 size={{ base: "xs", md: "sm" }}
                                 rounded={"full"}
                                 color={
