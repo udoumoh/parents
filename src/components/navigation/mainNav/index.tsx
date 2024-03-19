@@ -39,6 +39,8 @@ import {
 } from "@chakra-ui/react";
 import { FiMenu } from "react-icons/fi";
 import { IoMdSettings } from "react-icons/io";
+import { RiMailOpenFill } from "react-icons/ri";
+import { IoLogOut } from "react-icons/io5";
 import { PiChatsTeardrop, PiChatsTeardropFill } from "react-icons/pi";
 import { GoHome, GoHomeFill } from "react-icons/go";
 import {
@@ -340,29 +342,45 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
       <Menu>
         <MenuButton>
           <Box display={"flex"} alignItems={"center"} gap={2}>
-            <Text fontWeight={"600"}>
+            <Text fontWeight={"600"} color={"gray.600"} fontSize={"sm"}>
               Hi, {profileData.userBio.firstName} {profileData.userBio.lastName}
             </Text>
             <Avatar
               src={profileData.userBio.profileImage}
-              size={"sm"}
+              size={"md"}
               pointerEvents={"none"}
             />
             <Icon as={RiArrowDownSLine} color={"#000"} boxSize={6} />
           </Box>
         </MenuButton>
-        <MenuList p={"0.5rem"}>
+        <MenuList>
           <MenuItem
-            _hover={{ backgroundColor: "#005D5D30" }}
+            p={"1rem"}
             onClick={() => router.push("/dashboard/settings")}
+            display={"flex"}
+            gap={"3"}
           >
-            Settings
+            <Icon as={IoMdSettings} boxSize={"4"} color={"#005D5D"} />
+            <Text color={"#005D5D"}>Settings</Text>
           </MenuItem>
           <MenuItem
-            onClick={handleLogout}
-            _hover={{ backgroundColor: "#005D5D30" }}
+            p={"1rem"}
+            onClick={() => router.push("/dashboard/inbox")}
+            display={"flex"}
+            gap={"3"}
           >
-            Logout
+            <Icon as={RiMailOpenFill} boxSize={"4"} color={"#005D5D"} />
+            <Text color={"#005D5D"}>Messages</Text>
+          </MenuItem>
+          <MenuDivider />
+          <MenuItem
+            p={"1rem"}
+            onClick={handleLogout}
+            display={"flex"}
+            gap={"3"}
+          >
+            <Icon as={IoLogOut} boxSize={"4"} color={"red.600"} />
+            <Text color={"#005D5D"}>Logout</Text>
           </MenuItem>
         </MenuList>
       </Menu>
