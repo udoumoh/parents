@@ -321,7 +321,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
           >
             <Text fontWeight={"500"}>Link Requests</Text>
             <Flex w={'full'}>
-              <SimpleGrid minChildWidth="300px" spacing={"10px"} w={'full'}>
+              <SimpleGrid minChildWidth="400px" spacing={"10px"} w={'full'}>
                 {(requestData ?? []).length === 0 ? (
                   <Box
                     backgroundColor={"#005D5D10"}
@@ -347,8 +347,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                           rounded={"lg"}
                           border={"1px solid #005D5D"}
                           py={"1rem"}
-                          pl={"1rem"}
-                          pr={"3rem"}
+                          px={"1rem"}
                           w={"full"}
                         >
                           <Avatar
@@ -382,10 +381,10 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                                       ? "green.300"
                                       : "red.300"
                                   }
-                                  px={"1rem"}
+                                  px={"0.5rem"}
                                   py={"0.1rem"}
                                   fontSize={"2xs"}
-                                  borderRadius={"3px"}
+                                  rounded={'2xl'}
                                 >
                                   {item?.status}
                                 </Badge>
