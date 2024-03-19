@@ -199,7 +199,7 @@ const Page: FC<pageProps> = ({}) => {
                     alignItems={"center"}
                     border={"1px solid #005D5D40"}
                     py={"1.5rem"}
-                    px={{ base: "1rem", md: "5rem" }}
+                    px={{ base: "1rem", md: "3rem" }}
                     rounded={"xl"}
                     shadow={"lg"}
                   >
