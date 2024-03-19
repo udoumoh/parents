@@ -77,15 +77,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
   });
   const [deleteRequest] = useMutation(DELETE_REQUEST);
 
-  const handleLogout = async () => {
-    const response = await logoutParent();
-    if (response.data.logoutParent) {
-      router.push("/signin");
-      localStorage.removeItem('currentId')
-    }
-  };
-
-  console.log(parentData)
+  console.log(parentData);
 
   const handleRequestDelete = async (requestId: any) => {
     try {
@@ -176,7 +168,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
           rounded={"xl"}
           p={"1rem"}
           border={"1px solid #005D5D70"}
-          backgroundColor={"#403441"}
+          backgroundColor={"#005D5D"}
         >
           <Flex
             alignItems={"center"}
@@ -184,7 +176,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
             flexDir={{ base: "column", lg: "row" }}
             justifyContent={"center"}
           >
-            <Box border={"3px solid #FFF"} rounded={"full"} p={"0.2rem"}>
+            <Box border={"3px solid #12B77B"} rounded={"full"} p={"0.2rem"}>
               <Avatar
                 src={profileData?.userBio?.profileImage}
                 size={{ base: "xl", lg: "2xl" }}
@@ -198,11 +190,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
               justifyContent={"center"}
             >
               <Flex alignItems={"center"} gap={2}>
-                <Text
-                  fontSize={{ base: "lg", lg: "2xl" }}
-                  fontWeight={"bold"}
-                  color={"#FFFFFF"}
-                >
+                <Text fontSize={{ base: "lg", lg: "2xl" }} fontWeight={"bold"}>
                   {`${profileData?.userBio?.firstName} ${profileData?.userBio?.lastName}`}
                 </Text>
                 <Image
@@ -221,8 +209,8 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
               />
 
               <Flex alignItems={"center"} gap={2} my="0.5rem">
-                <Icon as={AiFillClockCircle} color={"#FFFFFF"} />
-                <Text color={"#FFFFFF"} fontSize={{ base: "2xs", lg: "sm" }}>
+                <Icon as={AiFillClockCircle} color={"#747474"} />
+                <Text color={"#747474"} fontSize={{ base: "2xs", lg: "sm" }}>
                   Created on {formatDate(parentData?.createdAt)}
                 </Text>
               </Flex>
@@ -231,10 +219,10 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
           <Flex gap={"6"}>
             <Button
               variant={"outline"}
-              border={"1px solid #005D5D30"}
+              border={"1px solid gray.600"}
               onClick={onModalOpen}
-              colorScheme="white"
-              gap={"2"}
+              colorScheme="green"
+              gap={'2'}
             >
               <Icon as={GoPencil} boxSize={4} />
               <Text>Edit</Text>
