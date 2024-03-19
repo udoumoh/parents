@@ -320,110 +320,112 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
             gap={3}
           >
             <Text fontWeight={"500"}>Link Requests</Text>
-            <SimpleGrid minChildWidth="200px" spacing={"10px"}>
-              {(requestData ?? []).length === 0 ? (
-                <Box
-                  backgroundColor={"#005D5D10"}
-                  border={"1px solid #005D5D"}
-                  display={"flex"}
-                  alignItems={"center"}
-                  px={"1.3rem"}
-                  rounded={"md"}
-                  py={"1rem"}
-                  minW={{ base: "auto", lg: "550px" }}
-                >
-                  <Text fontSize={"lg"}>You have no active requests</Text>
-                </Box>
-              ) : (
-                requestData?.map((item, index) => {
-                  return (
-                    item?.status !== "ACTIVE" && (
-                      <Flex
-                        gap={2}
-                        key={index}
-                        mb={"0.5rem"}
-                        backgroundColor={"#005D5D10"}
-                        rounded={"lg"}
-                        border={"1px solid #005D5D"}
-                        py={"1rem"}
-                        pl={"1rem"}
-                        pr={"3rem"}
-                        w={"full"}
-                      >
-                        <Avatar
-                          size={"lg"}
-                          src={item?.studentProfileImgUrl}
-                          pointerEvents={"none"}
-                        />
-                        <Box
-                          lineHeight={"20px"}
-                          display={"flex"}
-                          flexDir={"column"}
-                          justifyContent={"space-between"}
+            <Flex w={'full'}>
+              <SimpleGrid minChildWidth="200px" spacing={"10px"} w={'full'}>
+                {(requestData ?? []).length === 0 ? (
+                  <Box
+                    backgroundColor={"#005D5D10"}
+                    border={"1px solid #005D5D"}
+                    display={"flex"}
+                    alignItems={"center"}
+                    px={"1.3rem"}
+                    rounded={"md"}
+                    py={"1rem"}
+                    minW={{ base: "auto", lg: "550px" }}
+                  >
+                    <Text fontSize={"lg"}>You have no active requests</Text>
+                  </Box>
+                ) : (
+                  requestData?.map((item, index) => {
+                    return (
+                      item?.status !== "ACCEPTED" && (
+                        <Flex
+                          gap={2}
+                          key={index}
+                          mb={"0.5rem"}
+                          backgroundColor={"#005D5D10"}
+                          rounded={"lg"}
+                          border={"1px solid #005D5D"}
+                          py={"1rem"}
+                          pl={"1rem"}
+                          pr={"3rem"}
+                          w={"full"}
                         >
-                          <Box>
-                            <Text fontWeight={"600"} fontSize={"lg"}>
-                              {item?.studentFirstName} {item?.studentLastName}
-                            </Text>
-                            <Text
-                              fontSize={"sm"}
-                              color={"gray.500"}
-                              fontWeight={"600"}
-                              maxW={"300px"}
-                            >
-                              {item?.message}
-                            </Text>
-                          </Box>
-                          <Flex mt={"1rem"} gap={3}>
-                            <Button
-                              size={{ base: "xs", md: "sm" }}
-                              rounded={"full"}
-                              color={
-                                item?.status === "PENDING"
-                                  ? "orange.700"
-                                  : item?.status === "ACCEPTED"
-                                  ? "green.700"
-                                  : "red.700"
-                              }
-                              backgroundColor={
-                                item?.status === "PENDING"
-                                  ? "orange.300"
-                                  : item?.status === "ACCEPTED"
-                                  ? "green.300"
-                                  : "red.300"
-                              }
-                              _hover={{
-                                backgroundColor:
+                          <Avatar
+                            size={"lg"}
+                            src={item?.studentProfileImgUrl}
+                            pointerEvents={"none"}
+                          />
+                          <Box
+                            lineHeight={"20px"}
+                            display={"flex"}
+                            flexDir={"column"}
+                            justifyContent={"space-between"}
+                          >
+                            <Box>
+                              <Text fontWeight={"600"} fontSize={"lg"}>
+                                {item?.studentFirstName} {item?.studentLastName}
+                              </Text>
+                              <Text
+                                fontSize={"sm"}
+                                color={"gray.500"}
+                                fontWeight={"600"}
+                                maxW={"300px"}
+                              >
+                                {item?.message}
+                              </Text>
+                            </Box>
+                            <Flex mt={"1rem"} gap={3}>
+                              <Button
+                                size={{ base: "xs", md: "sm" }}
+                                rounded={"full"}
+                                color={
+                                  item?.status === "PENDING"
+                                    ? "orange.700"
+                                    : item?.status === "ACCEPTED"
+                                    ? "green.700"
+                                    : "red.700"
+                                }
+                                backgroundColor={
                                   item?.status === "PENDING"
                                     ? "orange.300"
                                     : item?.status === "ACCEPTED"
                                     ? "green.300"
-                                    : "red.300",
-                              }}
-                            >
-                              {item?.status}
-                            </Button>
-                            <Button
-                              size={{ base: "xs", md: "sm" }}
-                              colorScheme="red"
-                              _hover={{
-                                backgroundColor: "red.600",
-                                color: "#FFFFFF",
-                              }}
-                              variant={"outline"}
-                              rounded={"full"}
-                              onClick={() => handleRequestDelete(item?.id)}
-                            >
-                              Withdraw request
-                            </Button>
-                          </Flex>
-                        </Box>
-                      </Flex>
-                    )
-                  );
-                })
-              )}
-            </SimpleGrid>
+                                    : "red.300"
+                                }
+                                _hover={{
+                                  backgroundColor:
+                                    item?.status === "PENDING"
+                                      ? "orange.300"
+                                      : item?.status === "ACCEPTED"
+                                      ? "green.300"
+                                      : "red.300",
+                                }}
+                              >
+                                {item?.status}
+                              </Button>
+                              <Button
+                                size={{ base: "xs", md: "sm" }}
+                                colorScheme="red"
+                                _hover={{
+                                  backgroundColor: "red.600",
+                                  color: "#FFFFFF",
+                                }}
+                                variant={"outline"}
+                                rounded={"full"}
+                                onClick={() => handleRequestDelete(item?.id)}
+                              >
+                                Withdraw request
+                              </Button>
+                            </Flex>
+                          </Box>
+                        </Flex>
+                      )
+                    );
+                  })
+                )}
+              </SimpleGrid>
+            </Flex>
           </Flex>
         </Flex>
 
