@@ -310,7 +310,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
         />
 
         <Image
-          src={"/images/greylight.svg"}
+          src={"/images/greylightBordered.svg"}
           width={"2rem"}
           height={"2rem"}
           alt="logolight"
