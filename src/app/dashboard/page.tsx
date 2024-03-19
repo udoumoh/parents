@@ -57,7 +57,7 @@ const Page: FC<pageProps> = ({}) => {
         toast({
           title: "Error",
           description: "A client side error has occurred",
-          position: "bottom",
+          position: "top-right",
           variant: "left-accent",
           isClosable: true,
           status: "error",
@@ -67,18 +67,21 @@ const Page: FC<pageProps> = ({}) => {
         toast({
           title: "Success",
           description: "Your request was successfully deleted.",
-          position: "bottom",
+          position: "top-right",
           variant: "left-accent",
           isClosable: true,
           status: "success",
         });
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000)
       }
     } catch (err: any) {
         console.log(err);
         toast({
           title: "Error",
           description: err?.message,
-          position: "bottom",
+          position: "top-right",
           variant: "left-accent",
           isClosable: true,
           status: "error",
