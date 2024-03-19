@@ -43,7 +43,7 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
                 </Text>
               </Box>
             </Box>
-            <Box display={'flex'} gap={2} alignItems={'center'}>
+            <Box display={'flex'} gap={2} alignItems={'initial'}>
               <Image
                 rounded={'lg'}
                 src={currentWardProfile?.schoollogo}
@@ -53,7 +53,7 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
                 pointerEvents={"none"}
               />
               <Box>
-                <Text fontSize={{ base: "xs", lg: "md" }} maxW={'150px'}>
+                <Text fontSize={{ base: "xs", lg: "md" }} maxW={'150px'} fontWeight={'600'}>
                   {currentWardProfile?.school}
                 </Text>
               </Box>

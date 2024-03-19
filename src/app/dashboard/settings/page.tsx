@@ -22,6 +22,7 @@ import { formatDate } from "@/helpers/formatDate";
 import { PARENT_REQUESTS } from "@/gql/queries";
 import EditProfileModal from "@/components/shared/editProfileModal";
 import { DELETE_REQUEST } from "@/gql/mutations";
+import { GoPencil } from "react-icons/go";
 
 interface SettingsPageProps {}
 interface LegendBadgeProps {
@@ -172,7 +173,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
           flexDir={{ base: "column", lg: "row" }}
           rounded={"xl"}
           p={"1rem"}
-          border={'1px solid #005D5D70'}
+          border={"1px solid #005D5D70"}
           backgroundColor={"#005D5D10"}
         >
           <Flex
@@ -224,18 +225,12 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
           <Flex gap={"6"}>
             <Button
               variant={"outline"}
-              border={"2px solid #000"}
+              border={"1px solid #005D5D30"}
               onClick={onModalOpen}
+              _groupHover={{color:"#FFFFFF", backgroundColor:"#005D5D"}}
             >
-              Upload new photo
-            </Button>
-            <Button
-              variant={"outline"}
-              borderWidth={"2px"}
-              colorScheme="red"
-              onClick={handleLogout}
-            >
-              Logout
+              <Icon as={GoPencil} color={'gray.600'} boxSize={6} />
+              <Text color={'gray.600'}>Edit</Text>
             </Button>
           </Flex>
           <EditProfileModal
