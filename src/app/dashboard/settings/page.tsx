@@ -409,7 +409,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                             }}
                             variant={"outline"}
                             rounded={"full"}
-                            onClick={handleRequestDelete}
+                            onClick={()=>handleRequestDelete(item?.id)}
                           >
                             Withdraw request
                           </Button>
