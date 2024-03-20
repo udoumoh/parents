@@ -329,7 +329,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                     display={"flex"}
                     alignItems={"center"}
                     px={"1.3rem"}
-                    rounded={"2xl"}
+                    rounded={"md"}
                     py={"1rem"}
                     maxW={{ base: "auto", lg: "550px" }}
                   >
@@ -343,7 +343,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                           gap={2}
                           key={index}
                           backgroundColor={"#005D5D10"}
-                          rounded={"lg"}
+                          rounded={"xl"}
                           border={"1px solid #005D5D"}
                           p={"1rem"}
                           w={"auto"}
