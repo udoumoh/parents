@@ -17,7 +17,6 @@ import { useRouter } from "next/navigation";
 import { useUserAPI } from "@/hooks/UserContext";
 import { PARENT_REQUESTS } from "@/gql/queries";
 import { useQuery, useMutation } from "@apollo/client";
-import { DELETE_REQUEST } from "@/gql/mutations";
 import Loading from "../loading";
 
 interface pageProps {}
@@ -74,6 +73,10 @@ const Page: FC<pageProps> = ({}) => {
       };
       fetchData();
     }, [getRequests]);
+
+    if(!childData){
+      return <Loading />
+    }
 
   return (
     <Flex h={"100vh"} overflowY={"auto"}>
