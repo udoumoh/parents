@@ -158,7 +158,8 @@ const RemoveStudentModal: FC<RemoveStudentModalProps> = ({isOpen, onClose, onOpe
               {childData?.map((child, index) => {
                 return (
                   <AccordionItem
-                    border={"1px solid #A42020"}
+                    border={"1px solid"}
+                    borderColor={child.isVisible ? "#005D5D" : "#A42020"}
                     rounded={"md"}
                     mt={"1rem"}
                     key={index}
@@ -206,7 +207,7 @@ const RemoveStudentModal: FC<RemoveStudentModalProps> = ({isOpen, onClose, onOpe
                       )}
                       <Flex alignItems={"end"} mt={"1rem"}>
                         <Button
-                          colorScheme={child.isVisible ? 'red' : 'green'}
+                          colorScheme={child.isVisible ? "red" : "green"}
                           isLoading={
                             child.isVisible
                               ? isRemoveSubmitting
@@ -214,10 +215,14 @@ const RemoveStudentModal: FC<RemoveStudentModalProps> = ({isOpen, onClose, onOpe
                           }
                           ml={"auto"}
                           onClick={() => {
-                            child.isVisible ? handleRemoveStudent(child.id) : handleRecoverStudent(child.id)
-                        }}
+                            child.isVisible
+                              ? handleRemoveStudent(child.id)
+                              : handleRecoverStudent(child.id);
+                          }}
                         >
-                          { child.isVisible ? "Yes, delete data" : "Yes, recover data"}
+                          {child.isVisible
+                            ? "Yes, delete data"
+                            : "Yes, recover data"}
                         </Button>
                       </Flex>
                     </AccordionPanel>
