@@ -113,7 +113,7 @@ const SearchStudentModal: FC<SearchStudentModalProps> = ({isSearchOpen, onSearch
           pb={6}
           sx={{
             "&::-webkit-scrollbar": {
-              width: "10px",
+              width: "5px",
               borderRadius: "4px",
               backgroundColor: "#007C7B20",
             },
@@ -198,7 +198,7 @@ const SearchStudentModal: FC<SearchStudentModalProps> = ({isSearchOpen, onSearch
             gap={2}
             px={"3rem"}
             _hover={{ backgroundColor: "#044141" }}
-            onClick={() => {onModalOpen; onSearchClose}}
+            onClick={() => {onModalOpen}}
             isDisabled={selectedStudent?.age === 0 ? true : false}
           >
             <Icon as={AiOutlinePlus} color={"#fff"} />
