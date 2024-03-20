@@ -70,8 +70,6 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
   const toast = useToast()
   const [requestData, setRequestData] = useState<RequestDataProps[]>([]);
   const {isOpen: isModalOpen, onOpen: onModalOpen, onClose: onModalClose} = useDisclosure();
-  const router = useRouter();
-  const [logoutParent] = useMutation(LOGOUT_PARENTS);
   const { profileData, parentData, childData } = useUserAPI();
   const { data: getRequests, loading } = useQuery(PARENT_REQUESTS, {
     variables: { parentId: parentData?.userId },
@@ -123,27 +121,29 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
   };
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await getRequests;
-        if (!response) {
-          console.log("client error");
-        } else {
-          const newData = response?.parentRequests.map((item: any) => ({
-            studentFirstName: item?.student?.firstName,
-            studentLastName: item?.student?.lastName,
-            studentProfileImgUrl: item?.student?.profileImgUrl,
-            message: item?.message,
-            status: item?.status,
-            id: item?.id,
-          }));
-          setRequestData(newData);
+    setInterval(() => {
+      const fetchData = async () => {
+        try {
+          const response = await getRequests;
+          if (!response) {
+            console.log("client error");
+          } else {
+            const newData = response?.parentRequests.map((item: any) => ({
+              studentFirstName: item?.student?.firstName,
+              studentLastName: item?.student?.lastName,
+              studentProfileImgUrl: item?.student?.profileImgUrl,
+              message: item?.message,
+              status: item?.status,
+              id: item?.id,
+            }));
+            setRequestData(newData);
+          }
+        } catch (err: any) {
+          console.log(err);
         }
-      } catch (err: any) {
-        console.log(err);
-      }
-    };
-    fetchData();
+      };
+      fetchData();
+    }, 2000)
   }, [getRequests]);
 
   return (
@@ -200,14 +200,6 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                   {`${profileData?.userBio?.firstName} ${profileData?.userBio?.lastName}`}{" "}
                 </Text>
                 <Icon as={RiVerifiedBadgeFill} boxSize={'4'} color={'orange'}/>
-                <Image
-                  src="/images/verifiedtag.png"
-                  alt="badge"
-                  w={"1rem"}
-                  h={"1rem"}
-                  pointerEvents={"none"}
-                  display={(childData ?? []).length === 0 ? "none" : "block"}
-                />
               </Flex>
 
               {/* <LegendBadge
