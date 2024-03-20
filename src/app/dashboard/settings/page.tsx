@@ -25,6 +25,7 @@ import EditProfileModal from "@/components/shared/editProfileModal";
 import { DELETE_REQUEST } from "@/gql/mutations";
 import { GoPencil } from "react-icons/go";
 import { RiVerifiedBadgeFill } from "react-icons/ri";
+import RemoveStudentModal from "@/components/shared/removeStudentModal";
 
 interface SettingsPageProps {}
 interface LegendBadgeProps {
@@ -48,6 +49,11 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
     isOpen: isModalOpen,
     onOpen: onModalOpen,
     onClose: onModalClose,
+  } = useDisclosure();
+  const {
+    isOpen: isRemoveStudentModalOpen,
+    onOpen: onRemoveStudentModalOpen,
+    onClose: onRemoveStudentModalClose,
   } = useDisclosure();
   const { profileData, parentData, childData } = useUserAPI();
   const { data: getRequests, loading } = useQuery(PARENT_REQUESTS, {
@@ -195,13 +201,13 @@ fetchData();
                 _hover={{ cursor: "pointer" }}
                 backgroundColor={"#F1FAFB80"}
               >
-                <Text fontSize={"md"} color={"#000"} fontWeight={'600'}>
+                <Text fontSize={"md"} color={"#000"} fontWeight={"600"}>
                   Greycases
                 </Text>
                 <Center height="20px">
-                  <Divider orientation="vertical" border={'1px solid'}/>
+                  <Divider orientation="vertical" border={"1px solid"} />
                 </Center>
-                <Text fontSize={"md"} color={"#000"} fontWeight={'600'}>
+                <Text fontSize={"md"} color={"#000"} fontWeight={"600"}>
                   None
                 </Text>
               </Flex>
@@ -226,12 +232,20 @@ fetchData();
               <Icon as={GoPencil} boxSize={4} />
               <Text>Edit</Text>
             </Button>
+            <Button
+              onClick={onRemoveStudentModalOpen}
+              gap={"2"}
+              colorScheme="red"
+            >
+              <Text>Remove student</Text>
+            </Button>
           </Flex>
           <EditProfileModal
             isOpen={isModalOpen}
             onOpen={onModalOpen}
             onClose={onModalClose}
           />
+          <RemoveStudentModal isOpen={isRemoveStudentModalOpen} onOpen={onRemoveStudentModalOpen} onClose={onRemoveStudentModalClose} />
         </Flex>
 
         <Divider my={"2rem"} />
@@ -341,7 +355,7 @@ fetchData();
                           rounded={"xl"}
                           border={"1px solid #005D5D"}
                           p={"1rem"}
-                          maxW={'500px'}
+                          maxW={"500px"}
                         >
                           <Avatar
                             size={{ base: "sm", lg: "lg" }}

@@ -231,3 +231,7 @@ export const DELETE_REQUEST = gql(`mutation DeleteRequest($deleteRequestId: Floa
 export const RESET_PASSWORD_LINK = gql(`mutation ForgotParentPassword($email: String!) {
   forgotParentPassword(email: $email)
 }`)
+
+export const REMOVE_STUDENT = gql(`mutation GnRemoveStudent($studentId: Float!) {
+  gnRemoveStudent(studentId: $studentId)
+}`)

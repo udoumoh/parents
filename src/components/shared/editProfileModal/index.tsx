@@ -85,8 +85,8 @@ const EditProfileModal: FC<EditProfileModalProps> = ({
           status: "success",
         });
         setTimeout(() => {
-          window.location.reload()
-        }, 3000)
+          window.location.reload();
+        }, 3000);
       }
     } catch (err: any) {
       console.log(err.message);

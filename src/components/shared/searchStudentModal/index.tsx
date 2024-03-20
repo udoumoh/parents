@@ -198,7 +198,7 @@ const SearchStudentModal: FC<SearchStudentModalProps> = ({isSearchOpen, onSearch
             gap={2}
             px={"3rem"}
             _hover={{ backgroundColor: "#044141" }}
-            onClick={() => {onModalOpen}}
+            onClick={() => {onModalOpen()}}
             isDisabled={selectedStudent?.age === 0 ? true : false}
           >
             <Icon as={AiOutlinePlus} color={"#fff"} />
