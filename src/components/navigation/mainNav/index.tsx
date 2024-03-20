@@ -36,6 +36,7 @@ import {
   MenuGroup,
   MenuOptionGroup,
   MenuDivider,
+  useToast,
 } from "@chakra-ui/react";
 import { FiMenu } from "react-icons/fi";
 import { IoMdSettings } from "react-icons/io";
@@ -288,6 +289,7 @@ const NavItem = ({ icon, link, name, ...rest }: NavItemProps) => {
 };
 
 const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
+  const toast = useToast()
   const router = useRouter()
   const {
     isOpen: isModalOpen,
@@ -299,6 +301,14 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
   const handleLogout = async () => {
     const response = await logoutParent();
     if (response.data.logoutParent) {
+      toast({
+        title: "Success",
+        description: "You have been successfully logged out",
+        position: "top-right",
+        variant: "left-accent",
+        isClosable: true,
+        status: "success",
+      });
       router.push("/signin");
       localStorage.removeItem("currentId");
     }

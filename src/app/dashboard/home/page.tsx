@@ -5,7 +5,6 @@ interface PageProps {}
 
 const Page: FC<PageProps> = ({}) => {
   redirect("/dashboard/home/overview");
-  return <></>;
 };
 
 export default Page;

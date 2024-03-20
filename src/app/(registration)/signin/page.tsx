@@ -19,6 +19,7 @@ import { useUserAPI } from "@/hooks/UserContext";
 import { LOGIN_PARENT } from "@/gql/mutations";
 import { MdEmail } from "react-icons/md";
 import { IoMdLock, IoMdEyeOff, IoMdEye } from "react-icons/io";
+import Loading from "@/app/loading";
 
 interface pageProps {}
 
@@ -89,7 +90,7 @@ const Signin: FC<pageProps> = ({}) => {
       }else if(( childData ?? []).length > 0){
         window.location.replace("/dashboard/home/overview");
       } else{
-        window.location.replace("/dashboard");
+        return <Loading />
       }
       
     } catch (error: any) {
