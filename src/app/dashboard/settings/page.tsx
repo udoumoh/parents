@@ -341,6 +341,7 @@ fetchData();
                           rounded={"xl"}
                           border={"1px solid #005D5D"}
                           p={"1rem"}
+                          maxW={'500px'}
                         >
                           <Avatar
                             size={{ base: "sm", lg: "lg" }}
