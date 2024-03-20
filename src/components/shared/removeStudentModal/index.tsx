@@ -23,6 +23,7 @@ import {
 import { useUserAPI } from '@/hooks/UserContext';
 import { useMutation } from '@apollo/client';
 import { REMOVE_STUDENT } from '@/gql/mutations';
+import { RECOVER_STUDENT } from '@/gql/mutations';
 
 interface RemoveStudentModalProps {
     isOpen: boolean;
@@ -31,13 +32,15 @@ interface RemoveStudentModalProps {
 }
 
 const RemoveStudentModal: FC<RemoveStudentModalProps> = ({isOpen, onClose, onOpen}) => {
-    const {childData, currentId} = useUserAPI();
+    const {childData} = useUserAPI();
     const [removeStudent] = useMutation(REMOVE_STUDENT)
-    const [isSubmitting, setIsSubmitting] = useState(false)
+    const [recoverStudent] = useMutation(RECOVER_STUDENT)
+    const [isRemoveSubmitting, setIsRemoveSubmitting] = useState(false)
+    const [isRecoverSubmitting, setIsRecoverSubmitting] = useState(false);
     const toast = useToast()
 
     const handleRemoveStudent = async (id: any) => {
-        setIsSubmitting(true)
+        setIsRemoveSubmitting(true)
         try{
             const response = await removeStudent({
                 variables:{
@@ -78,9 +81,57 @@ const RemoveStudentModal: FC<RemoveStudentModalProps> = ({isOpen, onClose, onOpe
         } catch(err: any) {
             console.log(err)
         } finally {
-            setIsSubmitting(false)
+            setIsRemoveSubmitting(false)
         } 
         
+    }
+
+    const handleRecoverStudent = async(id: any) => {
+        setIsRecoverSubmitting(true);
+        try {
+          const response = await recoverStudent({
+            variables: {
+              studentId: id,
+            },
+          });
+          if (!response) {
+            toast({
+              title: "Client Error",
+              description: "A client-side error occurred",
+              position: "top-right",
+              variant: "left-accent",
+              isClosable: true,
+              status: "error",
+            });
+          }
+          if (!response.data.gnRecoverStudent) {
+            toast({
+              title: "Error",
+              description:
+                "An error occured while recovering this child from Greynote",
+              position: "top-right",
+              variant: "left-accent",
+              isClosable: true,
+              status: "error",
+            });
+          }
+          if (response?.data?.gnRecoverStudent) {
+            toast({
+              title: "Successfully recovered child",
+              description:
+                "Your request to recover this child was successful",
+              position: "top-right",
+              variant: "left-accent",
+              isClosable: true,
+              status: "success",
+            });
+            window.location.reload();
+          }
+        } catch (err: any) {
+          console.log(err);
+        } finally {
+          setIsRecoverSubmitting(false);
+        } 
     }
   return (
     <Modal
@@ -125,10 +176,7 @@ const RemoveStudentModal: FC<RemoveStudentModalProps> = ({isOpen, onClose, onOpe
                     >
                       <Box as="span" flex="1" textAlign="left">
                         <Flex gap={2} alignItems={"center"}>
-                          <Avatar
-                            src={child.profileImage}
-                            size={"md"}
-                          />
+                          <Avatar src={child.profileImage} size={"md"} />
                           <Box>
                             <Text fontWeight={"600"} fontSize={"sm"}>
                               {`${child.firstName} ${child.lastName}`}
@@ -145,13 +193,31 @@ const RemoveStudentModal: FC<RemoveStudentModalProps> = ({isOpen, onClose, onOpe
                       </Box>
                     </AccordionButton>
                     <AccordionPanel>
-                      <Text>
-                        Are you sure you want to delete Kylian Mbappes data from
-                        greynote?
-                      </Text>
+                      {child.isVisible ? (
+                        <Text>
+                          Are you sure you want to delete {child.firstName}{" "}
+                          {child.lastName} data from greynote?
+                        </Text>
+                      ) : (
+                        <Text>
+                          Are you sure you want to recover {child.firstName}{" "}
+                          {child.lastName}
+                        </Text>
+                      )}
                       <Flex alignItems={"end"} mt={"1rem"}>
-                        <Button colorScheme="red" isLoading={isSubmitting} ml={'auto'} onClick={()=>handleRemoveStudent(child.id)}>
-                          Yes, delete data
+                        <Button
+                          colorScheme={child.isVisible ? 'red' : 'green'}
+                          isLoading={
+                            child.isVisible
+                              ? isRemoveSubmitting
+                              : isRecoverSubmitting
+                          }
+                          ml={"auto"}
+                          onClick={() => {
+                            child.isVisible ? handleRemoveStudent(child.id) : handleRecoverStudent(child.id)
+                        }}
+                        >
+                          { child.isVisible ? "Yes, delete data" : "Yes, recover data"}
                         </Button>
                       </Flex>
                     </AccordionPanel>

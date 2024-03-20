@@ -27,6 +27,7 @@ export interface UserChildren {
   age: number;
   schoolId: number;
   graycase:any;
+  isVisible: boolean;
 }
 
 interface ParentDataProps {
@@ -100,6 +101,7 @@ export const UserApiProvider: FC<UserApiProviderProps> = ({ children }) => {
         age: 0,
         schoolId: 0,
         graycase: null,
+        isVisible: false,
       },
     ],
   });
@@ -153,6 +155,7 @@ export const UserApiProvider: FC<UserApiProviderProps> = ({ children }) => {
             age: child?.ageInput || 0,
             schoolId: child?.school?.school?.id || 0,
             graycase: child?.studentCase?.grayCase || null,
+            isVisible: child?.isVisible,
           })
         );
 

@@ -235,3 +235,7 @@ export const RESET_PASSWORD_LINK = gql(`mutation ForgotParentPassword($email: St
 export const REMOVE_STUDENT = gql(`mutation GnRemoveStudent($studentId: Float!) {
   gnRemoveStudent(studentId: $studentId)
 }`)
+
+export const RECOVER_STUDENT = gql(`mutation GnRecoverStudent($studentId: Float!) {
+  gnRecoverStudent(studentId: $studentId)
+}`)
