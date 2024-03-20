@@ -33,7 +33,7 @@ interface RequestDataProps {
 const Page: FC<pageProps> = ({}) => {
   const toast = useToast()
   const { childData, parentData } = useUserAPI();
-  const { data: getRequests, loading } = useQuery(PARENT_REQUESTS, {
+  const { data: getRequests } = useQuery(PARENT_REQUESTS, {
     variables: { parentId: parentData?.userId },
   });
   const [deleteRequest] = useMutation(DELETE_REQUEST)
@@ -91,32 +91,30 @@ const Page: FC<pageProps> = ({}) => {
   }
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await getRequests;
-        if(!response){
-          console.log('client error')
-        } else {
-          const newData = response?.parentRequests.map((item: any) => ({
-            studentFirstName: item?.student?.firstName,
-            studentLastName: item?.student?.lastName,
-            studentProfileImgUrl: item?.student?.profileImgUrl,
-            message: item?.message,
-            status: item?.status,
-            id: item?.id,
-          }))
-          setRequestData(newData)
+    setInterval(() => {
+      const fetchData = async () => {
+        try {
+          const response = await getRequests;
+          if (!response) {
+            console.log("client error");
+          } else {
+            const newData = response?.parentRequests.map((item: any) => ({
+              studentFirstName: item?.student?.firstName,
+              studentLastName: item?.student?.lastName,
+              studentProfileImgUrl: item?.student?.profileImgUrl,
+              message: item?.message,
+              status: item?.status,
+              id: item?.id,
+            }));
+            setRequestData(newData);
+          }
+        } catch (err: any) {
+          console.log(err);
         }
-      } catch (err: any) {
-        console.log(err);
-      }
-    };
-    fetchData();
+      };
+      fetchData();
+    }, 2000)
   }, [getRequests]);
-
-  if(loading){
-    return (<Loading />)
-  }
 
   return (
     <Flex h={"100vh"} overflowY={"auto"}>

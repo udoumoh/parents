@@ -93,10 +93,7 @@ const LinkRequestModal: FC<LinkRequestModalProps> = ({
               isClosable: true,
               status: "success",
             });
-            setTimeout(() => {
-              onClose()
-              window.location.reload();
-            }, 1000)
+            onClose()
         }
       } catch(error: any) {
         toast({
