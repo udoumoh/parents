@@ -158,8 +158,11 @@ const RemoveStudentModal: FC<RemoveStudentModalProps> = ({isOpen, onClose, onOpe
               {childData?.map((child, index) => {
                 return (
                   <AccordionItem
-                    border={"1px solid"}
-                    borderColor={child.isVisible ? "#005D5D" : "#A42020"}
+                    border={
+                      child.isVisible
+                        ? "1px solid #A42020"
+                        : "1px solid #005D5D"
+                    }
                     rounded={"md"}
                     mt={"1rem"}
                     key={index}
