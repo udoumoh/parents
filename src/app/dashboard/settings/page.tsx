@@ -23,6 +23,7 @@ import { PARENT_REQUESTS } from "@/gql/queries";
 import EditProfileModal from "@/components/shared/editProfileModal";
 import { DELETE_REQUEST } from "@/gql/mutations";
 import { GoPencil } from "react-icons/go";
+import { RiVerifiedBadgeFill } from "react-icons/ri";
 
 interface SettingsPageProps {}
 interface LegendBadgeProps {
@@ -45,25 +46,25 @@ mutation Mutation {
 }
 `);
 
-const LegendBadge: React.FC<LegendBadgeProps> = ({ role, mt, ...rest }) => {
-  return (
-    <Flex
-      justifyContent={"center"}
-      alignItems={"center"}
-      px={"0.8rem"}
-      py={"0.2rem"}
-      border={"1.5px solid #A3007F"}
-      rounded={"lg"}
-      backgroundColor={"#FFDDF7"}
-      width={"5.5rem"}
-      {...rest}
-    >
-      <Text color={"#A3007F"} fontSize={"xs"} fontWeight={"600"}>
-        {role}
-      </Text>
-    </Flex>
-  );
-};
+// const LegendBadge: React.FC<LegendBadgeProps> = ({ role, mt, ...rest }) => {
+//   return (
+//     <Flex
+//       justifyContent={"center"}
+//       alignItems={"center"}
+//       px={"0.8rem"}
+//       py={"0.2rem"}
+//       border={"1.5px solid #A3007F"}
+//       rounded={"lg"}
+//       backgroundColor={"#FFDDF7"}
+//       width={"5.5rem"}
+//       {...rest}
+//     >
+//       <Text color={"#A3007F"} fontSize={"xs"} fontWeight={"600"}>
+//         {role}
+//       </Text>
+//     </Flex>
+//   );
+// };
 
 const SettingsPage: FC<SettingsPageProps> = ({}) => {
   const toast = useToast()
@@ -198,6 +199,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                 >
                   {`${profileData?.userBio?.firstName} ${profileData?.userBio?.lastName}`}{" "}
                 </Text>
+                <Icon as={RiVerifiedBadgeFill} boxSize={'4'} color={'orange'}/>
                 <Image
                   src="/images/verifiedtag.png"
                   alt="badge"
@@ -232,7 +234,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
               onClick={onModalOpen}
               gap={"2"}
               color="#FCF4D9"
-              _hover={{color:"green", backgroundColor:"green.100"}}
+              _hover={{ color: "green", backgroundColor: "green.100" }}
             >
               <Icon as={GoPencil} boxSize={4} />
               <Text>Edit</Text>
