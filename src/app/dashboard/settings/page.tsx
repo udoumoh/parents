@@ -56,10 +56,10 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
     onClose: onRemoveStudentModalClose,
   } = useDisclosure();
   const { profileData, parentData, childData } = useUserAPI();
-  const { data: getRequests, loading } = useQuery(PARENT_REQUESTS, {
+  const { data: getRequests } = useQuery(PARENT_REQUESTS, {
     variables: { parentId: parentData?.userId },
   });
-  const [deleteRequest] = useMutation(DELETE_REQUEST);
+  const [deleteRequest, {loading}] = useMutation(DELETE_REQUEST);
   const [isSubmitting, setIsSubmitting] = useState(false)
  
   console.log(parentData);
@@ -104,6 +104,17 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
       });
     } finally{
       setIsSubmitting(false);
+    }
+
+    if(loading){
+      toast({
+        title: "Deleting Request",
+        description: 'Please hold on while we delete this request',
+        position: "top-right",
+        variant: "left-accent",
+        isClosable: true,
+        status: "loading",
+      });
     }
   };
 
@@ -448,7 +459,6 @@ fetchData();
                                 }}
                                 variant={"outline"}
                                 rounded={"lg"}
-                                isLoading={isSubmitting}
                                 onClick={() => handleRequestDelete(item?.id)}
                               >
                                 Withdraw request
