@@ -59,13 +59,13 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
   const { data: getRequests } = useQuery(PARENT_REQUESTS, {
     variables: { parentId: parentData?.userId },
   });
-  const [deleteRequest, {loading}] = useMutation(DELETE_REQUEST);
-  const [isSubmitting, setIsSubmitting] = useState(false)
- 
+  const [deleteRequest, { loading }] = useMutation(DELETE_REQUEST);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   console.log(parentData);
 
   const handleRequestDelete = async (requestId: any) => {
-    setIsSubmitting(true)
+    setIsSubmitting(true);
     try {
       const response = await deleteRequest({
         variables: { deleteRequestId: requestId },
@@ -102,45 +102,36 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
         isClosable: true,
         status: "error",
       });
-    } finally{
+    } finally {
       setIsSubmitting(false);
-    }
-
-    if(loading){
-      toast({
-        title: "Deleting Request",
-        description: 'Please hold on while we delete this request',
-        position: "top-right",
-        variant: "left-accent",
-        isClosable: true,
-        status: "loading",
-      });
     }
   };
 
   useEffect(() => {
-const fetchData = async () => {
-  try {
-    const response = await getRequests;
-    if (!response) {
-      console.log("client error");
-    } else {
-      const newData = response?.parentRequests.map((item: any) => ({
-        studentFirstName: item?.student?.firstName,
-        studentLastName: item?.student?.lastName,
-        studentProfileImgUrl: item?.student?.profileImgUrl,
-        message: item?.message,
-        status: item?.status,
-        id: item?.id,
-      }));
-      setRequestData(newData);
-    }
-  } catch (err: any) {
-    console.log(err);
-  }
-};
-fetchData();
-  }, [getRequests])
+    const fetchData = async () => {
+      try {
+        const response = await getRequests;
+        if (!response) {
+          console.log("client error");
+        } else {
+          const newData = response?.parentRequests.map((item: any) => ({
+            studentFirstName: item?.student?.firstName,
+            studentLastName: item?.student?.lastName,
+            studentProfileImgUrl: item?.student?.profileImgUrl,
+            message: item?.message,
+            status: item?.status,
+            id: item?.id,
+          }));
+          setRequestData(
+            newData.filter((item: any) => item.status !== "ACCEPTED")
+          );
+        }
+      } catch (err: any) {
+        console.log(err);
+      }
+    };
+    fetchData();
+  }, [getRequests]);
 
   return (
     <Box
@@ -256,7 +247,11 @@ fetchData();
             onOpen={onModalOpen}
             onClose={onModalClose}
           />
-          <RemoveStudentModal isOpen={isRemoveStudentModalOpen} onOpen={onRemoveStudentModalOpen} onClose={onRemoveStudentModalClose} />
+          <RemoveStudentModal
+            isOpen={isRemoveStudentModalOpen}
+            onOpen={onRemoveStudentModalOpen}
+            onClose={onRemoveStudentModalClose}
+          />
         </Flex>
 
         <Divider my={"2rem"} />
@@ -358,80 +353,42 @@ fetchData();
                 ) : (
                   requestData?.map((item, index) => {
                     return (
-                      item?.status !== "ACCEPTED" && (
-                        <Flex
-                          gap={2}
-                          key={index}
-                          backgroundColor={"#005D5D10"}
-                          rounded={"xl"}
-                          border={"1px solid #005D5D"}
-                          p={"1rem"}
-                          maxW={"500px"}
+                      <Flex
+                        gap={2}
+                        key={index}
+                        backgroundColor={"#005D5D10"}
+                        rounded={"xl"}
+                        border={"1px solid #005D5D"}
+                        p={"1rem"}
+                        maxW={"500px"}
+                      >
+                        <Avatar
+                          size={{ base: "sm", lg: "lg" }}
+                          src={item?.studentProfileImgUrl}
+                          pointerEvents={"none"}
+                        />
+                        <Box
+                          lineHeight={"20px"}
+                          display={"flex"}
+                          flexDir={"column"}
+                          justifyContent={"space-between"}
+                          maxW={{ base: "200px", md: "400px" }}
                         >
-                          <Avatar
-                            size={{ base: "sm", lg: "lg" }}
-                            src={item?.studentProfileImgUrl}
-                            pointerEvents={"none"}
-                          />
-                          <Box
-                            lineHeight={"20px"}
-                            display={"flex"}
-                            flexDir={"column"}
-                            justifyContent={"space-between"}
-                            maxW={{ base: "200px", md: "400px" }}
-                          >
-                            <Box>
-                              <Flex
-                                alignItems={"center"}
-                                justifyContent={"space-between"}
-                                gap={2}
-                              >
-                                <Text
-                                  fontWeight={"600"}
-                                  fontSize={{ base: "sm", lg: "lg" }}
-                                >
-                                  {item?.studentFirstName}{" "}
-                                  {item?.studentLastName}
-                                </Text>
-                                <Badge
-                                  display={{ base: "block", md: "none" }}
-                                  variant={"solid"}
-                                  backgroundColor={
-                                    item?.status === "PENDING"
-                                      ? "orange.300"
-                                      : item?.status === "ACCEPTED"
-                                      ? "green.300"
-                                      : "red.300"
-                                  }
-                                  px={"0.5rem"}
-                                  py={"0.1rem"}
-                                  fontSize={"2xs"}
-                                  rounded={"2xl"}
-                                >
-                                  {item?.status}
-                                </Badge>
-                              </Flex>
+                          <Box>
+                            <Flex
+                              alignItems={"center"}
+                              justifyContent={"space-between"}
+                              gap={2}
+                            >
                               <Text
-                                fontSize={{ base: "xs", lg: "sm" }}
-                                color={"gray.500"}
                                 fontWeight={"600"}
-                                maxW={{ base: "200px", md: "300px" }}
+                                fontSize={{ base: "sm", lg: "lg" }}
                               >
-                                {item?.message}
+                                {item?.studentFirstName} {item?.studentLastName}
                               </Text>
-                            </Box>
-                            <Flex mt={"1rem"} gap={3}>
-                              <Button
-                                display={{ base: "none", md: "block" }}
-                                size={{ base: "xs", md: "sm" }}
-                                rounded={"lg"}
-                                color={
-                                  item?.status === "PENDING"
-                                    ? "orange.700"
-                                    : item?.status === "ACCEPTED"
-                                    ? "green.700"
-                                    : "red.700"
-                                }
+                              <Badge
+                                display={{ base: "block", md: "none" }}
+                                variant={"solid"}
                                 backgroundColor={
                                   item?.status === "PENDING"
                                     ? "orange.300"
@@ -439,34 +396,69 @@ fetchData();
                                     ? "green.300"
                                     : "red.300"
                                 }
-                                _hover={{
-                                  backgroundColor:
-                                    item?.status === "PENDING"
-                                      ? "orange.300"
-                                      : item?.status === "ACCEPTED"
-                                      ? "green.300"
-                                      : "red.300",
-                                }}
+                                px={"0.5rem"}
+                                py={"0.1rem"}
+                                fontSize={"2xs"}
+                                rounded={"2xl"}
                               >
                                 {item?.status}
-                              </Button>
-                              <Button
-                                size={{ base: "xs", md: "sm" }}
-                                colorScheme="red"
-                                _hover={{
-                                  backgroundColor: "red.600",
-                                  color: "#FFFFFF",
-                                }}
-                                variant={"outline"}
-                                rounded={"lg"}
-                                onClick={() => handleRequestDelete(item?.id)}
-                              >
-                                Withdraw request
-                              </Button>
+                              </Badge>
                             </Flex>
+                            <Text
+                              fontSize={{ base: "xs", lg: "sm" }}
+                              color={"gray.500"}
+                              fontWeight={"600"}
+                              maxW={{ base: "200px", md: "300px" }}
+                            >
+                              {item?.message}
+                            </Text>
                           </Box>
-                        </Flex>
-                      )
+                          <Flex mt={"1rem"} gap={3}>
+                            <Button
+                              display={{ base: "none", md: "block" }}
+                              size={{ base: "xs", md: "sm" }}
+                              rounded={"lg"}
+                              color={
+                                item?.status === "PENDING"
+                                  ? "orange.700"
+                                  : item?.status === "ACCEPTED"
+                                  ? "green.700"
+                                  : "red.700"
+                              }
+                              backgroundColor={
+                                item?.status === "PENDING"
+                                  ? "orange.300"
+                                  : item?.status === "ACCEPTED"
+                                  ? "green.300"
+                                  : "red.300"
+                              }
+                              _hover={{
+                                backgroundColor:
+                                  item?.status === "PENDING"
+                                    ? "orange.300"
+                                    : item?.status === "ACCEPTED"
+                                    ? "green.300"
+                                    : "red.300",
+                              }}
+                            >
+                              {item?.status}
+                            </Button>
+                            <Button
+                              size={{ base: "xs", md: "sm" }}
+                              colorScheme="red"
+                              _hover={{
+                                backgroundColor: "red.600",
+                                color: "#FFFFFF",
+                              }}
+                              variant={"outline"}
+                              rounded={"lg"}
+                              onClick={() => handleRequestDelete(item?.id)}
+                            >
+                              Withdraw request
+                            </Button>
+                          </Flex>
+                        </Box>
+                      </Flex>
                     );
                   })
                 )}
