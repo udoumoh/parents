@@ -37,7 +37,6 @@ const Page: FC<pageProps> = ({}) => {
   const { data: getRequests } = useQuery(PARENT_REQUESTS, {
     variables: { parentId: parentData?.userId },
   });
-  const [deleteRequest] = useMutation(DELETE_REQUEST)
   const [requestData, setRequestData] = useState<RequestDataProps[]>([]);
   const {
     isOpen: isModalOpen,
@@ -49,50 +48,10 @@ const Page: FC<pageProps> = ({}) => {
     window.location.replace("/dashboard/home/overview");
   }
 
-  const handleRequestDelete = async(requestId: any) => {
-    try{
-      const response = await deleteRequest({
-        variables: {deleteRequestId: requestId}
-      });
-      console.log(response)
-      if(!response){
-        toast({
-          title: "Error",
-          description: "A client side error has occurred",
-          position: "top-right",
-          variant: "left-accent",
-          isClosable: true,
-          status: "error",
-        });
-      }
-      if(response?.data?.deleteRequest){
-        toast({
-          title: "Success",
-          description: "Your request was successfully deleted.",
-          position: "top-right",
-          variant: "left-accent",
-          isClosable: true,
-          status: "success",
-        });
-        setTimeout(() => {
-          window.location.reload();
-        }, 2000)
-      }
-    } catch (err: any) {
-        console.log(err);
-        toast({
-          title: "Error",
-          description: err?.message,
-          position: "top-right",
-          variant: "left-accent",
-          isClosable: true,
-          status: "error",
-        });
-    }
+  if ((childData ?? []).length === 0 && requestData.length !== 0 ) {
+    window.location.replace("/dashboard/settings")
   }
-
-  useEffect(() => {
-    setInterval(() => {
+    useEffect(() => {
       const fetchData = async () => {
         try {
           const response = await getRequests;
@@ -114,8 +73,7 @@ const Page: FC<pageProps> = ({}) => {
         }
       };
       fetchData();
-    }, 2000)
-  }, [getRequests]);
+    }, [getRequests]);
 
   return (
     <Flex h={"100vh"} overflowY={"auto"}>
@@ -128,7 +86,6 @@ const Page: FC<pageProps> = ({}) => {
         flexDir={"column"}
         alignItems={"center"}
       >
-        {requestData.length === 0 ? (
           <Flex
             flexDir={"column"}
             alignItems={"center"}
@@ -178,107 +135,6 @@ const Page: FC<pageProps> = ({}) => {
               onSearchOpen={onModalOpen}
             />
           </Flex>
-        ) : (
-          <>
-            <Flex
-              w={"full"}
-              alignItems={"center"}
-              justifyContent={"center"}
-              my={"4rem"}
-              flexDir={"column"}
-              rounded={"xl"}
-              p={"10"}
-            >
-              <Text
-                fontSize={{base:"xl", md:"3xl"}}
-                color={"#005D5D"}
-                fontWeight={"600"}
-                mb={"2rem"}
-                textAlign={'center'}
-              >
-                Link Child Request Status
-              </Text>
-              <SimpleGrid
-                minChildWidth={{ base: "230px", md: "350px" }}
-                spacing={"20px"}
-                w={"full"}
-              >
-                {requestData.map((data, index) => (
-                  <Flex
-                    key={index}
-                    overflow="hidden"
-                    flexDir={"column"}
-                    alignItems={"center"}
-                    border={"1px solid #005D5D40"}
-                    py={"1.5rem"}
-                    px={{ base: "1rem", md: "3rem" }}
-                    rounded={"xl"}
-                    shadow={"lg"}
-                    justifyContent={'space-between'}
-                  >
-                    <Box>
-                    <Avatar size={"lg"} src={data?.studentProfileImgUrl} />
-
-                    <Text fontSize={"lg"} fontWeight={"600"}>
-                      {data?.studentFirstName} {data?.studentLastName}
-                    </Text>
-
-                    <Text
-                      textAlign={"center"}
-                      fontSize={{ base: "xs", md: "sm" }}
-                      color={"gray.600"}
-                      w={{ base: "auto", md: "300px" }}
-                    >
-                      {data?.message}
-                    </Text>
-                    </Box>
-
-                    <Flex gap={"5"}>
-                      <Button
-                        size={"sm"}
-                        mt={"1rem"}
-                        rounded={"full"}
-                        color={
-                          data?.status === "PENDING"
-                            ? "orange.700"
-                            : data?.status === "ACCEPTED"
-                            ? "green.700"
-                            : "red.700"
-                        }
-                        backgroundColor={
-                          data?.status === "PENDING"
-                            ? "orange.300"
-                            : data?.status === "ACCEPTED"
-                            ? "green.300"
-                            : "red.300"
-                        }
-                        _hover={{
-                          backgroundColor:
-                            data?.status === "PENDING"
-                              ? "orange.300"
-                              : data?.status === "ACCEPTED"
-                              ? "green.300"
-                              : "red.300",
-                        }}
-                      >
-                        {data?.status}
-                      </Button>
-                      <Button
-                        size={"sm"}
-                        mt={"1rem"}
-                        rounded={"full"}
-                        colorScheme="red"
-                        onClick={() => handleRequestDelete(data?.id)}
-                      >
-                        Withdraw Request
-                      </Button>
-                    </Flex>
-                  </Flex>
-                ))}
-              </SimpleGrid>
-            </Flex>
-          </>
-        )}
       </Box>
     </Flex>
   );
