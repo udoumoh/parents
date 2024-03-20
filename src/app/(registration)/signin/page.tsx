@@ -131,9 +131,9 @@ const Signin: FC<pageProps> = ({}) => {
           backgroundColor={"#fff"}
           minW={{ base: "auto", md: "500px" }}
           py={5}
-          px={{ base: "2rem", md: "3rem" }}
+          px={"3rem"}
           rounded={"lg"}
-          shadow={'md'}
+          shadow={"md"}
         >
           <Box textAlign={"center"}>
             <Text color={"#005D5D"} fontWeight={"bold"} fontSize={"2xl"}>
@@ -156,6 +156,7 @@ const Signin: FC<pageProps> = ({}) => {
                 <MdEmail color="#005D5D" size={20} />
               </InputLeftElement>
               <Input
+                size={{ base: "sm", md: "md" }}
                 onChange={handleEmailChange}
                 type="email"
                 placeholder="Enter your email"
@@ -170,6 +171,7 @@ const Signin: FC<pageProps> = ({}) => {
                 <IoMdLock color="#005D5D" size={20} />
               </InputLeftElement>
               <Input
+                size={{ base: "sm", md: "md" }}
                 onChange={handlePasswordChange}
                 type={show ? "text" : "password"}
                 placeholder="Enter your password"
@@ -190,16 +192,26 @@ const Signin: FC<pageProps> = ({}) => {
               </InputRightElement>
             </InputGroup>
 
-            <Button
-              backgroundColor={"#005D5D"}
-              color={"#fff"}
-              w={"full"}
-              _hover={{ backgroundColor: "#005D5D90" }}
-              isLoading={isSubmitting}
-              onClick={handleLogin}
-            >
-              Sign in
-            </Button>
+            <Box w={"full"} textAlign={"right"}>
+              <Button
+                backgroundColor={"#005D5D"}
+                color={"#fff"}
+                w={"full"}
+                _hover={{ backgroundColor: "#005D5D90" }}
+                isLoading={isSubmitting}
+                onClick={handleLogin}
+              >
+                Sign in
+              </Button>
+              <Link
+                fontSize={"sm"}
+                color={"#005D5D"}
+                mt={'0.3rem'}
+                onClick={() => router.push("/forgotpassword")}
+              >
+                Forgot Password?
+              </Link>
+            </Box>
 
             <Box>
               <Text

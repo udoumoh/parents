@@ -12,10 +12,12 @@ import {
   Avatar,
   Flex,
   useToast,
+  Icon,
 } from "@chakra-ui/react";
 import { ImageUpload } from "@/components/imageUpload/ImageUpload";
 import { useMutation } from "@apollo/client";
 import { UPDATE_PARENT } from "@/gql/queries";
+import { FaEdit } from "react-icons/fa";
 import { useUserAPI } from "@/hooks/UserContext";
 
 interface EditProfileModalProps {
@@ -98,17 +100,16 @@ const EditProfileModal: FC<EditProfileModalProps> = ({
         <ModalHeader>Update your profile image</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
-          <Flex
-            justifyContent={"center"}
-            mt={"1rem"}
-            _hover={{ cursor: "pointer" }}
-          >
-            <Avatar
-              size={"xl"}
-              src={profileUrl}
+          <Flex justifyContent={"center"} mt={"1rem"}>
+            <Avatar size={"xl"} src={profileUrl} />
+            <Icon
+              as={FaEdit}
+              boxSize={4}
+              color={"#005D5D"}
               onClick={() => {
                 onModalOpen();
               }}
+              _hover={{ cursor: "pointer" }}
             />
           </Flex>
 

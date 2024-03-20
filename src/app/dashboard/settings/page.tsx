@@ -12,7 +12,8 @@ import {
   useDisclosure,
   Badge,
   useToast,
-  SimpleGrid
+  SimpleGrid,
+  Center,
 } from "@chakra-ui/react";
 import { AiFillClockCircle } from "react-icons/ai";
 import { useUserAPI } from "@/hooks/UserContext";
@@ -39,32 +40,6 @@ interface RequestDataProps {
   status: string;
   id: number;
 }
-
-const LOGOUT_PARENTS = gql(`
-mutation Mutation {
-  logoutParent
-}
-`);
-
-// const LegendBadge: React.FC<LegendBadgeProps> = ({ role, mt, ...rest }) => {
-//   return (
-//     <Flex
-//       justifyContent={"center"}
-//       alignItems={"center"}
-//       px={"0.8rem"}
-//       py={"0.2rem"}
-//       border={"1.5px solid #A3007F"}
-//       rounded={"lg"}
-//       backgroundColor={"#FFDDF7"}
-//       width={"5.5rem"}
-//       {...rest}
-//     >
-//       <Text color={"#A3007F"} fontSize={"xs"} fontWeight={"600"}>
-//         {role}
-//       </Text>
-//     </Flex>
-//   );
-// };
 
 const SettingsPage: FC<SettingsPageProps> = ({}) => {
   const toast = useToast()
@@ -199,17 +174,32 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                 >
                   {`${profileData?.userBio?.firstName} ${profileData?.userBio?.lastName}`}{" "}
                 </Text>
-                <Icon as={RiVerifiedBadgeFill} boxSize={'4'} color={'orange'}/>
+                <Icon as={RiVerifiedBadgeFill} boxSize={"4"} color={"orange"} />
               </Flex>
-
-              {/* <LegendBadge
-                role={profileData?.userBio?.parentRole || ""}
-                mt={{ base: "0.3rem", lg: "0.8rem" }}
-              /> */}
 
               <Text fontSize={"lg"} fontWeight={"700"} color={"#FCF4D990"}>
                 {profileData?.userBio?.parentRole}
               </Text>
+
+              <Flex
+                border={"1.5px dotted #FCF4D9"}
+                rounded={"md"}
+                py={"0.5rem"}
+                px={'1rem'}
+                gap={"4"}
+                alignItems={'center'}
+                mt={'0.5rem'}
+              >
+                <Text fontSize={"md"} color={"#FCF4D990"}>
+                  Graycases
+                </Text>
+                <Center height="20px">
+                  <Divider orientation="vertical" />
+                </Center>
+                <Text fontSize={"md"} color={"#FCF4D990"}>
+                  None
+                </Text>
+              </Flex>
 
               <Flex alignItems={"center"} gap={2} my="0.5rem">
                 <Icon as={AiFillClockCircle} color={"#FFF"} />
@@ -282,7 +272,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                       py={"0.5rem"}
                       pl={"1rem"}
                       pr={"3rem"}
-                      _hover={{ boxShadow: "lg", transitionDuration: '0.5s', }}
+                      _hover={{ boxShadow: "lg", transitionDuration: "0.5s" }}
                     >
                       <Avatar
                         size={"md"}
@@ -357,7 +347,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                             display={"flex"}
                             flexDir={"column"}
                             justifyContent={"space-between"}
-                            maxW={{base:"200px", md:'400px'}}
+                            maxW={{ base: "200px", md: "400px" }}
                           >
                             <Box>
                               <Flex
@@ -394,7 +384,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                                 fontSize={{ base: "xs", lg: "sm" }}
                                 color={"gray.500"}
                                 fontWeight={"600"}
-                                maxW={{base:'200px', md:"300px"}}
+                                maxW={{ base: "200px", md: "300px" }}
                               >
                                 {item?.message}
                               </Text>
