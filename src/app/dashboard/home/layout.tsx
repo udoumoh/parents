@@ -30,12 +30,14 @@ const Layout: FC<LayoutProps> = ({ children }) => {
   useEffect(() => {
     const currentId = localStorage.getItem("currentId");
 
-    if(childData?.length === 0){
-      window.location.replace('/dashboard/settings')
-    } else if(childData?.length !== 0 && currentId === null){
-      onOpen();
+    if (currentId === null) {
+      onOpen(); // Open the modal
     }
-  }, [onOpen, childData]);
+  }, [onOpen]);
+
+  if (parentData?.children.length === 0) {
+    window.location.replace("/dashboard");
+  }
 
   const Overlay = () => <ModalOverlay bg="none" backdropFilter="blur(10px)" />;
   return (
