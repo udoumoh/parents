@@ -166,7 +166,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
           justifyContent={"space-between"}
           alignItems={{ base: "center", lg: "start" }}
           flexDir={{ base: "column", md: "row" }}
-          rounded={"xl"}
+          rounded={"2xl"}
           p={"2rem"}
           // border={"1px solid #005D5D70"}
           shadow={"lg"}
@@ -329,7 +329,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                     display={"flex"}
                     alignItems={"center"}
                     px={"1.3rem"}
-                    rounded={"md"}
+                    rounded={"2xl"}
                     py={"1rem"}
                     maxW={{ base: "auto", lg: "550px" }}
                   >
