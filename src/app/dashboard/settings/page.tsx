@@ -54,10 +54,12 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
     variables: { parentId: parentData?.userId },
   });
   const [deleteRequest] = useMutation(DELETE_REQUEST);
-
+  const [isSubmitting, setIsSubmitting] = useState(false)
+ 
   console.log(parentData);
 
   const handleRequestDelete = async (requestId: any) => {
+    setIsSubmitting(true)
     try {
       const response = await deleteRequest({
         variables: { deleteRequestId: requestId },
@@ -82,6 +84,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
           isClosable: true,
           status: "success",
         });
+        window.location.reload();
       }
     } catch (err: any) {
       console.log(err);
@@ -93,32 +96,34 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
         isClosable: true,
         status: "error",
       });
+    } finally{
+      setIsSubmitting(false);
     }
   };
 
-  setInterval(() => {
-    const fetchData = async () => {
-      try {
-        const response = await getRequests;
-        if (!response) {
-          console.log("client error");
-        } else {
-          const newData = response?.parentRequests.map((item: any) => ({
-            studentFirstName: item?.student?.firstName,
-            studentLastName: item?.student?.lastName,
-            studentProfileImgUrl: item?.student?.profileImgUrl,
-            message: item?.message,
-            status: item?.status,
-            id: item?.id,
-          }));
-          setRequestData(newData);
-        }
-      } catch (err: any) {
-        console.log(err);
-      }
-    };
-    fetchData();
-  }, 2000);
+  useEffect(() => {
+const fetchData = async () => {
+  try {
+    const response = await getRequests;
+    if (!response) {
+      console.log("client error");
+    } else {
+      const newData = response?.parentRequests.map((item: any) => ({
+        studentFirstName: item?.student?.firstName,
+        studentLastName: item?.student?.lastName,
+        studentProfileImgUrl: item?.student?.profileImgUrl,
+        message: item?.message,
+        status: item?.status,
+        id: item?.id,
+      }));
+      setRequestData(newData);
+    }
+  } catch (err: any) {
+    console.log(err);
+  }
+};
+fetchData();
+  }, [getRequests])
 
   return (
     <Box
@@ -181,7 +186,6 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
               </Text>
 
               <Flex
-                border={"1.5px solid orange"}
                 rounded={"md"}
                 py={"0.5rem"}
                 px={"1rem"}
@@ -189,14 +193,15 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                 alignItems={"center"}
                 mt={"0.5rem"}
                 _hover={{ cursor: "pointer" }}
+                backgroundColor={"#F1FAFB80"}
               >
-                <Text fontSize={"md"} color={"#FCF4D9"}>
+                <Text fontSize={"md"} color={"#000"} fontWeight={'600'}>
                   Greycases
                 </Text>
                 <Center height="20px">
-                  <Divider orientation="vertical" />
+                  <Divider orientation="vertical" border={'1px solid'}/>
                 </Center>
-                <Text fontSize={"md"} color={"#FCF4D9"}>
+                <Text fontSize={"md"} color={"#000"} fontWeight={'600'}>
                   None
                 </Text>
               </Flex>
@@ -428,6 +433,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                                 }}
                                 variant={"outline"}
                                 rounded={"lg"}
+                                isLoading={isSubmitting}
                                 onClick={() => handleRequestDelete(item?.id)}
                               >
                                 Withdraw request
