@@ -383,7 +383,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
           >
             <Icon as={RiMailOpenFill} boxSize={"4"} color={"#005D5D"} />
             <Text color={"#005D5D"} fontWeight={"600"}>
-              Messages
+              Inbox
             </Text>
           </MenuItem>
           <MenuDivider />
