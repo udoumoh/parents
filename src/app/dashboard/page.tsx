@@ -9,6 +9,7 @@ import {
   Button,
   Avatar,
   useToast,
+  SimpleGrid,
 } from "@chakra-ui/react";
 import { AiOutlinePlus } from "react-icons/ai";
 import SearchStudentModal from "@/components/shared/searchStudentModal";
@@ -189,7 +190,7 @@ const Page: FC<pageProps> = ({}) => {
               p={"10"}
             >
               <Text
-                fontSize={"2xl"}
+                fontSize={{base:"xl", md:"3xl"}}
                 color={"#005D5D"}
                 fontWeight={"600"}
                 mb={"2rem"}
@@ -197,7 +198,11 @@ const Page: FC<pageProps> = ({}) => {
               >
                 Link Child Request Status
               </Text>
-              <Flex flexDir={{ base: "column", lg: "row" }} gap={4}>
+              <SimpleGrid
+                minChildWidth={{ base: "230px", md: "350px" }}
+                spacing={"20px"}
+                w={"full"}
+              >
                 {requestData.map((data, index) => (
                   <Flex
                     key={index}
@@ -209,7 +214,9 @@ const Page: FC<pageProps> = ({}) => {
                     px={{ base: "1rem", md: "3rem" }}
                     rounded={"xl"}
                     shadow={"lg"}
+                    justifyContent={'space-between'}
                   >
+                    <Box>
                     <Avatar size={"lg"} src={data?.studentProfileImgUrl} />
 
                     <Text fontSize={"lg"} fontWeight={"600"}>
@@ -224,6 +231,7 @@ const Page: FC<pageProps> = ({}) => {
                     >
                       {data?.message}
                     </Text>
+                    </Box>
 
                     <Flex gap={"5"}>
                       <Button
@@ -267,7 +275,7 @@ const Page: FC<pageProps> = ({}) => {
                     </Flex>
                   </Flex>
                 ))}
-              </Flex>
+              </SimpleGrid>
             </Flex>
           </>
         )}
