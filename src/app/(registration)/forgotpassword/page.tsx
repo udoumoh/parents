@@ -73,7 +73,9 @@ const ForgotPassword: FC<ForgotPasswordProps> = ({}) => {
             isClosable: true,
             status: "success",
           });
-          window.location.replace('/confirmation')
+          setTimeout(() => {
+            window.location.replace('/confirmation')
+          }, 2000)
       }
     } catch (error: any) {
       toast({
