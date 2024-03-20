@@ -18,6 +18,7 @@ import { useUserAPI } from "@/hooks/UserContext";
 import { PARENT_REQUESTS } from "@/gql/queries";
 import { useQuery, useMutation } from "@apollo/client";
 import Loading from "../loading";
+
 interface pageProps {}
 
 interface RequestDataProps {
@@ -42,6 +43,13 @@ const Page: FC<pageProps> = ({}) => {
     onClose: onModalClose,
   } = useDisclosure();
 
+  if ((childData ?? []).length !== 0) {
+    window.location.replace("/dashboard/home/overview");
+  }
+
+  if ((childData ?? []).length === 0 && requestData.length !== 0 ) {
+    window.location.replace("/dashboard/settings")
+  }
     useEffect(() => {
       const fetchData = async () => {
         try {
@@ -65,8 +73,6 @@ const Page: FC<pageProps> = ({}) => {
       };
       fetchData();
     }, [getRequests]);
-
-    console.log(childData)
 
     if(!childData){
       return <Loading />
