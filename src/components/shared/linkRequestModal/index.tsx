@@ -94,9 +94,9 @@ const LinkRequestModal: FC<LinkRequestModalProps> = ({
               status: "success",
             });
             setTimeout(() => {
-              window.location.reload();
               onClose()
-            }, 3000)
+              window.location.reload();
+            }, 1000)
         }
       } catch(error: any) {
         toast({
