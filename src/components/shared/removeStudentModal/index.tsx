@@ -150,7 +150,7 @@ const RemoveStudentModal: FC<RemoveStudentModalProps> = ({isOpen, onClose, onOpe
                         greynote?
                       </Text>
                       <Flex alignItems={"end"} mt={"1rem"}>
-                        <Button colorScheme="red" isLoading={isSubmitting} onClick={()=>handleRemoveStudent(child.id)}>
+                        <Button colorScheme="red" isLoading={isSubmitting} ml={'auto'} onClick={()=>handleRemoveStudent(child.id)}>
                           Yes, delete data
                         </Button>
                       </Flex>
