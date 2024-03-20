@@ -32,7 +32,7 @@ interface PageProps {
 }
 
 const Page: FC<PageProps> = ({ params }: { params: { slug: string } }) => {
-  console.log(params)
+  console.log(params.slug)
   const router = useRouter();
   const toast = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -54,7 +54,7 @@ const Page: FC<PageProps> = ({ params }: { params: { slug: string } }) => {
       const response = await changePassword({
         variables: {
           newPassword: values.newPassword,
-          token: params
+          token: params.slug
         }
       })
       if(!response) {
