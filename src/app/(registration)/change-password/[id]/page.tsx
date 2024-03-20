@@ -24,15 +24,14 @@ import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 
 interface Params {
-  slug: string;
+  id: string;
 }
 
 interface PageProps {
   params: Params;
 }
 
-const Page: FC<PageProps> = ({ params }: { params: { slug: string } }) => {
-  console.log(params.slug)
+const Page: FC<PageProps> = ({ params }: { params: { id: string } }) => {
   const router = useRouter();
   const toast = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -54,7 +53,7 @@ const Page: FC<PageProps> = ({ params }: { params: { slug: string } }) => {
       const response = await changePassword({
         variables: {
           newPassword: values.newPassword,
-          token: params.slug
+          token: params.id
         }
       })
       if(!response) {
