@@ -30,7 +30,6 @@ const Signin: FC<pageProps> = ({}) => {
   const [password, setPassword] = useState("");
   const [loginParent] = useMutation(LOGIN_PARENT);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const { childData } = useUserAPI();
   const [show, setShow] = useState(false);
 
   const handleEmailChange = (e: any) => {
@@ -85,13 +84,7 @@ const Signin: FC<pageProps> = ({}) => {
         isClosable: true,
         status: "success",
       });
-      if ((childData ?? []).length === 0) {
-        window.location.replace("/dashboard");
-      } else if ((childData ?? []).length > 0) {
-        window.location.replace("/dashboard/home/overview");
-      } else {
-        return <Loading />;
-      }
+        window.location.replace("/dashboard/home/overview")
     } catch (error: any) {
       toast({
         title: "Error",
