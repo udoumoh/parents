@@ -77,10 +77,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
           variant: "left-accent",
           isClosable: true,
           status: "success",
-        });
-        setTimeout(() => {
-          window.location.reload();
-        }, 2000);
+        });   
       }
     } catch (err: any) {
       console.log(err);
@@ -96,7 +93,6 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
   };
 
   useEffect(() => {
-    setInterval(() => {
       const fetchData = async () => {
         try {
           const response = await getRequests;
@@ -118,8 +114,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
         }
       };
       fetchData();
-    }, 2000)
-  }, [getRequests]);
+  }, [getRequests, deleteRequest]);
 
   return (
     <Box
