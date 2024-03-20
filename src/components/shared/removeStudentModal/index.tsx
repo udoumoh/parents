@@ -174,7 +174,9 @@ const RemoveStudentModal: FC<RemoveStudentModalProps> = ({isOpen, onClose, onOpe
                       py={"0.5rem"}
                       px={"1rem"}
                       _hover={{
-                        backgroundColor: "#FFE7E7",
+                        backgroundColor: child.isVisible
+                          ? "#FFE7E7"
+                          : "#3F999830",
                         cursor: "pointer",
                       }}
                     >
