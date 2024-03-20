@@ -294,49 +294,49 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                 backgroundColor={"#005D5D60"}
                 p={"0.4rem"}
                 rounded={"md"}
-                gap={"3"}
+                gap={{base:"1", md:"3"}}
               >
                 <Tab
-                  fontSize={"md"}
+                  fontSize={{base:"xs", md:"md"}}
                   color={"#000"}
-                  px={"1rem"}
+                  px={{base:"0.5rem", md:"1rem"}}
                   py={"0.3rem"}
                   borderRadius={"4px"}
                   _selected={{ backgroundColor: "#005D5D", color: "#FFFFFF" }}
                 >
-                  All invoice
+                  All
                 </Tab>
                 <Tab
-                  fontSize={"md"}
+                  fontSize={{base:"xs", md:"md"}}
                   color={"#000"}
-                  px={"1rem"}
+                  px={{base:"0.5rem", md:"1rem"}}
                   borderRadius={"4px"}
                   _selected={{ backgroundColor: "#005D5D", color: "#FFFFFF" }}
                 >
                   Completed
                 </Tab>
                 <Tab
-                  fontSize={"md"}
+                  fontSize={{base:"xs", md:"md"}}
                   color={"#000"}
-                  px={"1rem"}
+                  px={{base:"0.5rem", md:"1rem"}}
                   borderRadius={"4px"}
                   _selected={{ backgroundColor: "#005D5D", color: "#FFFFFF" }}
                 >
                   Active
                 </Tab>
                 <Tab
-                  fontSize={"md"}
+                  fontSize={{base:"xs", md:"md"}}
                   color={"#000"}
-                  px={"1rem"}
+                  px={{base:"0.5rem", md:"1rem"}}
                   borderRadius={"4px"}
                   _selected={{ backgroundColor: "#005D5D", color: "#FFFFFF" }}
                 >
                   Rejected
                 </Tab>
                 <Tab
-                  fontSize={"md"}
+                  fontSize={{base:"xs", md:"md"}}
                   color={"#000"}
-                  px={"1rem"}
+                  px={{base:"0.5rem", md:"1rem"}}
                   borderRadius={"4px"}
                   _selected={{ backgroundColor: "#005D5D", color: "#FFFFFF" }}
                 >
