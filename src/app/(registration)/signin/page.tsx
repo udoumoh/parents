@@ -155,7 +155,6 @@ const Signin: FC<pageProps> = ({}) => {
                 <MdEmail color="#005D5D" size={20} />
               </InputLeftElement>
               <Input
-                size={{ base: "sm", md: "md" }}
                 onChange={handleEmailChange}
                 type="email"
                 placeholder="Enter your email"
@@ -170,7 +169,6 @@ const Signin: FC<pageProps> = ({}) => {
                 <IoMdLock color="#005D5D" size={20} />
               </InputLeftElement>
               <Input
-                size={{ base: "sm", md: "md" }}
                 onChange={handlePasswordChange}
                 type={show ? "text" : "password"}
                 placeholder="Enter your password"

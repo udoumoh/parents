@@ -1,5 +1,5 @@
 "use client";
-import { FC, useEffect, useState } from "react";
+import { FC, useState } from "react";
 import {
   Box,
   Text,
@@ -18,10 +18,8 @@ import {
 } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
 import { gql, useMutation } from "@apollo/client";
-import { useUserAPI } from "@/hooks/UserContext";
-import { LOGIN_PARENT } from "@/gql/mutations";
 import { IoMdLock, IoMdEyeOff, IoMdEye } from "react-icons/io";
-import Loading from "@/app/loading";
+import { CHANGE_PARENT_PASSWORD } from "@/gql/mutations";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 
@@ -39,6 +37,7 @@ const Page: FC<PageProps> = ({ params }: { params: { slug: string } }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [changePassword] = useMutation(CHANGE_PARENT_PASSWORD)
 
   const schema = Yup.object().shape({
     newPassword: Yup.string()
@@ -47,6 +46,54 @@ const Page: FC<PageProps> = ({ params }: { params: { slug: string } }) => {
       .oneOf([Yup.ref("newPassword")], "Passwords must match")
       .required("Password confirm is required"),
   });
+
+  const handleChangePassword = async(values: any) => {
+    setIsSubmitting(true)
+    try{
+      const response = await changePassword({
+        variables: {
+          newPassword: values.newPassword,
+          token: params
+        }
+      })
+      if(!response) {
+        toast({
+          title: "Client Error",
+          description: "A client side error has occurred",
+          position: "top-right",
+          variant: "left-accent",
+          isClosable: true,
+          status: "error",
+        });
+      }
+      if(!response.data.changeParentPassword){
+        toast({
+          title: "Error",
+          description: "We were unable to change your password. Please try again",
+          position: "top-right",
+          variant: "left-accent",
+          isClosable: true,
+          status: "error",
+        });
+      }
+      if (response.data.changeParentPassword) {
+        toast({
+          title: "Success",
+          description:
+            "Your password has been changed successfully, you will be redirected to the signin page shortly",
+          position: "top-right",
+          variant: "left-accent",
+          isClosable: true,
+          status: "success",
+        });
+        setTimeout(() => {
+          router.push('/signin')
+        }, 2000)
+      }
+    } catch (err: any) {
+      console.log(err);
+    }
+  }
 
   return (
     <Box
@@ -92,7 +139,9 @@ const Page: FC<PageProps> = ({ params }: { params: { slug: string } }) => {
                 newPassword: "",
                 confirmPassword: "",
               }}
-              onSubmit={(values, actions) => {}}
+              onSubmit={(values, actions) => {
+                handleChangePassword(values)
+              }}
               validationSchema={schema}
             >
               {(props) => (
