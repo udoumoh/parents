@@ -10,43 +10,32 @@ import {
   Button,
   Image,
   Link,
-  Icon,
   useToast,
+  FormLabel,
 } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
 import { gql, useMutation } from "@apollo/client";
-import { useUserAPI } from "@/hooks/UserContext";
-import { LOGIN_PARENT } from "@/gql/mutations";
 import { MdEmail } from "react-icons/md";
-import { IoMdLock, IoMdEyeOff, IoMdEye } from "react-icons/io";
-import Loading from "@/app/loading";
+import { RESET_PASSWORD_LINK } from "@/gql/mutations";
 
-interface pageProps {}
+interface ForgotPasswordProps {}
 
-const Signin: FC<pageProps> = ({}) => {
+const ForgotPassword: FC<ForgotPasswordProps> = ({}) => {
   const router = useRouter();
   const toast = useToast();
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [loginParent] = useMutation(LOGIN_PARENT);
+  const [sendPasswordResetEmail] = useMutation(RESET_PASSWORD_LINK);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const {childData} = useUserAPI()
-  const [show, setShow] = useState(false);
 
   const handleEmailChange = (e: any) => {
     setEmail(e.target.value);
   };
 
-  const handlePasswordChange = (e: any) => {
-    setPassword(e.target.value);
-  };
-
-  const handleLogin = async () => {
+  const handleChangePassword = async () => {
     setIsSubmitting(true);
     try {
-      const response = await loginParent({
+      const response = await sendPasswordResetEmail({
         variables: {
-          password: password,
           email: email.toLowerCase(),
         },
       });
@@ -63,12 +52,10 @@ const Signin: FC<pageProps> = ({}) => {
         return;
       }
 
-      const loginErrors = response.data.loginParent.errors;
-
-      if (loginErrors) {
+      if (!response?.data?.forgotParentPassword) {
         toast({
           title: "Server Error",
-          description: loginErrors[0].message,
+          description: 'An error occurred while resetting your password',
           position: "top-right",
           variant: "left-accent",
           isClosable: true,
@@ -77,33 +64,28 @@ const Signin: FC<pageProps> = ({}) => {
         return;
       }
 
-      toast({
-        title: "Login successful",
-        description: "You are being redirected to your dashboard",
-        position: "top-right",
-        variant: "left-accent",
-        isClosable: true,
-        status: "success",
-      });
-      if(( childData ?? []).length === 0){
-        window.location.replace("/dashboard");
-      }else if(( childData ?? []).length > 0){
-        window.location.replace("/dashboard/home/overview");
-      } else{
-        return <Loading />
+      if(response?.data?.forgotParentPassword){
+          toast({
+            title: "Password Reset Link sent successfully",
+            description: "A link has been sent to your email for password reset, please follow that link to reset your password",
+            position: "top-right",
+            variant: "left-accent",
+            isClosable: true,
+            status: "success",
+          });
+          window.location.replace('/confirmation')
       }
-      
     } catch (error: any) {
       toast({
         title: "Error",
-        description: error.message,
+        description: 'A server side error has occured',
         position: "top-right",
         variant: "left-accent",
         isClosable: true,
         status: "error",
       });
 
-      console.error("Error during login:", error);
+      console.error(error.message);
     } finally {
       setIsSubmitting(false);
     }
@@ -129,18 +111,18 @@ const Signin: FC<pageProps> = ({}) => {
         <Image src="/images/greylightBordered.svg" alt="logo" />
         <Box
           backgroundColor={"#fff"}
-          minW={{ base: "auto", md: "500px" }}
-          py={5}
+          maxW={{ base: "auto", md: "550px" }}
+          py={8}
           px={{ base: "2rem", md: "3rem" }}
           rounded={"lg"}
-          shadow={'md'}
+          shadow={"md"}
         >
-          <Box textAlign={"center"}>
+          <Box textAlign={"start"} display={'flex'} flexDir={'column'} gap={'2'}>
             <Text color={"#005D5D"} fontWeight={"bold"} fontSize={"2xl"}>
-              Welcome back
+              Forgot  your password?
             </Text>
-            <Text color={"#005D5D90"} fontWeight={"600"} fontSize={"sm"}>
-              Enter your credentials to access your account
+            <Text color={"#005D5D90"} fontWeight={"600"} fontSize={"md"}>
+              Enter the email associated with your account, a link will be sent to you for password reset.
             </Text>
           </Box>
 
@@ -149,8 +131,10 @@ const Signin: FC<pageProps> = ({}) => {
             flexDir={"column"}
             gap={6}
             mb={"1rem"}
-            mt={"2rem"}
+            mt={"3rem"}
           >
+            <Box>
+            <FormLabel color={'#005D5D'} fontWeight={'bold'}>Email</FormLabel>
             <InputGroup>
               <InputLeftElement pointerEvents="none">
                 <MdEmail color="#005D5D" size={20} />
@@ -158,37 +142,13 @@ const Signin: FC<pageProps> = ({}) => {
               <Input
                 onChange={handleEmailChange}
                 type="email"
-                placeholder="Enter your email"
+                placeholder="johndoe@gn.com"
                 pl={"2.5rem"}
                 focusBorderColor="#005D5D80"
                 border={"1px solid #005D5D30"}
               />
             </InputGroup>
-
-            <InputGroup>
-              <InputLeftElement pointerEvents="none">
-                <IoMdLock color="#005D5D" size={20} />
-              </InputLeftElement>
-              <Input
-                onChange={handlePasswordChange}
-                type={show ? "text" : "password"}
-                placeholder="Enter your password"
-                pl={"2.5rem"}
-                focusBorderColor="#005D5D80"
-                border={"1px solid #005D5D30"}
-              />
-              <InputRightElement width="4.5rem">
-                <Icon
-                  _hover={{ cursor: "pointer" }}
-                  boxSize={5}
-                  as={show ? IoMdEyeOff : IoMdEye}
-                  onClick={() => {
-                    setShow(!show);
-                  }}
-                  color={"#005D5D"}
-                />
-              </InputRightElement>
-            </InputGroup>
+            </Box>
 
             <Button
               backgroundColor={"#005D5D"}
@@ -196,9 +156,10 @@ const Signin: FC<pageProps> = ({}) => {
               w={"full"}
               _hover={{ backgroundColor: "#005D5D90" }}
               isLoading={isSubmitting}
-              onClick={handleLogin}
+              onClick={handleChangePassword}
+              isDisabled={email.length === 0 ? true : false}
             >
-              Sign in
+              Continue
             </Button>
 
             <Box>
@@ -208,9 +169,9 @@ const Signin: FC<pageProps> = ({}) => {
                 fontWeight={"600"}
                 textAlign={"center"}
               >
-                Don&apos;t have an account?{" "}
-                <Link color={"#007C7B"} onClick={() => router.push("/signup")}>
-                  {`Sign Up`}
+                Already have an account?{" "}
+                <Link color={"#007C7B"} onClick={() => router.push("/signin")}>
+                  {`Sign In`}
                 </Link>
               </Text>
             </Box>
@@ -221,4 +182,4 @@ const Signin: FC<pageProps> = ({}) => {
   );
 };
 
-export default Signin;
+export default ForgotPassword;

@@ -227,3 +227,7 @@ mutation RegisterParent($folder: String!, $options: parentRegInput!) {
 export const DELETE_REQUEST = gql(`mutation DeleteRequest($deleteRequestId: Float!) {
   deleteRequest(id: $deleteRequestId)
 }`)
+
+export const RESET_PASSWORD_LINK = gql(`mutation ForgotParentPassword($email: String!) {
+  forgotParentPassword(email: $email)
+}`)

@@ -67,7 +67,7 @@ const Page: FC<pageProps> = ({}) => {
             firstName: values.firstName.trim(),
             lastName: values.lastName.trim(),
             middleName: values.middleName.trim(),
-            email: values.email.trim(),
+            email: values.email.trim().toLowerCase(),
             referralCode: "",
             phoneNumber: values.phoneNumber.toString().trim(),
             password: values.password.trim(),
@@ -190,10 +190,11 @@ const Page: FC<pageProps> = ({}) => {
                     <TabPanel p={0}>
                       <Box
                         backgroundColor={"#FFFFFF"}
-                        px={{ base: "1rem", lg: "2rem" }}
-                        py={"2rem"}
-                        rounded={"md"}
-                        mx={"3rem"}
+                        px={{ base: "2rem", lg: "4rem" }}
+                        py={"3rem"}
+                        rounded={"lg"}
+                        mx={{base:"1rem", lg:"3rem"}}
+                        shadow={"md"}
                       >
                         <Text
                           fontSize={{ base: "xl", lg: "3xl" }}
@@ -205,7 +206,7 @@ const Page: FC<pageProps> = ({}) => {
                           Create your account
                         </Text>
 
-                        <Flex gap={5} display={{ base: "column", lg: "flex" }}>
+                        <Flex gap={5} display={{ base: "column", sm: "flex" }}>
                           <Field name="firstName">
                             {({ field, form }: any) => (
                               <FormControl
@@ -216,14 +217,17 @@ const Page: FC<pageProps> = ({}) => {
                                 mb="1.5rem"
                               >
                                 <Box w={"full"}>
-                                  <FormLabel color={"#005D5D"} fontSize={"sm"}>
+                                  <FormLabel color={"#005D5D"} fontSize={"md"}>
                                     First Name
                                   </FormLabel>
                                   <Input
-                                    border={"1px solid #005D5D40"}
+                                    size={{ base: "sm", md: "md" }}
+                                    rounded={"md"}
+                                    placeholder="John"
+                                    border={"1px solid #005D5D80"}
                                     {...field}
                                     type="text"
-                                    focusBorderColor="#005D5D95"
+                                    focusBorderColor="#005D5D"
                                     errorBorderColor="#005D5D40"
                                     autoComplete="true"
                                   />
@@ -244,15 +248,18 @@ const Page: FC<pageProps> = ({}) => {
                                 mb="1.5rem"
                               >
                                 <Box w={"full"}>
-                                  <FormLabel color={"#005D5D"} fontSize={"sm"}>
+                                  <FormLabel color={"#005D5D"} fontSize={"md"}>
                                     Last Name
                                   </FormLabel>
                                   <Input
-                                    border={"1px solid #005D5D40"}
+                                    size={{ base: "sm", md: "md" }}
+                                    rounded={"md"}
+                                    placeholder="Smith"
+                                    border={"1px solid #005D5D80"}
                                     {...field}
                                     type="text"
                                     autoComplete="true"
-                                    focusBorderColor="#005D5D95"
+                                    focusBorderColor="#005D5D"
                                     errorBorderColor="#005D5D40"
                                   />
                                   <FormErrorMessage>
@@ -268,14 +275,17 @@ const Page: FC<pageProps> = ({}) => {
                           {({ field }: any) => (
                             <FormControl mb="1.5rem">
                               <Box w={"full"}>
-                                <FormLabel color={"#005D5D"} fontSize={"sm"}>
+                                <FormLabel color={"#005D5D"} fontSize={"md"}>
                                   Middle Name(Optional)
                                 </FormLabel>
                                 <Input
-                                  border={"1px solid #005D5D40"}
+                                  size={{ base: "sm", md: "md" }}
+                                  rounded={"md"}
+                                  placeholder="Clark"
+                                  border={"1px solid #005D5D80"}
                                   {...field}
                                   type="text"
-                                  focusBorderColor="#005D5D95"
+                                  focusBorderColor="#005D5D"
                                   errorBorderColor="#005D5D40"
                                   autoComplete="true"
                                 />
@@ -294,15 +304,18 @@ const Page: FC<pageProps> = ({}) => {
                                 mb="1.5rem"
                               >
                                 <Box w={"full"}>
-                                  <FormLabel color={"#005D5D"} fontSize={"sm"}>
+                                  <FormLabel color={"#005D5D"} fontSize={"md"}>
                                     Email
                                   </FormLabel>
                                   <Input
-                                    border={"1px solid #005D5D40"}
+                                    size={{ base: "sm", md: "md" }}
+                                    rounded={"md"}
+                                    placeholder="Olivia@untitledui.com"
+                                    border={"1px solid #005D5D80"}
                                     {...field}
                                     type="text"
                                     autoComplete="true"
-                                    focusBorderColor="#005D5D95"
+                                    focusBorderColor="#005D5D"
                                     errorBorderColor="#005D5D40"
                                   />
                                   <FormErrorMessage>
@@ -323,22 +336,30 @@ const Page: FC<pageProps> = ({}) => {
                                 mb="1.5rem"
                               >
                                 <Box w={"full"}>
-                                  <FormLabel color={"#005D5D"} fontSize={"sm"}>
+                                  <FormLabel color={"#005D5D"} fontSize={"md"}>
                                     Phone Number
                                   </FormLabel>
-                                  <InputGroup>
+                                  <InputGroup
+                                    size={{ base: "sm", md: "md" }}
+                                    rounded={"md"}
+                                  >
                                     <InputLeftAddon
-                                      border={"1px solid #005D5D40"}
-                                      backgroundColor={'transparent'}
+                                      rounded={"md"}
+                                      border={"1px solid #005D5D80"}
+                                      backgroundColor={"transparent"}
+                                      color={"#005D5D"}
                                     >
                                       +234
                                     </InputLeftAddon>
                                     <Input
-                                      border={"1px solid #005D5D40"}
+                                      size={{ base: "sm", md: "md" }}
+                                      rounded={"md"}
+                                      placeholder="8099992222"
+                                      border={"1px solid #005D5D80"}
                                       {...field}
                                       type="number"
                                       autoComplete="true"
-                                      focusBorderColor="#005D5D95"
+                                      focusBorderColor="#005D5D"
                                       errorBorderColor="#005D5D40"
                                     />
                                   </InputGroup>
@@ -360,15 +381,18 @@ const Page: FC<pageProps> = ({}) => {
                               mb="1.5rem"
                             >
                               <Box w={"full"}>
-                                <FormLabel color={"#005D5D"} fontSize={"sm"}>
+                                <FormLabel color={"#005D5D"} fontSize={"md"}>
                                   Password
                                 </FormLabel>
                                 <InputGroup>
                                   <Input
+                                    size={{ base: "sm", md: "md" }}
+                                    rounded={"md"}
+                                    placeholder="**************"
                                     type={show ? "text" : "password"}
-                                    border={"1px solid #005D5D40"}
+                                    border={"1px solid #005D5D80"}
                                     {...field}
-                                    focusBorderColor="#005D5D95"
+                                    focusBorderColor="#005D5D"
                                     errorBorderColor="#005D5D40"
                                   />
                                   <InputRightElement width="4.5rem">

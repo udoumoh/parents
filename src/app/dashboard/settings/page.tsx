@@ -318,7 +318,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
             <Text fontWeight={"500"}>Link Requests</Text>
             <Flex w={"full"} mb={"0.5rem"}>
               <SimpleGrid
-                minChildWidth={{ base: "230px", md: "350px" }}
+                minChildWidth={{ base: "270px", md: "400px" }}
                 spacing={"20px"}
                 w={"full"}
               >
@@ -346,10 +346,9 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                           rounded={"xl"}
                           border={"1px solid #005D5D"}
                           p={"1rem"}
-                          w={"auto"}
                         >
                           <Avatar
-                            size={"lg"}
+                            size={{ base: "sm", lg: "lg" }}
                             src={item?.studentProfileImgUrl}
                             pointerEvents={"none"}
                           />
@@ -358,7 +357,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                             display={"flex"}
                             flexDir={"column"}
                             justifyContent={"space-between"}
-                            w={"full"}
+                            maxW={{base:"200px", md:'400px'}}
                           >
                             <Box>
                               <Flex
@@ -366,7 +365,10 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                                 justifyContent={"space-between"}
                                 gap={2}
                               >
-                                <Text fontWeight={"600"} fontSize={"lg"}>
+                                <Text
+                                  fontWeight={"600"}
+                                  fontSize={{ base: "sm", lg: "lg" }}
+                                >
                                   {item?.studentFirstName}{" "}
                                   {item?.studentLastName}
                                 </Text>
@@ -389,10 +391,10 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                                 </Badge>
                               </Flex>
                               <Text
-                                fontSize={"sm"}
+                                fontSize={{ base: "xs", lg: "sm" }}
                                 color={"gray.500"}
                                 fontWeight={"600"}
-                                maxW={"300px"}
+                                maxW={{base:'200px', md:"300px"}}
                               >
                                 {item?.message}
                               </Text>
