@@ -42,9 +42,13 @@ interface RequestDataProps {
 }
 
 const SettingsPage: FC<SettingsPageProps> = ({}) => {
-  const toast = useToast()
+  const toast = useToast();
   const [requestData, setRequestData] = useState<RequestDataProps[]>([]);
-  const {isOpen: isModalOpen, onOpen: onModalOpen, onClose: onModalClose} = useDisclosure();
+  const {
+    isOpen: isModalOpen,
+    onOpen: onModalOpen,
+    onClose: onModalClose,
+  } = useDisclosure();
   const { profileData, parentData, childData } = useUserAPI();
   const { data: getRequests, loading } = useQuery(PARENT_REQUESTS, {
     variables: { parentId: parentData?.userId },
@@ -77,7 +81,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
           variant: "left-accent",
           isClosable: true,
           status: "success",
-        });   
+        });
       }
     } catch (err: any) {
       console.log(err);
@@ -92,29 +96,29 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
     }
   };
 
-  useEffect(() => {
-      const fetchData = async () => {
-        try {
-          const response = await getRequests;
-          if (!response) {
-            console.log("client error");
-          } else {
-            const newData = response?.parentRequests.map((item: any) => ({
-              studentFirstName: item?.student?.firstName,
-              studentLastName: item?.student?.lastName,
-              studentProfileImgUrl: item?.student?.profileImgUrl,
-              message: item?.message,
-              status: item?.status,
-              id: item?.id,
-            }));
-            setRequestData(newData);
-          }
-        } catch (err: any) {
-          console.log(err);
+  setInterval(() => {
+    const fetchData = async () => {
+      try {
+        const response = await getRequests;
+        if (!response) {
+          console.log("client error");
+        } else {
+          const newData = response?.parentRequests.map((item: any) => ({
+            studentFirstName: item?.student?.firstName,
+            studentLastName: item?.student?.lastName,
+            studentProfileImgUrl: item?.student?.profileImgUrl,
+            message: item?.message,
+            status: item?.status,
+            id: item?.id,
+          }));
+          setRequestData(newData);
         }
-      };
-      fetchData();
-  }, [getRequests, deleteRequest]);
+      } catch (err: any) {
+        console.log(err);
+      }
+    };
+    fetchData();
+  }, 2000);
 
   return (
     <Box
@@ -177,21 +181,22 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
               </Text>
 
               <Flex
-                border={"1.5px dotted #FCF4D9"}
+                border={"1.5px solid orange"}
                 rounded={"md"}
                 py={"0.5rem"}
-                px={'1rem'}
+                px={"1rem"}
                 gap={"4"}
-                alignItems={'center'}
-                mt={'0.5rem'}
+                alignItems={"center"}
+                mt={"0.5rem"}
+                _hover={{ cursor: "pointer" }}
               >
-                <Text fontSize={"md"} color={"#FCF4D990"}>
-                  Graycases
+                <Text fontSize={"md"} color={"#FCF4D9"}>
+                  Greycases
                 </Text>
                 <Center height="20px">
                   <Divider orientation="vertical" />
                 </Center>
-                <Text fontSize={"md"} color={"#FCF4D990"}>
+                <Text fontSize={"md"} color={"#FCF4D9"}>
                   None
                 </Text>
               </Flex>
