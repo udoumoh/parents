@@ -32,6 +32,7 @@ interface PageProps {
 }
 
 const Page: FC<PageProps> = ({ params }: { params: { slug: string } }) => {
+  console.log(params)
   const router = useRouter();
   const toast = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -92,6 +93,8 @@ const Page: FC<PageProps> = ({ params }: { params: { slug: string } }) => {
       }
     } catch (err: any) {
       console.log(err);
+    } finally {
+      setIsSubmitting(false)
     }
   }
 
