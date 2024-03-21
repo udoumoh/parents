@@ -146,7 +146,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
     .reduce((acc, item) => acc + item, 0);
 
     const getCompletedInvoiceAmount = (invoice: any) => {
-      const totalCompletedAmount = invoice.receipt.map((receipt: any) => receipt.amountPaid).reduce((acc: any, item: any) => acc + item.amountPaid, 0)
+      const totalCompletedAmount = invoice.receipt.map((receipt: any) => receipt.amountPaid).reduce((acc: any, item: any) => acc + item, 0)
       return formatNumberWithCommas(totalCompletedAmount)
     }
 
