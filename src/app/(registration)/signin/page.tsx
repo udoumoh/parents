@@ -116,14 +116,14 @@ const Signin: FC<pageProps> = ({}) => {
         alignItems={"center"}
         justifyContent={"center"}
         gap={10}
-        p={5}
+        p={2}
       >
         <Image src="/images/greylightBordered.svg" alt="logo" />
         <Box
           backgroundColor={"#fff"}
-          minW={{ base: "full", md: "500px" }}
+          w='full'
           py={5}
-          px={{base:"2rem", md:"3rem"}}
+          px={{base:"1rem", md:"3rem"}}
           rounded={"lg"}
           shadow={"md"}
         >
@@ -142,6 +142,7 @@ const Signin: FC<pageProps> = ({}) => {
             gap={6}
             mb={"1rem"}
             mt={"2rem"}
+            w={'full'}
           >
             <InputGroup>
               <InputLeftElement pointerEvents="none">
