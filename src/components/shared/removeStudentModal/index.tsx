@@ -1,4 +1,4 @@
-import { FC, useState } from 'react'
+import { FC, useState } from "react";
 import {
   Modal,
   ModalOverlay,
@@ -20,119 +20,123 @@ import {
   Divider,
   useToast,
 } from "@chakra-ui/react";
-import { useUserAPI } from '@/hooks/UserContext';
-import { useMutation } from '@apollo/client';
-import { REMOVE_STUDENT } from '@/gql/mutations';
-import { RECOVER_STUDENT } from '@/gql/mutations';
+import { useUserAPI } from "@/hooks/UserContext";
+import { useMutation } from "@apollo/client";
+import { REMOVE_STUDENT } from "@/gql/mutations";
+import { RECOVER_STUDENT } from "@/gql/mutations";
 
 interface RemoveStudentModalProps {
-    isOpen: boolean;
-    onClose: () => void;
-    onOpen: () => void;
+  isOpen: boolean;
+  onClose: () => void;
+  onOpen: () => void;
 }
 
-const RemoveStudentModal: FC<RemoveStudentModalProps> = ({isOpen, onClose, onOpen}) => {
-    const {childData} = useUserAPI();
-    const [removeStudent] = useMutation(REMOVE_STUDENT)
-    const [recoverStudent] = useMutation(RECOVER_STUDENT)
-    const [isRemoveSubmitting, setIsRemoveSubmitting] = useState(false)
-    const [isRecoverSubmitting, setIsRecoverSubmitting] = useState(false);
-    const toast = useToast()
+const RemoveStudentModal: FC<RemoveStudentModalProps> = ({
+  isOpen,
+  onClose,
+  onOpen,
+}) => {
+  const { childData } = useUserAPI();
+  const [removeStudent] = useMutation(REMOVE_STUDENT);
+  const [recoverStudent] = useMutation(RECOVER_STUDENT);
+  const [isRemoveSubmitting, setIsRemoveSubmitting] = useState(false);
+  const [isRecoverSubmitting, setIsRecoverSubmitting] = useState(false);
+  const toast = useToast();
 
-    const handleRemoveStudent = async (id: any) => {
-        setIsRemoveSubmitting(true)
-        try{
-            const response = await removeStudent({
-                variables:{
-                    studentId: id,
-                }
-            })
-            if(!response) {
-                toast({
-                  title: "Client Error",
-                  description: "A client-side error occurred",
-                  position: "top-right",
-                  variant: "left-accent",
-                  isClosable: true,
-                  status: "error",
-                });
-            }
-            if(!response.data.gnRemoveStudent) {
-                toast({
-                  title: "Error",
-                  description: "An error occured while removing this child from Greynote",
-                  position: "top-right",
-                  variant: "left-accent",
-                  isClosable: true,
-                  status: "error",
-                });
-            }
-            if(response?.data?.gnRemoveStudent){
-                toast({
-                  title: "Successfully removed child from Greynote",
-                  description: "Your request to remove this child from Greynote was successful",
-                  position: "top-right",
-                  variant: "left-accent",
-                  isClosable: true,
-                  status: "success",
-                });
-                window.location.reload();
-            }
-        } catch(err: any) {
-            console.log(err)
-        } finally {
-            setIsRemoveSubmitting(false)
-        } 
-        
+  const handleRemoveStudent = async (id: any) => {
+    setIsRemoveSubmitting(true);
+    try {
+      const response = await removeStudent({
+        variables: {
+          studentId: id,
+        },
+      });
+      if (!response) {
+        toast({
+          title: "Client Error",
+          description: "A client-side error occurred",
+          position: "top-right",
+          variant: "left-accent",
+          isClosable: true,
+          status: "error",
+        });
+      }
+      if (!response.data.gnRemoveStudent) {
+        toast({
+          title: "Error",
+          description:
+            "An error occured while removing this child from Greynote",
+          position: "top-right",
+          variant: "left-accent",
+          isClosable: true,
+          status: "error",
+        });
+      }
+      if (response?.data?.gnRemoveStudent) {
+        toast({
+          title: "Successfully removed child from Greynote",
+          description:
+            "Your request to remove this child from Greynote was successful",
+          position: "top-right",
+          variant: "left-accent",
+          isClosable: true,
+          status: "success",
+        });
+        window.location.reload();
+      }
+    } catch (err: any) {
+      console.log(err);
+    } finally {
+      setIsRemoveSubmitting(false);
     }
+  };
 
-    const handleRecoverStudent = async(id: any) => {
-        setIsRecoverSubmitting(true);
-        try {
-          const response = await recoverStudent({
-            variables: {
-              studentId: id,
-            },
-          });
-          if (!response) {
-            toast({
-              title: "Client Error",
-              description: "A client-side error occurred",
-              position: "top-right",
-              variant: "left-accent",
-              isClosable: true,
-              status: "error",
-            });
-          }
-          if (!response.data.gnRecoverStudent) {
-            toast({
-              title: "Error",
-              description:
-                "An error occured while recovering this child from Greynote",
-              position: "top-right",
-              variant: "left-accent",
-              isClosable: true,
-              status: "error",
-            });
-          }
-          if (response?.data?.gnRecoverStudent) {
-            toast({
-              title: "Successfully recovered child",
-              description:
-                "Your request to recover this child was successful",
-              position: "top-right",
-              variant: "left-accent",
-              isClosable: true,
-              status: "success",
-            });
-            window.location.reload();
-          }
-        } catch (err: any) {
-          console.log(err);
-        } finally {
-          setIsRecoverSubmitting(false);
-        } 
+  const handleRecoverStudent = async (id: any) => {
+    setIsRecoverSubmitting(true);
+    try {
+      const response = await recoverStudent({
+        variables: {
+          studentId: id,
+        },
+      });
+      if (!response) {
+        toast({
+          title: "Client Error",
+          description: "A client-side error occurred",
+          position: "top-right",
+          variant: "left-accent",
+          isClosable: true,
+          status: "error",
+        });
+      }
+      if (!response.data.gnRecoverStudent) {
+        toast({
+          title: "Error",
+          description:
+            "An error occured while recovering this child from Greynote",
+          position: "top-right",
+          variant: "left-accent",
+          isClosable: true,
+          status: "error",
+        });
+      }
+      if (response?.data?.gnRecoverStudent) {
+        toast({
+          title: "Successfully recovered child",
+          description: "Your request to recover this child was successful",
+          position: "top-right",
+          variant: "left-accent",
+          isClosable: true,
+          status: "success",
+        });
+        window.location.reload();
+      }
+    } catch (err: any) {
+      console.log(err);
+    } finally {
+      setIsRecoverSubmitting(false);
     }
+  };
   return (
     <Modal
       isCentered
@@ -144,8 +148,10 @@ const RemoveStudentModal: FC<RemoveStudentModalProps> = ({isOpen, onClose, onOpe
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>
-          <Text mb={"0.5rem"} color={'red.600'}>Remove child from Greynote</Text>
-        <ModalCloseButton />
+          <Text mb={"0.5rem"} color={"red.600"}>
+            Remove child from Greynote
+          </Text>
+          <ModalCloseButton />
           <Divider />
         </ModalHeader>
         <ModalBody>
@@ -331,6 +337,6 @@ const RemoveStudentModal: FC<RemoveStudentModalProps> = ({isOpen, onClose, onOpe
       </ModalContent>
     </Modal>
   );
-}
+};
 
-export default RemoveStudentModal
+export default RemoveStudentModal;

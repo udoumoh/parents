@@ -121,9 +121,9 @@ const Signin: FC<pageProps> = ({}) => {
         <Image src="/images/greylightBordered.svg" alt="logo" />
         <Box
           backgroundColor={"#fff"}
-          minW={{ base: "auto", md: "500px" }}
+          minW={{ base: "full", md: "500px" }}
           py={5}
-          px={"3rem"}
+          px={{base:"2rem", md:"3rem"}}
           rounded={"lg"}
           shadow={"md"}
         >

@@ -256,31 +256,44 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
 
         <Divider my={"2rem"} />
 
-        <Flex w={"full"} flexDir={"column"}>
+        <Flex
+          w={"full"}
+          flexDir={{ base: "column", lg: "row" }}
+          justifyContent={"space-between"}
+          gap={"10"}
+        >
           {/* Linked students */}
           <Flex
             flexDir={"column"}
-            alignItems={"flex-start"}
-            my={"1rem"}
-            gap={3}
+            border={"1px solid #005D5D30"}
+            rounded={"xl"}
+            pb={"1rem"}
+            px={"1rem"}
           >
-            <Text fontWeight={"500"}>Linked Students</Text>
-            <Flex
-              flexDir={{ base: "column", lg: "row" }}
-              gap={{ base: "5", lg: "20" }}
-            >
+            <Box py={"1rem"}>
+              <Text fontWeight={"600"} fontSize={"lg"}>
+                Linked Students
+              </Text>
+            </Box>
+            <Flex flexDir={"column"} gap={4}>
               {(childData ?? []).length === 0 ? (
                 <Box
-                  backgroundColor={"#005D5D10"}
-                  border={"1px solid #005D5D"}
                   display={"flex"}
+                  flexDir={"column"}
                   alignItems={"center"}
+                  justifyContent={"center"}
                   px={"1.3rem"}
                   rounded={"md"}
                   py={"1rem"}
-                  minW={{ base: "auto", lg: "550px" }}
+                  w={"100%"}
                 >
-                  <Text fontSize={"lg"}>
+                  <Image
+                    src="/images/nochild.svg"
+                    maxH={"200px"}
+                    maxW={"300px"}
+                    alt="bg"
+                  />
+                  <Text mt={"1rem"} fontSize={"lg"}>
                     No child has been linked to your account
                   </Text>
                 </Box>
@@ -289,32 +302,43 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                   return (
                     <Flex
                       alignItems={"center"}
+                      justifyContent={"space-between"}
                       gap={2}
                       key={index}
-                      mb={"0.5rem"}
-                      backgroundColor={"#3F999830"}
-                      rounded={"md"}
-                      py={"0.5rem"}
-                      pl={"1rem"}
-                      pr={"3rem"}
-                      _hover={{ boxShadow: "lg", transitionDuration: "0.5s" }}
+                      py={"0.6rem"}
+                      px={"1rem"}
+                      backgroundColor={"#005D5D10"}
+                      rounded={"2xl"}
+                      _hover={{
+                        backgroundColor: "#005D5D30",
+                        transitionDuration: "0.5s",
+                        cursor: "pointer",
+                      }}
+                      w={"full"}
                     >
-                      <Avatar
-                        size={"md"}
-                        src={item.profileImage}
-                        pointerEvents={"none"}
-                      />
-                      <Box lineHeight={"20px"}>
-                        <Text fontWeight={"600"} fontSize={"sm"}>
-                          {item.firstName} {item.lastName}
-                        </Text>
-                        <Text
-                          fontSize={"12px"}
-                          color={"#AAAAAA"}
-                          fontWeight={"600"}
-                        >
-                          {item.greynoteNumber}
-                        </Text>
+                      <Box display={"flex"} gap={"2"} alignItems={"center"}>
+                        <Avatar
+                          size={"lg"}
+                          src={item.profileImage}
+                          pointerEvents={"none"}
+                        />
+                        <Box>
+                          <Text
+                            fontWeight={"700"}
+                            fontSize={"lg"}
+                            pointerEvents={"none"}
+                          >
+                            {item.firstName} {item.lastName}
+                          </Text>
+                          <Text
+                            fontSize={"sm"}
+                            color={"#AAAAAA"}
+                            fontWeight={"600"}
+                            pointerEvents={"none"}
+                          >
+                            {item.greynoteNumber}
+                          </Text>
+                        </Box>
                       </Box>
                     </Flex>
                   );
@@ -324,31 +348,41 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
           </Flex>
 
           {/* Link requests */}
-          <Flex
-            flexDir={"column"}
-            alignItems={"flex-start"}
-            my={"1rem"}
-            gap={3}
+          <Box
+            w={"auto"}
+            display={"flex"}
+            flex="1"
+            border={"1px solid #005D5D30"}
+            rounded={"xl"}
+            pb={"1rem"}
+            px={"1rem"}
           >
-            <Text fontWeight={"500"}>Link Requests</Text>
-            <Flex w={"full"} mb={"0.5rem"}>
-              <SimpleGrid
-                minChildWidth={{ base: "270px", md: "400px" }}
-                spacing={"20px"}
-                w={"full"}
-              >
+            <Box display={"flex"} flexDir={"column"} w={"full"}>
+              <Text fontWeight={"600"} fontSize={"lg"} py={"1rem"}>
+                Link Requests
+              </Text>
+
+              <Flex w={"full"} mb={"0.5rem"} flexDir={"column"} gap={4}>
                 {(requestData ?? []).length === 0 ? (
                   <Box
-                    backgroundColor={"#005D5D10"}
-                    border={"1px solid #005D5D"}
                     display={"flex"}
+                    flexDir={"column"}
                     alignItems={"center"}
+                    justifyContent={"center"}
                     px={"1.3rem"}
                     rounded={"md"}
                     py={"1rem"}
-                    maxW={{ base: "auto", lg: "550px" }}
+                    w={"100%"}
                   >
-                    <Text fontSize={"lg"}>You have no active requests</Text>
+                    <Image
+                      src="/images/norequests.svg"
+                      maxH={"200px"}
+                      maxW={"300px"}
+                      alt="bg"
+                    />
+                    <Text mt={"1rem"} fontSize={"lg"}>
+                      There are no active requests
+                    </Text>
                   </Box>
                 ) : (
                   requestData?.map((item, index) => {
@@ -357,13 +391,17 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                         gap={2}
                         key={index}
                         backgroundColor={"#005D5D10"}
-                        rounded={"xl"}
-                        border={"1px solid #005D5D"}
+                        rounded={"2xl"}
                         p={"1rem"}
-                        maxW={"500px"}
+                        w={"full"}
+                        _hover={{
+                          backgroundColor: "#005D5D30",
+                          transitionDuration: "0.5s",
+                          cursor: "pointer",
+                        }}
                       >
                         <Avatar
-                          size={{ base: "sm", lg: "lg" }}
+                          size={"lg"}
                           src={item?.studentProfileImgUrl}
                           pointerEvents={"none"}
                         />
@@ -372,17 +410,19 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                           display={"flex"}
                           flexDir={"column"}
                           justifyContent={"space-between"}
-                          maxW={{ base: "200px", md: "400px" }}
+                          w={"full"}
                         >
-                          <Box>
+                          <Box w={"full"}>
                             <Flex
                               alignItems={"center"}
                               justifyContent={"space-between"}
                               gap={2}
+                              w={"full"}
                             >
                               <Text
-                                fontWeight={"600"}
-                                fontSize={{ base: "sm", lg: "lg" }}
+                                fontWeight={"700"}
+                                fontSize={"lg"}
+                                pointerEvents={"none"}
                               >
                                 {item?.studentFirstName} {item?.studentLastName}
                               </Text>
@@ -403,48 +443,47 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                               >
                                 {item?.status}
                               </Badge>
+                              <Button
+                                display={{ base: "none", md: "block" }}
+                                size={{ base: "xs", md: "sm" }}
+                                rounded={"lg"}
+                                color={
+                                  item?.status === "PENDING"
+                                    ? "orange.700"
+                                    : item?.status === "ACCEPTED"
+                                    ? "green.700"
+                                    : "red.700"
+                                }
+                                backgroundColor={
+                                  item?.status === "PENDING"
+                                    ? "orange.300"
+                                    : item?.status === "ACCEPTED"
+                                    ? "green.300"
+                                    : "red.300"
+                                }
+                                _hover={{
+                                  backgroundColor:
+                                    item?.status === "PENDING"
+                                      ? "orange.300"
+                                      : item?.status === "ACCEPTED"
+                                      ? "green.300"
+                                      : "red.300",
+                                }}
+                              >
+                                {item?.status}
+                              </Button>
                             </Flex>
                             <Text
                               fontSize={{ base: "xs", lg: "sm" }}
                               color={"gray.500"}
                               fontWeight={"600"}
-                              maxW={{ base: "200px", md: "300px" }}
                             >
                               {item?.message}
                             </Text>
                           </Box>
                           <Flex mt={"1rem"} gap={3}>
                             <Button
-                              display={{ base: "none", md: "block" }}
-                              size={{ base: "xs", md: "sm" }}
-                              rounded={"lg"}
-                              color={
-                                item?.status === "PENDING"
-                                  ? "orange.700"
-                                  : item?.status === "ACCEPTED"
-                                  ? "green.700"
-                                  : "red.700"
-                              }
-                              backgroundColor={
-                                item?.status === "PENDING"
-                                  ? "orange.300"
-                                  : item?.status === "ACCEPTED"
-                                  ? "green.300"
-                                  : "red.300"
-                              }
-                              _hover={{
-                                backgroundColor:
-                                  item?.status === "PENDING"
-                                    ? "orange.300"
-                                    : item?.status === "ACCEPTED"
-                                    ? "green.300"
-                                    : "red.300",
-                              }}
-                            >
-                              {item?.status}
-                            </Button>
-                            <Button
-                              size={{ base: "xs", md: "sm" }}
+                              size={{ base: "xs", md: "md" }}
                               colorScheme="red"
                               _hover={{
                                 backgroundColor: "red.600",
@@ -462,9 +501,9 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                     );
                   })
                 )}
-              </SimpleGrid>
-            </Flex>
-          </Flex>
+              </Flex>
+            </Box>
+          </Box>
         </Flex>
 
         <Box mt={"2rem"} w={"full"}>
