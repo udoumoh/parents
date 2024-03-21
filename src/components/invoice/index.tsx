@@ -13,6 +13,7 @@ import {
   Image,
   Wrap,
   WrapItem,
+  Button,
 } from "@chakra-ui/react";
 import { IoReceiptOutline } from "react-icons/io5";
 import { FaCheck } from "react-icons/fa6";
@@ -24,6 +25,7 @@ import { useQuery } from "@apollo/client";
 import { useUserAPI } from "@/hooks/UserContext";
 import { formatDate } from "@/helpers/formatDate";
 import formatNumberWithCommas from "@/helpers/formatNumberWithCommas";
+import { useRouter } from "next/navigation";
 
 interface InvoiceItemProps {
   studentInvoice: StudentInvoiceProps;
@@ -166,6 +168,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
   const { data: getinvoice } = useQuery(GET_STUDENT_INVOICE, {
     variables: { studentId: currentWardProfile?.id},
   });
+  const router = useRouter();
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -198,20 +201,31 @@ const Invoice: FC<InvoiceProps> = ({}) => {
       w={"full"}
       border={"1px solid #C2C2C2"}
     >
-      <Flex>
+      <Flex w={'full'} justifyContent={'space-between'} gap={3}>
         <Box display={"flex"} alignItems={"center"} gap={2}>
           <Icon as={IoReceiptOutline} boxSize={"5"} color={"#189879"} />
           <Text fontWeight={"600"} fontSize={"xl"}>
             {"Invoice Received"}
           </Text>
         </Box>
+        <Button
+          backgroundColor={"transparent"}
+          rounded={"md"}
+          border={"1px solid #E2E2E2"}
+          size={"md"}
+          onClick={() => router.push('/dashboard/home/invoice')}
+        >
+          <Text fontSize={"sm"} color={"#747474"}>
+            See All
+          </Text>
+        </Button>
       </Flex>
 
       <Divider color={"#C2C2C2"} my={"0.8rem"} />
 
       {invoiceData?.length > 0 ? (
         <Wrap spacing={"15px"}>
-          {invoiceData?.map((student, index) => {
+          {invoiceData?.slice(0,3)?.map((student, index) => {
             return (
               <WrapItem key={index} w={"auto"}>
                 <InvoiceItem studentInvoice={student} />
