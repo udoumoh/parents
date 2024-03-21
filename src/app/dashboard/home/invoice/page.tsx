@@ -145,6 +145,11 @@ const Invoice: FC<InvoiceProps> = ({}) => {
     )
     .reduce((acc, item) => acc + item, 0);
 
+    const getCompletedInvoiceAmount = (invoice: any) => {
+      const totalCompletedAmount = invoice.receipt.map((receipt: any) => receipt.amountPaid).reduce((acc: any, item: any) => acc + item.amountPaid, 0)
+      return formatNumberWithCommas(totalCompletedAmount)
+    }
+
   return (
     <Box mb={{ base: "8rem", lg: "5rem" }}>
       <Box>
@@ -368,10 +373,10 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                         return (
                           <Tr
                             key={index}
-                            // _hover={{
-                            //   backgroundColor: "#005D5D10",
-                            //   cursor: "pointer",
-                            // }}
+                            _hover={{
+                              backgroundColor: "#005D5D10",
+                              cursor: "pointer",
+                            }}
                           >
                             <Td fontWeight={"bold"} fontSize={"sm"}>
                               {item?.invoiceId}
@@ -391,7 +396,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                             <Td>{item.category}</Td>
                             <Td>{item.createdAt}</Td>
                             <Td fontWeight={"bold"}>
-                              ₦{formatNumberWithCommas(item.amountPaid)}
+                              ₦{item.status === 'completed' ? getCompletedInvoiceAmount(item) : formatNumberWithCommas(item.amountPaid)}
                             </Td>
                             <Td>
                               <Badge
@@ -483,10 +488,10 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                         return (
                           <Tr
                             key={index}
-                            // _hover={{
-                            //   backgroundColor: "#005D5D10",
-                            //   cursor: "pointer",
-                            // }}
+                            _hover={{
+                              backgroundColor: "#005D5D10",
+                              cursor: "pointer",
+                            }}
                           >
                             <Td fontWeight={"bold"} fontSize={"sm"}>
                               {item?.invoiceId}
@@ -505,7 +510,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                             </Td>
                             <Td>{item.category}</Td>
                             <Td>{item.createdAt}</Td>
-                            <Td fontWeight={"bold"}>₦{item.amountPaid}</Td>
+                            <Td fontWeight={"bold"}>₦{getCompletedInvoiceAmount(item)}</Td>
                             <Td>
                               <Badge
                                 variant="solid"
@@ -584,10 +589,10 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                         return (
                           <Tr
                             key={index}
-                            // _hover={{
-                            //   backgroundColor: "#005D5D10",
-                            //   cursor: "pointer",
-                            // }}
+                            _hover={{
+                              backgroundColor: "#005D5D10",
+                              cursor: "pointer",
+                            }}
                           >
                             <Td fontWeight={"bold"} fontSize={"sm"}>
                               {item?.invoiceId}
@@ -685,10 +690,10 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                         return (
                           <Tr
                             key={index}
-                            // _hover={{
-                            //   backgroundColor: "#005D5D10",
-                            //   cursor: "pointer",
-                            // }}
+                            _hover={{
+                              backgroundColor: "#005D5D10",
+                              cursor: "pointer",
+                            }}
                           >
                             <Td fontWeight={"bold"} fontSize={"sm"}>
                               {item?.invoiceId}
@@ -786,10 +791,10 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                         return (
                           <Tr
                             key={index}
-                            // _hover={{
-                            //   backgroundColor: "#005D5D10",
-                            //   cursor: "pointer",
-                            // }}
+                            _hover={{
+                              backgroundColor: "#005D5D10",
+                              cursor: "pointer",
+                            }}
                           >
                             <Td fontWeight={"bold"} fontSize={"sm"}>
                               {item?.invoiceId}
