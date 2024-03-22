@@ -204,27 +204,9 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
             );
           })}
         </Grid>
-        {/* <Box justifyContent={"center"} display={"flex"} alignItems={"center"}>
-          {profileData?.userBio?.profileImage ? (
-            <>
-              <Image
-                src={profileData?.userBio?.profileImage}
-                width={"2.7rem"}
-                height={"2.7rem"}
-                alt="profile"
-                pointerEvents={"none"}
-                rounded={"md"}
-              />
-            </>
-          ) : (
-            <>
-              <Avatar
-                name={`${profileData?.userBio?.firstName} ${profileData?.userBio?.lastName}`}
-                size={'sm'}
-              />
-            </>
-          )}
-        </Box> */}
+        <Box justifyContent={"center"} display={"flex"} alignItems={"center"}>
+          
+        </Box>
       </Box>
     </Box>
   );
