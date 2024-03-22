@@ -204,7 +204,7 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
             );
           })}
         </Grid>
-        <Box justifyContent={"center"} display={"flex"} alignItems={"center"}>
+        {/* <Box justifyContent={"center"} display={"flex"} alignItems={"center"}>
           {profileData?.userBio?.profileImage ? (
             <>
               <Image
@@ -224,7 +224,7 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
               />
             </>
           )}
-        </Box>
+        </Box> */}
       </Box>
     </Box>
   );
