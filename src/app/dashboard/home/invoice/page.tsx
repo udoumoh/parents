@@ -99,18 +99,18 @@ const Invoice: FC<InvoiceProps> = ({}) => {
         const response = await getinvoice;
         const parsedInvoiceData = response?.getStudentInvoice?.map(
           (item: any) => ({
-            term: item.academicTerm,
-            year: item.academicYear,
-            category: item.category,
-            amountPaid: item.amount,
-            id: item.id,
-            invoiceId: item.invoiceId,
-            createdAt: formatDate(item.createdAt),
-            summary: item.summary,
-            status: item.status,
-            schoolname: item.creatorSchool,
-            schoollogo: item?.student?.creator?.admin?.schoolImg,
-            receipt: item?.receipt,
+            term: item.academicTerm || "",
+            year: item.academicYear || "",
+            category: item.category || "",
+            amountPaid: item.amount || 0,
+            id: item.id || 0,
+            invoiceId: item.invoiceId || "",
+            createdAt: formatDate(item.createdAt) || "",
+            summary: item.summary || "",
+            status: item.status || "",
+            schoolname: item.creatorSchool || "",
+            schoollogo: item?.student?.creator?.admin?.schoolImg || "",
+            receipt: item?.receipt || [],
           })
         );
         setInvoiceData(parsedInvoiceData);
