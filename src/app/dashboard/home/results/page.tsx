@@ -180,7 +180,6 @@ const Results: FC<ResultsProps> = ({}) => {
   const columnNames = [
     "School",
     "Status",
-    "Term",
     "Type",
     "Shared by",
     "Shared date",
@@ -297,7 +296,6 @@ const Results: FC<ResultsProps> = ({}) => {
                     <Td color={"#000"}>
                       {data?.isOfficial ? "Official" : "Unofficial"}
                     </Td>
-                    <Td color={"#000"}>{data?.academicTerm}</Td>
                     <Td color={"#000"}>{data?.resultType || data?.examType}</Td>
                     <Td>
                       <Flex gap={2} alignItems={"center"}>

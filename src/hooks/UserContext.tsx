@@ -16,6 +16,7 @@ interface UserBio {
 export interface UserChildren {
   firstName: string;
   lastName: string;
+  middleName: string;
   greynoteNumber: string;
   profileImage: string;
   gender: string;
@@ -90,6 +91,7 @@ export const UserApiProvider: FC<UserApiProviderProps> = ({ children }) => {
       {
         firstName: "",
         lastName: "",
+        middleName: "",
         greynoteNumber: "",
         profileImage: "",
         gender: "",
@@ -141,8 +143,9 @@ export const UserApiProvider: FC<UserApiProviderProps> = ({ children }) => {
 
         const userChildren = (response?.parent?.parent?.children || []).map(
           (child: any) => ({
-            firstName: child.firstName || "",
-            lastName: child.lastName || "",
+            firstName: capitalizeFirstLetter(child.firstName) || "",
+            lastName: capitalizeFirstLetter(child.lastName) || "",
+            middleName: capitalizeFirstLetter(child.middleName) || "",
             greynoteNumber: child.grayId || "",
             profileImage: child.profileImgUrl || "",
             gender: child.gender || "",

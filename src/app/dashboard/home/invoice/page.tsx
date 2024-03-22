@@ -24,10 +24,6 @@ import {
   MenuButton,
   MenuList,
   MenuItem,
-  MenuItemOption,
-  MenuGroup,
-  MenuOptionGroup,
-  MenuDivider,
   useDisclosure,
 } from "@chakra-ui/react";
 import { GET_STUDENT_INVOICE } from "@/gql/queries";
@@ -40,6 +36,7 @@ import { FaCheck } from "react-icons/fa6";
 import { MdOutlineClose } from "react-icons/md";
 import AcceptInvoiceModal from "@/components/shared/acceptInvoiceModal";
 import RejectInvoiceModal from "@/components/shared/rejectinvoicemodal";
+import InvoiceDataDrawer from "@/components/shared/invoiceDataDrawer";
 
 interface InvoiceProps {}
 
@@ -55,20 +52,18 @@ interface StudentInvoiceProps {
   invoiceId: string;
   schoolname: string;
   schoollogo: string;
-  receipt: [
-    {
-      amountPaid: number;
-      createdAt: string;
-      creator: string;
-      filtType: string;
-      id: number;
-      parentInvoiceId: string;
-      status: string;
-      summary: string;
-      updatedAt: string;
-      uploadedDocument: string;
-    }
-  ]
+  receipt: {
+    amountPaid: number;
+    createdAt: string;
+    creator: string;
+    fileType: string;
+    id: number;
+    parentInvoiceId: string;
+    status: string;
+    summary: string;
+    updatedAt: string;
+    uploadedDocument: string;
+  }[];
 }
 
 const Invoice: FC<InvoiceProps> = ({}) => {
@@ -82,6 +77,11 @@ const Invoice: FC<InvoiceProps> = ({}) => {
     isOpen: isRejectModalOpen,
     onOpen: onRejectModalOpen,
     onClose: onRejectModalClose,
+  } = useDisclosure();
+  const {
+    isOpen: isDrawerOpen,
+    onOpen: onDrawerOpen,
+    onClose: onDrawerClose,
   } = useDisclosure();
   const [invoiceData, setInvoiceData] = useState<StudentInvoiceProps[]>([]);
   const { data: getinvoice } = useQuery(GET_STUDENT_INVOICE, {
@@ -105,7 +105,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
             status: item.status,
             schoolname: item.creatorSchool,
             schoollogo: item?.student?.creator?.admin?.schoolImg,
-            receipt: item?.receipt
+            receipt: item?.receipt,
           })
         );
         setInvoiceData(parsedInvoiceData);
@@ -116,10 +116,18 @@ const Invoice: FC<InvoiceProps> = ({}) => {
     fetchData();
   }, [getinvoice]);
 
-  const completedInvoice = invoiceData?.filter(invoice => invoice.status === 'completed');
-  const activeInvoice = invoiceData?.filter(invoice => invoice.status === 'active');
-  const rejectedInvoice = invoiceData?.filter(invoice => invoice.status === 'rejected by parent');
-  const processingInvoice = invoiceData?.filter(invoice => invoice.status === 'processing');
+  const completedInvoice = invoiceData?.filter(
+    (invoice) => invoice.status === "completed"
+  );
+  const activeInvoice = invoiceData?.filter(
+    (invoice) => invoice.status === "active"
+  );
+  const rejectedInvoice = invoiceData?.filter(
+    (invoice) => invoice.status === "rejected by parent"
+  );
+  const processingInvoice = invoiceData?.filter(
+    (invoice) => invoice.status === "processing"
+  );
 
   const totalActiveAmount = activeInvoice?.reduce(
     (accumulator, invoice) => accumulator + invoice.amountPaid,
@@ -134,7 +142,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
     0
   );
 
-  console.log(invoiceData)
+  console.log(invoiceData);
 
   const nonEmptyReceipts = invoiceData
     ?.map((invoice) => invoice?.receipt)
@@ -143,12 +151,14 @@ const Invoice: FC<InvoiceProps> = ({}) => {
     ?.map((receiptItem) =>
       receiptItem?.reduce((acc, item) => acc + item?.amountPaid, 0)
     )
-    .reduce((acc, item) => acc + item, 0);
+    .reduce((acc: any, item: any) => acc + item, 0);
 
-    const getCompletedInvoiceAmount = (invoice: any) => {
-      const totalCompletedAmount = invoice.receipt.map((receipt: any) => receipt.amountPaid).reduce((acc: any, item: any) => acc + item, 0)
-      return formatNumberWithCommas(totalCompletedAmount)
-    }
+  const getCompletedInvoiceAmount = (invoice: any) => {
+    const totalCompletedAmount = invoice.receipt
+      .map((receipt: any) => receipt.amountPaid)
+      .reduce((acc: any, item: any) => acc + item, 0);
+    return formatNumberWithCommas(totalCompletedAmount);
+  };
 
   return (
     <Box mb={{ base: "8rem", lg: "5rem" }}>
@@ -166,15 +176,16 @@ const Invoice: FC<InvoiceProps> = ({}) => {
         <SimpleGrid minChildWidth="200px" spacing={"10px"}>
           <Flex
             flexDir={"column"}
-            backgroundColor={"#005D5D15"}
-            border={"1px solid #005D5D"}
-            rounded={"lg"}
+            backgroundColor={"#E7FDF5"}
+            border={"1px solid #449C8760"}
+            rounded={"2xl"}
             px={5}
             py={2}
             gap={"2"}
             w={"full"}
+            shadow={"md"}
           >
-            <Text fontSize={"sm"} color={"blue.800"} fontWeight={"500"}>
+            <Text fontSize={"md"} color={"blue.800"} fontWeight={"500"}>
               Total Amount Paid
             </Text>
             <Text fontSize={"3xl"} fontWeight={"700"} color={"gray.700"}>
@@ -191,21 +202,23 @@ const Invoice: FC<InvoiceProps> = ({}) => {
               color={"#fff"}
               maxW={"100px"}
               fontSize={"2xs"}
+              shadow={"md"}
             >
               {completedInvoice?.length || 0} invoices
             </Badge>
           </Flex>
           <Flex
             flexDir={"column"}
-            backgroundColor={"#005D5D15"}
-            border={"1px solid #005D5D"}
-            rounded={"lg"}
+            backgroundColor={"#DBEEFC"}
+            border={"1px solid #83ACC960"}
+            rounded={"2xl"}
             px={5}
             py={2}
             gap={"2"}
             w={"full"}
+            shadow={"md"}
           >
-            <Text fontSize={"sm"} color={"blue.800"} fontWeight={"500"}>
+            <Text fontSize={"md"} color={"blue.800"} fontWeight={"500"}>
               Active
             </Text>
             <Text fontSize={"3xl"} fontWeight={"700"} color={"gray.700"}>
@@ -228,15 +241,16 @@ const Invoice: FC<InvoiceProps> = ({}) => {
           </Flex>
           <Flex
             flexDir={"column"}
-            backgroundColor={"#005D5D15"}
-            border={"1px solid #005D5D"}
-            rounded={"lg"}
+            backgroundColor={"#FDE7E7"}
+            border={"1px solid #9C444460"}
+            rounded={"2xl"}
             px={5}
             py={2}
             gap={"2"}
             w={"full"}
+            shadow={"md"}
           >
-            <Text fontSize={"sm"} color={"blue.800"} fontWeight={"500"}>
+            <Text fontSize={"lg"} color={"blue.800"} fontWeight={"500"}>
               Rejected
             </Text>
             <Text fontSize={"3xl"} fontWeight={"700"} color={"gray.700"}>
@@ -259,15 +273,16 @@ const Invoice: FC<InvoiceProps> = ({}) => {
           </Flex>
           <Flex
             flexDir={"column"}
-            backgroundColor={"#005D5D15"}
-            border={"1px solid #005D5D"}
-            rounded={"lg"}
+            backgroundColor={"#FCF1DB"}
+            border={"1px solid #C9973760"}
+            rounded={"2xl"}
             px={5}
             py={2}
             gap={"2"}
             w={"full"}
+            shadow={"md"}
           >
-            <Text fontSize={"sm"} color={"blue.800"} fontWeight={"500"}>
+            <Text fontSize={"md"} color={"blue.800"} fontWeight={"500"}>
               Processing
             </Text>
             <Text fontSize={"3xl"} fontWeight={"700"} color={"gray.700"}>
@@ -299,12 +314,12 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                 backgroundColor={"#005D5D60"}
                 p={"0.4rem"}
                 rounded={"md"}
-                gap={{base:"1", md:"3"}}
+                gap={{ base: "1", md: "3" }}
               >
                 <Tab
-                  fontSize={{base:"xs", md:"md"}}
+                  fontSize={{ base: "xs", md: "md" }}
                   color={"#000"}
-                  px={{base:"0.5rem", md:"1rem"}}
+                  px={{ base: "0.5rem", md: "1rem" }}
                   py={"0.3rem"}
                   borderRadius={"4px"}
                   _selected={{ backgroundColor: "#005D5D", color: "#FFFFFF" }}
@@ -312,36 +327,36 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                   All
                 </Tab>
                 <Tab
-                  fontSize={{base:"xs", md:"md"}}
+                  fontSize={{ base: "xs", md: "md" }}
                   color={"#000"}
-                  px={{base:"0.5rem", md:"1rem"}}
+                  px={{ base: "0.5rem", md: "1rem" }}
                   borderRadius={"4px"}
                   _selected={{ backgroundColor: "#005D5D", color: "#FFFFFF" }}
                 >
                   Completed
                 </Tab>
                 <Tab
-                  fontSize={{base:"xs", md:"md"}}
+                  fontSize={{ base: "xs", md: "md" }}
                   color={"#000"}
-                  px={{base:"0.5rem", md:"1rem"}}
+                  px={{ base: "0.5rem", md: "1rem" }}
                   borderRadius={"4px"}
                   _selected={{ backgroundColor: "#005D5D", color: "#FFFFFF" }}
                 >
                   Active
                 </Tab>
                 <Tab
-                  fontSize={{base:"xs", md:"md"}}
+                  fontSize={{ base: "xs", md: "md" }}
                   color={"#000"}
-                  px={{base:"0.5rem", md:"1rem"}}
+                  px={{ base: "0.5rem", md: "1rem" }}
                   borderRadius={"4px"}
                   _selected={{ backgroundColor: "#005D5D", color: "#FFFFFF" }}
                 >
                   Rejected
                 </Tab>
                 <Tab
-                  fontSize={{base:"xs", md:"md"}}
+                  fontSize={{ base: "xs", md: "md" }}
                   color={"#000"}
-                  px={{base:"0.5rem", md:"1rem"}}
+                  px={{ base: "0.5rem", md: "1rem" }}
                   borderRadius={"4px"}
                   _selected={{ backgroundColor: "#005D5D", color: "#FFFFFF" }}
                 >
@@ -357,7 +372,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                 mt={"1rem"}
               >
                 <TableContainer>
-                  <Table variant="simple" size={{ base: "sm", lg: "md" }}>
+                  <Table variant="simple" size={"sm"}>
                     <Thead>
                       <Tr>
                         <Th>Inv. ID</Th>
@@ -377,6 +392,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                               backgroundColor: "#005D5D10",
                               cursor: "pointer",
                             }}
+                            onClick={onDrawerOpen}
                           >
                             <Td fontWeight={"bold"} fontSize={"sm"}>
                               {item?.invoiceId}
@@ -396,7 +412,10 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                             <Td>{item.category}</Td>
                             <Td>{item.createdAt}</Td>
                             <Td fontWeight={"bold"}>
-                              ₦{item.status === 'completed' ? getCompletedInvoiceAmount(item) : formatNumberWithCommas(item.amountPaid)}
+                              ₦
+                              {item.status === "completed"
+                                ? getCompletedInvoiceAmount(item)
+                                : formatNumberWithCommas(item.amountPaid)}
                             </Td>
                             <Td>
                               <Badge
@@ -458,6 +477,12 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                               onClose={onRejectModalClose}
                               invoiceId={item.id}
                             />
+                            <InvoiceDataDrawer
+                              isOpen={isDrawerOpen}
+                              onOpen={onDrawerOpen}
+                              onClose={onDrawerClose}
+                              invoiceData={item}
+                            />
                           </Tr>
                         );
                       })}
@@ -472,7 +497,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                 mt={"1rem"}
               >
                 <TableContainer>
-                  <Table variant="simple" size={{ base: "sm", lg: "md" }}>
+                  <Table variant="simple" size={"sm"}>
                     <Thead>
                       <Tr>
                         <Th>Inv. ID</Th>
@@ -510,7 +535,9 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                             </Td>
                             <Td>{item.category}</Td>
                             <Td>{item.createdAt}</Td>
-                            <Td fontWeight={"bold"}>₦{getCompletedInvoiceAmount(item)}</Td>
+                            <Td fontWeight={"bold"}>
+                              ₦{getCompletedInvoiceAmount(item)}
+                            </Td>
                             <Td>
                               <Badge
                                 variant="solid"
@@ -559,6 +586,12 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                 </MenuList>
                               </Menu>
                             </Td>
+                            <InvoiceDataDrawer
+                              isOpen={isDrawerOpen}
+                              onOpen={onDrawerOpen}
+                              onClose={onDrawerClose}
+                              invoiceData={item}
+                            />
                           </Tr>
                         );
                       })}
@@ -573,7 +606,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                 mt={"1rem"}
               >
                 <TableContainer>
-                  <Table variant="simple" size={{ base: "sm", lg: "md" }}>
+                  <Table variant="simple" size={"sm"}>
                     <Thead>
                       <Tr>
                         <Th>Inv. ID</Th>
@@ -660,6 +693,12 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                 </MenuList>
                               </Menu>
                             </Td>
+                            <InvoiceDataDrawer
+                              isOpen={isDrawerOpen}
+                              onOpen={onDrawerOpen}
+                              onClose={onDrawerClose}
+                              invoiceData={item}
+                            />
                           </Tr>
                         );
                       })}
@@ -674,7 +713,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                 mt={"1rem"}
               >
                 <TableContainer>
-                  <Table variant="simple" size={{ base: "sm", lg: "md" }}>
+                  <Table variant="simple" size={"sm"}>
                     <Thead>
                       <Tr>
                         <Th>Inv. ID</Th>
@@ -761,6 +800,12 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                 </MenuList>
                               </Menu>
                             </Td>
+                            <InvoiceDataDrawer
+                              isOpen={isDrawerOpen}
+                              onOpen={onDrawerOpen}
+                              onClose={onDrawerClose}
+                              invoiceData={item}
+                            />
                           </Tr>
                         );
                       })}
@@ -775,7 +820,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                 mt={"1rem"}
               >
                 <TableContainer>
-                  <Table variant="simple" size={{ base: "sm", lg: "md" }}>
+                  <Table variant="simple" size={"sm"}>
                     <Thead>
                       <Tr>
                         <Th>Inv. ID</Th>
@@ -862,6 +907,12 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                 </MenuList>
                               </Menu>
                             </Td>
+                            <InvoiceDataDrawer
+                              isOpen={isDrawerOpen}
+                              onOpen={onDrawerOpen}
+                              onClose={onDrawerClose}
+                              invoiceData={item}
+                            />
                           </Tr>
                         );
                       })}

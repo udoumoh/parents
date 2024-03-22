@@ -87,13 +87,15 @@ const LinkRequestModal: FC<LinkRequestModalProps> = ({
             toast({
               title: "Request Sent",
               description:
-                "Your request has been sent, you are being redirected to your dashboard.",
+                "Your request for this child has been sent successfully.",
               position: "bottom",
               variant: "left-accent",
               isClosable: true,
               status: "success",
             });
-            onClose()
+            setTimeout(() => {
+              window.location.reload();
+            }, 2000)
         }
       } catch(error: any) {
         toast({
@@ -138,7 +140,7 @@ const LinkRequestModal: FC<LinkRequestModalProps> = ({
             <Text fontSize={"2xl"} fontWeight={"700"}>
               {student?.name}
             </Text>
-            <Text fontSize={"sm"} color={"#AAAAAA"} fontWeight={"600"}>
+            <Text fontSize={"sm"} color={"gray.600"} fontWeight={"600"}>
               {`${student?.age} years old`} • {student?.gender} •{" "}
               {student?.className}
             </Text>

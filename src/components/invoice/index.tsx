@@ -164,7 +164,7 @@ const InvoiceItem: FC<InvoiceItemProps> = ({
 
 const Invoice: FC<InvoiceProps> = ({}) => {
   const {currentWardProfile} = useUserAPI()
-  const [invoiceData, setInvoiceData] = useState([])
+  const [invoiceData, setInvoiceData] = useState([]);
   const { data: getinvoice } = useQuery(GET_STUDENT_INVOICE, {
     variables: { studentId: currentWardProfile?.id},
   });
