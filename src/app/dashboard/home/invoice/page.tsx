@@ -179,8 +179,8 @@ const Invoice: FC<InvoiceProps> = ({}) => {
         <SimpleGrid minChildWidth="200px" spacing={"10px"}>
           <Flex
             flexDir={"column"}
-            backgroundColor={"#E7FDF5"}
-            border={"1px solid #449C8760"}
+            backgroundColor={"#DBEEFC"}
+            border={"1px solid #83ACC960"}
             rounded={"2xl"}
             px={5}
             py={2}
@@ -212,8 +212,8 @@ const Invoice: FC<InvoiceProps> = ({}) => {
           </Flex>
           <Flex
             flexDir={"column"}
-            backgroundColor={"#DBEEFC"}
-            border={"1px solid #83ACC960"}
+            backgroundColor={"#E7FDF5"}
+            border={"1px solid #449C8760"}
             rounded={"2xl"}
             px={5}
             py={2}
@@ -395,7 +395,10 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                               backgroundColor: "#005D5D10",
                               cursor: "pointer",
                             }}
-                            onClick={() => {setSelectedInvoiceData(item); onDrawerOpen()}}
+                            onClick={() => {
+                              setSelectedInvoiceData(item);
+                              onDrawerOpen();
+                            }}
                           >
                             <Td fontWeight={"bold"} fontSize={"sm"}>
                               {item?.invoiceId}
@@ -787,7 +790,6 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                 </MenuList>
                               </Menu>
                             </Td>
-                            
                           </Tr>
                         );
                       })}
