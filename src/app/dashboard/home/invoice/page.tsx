@@ -438,9 +438,8 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                             </Td>
                             <Td>
                               <Menu size={"sm"}>
-                                <MenuButton>
+                                <MenuButton p={4}>
                                   <Icon
-                                    p={4}
                                     as={BsThreeDots}
                                     _hover={{ cursor: "pointer" }}
                                     boxSize={6}
