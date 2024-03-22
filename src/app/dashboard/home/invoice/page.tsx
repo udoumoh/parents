@@ -554,7 +554,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                             <Td>{item.category}</Td>
                             <Td>{item.createdAt}</Td>
                             <Td fontWeight={"bold"}>
-                              ₦{getCompletedInvoiceAmount(item)}
+                              ₦{getCompletedInvoiceAmount(formatNumberWithCommas(item))}
                             </Td>
                             <Td>
                               <Badge
@@ -665,7 +665,9 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                             </Td>
                             <Td>{item.category}</Td>
                             <Td>{item.createdAt}</Td>
-                            <Td fontWeight={"bold"}>₦{item.amountPaid}</Td>
+                            <Td fontWeight={"bold"}>
+                              ₦{formatNumberWithCommas(item.amountPaid)}
+                            </Td>
                             <Td>
                               <Badge
                                 variant="solid"
@@ -775,7 +777,9 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                             </Td>
                             <Td>{item.category}</Td>
                             <Td>{item.createdAt}</Td>
-                            <Td fontWeight={"bold"}>₦{item.amountPaid}</Td>
+                            <Td fontWeight={"bold"}>
+                              ₦{formatNumberWithCommas(item.amountPaid)}
+                            </Td>
                             <Td>
                               <Badge
                                 variant="solid"
@@ -885,7 +889,9 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                             </Td>
                             <Td>{item.category}</Td>
                             <Td>{item.createdAt}</Td>
-                            <Td fontWeight={"bold"}>₦{item.amountPaid}</Td>
+                            <Td fontWeight={"bold"}>
+                              ₦{formatNumberWithCommas(item.amountPaid)}
+                            </Td>
                             <Td>
                               <Badge
                                 variant="solid"
