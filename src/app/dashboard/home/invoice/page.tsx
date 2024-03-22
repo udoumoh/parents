@@ -68,6 +68,7 @@ interface StudentInvoiceProps {
 
 const Invoice: FC<InvoiceProps> = ({}) => {
   const { currentWardProfile } = useUserAPI();
+
   const {
     isOpen: isAcceptModalOpen,
     onOpen: onAcceptModalOpen,
@@ -83,10 +84,15 @@ const Invoice: FC<InvoiceProps> = ({}) => {
     onOpen: onDrawerOpen,
     onClose: onDrawerClose,
   } = useDisclosure();
+
   const [invoiceData, setInvoiceData] = useState<StudentInvoiceProps[]>([]);
+
+  const [selectedInvoiceData, setSelectedInvoiceData] = useState<StudentInvoiceProps>()
+
   const { data: getinvoice } = useQuery(GET_STUDENT_INVOICE, {
     variables: { studentId: currentWardProfile?.id },
   });
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -389,7 +395,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                               backgroundColor: "#005D5D10",
                               cursor: "pointer",
                             }}
-                            onClick={onDrawerOpen}
+                            onClick={() => {setSelectedInvoiceData(item); onDrawerOpen}}
                           >
                             <Td fontWeight={"bold"} fontSize={"sm"}>
                               {item?.invoiceId}
@@ -478,7 +484,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                               isOpen={isDrawerOpen}
                               onOpen={onDrawerOpen}
                               onClose={onDrawerClose}
-                              invoiceData={item}
+                              invoiceData={selectedInvoiceData}
                             />
                           </Tr>
                         );
