@@ -164,7 +164,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
 
   const handleSelectedInvoice = (invoice: any) => {
       setSelectedInvoiceData(invoice)
-      onDrawerOpen();
+      onDrawerOpen;
       console.log(invoice)
   }
 
