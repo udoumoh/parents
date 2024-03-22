@@ -558,7 +558,6 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                               <Menu size={"sm"}>
                                 <MenuButton>
                                   <Icon
-                                    p={1}
                                     as={BsThreeDots}
                                     _hover={{ cursor: "pointer" }}
                                     boxSize={6}
@@ -586,12 +585,6 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                 </MenuList>
                               </Menu>
                             </Td>
-                            <InvoiceDataDrawer
-                              isOpen={isDrawerOpen}
-                              onOpen={onDrawerOpen}
-                              onClose={onDrawerClose}
-                              invoiceData={item}
-                            />
                           </Tr>
                         );
                       })}
@@ -665,7 +658,6 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                               <Menu size={"sm"}>
                                 <MenuButton>
                                   <Icon
-                                    p={1}
                                     as={BsThreeDots}
                                     _hover={{ cursor: "pointer" }}
                                     boxSize={6}
@@ -693,12 +685,6 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                 </MenuList>
                               </Menu>
                             </Td>
-                            <InvoiceDataDrawer
-                              isOpen={isDrawerOpen}
-                              onOpen={onDrawerOpen}
-                              onClose={onDrawerClose}
-                              invoiceData={item}
-                            />
                           </Tr>
                         );
                       })}
@@ -772,7 +758,6 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                               <Menu size={"sm"}>
                                 <MenuButton>
                                   <Icon
-                                    p={4}
                                     as={BsThreeDots}
                                     _hover={{ cursor: "pointer" }}
                                     boxSize={6}
@@ -800,12 +785,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                 </MenuList>
                               </Menu>
                             </Td>
-                            <InvoiceDataDrawer
-                              isOpen={isDrawerOpen}
-                              onOpen={onDrawerOpen}
-                              onClose={onDrawerClose}
-                              invoiceData={item}
-                            />
+                            
                           </Tr>
                         );
                       })}
@@ -907,12 +887,6 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                 </MenuList>
                               </Menu>
                             </Td>
-                            <InvoiceDataDrawer
-                              isOpen={isDrawerOpen}
-                              onOpen={onDrawerOpen}
-                              onClose={onDrawerClose}
-                              invoiceData={item}
-                            />
                           </Tr>
                         );
                       })}

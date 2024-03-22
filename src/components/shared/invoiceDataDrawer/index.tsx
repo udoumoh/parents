@@ -200,7 +200,7 @@ const InvoiceDataDrawer: FC<InvoiceDataDrawerProps> = ({
                                 fontWeight={"bold"}
                                 color={"#000000"}
                               >
-                                {invoiceData.category}
+                                {invoiceData?.category}
                               </Text>
                             </Box>
                             <Box>
@@ -223,7 +223,7 @@ const InvoiceDataDrawer: FC<InvoiceDataDrawerProps> = ({
                                     fontWeight={"bold"}
                                     color={"#000000"}
                                   >
-                                    ₦{receipt.amountPaid}
+                                    ₦{receipt?.amountPaid}
                                   </Text>
                                 </Box>
 
@@ -268,7 +268,7 @@ const InvoiceDataDrawer: FC<InvoiceDataDrawerProps> = ({
                               justifyContent={"center"}
                               _hover={{ cursor: "pointer" }}
                               onClick={
-                                receipt.uploadedDocument.endsWith(".pdf")
+                                receipt?.uploadedDocument?.endsWith(".pdf")
                                   ? onPdfOpen
                                   : onImageViewerOpen
                               }
@@ -282,12 +282,12 @@ const InvoiceDataDrawer: FC<InvoiceDataDrawerProps> = ({
                               <PDFViewer
                                 isOpen={isPdfOpen}
                                 onClose={onPdfClose}
-                                path={receipt.uploadedDocument}
+                                path={receipt?.uploadedDocument}
                               />
                               <ImgViewer
                                 isOpen={isImageViewerOpen}
                                 onClose={onImageViewerClose}
-                                path={receipt.uploadedDocument}
+                                path={receipt?.uploadedDocument}
                               />
                             </Box>
                           </Tooltip>
@@ -314,7 +314,7 @@ const InvoiceDataDrawer: FC<InvoiceDataDrawerProps> = ({
                               fontWeight={"bold"}
                               color={"#000000"}
                             >
-                              {receipt.summary}
+                              {receipt?.summary}
                             </Text>
                           </Box>
 
@@ -323,7 +323,7 @@ const InvoiceDataDrawer: FC<InvoiceDataDrawerProps> = ({
                               fontSize={{ base: "xs", md: "sm" }}
                               color={"gray.500"}
                             >
-                              {invoiceData.term} - {invoiceData.year}
+                              {invoiceData?.term} - {invoiceData?.year}
                             </Text>
                           </Box>
                         </Box>
@@ -355,16 +355,16 @@ const InvoiceDataDrawer: FC<InvoiceDataDrawerProps> = ({
                   <Badge
                     variant={"solid"}
                     colorScheme={
-                      invoiceData.status === "active"
+                      invoiceData?.status === "active"
                         ? "green"
-                        : invoiceData.status === "rejected by parent"
+                        : invoiceData?.status === "rejected by parent"
                         ? "red"
-                        : invoiceData.status === "processing"
+                        : invoiceData?.status === "processing"
                         ? "yellow"
                         : "purple"
                     }
                   >
-                    {invoiceData.status}
+                    {invoiceData?.status}
                   </Badge>
                 </Box>
               </Flex>
@@ -385,7 +385,7 @@ const InvoiceDataDrawer: FC<InvoiceDataDrawerProps> = ({
                       Category
                     </Text>
                     <Text fontSize={"md"} fontWeight={"bold"} color={"#000000"}>
-                      {invoiceData.category}
+                      {invoiceData?.category}
                     </Text>
                   </Box>
 
@@ -398,7 +398,7 @@ const InvoiceDataDrawer: FC<InvoiceDataDrawerProps> = ({
                       Invoice Id
                     </Text>
                     <Text fontSize={"md"} fontWeight={"bold"} color={"#000000"}>
-                      {invoiceData.invoiceId}
+                      {invoiceData?.invoiceId}
                     </Text>
                   </Box>
 
@@ -418,7 +418,7 @@ const InvoiceDataDrawer: FC<InvoiceDataDrawerProps> = ({
                           fontWeight={"bold"}
                           color={"#000000"}
                         >
-                          ₦{invoiceData.amountPaid}
+                          ₦{invoiceData?.amountPaid}
                         </Text>
                       </Box>
 
@@ -458,7 +458,7 @@ const InvoiceDataDrawer: FC<InvoiceDataDrawerProps> = ({
                     Summary
                   </Text>
                   <Text fontSize={"md"} fontWeight={"bold"} color={"#000000"}>
-                    {invoiceData.summary}
+                    {invoiceData?.summary}
                   </Text>
                 </Box>
 
@@ -469,10 +469,10 @@ const InvoiceDataDrawer: FC<InvoiceDataDrawerProps> = ({
                   flexDir={{ base: "column", md: "row" }}
                 >
                   <Text fontSize={{ base: "xs", md: "sm" }} color={"gray.500"}>
-                    {invoiceData.term} - {invoiceData.year}
+                    {invoiceData?.term} - {invoiceData?.year}
                   </Text>
                   <Text fontSize={{ base: "xs", md: "sm" }} color={"gray.500"}>
-                    Created on {invoiceData.createdAt}
+                    Created on {invoiceData?.createdAt}
                   </Text>
                 </Box>
               </Box>
