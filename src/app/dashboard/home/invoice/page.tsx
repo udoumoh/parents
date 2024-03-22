@@ -87,7 +87,45 @@ const Invoice: FC<InvoiceProps> = ({}) => {
 
   const [invoiceData, setInvoiceData] = useState<StudentInvoiceProps[]>([]);
 
-  const [selectedInvoiceData, setSelectedInvoiceData] = useState<StudentInvoiceProps>()
+  const [selectedInvoiceData, setSelectedInvoiceData] = useState<StudentInvoiceProps>({
+  term: "Spring",
+  year: "2024",
+  category: "Education",
+  amountPaid: 1500,
+  id: 123,
+  status: "Paid",
+  summary: "Payment for tuition fees",
+  createdAt: "2024-03-17",
+  invoiceId: "INV123456",
+  schoolname: "Example School",
+  schoollogo: "school_logo.png",
+  receipt: [
+    {
+      amountPaid: 1500,
+      createdAt: "2024-03-17",
+      creator: "John Doe",
+      fileType: "pdf",
+      id: 1,
+      parentInvoiceId: "INV123456",
+      status: "Paid",
+      summary: "Payment receipt for tuition fees",
+      updatedAt: "2024-03-17",
+      uploadedDocument: "receipt_123.pdf",
+    },
+    {
+      amountPaid: 500,
+      createdAt: "2024-03-15",
+      creator: "Jane Smith",
+      fileType: "pdf",
+      id: 2,
+      parentInvoiceId: "INV123456",
+      status: "Paid",
+      summary: "Payment receipt for textbooks",
+      updatedAt: "2024-03-15",
+      uploadedDocument: "receipt_456.pdf",
+    },
+  ],
+  })
 
   const { data: getinvoice } = useQuery(GET_STUDENT_INVOICE, {
     variables: { studentId: currentWardProfile?.id },
@@ -430,19 +468,19 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                             <Td>{item?.createdAt}</Td>
                             <Td fontWeight={"bold"}>
                               ₦
-                              {item.status === "completed"
+                              {item?.status === "completed"
                                 ? getCompletedInvoiceAmount(item)
-                                : formatNumberWithCommas(item.amountPaid)}
+                                : formatNumberWithCommas(item?.amountPaid)}
                             </Td>
                             <Td>
                               <Badge
                                 variant="solid"
                                 colorScheme={
-                                  item.status === "active"
+                                  item?.status === "active"
                                     ? "green"
-                                    : item.status === "rejected by parent"
+                                    : item?.status === "rejected by parent"
                                     ? "red"
-                                    : item.status === "processing"
+                                    : item?.status === "processing"
                                     ? "yellow"
                                     : "purple"
                                 }
@@ -549,8 +587,8 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                 </Text>
                               </Flex>
                             </Td>
-                            <Td>{item.category}</Td>
-                            <Td>{item.createdAt}</Td>
+                            <Td>{item?.category}</Td>
+                            <Td>{item?.createdAt}</Td>
                             <Td fontWeight={"bold"}>
                               ₦{getCompletedInvoiceAmount(formatNumberWithCommas(item))}
                             </Td>
@@ -558,16 +596,16 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                               <Badge
                                 variant="solid"
                                 colorScheme={
-                                  item.status === "active"
+                                  item?.status === "active"
                                     ? "green"
-                                    : item.status === "rejected by parent"
+                                    : item?.status === "rejected by parent"
                                     ? "red"
-                                    : item.status === "processing"
+                                    : item?.status === "processing"
                                     ? "yellow"
                                     : "purple"
                                 }
                               >
-                                {item.status}
+                                {item?.status}
                               </Badge>
                             </Td>
                             <Td>
@@ -583,7 +621,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                   <MenuItem
                                     icon={<FaCheck />}
                                     isDisabled={
-                                      item.status === "active" ? false : true
+                                      item?.status === "active" ? false : true
                                     }
                                     onClick={onAcceptModalOpen}
                                   >
@@ -592,7 +630,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                   <MenuItem
                                     icon={<MdOutlineClose />}
                                     isDisabled={
-                                      item.status === "active" ? false : true
+                                      item?.status === "active" ? false : true
                                     }
                                     onClick={onRejectModalOpen}
                                   >
@@ -657,25 +695,25 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                 </Text>
                               </Flex>
                             </Td>
-                            <Td>{item.category}</Td>
-                            <Td>{item.createdAt}</Td>
+                            <Td>{item?.category}</Td>
+                            <Td>{item?.createdAt}</Td>
                             <Td fontWeight={"bold"}>
-                              ₦{formatNumberWithCommas(item.amountPaid)}
+                              ₦{formatNumberWithCommas(item?.amountPaid)}
                             </Td>
                             <Td>
                               <Badge
                                 variant="solid"
                                 colorScheme={
-                                  item.status === "active"
+                                  item?.status === "active"
                                     ? "green"
-                                    : item.status === "rejected by parent"
+                                    : item?.status === "rejected by parent"
                                     ? "red"
-                                    : item.status === "processing"
+                                    : item?.status === "processing"
                                     ? "yellow"
                                     : "purple"
                                 }
                               >
-                                {item.status}
+                                {item?.status}
                               </Badge>
                             </Td>
                             <Td>
