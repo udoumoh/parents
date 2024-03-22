@@ -164,7 +164,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
 
   const handleSelectedInvoice = (invoice: any) => {
       setSelectedInvoiceData(invoice)
-      onDrawerOpen;
+      onDrawerOpen();
       console.log(invoice)
   }
 
@@ -409,7 +409,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                               backgroundColor: "#005D5D10",
                               cursor: "pointer",
                             }}
-                            onClick={()=>handleSelectedInvoice(item)}
+                            onClick={() => {handleSelectedInvoice(item)}}
                           >
                             <Td fontWeight={"bold"} fontSize={"sm"}>
                               {item?.invoiceId}
@@ -532,7 +532,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                               backgroundColor: "#005D5D10",
                               cursor: "pointer",
                             }}
-                            onClick={()=>handleSelectedInvoice(item)}
+                            onClick={() => {handleSelectedInvoice(item)}}
                           >
                             <Td fontWeight={"bold"} fontSize={"sm"}>
                               {item?.invoiceId}
@@ -640,7 +640,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                               backgroundColor: "#005D5D10",
                               cursor: "pointer",
                             }}
-                            onClick={()=>handleSelectedInvoice(item)}
+                            onClick={() => {handleSelectedInvoice(item)}}
                           >
                             <Td fontWeight={"bold"} fontSize={"sm"}>
                               {item?.invoiceId}
@@ -748,7 +748,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                               backgroundColor: "#005D5D10",
                               cursor: "pointer",
                             }}
-                            onClick={()=>handleSelectedInvoice(item)}
+                            onClick={() => {handleSelectedInvoice(item)}}
                           >
                             <Td fontWeight={"bold"} fontSize={"sm"}>
                               {item?.invoiceId}
@@ -856,7 +856,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                               backgroundColor: "#005D5D10",
                               cursor: "pointer",
                             }}
-                            onClick={()=>handleSelectedInvoice(item)}
+                            onClick={() => {handleSelectedInvoice(item)}}
                           >
                             <Td fontWeight={"bold"} fontSize={"sm"}>
                               {item?.invoiceId}
