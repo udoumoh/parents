@@ -23,13 +23,6 @@ import {
   Divider,
   Center,
   Tooltip,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
 } from "@chakra-ui/react";
 import { CiReceipt } from "react-icons/ci";
 import { LiaCoinsSolid } from "react-icons/lia";
@@ -92,14 +85,14 @@ const InvoiceDataDrawer: FC<InvoiceDataDrawerProps> = ({
     onClose: onImageViewerClose,
   } = useDisclosure();
   return (
-    <Modal onClose={onClose} isOpen={isOpen} size={"xl"}>
-      <ModalOverlay />
-      <ModalContent>
-        <ModalCloseButton />
-        <ModalHeader>
+    <Drawer onClose={onClose} isOpen={isOpen} size={"sm"}>
+      <DrawerOverlay />
+      <DrawerContent>
+        <DrawerCloseButton />
+        <DrawerHeader>
           <Text fontWeight={"bold"}>Student Invoice</Text>
-        </ModalHeader>
-        <ModalBody>
+        </DrawerHeader>
+        <DrawerBody>
           <Flex
             alignItems={"center"}
             justifyContent={"center"}
@@ -146,7 +139,7 @@ const InvoiceDataDrawer: FC<InvoiceDataDrawerProps> = ({
                     </Text>
                   </Box>
                 ) : (
-                  (invoiceData && invoiceData.receipt)?.map((receipt, index) => {
+                  (invoiceData?.receipt)?.map((receipt, index) => {
                     return (
                       <Box
                         key={index}
@@ -484,9 +477,9 @@ const InvoiceDataDrawer: FC<InvoiceDataDrawerProps> = ({
               </Box>
             </Box>
           </Flex>
-        </ModalBody>
-      </ModalContent>
-    </Modal>
+        </DrawerBody>
+      </DrawerContent>
+    </Drawer>
   );
 };
 

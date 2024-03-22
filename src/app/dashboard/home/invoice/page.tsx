@@ -506,7 +506,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                 </TableContainer>
               </TabPanel>
 
-              <TabPanel
+              {/* <TabPanel
                 border={"1px solid #005D5D50"}
                 rounded={"lg"}
                 mt={"1rem"}
@@ -937,7 +937,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                     </Tbody>
                   </Table>
                 </TableContainer>
-              </TabPanel>
+              </TabPanel> */}
             </TabPanels>
           </Tabs>
         </Box>
