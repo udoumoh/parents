@@ -87,7 +87,7 @@ const InvoiceDataDrawer: FC<InvoiceDataDrawerProps> = ({
   } = useDisclosure();
   return (
     <Drawer onClose={onClose} isOpen={isOpen} size={"sm"}>
-      <DrawerOverlay opacity={0.2}/>
+      {/* <DrawerOverlay/> */}
       <DrawerContent>
         <DrawerCloseButton />
         <DrawerHeader>
