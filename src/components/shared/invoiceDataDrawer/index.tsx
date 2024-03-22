@@ -65,52 +65,12 @@ interface InvoiceDataDrawerProps {
   invoiceData: InvoiceData | undefined;
 }
 
+
 const InvoiceDataDrawer: FC<InvoiceDataDrawerProps> = ({
   onClose,
   isOpen,
   invoiceData,
 }) => {
-  
-const dummyData = {
-  term: "Spring",
-  year: "2024",
-  category: "Education",
-  amountPaid: 1500,
-  id: 123,
-  status: "Paid",
-  summary: "Payment for tuition fees",
-  createdAt: "2024-03-17",
-  invoiceId: "INV123456",
-  schoolname: "Example School",
-  schoollogo: "school_logo.png",
-  receipt: [
-    {
-      amountPaid: 1500,
-      createdAt: "2024-03-17",
-      creator: "John Doe",
-      fileType: "pdf",
-      id: 1,
-      parentInvoiceId: "INV123456",
-      status: "Paid",
-      summary: "Payment receipt for tuition fees",
-      updatedAt: "2024-03-17",
-      uploadedDocument: "receipt_123.pdf",
-    },
-    {
-      amountPaid: 500,
-      createdAt: "2024-03-15",
-      creator: "Jane Smith",
-      fileType: "pdf",
-      id: 2,
-      parentInvoiceId: "INV123456",
-      status: "Paid",
-      summary: "Payment receipt for textbooks",
-      updatedAt: "2024-03-15",
-      uploadedDocument: "receipt_456.pdf",
-    },
-    // Add more receipt objects as needed
-  ],
-};
   const { currentWardProfile } = useUserAPI();
   const { isOpen: isCollapseOpen, onToggle: onCollapseToggle } =
     useDisclosure();
@@ -165,7 +125,7 @@ const dummyData = {
             </Button>
             <Box w={"full"}>
               <Collapse in={isCollapseOpen} animateOpacity>
-                {dummyData?.receipt?.length === 0 ? (
+                {invoiceData?.receipt?.length === 0 ? (
                   <Box
                     border={"1px solid #005D5D60"}
                     p={3}
@@ -179,7 +139,7 @@ const dummyData = {
                     </Text>
                   </Box>
                 ) : (
-                  (dummyData && dummyData.receipt)?.map((receipt, index) => {
+                  (invoiceData && invoiceData.receipt)?.map((receipt, index) => {
                     return (
                       <Box
                         key={index}
@@ -239,7 +199,7 @@ const dummyData = {
                                 fontWeight={"bold"}
                                 color={"#000000"}
                               >
-                                {dummyData?.category}
+                                {invoiceData?.category}
                               </Text>
                             </Box>
                             <Box>
@@ -362,7 +322,7 @@ const dummyData = {
                               fontSize={{ base: "xs", md: "sm" }}
                               color={"gray.500"}
                             >
-                              {dummyData?.term} - {dummyData?.year}
+                              {invoiceData?.term} - {invoiceData?.year}
                             </Text>
                           </Box>
                         </Box>
@@ -394,16 +354,16 @@ const dummyData = {
                   <Badge
                     variant={"solid"}
                     colorScheme={
-                      dummyData?.status === "active"
+                      invoiceData?.status === "active"
                         ? "green"
-                        : dummyData?.status === "rejected by parent"
+                        : invoiceData?.status === "rejected by parent"
                         ? "red"
-                        : dummyData?.status === "processing"
+                        : invoiceData?.status === "processing"
                         ? "yellow"
                         : "purple"
                     }
                   >
-                    {dummyData?.status}
+                    {invoiceData?.status}
                   </Badge>
                 </Box>
               </Flex>
@@ -424,7 +384,7 @@ const dummyData = {
                       Category
                     </Text>
                     <Text fontSize={"md"} fontWeight={"bold"} color={"#000000"}>
-                      {dummyData?.category}
+                      {invoiceData?.category}
                     </Text>
                   </Box>
 
@@ -437,7 +397,7 @@ const dummyData = {
                       Invoice Id
                     </Text>
                     <Text fontSize={"md"} fontWeight={"bold"} color={"#000000"}>
-                      {dummyData?.invoiceId}
+                      {invoiceData?.invoiceId}
                     </Text>
                   </Box>
 
@@ -457,7 +417,7 @@ const dummyData = {
                           fontWeight={"bold"}
                           color={"#000000"}
                         >
-                          ₦{formatNumberWithCommas(dummyData?.amountPaid)}
+                          ₦{formatNumberWithCommas(invoiceData?.amountPaid)}
                         </Text>
                       </Box>
 
@@ -497,7 +457,7 @@ const dummyData = {
                     Summary
                   </Text>
                   <Text fontSize={"md"} fontWeight={"bold"} color={"#000000"}>
-                    {dummyData?.summary}
+                    {invoiceData?.summary}
                   </Text>
                 </Box>
 
@@ -508,10 +468,10 @@ const dummyData = {
                   flexDir={{ base: "column", md: "row" }}
                 >
                   <Text fontSize={{ base: "xs", md: "sm" }} color={"gray.500"}>
-                    {dummyData?.term} - {dummyData?.year}
+                    {invoiceData?.term} - {invoiceData?.year}
                   </Text>
                   <Text fontSize={{ base: "xs", md: "sm" }} color={"gray.500"}>
-                    Created on {dummyData?.createdAt}
+                    Created on {invoiceData?.createdAt}
                   </Text>
                 </Box>
               </Box>
