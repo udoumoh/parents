@@ -424,8 +424,8 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                 </Text>
                               </Flex>
                             </Td>
-                            <Td>{item.category}</Td>
-                            <Td>{item.createdAt}</Td>
+                            <Td>{item?.category}</Td>
+                            <Td>{item?.createdAt}</Td>
                             <Td fontWeight={"bold"}>
                               ₦
                               {item.status === "completed"
@@ -445,7 +445,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                     : "purple"
                                 }
                               >
-                                {item.status}
+                                {item?.status}
                               </Badge>
                             </Td>
                             <Td>
@@ -461,7 +461,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                   <MenuItem
                                     icon={<FaCheck />}
                                     isDisabled={
-                                      item.status === "active" ? false : true
+                                      item?.status === "active" ? false : true
                                     }
                                     onClick={onAcceptModalOpen}
                                   >
@@ -470,7 +470,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                   <MenuItem
                                     icon={<MdOutlineClose />}
                                     isDisabled={
-                                      item.status === "active" ? false : true
+                                      item?.status === "active" ? false : true
                                     }
                                     onClick={onRejectModalOpen}
                                   >
@@ -483,13 +483,13 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                               isOpen={isAcceptModalOpen}
                               onOpen={onAcceptModalOpen}
                               onClose={onAcceptModalClose}
-                              invoiceId={item.id}
+                              invoiceId={item?.id}
                             />
                             <RejectInvoiceModal
                               isOpen={isRejectModalOpen}
                               onOpen={onRejectModalOpen}
                               onClose={onRejectModalClose}
-                              invoiceId={item.id}
+                              invoiceId={item?.id}
                             />
                             <InvoiceDataDrawer
                               isOpen={isDrawerOpen}

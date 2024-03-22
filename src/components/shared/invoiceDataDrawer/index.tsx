@@ -31,30 +31,31 @@ import { TbFileInvoice } from "react-icons/tb";
 import { PDFViewer } from "../uploadedResultPdfViewer";
 import ImgViewer from "../imageViewer";
 import { useUserAPI } from "@/hooks/UserContext";
+import formatNumberWithCommas from "@/helpers/formatNumberWithCommas";
 
 interface InvoiceData {
-  term: string;
-  year: string;
-  category: string;
-  amountPaid: number;
-  id: number;
-  status: string;
-  summary: string;
-  createdAt: string;
-  invoiceId: string;
-  schoolname: string;
-  schoollogo: string;
+  term?: string;
+  year?: string;
+  category?: string;
+  amountPaid?: number;
+  id?: number;
+  status?: string;
+  summary?: string;
+  createdAt?: string;
+  invoiceId?: string;
+  schoolname?: string;
+  schoollogo?: string;
   receipt: {
-    amountPaid: number;
-    createdAt: string;
-    creator: string;
-    fileType: string;
-    id: number;
-    parentInvoiceId: string;
-    status: string;
-    summary: string;
-    updatedAt: string;
-    uploadedDocument: string;
+    amountPaid?: number;
+    createdAt?: string;
+    creator?: string;
+    fileType?: string;
+    id?: number;
+    parentInvoiceId?: string;
+    status?: string;
+    summary?: string;
+    updatedAt?: string;
+    uploadedDocument?: string;
   }[];
 }
 
@@ -139,7 +140,7 @@ const InvoiceDataDrawer: FC<InvoiceDataDrawerProps> = ({
                     </Text>
                   </Box>
                 ) : (
-                  invoiceData?.receipt?.map((receipt, index) => {
+                  (invoiceData && invoiceData.receipt)?.map((receipt, index) => {
                     return (
                       <Box
                         key={index}
@@ -222,7 +223,7 @@ const InvoiceDataDrawer: FC<InvoiceDataDrawerProps> = ({
                                     fontWeight={"bold"}
                                     color={"#000000"}
                                   >
-                                    ₦{receipt?.amountPaid}
+                                    ₦{formatNumberWithCommas(receipt?.amountPaid)}
                                   </Text>
                                 </Box>
 
@@ -286,7 +287,7 @@ const InvoiceDataDrawer: FC<InvoiceDataDrawerProps> = ({
                               <ImgViewer
                                 isOpen={isImageViewerOpen}
                                 onClose={onImageViewerClose}
-                                path={receipt?.uploadedDocument}
+                                path={receipt?.uploadedDocument || ""}
                               />
                             </Box>
                           </Tooltip>
@@ -417,7 +418,7 @@ const InvoiceDataDrawer: FC<InvoiceDataDrawerProps> = ({
                           fontWeight={"bold"}
                           color={"#000000"}
                         >
-                          ₦{invoiceData?.amountPaid}
+                          ₦{formatNumberWithCommas(invoiceData?.amountPaid)}
                         </Text>
                       </Box>
 
