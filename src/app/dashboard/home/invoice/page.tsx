@@ -549,7 +549,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                 rounded={"lg"}
                 mt={"1rem"}
               >
-                <TableContainer>
+                {/* <TableContainer>
                   <Table variant="simple" size={"sm"}>
                     <Thead>
                       <Tr>
@@ -649,7 +649,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                       })}
                     </Tbody>
                   </Table>
-                </TableContainer>
+                </TableContainer> */}
               </TabPanel>
 
               <TabPanel
@@ -657,7 +657,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                 rounded={"lg"}
                 mt={"1rem"}
               >
-                <TableContainer>
+                {/* <TableContainer>
                   <Table variant="simple" size={"sm"}>
                     <Thead>
                       <Tr>
@@ -757,7 +757,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                       })}
                     </Tbody>
                   </Table>
-                </TableContainer>
+                </TableContainer> */}
               </TabPanel>
 
               <TabPanel
@@ -765,7 +765,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                 rounded={"lg"}
                 mt={"1rem"}
               >
-                <TableContainer>
+                {/* <TableContainer>
                   <Table variant="simple" size={"sm"}>
                     <Thead>
                       <Tr>
@@ -865,7 +865,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                       })}
                     </Tbody>
                   </Table>
-                </TableContainer>
+                </TableContainer> */}
               </TabPanel>
 
               <TabPanel
@@ -873,7 +873,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                 rounded={"lg"}
                 mt={"1rem"}
               >
-                <TableContainer>
+                {/* <TableContainer>
                   <Table variant="simple" size={"sm"}>
                     <Thead>
                       <Tr>
@@ -974,7 +974,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                       })}
                     </Tbody>
                   </Table>
-                </TableContainer>
+                </TableContainer> */}
               </TabPanel>
             </TabPanels>
           </Tabs>
