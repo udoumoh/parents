@@ -90,10 +90,10 @@ const InvoiceDataDrawer: FC<InvoiceDataDrawerProps> = ({
       <DrawerOverlay />
       <DrawerContent>
         <DrawerCloseButton />
-        <DrawerHeader backgroundColor={"#005D5D05"}>
+        <DrawerHeader>
           <Text fontWeight={"bold"}>Student Invoice</Text>
         </DrawerHeader>
-        <DrawerBody backgroundColor={"#005D5D05"}>
+        <DrawerBody>
           <Flex
             alignItems={"center"}
             justifyContent={"center"}
