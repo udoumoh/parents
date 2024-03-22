@@ -159,46 +159,46 @@ const Invoice: FC<InvoiceProps> = ({}) => {
     fetchData();
   }, [getinvoice]);
 
-  // const completedInvoice = invoiceData?.filter(
-  //   (invoice) => invoice.status === "completed"
-  // );
-  // const activeInvoice = invoiceData?.filter(
-  //   (invoice) => invoice.status === "active"
-  // );
-  // const rejectedInvoice = invoiceData?.filter(
-  //   (invoice) => invoice.status === "rejected by parent"
-  // );
-  // const processingInvoice = invoiceData?.filter(
-  //   (invoice) => invoice.status === "processing"
-  // );
+  const completedInvoice = invoiceData?.filter(
+    (invoice) => invoice.status === "completed"
+  );
+  const activeInvoice = invoiceData?.filter(
+    (invoice) => invoice.status === "active"
+  );
+  const rejectedInvoice = invoiceData?.filter(
+    (invoice) => invoice.status === "rejected by parent"
+  );
+  const processingInvoice = invoiceData?.filter(
+    (invoice) => invoice.status === "processing"
+  );
 
-  // const totalActiveAmount = activeInvoice?.reduce(
-  //   (accumulator, invoice) => accumulator + invoice.amountPaid,
-  //   0
-  // );
-  // const totalRejectedAmount = rejectedInvoice?.reduce(
-  //   (accumulator, invoice) => accumulator + invoice.amountPaid,
-  //   0
-  // );
-  // const totalProcessingAmount = processingInvoice?.reduce(
-  //   (accumulator, invoice) => accumulator + invoice.amountPaid,
-  //   0
-  // );
+  const totalActiveAmount = activeInvoice?.reduce(
+    (accumulator, invoice) => accumulator + invoice.amountPaid,
+    0
+  );
+  const totalRejectedAmount = rejectedInvoice?.reduce(
+    (accumulator, invoice) => accumulator + invoice.amountPaid,
+    0
+  );
+  const totalProcessingAmount = processingInvoice?.reduce(
+    (accumulator, invoice) => accumulator + invoice.amountPaid,
+    0
+  );
 
-  // const nonEmptyReceipts = invoiceData
-  //   ?.map((invoice) => invoice?.receipt)
-  //   ?.filter((receipt: any) => receipt?.length !== 0);
-  // const totalAmountPaid = nonEmptyReceipts
-  //   ?.map((receiptItem) =>
-  //     receiptItem?.reduce((acc, item) => acc + item?.amountPaid, 0)
-  //   )
-  //   .reduce((acc: any, item: any) => acc + item, 0);
+  const nonEmptyReceipts = invoiceData
+    ?.map((invoice) => invoice?.receipt)
+    ?.filter((receipt: any) => receipt?.length !== 0);
+  const totalAmountPaid = nonEmptyReceipts
+    ?.map((receiptItem) =>
+      receiptItem?.reduce((acc, item) => acc + item?.amountPaid, 0)
+    )
+    .reduce((acc: any, item: any) => acc + item, 0);
 
-  // const getCompletedInvoiceAmount = (invoice: any) => {
-  //   const totalCompletedAmount = invoice?.receipt?.map((receipt: any) => receipt?.amountPaid)
-  //     .reduce((acc: any, item: any) => acc + item, 0);
-  //   return formatNumberWithCommas(totalCompletedAmount);
-  // };
+  const getCompletedInvoiceAmount = (invoice: any) => {
+    const totalCompletedAmount = invoice?.receipt?.map((receipt: any) => receipt?.amountPaid)
+      .reduce((acc: any, item: any) => acc + item, 0);
+    return formatNumberWithCommas(totalCompletedAmount);
+  };
 
   const handleSelectedInvoice = (invoice: any) => {
       setSelectedInvoiceData(invoice)
@@ -238,7 +238,9 @@ const Invoice: FC<InvoiceProps> = ({}) => {
             </Text>
             <Text fontSize={"3xl"} fontWeight={"700"} color={"gray.700"}>
               ₦
-              
+              {totalAmountPaid === undefined
+                ? 0
+                : formatNumberWithCommas(totalAmountPaid)}
             </Text>
             <Badge
               backgroundColor={"black"}
@@ -250,7 +252,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
               fontSize={"2xs"}
               shadow={"md"}
             >
-             invoices
+              {completedInvoice?.length || 0} invoices
             </Badge>
           </Flex>
           <Flex
@@ -271,7 +273,9 @@ const Invoice: FC<InvoiceProps> = ({}) => {
             </Text>
             <Text fontSize={"3xl"} fontWeight={"700"} color={"gray.700"}>
               ₦
-              
+              {totalActiveAmount === undefined
+                ? 0
+                : formatNumberWithCommas(totalActiveAmount)}
             </Text>
             <Badge
               backgroundColor={"black"}
@@ -282,7 +286,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
               maxW={"100px"}
               fontSize={"2xs"}
             >
-               invoices
+              {activeInvoice?.length || 0} invoices
             </Badge>
           </Flex>
           <Flex
@@ -303,8 +307,9 @@ const Invoice: FC<InvoiceProps> = ({}) => {
             </Text>
             <Text fontSize={"3xl"} fontWeight={"700"} color={"gray.700"}>
               ₦
-              
-
+              {totalRejectedAmount === undefined
+                ? 0
+                : formatNumberWithCommas(totalRejectedAmount)}
             </Text>
             <Badge
               backgroundColor={"black"}
@@ -315,7 +320,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
               maxW={"100px"}
               fontSize={"2xs"}
             >
-             invoices
+              {rejectedInvoice?.length || 0} invoices
             </Badge>
           </Flex>
           <Flex
@@ -336,7 +341,9 @@ const Invoice: FC<InvoiceProps> = ({}) => {
             </Text>
             <Text fontSize={"3xl"} fontWeight={"700"} color={"gray.700"}>
               ₦
-              
+              {totalProcessingAmount === undefined
+                ? 0
+                : formatNumberWithCommas(totalProcessingAmount)}
             </Text>
             <Badge
               backgroundColor={"black"}
@@ -347,7 +354,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
               maxW={"100px"}
               fontSize={"2xs"}
             >
-               invoices
+              {processingInvoice?.length || 0} invoices
             </Badge>
           </Flex>
         </SimpleGrid>
@@ -461,7 +468,9 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                             <Td>{item?.createdAt}</Td>
                             <Td fontWeight={"bold"}>
                               ₦
-                              
+                              {item?.status === "completed"
+                                ? getCompletedInvoiceAmount(item)
+                                : formatNumberWithCommas(item?.amountPaid)}
                             </Td>
                             <Td>
                               <Badge
@@ -541,7 +550,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                 mt={"1rem"}
               >
                 <TableContainer>
-                  {/* <Table variant="simple" size={"sm"}>
+                  <Table variant="simple" size={"sm"}>
                     <Thead>
                       <Tr>
                         <Th>Inv. ID</Th>
@@ -639,7 +648,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                         );
                       })}
                     </Tbody>
-                  </Table> */}
+                  </Table>
                 </TableContainer>
               </TabPanel>
 
@@ -648,7 +657,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                 rounded={"lg"}
                 mt={"1rem"}
               >
-                {/* <TableContainer>
+                <TableContainer>
                   <Table variant="simple" size={"sm"}>
                     <Thead>
                       <Tr>
@@ -748,7 +757,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                       })}
                     </Tbody>
                   </Table>
-                </TableContainer> */}
+                </TableContainer>
               </TabPanel>
 
               <TabPanel
@@ -756,7 +765,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                 rounded={"lg"}
                 mt={"1rem"}
               >
-                {/* <TableContainer>
+                <TableContainer>
                   <Table variant="simple" size={"sm"}>
                     <Thead>
                       <Tr>
@@ -856,7 +865,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                       })}
                     </Tbody>
                   </Table>
-                </TableContainer> */}
+                </TableContainer>
               </TabPanel>
 
               <TabPanel
@@ -864,7 +873,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                 rounded={"lg"}
                 mt={"1rem"}
               >
-                {/* <TableContainer>
+                <TableContainer>
                   <Table variant="simple" size={"sm"}>
                     <Thead>
                       <Tr>
@@ -965,7 +974,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                       })}
                     </Tbody>
                   </Table>
-                </TableContainer> */}
+                </TableContainer>
               </TabPanel>
             </TabPanels>
           </Tabs>
