@@ -62,7 +62,7 @@ interface InvoiceDataDrawerProps {
   isOpen: boolean;
   onOpen: () => void;
   onClose: () => void;
-  invoiceData: InvoiceData;
+  invoiceData: InvoiceData | undefined;
 }
 
 const InvoiceDataDrawer: FC<InvoiceDataDrawerProps> = ({
