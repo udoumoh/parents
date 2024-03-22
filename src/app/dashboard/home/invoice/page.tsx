@@ -437,7 +437,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                               <Menu size={"sm"}>
                                 <MenuButton>
                                   <Icon
-                                    p={1}
+                                    p={4}
                                     as={BsThreeDots}
                                     _hover={{ cursor: "pointer" }}
                                     boxSize={6}
@@ -772,7 +772,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                               <Menu size={"sm"}>
                                 <MenuButton>
                                   <Icon
-                                    p={1}
+                                    p={4}
                                     as={BsThreeDots}
                                     _hover={{ cursor: "pointer" }}
                                     boxSize={6}

@@ -31,7 +31,6 @@ import { TbFileInvoice } from "react-icons/tb";
 import { PDFViewer } from "../uploadedResultPdfViewer";
 import ImgViewer from "../imageViewer";
 import { useUserAPI } from "@/hooks/UserContext";
-import { capitalizeFirstLetter } from "@/helpers/capitalizeFirstLetter";
 
 interface InvoiceData {
   term: string;
@@ -72,6 +71,7 @@ const InvoiceDataDrawer: FC<InvoiceDataDrawerProps> = ({
   onOpen,
   invoiceData,
 }) => {
+    console.log(invoiceData)
   const { currentWardProfile } = useUserAPI();
   const { isOpen: isCollapseOpen, onToggle: onCollapseToggle } =
     useDisclosure();
@@ -109,7 +109,8 @@ const InvoiceDataDrawer: FC<InvoiceDataDrawerProps> = ({
             />
             <Text
               fontSize={"lg"}
-            >{`${currentWardProfile?.firstName} ${currentWardProfile?.middleName} ${currentWardProfile?.lastName}`}</Text>
+            >{`${currentWardProfile?.firstName} ${currentWardProfile?.middleName} ${currentWardProfile?.lastName}`}
+            </Text>
             <Text fontSize={"sm"} color={"#00000090"}>
               {currentWardProfile?.gender} • {currentWardProfile?.age} Years Old
             </Text>
@@ -125,7 +126,7 @@ const InvoiceDataDrawer: FC<InvoiceDataDrawerProps> = ({
             </Button>
             <Box w={"full"}>
               <Collapse in={isCollapseOpen} animateOpacity>
-                {invoiceData.receipt.length === 0 ? (
+                {invoiceData?.receipt?.length === 0 ? (
                   <Box
                     border={"1px solid #005D5D60"}
                     p={3}
@@ -139,7 +140,7 @@ const InvoiceDataDrawer: FC<InvoiceDataDrawerProps> = ({
                     </Text>
                   </Box>
                 ) : (
-                  invoiceData.receipt.map((receipt, index) => {
+                  invoiceData?.receipt?.map((receipt, index) => {
                     return (
                       <Box
                         key={index}
@@ -170,7 +171,7 @@ const InvoiceDataDrawer: FC<InvoiceDataDrawerProps> = ({
                               backgroundColor={"green.600"}
                               variant={"solid"}
                             >
-                              {receipt.status}
+                              {receipt?.status}
                             </Badge>
                           </Box>
                         </Flex>
