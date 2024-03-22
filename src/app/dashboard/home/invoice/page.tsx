@@ -162,6 +162,12 @@ const Invoice: FC<InvoiceProps> = ({}) => {
     return formatNumberWithCommas(totalCompletedAmount);
   };
 
+  const handleSelectedInvoice = (invoice: any) => {
+      setSelectedInvoiceData(invoice)
+      onDrawerOpen();
+      console.log(invoice)
+  }
+
   return (
     <Box mb={{ base: "8rem", lg: "5rem" }}>
       <Box>
@@ -403,10 +409,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                               backgroundColor: "#005D5D10",
                               cursor: "pointer",
                             }}
-                            onClick={() => {
-                              setSelectedInvoiceData(item);
-                              onDrawerOpen();
-                            }}
+                            onClick={()=>handleSelectedInvoice(item)}
                           >
                             <Td fontWeight={"bold"} fontSize={"sm"}>
                               {item?.invoiceId}
@@ -529,10 +532,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                               backgroundColor: "#005D5D10",
                               cursor: "pointer",
                             }}
-                            onClick={() => {
-                              setSelectedInvoiceData(item);
-                              onDrawerOpen();
-                            }}
+                            onClick={()=>handleSelectedInvoice(item)}
                           >
                             <Td fontWeight={"bold"} fontSize={"sm"}>
                               {item?.invoiceId}
@@ -640,10 +640,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                               backgroundColor: "#005D5D10",
                               cursor: "pointer",
                             }}
-                            onClick={() => {
-                              setSelectedInvoiceData(item);
-                              onDrawerOpen();
-                            }}
+                            onClick={()=>handleSelectedInvoice(item)}
                           >
                             <Td fontWeight={"bold"} fontSize={"sm"}>
                               {item?.invoiceId}
@@ -751,10 +748,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                               backgroundColor: "#005D5D10",
                               cursor: "pointer",
                             }}
-                            onClick={() => {
-                              setSelectedInvoiceData(item);
-                              onDrawerOpen();
-                            }}
+                            onClick={()=>handleSelectedInvoice(item)}
                           >
                             <Td fontWeight={"bold"} fontSize={"sm"}>
                               {item?.invoiceId}
@@ -862,10 +856,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                               backgroundColor: "#005D5D10",
                               cursor: "pointer",
                             }}
-                            onClick={() => {
-                              setSelectedInvoiceData(item);
-                              onDrawerOpen();
-                            }}
+                            onClick={()=>handleSelectedInvoice(item)}
                           >
                             <Td fontWeight={"bold"} fontSize={"sm"}>
                               {item?.invoiceId}
