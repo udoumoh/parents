@@ -395,7 +395,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                               backgroundColor: "#005D5D10",
                               cursor: "pointer",
                             }}
-                            onClick={() => {setSelectedInvoiceData(item); onDrawerOpen}}
+                            onClick={() => {setSelectedInvoiceData(item); onDrawerOpen()}}
                           >
                             <Td fontWeight={"bold"} fontSize={"sm"}>
                               {item?.invoiceId}
