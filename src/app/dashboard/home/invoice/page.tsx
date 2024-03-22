@@ -151,48 +151,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
             receipt: item?.receipt,
           })
         );
-        setInvoiceData([
-          {
-  term: "Spring",
-  year: "2024",
-  category: "Education",
-  amountPaid: 1500,
-  id: 123,
-  status: "Paid",
-  summary: "Payment for tuition fees",
-  createdAt: "2024-03-17",
-  invoiceId: "INV123456",
-  schoolname: "Example School",
-  schoollogo: "school_logo.png",
-  receipt: [
-    {
-      amountPaid: 1500,
-      createdAt: "2024-03-17",
-      creator: "John Doe",
-      fileType: "pdf",
-      id: 1,
-      parentInvoiceId: "INV123456",
-      status: "Paid",
-      summary: "Payment receipt for tuition fees",
-      updatedAt: "2024-03-17",
-      uploadedDocument: "receipt_123.pdf",
-    },
-    {
-      amountPaid: 500,
-      createdAt: "2024-03-15",
-      creator: "Jane Smith",
-      fileType: "pdf",
-      id: 2,
-      parentInvoiceId: "INV123456",
-      status: "Paid",
-      summary: "Payment receipt for textbooks",
-      updatedAt: "2024-03-15",
-      uploadedDocument: "receipt_456.pdf",
-    },
-    // Add more receipt objects as needed
-  ],
-}
-      ]);
+        setInvoiceData(parsedInvoiceData);
       } catch (err: any) {
         console.log(err.message);
       }
@@ -200,46 +159,46 @@ const Invoice: FC<InvoiceProps> = ({}) => {
     fetchData();
   }, [getinvoice]);
 
-  const completedInvoice = invoiceData?.filter(
-    (invoice) => invoice.status === "completed"
-  );
-  const activeInvoice = invoiceData?.filter(
-    (invoice) => invoice.status === "active"
-  );
-  const rejectedInvoice = invoiceData?.filter(
-    (invoice) => invoice.status === "rejected by parent"
-  );
-  const processingInvoice = invoiceData?.filter(
-    (invoice) => invoice.status === "processing"
-  );
+  // const completedInvoice = invoiceData?.filter(
+  //   (invoice) => invoice.status === "completed"
+  // );
+  // const activeInvoice = invoiceData?.filter(
+  //   (invoice) => invoice.status === "active"
+  // );
+  // const rejectedInvoice = invoiceData?.filter(
+  //   (invoice) => invoice.status === "rejected by parent"
+  // );
+  // const processingInvoice = invoiceData?.filter(
+  //   (invoice) => invoice.status === "processing"
+  // );
 
-  const totalActiveAmount = activeInvoice?.reduce(
-    (accumulator, invoice) => accumulator + invoice.amountPaid,
-    0
-  );
-  const totalRejectedAmount = rejectedInvoice?.reduce(
-    (accumulator, invoice) => accumulator + invoice.amountPaid,
-    0
-  );
-  const totalProcessingAmount = processingInvoice?.reduce(
-    (accumulator, invoice) => accumulator + invoice.amountPaid,
-    0
-  );
+  // const totalActiveAmount = activeInvoice?.reduce(
+  //   (accumulator, invoice) => accumulator + invoice.amountPaid,
+  //   0
+  // );
+  // const totalRejectedAmount = rejectedInvoice?.reduce(
+  //   (accumulator, invoice) => accumulator + invoice.amountPaid,
+  //   0
+  // );
+  // const totalProcessingAmount = processingInvoice?.reduce(
+  //   (accumulator, invoice) => accumulator + invoice.amountPaid,
+  //   0
+  // );
 
-  const nonEmptyReceipts = invoiceData
-    ?.map((invoice) => invoice?.receipt)
-    ?.filter((receipt: any) => receipt?.length !== 0);
-  const totalAmountPaid = nonEmptyReceipts
-    ?.map((receiptItem) =>
-      receiptItem?.reduce((acc, item) => acc + item?.amountPaid, 0)
-    )
-    .reduce((acc: any, item: any) => acc + item, 0);
+  // const nonEmptyReceipts = invoiceData
+  //   ?.map((invoice) => invoice?.receipt)
+  //   ?.filter((receipt: any) => receipt?.length !== 0);
+  // const totalAmountPaid = nonEmptyReceipts
+  //   ?.map((receiptItem) =>
+  //     receiptItem?.reduce((acc, item) => acc + item?.amountPaid, 0)
+  //   )
+  //   .reduce((acc: any, item: any) => acc + item, 0);
 
-  const getCompletedInvoiceAmount = (invoice: any) => {
-    const totalCompletedAmount = invoice?.receipt?.map((receipt: any) => receipt?.amountPaid)
-      .reduce((acc: any, item: any) => acc + item, 0);
-    return formatNumberWithCommas(totalCompletedAmount);
-  };
+  // const getCompletedInvoiceAmount = (invoice: any) => {
+  //   const totalCompletedAmount = invoice?.receipt?.map((receipt: any) => receipt?.amountPaid)
+  //     .reduce((acc: any, item: any) => acc + item, 0);
+  //   return formatNumberWithCommas(totalCompletedAmount);
+  // };
 
   const handleSelectedInvoice = (invoice: any) => {
       setSelectedInvoiceData(invoice)
@@ -279,9 +238,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
             </Text>
             <Text fontSize={"3xl"} fontWeight={"700"} color={"gray.700"}>
               ₦
-              {totalAmountPaid === undefined
-                ? 0
-                : formatNumberWithCommas(totalAmountPaid)}
+              
             </Text>
             <Badge
               backgroundColor={"black"}
@@ -293,7 +250,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
               fontSize={"2xs"}
               shadow={"md"}
             >
-              {completedInvoice?.length || 0} invoices
+             invoices
             </Badge>
           </Flex>
           <Flex
@@ -314,9 +271,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
             </Text>
             <Text fontSize={"3xl"} fontWeight={"700"} color={"gray.700"}>
               ₦
-              {totalActiveAmount === undefined
-                ? 0
-                : formatNumberWithCommas(totalActiveAmount)}
+              
             </Text>
             <Badge
               backgroundColor={"black"}
@@ -327,7 +282,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
               maxW={"100px"}
               fontSize={"2xs"}
             >
-              {activeInvoice?.length || 0} invoices
+               invoices
             </Badge>
           </Flex>
           <Flex
@@ -348,9 +303,8 @@ const Invoice: FC<InvoiceProps> = ({}) => {
             </Text>
             <Text fontSize={"3xl"} fontWeight={"700"} color={"gray.700"}>
               ₦
-              {totalRejectedAmount === undefined
-                ? 0
-                : formatNumberWithCommas(totalRejectedAmount)}
+              
+
             </Text>
             <Badge
               backgroundColor={"black"}
@@ -361,7 +315,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
               maxW={"100px"}
               fontSize={"2xs"}
             >
-              {rejectedInvoice?.length || 0} invoices
+             invoices
             </Badge>
           </Flex>
           <Flex
@@ -382,9 +336,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
             </Text>
             <Text fontSize={"3xl"} fontWeight={"700"} color={"gray.700"}>
               ₦
-              {totalProcessingAmount === undefined
-                ? 0
-                : formatNumberWithCommas(totalProcessingAmount)}
+              
             </Text>
             <Badge
               backgroundColor={"black"}
@@ -395,7 +347,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
               maxW={"100px"}
               fontSize={"2xs"}
             >
-              {processingInvoice?.length || 0} invoices
+               invoices
             </Badge>
           </Flex>
         </SimpleGrid>
@@ -509,9 +461,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                             <Td>{item?.createdAt}</Td>
                             <Td fontWeight={"bold"}>
                               ₦
-                              {item?.status === "completed"
-                                ? getCompletedInvoiceAmount(item)
-                                : formatNumberWithCommas(item?.amountPaid)}
+                              
                             </Td>
                             <Td>
                               <Badge
@@ -591,7 +541,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                 mt={"1rem"}
               >
                 <TableContainer>
-                  <Table variant="simple" size={"sm"}>
+                  {/* <Table variant="simple" size={"sm"}>
                     <Thead>
                       <Tr>
                         <Th>Inv. ID</Th>
@@ -689,7 +639,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                         );
                       })}
                     </Tbody>
-                  </Table>
+                  </Table> */}
                 </TableContainer>
               </TabPanel>
 
@@ -698,7 +648,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                 rounded={"lg"}
                 mt={"1rem"}
               >
-                <TableContainer>
+                {/* <TableContainer>
                   <Table variant="simple" size={"sm"}>
                     <Thead>
                       <Tr>
@@ -798,7 +748,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                       })}
                     </Tbody>
                   </Table>
-                </TableContainer>
+                </TableContainer> */}
               </TabPanel>
 
               <TabPanel
@@ -806,7 +756,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                 rounded={"lg"}
                 mt={"1rem"}
               >
-                <TableContainer>
+                {/* <TableContainer>
                   <Table variant="simple" size={"sm"}>
                     <Thead>
                       <Tr>
@@ -906,7 +856,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                       })}
                     </Tbody>
                   </Table>
-                </TableContainer>
+                </TableContainer> */}
               </TabPanel>
 
               <TabPanel
@@ -914,7 +864,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                 rounded={"lg"}
                 mt={"1rem"}
               >
-                <TableContainer>
+                {/* <TableContainer>
                   <Table variant="simple" size={"sm"}>
                     <Thead>
                       <Tr>
@@ -1015,7 +965,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                       })}
                     </Tbody>
                   </Table>
-                </TableContainer>
+                </TableContainer> */}
               </TabPanel>
             </TabPanels>
           </Tabs>
