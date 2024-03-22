@@ -61,7 +61,6 @@ interface InvoiceData {
 
 interface InvoiceDataDrawerProps {
   isOpen: boolean;
-  onOpen: () => void;
   onClose: () => void;
   invoiceData: InvoiceData | undefined;
 }
@@ -70,7 +69,6 @@ interface InvoiceDataDrawerProps {
 const InvoiceDataDrawer: FC<InvoiceDataDrawerProps> = ({
   onClose,
   isOpen,
-  onOpen,
   invoiceData,
 }) => {
   const { currentWardProfile } = useUserAPI();

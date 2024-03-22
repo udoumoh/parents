@@ -99,67 +99,27 @@ const Invoice: FC<InvoiceProps> = ({}) => {
         const response = await getinvoice;
         const parsedInvoiceData = response?.getStudentInvoice?.map(
           (item: any) => ({
-            term: item.academicTerm || "",
-            year: item.academicYear || "",
-            category: item.category || "",
-            amountPaid: item.amount || 0,
-            id: item.id || 0,
-            invoiceId: item.invoiceId || "",
-            createdAt: formatDate(item.createdAt) || "",
-            summary: item.summary || "",
-            status: item.status || "",
-            schoolname: item.creatorSchool || "",
-            schoollogo: item?.student?.creator?.admin?.schoolImg || "",
-            receipt: item?.receipt || [],
+            term: item?.academicTerm,
+            year: item?.academicYear,
+            category: item?.category,
+            amountPaid: item?.amount,
+            id: item?.id,
+            invoiceId: item?.invoiceId,
+            createdAt: formatDate(item?.createdAt),
+            summary: item?.summary,
+            status: item?.status,
+            schoolname: item?.creatorSchool,
+            schoollogo: item?.student?.creator?.admin?.schoolImg,
+            receipt: item?.receipt,
           })
         );
-        setInvoiceData([
-          {
-            term: "Spring",
-            year: "2024",
-            category: "Education",
-            amountPaid: 1500,
-            id: 123,
-            status: "Paid",
-            summary: "Payment for tuition fees",
-            createdAt: "2024-03-17",
-            invoiceId: "INV123456",
-            schoolname: "Example School",
-            schoollogo: "school_logo.png",
-            receipt: [
-              {
-                amountPaid: 1500,
-                createdAt: "2024-03-17",
-                creator: "John Doe",
-                fileType: "pdf",
-                id: 1,
-                parentInvoiceId: "INV123456",
-                status: "Paid",
-                summary: "Payment receipt for tuition fees",
-                updatedAt: "2024-03-17",
-                uploadedDocument: "receipt_123.pdf",
-              },
-              {
-                amountPaid: 500,
-                createdAt: "2024-03-15",
-                creator: "Jane Smith",
-                fileType: "pdf",
-                id: 2,
-                parentInvoiceId: "INV123456",
-                status: "Paid",
-                summary: "Payment receipt for textbooks",
-                updatedAt: "2024-03-15",
-                uploadedDocument: "receipt_456.pdf",
-              },
-            ],
-          },
-        ]);
+        setInvoiceData(parsedInvoiceData);
       } catch (err: any) {
         console.log(err.message);
       }
     };
     fetchData();
-  }, [getinvoice]);
+  });
 
   const completedInvoice = invoiceData?.filter(
     (invoice) => invoice.status === "completed"
@@ -197,7 +157,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
     .reduce((acc: any, item: any) => acc + item, 0);
 
   const getCompletedInvoiceAmount = (invoice: any) => {
-    const totalCompletedAmount = (invoice?.receipt ?? []).map((receipt: any) => receipt?.amountPaid)
+    const totalCompletedAmount = (invoice?.receipt).map((receipt: any) => receipt?.amountPaid)
       .reduce((acc: any, item: any) => acc + item, 0);
     return formatNumberWithCommas(totalCompletedAmount);
   };
@@ -532,7 +492,6 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                             />
                             <InvoiceDataDrawer
                               isOpen={isDrawerOpen}
-                              onOpen={onDrawerOpen}
                               onClose={onDrawerClose}
                               invoiceData={selectedInvoiceData}
                             />
@@ -644,7 +603,6 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                             </Td>
                             <InvoiceDataDrawer
                               isOpen={isDrawerOpen}
-                              onOpen={onDrawerOpen}
                               onClose={onDrawerClose}
                               invoiceData={selectedInvoiceData}
                             />
@@ -756,7 +714,6 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                             </Td>
                             <InvoiceDataDrawer
                               isOpen={isDrawerOpen}
-                              onOpen={onDrawerOpen}
                               onClose={onDrawerClose}
                               invoiceData={selectedInvoiceData}
                             />
@@ -868,7 +825,6 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                             </Td>
                             <InvoiceDataDrawer
                               isOpen={isDrawerOpen}
-                              onOpen={onDrawerOpen}
                               onClose={onDrawerClose}
                               invoiceData={selectedInvoiceData}
                             />
@@ -981,7 +937,6 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                             </Td>
                             <InvoiceDataDrawer
                               isOpen={isDrawerOpen}
-                              onOpen={onDrawerOpen}
                               onClose={onDrawerClose}
                               invoiceData={selectedInvoiceData}
                             />
