@@ -91,7 +91,6 @@ const Invoice: FC<InvoiceProps> = ({}) => {
     const fetchData = async () => {
       try {
         const response = await getinvoice;
-        console.log(response);
         const parsedInvoiceData = response?.getStudentInvoice?.map(
           (item: any) => ({
             term: item.academicTerm,
@@ -141,8 +140,6 @@ const Invoice: FC<InvoiceProps> = ({}) => {
     (accumulator, invoice) => accumulator + invoice.amountPaid,
     0
   );
-
-  console.log(invoiceData);
 
   const nonEmptyReceipts = invoiceData
     ?.map((invoice) => invoice?.receipt)
