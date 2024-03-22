@@ -157,7 +157,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
       }
     };
     fetchData();
-  });
+  }, [getinvoice]);
 
   const completedInvoice = invoiceData?.filter(
     (invoice) => invoice.status === "completed"
