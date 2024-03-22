@@ -71,7 +71,6 @@ const InvoiceDataDrawer: FC<InvoiceDataDrawerProps> = ({
   onOpen,
   invoiceData,
 }) => {
-    console.log(invoiceData)
   const { currentWardProfile } = useUserAPI();
   const { isOpen: isCollapseOpen, onToggle: onCollapseToggle } =
     useDisclosure();
