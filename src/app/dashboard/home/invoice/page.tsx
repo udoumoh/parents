@@ -1,5 +1,5 @@
 "use client";
-import { FC, useState, useEffect, useMemo } from "react";
+import { FC, useState, useEffect } from "react";
 import {
   Box,
   Text,
@@ -37,6 +37,7 @@ import { MdOutlineClose } from "react-icons/md";
 import AcceptInvoiceModal from "@/components/shared/acceptInvoiceModal";
 import RejectInvoiceModal from "@/components/shared/rejectinvoicemodal";
 import InvoiceDataDrawer from "@/components/shared/invoiceDataDrawer";
+import { TbFileInvoice } from "react-icons/tb";
 
 interface InvoiceProps {}
 
@@ -147,14 +148,6 @@ const Invoice: FC<InvoiceProps> = ({}) => {
     0
   );
 
-  const memoizedInvoiceDrawers = useMemo(() => {
-      <InvoiceDataDrawer
-        isOpen={isDrawerOpen}
-        onClose={onDrawerClose}
-        invoiceData={selectedInvoiceData}
-      />
-  }, [isDrawerOpen, onDrawerClose, selectedInvoiceData]);
-
   const nonEmptyReceipts = invoiceData
     ?.map((invoice) => invoice?.receipt)
     ?.filter((receipt: any) => receipt?.length !== 0);
@@ -201,7 +194,6 @@ const Invoice: FC<InvoiceProps> = ({}) => {
             w={"full"}
             shadow={"md"}
             _hover={{ boxShadow: "sm" }}
-            
           >
             <Text fontSize={"md"} color={"blue.800"} fontWeight={"500"}>
               Total Amount Paid
@@ -236,7 +228,6 @@ const Invoice: FC<InvoiceProps> = ({}) => {
             w={"full"}
             shadow={"md"}
             _hover={{ boxShadow: "sm" }}
-            
           >
             <Text fontSize={"md"} color={"blue.800"} fontWeight={"500"}>
               Active
@@ -270,7 +261,6 @@ const Invoice: FC<InvoiceProps> = ({}) => {
             w={"full"}
             shadow={"md"}
             _hover={{ boxShadow: "sm" }}
-            
           >
             <Text fontSize={"lg"} color={"blue.800"} fontWeight={"500"}>
               Rejected
@@ -304,7 +294,6 @@ const Invoice: FC<InvoiceProps> = ({}) => {
             w={"full"}
             shadow={"md"}
             _hover={{ boxShadow: "sm" }}
-            
           >
             <Text fontSize={"md"} color={"blue.800"} fontWeight={"500"}>
               Processing
@@ -410,16 +399,8 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                     </Thead>
                     <Tbody>
                       {invoiceData?.map((item, index) => {
-                        memoizedInvoiceDrawers
                         return (
-                          <Tr
-                            key={index}
-                            _hover={{
-                              backgroundColor: "#005D5D10",
-                              cursor: "pointer",
-                            }}
-                            onClick={()=>handleSelectedInvoice(item)}
-                          >
+                          <Tr key={index}>
                             <Td fontWeight={"bold"} fontSize={"sm"}>
                               {item?.invoiceId}
                             </Td>
@@ -487,6 +468,14 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                   >
                                     Reject Invoice
                                   </MenuItem>
+                                  <MenuItem
+                                    icon={<TbFileInvoice />}
+                                    onClick={() => {
+                                      handleSelectedInvoice(item);
+                                    }}
+                                  >
+                                    View Invoice Details
+                                  </MenuItem>
                                 </MenuList>
                               </Menu>
                             </Td>
@@ -536,7 +525,9 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                               backgroundColor: "#005D5D10",
                               cursor: "pointer",
                             }}
-                            onClick={() => {handleSelectedInvoice(item)}}
+                            onClick={() => {
+                              handleSelectedInvoice(item);
+                            }}
                           >
                             <Td fontWeight={"bold"} fontSize={"sm"}>
                               {item?.invoiceId}
@@ -556,7 +547,10 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                             <Td>{item?.category}</Td>
                             <Td>{item?.createdAt}</Td>
                             <Td fontWeight={"bold"}>
-                              ₦{getCompletedInvoiceAmount(formatNumberWithCommas(item))}
+                              ₦
+                              {getCompletedInvoiceAmount(
+                                formatNumberWithCommas(item)
+                              )}
                             </Td>
                             <Td>
                               <Badge
@@ -602,6 +596,14 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                   >
                                     Reject Invoice
                                   </MenuItem>
+                                  <MenuItem
+                                    icon={<TbFileInvoice />}
+                                    onClick={() => {
+                                      handleSelectedInvoice(item);
+                                    }}
+                                  >
+                                    View Invoice Details
+                                  </MenuItem>
                                 </MenuList>
                               </Menu>
                             </Td>
@@ -644,7 +646,9 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                               backgroundColor: "#005D5D10",
                               cursor: "pointer",
                             }}
-                            onClick={() => {handleSelectedInvoice(item)}}
+                            onClick={() => {
+                              handleSelectedInvoice(item);
+                            }}
                           >
                             <Td fontWeight={"bold"} fontSize={"sm"}>
                               {item?.invoiceId}
@@ -710,6 +714,14 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                   >
                                     Reject Invoice
                                   </MenuItem>
+                                  <MenuItem
+                                    icon={<TbFileInvoice />}
+                                    onClick={() => {
+                                      handleSelectedInvoice(item);
+                                    }}
+                                  >
+                                    View Invoice Details
+                                  </MenuItem>
                                 </MenuList>
                               </Menu>
                             </Td>
@@ -752,7 +764,9 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                               backgroundColor: "#005D5D10",
                               cursor: "pointer",
                             }}
-                            onClick={() => {handleSelectedInvoice(item)}}
+                            onClick={() => {
+                              handleSelectedInvoice(item);
+                            }}
                           >
                             <Td fontWeight={"bold"} fontSize={"sm"}>
                               {item?.invoiceId}
@@ -818,6 +832,14 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                   >
                                     Reject Invoice
                                   </MenuItem>
+                                  <MenuItem
+                                    icon={<TbFileInvoice />}
+                                    onClick={() => {
+                                      handleSelectedInvoice(item);
+                                    }}
+                                  >
+                                    View Invoice Details
+                                  </MenuItem>
                                 </MenuList>
                               </Menu>
                             </Td>
@@ -860,7 +882,9 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                               backgroundColor: "#005D5D10",
                               cursor: "pointer",
                             }}
-                            onClick={() => {handleSelectedInvoice(item)}}
+                            onClick={() => {
+                              handleSelectedInvoice(item);
+                            }}
                           >
                             <Td fontWeight={"bold"} fontSize={"sm"}>
                               {item?.invoiceId}
@@ -927,6 +951,14 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                   >
                                     Reject Invoice
                                   </MenuItem>
+                                  <MenuItem
+                                    icon={<TbFileInvoice />}
+                                    onClick={() => {
+                                      handleSelectedInvoice(item);
+                                    }}
+                                  >
+                                    View Invoice Details
+                                  </MenuItem>
                                 </MenuList>
                               </Menu>
                             </Td>
@@ -946,6 +978,11 @@ const Invoice: FC<InvoiceProps> = ({}) => {
           </Tabs>
         </Box>
       </Box>
+      <InvoiceDataDrawer
+        isOpen={isDrawerOpen}
+        onClose={onDrawerClose}
+        invoiceData={selectedInvoiceData}
+      />
     </Box>
   );
 };
