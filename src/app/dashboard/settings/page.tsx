@@ -157,7 +157,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
       try{
         const response = await parent;
         const newArray = response?.parent?.parent?.children?.map((child: any) => {
-          const temp = child?.studentCase?.graycase?.map((graycase: any, index: any) => ({
+          const temp = child?.studentCase?.grayCase?.map((graycase: any, index: any) => ({
             firstName: child?.firstName,
             lastName: child?.lastName,
             middleName: child?.middleName,
