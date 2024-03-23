@@ -76,7 +76,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
   const [currentStudentCase, setCurrentStudentCase] = useState<
     UserChildren | undefined
   >();
-  const [currentIndex, setCurrentIndex] = useState<number>();
+  const [currentIndex, setCurrentIndex] = useState<any>();
   console.log(parentData);
 
   const handleRequestDelete = async (requestId: any) => {

@@ -26,7 +26,7 @@ interface GraycaseModalProps {
   isOpen: boolean;
   onClose: () => void;
   childData: childData | undefined;
-  index: number;
+  index: any;
 }
 
 const GraycaseModal: FC<GraycaseModalProps> = ({isOpen, onClose, childData, index}) => {
