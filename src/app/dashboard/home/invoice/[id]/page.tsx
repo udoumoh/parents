@@ -26,6 +26,7 @@ import { GET_STUDENT_INVOICE } from "@/gql/queries";
 import { useQuery } from "@apollo/client";
 import { formatDate } from "@/helpers/formatDate";
 import { IoIosArrowRoundBack } from "react-icons/io";
+import { useRouter } from "next/navigation";
 
 interface Params {
   id: number;
@@ -62,6 +63,7 @@ interface StudentInvoiceProps {
 }
 
 const Invoice: FC<InvoiceProps> = ({ params }: { params: { id: number } }) => {
+    const router = useRouter()
     const { currentWardProfile } = useUserAPI();
     const [invoiceData, setInvoiceData] = useState<StudentInvoiceProps[]>([]);
     const { data: getinvoice } = useQuery(GET_STUDENT_INVOICE, {
