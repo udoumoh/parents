@@ -156,8 +156,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
 
       try{
         const response = await parent;
-        const newArray = response?.parent?.parent?.children?.map((child: any) => {
-          const temp = child?.studentCase?.grayCase?.map((graycase: any, index: any) => ({
+        const newArray = response?.parent?.parent?.children?.map((child: any) => ({
             firstName: child?.firstName,
             lastName: child?.lastName,
             middleName: child?.middleName,
@@ -172,17 +171,15 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
             age: child?.age,
             schoolId: child?.schoolId,
             isVisible: child?.isVisible,
-            category: graycase?.category,
-            createdAt: graycase?.createdAt,
-            id: graycase?.id,
-            isActive: graycase?.isActive,
-            notes: graycase?.notes,
-            owingAmount: graycase?.owingAmount,
-            updatedAt: graycase?.updatedAt,
-            wasEdited: graycase?.wasEdited,
+            category: child?.studentCase.grayCase?.graycase?.category,
+            createdAt: child?.studentCase.grayCase?.graycase?.createdAt,
+            id: child?.studentCase.grayCase?.graycase?.id,
+            isActive: child?.studentCase.grayCase?.graycase?.isActive,
+            notes: child?.studentCase.grayCase?.graycase?.notes,
+            owingAmount: child?.studentCase.grayCase?.graycase?.owingAmount,
+            updatedAt: child?.studentCase.grayCase?.graycase?.updatedAt,
+            wasEdited: child?.studentCase.grayCase?.graycase?.wasEdited,
           }));
-          return temp;
-        });
         setExperiment(newArray);
       } catch (err: any) {
         console.log(err);
