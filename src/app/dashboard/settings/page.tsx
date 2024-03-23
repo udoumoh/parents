@@ -161,7 +161,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
             profileImage: child?.profileImgUrl,
             gender: child?.gender,
             class: child?.classroom?.classroom?.className,
-            dateOfBirth: formatDateWithOrdinalSuffix(child?.birthDate),
+            dateOfBirth: child?.birthDate,
             school: child?.school?.school?.schoolName,
             schoollogo: child?.school?.school?.logoImgUrl,
             childId: child?.id,
@@ -169,12 +169,12 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
             schoolId: child?.school?.school?.id,
             isVisible: child?.isVisible,
             category: child?.studentCase.grayCase?.category,
-            createdAt: formatDateWithOrdinalSuffix(child?.studentCase.grayCase?.createdAt),
+            createdAt: child?.studentCase.grayCase?.createdAt,
             id: child?.studentCase.grayCase?.id,
             isActive: child?.studentCase.grayCase?.isActive,
             notes: child?.studentCase.grayCase?.note,
             owingAmount: child?.studentCase.grayCase?.owingAmount,
-            updatedAt: formatDateWithOrdinalSuffix(child?.studentCase.grayCase?.updatedAt),
+            updatedAt: child?.studentCase.grayCase?.updatedAt,
             wasEdited: child?.studentCase.grayCase?.wasEdited,
           }));
         setGraycases(newArray);
