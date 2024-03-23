@@ -93,17 +93,6 @@ const Invoice: FC<InvoiceProps> = ({}) => {
     variables: { studentId: currentWardProfile?.id },
   });
 
-  const memoizedInvoiceDrawers = useMemo(() => {
-    return invoiceData.map((item, index) => (
-      <InvoiceDataDrawer
-        key={index}
-        isOpen={isDrawerOpen}
-        onClose={onDrawerClose}
-        invoiceData={selectedInvoiceData}
-      />
-    ));
-  }, [invoiceData, isDrawerOpen, onDrawerClose, selectedInvoiceData]);
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -157,6 +146,14 @@ const Invoice: FC<InvoiceProps> = ({}) => {
     (accumulator, invoice) => accumulator + invoice.amountPaid,
     0
   );
+
+  const memoizedInvoiceDrawers = useMemo(() => {
+      <InvoiceDataDrawer
+        isOpen={isDrawerOpen}
+        onClose={onDrawerClose}
+        invoiceData={selectedInvoiceData}
+      />
+  }, [isDrawerOpen, onDrawerClose, selectedInvoiceData]);
 
   const nonEmptyReceipts = invoiceData
     ?.map((invoice) => invoice?.receipt)
