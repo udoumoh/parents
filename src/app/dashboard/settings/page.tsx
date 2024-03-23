@@ -509,7 +509,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
         </Flex>
 
         {/* Graycases */}
-        {/* <Flex
+        <Flex
           flexDir={"column"}
           border={"1px solid #005D5D30"}
           rounded={"xl"}
@@ -561,35 +561,41 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                   </Thead>
                   <Tbody>
                     {childData?.map((child: any) => {
-                      return (child?.graycase)?.map((graycase: any, index: any) => {
-                        return (
-                          <Tr
-                            key={index}
-                            _hover={{
-                              backgroundColor: "#005D5D10",
-                              cursor: "pointer",
-                            }}
-                            onClick={() => {
-                              handleGreycaseItem(child, index);
-                            }}
-                          >
-                            <Td>
-                              {child?.firstName} {child?.lastName}
-                            </Td>
-                            <Td>{graycase?.category}</Td>
-                            <Td>
-                              <Badge
-                                colorScheme={
-                                  graycase?.isActive ? "green" : "red"
-                                }
-                              >
-                                {graycase?.isActive ? "ACTIVE" : "INACTIVE"}
-                              </Badge>
-                            </Td>
-                            <Td>{graycase?.createdAt}</Td>
-                          </Tr>
-                        );
-                      });
+                      return child?.graycase === null ? (
+                        <></>
+                      ) : (
+                        child?.graycase?.map(
+                        (graycase: any, index: any) => {
+                          return (
+                            <Tr
+                              key={index}
+                              _hover={{
+                                backgroundColor: "#005D5D10",
+                                cursor: "pointer",
+                              }}
+                              onClick={() => {
+                                handleGreycaseItem(child, index);
+                              }}
+                            >
+                              <Td>
+                                {child?.firstName} {child?.lastName}
+                              </Td>
+                              <Td>{graycase?.category}</Td>
+                              <Td>
+                                <Badge
+                                  colorScheme={
+                                    graycase?.isActive ? "green" : "red"
+                                  }
+                                >
+                                  {graycase?.isActive ? "ACTIVE" : "INACTIVE"}
+                                </Badge>
+                              </Td>
+                              <Td>{graycase?.createdAt}</Td>
+                            </Tr>
+                          );
+                        }
+                      )
+                      )
                     })}
                     <GraycaseModal
                       isOpen={isGraycaseModalOpen}
@@ -602,7 +608,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
               </TableContainer>
             )}
           </Flex>
-        </Flex> */}
+        </Flex>
       </Box>
     </Box>
   );
