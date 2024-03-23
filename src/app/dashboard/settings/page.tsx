@@ -559,7 +559,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                   </Thead>
                   <Tbody>
                     {childData?.map((child) => {
-                      return (child?.graycase ?? []).map((graycase, index) => {
+                      return (child?.graycase)?.map((graycase, index) => {
                         return (
                           <Tr
                             key={index}
