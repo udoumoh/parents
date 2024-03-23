@@ -122,7 +122,35 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
     }
   };
 
-  console.log('This is the childdata', childData)
+  const newArray = childData?.map((child) => {
+    const temp = child?.graycase?.map((graycase, index) => ({
+      firstName: child?.firstName,
+      lastName: child?.lastName,
+      middleName: child?.middleName,
+      greynoteNumber: child?.greynoteNumber,
+      profileImage: child?.profileImage,
+      gender: child?.gender,
+      class: child?.class,
+      dateOfBirth: child?.dateOfBirth,
+      school: child?.school,
+      schoollogo: child?.schoollogo,
+      childId: child?.id,
+      age: child?.age,
+      schoolId: child?.schoolId,
+      isVisible: child?.isVisible,
+      category: graycase?.category,
+      createdAt: graycase?.createdAt,
+      id: graycase?.id,
+      isActive: graycase?.isActive,
+      notes: graycase?.notes,
+      owingAmount: graycase?.owingAmount,
+      updatedAt: graycase?.updatedAt,
+      wasEdited: graycase?.wasEdited,
+    }));
+    return temp; 
+  });
+
+  console.log('This is the childdata', newArray)
 
   const handleGreycaseItem = (child: any, index: any) => {
     setCurrentStudentCase(child);
