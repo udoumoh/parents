@@ -40,11 +40,6 @@ import GraycaseModal from "@/components/shared/greycaseModal";
 
 interface SettingsPageProps {}
 
-interface LegendBadgeProps {
-  role: string;
-  mt?: { base: string; lg: string };
-}
-
 interface RequestDataProps {
   studentFirstName: string;
   studentLastName: string;
