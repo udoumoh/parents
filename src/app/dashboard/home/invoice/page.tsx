@@ -106,7 +106,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                 uploadedDocument: "receipt_456.pdf",
               },
             ],
-          },
+          }
   const {
     isOpen: isAcceptModalOpen,
     onOpen: onAcceptModalOpen,
