@@ -407,7 +407,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                 mt={"1rem"}
               >
                 <TableContainer>
-                  <Table variant="simple" size={"sm"}>
+                  <Table variant="simple" size={{ base: "sm", md: "md" }}>
                     <Thead>
                       <Tr>
                         <Th>Inv. ID</Th>
@@ -477,7 +477,9 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                     isDisabled={
                                       item?.status === "active" ? false : true
                                     }
-                                    onClick={()=>handleAcceptInvoice(item?.id)}
+                                    onClick={() =>
+                                      handleAcceptInvoice(item?.id)
+                                    }
                                   >
                                     Accept Invoice
                                   </MenuItem>
@@ -486,7 +488,9 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                     isDisabled={
                                       item?.status === "active" ? false : true
                                     }
-                                    onClick={()=>handleRejectInvoice(item?.id)}
+                                    onClick={() =>
+                                      handleRejectInvoice(item?.id)
+                                    }
                                   >
                                     Reject Invoice
                                   </MenuItem>
@@ -515,7 +519,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                 mt={"1rem"}
               >
                 <TableContainer>
-                  <Table variant="simple" size={"sm"}>
+                  <Table variant="simple" size={{ base: "sm", md: "md" }}>
                     <Thead>
                       <Tr>
                         <Th>Inv. ID</Th>
@@ -549,8 +553,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                             <Td>{item?.category}</Td>
                             <Td>{item?.createdAt}</Td>
                             <Td fontWeight={"bold"}>
-                              ₦
-                              {getCompletedInvoiceAmount(item)}
+                              ₦{getCompletedInvoiceAmount(item)}
                             </Td>
                             <Td>
                               <Badge
@@ -583,7 +586,9 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                     isDisabled={
                                       item?.status === "active" ? false : true
                                     }
-                                    onClick={()=>handleAcceptInvoice(item?.id)}
+                                    onClick={() =>
+                                      handleAcceptInvoice(item?.id)
+                                    }
                                   >
                                     Accept Invoice
                                   </MenuItem>
@@ -592,7 +597,9 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                     isDisabled={
                                       item?.status === "active" ? false : true
                                     }
-                                    onClick={()=>handleRejectInvoice(item?.id)}
+                                    onClick={() =>
+                                      handleRejectInvoice(item?.id)
+                                    }
                                   >
                                     Reject Invoice
                                   </MenuItem>
@@ -621,7 +628,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                 mt={"1rem"}
               >
                 <TableContainer>
-                  <Table variant="simple" size={"sm"}>
+                  <Table variant="simple" size={{ base: "sm", md: "md" }}>
                     <Thead>
                       <Tr>
                         <Th>Inv. ID</Th>
@@ -686,18 +693,22 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                   <MenuItem
                                     icon={<FaCheck />}
                                     isDisabled={
-                                      item.status === "active" ? false : true
+                                      item?.status === "active" ? false : true
                                     }
-                                    onClick={()=>handleAcceptInvoice(item?.id)}
+                                    onClick={() =>
+                                      handleAcceptInvoice(item?.id)
+                                    }
                                   >
                                     Accept Invoice
                                   </MenuItem>
                                   <MenuItem
                                     icon={<MdOutlineClose />}
                                     isDisabled={
-                                      item.status === "active" ? false : true
+                                      item?.status === "active" ? false : true
                                     }
-                                    onClick={()=>handleRejectInvoice(item?.id)}
+                                    onClick={() =>
+                                      handleRejectInvoice(item?.id)
+                                    }
                                   >
                                     Reject Invoice
                                   </MenuItem>
@@ -726,7 +737,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                 mt={"1rem"}
               >
                 <TableContainer>
-                  <Table variant="simple" size={"sm"}>
+                  <Table variant="simple" size={{ base: "sm", md: "md" }}>
                     <Thead>
                       <Tr>
                         <Th>Inv. ID</Th>
@@ -757,25 +768,25 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                 </Text>
                               </Flex>
                             </Td>
-                            <Td>{item.category}</Td>
-                            <Td>{item.createdAt}</Td>
+                            <Td>{item?.category}</Td>
+                            <Td>{item?.createdAt}</Td>
                             <Td fontWeight={"bold"}>
-                              ₦{formatNumberWithCommas(item.amountPaid)}
+                              ₦{formatNumberWithCommas(item?.amountPaid)}
                             </Td>
                             <Td>
                               <Badge
                                 variant="solid"
                                 colorScheme={
-                                  item.status === "active"
+                                  item?.status === "active"
                                     ? "green"
-                                    : item.status === "rejected by parent"
+                                    : item?.status === "rejected by parent"
                                     ? "red"
-                                    : item.status === "processing"
+                                    : item?.status === "processing"
                                     ? "yellow"
                                     : "purple"
                                 }
                               >
-                                {item.status}
+                                {item?.status}
                               </Badge>
                             </Td>
                             <Td>
@@ -791,25 +802,29 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                   <MenuItem
                                     icon={<FaCheck />}
                                     isDisabled={
-                                      item.status === "active" ? false : true
+                                      item?.status === "active" ? false : true
                                     }
-                                    onClick={()=>handleAcceptInvoice(item?.id)}
+                                    onClick={() =>
+                                      handleAcceptInvoice(item?.id)
+                                    }
                                   >
                                     Accept Invoice
                                   </MenuItem>
                                   <MenuItem
                                     icon={<MdOutlineClose />}
                                     isDisabled={
-                                      item.status === "active" ? false : true
+                                      item?.status === "active" ? false : true
                                     }
-                                    onClick={()=>handleRejectInvoice(item?.id)}
+                                    onClick={() =>
+                                      handleRejectInvoice(item?.id)
+                                    }
                                   >
                                     Reject Invoice
                                   </MenuItem>
                                   <MenuItem
                                     icon={<TbFileInvoice />}
                                     onClick={() => {
-                                      handleSelectedInvoice(item);
+                                      handleSelectedInvoice(item?.id);
                                     }}
                                   >
                                     View Invoice Details
@@ -831,7 +846,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                 mt={"1rem"}
               >
                 <TableContainer>
-                  <Table variant="simple" size={"sm"}>
+                  <Table variant="simple" size={{ base: "sm", md: "md" }}>
                     <Thead>
                       <Tr>
                         <Th>Inv. ID</Th>
@@ -862,25 +877,25 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                 </Text>
                               </Flex>
                             </Td>
-                            <Td>{item.category}</Td>
-                            <Td>{item.createdAt}</Td>
+                            <Td>{item?.category}</Td>
+                            <Td>{item?.createdAt}</Td>
                             <Td fontWeight={"bold"}>
-                              ₦{formatNumberWithCommas(item.amountPaid)}
+                              ₦{formatNumberWithCommas(item?.amountPaid)}
                             </Td>
                             <Td>
                               <Badge
                                 variant="solid"
                                 colorScheme={
-                                  item.status === "active"
+                                  item?.status === "active"
                                     ? "green"
-                                    : item.status === "rejected by parent"
+                                    : item?.status === "rejected by parent"
                                     ? "red"
-                                    : item.status === "processing"
+                                    : item?.status === "processing"
                                     ? "yellow"
                                     : "purple"
                                 }
                               >
-                                {item.status}
+                                {item?.status}
                               </Badge>
                             </Td>
                             <Td>
@@ -897,25 +912,29 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                   <MenuItem
                                     icon={<FaCheck />}
                                     isDisabled={
-                                      item.status === "active" ? false : true
+                                      item?.status === "active" ? false : true
                                     }
-                                    onClick={()=>handleAcceptInvoice(item?.id)}
+                                    onClick={() =>
+                                      handleAcceptInvoice(item?.id)
+                                    }
                                   >
                                     Accept Invoice
                                   </MenuItem>
                                   <MenuItem
                                     icon={<MdOutlineClose />}
                                     isDisabled={
-                                      item.status === "active" ? false : true
+                                      item?.status === "active" ? false : true
                                     }
-                                    onClick={()=>handleRejectInvoice(item?.id)}
+                                    onClick={() =>
+                                      handleRejectInvoice(item?.id)
+                                    }
                                   >
                                     Reject Invoice
                                   </MenuItem>
                                   <MenuItem
                                     icon={<TbFileInvoice />}
                                     onClick={() => {
-                                      handleSelectedInvoice(item);
+                                      handleSelectedInvoice(item?.id);
                                     }}
                                   >
                                     View Invoice Details
