@@ -527,7 +527,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
             <Divider mt={"0.3rem"} mb={"1rem"} />
           </Box>
           <Flex flexDir={"column"} gap={4}>
-            {(childData ?? []).length === 0 ? (
+            {(parentData?.children ?? []).length === 0 ? (
               <Box
                 display={"flex"}
                 flexDir={"column"}
@@ -560,11 +560,8 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                     </Tr>
                   </Thead>
                   <Tbody>
-                    {childData?.map((child: any) => {
-                      return child?.graycase === null ? (
-                        <></>
-                      ) : (
-                        child?.graycase?.map(
+                    {parentData?.children?.map((child) => {
+                      return child?.graycase?.map(
                         (graycase: any, index: any) => {
                           return (
                             <Tr
@@ -594,8 +591,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                             </Tr>
                           );
                         }
-                      )
-                      )
+                      );
                     })}
                     <GraycaseModal
                       isOpen={isGraycaseModalOpen}
