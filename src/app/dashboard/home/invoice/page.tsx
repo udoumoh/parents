@@ -113,7 +113,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
             receipt: item?.receipt,
           })
         );
-        setInvoiceData([parsedInvoiceData[0]])
+        setInvoiceData(parsedInvoiceData)
       } catch (err: any) {
         console.log(err.message);
       }
