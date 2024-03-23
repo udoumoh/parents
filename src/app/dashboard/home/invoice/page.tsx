@@ -164,7 +164,11 @@ const Invoice: FC<InvoiceProps> = ({}) => {
 
   const handleSelectedInvoice = (invoice: any) => {
       setSelectedInvoiceData(invoice)
-      onDrawerOpen();
+      if(!selectedInvoiceData){
+        return;
+      } else {
+        onDrawerOpen();
+      }
       console.log(invoice)
   }
 
@@ -417,7 +421,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                               <Flex gap={2} alignItems={"center"}>
                                 <Avatar
                                   src={item?.schoollogo}
-                                  pointerEvents={"none"}
+                                  pointerEvents={'none'}
                                   size={"sm"}
                                 />
                                 <Text fontSize={"sm"} fontWeight={"500"}>
@@ -461,20 +465,18 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                 <MenuList>
                                   <MenuItem
                                     icon={<FaCheck />}
-                                    // isDisabled={
-                                    //   item?.status === "active" ? false : true
-                                    // }
-                                    onClick={() => {
-                                      handleSelectedInvoice(item);
-                                    }}
+                                    isDisabled={
+                                      item?.status === "active" ? false : true
+                                    }
+                                    onClick={() => {handleSelectedInvoice(item)}}
                                   >
                                     Accept Invoice
                                   </MenuItem>
                                   <MenuItem
                                     icon={<MdOutlineClose />}
-                                    // isDisabled={
-                                    //   item?.status === "active" ? false : true
-                                    // }
+                                    isDisabled={
+                                      item?.status === "active" ? false : true
+                                    }
                                     onClick={onRejectModalOpen}
                                   >
                                     Reject Invoice
