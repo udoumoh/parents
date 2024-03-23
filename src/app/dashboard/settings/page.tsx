@@ -122,6 +122,8 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
     }
   };
 
+  console.log('This is the childdata', childData)
+
   const handleGreycaseItem = (child: any, index: any) => {
     setCurrentStudentCase(child);
     setCurrentIndex(index);
