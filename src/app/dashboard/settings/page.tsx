@@ -559,7 +559,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                   </Thead>
                   <Tbody>
                     {childData?.map((child) => {
-                      return child?.graycase?.map((graycase, index) => {
+                      return (child?.graycase ?? []).map((graycase, index) => {
                         return (
                           <Tr
                             key={index}
@@ -568,7 +568,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                               cursor: "pointer",
                             }}
                             onClick={() => {
-                              handleGreycaseItem(child, index || 0);
+                              handleGreycaseItem(child, index);
                             }}
                           >
                             <Td>

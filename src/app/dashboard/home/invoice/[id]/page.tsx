@@ -112,9 +112,6 @@ const Invoice: FC<InvoiceProps> = ({ params }: { params: { id: number } }) => {
     const currentInvoice = invoiceData?.find(
       (invoice: any) => Number(invoice?.id) === Number(params?.id)
     );
-    console.log('current invoice', currentInvoice)
-    console.log(params.id)
-    console.log(invoiceData)
 
   return (
     <Box
