@@ -38,7 +38,7 @@ export interface UserChildren {
   id: number;
   age: number;
   schoolId: number;
-  graycase?:Graycase[];
+  graycase?:Graycase[] | null;
   isVisible: boolean;
 }
 
