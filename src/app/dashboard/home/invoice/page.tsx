@@ -1,5 +1,5 @@
 "use client";
-import { FC, useState, useEffect } from "react";
+import { FC, useState, useEffect, useMemo } from "react";
 import {
   Box,
   Text,
@@ -92,6 +92,17 @@ const Invoice: FC<InvoiceProps> = ({}) => {
   const { data: getinvoice } = useQuery(GET_STUDENT_INVOICE, {
     variables: { studentId: currentWardProfile?.id },
   });
+
+  const memoizedInvoiceDrawers = useMemo(() => {
+    return invoiceData.map((item, index) => (
+      <InvoiceDataDrawer
+        key={index}
+        isOpen={isDrawerOpen}
+        onClose={onDrawerClose}
+        invoiceData={selectedInvoiceData}
+      />
+    ));
+  }, [invoiceData, isDrawerOpen, onDrawerClose, selectedInvoiceData]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -402,6 +413,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                     </Thead>
                     <Tbody>
                       {invoiceData?.map((item, index) => {
+                        memoizedInvoiceDrawers
                         return (
                           <Tr
                             key={index}
@@ -409,7 +421,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                               backgroundColor: "#005D5D10",
                               cursor: "pointer",
                             }}
-                            onClick={onDrawerOpen}
+                            onClick={()=>handleSelectedInvoice(item)}
                           >
                             <Td fontWeight={"bold"} fontSize={"sm"}>
                               {item?.invoiceId}
@@ -492,11 +504,6 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                               onOpen={onRejectModalOpen}
                               onClose={onRejectModalClose}
                               invoiceId={item?.id}
-                            />
-                            <InvoiceDataDrawer
-                              isOpen={isDrawerOpen}
-                              onClose={onDrawerClose}
-                              invoiceData={invoiceData[index]}
                             />
                           </Tr>
                         );
