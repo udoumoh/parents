@@ -507,7 +507,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
         </Flex>
 
         {/* Graycases */}
-        <Flex
+        {/* <Flex
           flexDir={"column"}
           border={"1px solid #005D5D30"}
           rounded={"xl"}
@@ -600,7 +600,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
               </TableContainer>
             )}
           </Flex>
-        </Flex>
+        </Flex> */}
       </Box>
     </Box>
   );
