@@ -86,7 +86,10 @@ const Invoice: FC<InvoiceProps> = ({}) => {
   } = useDisclosure();
 
   const [invoiceData, setInvoiceData] = useState<StudentInvoiceProps[]>([]);
-
+  const [completedInvoice, setCompletedInvoice] = useState<StudentInvoiceProps[]>([])
+  const [activeInvoice, setActiveInvoice] = useState<StudentInvoiceProps[]>([])
+  const [rejectedInvoice, setRejectedInvoice] = useState<StudentInvoiceProps[]>([])
+  const [processingInvoice, setProcessingInvoice] = useState<StudentInvoiceProps[]>([])
   const [selectedInvoiceData, setSelectedInvoiceData] = useState<StudentInvoiceProps>()
 
   const { data: getinvoice } = useQuery(GET_STUDENT_INVOICE, {
@@ -113,48 +116,24 @@ const Invoice: FC<InvoiceProps> = ({}) => {
             receipt: item?.receipt,
           })
         );
-        setInvoiceData([
-          {
-            term: "Spring",
-            year: "2024",
-            category: "Education",
-            amountPaid: 1500,
-            id: 123,
-            status: "Paid",
-            summary: "Payment for tuition fees",
-            createdAt: "2024-03-17",
-            invoiceId: "INV123456",
-            schoolname: "Example School",
-            schoollogo: "school_logo.png",
-            receipt: [
-              {
-                amountPaid: 1500,
-                createdAt: "2024-03-17",
-                creator: "John Doe",
-                fileType: "pdf",
-                id: 1,
-                parentInvoiceId: "INV123456",
-                status: "Paid",
-                summary: "Payment receipt for tuition fees",
-                updatedAt: "2024-03-17",
-                uploadedDocument: "receipt_123.pdf",
-              },
-              {
-                amountPaid: 500,
-                createdAt: "2024-03-15",
-                creator: "Jane Smith",
-                fileType: "pdf",
-                id: 2,
-                parentInvoiceId: "INV123456",
-                status: "Paid",
-                summary: "Payment receipt for textbooks",
-                updatedAt: "2024-03-15",
-                uploadedDocument: "receipt_456.pdf",
-              },
-            ],
-          },
-          
-        ]);
+        setInvoiceData(parsedInvoiceData)
+        const completedInvoice = parsedInvoiceData?.filter(
+          (invoice: any) => invoice.status === "completed"
+        );
+        setCompletedInvoice(completedInvoice);
+        const activeInvoice = parsedInvoiceData?.filter(
+          (invoice: any) => invoice.status === "active"
+        );
+        setActiveInvoice(activeInvoice);
+        const rejectedInvoice = parsedInvoiceData?.filter(
+          (invoice: any) => invoice.status === "rejected by parent"
+        );
+        setRejectedInvoice(rejectedInvoice);
+        const processingInvoice = parsedInvoiceData?.filter(
+          (invoice: any) => invoice.status === "processing"
+        );
+      setProcessingInvoice(processingInvoice)
+        console.log(parsedInvoiceData )
       } catch (err: any) {
         console.log(err.message);
       }
@@ -162,29 +141,16 @@ const Invoice: FC<InvoiceProps> = ({}) => {
     fetchData();
   }, [getinvoice]);
 
-  const completedInvoice = invoiceData?.filter(
-    (invoice) => invoice.status === "completed"
-  );
-  const activeInvoice = invoiceData?.filter(
-    (invoice) => invoice.status === "active"
-  );
-  const rejectedInvoice = invoiceData?.filter(
-    (invoice) => invoice.status === "rejected by parent"
-  );
-  const processingInvoice = invoiceData?.filter(
-    (invoice) => invoice.status === "processing"
-  );
-
   const totalActiveAmount = activeInvoice?.reduce(
-    (accumulator, invoice) => accumulator + invoice.amountPaid,
+    (accumulator: any, invoice: any) => accumulator + invoice.amountPaid,
     0
   );
   const totalRejectedAmount = rejectedInvoice?.reduce(
-    (accumulator, invoice) => accumulator + invoice.amountPaid,
+    (accumulator: any, invoice: any) => accumulator + invoice.amountPaid,
     0
   );
   const totalProcessingAmount = processingInvoice?.reduce(
-    (accumulator, invoice) => accumulator + invoice.amountPaid,
+    (accumulator: any, invoice: any) => accumulator + invoice.amountPaid,
     0
   );
 
