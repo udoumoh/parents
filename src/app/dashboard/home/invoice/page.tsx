@@ -24,10 +24,6 @@ import {
   MenuButton,
   MenuList,
   MenuItem,
-  MenuItemOption,
-  MenuGroup,
-  MenuOptionGroup,
-  MenuDivider,
   useDisclosure,
 } from "@chakra-ui/react";
 import { GET_STUDENT_INVOICE } from "@/gql/queries";
@@ -40,6 +36,9 @@ import { FaCheck } from "react-icons/fa6";
 import { MdOutlineClose } from "react-icons/md";
 import AcceptInvoiceModal from "@/components/shared/acceptInvoiceModal";
 import RejectInvoiceModal from "@/components/shared/rejectinvoicemodal";
+import InvoiceDataDrawer from "@/components/shared/invoiceDataDrawer";
+import { TbFileInvoice } from "react-icons/tb";
+import { useRouter } from "next/navigation";
 
 interface InvoiceProps {}
 
@@ -55,24 +54,24 @@ interface StudentInvoiceProps {
   invoiceId: string;
   schoolname: string;
   schoollogo: string;
-  receipt: [
-    {
-      amountPaid: number;
-      createdAt: string;
-      creator: string;
-      filtType: string;
-      id: number;
-      parentInvoiceId: string;
-      status: string;
-      summary: string;
-      updatedAt: string;
-      uploadedDocument: string;
-    }
-  ]
+  receipt: {
+    amountPaid: number;
+    createdAt: string;
+    creator: string;
+    fileType: string;
+    id: number;
+    parentInvoiceId: string;
+    status: string;
+    summary: string;
+    updatedAt: string;
+    uploadedDocument: string;
+  }[];
 }
 
 const Invoice: FC<InvoiceProps> = ({}) => {
+  const router = useRouter()
   const { currentWardProfile } = useUserAPI();
+
   const {
     isOpen: isAcceptModalOpen,
     onOpen: onAcceptModalOpen,
@@ -83,32 +82,41 @@ const Invoice: FC<InvoiceProps> = ({}) => {
     onOpen: onRejectModalOpen,
     onClose: onRejectModalClose,
   } = useDisclosure();
+  const {
+    isOpen: isDrawerOpen,
+    onOpen: onDrawerOpen,
+    onClose: onDrawerClose,
+  } = useDisclosure();
+
   const [invoiceData, setInvoiceData] = useState<StudentInvoiceProps[]>([]);
+
+  const [selectedInvoiceData, setSelectedInvoiceData] = useState<StudentInvoiceProps>()
+
   const { data: getinvoice } = useQuery(GET_STUDENT_INVOICE, {
     variables: { studentId: currentWardProfile?.id },
   });
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await getinvoice;
-        console.log(response);
         const parsedInvoiceData = response?.getStudentInvoice?.map(
           (item: any) => ({
-            term: item.academicTerm,
-            year: item.academicYear,
-            category: item.category,
-            amountPaid: item.amount,
-            id: item.id,
-            invoiceId: item.invoiceId,
-            createdAt: formatDate(item.createdAt),
-            summary: item.summary,
-            status: item.status,
-            schoolname: item.creatorSchool,
+            term: item?.academicTerm,
+            year: item?.academicYear,
+            category: item?.category,
+            amountPaid: item?.amount,
+            id: item?.id,
+            invoiceId: item?.invoiceId,
+            createdAt: formatDate(item?.createdAt),
+            summary: item?.summary,
+            status: item?.status,
+            schoolname: item?.creatorSchool,
             schoollogo: item?.student?.creator?.admin?.schoolImg,
-            receipt: item?.receipt
+            receipt: item?.receipt,
           })
         );
-        setInvoiceData(parsedInvoiceData);
+        setInvoiceData(parsedInvoiceData)
       } catch (err: any) {
         console.log(err.message);
       }
@@ -116,10 +124,18 @@ const Invoice: FC<InvoiceProps> = ({}) => {
     fetchData();
   }, [getinvoice]);
 
-  const completedInvoice = invoiceData?.filter(invoice => invoice.status === 'completed');
-  const activeInvoice = invoiceData?.filter(invoice => invoice.status === 'active');
-  const rejectedInvoice = invoiceData?.filter(invoice => invoice.status === 'rejected by parent');
-  const processingInvoice = invoiceData?.filter(invoice => invoice.status === 'processing');
+  const completedInvoice = invoiceData?.filter(
+    (invoice) => invoice.status === "completed"
+  );
+  const activeInvoice = invoiceData?.filter(
+    (invoice) => invoice.status === "active"
+  );
+  const rejectedInvoice = invoiceData?.filter(
+    (invoice) => invoice.status === "rejected by parent"
+  );
+  const processingInvoice = invoiceData?.filter(
+    (invoice) => invoice.status === "processing"
+  );
 
   const totalActiveAmount = activeInvoice?.reduce(
     (accumulator, invoice) => accumulator + invoice.amountPaid,
@@ -134,8 +150,6 @@ const Invoice: FC<InvoiceProps> = ({}) => {
     0
   );
 
-  console.log(invoiceData)
-
   const nonEmptyReceipts = invoiceData
     ?.map((invoice) => invoice?.receipt)
     ?.filter((receipt: any) => receipt?.length !== 0);
@@ -143,7 +157,17 @@ const Invoice: FC<InvoiceProps> = ({}) => {
     ?.map((receiptItem) =>
       receiptItem?.reduce((acc, item) => acc + item?.amountPaid, 0)
     )
-    .reduce((acc, item) => acc + item, 0);
+    .reduce((acc: any, item: any) => acc + item, 0);
+
+  const getCompletedInvoiceAmount = (invoice: any) => {
+    const totalCompletedAmount = invoice?.receipt?.map((receipt: any) => receipt?.amountPaid)
+      .reduce((acc: any, item: any) => acc + item, 0);
+    return formatNumberWithCommas(totalCompletedAmount);
+  };
+
+  const handleSelectedInvoice = (id: any) => {
+      router.push(`/dashboard/home/invoice/${id}`);
+  }
 
   return (
     <Box mb={{ base: "8rem", lg: "5rem" }}>
@@ -161,15 +185,17 @@ const Invoice: FC<InvoiceProps> = ({}) => {
         <SimpleGrid minChildWidth="200px" spacing={"10px"}>
           <Flex
             flexDir={"column"}
-            backgroundColor={"#005D5D15"}
-            border={"1px solid #005D5D"}
-            rounded={"lg"}
+            backgroundColor={"#DBEEFC"}
+            border={"1px solid #83ACC960"}
+            rounded={"2xl"}
             px={5}
             py={2}
             gap={"2"}
             w={"full"}
+            shadow={"md"}
+            _hover={{ boxShadow: "sm" }}
           >
-            <Text fontSize={"sm"} color={"blue.800"} fontWeight={"500"}>
+            <Text fontSize={"md"} color={"blue.800"} fontWeight={"500"}>
               Total Amount Paid
             </Text>
             <Text fontSize={"3xl"} fontWeight={"700"} color={"gray.700"}>
@@ -186,21 +212,24 @@ const Invoice: FC<InvoiceProps> = ({}) => {
               color={"#fff"}
               maxW={"100px"}
               fontSize={"2xs"}
+              shadow={"md"}
             >
               {completedInvoice?.length || 0} invoices
             </Badge>
           </Flex>
           <Flex
             flexDir={"column"}
-            backgroundColor={"#005D5D15"}
-            border={"1px solid #005D5D"}
-            rounded={"lg"}
+            backgroundColor={"#E7FDF5"}
+            border={"1px solid #449C8760"}
+            rounded={"2xl"}
             px={5}
             py={2}
             gap={"2"}
             w={"full"}
+            shadow={"md"}
+            _hover={{ boxShadow: "sm" }}
           >
-            <Text fontSize={"sm"} color={"blue.800"} fontWeight={"500"}>
+            <Text fontSize={"md"} color={"blue.800"} fontWeight={"500"}>
               Active
             </Text>
             <Text fontSize={"3xl"} fontWeight={"700"} color={"gray.700"}>
@@ -223,15 +252,17 @@ const Invoice: FC<InvoiceProps> = ({}) => {
           </Flex>
           <Flex
             flexDir={"column"}
-            backgroundColor={"#005D5D15"}
-            border={"1px solid #005D5D"}
-            rounded={"lg"}
+            backgroundColor={"#FDE7E7"}
+            border={"1px solid #9C444460"}
+            rounded={"2xl"}
             px={5}
             py={2}
             gap={"2"}
             w={"full"}
+            shadow={"md"}
+            _hover={{ boxShadow: "sm" }}
           >
-            <Text fontSize={"sm"} color={"blue.800"} fontWeight={"500"}>
+            <Text fontSize={"lg"} color={"blue.800"} fontWeight={"500"}>
               Rejected
             </Text>
             <Text fontSize={"3xl"} fontWeight={"700"} color={"gray.700"}>
@@ -254,15 +285,17 @@ const Invoice: FC<InvoiceProps> = ({}) => {
           </Flex>
           <Flex
             flexDir={"column"}
-            backgroundColor={"#005D5D15"}
-            border={"1px solid #005D5D"}
-            rounded={"lg"}
+            backgroundColor={"#FCF1DB"}
+            border={"1px solid #C9973760"}
+            rounded={"2xl"}
             px={5}
             py={2}
             gap={"2"}
             w={"full"}
+            shadow={"md"}
+            _hover={{ boxShadow: "sm" }}
           >
-            <Text fontSize={"sm"} color={"blue.800"} fontWeight={"500"}>
+            <Text fontSize={"md"} color={"blue.800"} fontWeight={"500"}>
               Processing
             </Text>
             <Text fontSize={"3xl"} fontWeight={"700"} color={"gray.700"}>
@@ -291,52 +324,52 @@ const Invoice: FC<InvoiceProps> = ({}) => {
           <Tabs variant={"unstyled"} size={"xs"} w={"full"}>
             <Flex overflowX={"auto"}>
               <TabList
-                backgroundColor={"#005D5D60"}
+                backgroundColor={"#005D5D40"}
                 p={"0.4rem"}
                 rounded={"md"}
-                gap={"3"}
+                gap={{ base: "1", md: "3" }}
               >
                 <Tab
-                  fontSize={"md"}
+                  fontSize={{ base: "xs", md: "md" }}
                   color={"#000"}
-                  px={"1rem"}
+                  px={{ base: "0.5rem", md: "1rem" }}
                   py={"0.3rem"}
                   borderRadius={"4px"}
                   _selected={{ backgroundColor: "#005D5D", color: "#FFFFFF" }}
                 >
-                  All invoice
+                  All
                 </Tab>
                 <Tab
-                  fontSize={"md"}
+                  fontSize={{ base: "xs", md: "md" }}
                   color={"#000"}
-                  px={"1rem"}
+                  px={{ base: "0.5rem", md: "1rem" }}
                   borderRadius={"4px"}
                   _selected={{ backgroundColor: "#005D5D", color: "#FFFFFF" }}
                 >
                   Completed
                 </Tab>
                 <Tab
-                  fontSize={"md"}
+                  fontSize={{ base: "xs", md: "md" }}
                   color={"#000"}
-                  px={"1rem"}
+                  px={{ base: "0.5rem", md: "1rem" }}
                   borderRadius={"4px"}
                   _selected={{ backgroundColor: "#005D5D", color: "#FFFFFF" }}
                 >
                   Active
                 </Tab>
                 <Tab
-                  fontSize={"md"}
+                  fontSize={{ base: "xs", md: "md" }}
                   color={"#000"}
-                  px={"1rem"}
+                  px={{ base: "0.5rem", md: "1rem" }}
                   borderRadius={"4px"}
                   _selected={{ backgroundColor: "#005D5D", color: "#FFFFFF" }}
                 >
                   Rejected
                 </Tab>
                 <Tab
-                  fontSize={"md"}
+                  fontSize={{ base: "xs", md: "md" }}
                   color={"#000"}
-                  px={"1rem"}
+                  px={{ base: "0.5rem", md: "1rem" }}
                   borderRadius={"4px"}
                   _selected={{ backgroundColor: "#005D5D", color: "#FFFFFF" }}
                 >
@@ -352,7 +385,127 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                 mt={"1rem"}
               >
                 <TableContainer>
-                  <Table variant="simple" size={{ base: "sm", lg: "md" }}>
+                  <Table variant="simple" size={"sm"}>
+                    <Thead>
+                      <Tr>
+                        <Th>Inv. ID</Th>
+                        <Th>School</Th>
+                        <Th>Category</Th>
+                        <Th>Date</Th>
+                        <Th>Amount</Th>
+                        <Th>Status</Th>
+                        <Th></Th>
+                      </Tr>
+                    </Thead>
+                    <Tbody>
+                      {invoiceData?.map((item, index) => {
+                        return (
+                          <Tr key={index}>
+                            <Td fontWeight={"bold"} fontSize={"sm"}>
+                              {item?.invoiceId}
+                            </Td>
+                            <Td>
+                              <Flex gap={2} alignItems={"center"}>
+                                <Avatar
+                                  src={item?.schoollogo}
+                                  pointerEvents={"none"}
+                                  size={"sm"}
+                                />
+                                <Text fontSize={"sm"} fontWeight={"500"}>
+                                  {item?.schoolname}
+                                </Text>
+                              </Flex>
+                            </Td>
+                            <Td>{item?.category}</Td>
+                            <Td>{item?.createdAt}</Td>
+                            <Td fontWeight={"bold"}>
+                              ₦
+                              {item?.status === "completed"
+                                ? getCompletedInvoiceAmount(item)
+                                : formatNumberWithCommas(item?.amountPaid)}
+                            </Td>
+                            <Td>
+                              <Badge
+                                variant="solid"
+                                colorScheme={
+                                  item?.status === "active"
+                                    ? "green"
+                                    : item?.status === "rejected by parent"
+                                    ? "red"
+                                    : item?.status === "processing"
+                                    ? "yellow"
+                                    : "purple"
+                                }
+                              >
+                                {item?.status}
+                              </Badge>
+                            </Td>
+                            <Td>
+                              <Menu size={"sm"}>
+                                <MenuButton p={4}>
+                                  <Icon
+                                    as={BsThreeDots}
+                                    _hover={{ cursor: "pointer" }}
+                                    boxSize={6}
+                                  />
+                                </MenuButton>
+                                <MenuList>
+                                  <MenuItem
+                                    icon={<FaCheck />}
+                                    isDisabled={
+                                      item?.status === "active" ? false : true
+                                    }
+                                    onClick={onAcceptModalOpen}
+                                  >
+                                    Accept Invoice
+                                  </MenuItem>
+                                  <MenuItem
+                                    icon={<MdOutlineClose />}
+                                    isDisabled={
+                                      item?.status === "active" ? false : true
+                                    }
+                                    onClick={onRejectModalOpen}
+                                  >
+                                    Reject Invoice
+                                  </MenuItem>
+                                  <MenuItem
+                                    icon={<TbFileInvoice />}
+                                    onClick={() => {
+                                      handleSelectedInvoice(item?.id);
+                                    }}
+                                  >
+                                    View Invoice Details
+                                  </MenuItem>
+                                </MenuList>
+                              </Menu>
+                            </Td>
+                            <AcceptInvoiceModal
+                              isOpen={isAcceptModalOpen}
+                              onOpen={onAcceptModalOpen}
+                              onClose={onAcceptModalClose}
+                              invoiceId={item?.id}
+                            />
+                            <RejectInvoiceModal
+                              isOpen={isRejectModalOpen}
+                              onOpen={onRejectModalOpen}
+                              onClose={onRejectModalClose}
+                              invoiceId={item?.id}
+                            />
+                          </Tr>
+                        );
+                      })}
+                    </Tbody>
+                  </Table>
+                </TableContainer>
+              </TabPanel>
+
+              <TabPanel
+                border={"1px solid #005D5D50"}
+                rounded={"lg"}
+                mt={"1rem"}
+              >
+                <TableContainer>
+                  <Table variant="simple" size={"sm"}>
                     <Thead>
                       <Tr>
                         <Th>Inv. ID</Th>
@@ -364,14 +517,369 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                       </Tr>
                     </Thead>
                     <Tbody>
-                      {invoiceData?.map((item, index) => {
+                      {completedInvoice?.map((item, index) => {
                         return (
                           <Tr
                             key={index}
-                            // _hover={{
-                            //   backgroundColor: "#005D5D10",
-                            //   cursor: "pointer",
-                            // }}
+                            _hover={{
+                              backgroundColor: "#005D5D10",
+                              cursor: "pointer",
+                            }}
+                            onClick={() => {
+                              handleSelectedInvoice(item);
+                            }}
+                          >
+                            <Td fontWeight={"bold"} fontSize={"sm"}>
+                              {item?.invoiceId}
+                            </Td>
+                            <Td>
+                              <Flex gap={2} alignItems={"center"}>
+                                <Avatar
+                                  src={item?.schoollogo}
+                                  pointerEvents={"none"}
+                                  size={"sm"}
+                                />
+                                <Text fontSize={"sm"} fontWeight={"500"}>
+                                  {item?.schoolname}
+                                </Text>
+                              </Flex>
+                            </Td>
+                            <Td>{item?.category}</Td>
+                            <Td>{item?.createdAt}</Td>
+                            <Td fontWeight={"bold"}>
+                              ₦
+                              {getCompletedInvoiceAmount(
+                                formatNumberWithCommas(item)
+                              )}
+                            </Td>
+                            <Td>
+                              <Badge
+                                variant="solid"
+                                colorScheme={
+                                  item?.status === "active"
+                                    ? "green"
+                                    : item?.status === "rejected by parent"
+                                    ? "red"
+                                    : item?.status === "processing"
+                                    ? "yellow"
+                                    : "purple"
+                                }
+                              >
+                                {item?.status}
+                              </Badge>
+                            </Td>
+                            <Td>
+                              <Menu size={"sm"}>
+                                <MenuButton>
+                                  <Icon
+                                    as={BsThreeDots}
+                                    _hover={{ cursor: "pointer" }}
+                                    boxSize={6}
+                                  />
+                                </MenuButton>
+                                <MenuList>
+                                  <MenuItem
+                                    icon={<FaCheck />}
+                                    isDisabled={
+                                      item?.status === "active" ? false : true
+                                    }
+                                    onClick={onAcceptModalOpen}
+                                  >
+                                    Accept Invoice
+                                  </MenuItem>
+                                  <MenuItem
+                                    icon={<MdOutlineClose />}
+                                    isDisabled={
+                                      item?.status === "active" ? false : true
+                                    }
+                                    onClick={onRejectModalOpen}
+                                  >
+                                    Reject Invoice
+                                  </MenuItem>
+                                  <MenuItem
+                                    icon={<TbFileInvoice />}
+                                    onClick={() => {
+                                      handleSelectedInvoice(item?.id);
+                                    }}
+                                  >
+                                    View Invoice Details
+                                  </MenuItem>
+                                </MenuList>
+                              </Menu>
+                            </Td>
+                            <InvoiceDataDrawer
+                              isOpen={isDrawerOpen}
+                              onClose={onDrawerClose}
+                              invoiceData={selectedInvoiceData}
+                            />
+                          </Tr>
+                        );
+                      })}
+                    </Tbody>
+                  </Table>
+                </TableContainer>
+              </TabPanel>
+
+              <TabPanel
+                border={"1px solid #005D5D50"}
+                rounded={"lg"}
+                mt={"1rem"}
+              >
+                <TableContainer>
+                  <Table variant="simple" size={"sm"}>
+                    <Thead>
+                      <Tr>
+                        <Th>Inv. ID</Th>
+                        <Th>School</Th>
+                        <Th>Category</Th>
+                        <Th>Date</Th>
+                        <Th>Amount</Th>
+                        <Th>Status</Th>
+                      </Tr>
+                    </Thead>
+                    <Tbody>
+                      {activeInvoice?.map((item, index) => {
+                        return (
+                          <Tr
+                            key={index}
+                            _hover={{
+                              backgroundColor: "#005D5D10",
+                              cursor: "pointer",
+                            }}
+                            onClick={() => {
+                              handleSelectedInvoice(item);
+                            }}
+                          >
+                            <Td fontWeight={"bold"} fontSize={"sm"}>
+                              {item?.invoiceId}
+                            </Td>
+                            <Td>
+                              <Flex gap={2} alignItems={"center"}>
+                                <Avatar
+                                  src={item?.schoollogo}
+                                  pointerEvents={"none"}
+                                  size={"sm"}
+                                />
+                                <Text fontSize={"sm"} fontWeight={"500"}>
+                                  {item?.schoolname}
+                                </Text>
+                              </Flex>
+                            </Td>
+                            <Td>{item?.category}</Td>
+                            <Td>{item?.createdAt}</Td>
+                            <Td fontWeight={"bold"}>
+                              ₦{formatNumberWithCommas(item?.amountPaid)}
+                            </Td>
+                            <Td>
+                              <Badge
+                                variant="solid"
+                                colorScheme={
+                                  item?.status === "active"
+                                    ? "green"
+                                    : item?.status === "rejected by parent"
+                                    ? "red"
+                                    : item?.status === "processing"
+                                    ? "yellow"
+                                    : "purple"
+                                }
+                              >
+                                {item?.status}
+                              </Badge>
+                            </Td>
+                            <Td>
+                              <Menu size={"sm"}>
+                                <MenuButton>
+                                  <Icon
+                                    as={BsThreeDots}
+                                    _hover={{ cursor: "pointer" }}
+                                    boxSize={6}
+                                  />
+                                </MenuButton>
+                                <MenuList>
+                                  <MenuItem
+                                    icon={<FaCheck />}
+                                    isDisabled={
+                                      item.status === "active" ? false : true
+                                    }
+                                    onClick={onAcceptModalOpen}
+                                  >
+                                    Accept Invoice
+                                  </MenuItem>
+                                  <MenuItem
+                                    icon={<MdOutlineClose />}
+                                    isDisabled={
+                                      item.status === "active" ? false : true
+                                    }
+                                    onClick={onRejectModalOpen}
+                                  >
+                                    Reject Invoice
+                                  </MenuItem>
+                                  <MenuItem
+                                    icon={<TbFileInvoice />}
+                                    onClick={() => {
+                                      handleSelectedInvoice(item?.id);
+                                    }}
+                                  >
+                                    View Invoice Details
+                                  </MenuItem>
+                                </MenuList>
+                              </Menu>
+                            </Td>
+                          </Tr>
+                        );
+                      })}
+                    </Tbody>
+                  </Table>
+                </TableContainer>
+              </TabPanel>
+
+              <TabPanel
+                border={"1px solid #005D5D50"}
+                rounded={"lg"}
+                mt={"1rem"}
+              >
+                <TableContainer>
+                  <Table variant="simple" size={"sm"}>
+                    <Thead>
+                      <Tr>
+                        <Th>Inv. ID</Th>
+                        <Th>School</Th>
+                        <Th>Category</Th>
+                        <Th>Date</Th>
+                        <Th>Amount</Th>
+                        <Th>Status</Th>
+                      </Tr>
+                    </Thead>
+                    <Tbody>
+                      {rejectedInvoice?.map((item, index) => {
+                        return (
+                          <Tr
+                            key={index}
+                            _hover={{
+                              backgroundColor: "#005D5D10",
+                              cursor: "pointer",
+                            }}
+                            onClick={() => {
+                              handleSelectedInvoice(item);
+                            }}
+                          >
+                            <Td fontWeight={"bold"} fontSize={"sm"}>
+                              {item?.invoiceId}
+                            </Td>
+                            <Td>
+                              <Flex gap={2} alignItems={"center"}>
+                                <Avatar
+                                  src={item?.schoollogo}
+                                  pointerEvents={"none"}
+                                  size={"sm"}
+                                />
+                                <Text fontSize={"sm"} fontWeight={"500"}>
+                                  {item?.schoolname}
+                                </Text>
+                              </Flex>
+                            </Td>
+                            <Td>{item.category}</Td>
+                            <Td>{item.createdAt}</Td>
+                            <Td fontWeight={"bold"}>
+                              ₦{formatNumberWithCommas(item.amountPaid)}
+                            </Td>
+                            <Td>
+                              <Badge
+                                variant="solid"
+                                colorScheme={
+                                  item.status === "active"
+                                    ? "green"
+                                    : item.status === "rejected by parent"
+                                    ? "red"
+                                    : item.status === "processing"
+                                    ? "yellow"
+                                    : "purple"
+                                }
+                              >
+                                {item.status}
+                              </Badge>
+                            </Td>
+                            <Td>
+                              <Menu size={"sm"}>
+                                <MenuButton>
+                                  <Icon
+                                    as={BsThreeDots}
+                                    _hover={{ cursor: "pointer" }}
+                                    boxSize={6}
+                                  />
+                                </MenuButton>
+                                <MenuList>
+                                  <MenuItem
+                                    icon={<FaCheck />}
+                                    isDisabled={
+                                      item.status === "active" ? false : true
+                                    }
+                                    onClick={onAcceptModalOpen}
+                                  >
+                                    Accept Invoice
+                                  </MenuItem>
+                                  <MenuItem
+                                    icon={<MdOutlineClose />}
+                                    isDisabled={
+                                      item.status === "active" ? false : true
+                                    }
+                                    onClick={onRejectModalOpen}
+                                  >
+                                    Reject Invoice
+                                  </MenuItem>
+                                  <MenuItem
+                                    icon={<TbFileInvoice />}
+                                    onClick={() => {
+                                      handleSelectedInvoice(item);
+                                    }}
+                                  >
+                                    View Invoice Details
+                                  </MenuItem>
+                                </MenuList>
+                              </Menu>
+                            </Td>
+                            <InvoiceDataDrawer
+                              isOpen={isDrawerOpen}
+                              onClose={onDrawerClose}
+                              invoiceData={selectedInvoiceData}
+                            />
+                          </Tr>
+                        );
+                      })}
+                    </Tbody>
+                  </Table>
+                </TableContainer>
+              </TabPanel>
+
+              <TabPanel
+                border={"1px solid #005D5D50"}
+                rounded={"lg"}
+                mt={"1rem"}
+              >
+                <TableContainer>
+                  <Table variant="simple" size={"sm"}>
+                    <Thead>
+                      <Tr>
+                        <Th>Inv. ID</Th>
+                        <Th>School</Th>
+                        <Th>Category</Th>
+                        <Th>Date</Th>
+                        <Th>Amount</Th>
+                        <Th>Status</Th>
+                      </Tr>
+                    </Thead>
+                    <Tbody>
+                      {processingInvoice?.map((item, index) => {
+                        return (
+                          <Tr
+                            key={index}
+                            _hover={{
+                              backgroundColor: "#005D5D10",
+                              cursor: "pointer",
+                            }}
+                            onClick={() => {
+                              handleSelectedInvoice(item);
+                            }}
                           >
                             <Td fontWeight={"bold"} fontSize={"sm"}>
                               {item?.invoiceId}
@@ -438,425 +946,22 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                   >
                                     Reject Invoice
                                   </MenuItem>
+                                  <MenuItem
+                                    icon={<TbFileInvoice />}
+                                    onClick={() => {
+                                      handleSelectedInvoice(item);
+                                    }}
+                                  >
+                                    View Invoice Details
+                                  </MenuItem>
                                 </MenuList>
                               </Menu>
                             </Td>
-                            <AcceptInvoiceModal
-                              isOpen={isAcceptModalOpen}
-                              onOpen={onAcceptModalOpen}
-                              onClose={onAcceptModalClose}
-                              invoiceId={item.id}
+                            <InvoiceDataDrawer
+                              isOpen={isDrawerOpen}
+                              onClose={onDrawerClose}
+                              invoiceData={selectedInvoiceData}
                             />
-                            <RejectInvoiceModal
-                              isOpen={isRejectModalOpen}
-                              onOpen={onRejectModalOpen}
-                              onClose={onRejectModalClose}
-                              invoiceId={item.id}
-                            />
-                          </Tr>
-                        );
-                      })}
-                    </Tbody>
-                  </Table>
-                </TableContainer>
-              </TabPanel>
-
-              <TabPanel
-                border={"1px solid #005D5D50"}
-                rounded={"lg"}
-                mt={"1rem"}
-              >
-                <TableContainer>
-                  <Table variant="simple" size={{ base: "sm", lg: "md" }}>
-                    <Thead>
-                      <Tr>
-                        <Th>Inv. ID</Th>
-                        <Th>School</Th>
-                        <Th>Category</Th>
-                        <Th>Date</Th>
-                        <Th>Amount</Th>
-                        <Th>Status</Th>
-                      </Tr>
-                    </Thead>
-                    <Tbody>
-                      {completedInvoice?.map((item, index) => {
-                        return (
-                          <Tr
-                            key={index}
-                            // _hover={{
-                            //   backgroundColor: "#005D5D10",
-                            //   cursor: "pointer",
-                            // }}
-                          >
-                            <Td fontWeight={"bold"} fontSize={"sm"}>
-                              {item?.invoiceId}
-                            </Td>
-                            <Td>
-                              <Flex gap={2} alignItems={"center"}>
-                                <Avatar
-                                  src={item?.schoollogo}
-                                  pointerEvents={"none"}
-                                  size={"sm"}
-                                />
-                                <Text fontSize={"sm"} fontWeight={"500"}>
-                                  {item?.schoolname}
-                                </Text>
-                              </Flex>
-                            </Td>
-                            <Td>{item.category}</Td>
-                            <Td>{item.createdAt}</Td>
-                            <Td fontWeight={"bold"}>₦{item.amountPaid}</Td>
-                            <Td>
-                              <Badge
-                                variant="solid"
-                                colorScheme={
-                                  item.status === "active"
-                                    ? "green"
-                                    : item.status === "rejected by parent"
-                                    ? "red"
-                                    : item.status === "processing"
-                                    ? "yellow"
-                                    : "purple"
-                                }
-                              >
-                                {item.status}
-                              </Badge>
-                            </Td>
-                            <Td>
-                              <Menu size={"sm"}>
-                                <MenuButton>
-                                  <Icon
-                                    p={1}
-                                    as={BsThreeDots}
-                                    _hover={{ cursor: "pointer" }}
-                                    boxSize={6}
-                                  />
-                                </MenuButton>
-                                <MenuList>
-                                  <MenuItem
-                                    icon={<FaCheck />}
-                                    isDisabled={
-                                      item.status === "active" ? false : true
-                                    }
-                                    onClick={onAcceptModalOpen}
-                                  >
-                                    Accept Invoice
-                                  </MenuItem>
-                                  <MenuItem
-                                    icon={<MdOutlineClose />}
-                                    isDisabled={
-                                      item.status === "active" ? false : true
-                                    }
-                                    onClick={onRejectModalOpen}
-                                  >
-                                    Reject Invoice
-                                  </MenuItem>
-                                </MenuList>
-                              </Menu>
-                            </Td>
-                          </Tr>
-                        );
-                      })}
-                    </Tbody>
-                  </Table>
-                </TableContainer>
-              </TabPanel>
-
-              <TabPanel
-                border={"1px solid #005D5D50"}
-                rounded={"lg"}
-                mt={"1rem"}
-              >
-                <TableContainer>
-                  <Table variant="simple" size={{ base: "sm", lg: "md" }}>
-                    <Thead>
-                      <Tr>
-                        <Th>Inv. ID</Th>
-                        <Th>School</Th>
-                        <Th>Category</Th>
-                        <Th>Date</Th>
-                        <Th>Amount</Th>
-                        <Th>Status</Th>
-                      </Tr>
-                    </Thead>
-                    <Tbody>
-                      {activeInvoice?.map((item, index) => {
-                        return (
-                          <Tr
-                            key={index}
-                            // _hover={{
-                            //   backgroundColor: "#005D5D10",
-                            //   cursor: "pointer",
-                            // }}
-                          >
-                            <Td fontWeight={"bold"} fontSize={"sm"}>
-                              {item?.invoiceId}
-                            </Td>
-                            <Td>
-                              <Flex gap={2} alignItems={"center"}>
-                                <Avatar
-                                  src={item?.schoollogo}
-                                  pointerEvents={"none"}
-                                  size={"sm"}
-                                />
-                                <Text fontSize={"sm"} fontWeight={"500"}>
-                                  {item?.schoolname}
-                                </Text>
-                              </Flex>
-                            </Td>
-                            <Td>{item.category}</Td>
-                            <Td>{item.createdAt}</Td>
-                            <Td fontWeight={"bold"}>₦{item.amountPaid}</Td>
-                            <Td>
-                              <Badge
-                                variant="solid"
-                                colorScheme={
-                                  item.status === "active"
-                                    ? "green"
-                                    : item.status === "rejected by parent"
-                                    ? "red"
-                                    : item.status === "processing"
-                                    ? "yellow"
-                                    : "purple"
-                                }
-                              >
-                                {item.status}
-                              </Badge>
-                            </Td>
-                            <Td>
-                              <Menu size={"sm"}>
-                                <MenuButton>
-                                  <Icon
-                                    p={1}
-                                    as={BsThreeDots}
-                                    _hover={{ cursor: "pointer" }}
-                                    boxSize={6}
-                                  />
-                                </MenuButton>
-                                <MenuList>
-                                  <MenuItem
-                                    icon={<FaCheck />}
-                                    isDisabled={
-                                      item.status === "active" ? false : true
-                                    }
-                                    onClick={onAcceptModalOpen}
-                                  >
-                                    Accept Invoice
-                                  </MenuItem>
-                                  <MenuItem
-                                    icon={<MdOutlineClose />}
-                                    isDisabled={
-                                      item.status === "active" ? false : true
-                                    }
-                                    onClick={onRejectModalOpen}
-                                  >
-                                    Reject Invoice
-                                  </MenuItem>
-                                </MenuList>
-                              </Menu>
-                            </Td>
-                          </Tr>
-                        );
-                      })}
-                    </Tbody>
-                  </Table>
-                </TableContainer>
-              </TabPanel>
-
-              <TabPanel
-                border={"1px solid #005D5D50"}
-                rounded={"lg"}
-                mt={"1rem"}
-              >
-                <TableContainer>
-                  <Table variant="simple" size={{ base: "sm", lg: "md" }}>
-                    <Thead>
-                      <Tr>
-                        <Th>Inv. ID</Th>
-                        <Th>School</Th>
-                        <Th>Category</Th>
-                        <Th>Date</Th>
-                        <Th>Amount</Th>
-                        <Th>Status</Th>
-                      </Tr>
-                    </Thead>
-                    <Tbody>
-                      {rejectedInvoice?.map((item, index) => {
-                        return (
-                          <Tr
-                            key={index}
-                            // _hover={{
-                            //   backgroundColor: "#005D5D10",
-                            //   cursor: "pointer",
-                            // }}
-                          >
-                            <Td fontWeight={"bold"} fontSize={"sm"}>
-                              {item?.invoiceId}
-                            </Td>
-                            <Td>
-                              <Flex gap={2} alignItems={"center"}>
-                                <Avatar
-                                  src={item?.schoollogo}
-                                  pointerEvents={"none"}
-                                  size={"sm"}
-                                />
-                                <Text fontSize={"sm"} fontWeight={"500"}>
-                                  {item?.schoolname}
-                                </Text>
-                              </Flex>
-                            </Td>
-                            <Td>{item.category}</Td>
-                            <Td>{item.createdAt}</Td>
-                            <Td fontWeight={"bold"}>₦{item.amountPaid}</Td>
-                            <Td>
-                              <Badge
-                                variant="solid"
-                                colorScheme={
-                                  item.status === "active"
-                                    ? "green"
-                                    : item.status === "rejected by parent"
-                                    ? "red"
-                                    : item.status === "processing"
-                                    ? "yellow"
-                                    : "purple"
-                                }
-                              >
-                                {item.status}
-                              </Badge>
-                            </Td>
-                            <Td>
-                              <Menu size={"sm"}>
-                                <MenuButton>
-                                  <Icon
-                                    p={1}
-                                    as={BsThreeDots}
-                                    _hover={{ cursor: "pointer" }}
-                                    boxSize={6}
-                                  />
-                                </MenuButton>
-                                <MenuList>
-                                  <MenuItem
-                                    icon={<FaCheck />}
-                                    isDisabled={
-                                      item.status === "active" ? false : true
-                                    }
-                                    onClick={onAcceptModalOpen}
-                                  >
-                                    Accept Invoice
-                                  </MenuItem>
-                                  <MenuItem
-                                    icon={<MdOutlineClose />}
-                                    isDisabled={
-                                      item.status === "active" ? false : true
-                                    }
-                                    onClick={onRejectModalOpen}
-                                  >
-                                    Reject Invoice
-                                  </MenuItem>
-                                </MenuList>
-                              </Menu>
-                            </Td>
-                          </Tr>
-                        );
-                      })}
-                    </Tbody>
-                  </Table>
-                </TableContainer>
-              </TabPanel>
-
-              <TabPanel
-                border={"1px solid #005D5D50"}
-                rounded={"lg"}
-                mt={"1rem"}
-              >
-                <TableContainer>
-                  <Table variant="simple" size={{ base: "sm", lg: "md" }}>
-                    <Thead>
-                      <Tr>
-                        <Th>Inv. ID</Th>
-                        <Th>School</Th>
-                        <Th>Category</Th>
-                        <Th>Date</Th>
-                        <Th>Amount</Th>
-                        <Th>Status</Th>
-                      </Tr>
-                    </Thead>
-                    <Tbody>
-                      {processingInvoice?.map((item, index) => {
-                        return (
-                          <Tr
-                            key={index}
-                            // _hover={{
-                            //   backgroundColor: "#005D5D10",
-                            //   cursor: "pointer",
-                            // }}
-                          >
-                            <Td fontWeight={"bold"} fontSize={"sm"}>
-                              {item?.invoiceId}
-                            </Td>
-                            <Td>
-                              <Flex gap={2} alignItems={"center"}>
-                                <Avatar
-                                  src={item?.schoollogo}
-                                  pointerEvents={"none"}
-                                  size={"sm"}
-                                />
-                                <Text fontSize={"sm"} fontWeight={"500"}>
-                                  {item?.schoolname}
-                                </Text>
-                              </Flex>
-                            </Td>
-                            <Td>{item.category}</Td>
-                            <Td>{item.createdAt}</Td>
-                            <Td fontWeight={"bold"}>₦{item.amountPaid}</Td>
-                            <Td>
-                              <Badge
-                                variant="solid"
-                                colorScheme={
-                                  item.status === "active"
-                                    ? "green"
-                                    : item.status === "rejected by parent"
-                                    ? "red"
-                                    : item.status === "processing"
-                                    ? "yellow"
-                                    : "purple"
-                                }
-                              >
-                                {item.status}
-                              </Badge>
-                            </Td>
-                            <Td>
-                              <Menu size={"sm"}>
-                                <MenuButton>
-                                  <Icon
-                                    p={1}
-                                    as={BsThreeDots}
-                                    _hover={{ cursor: "pointer" }}
-                                    boxSize={6}
-                                  />
-                                </MenuButton>
-                                <MenuList>
-                                  <MenuItem
-                                    icon={<FaCheck />}
-                                    isDisabled={
-                                      item.status === "active" ? false : true
-                                    }
-                                    onClick={onAcceptModalOpen}
-                                  >
-                                    Accept Invoice
-                                  </MenuItem>
-                                  <MenuItem
-                                    icon={<MdOutlineClose />}
-                                    isDisabled={
-                                      item.status === "active" ? false : true
-                                    }
-                                    onClick={onRejectModalOpen}
-                                  >
-                                    Reject Invoice
-                                  </MenuItem>
-                                </MenuList>
-                              </Menu>
-                            </Td>
                           </Tr>
                         );
                       })}
@@ -868,6 +973,11 @@ const Invoice: FC<InvoiceProps> = ({}) => {
           </Tabs>
         </Box>
       </Box>
+      <InvoiceDataDrawer
+        isOpen={isDrawerOpen}
+        onClose={onDrawerClose}
+        invoiceData={selectedInvoiceData}
+      />
     </Box>
   );
 };
