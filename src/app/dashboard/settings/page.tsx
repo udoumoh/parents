@@ -593,7 +593,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                       isOpen={isGraycaseModalOpen}
                       onClose={onGraycaseModalClose}
                       childData={currentStudentCase}
-                      index={currentIndex}
+                      index={currentIndex || 0}
                     />
                   </Tbody>
                 </Table>
