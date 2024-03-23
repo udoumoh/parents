@@ -1,12 +1,6 @@
+import 'use client'
 import { FC, useState, useEffect } from "react";
 import {
-  Drawer,
-  DrawerBody,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerOverlay,
-  DrawerContent,
-  DrawerCloseButton,
   Box,
   Text,
   Button,
