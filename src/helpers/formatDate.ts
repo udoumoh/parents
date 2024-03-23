@@ -53,8 +53,3 @@ export const formatDateWithOrdinalSuffix = (inputDate: any) => {
   return formattedDateWithSuffix;
 };
 
-// Example usage:
-const inputDate = new Date("2024-03-01T10:08:58.000Z");
-const formattedDate = formatDateWithOrdinalSuffix(inputDate);
-console.log(formattedDate); // Output: "1st March 2024"
-
