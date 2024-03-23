@@ -68,7 +68,45 @@ interface StudentInvoiceProps {
 
 const Invoice: FC<InvoiceProps> = ({}) => {
   const { currentWardProfile } = useUserAPI();
-
+ const dummyData = {
+            term: "Spring",
+            year: "2024",
+            category: "Education",
+            amountPaid: 1500,
+            id: 123,
+            status: "Paid",
+            summary: "Payment for tuition fees",
+            createdAt: "2024-03-17",
+            invoiceId: "INV123456",
+            schoolname: "Example School",
+            schoollogo: "school_logo.png",
+            receipt: [
+              {
+                amountPaid: 1500,
+                createdAt: "2024-03-17",
+                creator: "John Doe",
+                fileType: "pdf",
+                id: 1,
+                parentInvoiceId: "INV123456",
+                status: "Paid",
+                summary: "Payment receipt for tuition fees",
+                updatedAt: "2024-03-17",
+                uploadedDocument: "receipt_123.pdf",
+              },
+              {
+                amountPaid: 500,
+                createdAt: "2024-03-15",
+                creator: "Jane Smith",
+                fileType: "pdf",
+                id: 2,
+                parentInvoiceId: "INV123456",
+                status: "Paid",
+                summary: "Payment receipt for textbooks",
+                updatedAt: "2024-03-15",
+                uploadedDocument: "receipt_456.pdf",
+              },
+            ],
+          },
   const {
     isOpen: isAcceptModalOpen,
     onOpen: onAcceptModalOpen,
@@ -164,11 +202,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
 
   const handleSelectedInvoice = (invoice: any) => {
       setSelectedInvoiceData(invoice)
-      if(!selectedInvoiceData){
-        return;
-      } else {
-        onDrawerOpen();
-      }
+      onDrawerOpen()
       console.log(invoice)
   }
 
@@ -504,7 +538,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                             <InvoiceDataDrawer
                               isOpen={isDrawerOpen}
                               onClose={onDrawerClose}
-                              invoiceData={selectedInvoiceData}
+                              invoiceData={selectedInvoiceData ? selectedInvoiceData : dummyData}
                             />
                           </Tr>
                         );
@@ -514,7 +548,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                 </TableContainer>
               </TabPanel>
 
-              {/* <TabPanel
+              <TabPanel
                 border={"1px solid #005D5D50"}
                 rounded={"lg"}
                 mt={"1rem"}
@@ -945,7 +979,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                     </Tbody>
                   </Table>
                 </TableContainer>
-              </TabPanel> */}
+              </TabPanel>
             </TabPanels>
           </Tabs>
         </Box>
