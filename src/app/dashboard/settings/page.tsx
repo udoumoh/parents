@@ -35,7 +35,7 @@ import RemoveStudentModal from "@/components/shared/removeStudentModal";
 import { RiBookletFill } from "react-icons/ri";
 import GraycaseModal from "@/components/shared/greycaseModal";
 import { GET_PARENT } from "@/gql/queries";
-import { formatDateWithOrdinalSuffix } from "@/helpers/formatDate";
+import { formatDateWithSuffix } from "@/helpers/formatDate";
 import { FaChildren } from "react-icons/fa6";
 import { FaCodePullRequest } from "react-icons/fa6";
 
@@ -161,7 +161,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
             profileImage: child?.profileImgUrl,
             gender: child?.gender,
             class: child?.classroom?.classroom?.className,
-            dateOfBirth: child?.birthDate,
+            dateOfBirth: formatDateWithSuffix(child?.birthDate),
             school: child?.school?.school?.schoolName,
             schoollogo: child?.school?.school?.logoImgUrl,
             childId: child?.id,
@@ -169,12 +169,12 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
             schoolId: child?.school?.school?.id,
             isVisible: child?.isVisible,
             category: child?.studentCase.grayCase?.category,
-            createdAt: child?.studentCase.grayCase?.createdAt,
+            createdAt: formatDateWithSuffix(child?.studentCase.grayCase?.createdAt),
             id: child?.studentCase.grayCase?.id,
             isActive: child?.studentCase.grayCase?.isActive,
             notes: child?.studentCase.grayCase?.note,
             owingAmount: child?.studentCase.grayCase?.owingAmount,
-            updatedAt: child?.studentCase.grayCase?.updatedAt,
+            updatedAt: formatDateWithSuffix(child?.studentCase.grayCase?.updatedAt),
             wasEdited: child?.studentCase.grayCase?.wasEdited,
           }));
         setGraycases(newArray);
@@ -184,8 +184,6 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
     };
     fetchData();
   }, [getRequests, parent]);
-
-  console.log(graycases)
 
   return (
     <Box

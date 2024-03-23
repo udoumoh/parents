@@ -37,7 +37,7 @@ const GraycaseModal: FC<GraycaseModalProps> = ({isOpen, onClose, graycase}) => {
         <ModalCloseButton />
         <ModalBody>
           <Box display={"flex"} alignItems={"center"} gap={2}>
-            <Avatar size={"lg"} src={graycase.profileImage}/>
+            <Avatar size={"lg"} src={graycase?.profileImage}/>
             <Box>
               <Text fontSize={"lg"} fontWeight={"bold"}>
                 {graycase?.firstName} {graycase?.lastName}

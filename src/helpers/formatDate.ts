@@ -28,14 +28,14 @@ const getOrdinalSuffix = (day: any) => {
   }
 };
 
-export const formatDateWithOrdinalSuffix = (inputDate: any) => {
-  const options = {
+export const formatDateWithSuffix = (timestamp: any) => {
+  const inputDate = new Date(timestamp);
+
+  const options: Intl.DateTimeFormatOptions = {
     day: "numeric",
     month: "long",
     year: "numeric",
   };
-
-  const formattedDate = inputDate.toLocaleDateString("en-GB", options);
 
   // To add 'th', 'st', 'nd', 'rd' suffix to the day
   const day = inputDate.getDate();
@@ -47,6 +47,8 @@ export const formatDateWithOrdinalSuffix = (inputDate: any) => {
       : day === 3 || day === 23
       ? "rd"
       : "th";
+
+  const formattedDate = inputDate.toLocaleDateString("en-GB", options);
 
   const formattedDateWithSuffix = formattedDate.replace(/\d+/, day + suffix);
 
