@@ -413,6 +413,9 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                               backgroundColor: "#005D5D10",
                               cursor: "pointer",
                             }}
+                            onClick={() => {
+                              handleSelectedInvoice(item);
+                            }}
                           >
                             <Td fontWeight={"bold"} fontSize={"sm"}>
                               {item?.invoiceId}
@@ -421,7 +424,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                               <Flex gap={2} alignItems={"center"}>
                                 <Avatar
                                   src={item?.schoollogo}
-                                  pointerEvents={'none'}
+                                  pointerEvents={"none"}
                                   size={"sm"}
                                 />
                                 <Text fontSize={"sm"} fontWeight={"500"}>
@@ -468,7 +471,9 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                     isDisabled={
                                       item?.status === "active" ? false : true
                                     }
-                                    onClick={() => {handleSelectedInvoice(item)}}
+                                    onClick={() => {
+                                      handleSelectedInvoice(item);
+                                    }}
                                   >
                                     Accept Invoice
                                   </MenuItem>
