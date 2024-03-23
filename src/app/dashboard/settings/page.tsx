@@ -272,7 +272,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
           >
             <Box py={"1rem"}>
               <Text fontWeight={"600"} fontSize={"lg"}>
-                Linked Students
+                Linked Children
               </Text>
             </Box>
             <Flex flexDir={"column"} gap={4}>
