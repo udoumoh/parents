@@ -298,7 +298,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                   </Text>
                 </Box>
               ) : (
-                childData?.map((item, index) => {
+                (childData ?? []).map((item, index) => {
                   return (
                     <Flex
                       alignItems={"center"}
@@ -328,7 +328,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                             fontSize={"lg"}
                             pointerEvents={"none"}
                           >
-                            {item.firstName} {item.lastName}
+                            {item?.firstName} {item?.lastName}
                           </Text>
                           <Text
                             fontSize={"sm"}
@@ -336,7 +336,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                             fontWeight={"600"}
                             pointerEvents={"none"}
                           >
-                            {item.greynoteNumber}
+                            {item?.greynoteNumber}
                           </Text>
                         </Box>
                       </Box>
@@ -593,7 +593,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                       isOpen={isGraycaseModalOpen}
                       onClose={onGraycaseModalClose}
                       childData={currentStudentCase}
-                      index={currentIndex || 0}
+                      index={currentIndex}
                     />
                   </Tbody>
                 </Table>

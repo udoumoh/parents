@@ -111,7 +111,7 @@ const Invoice: FC<InvoiceProps> = ({ params }: { params: { id: number } }) => {
       };
       fetchData();
     }, [getinvoice, params]);
-    console.log(currentInvoice)
+    console.log('current invoice', currentInvoice)
     console.log(params.id)
     console.log(invoiceData)
 
@@ -131,9 +131,7 @@ const Invoice: FC<InvoiceProps> = ({ params }: { params: { id: number } }) => {
       >
         Back to invoice page
       </Button>
-      {
-        currentInvoice && (
-            <Box rounded={"lg"} border={"1px solid #005D5D40"} w={"full"} p={"1rem"}>
+      <Box rounded={"lg"} border={"1px solid #005D5D40"} w={"full"} p={"1rem"}>
         <Flex
           alignItems={"center"}
           justifyContent={"center"}
@@ -506,9 +504,6 @@ const Invoice: FC<InvoiceProps> = ({ params }: { params: { id: number } }) => {
           </Box>
         </Flex>
       </Box>
-        )
-      }
-      
     </Box>
   );
 };
