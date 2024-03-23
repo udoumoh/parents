@@ -13,6 +13,17 @@ interface UserBio {
   parentRole: string;
 }
 
+interface Graycase {
+  category: string;
+  createdAt: string;
+  id: number;
+  isActive: boolean;
+  notes: string;
+  owingAmount: number;
+  updatedAt: string;
+  wasEdited: boolean;
+}
+
 export interface UserChildren {
   firstName: string;
   lastName: string;
@@ -27,7 +38,7 @@ export interface UserChildren {
   id: number;
   age: number;
   schoolId: number;
-  graycase:any;
+  graycase?:Graycase[];
   isVisible: boolean;
 }
 
@@ -102,7 +113,6 @@ export const UserApiProvider: FC<UserApiProviderProps> = ({ children }) => {
         id: 0,
         age: 0,
         schoolId: 0,
-        graycase: null,
         isVisible: false,
       },
     ],
@@ -157,7 +167,7 @@ export const UserApiProvider: FC<UserApiProviderProps> = ({ children }) => {
             id: child.id || 0,
             age: child?.ageInput || 0,
             schoolId: child?.school?.school?.id || 0,
-            graycase: child?.studentCase?.grayCase || null,
+            graycase: child?.studentCase?.grayCase,
             isVisible: child?.isVisible,
           })
         );

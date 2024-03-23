@@ -14,9 +14,18 @@ import {
   useToast,
   SimpleGrid,
   Center,
+  Table,
+  Thead,
+  Tbody,
+  Tfoot,
+  Tr,
+  Th,
+  Td,
+  TableCaption,
+  TableContainer,
 } from "@chakra-ui/react";
 import { AiFillClockCircle } from "react-icons/ai";
-import { useUserAPI } from "@/hooks/UserContext";
+import { UserChildren, useUserAPI } from "@/hooks/UserContext";
 import { gql, useQuery, useMutation } from "@apollo/client";
 import { useRouter } from "next/navigation";
 import { formatDate } from "@/helpers/formatDate";
@@ -26,8 +35,11 @@ import { DELETE_REQUEST } from "@/gql/mutations";
 import { GoPencil } from "react-icons/go";
 import { RiVerifiedBadgeFill } from "react-icons/ri";
 import RemoveStudentModal from "@/components/shared/removeStudentModal";
+import { RiBookletFill } from "react-icons/ri";
+import GraycaseModal from "@/components/shared/greycaseModal";
 
 interface SettingsPageProps {}
+
 interface LegendBadgeProps {
   role: string;
   mt?: { base: string; lg: string };
@@ -51,6 +63,11 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
     onClose: onModalClose,
   } = useDisclosure();
   const {
+    isOpen: isGraycaseModalOpen,
+    onOpen: onGraycaseModalOpen,
+    onClose: onGraycaseModalClose,
+  } = useDisclosure();
+  const {
     isOpen: isRemoveStudentModalOpen,
     onOpen: onRemoveStudentModalOpen,
     onClose: onRemoveStudentModalClose,
@@ -61,7 +78,8 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
   });
   const [deleteRequest, { loading }] = useMutation(DELETE_REQUEST);
   const [isSubmitting, setIsSubmitting] = useState(false);
-
+  const [currentStudentCase, setCurrentStudentCase] = useState<UserChildren | undefined>()
+  const [currentIndex, setCurrentIndex] = useState<number>()
   console.log(parentData);
 
   const handleRequestDelete = async (requestId: any) => {
@@ -106,6 +124,12 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
       setIsSubmitting(false);
     }
   };
+
+  const handleGreycaseItem = (child: any, index: any) => {
+    setCurrentStudentCase(child)
+    setCurrentIndex(index);
+    onGraycaseModalOpen()
+  }
 
   useEffect(() => {
     const fetchData = async () => {
@@ -192,27 +216,6 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
               <Text fontSize={"lg"} fontWeight={"700"} color={"#FCF4D990"}>
                 {profileData?.userBio?.parentRole}
               </Text>
-
-              <Flex
-                rounded={"md"}
-                py={"0.5rem"}
-                px={"1rem"}
-                gap={"4"}
-                alignItems={"center"}
-                mt={"0.5rem"}
-                _hover={{ cursor: "pointer" }}
-                backgroundColor={"#F1FAFB80"}
-              >
-                <Text fontSize={"md"} color={"#000"} fontWeight={"600"}>
-                  Greycases
-                </Text>
-                <Center height="20px">
-                  <Divider orientation="vertical" border={"1px solid"} />
-                </Center>
-                <Text fontSize={"md"} color={"#000"} fontWeight={"600"}>
-                  None
-                </Text>
-              </Flex>
 
               <Flex alignItems={"center"} gap={2} my="0.5rem">
                 <Icon as={AiFillClockCircle} color={"#FFF"} />
@@ -308,7 +311,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                       py={"0.6rem"}
                       px={"1rem"}
                       backgroundColor={"#005D5D10"}
-                      rounded={"2xl"}
+                      rounded={"md"}
                       _hover={{
                         backgroundColor: "#005D5D30",
                         transitionDuration: "0.5s",
@@ -318,7 +321,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                     >
                       <Box display={"flex"} gap={"2"} alignItems={"center"}>
                         <Avatar
-                          size={"lg"}
+                          size={"md"}
                           src={item.profileImage}
                           pointerEvents={"none"}
                         />
@@ -391,7 +394,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                         gap={2}
                         key={index}
                         backgroundColor={"#005D5D10"}
-                        rounded={"2xl"}
+                        rounded={"md"}
                         p={"1rem"}
                         w={"full"}
                         _hover={{
@@ -506,43 +509,96 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
           </Box>
         </Flex>
 
-        <Box mt={"2rem"} w={"full"}>
-          <Text fontWeight={"500"} mb={"1rem"}>
-            Uploaded Files
-          </Text>
-          <Box
-            display={"flex"}
-            alignItems={"center"}
-            justifyContent={"center"}
-            w={"full"}
-            border={"1px solid #005D5D30"}
-            rounded={"xl"}
-            flexDir={"column"}
-            gap={3}
-            py={"3rem"}
-            px={"0.5rem"}
-          >
-            <Image
-              alt="No files"
-              src="/images/nofile.svg"
-              pointerEvents={"none"}
-              w={"200px"}
-              h={"300px"}
-            />
-            <Text color={"#8A8A8A"} fontSize={"lg"} textAlign={"center"}>
-              No files have been uploaded yet
-            </Text>
+        {/* Graycases */}
+        <Flex
+          flexDir={"column"}
+          border={"1px solid #005D5D30"}
+          rounded={"xl"}
+          pb={"1rem"}
+          px={"1rem"}
+          mt={"2rem"}
+        >
+          <Box py={"1rem"}>
+            <Flex alignItems={"center"} gap={1}>
+              <Icon as={RiBookletFill} color="#005D5D" fontWeight={"bold"} />
+              <Text fontWeight={"600"} fontSize={"lg"} color={"#005D5D"}>
+                Graycases
+              </Text>
+            </Flex>
+            <Divider mt={"0.3rem"} mb={"1rem"} />
           </Box>
-          {/* <Wrap gap={5} flexDir={{ base: "column", lg: "row" }}>
-                {resultsData.map((result, index) => {
-                  return (
-                    <WrapItem key={index}>
-                      <ResultCard key={index} result={result} />
-                    </WrapItem>
-                  );
-                })}
-              </Wrap> */}
-        </Box>
+          <Flex flexDir={"column"} gap={4}>
+            {(childData ?? []).length === 0 ? (
+              <Box
+                display={"flex"}
+                flexDir={"column"}
+                alignItems={"center"}
+                justifyContent={"center"}
+                px={"1.3rem"}
+                rounded={"md"}
+                py={"1rem"}
+                w={"100%"}
+              >
+                <Image
+                  src="/images/nofile.svg"
+                  maxH={"200px"}
+                  maxW={"300px"}
+                  alt="bg"
+                />
+                <Text mt={"1rem"} fontSize={"lg"}>
+                  No graycase records for this child
+                </Text>
+              </Box>
+            ) : (
+              <TableContainer w={"full"}>
+                <Table variant="simple" size={"md"}>
+                  <Thead>
+                    <Tr>
+                      <Th textTransform={'none'}> Student Name</Th>
+                      <Th textTransform={'none'}> category</Th>
+                      <Th textTransform={'none'}> status</Th>
+                      <Th textTransform={'none'}> Date created</Th>
+                    </Tr>
+                  </Thead>
+                  <Tbody>
+                    {
+                      childData?.map((child) => {
+                        return child?.graycase?.map((graycase, index) => {
+                          return (
+                            <Tr
+                              key={index}
+                              _hover={{
+                                backgroundColor: "#005D5D10",
+                                cursor: "pointer",
+                              }}
+                              onClick={()=>{handleGreycaseItem(child, index)}}
+                            >
+                              <Td>
+                                {child.firstName} {child.lastName}
+                              </Td>
+                              <Td>{graycase.category}</Td>
+                              <Td>
+                                <Badge
+                                  colorScheme={
+                                    graycase.isActive ? "green" : "red"
+                                  }
+                                >
+                                  {graycase.isActive ? "ACTIVE" : "INACTIVE"}
+                                </Badge>
+                              </Td>
+                              <Td>{graycase.createdAt}</Td>
+                            </Tr>
+                          );
+                        });
+                      })
+                    }
+                    <GraycaseModal isOpen={isGraycaseModalOpen} onClose={onGraycaseModalClose} childData={currentStudentCase} index={currentIndex}/>
+                  </Tbody>
+                </Table>
+              </TableContainer>
+            )}
+          </Flex>
+        </Flex>
       </Box>
     </Box>
   );
