@@ -568,7 +568,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                               cursor: "pointer",
                             }}
                             onClick={() => {
-                              handleGreycaseItem(child, index);
+                              handleGreycaseItem(child, index || 0);
                             }}
                           >
                             <Td>
