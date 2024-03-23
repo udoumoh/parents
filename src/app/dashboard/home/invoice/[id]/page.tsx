@@ -65,6 +65,7 @@ interface StudentInvoiceProps {
 const Invoice: FC<InvoiceProps> = ({ params }: { params: { id: number } }) => {
     const router = useRouter()
     const { currentWardProfile } = useUserAPI();
+    const [currentInvoice, setCurrentInvoice] = useState<StudentInvoiceProps>()
     const [invoiceData, setInvoiceData] = useState<StudentInvoiceProps[]>([]);
     const { data: getinvoice } = useQuery(GET_STUDENT_INVOICE, {
     variables: { studentId: currentWardProfile?.id },
@@ -103,16 +104,16 @@ const Invoice: FC<InvoiceProps> = ({ params }: { params: { id: number } }) => {
             })
           );
           setInvoiceData(parsedInvoiceData);
+          setCurrentInvoice(parsedInvoiceData?.find((invoice: any) => invoice?.id === params?.id))
         } catch (err: any) {
           console.log(err.message);
         }
       };
       fetchData();
-    }, [getinvoice]);
+    }, [getinvoice, params]);
 
     console.log(params.id)
     console.log(invoiceData)
-    const currentInvoice = invoiceData?.find(invoice => invoice?.id === params?.id)
 
   return (
     <Box
