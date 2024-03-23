@@ -25,6 +25,7 @@ import formatNumberWithCommas from "@/helpers/formatNumberWithCommas";
 import { GET_STUDENT_INVOICE } from "@/gql/queries";
 import { useQuery } from "@apollo/client";
 import { formatDate } from "@/helpers/formatDate";
+import { IoIosArrowRoundBack } from "react-icons/io";
 
 interface Params {
   id: number;
@@ -107,369 +108,399 @@ const Invoice: FC<InvoiceProps> = ({ params }: { params: { id: number } }) => {
       fetchData();
     }, [getinvoice]);
 
-    const currentInvoice = invoiceData?.filter(invoice => invoice?.id === params?.id)
+    console.log(params.id)
+
+    const currentInvoice = invoiceData?.find(invoice => invoice?.id === params?.id)
 
   return (
-    <Box display={'flex'} alignItems={'center'} justifyContent={'center'}>
-        <Box rounded={'lg'} shadow={'md'}>
-            <Flex
-                alignItems={"center"}
-                justifyContent={"center"}
-                flexDir={"column"}
-                w={"full"}
-            >
-                <Avatar
-                src={currentWardProfile?.profileImage}
-                size={"xl"}
-                border={"2px solid #005D5D"}
-                p={"0.2rem"}
-                mb={"0.5rem"}
-                />
-                <Text fontSize={"lg"}>
-                {`${currentWardProfile?.firstName} ${currentWardProfile?.middleName} ${currentWardProfile?.lastName}`}
-                </Text>
-                <Text fontSize={"sm"} color={"#00000090"}>
-                {currentWardProfile?.gender} • {currentWardProfile?.age} Years Old
-                </Text>
-                <Button
-                size={"sm"}
-                colorScheme="gray"
-                gap={"2"}
-                mt={"0.5rem"}
-                onClick={onCollapseToggle}
-                >
-                <Icon as={CiReceipt} boxSize={"4"} />
-                <Text fontSize={"sm"}>View Receipt</Text>
-                </Button>
-                <Box w={"full"}>
-                <Collapse in={isCollapseOpen} animateOpacity>
-                    {currentInvoice[0]?.receipt?.length === 0 ? (
-                    <Box
-                        border={"1px solid #005D5D60"}
-                        p={3}
-                        color="white"
-                        mt="4"
-                        rounded="lg"
-                        shadow="md"
-                    >
-                        <Text fontSize={"lg"} color={"#00000060"}>
-                        No receipt has been added
-                        </Text>
-                    </Box>
-                    ) : (
-                    currentInvoice[0]?.receipt?.map((receipt, index) => {
-                        return (
-                        <Box
-                            key={index}
-                            border={"1px solid #005D5D60"}
-                            p={3}
-                            color="white"
-                            mt="4"
-                            rounded="lg"
-                            shadow="md"
-                        >
-                            <Flex justifyContent={"space-between"}>
-                            <Box display={"flex"} gap={1} alignItems={"center"}>
-                                <Icon as={CiReceipt} boxSize={5} color={"#005D5D"} />
-                                <Text
-                                fontSize={"lg"}
-                                fontWeight={"bold"}
-                                color={"#000000"}
-                                >
-                                Receipt Details
-                                </Text>
-                            </Box>
-                            <Box>
-                                <Badge backgroundColor={"green.600"} variant={"solid"}>
-                                {receipt?.status}
-                                </Badge>
-                            </Box>
-                            </Flex>
-                            <Divider my="0.6rem" />
-                            <Flex
-                            my={"1rem"}
-                            justifyContent={"space-between"}
-                            gap={"4"}
-                            >
-                            <Box
-                                display={"flex"}
-                                flexDir={"column"}
-                                justifyContent={"space-between"}
-                                gap={"4"}
-                            >
-                                <Box>
-                                <Text
-                                    fontSize={"xs"}
-                                    color={"#00000080"}
-                                    fontWeight={"bold"}
-                                >
-                                    Category
-                                </Text>
-                                <Text
-                                    fontSize={"md"}
-                                    fontWeight={"bold"}
-                                    color={"#000000"}
-                                >
-                                    {currentInvoice[0]?.category}
-                                </Text>
-                                </Box>
-                                <Box>
-                                <Icon
-                                    as={LiaCoinsSolid}
-                                    boxSize={5}
-                                    color={"#00000060"}
-                                />
-                                <Flex gap={"3"}>
-                                    <Box>
-                                    <Text
-                                        fontSize={"xs"}
-                                        fontWeight={"bold"}
-                                        color={"#00000080"}
-                                    >
-                                        Amount Paid
-                                    </Text>
-                                    <Text
-                                        fontSize={"md"}
-                                        fontWeight={"bold"}
-                                        color={"#000000"}
-                                    >
-                                        ₦{formatNumberWithCommas(receipt?.amountPaid)}
-                                    </Text>
-                                    </Box>
-
-                                    <Center height={"40px"}>
-                                    <Divider
-                                        orientation="vertical"
-                                        borderColor={"#00000060"}
-                                    />
-                                    </Center>
-
-                                    <Box>
-                                    <Text
-                                        fontSize={"xs"}
-                                        fontWeight={"bold"}
-                                        color={"#00000080"}
-                                    >
-                                        Balance
-                                    </Text>
-                                    <Text
-                                        fontSize={"md"}
-                                        fontWeight={"bold"}
-                                        color={"#000000"}
-                                    >
-                                        N/A
-                                    </Text>
-                                    </Box>
-                                </Flex>
-                                </Box>
-                            </Box>
-
-                            <Tooltip
-                                label="Show uploaded document"
-                                backgroundColor={"#005D5D"}
-                                py={"0.3rem"}
-                                rounded={"md"}
-                            >
-                                <Box
-                                display={"flex"}
-                                border={"1px solid #00000020"}
-                                rounded={"lg"}
-                                alignItems={"center"}
-                                justifyContent={"center"}
-                                _hover={{ cursor: "pointer" }}
-                                onClick={
-                                    receipt?.uploadedDocument?.endsWith(".pdf")
-                                    ? onPdfOpen
-                                    : onImageViewerOpen
-                                }
-                                >
-                                <Icon
-                                    as={FaFilePdf}
-                                    color={"#930808"}
-                                    boxSize={"6"}
-                                    mx={"2rem"}
-                                />
-                                <PDFViewer
-                                    isOpen={isPdfOpen}
-                                    onClose={onPdfClose}
-                                    path={receipt?.uploadedDocument}
-                                />
-                                <ImgViewer
-                                    isOpen={isImageViewerOpen}
-                                    onClose={onImageViewerClose}
-                                    path={receipt?.uploadedDocument || ""}
-                                />
-                                </Box>
-                            </Tooltip>
-                            </Flex>
-
-                            <Divider />
-
-                            <Box
-                            display={"flex"}
-                            flexDir={"column"}
-                            gap={"4"}
-                            mt={"1rem"}
-                            >
-                            <Box>
-                                <Text
-                                fontSize={"xs"}
-                                fontWeight={"bold"}
-                                color={"#00000080"}
-                                >
-                                Summary
-                                </Text>
-                                <Text
-                                fontSize={"md"}
-                                fontWeight={"bold"}
-                                color={"#000000"}
-                                >
-                                {receipt?.summary}
-                                </Text>
-                            </Box>
-
-                            <Box>
-                                <Text
-                                fontSize={{ base: "xs", md: "sm" }}
-                                color={"gray.500"}
-                                >
-                                {currentInvoice[0]?.term} - {currentInvoice[0]?.year}
-                                </Text>
-                            </Box>
-                            </Box>
-                        </Box>
-                        );
-                    })
-                    )}
-                </Collapse>
-                </Box>
-            </Flex>
-
-            <Flex flexDir={"column"}>
+    <Box
+      display={"flex"}
+      alignItems={"start"}
+      justifyContent={"center"}
+      flexDir={"column"}
+    >
+      <Button
+        mb={'2rem'}
+        leftIcon={<IoIosArrowRoundBack />}
+        variant={"outline"}
+        colorScheme="green"
+        onClick={()=>router.push('/dashboard/home/invoice')}
+      >
+        Back to invoice page
+      </Button>
+      <Box rounded={"lg"} border={"1px solid #005D5D40"} w={"full"} p={"1rem"}>
+        <Flex
+          alignItems={"center"}
+          justifyContent={"center"}
+          flexDir={"column"}
+          w={"full"}
+        >
+          <Avatar
+            src={currentWardProfile?.profileImage}
+            size={"xl"}
+            border={"2px solid #005D5D"}
+            p={"0.2rem"}
+            mb={"0.5rem"}
+          />
+          <Text fontSize={"lg"}>
+            {`${currentWardProfile?.firstName} ${currentWardProfile?.middleName} ${currentWardProfile?.lastName}`}
+          </Text>
+          <Text fontSize={"sm"} color={"#00000090"}>
+            {currentWardProfile?.gender} • {currentWardProfile?.age} Years Old
+          </Text>
+          <Button
+            size={"sm"}
+            colorScheme="gray"
+            gap={"2"}
+            mt={"0.5rem"}
+            onClick={onCollapseToggle}
+          >
+            <Icon as={CiReceipt} boxSize={"4"} />
+            <Text fontSize={"sm"}>View Receipt</Text>
+          </Button>
+          <Box w={"full"}>
+            <Collapse in={isCollapseOpen} animateOpacity>
+              {currentInvoice?.receipt?.length === 0 ? (
                 <Box
-                border={"1px solid #93080830"}
-                p={3}
-                color="white"
-                mt="4"
-                rounded="lg"
-                shadow="md"
+                  border={"1px solid #005D5D60"}
+                  p={3}
+                  color="white"
+                  mt="4"
+                  rounded="lg"
+                  shadow="md"
                 >
-                <Flex justifyContent={"space-between"}>
-                    <Box display={"flex"} gap={1} alignItems={"center"}>
-                    <Icon as={TbFileInvoice} boxSize={5} color={"#005D5D"} />
-                    <Text fontSize={"lg"} fontWeight={"bold"} color={"#000000"}>
-                        Invoice Details
-                    </Text>
-                    </Box>
-                    <Box>
-                    <Badge
-                        variant={"solid"}
-                        colorScheme={
-                        currentInvoice[0]?.status === "active"
-                            ? "green"
-                            : currentInvoice[0]?.status === "rejected by parent"
-                            ? "red"
-                            : currentInvoice[0]?.status === "processing"
-                            ? "yellow"
-                            : "purple"
-                        }
-                    >
-                        {currentInvoice[0]?.status}
-                    </Badge>
-                    </Box>
-                </Flex>
-                <Divider my="0.6rem" />
-                <Flex my={"1rem"} justifyContent={"space-between"} gap={"4"}>
+                  <Text fontSize={"lg"} color={"#00000060"}>
+                    No receipt has been added
+                  </Text>
+                </Box>
+              ) : (
+                currentInvoice?.receipt?.map((receipt, index) => {
+                  return (
                     <Box
-                    display={"flex"}
-                    flexDir={"column"}
-                    justifyContent={"space-between"}
-                    gap={"4"}
+                      key={index}
+                      border={"1px solid #005D5D60"}
+                      p={3}
+                      color="white"
+                      mt="4"
+                      rounded="lg"
+                      shadow="md"
                     >
-                    <Box>
-                        <Text fontSize={"xs"} color={"#00000080"} fontWeight={"bold"}>
-                        Category
-                        </Text>
-                        <Text fontSize={"md"} fontWeight={"bold"} color={"#000000"}>
-                        {currentInvoice[0]?.category}
-                        </Text>
-                    </Box>
-
-                    <Box>
-                        <Text fontSize={"xs"} color={"#00000080"} fontWeight={"bold"}>
-                        Invoice Id
-                        </Text>
-                        <Text fontSize={"md"} fontWeight={"bold"} color={"#000000"}>
-                        {currentInvoice[0]?.invoiceId}
-                        </Text>
-                    </Box>
-
-                    <Box>
-                        <Icon as={LiaCoinsSolid} boxSize={5} color={"#00000060"} />
-                        <Flex gap={"3"}>
+                      <Flex justifyContent={"space-between"}>
+                        <Box display={"flex"} gap={1} alignItems={"center"}>
+                          <Icon as={CiReceipt} boxSize={5} color={"#005D5D"} />
+                          <Text
+                            fontSize={"lg"}
+                            fontWeight={"bold"}
+                            color={"#000000"}
+                          >
+                            Receipt Details
+                          </Text>
+                        </Box>
                         <Box>
+                          <Badge
+                            backgroundColor={"green.600"}
+                            variant={"solid"}
+                          >
+                            {receipt?.status}
+                          </Badge>
+                        </Box>
+                      </Flex>
+                      <Divider my="0.6rem" />
+                      <Flex
+                        my={"1rem"}
+                        justifyContent={"space-between"}
+                        gap={"4"}
+                      >
+                        <Box
+                          display={"flex"}
+                          flexDir={"column"}
+                          justifyContent={"space-between"}
+                          gap={"4"}
+                        >
+                          <Box>
                             <Text
+                              fontSize={"xs"}
+                              color={"#00000080"}
+                              fontWeight={"bold"}
+                            >
+                              Category
+                            </Text>
+                            <Text
+                              fontSize={"md"}
+                              fontWeight={"bold"}
+                              color={"#000000"}
+                            >
+                              {currentInvoice?.category}
+                            </Text>
+                          </Box>
+                          <Box>
+                            <Icon
+                              as={LiaCoinsSolid}
+                              boxSize={5}
+                              color={"#00000060"}
+                            />
+                            <Flex gap={"3"}>
+                              <Box>
+                                <Text
+                                  fontSize={"xs"}
+                                  fontWeight={"bold"}
+                                  color={"#00000080"}
+                                >
+                                  Amount Paid
+                                </Text>
+                                <Text
+                                  fontSize={"md"}
+                                  fontWeight={"bold"}
+                                  color={"#000000"}
+                                >
+                                  ₦{formatNumberWithCommas(receipt?.amountPaid)}
+                                </Text>
+                              </Box>
+
+                              <Center height={"40px"}>
+                                <Divider
+                                  orientation="vertical"
+                                  borderColor={"#00000060"}
+                                />
+                              </Center>
+
+                              <Box>
+                                <Text
+                                  fontSize={"xs"}
+                                  fontWeight={"bold"}
+                                  color={"#00000080"}
+                                >
+                                  Balance
+                                </Text>
+                                <Text
+                                  fontSize={"md"}
+                                  fontWeight={"bold"}
+                                  color={"#000000"}
+                                >
+                                  N/A
+                                </Text>
+                              </Box>
+                            </Flex>
+                          </Box>
+                        </Box>
+
+                        <Tooltip
+                          label="Show uploaded document"
+                          backgroundColor={"#005D5D"}
+                          py={"0.3rem"}
+                          rounded={"md"}
+                        >
+                          <Box
+                            display={"flex"}
+                            border={"1px solid #00000020"}
+                            rounded={"lg"}
+                            alignItems={"center"}
+                            justifyContent={"center"}
+                            _hover={{ cursor: "pointer" }}
+                            onClick={
+                              receipt?.uploadedDocument?.endsWith(".pdf")
+                                ? onPdfOpen
+                                : onImageViewerOpen
+                            }
+                          >
+                            <Icon
+                              as={FaFilePdf}
+                              color={"#930808"}
+                              boxSize={"6"}
+                              mx={"2rem"}
+                            />
+                            <PDFViewer
+                              isOpen={isPdfOpen}
+                              onClose={onPdfClose}
+                              path={receipt?.uploadedDocument}
+                            />
+                            <ImgViewer
+                              isOpen={isImageViewerOpen}
+                              onClose={onImageViewerClose}
+                              path={receipt?.uploadedDocument || ""}
+                            />
+                          </Box>
+                        </Tooltip>
+                      </Flex>
+
+                      <Divider />
+
+                      <Box
+                        display={"flex"}
+                        flexDir={"column"}
+                        gap={"4"}
+                        mt={"1rem"}
+                      >
+                        <Box>
+                          <Text
                             fontSize={"xs"}
                             fontWeight={"bold"}
                             color={"#00000080"}
-                            >
-                            Amount Paid
-                            </Text>
-                            <Text fontSize={"md"} fontWeight={"bold"} color={"#000000"}>
-                            ₦{formatNumberWithCommas(currentInvoice[0]?.amountPaid)}
-                            </Text>
+                          >
+                            Summary
+                          </Text>
+                          <Text
+                            fontSize={"md"}
+                            fontWeight={"bold"}
+                            color={"#000000"}
+                          >
+                            {receipt?.summary}
+                          </Text>
                         </Box>
-
-                        <Center height={"40px"}>
-                            <Divider orientation="vertical" borderColor={"#00000060"} />
-                        </Center>
 
                         <Box>
-                            <Text
-                            fontSize={"xs"}
-                            fontWeight={"bold"}
-                            color={"#00000080"}
-                            >
-                            Balance
-                            </Text>
-                            <Text fontSize={"md"} fontWeight={"bold"} color={"#000000"}>
-                            N/A
-                            </Text>
+                          <Text
+                            fontSize={{ base: "xs", md: "sm" }}
+                            color={"gray.500"}
+                          >
+                            {currentInvoice?.term} - {currentInvoice?.year}
+                          </Text>
                         </Box>
-                        </Flex>
+                      </Box>
                     </Box>
-                    </Box>
-                </Flex>
+                  );
+                })
+              )}
+            </Collapse>
+          </Box>
+        </Flex>
 
-                <Divider />
-
-                <Box display={"flex"} flexDir={"column"} gap={"4"} mt={"1rem"}>
-                    <Box>
-                    <Text fontSize={"xs"} fontWeight={"bold"} color={"#00000080"}>
-                        Summary
-                    </Text>
-                    <Text fontSize={"md"} fontWeight={"bold"} color={"#000000"}>
-                        {currentInvoice[0]?.summary}
-                    </Text>
-                    </Box>
-
-                    <Box
-                    display={"flex"}
-                    justifyContent={"space-between"}
-                    gap={"2"}
-                    flexDir={{ base: "column", md: "row" }}
-                    >
-                    <Text fontSize={{ base: "xs", md: "sm" }} color={"gray.500"}>
-                        {currentInvoice[0]?.term} - {currentInvoice[0]?.year}
-                    </Text>
-                    <Text fontSize={{ base: "xs", md: "sm" }} color={"gray.500"}>
-                        Created on {currentInvoice[0]?.createdAt}
-                    </Text>
-                    </Box>
-                </Box>
-                </Box>
+        <Flex flexDir={"column"}>
+          <Box
+            border={"1px solid #93080830"}
+            p={3}
+            color="white"
+            mt="4"
+            rounded="lg"
+            shadow="md"
+          >
+            <Flex justifyContent={"space-between"}>
+              <Box display={"flex"} gap={1} alignItems={"center"}>
+                <Icon as={TbFileInvoice} boxSize={5} color={"#005D5D"} />
+                <Text fontSize={"lg"} fontWeight={"bold"} color={"#000000"}>
+                  Invoice Details
+                </Text>
+              </Box>
+              <Box>
+                <Badge
+                  variant={"solid"}
+                  colorScheme={
+                    currentInvoice?.status === "active"
+                      ? "green"
+                      : currentInvoice?.status === "rejected by parent"
+                      ? "red"
+                      : currentInvoice?.status === "processing"
+                      ? "yellow"
+                      : "purple"
+                  }
+                >
+                  {currentInvoice?.status}
+                </Badge>
+              </Box>
             </Flex>
-        </Box>
+            <Divider my="0.6rem" />
+            <Flex my={"1rem"} justifyContent={"space-between"} gap={"4"}>
+              <Box
+                display={"flex"}
+                flexDir={"column"}
+                justifyContent={"space-between"}
+                gap={"4"}
+              >
+                <Box>
+                  <Text fontSize={"xs"} color={"#00000080"} fontWeight={"bold"}>
+                    Category
+                  </Text>
+                  <Text fontSize={"md"} fontWeight={"bold"} color={"#000000"}>
+                    {currentInvoice?.category}
+                  </Text>
+                </Box>
+
+                <Box>
+                  <Text fontSize={"xs"} color={"#00000080"} fontWeight={"bold"}>
+                    Invoice Id
+                  </Text>
+                  <Text fontSize={"md"} fontWeight={"bold"} color={"#000000"}>
+                    {currentInvoice?.invoiceId}
+                  </Text>
+                </Box>
+
+                <Box>
+                  <Icon as={LiaCoinsSolid} boxSize={5} color={"#00000060"} />
+                  <Flex gap={"3"}>
+                    <Box>
+                      <Text
+                        fontSize={"xs"}
+                        fontWeight={"bold"}
+                        color={"#00000080"}
+                      >
+                        Amount Paid
+                      </Text>
+                      <Text
+                        fontSize={"md"}
+                        fontWeight={"bold"}
+                        color={"#000000"}
+                      >
+                        ₦{formatNumberWithCommas(currentInvoice?.amountPaid)}
+                      </Text>
+                    </Box>
+
+                    <Center height={"40px"}>
+                      <Divider
+                        orientation="vertical"
+                        borderColor={"#00000060"}
+                      />
+                    </Center>
+
+                    <Box>
+                      <Text
+                        fontSize={"xs"}
+                        fontWeight={"bold"}
+                        color={"#00000080"}
+                      >
+                        Balance
+                      </Text>
+                      <Text
+                        fontSize={"md"}
+                        fontWeight={"bold"}
+                        color={"#000000"}
+                      >
+                        N/A
+                      </Text>
+                    </Box>
+                  </Flex>
+                </Box>
+              </Box>
+            </Flex>
+
+            <Divider />
+
+            <Box display={"flex"} flexDir={"column"} gap={"4"} mt={"1rem"}>
+              <Box>
+                <Text fontSize={"xs"} fontWeight={"bold"} color={"#00000080"}>
+                  Summary
+                </Text>
+                <Text fontSize={"md"} fontWeight={"bold"} color={"#000000"}>
+                  {currentInvoice?.summary}
+                </Text>
+              </Box>
+
+              <Box
+                display={"flex"}
+                justifyContent={"space-between"}
+                gap={"2"}
+                flexDir={{ base: "column", md: "row" }}
+              >
+                <Text fontSize={{ base: "xs", md: "sm" }} color={"gray.500"}>
+                  {currentInvoice?.term} - {currentInvoice?.year}
+                </Text>
+                <Text fontSize={{ base: "xs", md: "sm" }} color={"gray.500"}>
+                  Created on {currentInvoice?.createdAt}
+                </Text>
+              </Box>
+            </Box>
+          </Box>
+        </Flex>
+      </Box>
     </Box>
   );
 };
