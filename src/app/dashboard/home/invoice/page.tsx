@@ -86,10 +86,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
   } = useDisclosure();
 
   const [invoiceData, setInvoiceData] = useState<StudentInvoiceProps[]>([]);
-  const [completedInvoice, setCompletedInvoice] = useState<StudentInvoiceProps[]>([])
-  const [activeInvoice, setActiveInvoice] = useState<StudentInvoiceProps[]>([])
-  const [rejectedInvoice, setRejectedInvoice] = useState<StudentInvoiceProps[]>([])
-  const [processingInvoice, setProcessingInvoice] = useState<StudentInvoiceProps[]>([])
+
   const [selectedInvoiceData, setSelectedInvoiceData] = useState<StudentInvoiceProps>()
 
   const { data: getinvoice } = useQuery(GET_STUDENT_INVOICE, {
@@ -117,23 +114,6 @@ const Invoice: FC<InvoiceProps> = ({}) => {
           })
         );
         setInvoiceData(parsedInvoiceData)
-        const completedInvoice = parsedInvoiceData?.filter(
-          (invoice: any) => invoice.status === "completed"
-        );
-        setCompletedInvoice(completedInvoice);
-        const activeInvoice = parsedInvoiceData?.filter(
-          (invoice: any) => invoice.status === "active"
-        );
-        setActiveInvoice(activeInvoice);
-        const rejectedInvoice = parsedInvoiceData?.filter(
-          (invoice: any) => invoice.status === "rejected by parent"
-        );
-        setRejectedInvoice(rejectedInvoice);
-        const processingInvoice = parsedInvoiceData?.filter(
-          (invoice: any) => invoice.status === "processing"
-        );
-      setProcessingInvoice(processingInvoice)
-        console.log(parsedInvoiceData )
       } catch (err: any) {
         console.log(err.message);
       }
@@ -141,16 +121,29 @@ const Invoice: FC<InvoiceProps> = ({}) => {
     fetchData();
   }, [getinvoice]);
 
+  const completedInvoice = invoiceData?.filter(
+    (invoice) => invoice.status === "completed"
+  );
+  const activeInvoice = invoiceData?.filter(
+    (invoice) => invoice.status === "active"
+  );
+  const rejectedInvoice = invoiceData?.filter(
+    (invoice) => invoice.status === "rejected by parent"
+  );
+  const processingInvoice = invoiceData?.filter(
+    (invoice) => invoice.status === "processing"
+  );
+
   const totalActiveAmount = activeInvoice?.reduce(
-    (accumulator: any, invoice: any) => accumulator + invoice.amountPaid,
+    (accumulator, invoice) => accumulator + invoice.amountPaid,
     0
   );
   const totalRejectedAmount = rejectedInvoice?.reduce(
-    (accumulator: any, invoice: any) => accumulator + invoice.amountPaid,
+    (accumulator, invoice) => accumulator + invoice.amountPaid,
     0
   );
   const totalProcessingAmount = processingInvoice?.reduce(
-    (accumulator: any, invoice: any) => accumulator + invoice.amountPaid,
+    (accumulator, invoice) => accumulator + invoice.amountPaid,
     0
   );
 
@@ -416,7 +409,6 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                               backgroundColor: "#005D5D10",
                               cursor: "pointer",
                             }}
-                            onClick={() => {handleSelectedInvoice(item)}}
                           >
                             <Td fontWeight={"bold"} fontSize={"sm"}>
                               {item?.invoiceId}
@@ -425,7 +417,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                               <Flex gap={2} alignItems={"center"}>
                                 <Avatar
                                   src={item?.schoollogo}
-                                  pointerEvents={'none'}
+                                  pointerEvents={"none"}
                                   size={"sm"}
                                 />
                                 <Text fontSize={"sm"} fontWeight={"500"}>
@@ -469,18 +461,20 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                 <MenuList>
                                   <MenuItem
                                     icon={<FaCheck />}
-                                    isDisabled={
-                                      item?.status === "active" ? false : true
-                                    }
-                                    onClick={onAcceptModalOpen}
+                                    // isDisabled={
+                                    //   item?.status === "active" ? false : true
+                                    // }
+                                    onClick={() => {
+                                      handleSelectedInvoice(item);
+                                    }}
                                   >
                                     Accept Invoice
                                   </MenuItem>
                                   <MenuItem
                                     icon={<MdOutlineClose />}
-                                    isDisabled={
-                                      item?.status === "active" ? false : true
-                                    }
+                                    // isDisabled={
+                                    //   item?.status === "active" ? false : true
+                                    // }
                                     onClick={onRejectModalOpen}
                                   >
                                     Reject Invoice
