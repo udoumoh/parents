@@ -160,25 +160,25 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
             firstName: child?.firstName,
             lastName: child?.lastName,
             middleName: child?.middleName,
-            greynoteNumber: child?.greynoteNumber,
-            profileImage: child?.profileImage,
+            greynoteNumber: child?.grayId,
+            profileImage: child?.profileImgUrl,
             gender: child?.gender,
-            class: child?.class,
-            dateOfBirth: child?.dateOfBirth,
-            school: child?.school,
+            class: child?.classroom?.classroom?.className,
+            dateOfBirth: child?.birthDate,
+            school: child?.school?.school?.schoolName,
             schoollogo: child?.schoollogo,
             childId: child?.id,
-            age: child?.age,
-            schoolId: child?.schoolId,
+            age: child?.ageInput,
+            schoolId: child?.school?.schoo?.id,
             isVisible: child?.isVisible,
-            category: child?.studentCase.grayCase?.graycase?.category,
-            createdAt: child?.studentCase.grayCase?.graycase?.createdAt,
-            id: child?.studentCase.grayCase?.graycase?.id,
-            isActive: child?.studentCase.grayCase?.graycase?.isActive,
-            notes: child?.studentCase.grayCase?.graycase?.notes,
-            owingAmount: child?.studentCase.grayCase?.graycase?.owingAmount,
-            updatedAt: child?.studentCase.grayCase?.graycase?.updatedAt,
-            wasEdited: child?.studentCase.grayCase?.graycase?.wasEdited,
+            category: child?.studentCase.grayCase?.category,
+            createdAt: child?.studentCase.grayCase?.createdAt,
+            id: child?.studentCase.grayCase?.id,
+            isActive: child?.studentCase.grayCase?.isActive,
+            notes: child?.studentCase.grayCase?.notes,
+            owingAmount: child?.studentCase.grayCase?.owingAmount,
+            updatedAt: child?.studentCase.grayCase?.updatedAt,
+            wasEdited: child?.studentCase.grayCase?.wasEdited,
           }));
         setExperiment(newArray);
       } catch (err: any) {
@@ -189,7 +189,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
   }, [getRequests, parent]);
 
 
-
+console.log('other child data',childData)
 
  console.log("This is the childdata", expriment); 
   return (
@@ -452,6 +452,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                         >
                           <Box w={"full"}>
                             <Flex
+                            flexDir={{base:"column", sm:"row"}}
                               alignItems={"center"}
                               justifyContent={"space-between"}
                               gap={2}
