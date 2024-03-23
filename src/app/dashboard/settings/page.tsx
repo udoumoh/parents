@@ -260,7 +260,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
               </Flex>
             </Box>
           </Flex>
-          <Flex gap={"6"}>
+          <Flex gap={"6"} flexDir={{base:"column", sm:"row"}}>
             <Button
               variant={"outline"}
               border={"1px solid #FCF4D9"}
@@ -270,7 +270,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
               _hover={{ color: "green", backgroundColor: "green.100" }}
             >
               <Icon as={GoPencil} boxSize={4} />
-              <Text>Edit</Text>
+              <Text>Edit Profile Image</Text>
             </Button>
             <Button
               onClick={onRemoveStudentModalOpen}
