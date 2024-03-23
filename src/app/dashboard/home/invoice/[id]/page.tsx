@@ -111,7 +111,7 @@ const Invoice: FC<InvoiceProps> = ({ params }: { params: { id: number } }) => {
     }, [getinvoice]);
 
     console.log(params.id)
-
+    console.log(invoiceData)
     const currentInvoice = invoiceData?.find(invoice => invoice?.id === params?.id)
 
   return (
