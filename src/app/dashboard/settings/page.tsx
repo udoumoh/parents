@@ -156,8 +156,8 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
 
       try{
         const response = await parent;
-        const newArray = response?.parent?.parent?.map((child) => {
-          const temp = child?.graycase?.map((graycase, index) => ({
+        const newArray = response?.parent?.parent?.map((child: any) => {
+          const temp = child?.graycase?.map((graycase: any, index: any) => ({
             firstName: child?.firstName,
             lastName: child?.lastName,
             middleName: child?.middleName,
@@ -548,7 +548,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
         </Flex>
 
         {/* Graycases */}
-        <Flex
+        {/* <Flex
           flexDir={"column"}
           border={"1px solid #005D5D30"}
           rounded={"xl"}
@@ -643,7 +643,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
               </TableContainer>
             )}
           </Flex>
-        </Flex>
+        </Flex> */}
       </Box>
     </Box>
   );
