@@ -550,9 +550,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                             <Td>{item?.createdAt}</Td>
                             <Td fontWeight={"bold"}>
                               ₦
-                              {getCompletedInvoiceAmount(
-                                formatNumberWithCommas(item)
-                              )}
+                              {getCompletedInvoiceAmount(item)}
                             </Td>
                             <Td>
                               <Badge
