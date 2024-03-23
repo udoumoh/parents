@@ -73,8 +73,10 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
   });
   const [deleteRequest, { loading }] = useMutation(DELETE_REQUEST);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [currentStudentCase, setCurrentStudentCase] = useState<UserChildren | undefined>()
-  const [currentIndex, setCurrentIndex] = useState<number>()
+  const [currentStudentCase, setCurrentStudentCase] = useState<
+    UserChildren | undefined
+  >();
+  const [currentIndex, setCurrentIndex] = useState<number>();
   console.log(parentData);
 
   const handleRequestDelete = async (requestId: any) => {
@@ -121,10 +123,10 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
   };
 
   const handleGreycaseItem = (child: any, index: any) => {
-    setCurrentStudentCase(child)
+    setCurrentStudentCase(child);
     setCurrentIndex(index);
-    onGraycaseModalOpen()
-  }
+    onGraycaseModalOpen();
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -549,45 +551,50 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                 <Table variant="simple" size={"md"}>
                   <Thead>
                     <Tr>
-                      <Th textTransform={'none'}> Student Name</Th>
-                      <Th textTransform={'none'}> category</Th>
-                      <Th textTransform={'none'}> status</Th>
-                      <Th textTransform={'none'}> Date created</Th>
+                      <Th textTransform={"none"}> Student Name</Th>
+                      <Th textTransform={"none"}> category</Th>
+                      <Th textTransform={"none"}> status</Th>
+                      <Th textTransform={"none"}> Date created</Th>
                     </Tr>
                   </Thead>
                   <Tbody>
-                    {
-                      childData?.map((child) => {
-                        return child?.graycase?.map((graycase, index) => {
-                          return (
-                            <Tr
-                              key={index}
-                              _hover={{
-                                backgroundColor: "#005D5D10",
-                                cursor: "pointer",
-                              }}
-                              onClick={()=>{handleGreycaseItem(child, index)}}
-                            >
-                              <Td>
-                                {child.firstName} {child.lastName}
-                              </Td>
-                              <Td>{graycase.category}</Td>
-                              <Td>
-                                <Badge
-                                  colorScheme={
-                                    graycase.isActive ? "green" : "red"
-                                  }
-                                >
-                                  {graycase.isActive ? "ACTIVE" : "INACTIVE"}
-                                </Badge>
-                              </Td>
-                              <Td>{graycase.createdAt}</Td>
-                            </Tr>
-                          );
-                        });
-                      })
-                    }
-                    <GraycaseModal isOpen={isGraycaseModalOpen} onClose={onGraycaseModalClose} childData={currentStudentCase} index={currentIndex}/>
+                    {childData?.map((child) => {
+                      return child?.graycase?.map((graycase, index) => {
+                        return (
+                          <Tr
+                            key={index}
+                            _hover={{
+                              backgroundColor: "#005D5D10",
+                              cursor: "pointer",
+                            }}
+                            onClick={() => {
+                              handleGreycaseItem(child, index);
+                            }}
+                          >
+                            <Td>
+                              {child.firstName} {child.lastName}
+                            </Td>
+                            <Td>{graycase.category}</Td>
+                            <Td>
+                              <Badge
+                                colorScheme={
+                                  graycase.isActive ? "green" : "red"
+                                }
+                              >
+                                {graycase.isActive ? "ACTIVE" : "INACTIVE"}
+                              </Badge>
+                            </Td>
+                            <Td>{graycase.createdAt}</Td>
+                          </Tr>
+                        );
+                      });
+                    })}
+                    <GraycaseModal
+                      isOpen={isGraycaseModalOpen}
+                      onClose={onGraycaseModalClose}
+                      childData={currentStudentCase}
+                      index={currentIndex}
+                    />
                   </Tbody>
                 </Table>
               </TableContainer>
