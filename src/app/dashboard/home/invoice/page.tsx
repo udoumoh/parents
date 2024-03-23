@@ -409,9 +409,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                               backgroundColor: "#005D5D10",
                               cursor: "pointer",
                             }}
-                            onClick={() => {
-                              handleSelectedInvoice(item);
-                            }}
+                            onClick={onDrawerOpen}
                           >
                             <Td fontWeight={"bold"} fontSize={"sm"}>
                               {item?.invoiceId}
@@ -467,9 +465,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                     isDisabled={
                                       item?.status === "active" ? false : true
                                     }
-                                    onClick={() => {
-                                      handleSelectedInvoice(item);
-                                    }}
+                                    onClick={onAcceptModalOpen}
                                   >
                                     Accept Invoice
                                   </MenuItem>
@@ -500,7 +496,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                             <InvoiceDataDrawer
                               isOpen={isDrawerOpen}
                               onClose={onDrawerClose}
-                              invoiceData={selectedInvoiceData}
+                              invoiceData={invoiceData[index]}
                             />
                           </Tr>
                         );
