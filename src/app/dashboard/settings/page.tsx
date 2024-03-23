@@ -572,19 +572,19 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                             }}
                           >
                             <Td>
-                              {child.firstName} {child.lastName}
+                              {child?.firstName} {child?.lastName}
                             </Td>
-                            <Td>{graycase.category}</Td>
+                            <Td>{graycase?.category}</Td>
                             <Td>
                               <Badge
                                 colorScheme={
-                                  graycase.isActive ? "green" : "red"
+                                  graycase?.isActive ? "green" : "red"
                                 }
                               >
-                                {graycase.isActive ? "ACTIVE" : "INACTIVE"}
+                                {graycase?.isActive ? "ACTIVE" : "INACTIVE"}
                               </Badge>
                             </Td>
-                            <Td>{graycase.createdAt}</Td>
+                            <Td>{graycase?.createdAt}</Td>
                           </Tr>
                         );
                       });
