@@ -37,6 +37,7 @@ import { RiVerifiedBadgeFill } from "react-icons/ri";
 import RemoveStudentModal from "@/components/shared/removeStudentModal";
 import { RiBookletFill } from "react-icons/ri";
 import GraycaseModal from "@/components/shared/greycaseModal";
+import { GET_PARENT } from "@/gql/queries";
 
 interface SettingsPageProps {}
 
@@ -52,6 +53,7 @@ interface RequestDataProps {
 const SettingsPage: FC<SettingsPageProps> = ({}) => {
   const toast = useToast();
   const [requestData, setRequestData] = useState<RequestDataProps[]>([]);
+  const { data: parent } = useQuery(GET_PARENT);
   const {
     isOpen: isModalOpen,
     onOpen: onModalOpen,
@@ -71,7 +73,8 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
   const { data: getRequests } = useQuery(PARENT_REQUESTS, {
     variables: { parentId: parentData?.userId },
   });
-  const [deleteRequest, { loading }] = useMutation(DELETE_REQUEST);
+  const [expriment, setExperiment] = useState([]);
+  const [deleteRequest] = useMutation(DELETE_REQUEST);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [currentStudentCase, setCurrentStudentCase] = useState<
     UserChildren | undefined
@@ -121,11 +124,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
       setIsSubmitting(false);
     }
   };
-
-  
-
  
-
   const handleGreycaseItem = (child: any, index: any) => {
     setCurrentStudentCase(child);
     setCurrentIndex(index);
@@ -154,40 +153,48 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
       } catch (err: any) {
         console.log(err);
       }
+
+      try{
+        const response = await parent;
+        const newArray = response?.parent?.parent?.map((child) => {
+          const temp = child?.graycase?.map((graycase, index) => ({
+            firstName: child?.firstName,
+            lastName: child?.lastName,
+            middleName: child?.middleName,
+            greynoteNumber: child?.greynoteNumber,
+            profileImage: child?.profileImage,
+            gender: child?.gender,
+            class: child?.class,
+            dateOfBirth: child?.dateOfBirth,
+            school: child?.school,
+            schoollogo: child?.schoollogo,
+            childId: child?.id,
+            age: child?.age,
+            schoolId: child?.schoolId,
+            isVisible: child?.isVisible,
+            category: graycase?.category,
+            createdAt: graycase?.createdAt,
+            id: graycase?.id,
+            isActive: graycase?.isActive,
+            notes: graycase?.notes,
+            owingAmount: graycase?.owingAmount,
+            updatedAt: graycase?.updatedAt,
+            wasEdited: graycase?.wasEdited,
+          }));
+          return temp;
+        });
+        setExperiment(newArray);
+      } catch (err: any) {
+        console.log(err);
+      }
     };
     fetchData();
-  }, [getRequests]);
+  }, [getRequests, parent]);
 
 
-const newArray = childData?.map((child) => {
-  const temp = child?.graycase?.map((graycase, index) => ({
-    firstName: child?.firstName,
-    lastName: child?.lastName,
-    middleName: child?.middleName,
-    greynoteNumber: child?.greynoteNumber,
-    profileImage: child?.profileImage,
-    gender: child?.gender,
-    class: child?.class,
-    dateOfBirth: child?.dateOfBirth,
-    school: child?.school,
-    schoollogo: child?.schoollogo,
-    childId: child?.id,
-    age: child?.age,
-    schoolId: child?.schoolId,
-    isVisible: child?.isVisible,
-    category: graycase?.category,
-    createdAt: graycase?.createdAt,
-    id: graycase?.id,
-    isActive: graycase?.isActive,
-    notes: graycase?.notes,
-    owingAmount: graycase?.owingAmount,
-    updatedAt: graycase?.updatedAt,
-    wasEdited: graycase?.wasEdited,
-  }));
-  return temp;
-});
 
- console.log("This is the childdata", newArray);
+
+ console.log("This is the childdata", expriment); 
   return (
     <Box
       display={"flex"}
