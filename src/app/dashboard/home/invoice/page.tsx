@@ -38,6 +38,7 @@ import AcceptInvoiceModal from "@/components/shared/acceptInvoiceModal";
 import RejectInvoiceModal from "@/components/shared/rejectinvoicemodal";
 import InvoiceDataDrawer from "@/components/shared/invoiceDataDrawer";
 import { TbFileInvoice } from "react-icons/tb";
+import { useRouter } from "next/navigation";
 
 interface InvoiceProps {}
 
@@ -68,6 +69,7 @@ interface StudentInvoiceProps {
 }
 
 const Invoice: FC<InvoiceProps> = ({}) => {
+  const router = useRouter()
   const { currentWardProfile } = useUserAPI();
 
   const {
@@ -163,10 +165,8 @@ const Invoice: FC<InvoiceProps> = ({}) => {
     return formatNumberWithCommas(totalCompletedAmount);
   };
 
-  const handleSelectedInvoice = (invoice: any) => {
-      setSelectedInvoiceData(invoice)
-      onDrawerOpen()
-      console.log(invoice)
+  const handleSelectedInvoice = (id: any) => {
+      router.push(`/dashboard/home/invoice/${id}`);
   }
 
   return (
@@ -471,7 +471,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                   <MenuItem
                                     icon={<TbFileInvoice />}
                                     onClick={() => {
-                                      handleSelectedInvoice(item);
+                                      handleSelectedInvoice(item?.id);
                                     }}
                                   >
                                     View Invoice Details
@@ -599,7 +599,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                   <MenuItem
                                     icon={<TbFileInvoice />}
                                     onClick={() => {
-                                      handleSelectedInvoice(item);
+                                      handleSelectedInvoice(item?.id);
                                     }}
                                   >
                                     View Invoice Details
@@ -717,7 +717,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                   <MenuItem
                                     icon={<TbFileInvoice />}
                                     onClick={() => {
-                                      handleSelectedInvoice(item);
+                                      handleSelectedInvoice(item?.id);
                                     }}
                                   >
                                     View Invoice Details
@@ -725,11 +725,6 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                 </MenuList>
                               </Menu>
                             </Td>
-                            <InvoiceDataDrawer
-                              isOpen={isDrawerOpen}
-                              onClose={onDrawerClose}
-                              invoiceData={selectedInvoiceData}
-                            />
                           </Tr>
                         );
                       })}
