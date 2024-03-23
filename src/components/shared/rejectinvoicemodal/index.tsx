@@ -21,7 +21,7 @@ interface RejectInvoiceModalProps {
   isOpen: boolean;
   onOpen: () => void;
   onClose: () => void;
-  invoiceId: number;
+  invoiceId: any;
 }
 
 const RejectInvoiceModal: FC<RejectInvoiceModalProps> = ({

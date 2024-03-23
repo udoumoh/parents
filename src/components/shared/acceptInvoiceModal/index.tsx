@@ -32,7 +32,7 @@ interface AcceptInvoiceModalProps {
   isOpen: boolean;
   onOpen: () => void;
   onClose: () => void;
-  invoiceId: number;
+  invoiceId: any;
 }
 
 const AcceptInvoiceModal: FC<AcceptInvoiceModalProps> = ({

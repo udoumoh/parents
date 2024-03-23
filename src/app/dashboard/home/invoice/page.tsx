@@ -90,7 +90,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
 
   const [invoiceData, setInvoiceData] = useState<StudentInvoiceProps[]>([]);
 
-  const [selectedInvoiceData, setSelectedInvoiceData] = useState<StudentInvoiceProps>()
+  const [currentInvoiceId, setCurrentInvoiceId] = useState()
 
   const { data: getinvoice } = useQuery(GET_STUDENT_INVOICE, {
     variables: { studentId: currentWardProfile?.id },
@@ -169,6 +169,16 @@ const Invoice: FC<InvoiceProps> = ({}) => {
       router.push(`/dashboard/home/invoice/${id}`);
   }
 
+  const handleAcceptInvoice = (id: any) => {
+    setCurrentInvoiceId(id);
+    onAcceptModalOpen();
+  }
+
+  const handleRejectInvoice = (id: any) => {
+    setCurrentInvoiceId(id);
+    onRejectModalOpen();
+  };
+
   return (
     <Box mb={{ base: "8rem", lg: "5rem" }}>
       <Box>
@@ -182,6 +192,18 @@ const Invoice: FC<InvoiceProps> = ({}) => {
             Overview
           </Text>
         </Box>
+        <AcceptInvoiceModal
+          isOpen={isAcceptModalOpen}
+          onOpen={onAcceptModalOpen}
+          onClose={onAcceptModalClose}
+          invoiceId={currentInvoiceId}
+        />
+        <RejectInvoiceModal
+          isOpen={isRejectModalOpen}
+          onOpen={onRejectModalOpen}
+          onClose={onRejectModalClose}
+          invoiceId={currentInvoiceId}
+        />
         <SimpleGrid minChildWidth="200px" spacing={"10px"}>
           <Flex
             flexDir={"column"}
@@ -455,7 +477,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                     isDisabled={
                                       item?.status === "active" ? false : true
                                     }
-                                    onClick={onAcceptModalOpen}
+                                    onClick={()=>handleAcceptInvoice(item?.id)}
                                   >
                                     Accept Invoice
                                   </MenuItem>
@@ -464,7 +486,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                     isDisabled={
                                       item?.status === "active" ? false : true
                                     }
-                                    onClick={onRejectModalOpen}
+                                    onClick={()=>handleRejectInvoice(item?.id)}
                                   >
                                     Reject Invoice
                                   </MenuItem>
@@ -479,18 +501,6 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                 </MenuList>
                               </Menu>
                             </Td>
-                            <AcceptInvoiceModal
-                              isOpen={isAcceptModalOpen}
-                              onOpen={onAcceptModalOpen}
-                              onClose={onAcceptModalClose}
-                              invoiceId={item?.id}
-                            />
-                            <RejectInvoiceModal
-                              isOpen={isRejectModalOpen}
-                              onOpen={onRejectModalOpen}
-                              onClose={onRejectModalClose}
-                              invoiceId={item?.id}
-                            />
                           </Tr>
                         );
                       })}
@@ -514,21 +524,13 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                         <Th>Date</Th>
                         <Th>Amount</Th>
                         <Th>Status</Th>
+                        <Th></Th>
                       </Tr>
                     </Thead>
                     <Tbody>
                       {completedInvoice?.map((item, index) => {
                         return (
-                          <Tr
-                            key={index}
-                            _hover={{
-                              backgroundColor: "#005D5D10",
-                              cursor: "pointer",
-                            }}
-                            onClick={() => {
-                              handleSelectedInvoice(item);
-                            }}
-                          >
+                          <Tr key={index}>
                             <Td fontWeight={"bold"} fontSize={"sm"}>
                               {item?.invoiceId}
                             </Td>
@@ -583,7 +585,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                     isDisabled={
                                       item?.status === "active" ? false : true
                                     }
-                                    onClick={onAcceptModalOpen}
+                                    onClick={()=>handleAcceptInvoice(item?.id)}
                                   >
                                     Accept Invoice
                                   </MenuItem>
@@ -592,7 +594,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                     isDisabled={
                                       item?.status === "active" ? false : true
                                     }
-                                    onClick={onRejectModalOpen}
+                                    onClick={()=>handleRejectInvoice(item?.id)}
                                   >
                                     Reject Invoice
                                   </MenuItem>
@@ -607,11 +609,6 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                 </MenuList>
                               </Menu>
                             </Td>
-                            <InvoiceDataDrawer
-                              isOpen={isDrawerOpen}
-                              onClose={onDrawerClose}
-                              invoiceData={selectedInvoiceData}
-                            />
                           </Tr>
                         );
                       })}
@@ -635,21 +632,13 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                         <Th>Date</Th>
                         <Th>Amount</Th>
                         <Th>Status</Th>
+                        <Th></Th>
                       </Tr>
                     </Thead>
                     <Tbody>
                       {activeInvoice?.map((item, index) => {
                         return (
-                          <Tr
-                            key={index}
-                            _hover={{
-                              backgroundColor: "#005D5D10",
-                              cursor: "pointer",
-                            }}
-                            onClick={() => {
-                              handleSelectedInvoice(item);
-                            }}
-                          >
+                          <Tr key={index}>
                             <Td fontWeight={"bold"} fontSize={"sm"}>
                               {item?.invoiceId}
                             </Td>
@@ -701,7 +690,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                     isDisabled={
                                       item.status === "active" ? false : true
                                     }
-                                    onClick={onAcceptModalOpen}
+                                    onClick={()=>handleAcceptInvoice(item?.id)}
                                   >
                                     Accept Invoice
                                   </MenuItem>
@@ -710,7 +699,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                     isDisabled={
                                       item.status === "active" ? false : true
                                     }
-                                    onClick={onRejectModalOpen}
+                                    onClick={()=>handleRejectInvoice(item?.id)}
                                   >
                                     Reject Invoice
                                   </MenuItem>
@@ -748,21 +737,13 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                         <Th>Date</Th>
                         <Th>Amount</Th>
                         <Th>Status</Th>
+                        <Th></Th>
                       </Tr>
                     </Thead>
                     <Tbody>
                       {rejectedInvoice?.map((item, index) => {
                         return (
-                          <Tr
-                            key={index}
-                            _hover={{
-                              backgroundColor: "#005D5D10",
-                              cursor: "pointer",
-                            }}
-                            onClick={() => {
-                              handleSelectedInvoice(item);
-                            }}
-                          >
+                          <Tr key={index}>
                             <Td fontWeight={"bold"} fontSize={"sm"}>
                               {item?.invoiceId}
                             </Td>
@@ -814,7 +795,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                     isDisabled={
                                       item.status === "active" ? false : true
                                     }
-                                    onClick={onAcceptModalOpen}
+                                    onClick={()=>handleAcceptInvoice(item?.id)}
                                   >
                                     Accept Invoice
                                   </MenuItem>
@@ -823,7 +804,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                     isDisabled={
                                       item.status === "active" ? false : true
                                     }
-                                    onClick={onRejectModalOpen}
+                                    onClick={()=>handleRejectInvoice(item?.id)}
                                   >
                                     Reject Invoice
                                   </MenuItem>
@@ -838,11 +819,6 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                 </MenuList>
                               </Menu>
                             </Td>
-                            <InvoiceDataDrawer
-                              isOpen={isDrawerOpen}
-                              onClose={onDrawerClose}
-                              invoiceData={selectedInvoiceData}
-                            />
                           </Tr>
                         );
                       })}
@@ -866,21 +842,13 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                         <Th>Date</Th>
                         <Th>Amount</Th>
                         <Th>Status</Th>
+                        <Th></Th>
                       </Tr>
                     </Thead>
                     <Tbody>
                       {processingInvoice?.map((item, index) => {
                         return (
-                          <Tr
-                            key={index}
-                            _hover={{
-                              backgroundColor: "#005D5D10",
-                              cursor: "pointer",
-                            }}
-                            onClick={() => {
-                              handleSelectedInvoice(item);
-                            }}
-                          >
+                          <Tr key={index}>
                             <Td fontWeight={"bold"} fontSize={"sm"}>
                               {item?.invoiceId}
                             </Td>
@@ -933,7 +901,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                     isDisabled={
                                       item.status === "active" ? false : true
                                     }
-                                    onClick={onAcceptModalOpen}
+                                    onClick={()=>handleAcceptInvoice(item?.id)}
                                   >
                                     Accept Invoice
                                   </MenuItem>
@@ -942,7 +910,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                     isDisabled={
                                       item.status === "active" ? false : true
                                     }
-                                    onClick={onRejectModalOpen}
+                                    onClick={()=>handleRejectInvoice(item?.id)}
                                   >
                                     Reject Invoice
                                   </MenuItem>
@@ -957,11 +925,6 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                 </MenuList>
                               </Menu>
                             </Td>
-                            <InvoiceDataDrawer
-                              isOpen={isDrawerOpen}
-                              onClose={onDrawerClose}
-                              invoiceData={selectedInvoiceData}
-                            />
                           </Tr>
                         );
                       })}
@@ -973,11 +936,6 @@ const Invoice: FC<InvoiceProps> = ({}) => {
           </Tabs>
         </Box>
       </Box>
-      <InvoiceDataDrawer
-        isOpen={isDrawerOpen}
-        onClose={onDrawerClose}
-        invoiceData={selectedInvoiceData}
-      />
     </Box>
   );
 };
