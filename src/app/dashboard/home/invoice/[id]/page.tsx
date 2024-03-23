@@ -131,7 +131,9 @@ const Invoice: FC<InvoiceProps> = ({ params }: { params: { id: number } }) => {
       >
         Back to invoice page
       </Button>
-      <Box rounded={"lg"} border={"1px solid #005D5D40"} w={"full"} p={"1rem"}>
+      {
+        currentInvoice && (
+            <Box rounded={"lg"} border={"1px solid #005D5D40"} w={"full"} p={"1rem"}>
         <Flex
           alignItems={"center"}
           justifyContent={"center"}
@@ -504,6 +506,9 @@ const Invoice: FC<InvoiceProps> = ({ params }: { params: { id: number } }) => {
           </Box>
         </Flex>
       </Box>
+        )
+      }
+      
     </Box>
   );
 };
