@@ -16,20 +16,15 @@ import {
   Divider,
   Badge,
 } from "@chakra-ui/react";
-import { UserChildren } from '@/hooks/UserContext';
-
-interface childData extends UserChildren {
-
-}
+import { formatDate } from '@/helpers/formatDate';
 
 interface GraycaseModalProps {
   isOpen: boolean;
   onClose: () => void;
-  childData: childData | undefined;
-  index: any;
+  graycase: any;
 }
 
-const GraycaseModal: FC<GraycaseModalProps> = ({isOpen, onClose, childData, index}) => {
+const GraycaseModal: FC<GraycaseModalProps> = ({isOpen, onClose, graycase}) => {
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
@@ -46,11 +41,11 @@ const GraycaseModal: FC<GraycaseModalProps> = ({isOpen, onClose, childData, inde
             <Avatar size={"lg"} />
             <Box>
               <Text fontSize={"lg"} fontWeight={"bold"}>
-                {childData?.firstName} {childData?.lastName}
+                {graycase?.firstName} {graycase?.lastName}
               </Text>
               <Text fontSize={"xs"}>
-                {childData?.age} Years Old | {childData?.gender} |{" "}
-                {childData?.class}
+                {graycase?.age} Years Old | {graycase?.gender} |{" "}
+                {graycase?.class}
               </Text>
             </Box>
           </Box>
@@ -60,11 +55,11 @@ const GraycaseModal: FC<GraycaseModalProps> = ({isOpen, onClose, childData, inde
             </Text>
             <Box display={"flex"} alignItems={"center"} gap={"3"}>
               <Text fontWeight={"bold"}>
-                {(childData?.graycase && childData?.graycase[index])?.category}
+                {graycase?.category}
               </Text>
               <Badge
                 colorScheme={
-                  (childData?.graycase && childData?.graycase[index])?.isActive
+                  graycase?.isActive
                     ? "green"
                     : "red"
                 }
@@ -74,7 +69,7 @@ const GraycaseModal: FC<GraycaseModalProps> = ({isOpen, onClose, childData, inde
                 fontSize={"3xs"}
                 rounded={"full"}
               >
-                {(childData?.graycase && childData?.graycase[index])?.isActive
+                {graycase?.isActive
                   ? "Active"
                   : "Inactive"}
               </Badge>
@@ -97,7 +92,7 @@ const GraycaseModal: FC<GraycaseModalProps> = ({isOpen, onClose, childData, inde
               rounded={"md"}
             >
               <Text>
-                {(childData?.graycase && childData?.graycase[index])?.notes}
+                {graycase?.notes}
               </Text>
             </Box>
           </Box>
@@ -105,7 +100,7 @@ const GraycaseModal: FC<GraycaseModalProps> = ({isOpen, onClose, childData, inde
 
         <ModalFooter>
           <Text fontSize={"xs"} color={"#00000080"}>
-            {(childData?.graycase && childData?.graycase[index])?.createdAt}
+            {formatDate(graycase?.createdAt)}
           </Text>
         </ModalFooter>
       </ModalContent>

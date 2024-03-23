@@ -73,7 +73,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
   const { data: getRequests } = useQuery(PARENT_REQUESTS, {
     variables: { parentId: parentData?.userId },
   });
-  const [expriment, setExperiment] = useState([]);
+  const [graycases, setGraycases] = useState([]);
   const [deleteRequest] = useMutation(DELETE_REQUEST);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [currentStudentCase, setCurrentStudentCase] = useState<
@@ -125,9 +125,8 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
     }
   };
  
-  const handleGreycaseItem = (child: any, index: any) => {
-    setCurrentStudentCase(child);
-    setCurrentIndex(index);
+  const handleGreycaseItem = (graycase: any) => {
+    setCurrentStudentCase(graycase);
     onGraycaseModalOpen();
   };
 
@@ -156,7 +155,8 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
 
       try{
         const response = await parent;
-        const newArray = response?.parent?.parent?.children?.map((child: any) => ({
+        const filteredCases = response?.parent?.parent?.children?.filter((child: any) => child.studentCase.grayCase !== null)
+        const newArray = filteredCases?.map((child: any) => ({
             firstName: child?.firstName,
             lastName: child?.lastName,
             middleName: child?.middleName,
@@ -166,21 +166,21 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
             class: child?.classroom?.classroom?.className,
             dateOfBirth: child?.birthDate,
             school: child?.school?.school?.schoolName,
-            schoollogo: child?.schoollogo,
+            schoollogo: child?.school?.school?.logoImgUrl,
             childId: child?.id,
             age: child?.ageInput,
-            schoolId: child?.school?.schoo?.id,
+            schoolId: child?.school?.school?.id,
             isVisible: child?.isVisible,
             category: child?.studentCase.grayCase?.category,
             createdAt: child?.studentCase.grayCase?.createdAt,
             id: child?.studentCase.grayCase?.id,
             isActive: child?.studentCase.grayCase?.isActive,
-            notes: child?.studentCase.grayCase?.notes,
+            notes: child?.studentCase.grayCase?.note,
             owingAmount: child?.studentCase.grayCase?.owingAmount,
             updatedAt: child?.studentCase.grayCase?.updatedAt,
             wasEdited: child?.studentCase.grayCase?.wasEdited,
           }));
-        setExperiment(newArray);
+        setGraycases(newArray);
       } catch (err: any) {
         console.log(err);
       }
@@ -188,10 +188,6 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
     fetchData();
   }, [getRequests, parent]);
 
-
-console.log('other child data',childData)
-
- console.log("This is the childdata", expriment); 
   return (
     <Box
       display={"flex"}
@@ -546,7 +542,7 @@ console.log('other child data',childData)
         </Flex>
 
         {/* Graycases */}
-        {/* <Flex
+        <Flex
           flexDir={"column"}
           border={"1px solid #005D5D30"}
           rounded={"xl"}
@@ -564,7 +560,7 @@ console.log('other child data',childData)
             <Divider mt={"0.3rem"} mb={"1rem"} />
           </Box>
           <Flex flexDir={"column"} gap={4}>
-            {(childData ?? []).length === 0 ? (
+            {(graycases ?? []).length === 0 ? (
               <Box
                 display={"flex"}
                 flexDir={"column"}
@@ -597,8 +593,7 @@ console.log('other child data',childData)
                     </Tr>
                   </Thead>
                   <Tbody>
-                    {childData?.map((child) => {
-                      return child?.graycase?.map(
+                    {graycases?.map(
                         (graycase: any, index: any) => {
                           return (
                             <Tr
@@ -608,11 +603,11 @@ console.log('other child data',childData)
                                 cursor: "pointer",
                               }}
                               onClick={() => {
-                                handleGreycaseItem(child, index);
+                                handleGreycaseItem(graycase);
                               }}
                             >
                               <Td>
-                                {child?.firstName} {child?.lastName}
+                                {graycase?.firstName} {graycase?.lastName}
                               </Td>
                               <Td>{graycase?.category}</Td>
                               <Td>
@@ -624,24 +619,23 @@ console.log('other child data',childData)
                                   {graycase?.isActive ? "ACTIVE" : "INACTIVE"}
                                 </Badge>
                               </Td>
-                              <Td>{graycase?.createdAt}</Td>
+                              <Td>{formatDate(graycase?.createdAt)}</Td>
                             </Tr>
                           );
                         }
-                      );
-                    })}
+                      )
+                    }
                     <GraycaseModal
                       isOpen={isGraycaseModalOpen}
                       onClose={onGraycaseModalClose}
-                      childData={currentStudentCase}
-                      index={currentIndex}
+                      graycase={currentStudentCase}
                     />
                   </Tbody>
                 </Table>
               </TableContainer>
             )}
           </Flex>
-        </Flex> */}
+        </Flex>
       </Box>
     </Box>
   );
