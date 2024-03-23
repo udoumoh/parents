@@ -135,7 +135,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
         if (!response) {
           console.log("client error");
         } else {
-          const newData = response?.parentRequests.map((item: any) => ({
+          const newData = response?.parentRequests?.map((item: any) => ({
             studentFirstName: item?.student?.firstName,
             studentLastName: item?.student?.lastName,
             studentProfileImgUrl: item?.student?.profileImgUrl,
