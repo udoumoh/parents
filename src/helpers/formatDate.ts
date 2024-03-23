@@ -27,3 +27,34 @@ const getOrdinalSuffix = (day: any) => {
       return 'th';
   }
 };
+
+export const formatDateWithOrdinalSuffix = (inputDate: any) => {
+  const options = {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  };
+
+  const formattedDate = inputDate.toLocaleDateString("en-GB", options);
+
+  // To add 'th', 'st', 'nd', 'rd' suffix to the day
+  const day = inputDate.getDate();
+  const suffix =
+    day === 1 || day === 21 || day === 31
+      ? "st"
+      : day === 2 || day === 22
+      ? "nd"
+      : day === 3 || day === 23
+      ? "rd"
+      : "th";
+
+  const formattedDateWithSuffix = formattedDate.replace(/\d+/, day + suffix);
+
+  return formattedDateWithSuffix;
+};
+
+// Example usage:
+const inputDate = new Date("2024-03-01T10:08:58.000Z");
+const formattedDate = formatDateWithOrdinalSuffix(inputDate);
+console.log(formattedDate); // Output: "1st March 2024"
+

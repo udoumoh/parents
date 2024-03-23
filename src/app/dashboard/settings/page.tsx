@@ -17,17 +17,14 @@ import {
   Table,
   Thead,
   Tbody,
-  Tfoot,
   Tr,
   Th,
   Td,
-  TableCaption,
   TableContainer,
 } from "@chakra-ui/react";
 import { AiFillClockCircle } from "react-icons/ai";
 import { UserChildren, useUserAPI } from "@/hooks/UserContext";
 import { gql, useQuery, useMutation } from "@apollo/client";
-import { useRouter } from "next/navigation";
 import { formatDate } from "@/helpers/formatDate";
 import { PARENT_REQUESTS } from "@/gql/queries";
 import EditProfileModal from "@/components/shared/editProfileModal";
@@ -38,6 +35,9 @@ import RemoveStudentModal from "@/components/shared/removeStudentModal";
 import { RiBookletFill } from "react-icons/ri";
 import GraycaseModal from "@/components/shared/greycaseModal";
 import { GET_PARENT } from "@/gql/queries";
+import { formatDateWithOrdinalSuffix } from "@/helpers/formatDate";
+import { FaChildren } from "react-icons/fa6";
+import { FaCodePullRequest } from "react-icons/fa6";
 
 interface SettingsPageProps {}
 
@@ -79,8 +79,6 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
   const [currentStudentCase, setCurrentStudentCase] = useState<
     UserChildren | undefined
   >();
-  const [currentIndex, setCurrentIndex] = useState<any>();
-  console.log(parentData);
 
   const handleRequestDelete = async (requestId: any) => {
     setIsSubmitting(true);
@@ -88,7 +86,6 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
       const response = await deleteRequest({
         variables: { deleteRequestId: requestId },
       });
-      console.log(response);
       if (!response) {
         toast({
           title: "Error",
@@ -164,7 +161,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
             profileImage: child?.profileImgUrl,
             gender: child?.gender,
             class: child?.classroom?.classroom?.className,
-            dateOfBirth: child?.birthDate,
+            dateOfBirth: formatDateWithOrdinalSuffix(child?.birthDate),
             school: child?.school?.school?.schoolName,
             schoollogo: child?.school?.school?.logoImgUrl,
             childId: child?.id,
@@ -172,12 +169,12 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
             schoolId: child?.school?.school?.id,
             isVisible: child?.isVisible,
             category: child?.studentCase.grayCase?.category,
-            createdAt: child?.studentCase.grayCase?.createdAt,
+            createdAt: formatDateWithOrdinalSuffix(child?.studentCase.grayCase?.createdAt),
             id: child?.studentCase.grayCase?.id,
             isActive: child?.studentCase.grayCase?.isActive,
             notes: child?.studentCase.grayCase?.note,
             owingAmount: child?.studentCase.grayCase?.owingAmount,
-            updatedAt: child?.studentCase.grayCase?.updatedAt,
+            updatedAt: formatDateWithOrdinalSuffix(child?.studentCase.grayCase?.updatedAt),
             wasEdited: child?.studentCase.grayCase?.wasEdited,
           }));
         setGraycases(newArray);
@@ -220,7 +217,6 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
             flexDir={{ base: "column", lg: "row" }}
             justifyContent={"center"}
           >
-            {/* <Box border={"3px solid #12B77B"} rounded={"full"} p={"0.2rem"}> */}
             <Avatar
               src={profileData?.userBio?.profileImage}
               size={{ base: "xl", lg: "2xl" }}
@@ -256,7 +252,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
               </Flex>
             </Box>
           </Flex>
-          <Flex gap={"6"} flexDir={{base:"column", sm:"row"}}>
+          <Flex gap={"6"} flexDir={{ base: "column", sm: "row" }}>
             <Button
               variant={"outline"}
               border={"1px solid #FCF4D9"}
@@ -305,9 +301,13 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
             px={"1rem"}
           >
             <Box py={"1rem"}>
-              <Text fontWeight={"600"} fontSize={"lg"}>
-                Linked Children
-              </Text>
+              <Flex alignItems={"center"} gap={1}>
+                <Icon as={FaChildren} color="#005D5D" fontWeight={"bold"} />
+                <Text fontWeight={"600"} fontSize={"lg"} color={"#005D5D"}>
+                  Linked Children
+                </Text>
+              </Flex>
+              <Divider mt={"0.3rem"} mb={"1rem"} />
             </Box>
             <Flex flexDir={"column"} gap={4}>
               {(childData ?? []).length === 0 ? (
@@ -392,9 +392,19 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
             px={"1rem"}
           >
             <Box display={"flex"} flexDir={"column"} w={"full"}>
-              <Text fontWeight={"600"} fontSize={"lg"} py={"1rem"}>
-                Link Requests
-              </Text>
+              <Box py={"1rem"}>
+                <Flex alignItems={"center"} gap={1}>
+                  <Icon
+                    as={FaCodePullRequest}
+                    color="#005D5D"
+                    fontWeight={"bold"}
+                  />
+                  <Text fontWeight={"600"} fontSize={"lg"} color={"#005D5D"}>
+                    Link Requests
+                  </Text>
+                </Flex>
+                <Divider mt={"0.3rem"} mb={"1rem"} />
+              </Box>
 
               <Flex w={"full"} mb={"0.5rem"} flexDir={"column"} gap={4}>
                 {(requestData ?? []).length === 0 ? (
@@ -448,8 +458,8 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                         >
                           <Box w={"full"}>
                             <Flex
-                            flexDir={{base:"column", sm:"row"}}
-                              alignItems={"center"}
+                              flexDir={{ base: "column", sm: "row" }}
+                              alignItems={{ base: "start", sm: "center" }}
                               justifyContent={"space-between"}
                               gap={2}
                               w={"full"}
@@ -593,38 +603,33 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                     </Tr>
                   </Thead>
                   <Tbody>
-                    {graycases?.map(
-                        (graycase: any, index: any) => {
-                          return (
-                            <Tr
-                              key={index}
-                              _hover={{
-                                backgroundColor: "#005D5D10",
-                                cursor: "pointer",
-                              }}
-                              onClick={() => {
-                                handleGreycaseItem(graycase);
-                              }}
+                    {graycases?.map((graycase: any, index: any) => {
+                      return (
+                        <Tr
+                          key={index}
+                          _hover={{
+                            backgroundColor: "#005D5D10",
+                            cursor: "pointer",
+                          }}
+                          onClick={() => {
+                            handleGreycaseItem(graycase);
+                          }}
+                        >
+                          <Td>
+                            {graycase?.firstName} {graycase?.lastName}
+                          </Td>
+                          <Td>{graycase?.category}</Td>
+                          <Td>
+                            <Badge
+                              colorScheme={graycase?.isActive ? "green" : "red"}
                             >
-                              <Td>
-                                {graycase?.firstName} {graycase?.lastName}
-                              </Td>
-                              <Td>{graycase?.category}</Td>
-                              <Td>
-                                <Badge
-                                  colorScheme={
-                                    graycase?.isActive ? "green" : "red"
-                                  }
-                                >
-                                  {graycase?.isActive ? "ACTIVE" : "INACTIVE"}
-                                </Badge>
-                              </Td>
-                              <Td>{formatDate(graycase?.createdAt)}</Td>
-                            </Tr>
-                          );
-                        }
-                      )
-                    }
+                              {graycase?.isActive ? "ACTIVE" : "INACTIVE"}
+                            </Badge>
+                          </Td>
+                          <Td>{graycase?.createdAt}</Td>
+                        </Tr>
+                      );
+                    })}
                     <GraycaseModal
                       isOpen={isGraycaseModalOpen}
                       onClose={onGraycaseModalClose}

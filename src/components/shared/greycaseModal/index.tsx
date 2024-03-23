@@ -16,7 +16,6 @@ import {
   Divider,
   Badge,
 } from "@chakra-ui/react";
-import { formatDate } from '@/helpers/formatDate';
 
 interface GraycaseModalProps {
   isOpen: boolean;
@@ -38,7 +37,7 @@ const GraycaseModal: FC<GraycaseModalProps> = ({isOpen, onClose, graycase}) => {
         <ModalCloseButton />
         <ModalBody>
           <Box display={"flex"} alignItems={"center"} gap={2}>
-            <Avatar size={"lg"} />
+            <Avatar size={"lg"} src={graycase.profileImage}/>
             <Box>
               <Text fontSize={"lg"} fontWeight={"bold"}>
                 {graycase?.firstName} {graycase?.lastName}
@@ -100,7 +99,7 @@ const GraycaseModal: FC<GraycaseModalProps> = ({isOpen, onClose, graycase}) => {
 
         <ModalFooter>
           <Text fontSize={"xs"} color={"#00000080"}>
-            {formatDate(graycase?.createdAt)}
+            {graycase?.createdAt}
           </Text>
         </ModalFooter>
       </ModalContent>
