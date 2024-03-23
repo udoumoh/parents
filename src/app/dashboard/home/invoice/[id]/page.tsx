@@ -65,7 +65,7 @@ interface StudentInvoiceProps {
 const Invoice: FC<InvoiceProps> = ({ params }: { params: { id: number } }) => {
     const router = useRouter()
     const { currentWardProfile } = useUserAPI();
-    const [currentInvoice, setCurrentInvoice] = useState<StudentInvoiceProps>()
+    const [currentInvoice, setCurrentInvoice] = useState<StudentInvoiceProps | undefined>()
     const [invoiceData, setInvoiceData] = useState<StudentInvoiceProps[]>([]);
     const { data: getinvoice } = useQuery(GET_STUDENT_INVOICE, {
     variables: { studentId: currentWardProfile?.id },
