@@ -48,6 +48,7 @@ interface StudentInvoiceProps {
   invoiceId: string;
   schoolname: string;
   schoollogo: string;
+  balance: number;
   receipt: {
     amountPaid: number;
     createdAt: string;
@@ -100,6 +101,7 @@ const Invoice: FC<InvoiceProps> = ({ params }: { params: { id: number } }) => {
               schoolname: item?.creatorSchool,
               schoollogo: item?.student?.creator?.admin?.schoolImg,
               receipt: item?.receipt,
+              balance: item?.balance,
             })
           );
           setInvoiceData(parsedInvoiceData);
@@ -265,23 +267,6 @@ const Invoice: FC<InvoiceProps> = ({ params }: { params: { id: number } }) => {
                                   borderColor={"#00000060"}
                                 />
                               </Center>
-
-                              <Box>
-                                <Text
-                                  fontSize={"xs"}
-                                  fontWeight={"bold"}
-                                  color={"#00000080"}
-                                >
-                                  Balance
-                                </Text>
-                                <Text
-                                  fontSize={"md"}
-                                  fontWeight={"bold"}
-                                  color={"#000000"}
-                                >
-                                  N/A
-                                </Text>
-                              </Box>
                             </Flex>
                           </Box>
                         </Box>
@@ -466,7 +451,7 @@ const Invoice: FC<InvoiceProps> = ({ params }: { params: { id: number } }) => {
                         fontWeight={"bold"}
                         color={"#000000"}
                       >
-                        N/A
+                        {currentInvoice?.balance}
                       </Text>
                     </Box>
                   </Flex>

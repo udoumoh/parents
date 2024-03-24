@@ -9,7 +9,6 @@ import "./globals.css";
 import Loading from "./loading";
 import LoadingBar from "react-top-loading-bar";
 import { Router } from "next/router";
-import TopBarProgress from "react-topbar-progress-indicator";
 
 const mulish = Mulish({ subsets: ["cyrillic"] });
 
@@ -24,20 +23,13 @@ const client = new ApolloClient({
 });
 
 const Layout: FC<LayoutProps> = ({ children }) => {
-  const [progress, setProgress] = useState(false);
-
-  Router.events.on("routeChangeStart", () => {
-    setProgress(true);
-  });
+  const [progress, setProgress] = useState(0);
+  Router.events.on("routeChangeStart", ()=>{
+    setProgress(10);
+  })
   Router.events.on("routeChangeComplete", () => {
-    setProgress(false);
-  });
-  TopBarProgress.config({
-    barColors: {
-      "0": "#099C9B",
-      "1.0": "#007C7B",
-    },
-  });
+    setProgress(100);
+  })
   return (
     <html lang="en">
       <head>
@@ -46,11 +38,15 @@ const Layout: FC<LayoutProps> = ({ children }) => {
       <body className={mulish.className}>
         <ApolloProvider client={client}>
           <Providers>
-            {progress && <TopBarProgress />}
             {typeof window === "undefined" ? (
               <Loading />
             ) : (
               <UserApiProvider>
+                <LoadingBar
+                  color="#f11946"
+                  progress={progress}
+                  onLoaderFinished={() => setProgress(0)}
+                />
                 {children}
               </UserApiProvider>
             )}
