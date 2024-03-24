@@ -451,7 +451,7 @@ const Invoice: FC<InvoiceProps> = ({ params }: { params: { id: number } }) => {
                         fontWeight={"bold"}
                         color={"#000000"}
                       >
-                        {currentInvoice?.balance}
+                        ₦{formatNumberWithCommas(currentInvoice?.balance)}
                       </Text>
                     </Box>
                   </Flex>
