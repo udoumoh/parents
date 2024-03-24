@@ -94,7 +94,11 @@ const EditProfileModal: FC<EditProfileModalProps> = ({
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <Modal
+      isOpen={isOpen}
+      onClose={onClose}
+      size={{ base: "xs", sm: "sm", md: "md" }}
+    >
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>Update your profile image</ModalHeader>

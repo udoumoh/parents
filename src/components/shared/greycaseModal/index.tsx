@@ -25,7 +25,11 @@ interface GraycaseModalProps {
 
 const GraycaseModal: FC<GraycaseModalProps> = ({isOpen, onClose, graycase}) => {
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <Modal
+      isOpen={isOpen}
+      onClose={onClose}
+      size={{ base: "xs", sm: "sm", md: "md" }}
+    >
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>
@@ -37,7 +41,7 @@ const GraycaseModal: FC<GraycaseModalProps> = ({isOpen, onClose, graycase}) => {
         <ModalCloseButton />
         <ModalBody>
           <Box display={"flex"} alignItems={"center"} gap={2}>
-            <Avatar size={"lg"} src={graycase?.profileImage}/>
+            <Avatar size={"lg"} src={graycase?.profileImage} />
             <Box>
               <Text fontSize={"lg"} fontWeight={"bold"}>
                 {graycase?.firstName} {graycase?.lastName}
@@ -53,24 +57,16 @@ const GraycaseModal: FC<GraycaseModalProps> = ({isOpen, onClose, graycase}) => {
               category
             </Text>
             <Box display={"flex"} alignItems={"center"} gap={"3"}>
-              <Text fontWeight={"bold"}>
-                {graycase?.category}
-              </Text>
+              <Text fontWeight={"bold"}>{graycase?.category}</Text>
               <Badge
-                colorScheme={
-                  graycase?.isActive
-                    ? "green"
-                    : "red"
-                }
+                colorScheme={graycase?.isActive ? "green" : "red"}
                 size={"sm"}
                 px={"0.6rem"}
                 py={"0.3rem"}
                 fontSize={"3xs"}
                 rounded={"full"}
               >
-                {graycase?.isActive
-                  ? "Active"
-                  : "Inactive"}
+                {graycase?.isActive ? "Active" : "Inactive"}
               </Badge>
             </Box>
           </Box>
@@ -90,9 +86,7 @@ const GraycaseModal: FC<GraycaseModalProps> = ({isOpen, onClose, graycase}) => {
               p={2}
               rounded={"md"}
             >
-              <Text>
-                {graycase?.notes}
-              </Text>
+              <Text>{graycase?.notes}</Text>
             </Box>
           </Box>
         </ModalBody>
