@@ -612,15 +612,6 @@ const GeneratedResults: React.FC<GeneratedResultsProps> = ({
               }
               fileName={`${result?.studentsFirstName} ${result?.studentsLastName} Result`}
             >
-              {({ blob, url, loading, error }) =>
-                loading ? (
-                  <Text>Loading...</Text>
-                ) : (
-                  <Button colorScheme="blue" my={4} w="100%">
-                    Download PDF
-                  </Button>
-                )
-              }
             </PDFDownloadLink>
           </Box>
           <VStack h="full" display={{ base: "none", md: "block" }}>
