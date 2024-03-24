@@ -36,7 +36,6 @@ import { FaCheck } from "react-icons/fa6";
 import { MdOutlineClose } from "react-icons/md";
 import AcceptInvoiceModal from "@/components/shared/acceptInvoiceModal";
 import RejectInvoiceModal from "@/components/shared/rejectinvoicemodal";
-import InvoiceDataDrawer from "@/components/shared/invoiceDataDrawer";
 import { TbFileInvoice } from "react-icons/tb";
 import { useRouter } from "next/navigation";
 
@@ -70,7 +69,7 @@ interface StudentInvoiceProps {
 
 const Invoice: FC<InvoiceProps> = ({}) => {
   const router = useRouter()
-  const { currentWardProfile } = useUserAPI();
+  const { currentWardProfile, parentData } = useUserAPI();
 
   const {
     isOpen: isAcceptModalOpen,
@@ -186,6 +185,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
     onRejectModalOpen();
   };
 
+  console.log(parentData)
   return (
     <Box mb={{ base: "8rem", lg: "5rem" }}>
       <Box>
@@ -471,7 +471,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                             </Td>
                             <Td>
                               <Menu size={"sm"}>
-                                <MenuButton p={4}>
+                                <MenuButton>
                                   <Icon
                                     as={BsThreeDots}
                                     _hover={{ cursor: "pointer" }}
