@@ -1,4 +1,4 @@
-'use client'
+/* eslint-disable jsx-a11y/alt-text */
 import {
   Button,
   Divider,
@@ -11,8 +11,6 @@ import {
   ModalOverlay,
   VStack,
   useDisclosure,
-  Box,
-  // Image,
 } from "@chakra-ui/react";
 import {
   Document,
@@ -22,7 +20,6 @@ import {
   View,
   Image,
   PDFViewer,
-  PDFDownloadLink,
 } from "@react-pdf/renderer";
 import React from "react";
 import { formatDate } from "@/helpers/formatDate";
@@ -207,7 +204,7 @@ const GeneratedResults: React.FC<GeneratedResultsProps> = ({
         </ModalHeader>
         <ModalCloseButton />
         <ModalBody>
-          <VStack h="full" display={{ base: "none", md: "block" }}>
+          <VStack h="full">
             <PDFViewer
               height="100%"
               width="100%"
@@ -241,7 +238,6 @@ const GeneratedResults: React.FC<GeneratedResultsProps> = ({
                         <Image
                           src={result?.schoolLogo}
                           style={{ width: 50, height: 50, marginRight: 10 }}
-                          
                         />
                         <Text style={styles.header}>
                           {result?.authorsSchoolName}
@@ -274,7 +270,6 @@ const GeneratedResults: React.FC<GeneratedResultsProps> = ({
                           <Image
                             src={result?.studentProfileImgUrl}
                             style={{ width: 70, height: 70, marginRight: 10 }}
-                            
                           />
                           <View
                             style={{
