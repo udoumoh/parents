@@ -326,13 +326,16 @@ const Invoice: FC<InvoiceProps> = ({ params }: { params: { id: number } }) => {
                           >
                             Summary
                           </Text>
-                          <Text
-                            fontSize={"md"}
-                            fontWeight={"bold"}
-                            color={"#000000"}
+                          <Box
+                            border={"1px solid #005D5D"}
+                            backgroundColor={"#005D5D30"}
+                            p={2}
+                            rounded={"md"}
                           >
-                            {receipt?.summary}
-                          </Text>
+                            <Text fontSize={"lg"}>
+                              {receipt?.summary}
+                            </Text>
+                          </Box>
                         </Box>
 
                         <Box>
@@ -420,14 +423,18 @@ const Invoice: FC<InvoiceProps> = ({ params }: { params: { id: number } }) => {
                         fontWeight={"bold"}
                         color={"#00000080"}
                       >
-                        Amount Paid
+                        Amount to be Paid
                       </Text>
                       <Text
                         fontSize={"md"}
                         fontWeight={"bold"}
                         color={"#000000"}
                       >
-                        ₦{formatNumberWithCommas(currentInvoice?.amountPaid + getCompletedInvoiceAmount(currentInvoice))}
+                        ₦
+                        {formatNumberWithCommas(
+                          currentInvoice?.amountPaid +
+                            getCompletedInvoiceAmount(currentInvoice)
+                        )}
                       </Text>
                     </Box>
 
@@ -466,9 +473,14 @@ const Invoice: FC<InvoiceProps> = ({ params }: { params: { id: number } }) => {
                 <Text fontSize={"xs"} fontWeight={"bold"} color={"#00000080"}>
                   Summary
                 </Text>
-                <Text fontSize={"md"} fontWeight={"bold"} color={"#000000"}>
-                  {currentInvoice?.summary}
-                </Text>
+                <Box
+                  border={"1px solid #005D5D"}
+                  backgroundColor={"#005D5D30"}
+                  p={2}
+                  rounded={"md"}
+                >
+                  <Text fontSize={'lg'}>{currentInvoice?.summary}</Text>
+                </Box>
               </Box>
 
               <Box

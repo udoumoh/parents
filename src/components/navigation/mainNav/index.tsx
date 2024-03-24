@@ -14,9 +14,6 @@ import {
   Image,
   Button,
   Grid,
-  InputGroup,
-  InputLeftElement,
-  Input,
   Icon,
   IconButton,
   Tooltip,
@@ -32,9 +29,6 @@ import {
   MenuButton,
   MenuList,
   MenuItem,
-  MenuItemOption,
-  MenuGroup,
-  MenuOptionGroup,
   MenuDivider,
   useToast,
 } from "@chakra-ui/react";
@@ -49,7 +43,6 @@ import {
   RiArrowRightSLine,
 } from "react-icons/ri";
 import {
-  AiOutlineSearch,
   AiOutlinePlus,
   AiOutlineSetting,
 } from "react-icons/ai";
@@ -89,16 +82,6 @@ interface SidebarProps extends BoxProps {
 
 interface MainNav {
   children: React.ReactNode;
-}
-
-interface SearchResultItemProps {
-  student: {
-    name: string;
-    profileImageUrl: string;
-    gender: string;
-    className: string;
-    age: number;
-  }
 }
 
 const LinkItems: Array<LinkItemProps> = [

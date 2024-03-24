@@ -31,7 +31,6 @@ interface RequestDataProps {
 }
 
 const Page: FC<pageProps> = ({}) => {
-  const toast = useToast()
   const { childData, parentData } = useUserAPI();
   const { data: getRequests } = useQuery(PARENT_REQUESTS, {
     variables: { parentId: parentData?.userId },

@@ -221,8 +221,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
             py={2}
             gap={"2"}
             w={"full"}
-            shadow={"md"}
-            _hover={{ boxShadow: "sm" }}
+            _hover={{ boxShadow: "md", transitionDuration: "0.5s" }}
           >
             <Text fontSize={"md"} color={"blue.800"} fontWeight={"500"}>
               Total Amount Paid
@@ -255,8 +254,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
             py={2}
             gap={"2"}
             w={"full"}
-            shadow={"md"}
-            _hover={{ boxShadow: "sm" }}
+            _hover={{ boxShadow: "md", transitionDuration: "0.5s" }}
           >
             <Text fontSize={"md"} color={"blue.800"} fontWeight={"500"}>
               Active
@@ -288,8 +286,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
             py={2}
             gap={"2"}
             w={"full"}
-            shadow={"md"}
-            _hover={{ boxShadow: "sm" }}
+            _hover={{ boxShadow: "md", transitionDuration: "0.5s" }}
           >
             <Text fontSize={"lg"} color={"blue.800"} fontWeight={"500"}>
               Rejected
@@ -321,8 +318,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
             py={2}
             gap={"2"}
             w={"full"}
-            shadow={"md"}
-            _hover={{ boxShadow: "sm" }}
+            _hover={{ boxShadow: "md", transitionDuration: "0.5s" }}
           >
             <Text fontSize={"md"} color={"blue.800"} fontWeight={"500"}>
               Processing
@@ -450,8 +446,13 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                             <Td fontWeight={"bold"}>
                               ₦
                               {item?.status === "completed"
-                                ? formatNumberWithCommas(getCompletedInvoiceAmount(item))
-                                : formatNumberWithCommas(item?.amountPaid + getCompletedInvoiceAmount(item))}
+                                ? formatNumberWithCommas(
+                                    getCompletedInvoiceAmount(item)
+                                  )
+                                : formatNumberWithCommas(
+                                    item?.amountPaid +
+                                      getCompletedInvoiceAmount(item)
+                                  )}
                             </Td>
                             <Td>
                               <Badge
