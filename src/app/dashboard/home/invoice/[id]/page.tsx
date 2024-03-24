@@ -119,7 +119,7 @@ const Invoice: FC<InvoiceProps> = ({ params }: { params: { id: number } }) => {
       alignItems={"start"}
       justifyContent={"center"}
       flexDir={"column"}
-      pb={"5rem"}
+      pb={"10rem"}
     >
       <Button
         mb={"2rem"}
