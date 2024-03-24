@@ -12,6 +12,7 @@ import {
   VStack,
   useDisclosure,
   Box,
+  Image,
 } from "@chakra-ui/react";
 import {
   Document,
@@ -19,7 +20,7 @@ import {
   StyleSheet,
   Text,
   View,
-  Image,
+  // Image,
   PDFViewer,
   PDFDownloadLink,
 } from "@react-pdf/renderer";
@@ -222,7 +223,7 @@ const GeneratedResults: React.FC<GeneratedResultsProps> = ({
                     style={styles.page}
                   >
                     {/* Watermark */}
-                    <Image src={result?.schoolLogo} style={styles.watermark} />
+                    <Image src={result?.schoolLogo} style={styles.watermark} alt='' />
                     <View style={styles.section}>
                       {/* Header with School Logo and Name */}
 
@@ -237,6 +238,7 @@ const GeneratedResults: React.FC<GeneratedResultsProps> = ({
                           <Image
                             src={result?.schoolLogo}
                             style={{ width: 50, height: 50, marginRight: 10 }}
+                            alt=''
                           />
                           <Text style={styles.header}>
                             {result?.authorsSchoolName}
@@ -269,6 +271,7 @@ const GeneratedResults: React.FC<GeneratedResultsProps> = ({
                             <Image
                               src={result?.studentProfileImgUrl}
                               style={{ width: 70, height: 70, marginRight: 10 }}
+                              alt=''
                             />
                             <View
                               style={{
@@ -639,7 +642,7 @@ const GeneratedResults: React.FC<GeneratedResultsProps> = ({
                   style={styles.page}
                 >
                   {/* Watermark */}
-                  <Image src={result?.schoolLogo} style={styles.watermark} />
+                  <Image src={result?.schoolLogo} style={styles.watermark} alt=''/>
                   <View style={styles.section}>
                     {/* Header with School Logo and Name */}
 
@@ -654,6 +657,7 @@ const GeneratedResults: React.FC<GeneratedResultsProps> = ({
                         <Image
                           src={result?.schoolLogo}
                           style={{ width: 50, height: 50, marginRight: 10 }}
+                          alt=''
                         />
                         <Text style={styles.header}>
                           {result?.authorsSchoolName}
@@ -686,6 +690,7 @@ const GeneratedResults: React.FC<GeneratedResultsProps> = ({
                           <Image
                             src={result?.studentProfileImgUrl}
                             style={{ width: 70, height: 70, marginRight: 10 }}
+                            alt=""
                           />
                           <View
                             style={{
