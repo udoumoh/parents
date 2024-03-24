@@ -145,14 +145,15 @@ const Invoice: FC<InvoiceProps> = ({}) => {
   );
 
   const totalActiveAmount = activeInvoice?.reduce(
-    (accumulator, invoice) => accumulator + invoice.amountPaid,
+    (accumulator, invoice) =>
+      accumulator + (invoice.amountPaid + getCompletedInvoiceAmount(invoice)),
     0
-  )
+  );
 
   console.log(activeInvoice)
 
   const totalRejectedAmount = rejectedInvoice?.reduce(
-    (accumulator, invoice) => accumulator + (invoice.amountPaid + getCompletedInvoiceAmount(invoice)),
+    (accumulator, invoice) => accumulator + invoice.amountPaid,
     0
   );
   const totalProcessingAmount = processingInvoice?.reduce(
