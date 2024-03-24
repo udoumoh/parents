@@ -147,7 +147,9 @@ const Invoice: FC<InvoiceProps> = ({}) => {
   const totalActiveAmount = activeInvoice?.reduce(
     (accumulator, invoice) => accumulator + invoice.amountPaid,
     0
-  ) + getCompletedInvoiceAmount(activeInvoice)
+  )
+
+  console.log(activeInvoice)
 
   const totalRejectedAmount = rejectedInvoice?.reduce(
     (accumulator, invoice) => accumulator + invoice.amountPaid,
@@ -448,7 +450,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                               ₦
                               {item?.status === "completed"
                                 ? formatNumberWithCommas(getCompletedInvoiceAmount(item))
-                                : formatNumberWithCommas(item?.amountPaid)}
+                                : formatNumberWithCommas(item?.amountPaid + getCompletedInvoiceAmount(item))}
                             </Td>
                             <Td>
                               <Badge
