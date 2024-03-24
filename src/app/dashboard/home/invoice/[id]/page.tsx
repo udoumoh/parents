@@ -83,6 +83,13 @@ const Invoice: FC<InvoiceProps> = ({ params }: { params: { id: number } }) => {
       onClose: onImageViewerClose,
     } = useDisclosure();
 
+    const getCompletedInvoiceAmount = (invoice: any) => {
+      const totalCompletedAmount = invoice?.receipt
+        ?.map((receipt: any) => receipt?.amountPaid)
+        .reduce((acc: any, item: any) => acc + item, 0);
+      return totalCompletedAmount;
+    };
+
     useEffect(() => {
       const fetchData = async () => {
         try {
@@ -260,13 +267,6 @@ const Invoice: FC<InvoiceProps> = ({ params }: { params: { id: number } }) => {
                                   ₦{formatNumberWithCommas(receipt?.amountPaid)}
                                 </Text>
                               </Box>
-
-                              <Center height={"40px"}>
-                                <Divider
-                                  orientation="vertical"
-                                  borderColor={"#00000060"}
-                                />
-                              </Center>
                             </Flex>
                           </Box>
                         </Box>
@@ -427,7 +427,7 @@ const Invoice: FC<InvoiceProps> = ({ params }: { params: { id: number } }) => {
                         fontWeight={"bold"}
                         color={"#000000"}
                       >
-                        ₦{formatNumberWithCommas(currentInvoice?.amountPaid)}
+                        ₦{formatNumberWithCommas(currentInvoice?.amountPaid + getCompletedInvoiceAmount(currentInvoice))}
                       </Text>
                     </Box>
 
