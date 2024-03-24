@@ -124,6 +124,13 @@ const Invoice: FC<InvoiceProps> = ({}) => {
     fetchData();
   }, [getinvoice]);
 
+  const getCompletedInvoiceAmount = (invoice: any) => {
+    const totalCompletedAmount = invoice?.receipt
+      ?.map((receipt: any) => receipt?.amountPaid)
+      .reduce((acc: any, item: any) => acc + item, 0);
+    return totalCompletedAmount;
+  };
+
   const completedInvoice = invoiceData?.filter(
     (invoice) => invoice.status === "completed"
   );
@@ -140,7 +147,8 @@ const Invoice: FC<InvoiceProps> = ({}) => {
   const totalActiveAmount = activeInvoice?.reduce(
     (accumulator, invoice) => accumulator + invoice.amountPaid,
     0
-  );
+  ) + getCompletedInvoiceAmount(activeInvoice)
+
   const totalRejectedAmount = rejectedInvoice?.reduce(
     (accumulator, invoice) => accumulator + invoice.amountPaid,
     0
@@ -159,11 +167,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
     )
     .reduce((acc: any, item: any) => acc + item, 0);
 
-  const getCompletedInvoiceAmount = (invoice: any) => {
-    const totalCompletedAmount = invoice?.receipt?.map((receipt: any) => receipt?.amountPaid)
-      .reduce((acc: any, item: any) => acc + item, 0);
-    return formatNumberWithCommas(totalCompletedAmount);
-  };
+  
 
   const handleSelectedInvoice = (id: any) => {
       router.push(`/dashboard/home/invoice/${id}`);
@@ -443,7 +447,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                             <Td fontWeight={"bold"}>
                               ₦
                               {item?.status === "completed"
-                                ? getCompletedInvoiceAmount(item)
+                                ? formatNumberWithCommas(getCompletedInvoiceAmount(item))
                                 : formatNumberWithCommas(item?.amountPaid)}
                             </Td>
                             <Td>
@@ -553,7 +557,10 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                             <Td>{item?.category}</Td>
                             <Td>{item?.createdAt}</Td>
                             <Td fontWeight={"bold"}>
-                              ₦{getCompletedInvoiceAmount(item)}
+                              ₦
+                              {formatNumberWithCommas(
+                                getCompletedInvoiceAmount(item)
+                              )}
                             </Td>
                             <Td>
                               <Badge
