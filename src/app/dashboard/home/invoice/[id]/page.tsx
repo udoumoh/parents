@@ -119,13 +119,14 @@ const Invoice: FC<InvoiceProps> = ({ params }: { params: { id: number } }) => {
       alignItems={"start"}
       justifyContent={"center"}
       flexDir={"column"}
+      mb={"2rem"}
     >
       <Button
-        mb={'2rem'}
+        mb={"2rem"}
         leftIcon={<IoIosArrowRoundBack />}
         variant={"outline"}
         colorScheme="green"
-        onClick={()=>router.push('/dashboard/home/invoice')}
+        onClick={() => router.push("/dashboard/home/invoice")}
       >
         Back to invoice page
       </Button>

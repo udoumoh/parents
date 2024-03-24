@@ -212,7 +212,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
           backgroundColor={"transparent"}
           rounded={"md"}
           border={"1px solid #E2E2E2"}
-          size={"md"}
+          size={"sm"}
           onClick={() => router.push('/dashboard/home/invoice')}
         >
           <Text fontSize={"sm"} color={"#747474"}>

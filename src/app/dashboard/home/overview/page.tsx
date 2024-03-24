@@ -43,17 +43,22 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
                 </Text>
               </Box>
             </Box>
-            <Box display={'flex'} gap={2} alignItems={'initial'}>
+            <Box display={"flex"} gap={2} alignItems={"initial"}>
               <Image
-                rounded={'lg'}
+                rounded={"lg"}
                 src={currentWardProfile?.schoollogo}
                 alt="profileImg"
                 w={{ base: "2.5rem", lg: "4.5rem" }}
                 h={{ base: "2.5rem", lg: "4.5rem" }}
                 pointerEvents={"none"}
               />
-              <Box>
-                <Text fontSize={{ base: "xs", lg: "md" }} maxW={'150px'} fontWeight={'600'}>
+              <Box display={{base:"block", md:"none"}}>
+                <Text
+                  fontSize={{ base: "xs", lg: "md" }}
+                  maxW={"150px"}
+                  fontWeight={"600"}
+                  color={'#005D5D'}
+                >
                   {currentWardProfile?.school}
                 </Text>
               </Box>
@@ -100,6 +105,18 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
                   color={"#606162"}
                 >
                   {currentWardProfile?.dateOfBirth}
+                </Text>
+              </Grid>
+              <Grid gap={1} display={{base:"none", md:"block"}}>
+                <Text color={"#449c7c"} fontSize={"0.8rem"} fontWeight={"600"}>
+                  School
+                </Text>
+                <Text
+                  fontWeight={"600"}
+                  fontSize={{ base: "xs", md: "lg" }}
+                  color={"#606162"}
+                >
+                  {currentWardProfile?.school}
                 </Text>
               </Grid>
             </Box>
