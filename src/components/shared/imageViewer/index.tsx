@@ -1,5 +1,4 @@
 import { FC } from 'react'
-import ImageViewer from "react-simple-image-viewer";
 import {
   Box,
   Image,
