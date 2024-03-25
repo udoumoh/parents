@@ -414,7 +414,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                 <TableContainer>
                   <Table variant="simple" size={{ base: "sm", md: "md" }}>
                     <Thead>
-                      <Tr backgroundColor={"#213363"} rounded={"lg"}>
+                      <Tr>
                         <Th>Inv. ID</Th>
                         <Th>School</Th>
                         <Th>Category</Th>
@@ -585,12 +585,14 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                 variant="solid"
                                 colorScheme={
                                   item?.status === "active"
-                                    ? "green"
+                                    ? "blue"
                                     : item?.status === "rejected by parent"
                                     ? "red"
                                     : item?.status === "processing"
                                     ? "yellow"
-                                    : "purple"
+                                    : item?.status === 'completed'
+                                    ? "green"
+                                    : 'black'
                                 }
                               >
                                 {item?.status}
