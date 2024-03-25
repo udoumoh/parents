@@ -428,7 +428,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                             <Td
                               fontWeight={"bold"}
                               fontSize={"sm"}
-                              color={"green.500"}
+                              color={"green.700"}
                             >
                               {item?.invoiceId}
                             </Td>
@@ -607,7 +607,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                       {completedInvoice?.map((item, index) => {
                         return (
                           <Tr key={index}>
-                            <Td fontWeight={"bold"} fontSize={"sm"}>
+                            <Td color={"green.700"} fontWeight={"bold"} fontSize={"sm"}>
                               {item?.invoiceId}
                             </Td>
                             <Td>
@@ -720,7 +720,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                     <Icon
                                       as={TbFileInvoice}
                                       boxSize={"4"}
-                                      color={"#005D5D"}
+                                      color={"red.600"}
                                     />
                                     <Text color={"#005D5D"} fontWeight={"600"}>
                                       View Invoice Details
@@ -760,7 +760,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                       {activeInvoice?.map((item, index) => {
                         return (
                           <Tr key={index}>
-                            <Td fontWeight={"bold"} fontSize={"sm"}>
+                            <Td color={"green.700"} fontWeight={"bold"} fontSize={"sm"}>
                               {item?.invoiceId}
                             </Td>
                             <Td>
@@ -910,7 +910,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                       {rejectedInvoice?.map((item, index) => {
                         return (
                           <Tr key={index}>
-                            <Td fontWeight={"bold"} fontSize={"sm"}>
+                            <Td color={"green.700"} fontWeight={"bold"} fontSize={"sm"}>
                               {item?.invoiceId}
                             </Td>
                             <Td>
@@ -1060,7 +1060,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                       {processingInvoice?.map((item, index) => {
                         return (
                           <Tr key={index}>
-                            <Td fontWeight={"bold"} fontSize={"sm"}>
+                            <Td color={"green.700"} fontWeight={"bold"} fontSize={"sm"}>
                               {item?.invoiceId}
                             </Td>
                             <Td>
