@@ -417,7 +417,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                     size={{ base: "sm", md: "md" }}
                   >
                     <Thead>
-                      <Tr backgroundColor={"#005D5D40"}>
+                      <Tr backgroundColor={"gray.400"} borderTopEndRadius={'lg'}>
                         <Th>Inv. ID</Th>
                         <Th>School</Th>
                         <Th>Category</Th>
@@ -460,7 +460,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                             <Td fontWeight={"bold"}>
                               {item?.status === "rejected by parent"
                                 ? `-`
-                                : `#${formatNumberWithCommas(item?.balance)}`}
+                                : `₦${formatNumberWithCommas(item?.balance)}`}
                             </Td>
                             <Td>
                               <Badge

@@ -61,7 +61,7 @@ const InvoiceItem: FC<InvoiceItemProps> = ({
     >
       <Box backgroundColor={"#E2E2E2"} rounded={"lg"} p={"0.6rem"} pb={"1rem"}>
         <Box display={"flex"} gap={1} alignItems={"center"}>
-          <Text fontSize={"sm"} color={"#666666"}>
+          <Text fontSize={"xs"} color={"#666666"}>
             {studentInvoice.term}
           </Text>{" "}
           •{" "}
@@ -72,7 +72,7 @@ const InvoiceItem: FC<InvoiceItemProps> = ({
         <Text color={"#666666"} mt={"1.3rem"} fontSize={"xs"}>
           {studentInvoice.category}
         </Text>
-        <Text color={"#000"} fontSize={"2xl"} fontWeight={"500"}>
+        <Text color={"#000"} fontSize={"2xl"} fontWeight={"600"}>
           ₦ {formatNumberWithCommas(studentInvoice.amountPaid)}
         </Text>
       </Box>

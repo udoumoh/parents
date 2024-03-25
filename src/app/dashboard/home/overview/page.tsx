@@ -68,6 +68,7 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
             <Box
               textAlign={"start"}
               display={"flex"}
+              alignItems={'center'}
               gap={{ base: 2, md: 10 }}
               my={"1rem"}
             >
