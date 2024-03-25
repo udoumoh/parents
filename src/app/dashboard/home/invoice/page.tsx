@@ -412,12 +412,9 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                 mt={"1rem"}
               >
                 <TableContainer>
-                  <Table
-                    variant="simple"
-                    size={{ base: "sm", md: "md" }}
-                  >
+                  <Table variant="simple" size={{ base: "sm", md: "md" }}>
                     <Thead>
-                      <Tr backgroundColor={"gray.400"} borderTopRadius={'lg'}>
+                      <Tr backgroundColor={"#213363"} rounded={"lg"}>
                         <Th>Inv. ID</Th>
                         <Th>School</Th>
                         <Th>Category</Th>
