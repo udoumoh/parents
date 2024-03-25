@@ -424,7 +424,11 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                       {invoiceData?.map((item, index) => {
                         return (
                           <Tr key={index}>
-                            <Td fontWeight={"bold"} fontSize={"sm"} color={'green.500'}>
+                            <Td
+                              fontWeight={"bold"}
+                              fontSize={"sm"}
+                              color={"green.500"}
+                            >
                               {item?.invoiceId}
                             </Td>
                             <Td>
@@ -521,7 +525,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                     }
                                   >
                                     <Icon
-                                      as={FaCheck}
+                                      as={MdOutlineClose}
                                       boxSize={"4"}
                                       color={"#005D5D"}
                                     />
