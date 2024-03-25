@@ -476,7 +476,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                               </Badge>
                             </Td>
                             <Td>
-                              <Menu size={"sm"}>
+                              <Menu>
                                 <MenuButton>
                                   <Icon
                                     as={BsThreeDots}
@@ -486,7 +486,9 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                 </MenuButton>
                                 <MenuList>
                                   <MenuItem
-                                    icon={<FaCheck />}
+                                    px={"1rem"}
+                                    display={"flex"}
+                                    gap={"3"}
                                     isDisabled={
                                       !["active", "partial payment"].includes(
                                         item?.status
@@ -496,10 +498,19 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                       handleAcceptInvoice(item?.id)
                                     }
                                   >
-                                    Accept Invoice
+                                    <Icon
+                                      as={FaCheck}
+                                      boxSize={"4"}
+                                      color={"#005D5D"}
+                                    />
+                                    <Text color={"#005D5D"} fontWeight={"600"}>
+                                      Accept Invoice
+                                    </Text>
                                   </MenuItem>
                                   <MenuItem
-                                    icon={<MdOutlineClose />}
+                                    px={"1rem"}
+                                    display={"flex"}
+                                    gap={"3"}
                                     isDisabled={
                                       !["active", "partial payment"].includes(
                                         item?.status
@@ -509,15 +520,36 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                       handleRejectInvoice(item?.id)
                                     }
                                   >
-                                    Reject Invoice
+                                    <Icon
+                                      as={FaCheck}
+                                      boxSize={"4"}
+                                      color={"#005D5D"}
+                                    />
+                                    <Text color={"#005D5D"} fontWeight={"600"}>
+                                      Reject Invoice
+                                    </Text>
                                   </MenuItem>
                                   <MenuItem
-                                    icon={<TbFileInvoice />}
+                                    px={"1rem"}
+                                    display={"flex"}
+                                    gap={"3"}
+                                    isDisabled={
+                                      !["active", "partial payment"].includes(
+                                        item?.status
+                                      )
+                                    }
                                     onClick={() => {
                                       handleSelectedInvoice(item?.id);
                                     }}
                                   >
-                                    View Invoice Details
+                                    <Icon
+                                      as={TbFileInvoice}
+                                      boxSize={"4"}
+                                      color={"#005D5D"}
+                                    />
+                                    <Text color={"#005D5D"} fontWeight={"600"}>
+                                      View Invoice Details
+                                    </Text>
                                   </MenuItem>
                                 </MenuList>
                               </Menu>
