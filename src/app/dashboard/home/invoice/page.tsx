@@ -165,13 +165,14 @@ const Invoice: FC<InvoiceProps> = ({}) => {
     0
   );
 
-    const totalOverpaidAmount = invoiceData
+  const totalOverpaidAmount = invoiceData
       .filter((invoice) => invoice.status === "parent overpaid")
       .reduce((acc, item) => acc + item.balance, 0);
 
   const nonEmptyReceipts = invoiceData
     ?.map((invoice) => invoice?.receipt)
     ?.filter((receipt: any) => receipt?.length !== 0);
+
   const totalAmountPaid = nonEmptyReceipts
     ?.map((receiptItem) =>
       receiptItem?.reduce((acc, item) => acc + item?.amountPaid, 0)

@@ -61,6 +61,7 @@ const LinkRequestModal: FC<LinkRequestModalProps> = ({
             message: message,
             purpose: purpose,
             studentId: student.id,
+            document: 'PNG',
           },
         });
         if (!response) {
