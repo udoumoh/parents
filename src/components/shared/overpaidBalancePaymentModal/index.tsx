@@ -174,8 +174,6 @@ const OverpaidBalancePaymentModal: FC<OverpaidBalancePaymentModalProps> = ({
                       defaultValue={summary}
                       h={"100px"}
                       rounded={"xl"}
-                      backgroundColor={"#fff"}
-                      focusBorderColor="green.600"
                       isReadOnly={true}
                       variant={"filled"}
                     />

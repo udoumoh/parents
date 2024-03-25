@@ -94,7 +94,6 @@ const Invoice: FC<InvoiceProps> = ({}) => {
 
   const [invoiceData, setInvoiceData] = useState<StudentInvoiceProps[]>([]);
   const [overpaidId, setOverpaidId] = useState()
-  const [overpaidBalance, setOverpaidBalance] = useState<number>()
   const [currentInvoiceId, setCurrentInvoiceId] = useState()
 
   const { data: getinvoice } = useQuery(GET_STUDENT_INVOICE, {
@@ -156,16 +155,19 @@ const Invoice: FC<InvoiceProps> = ({}) => {
     0
   );
 
-  console.log(activeInvoice)
-
   const totalRejectedAmount = rejectedInvoice?.reduce(
     (accumulator, invoice) => accumulator + invoice.amountPaid,
     0
   );
+
   const totalProcessingAmount = processingInvoice?.reduce(
     (accumulator, invoice) => accumulator + invoice.amountPaid,
     0
   );
+
+    const totalOverpaidAmount = invoiceData
+      .filter((invoice) => invoice.status === "parent overpaid")
+      .reduce((acc, item) => acc + item.balance, 0);
 
   const nonEmptyReceipts = invoiceData
     ?.map((invoice) => invoice?.receipt)
@@ -192,9 +194,8 @@ const Invoice: FC<InvoiceProps> = ({}) => {
     onRejectModalOpen();
   };
 
-  const handleOverpaidInvoice = (id: any, balance: number) => {
+  const handleOverpaidInvoice = (id: any) => {
     setOverpaidId(id)
-    setOverpaidBalance(balance)
     onOverpaidModalModalOpen();
   }
 
@@ -229,7 +230,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
         onOpen={onOverpaidModalModalOpen}
         onClose={onOverpaidModalModalClose}
         invoiceId={overpaidId}
-        balance={overpaidBalance}
+        balance={totalOverpaidAmount}
         />
         <SimpleGrid minChildWidth="200px" spacing={"10px"}>
           <Flex
@@ -554,7 +555,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                       boxSize={"4"}
                                       color={"red.600"}
                                     />
-                                    <Text color={"#005D5D"} fontWeight={"600"}>
+                                    <Text color={"red.600"} fontWeight={"600"}>
                                       Reject Invoice
                                     </Text>
                                   </MenuItem>
@@ -585,7 +586,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                         : "flex"
                                     }
                                     gap={"3"}
-                                    onClick={()=>handleOverpaidInvoice(item?.id, item?.balance)}
+                                    onClick={()=>handleOverpaidInvoice(item?.id)}
                                   >
                                     <Icon
                                       as={MdOutlinePayment}
@@ -796,13 +797,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                 <MenuList>
                                   <MenuItem
                                     px={"1rem"}
-                                    display={
-                                      !["active", "partial payment"].includes(
-                                        item?.status
-                                      )
-                                        ? "none"
-                                        : "flex"
-                                    }
+                                    display={'flex'}
                                     gap={"3"}
                                     onClick={() =>
                                       handleAcceptInvoice(item?.id)
@@ -819,13 +814,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                   </MenuItem>
                                   <MenuItem
                                     px={"1rem"}
-                                    display={
-                                      !["active", "partial payment"].includes(
-                                        item?.status
-                                      )
-                                        ? "none"
-                                        : "flex"
-                                    }
+                                    display={'flex'}
                                     gap={"3"}
                                     onClick={() =>
                                       handleRejectInvoice(item?.id)
@@ -836,8 +825,25 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                       boxSize={"4"}
                                       color={"red.600"}
                                     />
-                                    <Text color={"#005D5D"} fontWeight={"600"}>
+                                    <Text color={"red.600"} fontWeight={"600"}>
                                       Reject Invoice
+                                    </Text>
+                                  </MenuItem>
+                                  <MenuItem
+                                    px={"1rem"}
+                                    display={'flex'}
+                                    gap={"3"}
+                                    onClick={() =>
+                                      handleOverpaidInvoice(item?.id)
+                                    }
+                                  >
+                                    <Icon
+                                      as={MdOutlinePayment}
+                                      boxSize={"4"}
+                                      color={"#005D5D"}
+                                    />
+                                    <Text color={"#005D5D"} fontWeight={"600"}>
+                                      Pay with overpaid balance
                                     </Text>
                                   </MenuItem>
                                   <MenuItem
@@ -1104,7 +1110,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                       boxSize={"4"}
                                       color={"#005D5D"}
                                     />
-                                    <Text color={"#005D5D"} fontWeight={"600"}>
+                                    <Text color={"red.600"} fontWeight={"600"}>
                                       Reject Invoice
                                     </Text>
                                   </MenuItem>
