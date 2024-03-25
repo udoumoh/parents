@@ -28,9 +28,9 @@ interface RequestDataProps {
 }
 
 const Page: FC<pageProps> = ({}) => {
-  const { data: parent, loading } = useQuery(GET_PARENT);
-  const { childData, parentData } = useUserAPI();
-  const { data: getRequests } = useQuery(PARENT_REQUESTS, {
+  const { data: parent } = useQuery(GET_PARENT);
+  const { parentData } = useUserAPI();
+  const { data: getRequests, loading } = useQuery(PARENT_REQUESTS, {
     variables: { parentId: parentData?.userId },
   });
   const [requestData, setRequestData] = useState<RequestDataProps[]>([]);
