@@ -53,6 +53,7 @@ interface StudentInvoiceProps {
   invoiceId: string;
   schoolname: string;
   schoollogo: string;
+  balance: number;
   receipt: {
     amountPaid: number;
     createdAt: string;
@@ -113,6 +114,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
             schoolname: item?.creatorSchool,
             schoollogo: item?.student?.creator?.admin?.schoolImg,
             receipt: item?.receipt,
+            balance: item?.balance,
           })
         );
         setInvoiceData(parsedInvoiceData)
@@ -412,12 +414,13 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                 <TableContainer>
                   <Table variant="simple" size={{ base: "sm", md: "md" }}>
                     <Thead>
-                      <Tr>
+                      <Tr backgroundColor={'#005D5D40'}>
                         <Th>Inv. ID</Th>
                         <Th>School</Th>
                         <Th>Category</Th>
                         <Th>Date</Th>
                         <Th>Amount</Th>
+                        <Th>Balance</Th>
                         <Th>Status</Th>
                         <Th></Th>
                       </Tr>
@@ -451,6 +454,10 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                   )
                                 : formatNumberWithCommas(item?.amountPaid)}
                             </Td>
+                            <Td fontWeight={"bold"}>
+                              ₦
+                              {formatNumberWithCommas(item?.balance)}
+                            </Td>
                             <Td>
                               <Badge
                                 variant="solid"
@@ -480,7 +487,9 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                   <MenuItem
                                     icon={<FaCheck />}
                                     isDisabled={
-                                      item?.status === "active" ? false : true
+                                      !["active", "partial payment"].includes(
+                                        item?.status
+                                      )
                                     }
                                     onClick={() =>
                                       handleAcceptInvoice(item?.id)
@@ -491,11 +500,9 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                   <MenuItem
                                     icon={<MdOutlineClose />}
                                     isDisabled={
-                                      ![
-                                        "active",
-                                        "parent overpaid",
-                                        "partial payment",
-                                      ].includes(item?.status)
+                                      !["active", "partial payment"].includes(
+                                        item?.status
+                                      )
                                     }
                                     onClick={() =>
                                       handleRejectInvoice(item?.id)
