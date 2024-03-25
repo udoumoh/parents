@@ -182,7 +182,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
             status: item.status,
           })
         );
-        setInvoiceData(parsedInvoiceData);
+        setInvoiceData(parsedInvoiceData.reverse());
       } catch (err: any) {
         console.log(err.message);
       }
