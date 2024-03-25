@@ -491,13 +491,10 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                 <MenuList>
                                   <MenuItem
                                     px={"1rem"}
-                                    display={"flex"}
-                                    gap={"3"}
-                                    isDisabled={
-                                      !["active", "partial payment"].includes(
+                                    display={!["active", "partial payment"].includes(
                                         item?.status
-                                      )
-                                    }
+                                      ) ? 'none' : "flex"}
+                                    gap={"3"}
                                     onClick={() =>
                                       handleAcceptInvoice(item?.id)
                                     }
