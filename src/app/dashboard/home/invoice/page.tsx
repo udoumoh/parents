@@ -415,7 +415,6 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                   <Table
                     variant="simple"
                     size={{ base: "sm", md: "md" }}
-                    border={"1px solid #005D5D60"}
                   >
                     <Thead>
                       <Tr backgroundColor={"#005D5D40"}>
