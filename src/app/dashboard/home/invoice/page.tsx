@@ -459,7 +459,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                             </Td>
                             <Td>
                               <Badge
-                                variant="solid"
+                                variant="subtle"
                                 colorScheme={
                                   item?.status === "active"
                                     ? "green"
@@ -609,7 +609,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                             </Td>
                             <Td>
                               <Badge
-                                variant="solid"
+                                variant="subtle"
                                 colorScheme={
                                   item?.status === "active"
                                     ? "green"
@@ -724,7 +724,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                             </Td>
                             <Td>
                               <Badge
-                                variant="solid"
+                                variant="subtle"
                                 colorScheme={
                                   item?.status === "active"
                                     ? "green"
@@ -839,7 +839,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                             </Td>
                             <Td>
                               <Badge
-                                variant="solid"
+                                variant="subtle"
                                 colorScheme={
                                   item?.status === "active"
                                     ? "green"
@@ -954,7 +954,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                             </Td>
                             <Td>
                               <Badge
-                                variant="solid"
+                                variant="subtle"
                                 colorScheme={
                                   item?.status === "active"
                                     ? "green"
