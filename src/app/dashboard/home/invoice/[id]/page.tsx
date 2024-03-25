@@ -139,7 +139,14 @@ const Invoice: FC<InvoiceProps> = ({ params }: { params: { id: number } }) => {
       >
         Back to invoice page
       </Button>
-      <Box rounded={"lg"} border={"1px solid #005D5D40"} w={"full"} p={"1rem"}>
+      <Box
+        rounded={"lg"}
+        border={"1px solid #005D5D40"}
+        backgroundColor={"#0F0F0F"}
+        w={"full"}
+        p={"1rem"}
+        color={'#FFFFFF'}
+      >
         <Flex
           alignItems={"center"}
           justifyContent={"center"}
@@ -149,7 +156,7 @@ const Invoice: FC<InvoiceProps> = ({ params }: { params: { id: number } }) => {
           <Avatar
             src={currentWardProfile?.profileImage}
             size={"xl"}
-            border={"2px solid #005D5D"}
+            border={"2px solid green.400"}
             p={"0.2rem"}
             mb={"0.5rem"}
           />
@@ -332,9 +339,7 @@ const Invoice: FC<InvoiceProps> = ({ params }: { params: { id: number } }) => {
                             p={2}
                             rounded={"md"}
                           >
-                            <Text fontSize={"lg"}>
-                              {receipt?.summary}
-                            </Text>
+                            <Text fontSize={"lg"}>{receipt?.summary}</Text>
                           </Box>
                         </Box>
 
@@ -479,7 +484,7 @@ const Invoice: FC<InvoiceProps> = ({ params }: { params: { id: number } }) => {
                   p={2}
                   rounded={"md"}
                 >
-                  <Text fontSize={'lg'}>{currentInvoice?.summary}</Text>
+                  <Text fontSize={"lg"}>{currentInvoice?.summary}</Text>
                 </Box>
               </Box>
 
