@@ -54,6 +54,8 @@ const OverpaidBalancePaymentModal: FC<OverpaidBalancePaymentModalProps> = ({
                 amountPaid: balance,
                 invoiceid: invoiceId,
                 summary: summary,
+                document: "PNG",
+                fileType: 'PNG',
               },
             });
             if (!response) {
