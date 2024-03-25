@@ -491,9 +491,13 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                 <MenuList>
                                   <MenuItem
                                     px={"1rem"}
-                                    display={!["active", "partial payment"].includes(
+                                    display={
+                                      !["active", "partial payment"].includes(
                                         item?.status
-                                      ) ? 'none' : "flex"}
+                                      )
+                                        ? "none"
+                                        : "flex"
+                                    }
                                     gap={"3"}
                                     onClick={() =>
                                       handleAcceptInvoice(item?.id)
@@ -510,13 +514,14 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                   </MenuItem>
                                   <MenuItem
                                     px={"1rem"}
-                                    display={"flex"}
-                                    gap={"3"}
-                                    isDisabled={
+                                    display={
                                       !["active", "partial payment"].includes(
                                         item?.status
                                       )
+                                        ? "none"
+                                        : "flex"
                                     }
+                                    gap={"3"}
                                     onClick={() =>
                                       handleRejectInvoice(item?.id)
                                     }
@@ -628,7 +633,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                               </Badge>
                             </Td>
                             <Td>
-                              <Menu size={"sm"}>
+                               <Menu>
                                 <MenuButton>
                                   <Icon
                                     as={BsThreeDots}
@@ -638,38 +643,67 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                 </MenuButton>
                                 <MenuList>
                                   <MenuItem
-                                    icon={<FaCheck />}
-                                    isDisabled={
+                                    px={"1rem"}
+                                    display={
                                       !["active", "partial payment"].includes(
                                         item?.status
                                       )
+                                        ? "none"
+                                        : "flex"
                                     }
+                                    gap={"3"}
                                     onClick={() =>
                                       handleAcceptInvoice(item?.id)
                                     }
                                   >
-                                    Accept Invoice
+                                    <Icon
+                                      as={FaCheck}
+                                      boxSize={"4"}
+                                      color={"#005D5D"}
+                                    />
+                                    <Text color={"#005D5D"} fontWeight={"600"}>
+                                      Accept Invoice
+                                    </Text>
                                   </MenuItem>
                                   <MenuItem
-                                    icon={<MdOutlineClose />}
-                                    isDisabled={
+                                    px={"1rem"}
+                                    display={
                                       !["active", "partial payment"].includes(
                                         item?.status
                                       )
+                                        ? "none"
+                                        : "flex"
                                     }
+                                    gap={"3"}
                                     onClick={() =>
                                       handleRejectInvoice(item?.id)
                                     }
                                   >
-                                    Reject Invoice
+                                    <Icon
+                                      as={MdOutlineClose}
+                                      boxSize={"4"}
+                                      color={"#005D5D"}
+                                    />
+                                    <Text color={"#005D5D"} fontWeight={"600"}>
+                                      Reject Invoice
+                                    </Text>
                                   </MenuItem>
                                   <MenuItem
-                                    icon={<TbFileInvoice />}
+                                    px={"1rem"}
+                                    display={"flex"}
+                                    gap={"3"}
                                     onClick={() => {
                                       handleSelectedInvoice(item?.id);
                                     }}
                                   >
-                                    View Invoice Details
+                                    <Icon
+                                      as={TbFileInvoice}
+                                      boxSize={"4"}
+                                      color={"#005D5D"}
+                                    />
+                                    <Text color={"#005D5D"} fontWeight={"600"}>
+                                      View Invoice Details
+                                    </Text>
                                   </MenuItem>
                                 </MenuList>
                               </Menu>
@@ -749,7 +783,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                               </Badge>
                             </Td>
                             <Td>
-                              <Menu size={"sm"}>
+                               <Menu>
                                 <MenuButton>
                                   <Icon
                                     as={BsThreeDots}
@@ -759,38 +793,67 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                 </MenuButton>
                                 <MenuList>
                                   <MenuItem
-                                    icon={<FaCheck />}
-                                    isDisabled={
+                                    px={"1rem"}
+                                    display={
                                       !["active", "partial payment"].includes(
                                         item?.status
                                       )
+                                        ? "none"
+                                        : "flex"
                                     }
+                                    gap={"3"}
                                     onClick={() =>
                                       handleAcceptInvoice(item?.id)
                                     }
                                   >
-                                    Accept Invoice
+                                    <Icon
+                                      as={FaCheck}
+                                      boxSize={"4"}
+                                      color={"#005D5D"}
+                                    />
+                                    <Text color={"#005D5D"} fontWeight={"600"}>
+                                      Accept Invoice
+                                    </Text>
                                   </MenuItem>
                                   <MenuItem
-                                    icon={<MdOutlineClose />}
-                                    isDisabled={
+                                    px={"1rem"}
+                                    display={
                                       !["active", "partial payment"].includes(
                                         item?.status
                                       )
+                                        ? "none"
+                                        : "flex"
                                     }
+                                    gap={"3"}
                                     onClick={() =>
                                       handleRejectInvoice(item?.id)
                                     }
                                   >
-                                    Reject Invoice
+                                    <Icon
+                                      as={MdOutlineClose}
+                                      boxSize={"4"}
+                                      color={"#005D5D"}
+                                    />
+                                    <Text color={"#005D5D"} fontWeight={"600"}>
+                                      Reject Invoice
+                                    </Text>
                                   </MenuItem>
                                   <MenuItem
-                                    icon={<TbFileInvoice />}
+                                    px={"1rem"}
+                                    display={"flex"}
+                                    gap={"3"}
                                     onClick={() => {
                                       handleSelectedInvoice(item?.id);
                                     }}
                                   >
-                                    View Invoice Details
+                                    <Icon
+                                      as={TbFileInvoice}
+                                      boxSize={"4"}
+                                      color={"#005D5D"}
+                                    />
+                                    <Text color={"#005D5D"} fontWeight={"600"}>
+                                      View Invoice Details
+                                    </Text>
                                   </MenuItem>
                                 </MenuList>
                               </Menu>
@@ -870,7 +933,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                               </Badge>
                             </Td>
                             <Td>
-                              <Menu size={"sm"}>
+                               <Menu>
                                 <MenuButton>
                                   <Icon
                                     as={BsThreeDots}
@@ -880,38 +943,67 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                 </MenuButton>
                                 <MenuList>
                                   <MenuItem
-                                    icon={<FaCheck />}
-                                    isDisabled={
+                                    px={"1rem"}
+                                    display={
                                       !["active", "partial payment"].includes(
                                         item?.status
                                       )
+                                        ? "none"
+                                        : "flex"
                                     }
+                                    gap={"3"}
                                     onClick={() =>
                                       handleAcceptInvoice(item?.id)
                                     }
                                   >
-                                    Accept Invoice
+                                    <Icon
+                                      as={FaCheck}
+                                      boxSize={"4"}
+                                      color={"#005D5D"}
+                                    />
+                                    <Text color={"#005D5D"} fontWeight={"600"}>
+                                      Accept Invoice
+                                    </Text>
                                   </MenuItem>
                                   <MenuItem
-                                    icon={<MdOutlineClose />}
-                                    isDisabled={
+                                    px={"1rem"}
+                                    display={
                                       !["active", "partial payment"].includes(
                                         item?.status
                                       )
+                                        ? "none"
+                                        : "flex"
                                     }
+                                    gap={"3"}
                                     onClick={() =>
                                       handleRejectInvoice(item?.id)
                                     }
                                   >
-                                    Reject Invoice
+                                    <Icon
+                                      as={MdOutlineClose}
+                                      boxSize={"4"}
+                                      color={"#005D5D"}
+                                    />
+                                    <Text color={"#005D5D"} fontWeight={"600"}>
+                                      Reject Invoice
+                                    </Text>
                                   </MenuItem>
                                   <MenuItem
-                                    icon={<TbFileInvoice />}
+                                    px={"1rem"}
+                                    display={"flex"}
+                                    gap={"3"}
                                     onClick={() => {
                                       handleSelectedInvoice(item?.id);
                                     }}
                                   >
-                                    View Invoice Details
+                                    <Icon
+                                      as={TbFileInvoice}
+                                      boxSize={"4"}
+                                      color={"#005D5D"}
+                                    />
+                                    <Text color={"#005D5D"} fontWeight={"600"}>
+                                      View Invoice Details
+                                    </Text>
                                   </MenuItem>
                                 </MenuList>
                               </Menu>
@@ -991,7 +1083,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                               </Badge>
                             </Td>
                             <Td>
-                              <Menu size={"sm"}>
+                               <Menu>
                                 <MenuButton>
                                   <Icon
                                     as={BsThreeDots}
@@ -1001,38 +1093,67 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                 </MenuButton>
                                 <MenuList>
                                   <MenuItem
-                                    icon={<FaCheck />}
-                                    isDisabled={
+                                    px={"1rem"}
+                                    display={
                                       !["active", "partial payment"].includes(
                                         item?.status
                                       )
+                                        ? "none"
+                                        : "flex"
                                     }
+                                    gap={"3"}
                                     onClick={() =>
                                       handleAcceptInvoice(item?.id)
                                     }
                                   >
-                                    Accept Invoice
+                                    <Icon
+                                      as={FaCheck}
+                                      boxSize={"4"}
+                                      color={"#005D5D"}
+                                    />
+                                    <Text color={"#005D5D"} fontWeight={"600"}>
+                                      Accept Invoice
+                                    </Text>
                                   </MenuItem>
                                   <MenuItem
-                                    icon={<MdOutlineClose />}
-                                    isDisabled={
+                                    px={"1rem"}
+                                    display={
                                       !["active", "partial payment"].includes(
                                         item?.status
                                       )
+                                        ? "none"
+                                        : "flex"
                                     }
+                                    gap={"3"}
                                     onClick={() =>
                                       handleRejectInvoice(item?.id)
                                     }
                                   >
-                                    Reject Invoice
+                                    <Icon
+                                      as={MdOutlineClose}
+                                      boxSize={"4"}
+                                      color={"#005D5D"}
+                                    />
+                                    <Text color={"#005D5D"} fontWeight={"600"}>
+                                      Reject Invoice
+                                    </Text>
                                   </MenuItem>
                                   <MenuItem
-                                    icon={<TbFileInvoice />}
+                                    px={"1rem"}
+                                    display={"flex"}
+                                    gap={"3"}
                                     onClick={() => {
                                       handleSelectedInvoice(item?.id);
                                     }}
                                   >
-                                    View Invoice Details
+                                    <Icon
+                                      as={TbFileInvoice}
+                                      boxSize={"4"}
+                                      color={"#005D5D"}
+                                    />
+                                    <Text color={"#005D5D"} fontWeight={"600"}>
+                                      View Invoice Details
+                                    </Text>
                                   </MenuItem>
                                 </MenuList>
                               </Menu>
