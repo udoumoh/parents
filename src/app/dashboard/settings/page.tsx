@@ -207,7 +207,6 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
           flexDir={{ base: "column", md: "row" }}
           rounded={"2xl"}
           p={"2rem"}
-          // border={"1px solid #005D5D70"}
           shadow={"lg"}
           backgroundColor={"#334854"}
         >
@@ -349,6 +348,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                         cursor: "pointer",
                       }}
                       w={"full"}
+                      border={'1px solid #005D5D80'}
                       onClick={() => {
                         setLocalstorageId(item?.id || 0);
                         window.location.replace('/dashboard/home/overview')
