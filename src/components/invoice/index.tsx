@@ -53,13 +53,8 @@ const InvoiceItem: FC<InvoiceItemProps> = ({
     onClose: onRejectModalClose,
   } = useDisclosure();
   return (
-    <Box
-      border={"1px solid #C2C2C2"}
-      rounded={"xl"}
-      p={"0.4rem"}
-      mb={"1rem"}
-    >
-      <Box backgroundColor={"#E2E2E2"} rounded={"lg"} p={"0.6rem"} pb={"1rem"}>
+    <Box border={"1px solid #C2C2C2"} rounded={"xl"} p={"0.4rem"} mb={"1rem"}>
+      <Box backgroundColor={"#44506960"} rounded={"lg"} p={"0.6rem"} pb={"1rem"}>
         <Box display={"flex"} gap={1} alignItems={"center"}>
           <Text fontSize={"xs"} color={"#666666"}>
             {studentInvoice.term}
@@ -76,7 +71,7 @@ const InvoiceItem: FC<InvoiceItemProps> = ({
           ₦ {formatNumberWithCommas(studentInvoice.amountPaid)}
         </Text>
       </Box>
-      <Box px={"0.5rem"} w={"auto"}>
+      <Box px={"0.5rem"} w={"auto"} mb={"0.5rem"}>
         <Text color={"#666666"} fontSize={"xs"} fontWeight={"400"} mt={"1rem"}>
           Summary
         </Text>
@@ -85,19 +80,19 @@ const InvoiceItem: FC<InvoiceItemProps> = ({
           fontWeight={"500"}
           color={"#000000"}
           isTruncated={true}
-          maxW={'180px'}
+          maxW={"180px"}
         >
           {`${studentInvoice.summary || studentInvoice.category}`}
         </Text>
 
         <Badge
           variant={"solid"}
-          colorScheme={studentInvoice.status === "active" ? "green" : "yellow"}
+          colorScheme={studentInvoice.status === "active" ? "green" : "blue"}
           px={"1rem"}
           py={"0.1rem"}
           fontSize={"2xs"}
           borderRadius={"3px"}
-          my={'0.5rem'}
+          my={"0.5rem"}
         >
           {studentInvoice.status}
         </Badge>
@@ -126,6 +121,7 @@ const InvoiceItem: FC<InvoiceItemProps> = ({
               aria-label="Search database"
               icon={<FaCheck />}
               onClick={onAcceptModalOpen}
+              size={"sm"}
               isDisabled={studentInvoice.status === "active" ? false : true}
             />
           </Tooltip>
@@ -141,6 +137,7 @@ const InvoiceItem: FC<InvoiceItemProps> = ({
               aria-label="Search database"
               icon={<IoClose size="24" />}
               onClick={onRejectModalOpen}
+              size={"sm"}
               isDisabled={studentInvoice.status === "active" ? false : true}
             />
           </Tooltip>
