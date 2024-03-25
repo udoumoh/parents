@@ -51,7 +51,7 @@ const OverpaidBalancePaymentModal: FC<OverpaidBalancePaymentModalProps> = ({
           try {
             const response = await acceptinvoice({
               variables: {
-                amountPaid: balance,
+                amountPaid: Math.abs(balance || 0),
                 invoiceid: invoiceId,
                 summary: summary,
                 document: "PNG",

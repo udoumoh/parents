@@ -27,6 +27,8 @@ import { useQuery } from "@apollo/client";
 import { formatDate } from "@/helpers/formatDate";
 import { IoIosArrowRoundBack } from "react-icons/io";
 import { useRouter } from "next/navigation";
+import { MdOutlinePayment } from "react-icons/md";
+import OverpaidBalancePaymentModal from "@/components/shared/overpaidBalancePaymentModal";
 
 interface Params {
   id: number;
@@ -66,6 +68,8 @@ interface StudentInvoiceProps {
 const Invoice: FC<InvoiceProps> = ({ params }: { params: { id: number } }) => {
     const router = useRouter()
     const { currentWardProfile } = useUserAPI();
+    const [overpaidId, setOverpaidId] = useState();
+    const [currentInvoiceId, setCurrentInvoiceId] = useState();
     const [invoiceData, setInvoiceData] = useState<StudentInvoiceProps[]>([]);
     const { data: getinvoice } = useQuery(GET_STUDENT_INVOICE, {
     variables: { studentId: currentWardProfile?.id },
@@ -77,6 +81,13 @@ const Invoice: FC<InvoiceProps> = ({ params }: { params: { id: number } }) => {
       onOpen: onPdfOpen,
       onClose: onPdfClose,
     } = useDisclosure();
+
+    const {
+      isOpen: isOverpaidModalModalOpen,
+      onOpen: onOverpaidModalModalOpen,
+      onClose: onOverpaidModalModalClose,
+    } = useDisclosure();
+
     const {
       isOpen: isImageViewerOpen,
       onOpen: onImageViewerOpen,
@@ -122,6 +133,15 @@ const Invoice: FC<InvoiceProps> = ({ params }: { params: { id: number } }) => {
       (invoice: any) => Number(invoice?.id) === Number(params?.id)
     );
 
+      const totalOverpaidAmount = invoiceData
+        .filter((invoice) => invoice.status === "parent overpaid")
+        .reduce((acc, item) => acc + item.balance, 0);
+
+    const handleOverpaidInvoice = (id: any) => {
+      setOverpaidId(id);
+      onOverpaidModalModalOpen();
+    };
+
   return (
     <Box
       display={"flex"}
@@ -130,6 +150,13 @@ const Invoice: FC<InvoiceProps> = ({ params }: { params: { id: number } }) => {
       flexDir={"column"}
       pb={"10rem"}
     >
+      <OverpaidBalancePaymentModal
+        isOpen={isOverpaidModalModalOpen}
+        onOpen={onOverpaidModalModalOpen}
+        onClose={onOverpaidModalModalClose}
+        invoiceId={overpaidId}
+        balance={totalOverpaidAmount}
+      />
       <Button
         mb={"2rem"}
         leftIcon={<IoIosArrowRoundBack />}
@@ -159,16 +186,36 @@ const Invoice: FC<InvoiceProps> = ({ params }: { params: { id: number } }) => {
           <Text fontSize={"sm"} color={"#00000090"}>
             {currentWardProfile?.gender} • {currentWardProfile?.age} Years Old
           </Text>
-          <Button
-            size={"sm"}
-            colorScheme="gray"
-            gap={"2"}
-            mt={"0.5rem"}
-            onClick={onCollapseToggle}
-          >
-            <Icon as={CiReceipt} boxSize={"4"} />
-            <Text fontSize={"sm"}>View Receipt</Text>
-          </Button>
+          <Flex gap={"5"} alignItems={"center"} justifyContent={"center"}>
+            <Button
+              size={"sm"}
+              colorScheme="gray"
+              gap={"2"}
+              mt={"0.5rem"}
+              onClick={onCollapseToggle}
+            >
+              <Icon as={CiReceipt} boxSize={"4"} />
+              <Text fontSize={"sm"}>View Receipt</Text>
+            </Button>
+
+            <Button
+              display={
+                !["active", "partial payment"].includes(
+                  currentInvoice?.status || ""
+                )
+                  ? "none"
+                  : "flex"
+              }
+              size={"sm"}
+              colorScheme="red"
+              gap={"2"}
+              mt={"0.5rem"}
+              onClick={()=>handleOverpaidInvoice(currentInvoice?.id)}
+            >
+              <Icon as={MdOutlinePayment} boxSize={"4"} />
+              <Text fontSize={"sm"}>Pay with overpaid balance</Text>
+            </Button>
+          </Flex>
           <Box w={"full"}>
             <Collapse in={isCollapseOpen} animateOpacity>
               {currentInvoice?.receipt?.length === 0 ? (
