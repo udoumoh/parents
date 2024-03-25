@@ -480,9 +480,9 @@ const Invoice: FC<InvoiceProps> = ({ params }: { params: { id: number } }) => {
                       >
                         ₦
                         {currentInvoice?.status === "active"
-                          ? currentInvoice?.amountPaid
+                          ? formatNumberWithCommas(currentInvoice?.amountPaid)
                           : currentInvoice?.status === "processing"
-                          ? currentInvoice?.amountPaid
+                          ? formatNumberWithCommas(currentInvoice?.amountPaid)
                           : formatNumberWithCommas(
                               currentInvoice?.amountPaid +
                                 getCompletedInvoiceAmount(currentInvoice)
