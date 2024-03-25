@@ -212,7 +212,7 @@ const NavItem = ({ icon, link, name, ...rest }: NavItemProps) => {
         as="a"
         w={"auto"}
         h={"auto"}
-        onClick={()=>router.push(link)}
+        onClick={()=>window.location.replace(link)}
         // href={`${link}`}
         style={{ textDecoration: "none" }}
         _focus={{ boxShadow: "none" }}
