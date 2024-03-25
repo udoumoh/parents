@@ -450,8 +450,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                     getCompletedInvoiceAmount(item)
                                   )
                                 : formatNumberWithCommas(
-                                    item?.amountPaid +
-                                      getCompletedInvoiceAmount(item)
+                                    item?.amountPaid
                                   )}
                             </Td>
                             <Td>
