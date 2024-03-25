@@ -56,15 +56,15 @@ const InvoiceItem: FC<InvoiceItemProps> = ({
     <Box border={"1px solid #C2C2C2"} rounded={"xl"} p={"0.4rem"} mb={"1rem"}>
       <Box backgroundColor={"#44506960"} rounded={"lg"} p={"0.6rem"} pb={"1rem"}>
         <Box display={"flex"} gap={1} alignItems={"center"}>
-          <Text fontSize={"xs"} color={"#666666"}>
+          <Text fontSize={"xs"} >
             {studentInvoice.term}
           </Text>{" "}
           •{" "}
-          <Text fontSize={"xs"} color={"#666666"}>
+          <Text fontSize={"xs"} >
             {studentInvoice.year}
           </Text>
         </Box>
-        <Text color={"#666666"} mt={"1.3rem"} fontSize={"xs"}>
+        <Text mt={"1.3rem"} fontSize={"xs"}>
           {studentInvoice.category}
         </Text>
         <Text color={"#000"} fontSize={"2xl"} fontWeight={"600"}>
@@ -87,7 +87,7 @@ const InvoiceItem: FC<InvoiceItemProps> = ({
 
         <Badge
           variant={"solid"}
-          colorScheme={studentInvoice.status === "active" ? "green" : "blue"}
+          colorScheme={"green"}
           px={"1rem"}
           py={"0.1rem"}
           fontSize={"2xs"}
