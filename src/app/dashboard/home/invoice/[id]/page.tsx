@@ -145,7 +145,7 @@ const Invoice: FC<InvoiceProps> = ({ params }: { params: { id: number } }) => {
         backgroundColor={"#0F0F0F"}
         w={"full"}
         p={"1rem"}
-        color={'#FFFFFF'}
+        color={"#FFFFFF"}
       >
         <Flex
           alignItems={"center"}
@@ -163,7 +163,7 @@ const Invoice: FC<InvoiceProps> = ({ params }: { params: { id: number } }) => {
           <Text fontSize={"lg"}>
             {`${currentWardProfile?.firstName} ${currentWardProfile?.middleName} ${currentWardProfile?.lastName}`}
           </Text>
-          <Text fontSize={"sm"} color={"#00000090"}>
+          <Text fontSize={"sm"} color={"#ffffff"}>
             {currentWardProfile?.gender} • {currentWardProfile?.age} Years Old
           </Text>
           <Button
@@ -187,7 +187,7 @@ const Invoice: FC<InvoiceProps> = ({ params }: { params: { id: number } }) => {
                   rounded="lg"
                   shadow="md"
                 >
-                  <Text fontSize={"lg"} color={"#00000060"}>
+                  <Text fontSize={"lg"} color={"#ffffff"}>
                     No receipt has been added
                   </Text>
                 </Box>
