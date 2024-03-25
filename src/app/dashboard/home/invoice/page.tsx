@@ -552,6 +552,26 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                       View Invoice Details
                                     </Text>
                                   </MenuItem>
+                                  <MenuItem
+                                    px={"1rem"}
+                                    display={
+                                      !["parent overpaid"].includes(
+                                        item?.status
+                                      )
+                                        ? "none"
+                                        : "flex"
+                                    }
+                                    gap={"3"}
+                                  >
+                                    <Icon
+                                      as={TbFileInvoice}
+                                      boxSize={"4"}
+                                      color={"#005D5D"}
+                                    />
+                                    <Text color={"#005D5D"} fontWeight={"600"}>
+                                      Pay with overpaid balance
+                                    </Text>
+                                  </MenuItem>
                                 </MenuList>
                               </Menu>
                             </Td>
