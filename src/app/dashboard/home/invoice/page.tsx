@@ -537,11 +537,6 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                     px={"1rem"}
                                     display={"flex"}
                                     gap={"3"}
-                                    isDisabled={
-                                      !["active", "partial payment"].includes(
-                                        item?.status
-                                      )
-                                    }
                                     onClick={() => {
                                       handleSelectedInvoice(item?.id);
                                     }}
