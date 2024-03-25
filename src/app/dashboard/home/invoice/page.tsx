@@ -417,7 +417,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                     size={{ base: "sm", md: "md" }}
                   >
                     <Thead>
-                      <Tr backgroundColor={"gray.400"} borderTopEndRadius={'lg'}>
+                      <Tr backgroundColor={"gray.400"} borderTopRadius={'lg'}>
                         <Th>Inv. ID</Th>
                         <Th>School</Th>
                         <Th>Category</Th>
