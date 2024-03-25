@@ -455,12 +455,12 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                 ? formatNumberWithCommas(
                                     getCompletedInvoiceAmount(item)
                                   )
-                                : formatNumberWithCommas(item?.amountPaid)}
+                                : formatNumberWithCommas(item?.amountPaid) + getCompletedInvoiceAmount(item)}
                             </Td>
                             <Td fontWeight={"bold"}>
                               {item?.status === "rejected by parent"
                                 ? `-`
-                                : `₦${formatNumberWithCommas(item?.balance)}`}
+                                : `₦${formatNumberWithCommas(Math.abs(item?.balance))}`}
                             </Td>
                             <Td>
                               <Badge
