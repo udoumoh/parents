@@ -575,6 +575,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                         <Th>Category</Th>
                         <Th>Date</Th>
                         <Th>Amount</Th>
+                        <Th>Balance</Th>
                         <Th>Status</Th>
                         <Th></Th>
                       </Tr>
@@ -606,6 +607,11 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                 getCompletedInvoiceAmount(item)
                               )}
                             </Td>
+                            <Td fontWeight={"bold"}>
+                              {item?.status === "rejected by parent"
+                                ? `-`
+                                : `₦${formatNumberWithCommas(item?.balance)}`}
+                            </Td>
                             <Td>
                               <Badge
                                 variant="subtle"
@@ -693,6 +699,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                         <Th>Category</Th>
                         <Th>Date</Th>
                         <Th>Amount</Th>
+                        <Th>Balance</Th>
                         <Th>Status</Th>
                         <Th></Th>
                       </Tr>
@@ -721,6 +728,11 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                             <Td fontWeight={"bold"}>
                               ₦{formatNumberWithCommas(item?.amountPaid)}
                             </Td>
+                            <Td fontWeight={"bold"}>
+                              {item?.status === "rejected by parent"
+                                ? `-`
+                                : `₦${formatNumberWithCommas(item?.balance)}`}
+                            </Td>
                             <Td>
                               <Badge
                                 variant="subtle"
@@ -808,6 +820,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                         <Th>Category</Th>
                         <Th>Date</Th>
                         <Th>Amount</Th>
+                        <Th>Balance</Th>
                         <Th>Status</Th>
                         <Th></Th>
                       </Tr>
@@ -836,6 +849,11 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                             <Td fontWeight={"bold"}>
                               ₦{formatNumberWithCommas(item?.amountPaid)}
                             </Td>
+                            <Td fontWeight={"bold"}>
+                              {item?.status === "rejected by parent"
+                                ? `-`
+                                : `₦${formatNumberWithCommas(item?.balance)}`}
+                            </Td>
                             <Td>
                               <Badge
                                 variant="subtle"
@@ -923,6 +941,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                         <Th>Category</Th>
                         <Th>Date</Th>
                         <Th>Amount</Th>
+                        <Th>Balance</Th>
                         <Th>Status</Th>
                         <Th></Th>
                       </Tr>
@@ -950,6 +969,11 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                             <Td>{item?.createdAt}</Td>
                             <Td fontWeight={"bold"}>
                               ₦{formatNumberWithCommas(item?.amountPaid)}
+                            </Td>
+                            <Td fontWeight={"bold"}>
+                              {item?.status === "rejected by parent"
+                                ? `-`
+                                : `₦${formatNumberWithCommas(item?.balance)}`}
                             </Td>
                             <Td>
                               <Badge
