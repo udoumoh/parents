@@ -26,6 +26,7 @@ import {
 import { Formik, Form, Field } from "formik";
 import { useMutation } from "@apollo/client";
 import { ACCEPT_INVOICE } from "@/gql/queries";
+import formatNumberWithCommas from '@/helpers/formatNumberWithCommas';
 
 interface OverpaidBalancePaymentModalProps {
   isOpen: boolean;
@@ -148,8 +149,7 @@ const OverpaidBalancePaymentModal: FC<OverpaidBalancePaymentModalProps> = ({
                               <InputGroup backgroundColor={"#FFF"} size={"md"}>
                                 <InputLeftAddon>₦</InputLeftAddon>
                                 <Input
-                                  {...field}
-                                  defaultValue={Math.abs(balance || 0)}
+                                  defaultValue={formatNumberWithCommas(Math.abs(balance || 0))}
                                   variant={"filled"}
                                   isReadOnly={true}
                                   focusBorderColor="green.600"
