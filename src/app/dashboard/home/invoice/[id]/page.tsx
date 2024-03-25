@@ -197,6 +197,7 @@ const Invoice: FC<InvoiceProps> = ({ params }: { params: { id: number } }) => {
                     <Box
                       key={index}
                       border={"1px solid #005D5D60"}
+                      backgroundColor={"#232D3F"}
                       p={3}
                       color="white"
                       mt="4"
@@ -209,7 +210,7 @@ const Invoice: FC<InvoiceProps> = ({ params }: { params: { id: number } }) => {
                           <Text
                             fontSize={"lg"}
                             fontWeight={"bold"}
-                            color={"#000000"}
+                            color={"#ffffff"}
                           >
                             Receipt Details
                           </Text>
@@ -238,7 +239,7 @@ const Invoice: FC<InvoiceProps> = ({ params }: { params: { id: number } }) => {
                           <Box>
                             <Text
                               fontSize={"xs"}
-                              color={"#00000080"}
+                              color={"#ffffff"}
                               fontWeight={"bold"}
                             >
                               Category
@@ -262,7 +263,7 @@ const Invoice: FC<InvoiceProps> = ({ params }: { params: { id: number } }) => {
                                 <Text
                                   fontSize={"xs"}
                                   fontWeight={"bold"}
-                                  color={"#00000080"}
+                                  color={"#ffffff"}
                                 >
                                   Amount Paid
                                 </Text>
@@ -329,7 +330,7 @@ const Invoice: FC<InvoiceProps> = ({ params }: { params: { id: number } }) => {
                           <Text
                             fontSize={"xs"}
                             fontWeight={"bold"}
-                            color={"#00000080"}
+                            color={"#ffffff"}
                           >
                             Summary
                           </Text>
@@ -402,7 +403,7 @@ const Invoice: FC<InvoiceProps> = ({ params }: { params: { id: number } }) => {
                 gap={"4"}
               >
                 <Box>
-                  <Text fontSize={"xs"} color={"#00000080"} fontWeight={"bold"}>
+                  <Text fontSize={"xs"} color={"#ffffff"} fontWeight={"bold"}>
                     Category
                   </Text>
                   <Text fontSize={"md"} fontWeight={"bold"} color={"#000000"}>
@@ -411,7 +412,7 @@ const Invoice: FC<InvoiceProps> = ({ params }: { params: { id: number } }) => {
                 </Box>
 
                 <Box>
-                  <Text fontSize={"xs"} color={"#00000080"} fontWeight={"bold"}>
+                  <Text fontSize={"xs"} color={"#ffffff"} fontWeight={"bold"}>
                     Invoice Id
                   </Text>
                   <Text fontSize={"md"} fontWeight={"bold"} color={"#000000"}>
@@ -426,7 +427,7 @@ const Invoice: FC<InvoiceProps> = ({ params }: { params: { id: number } }) => {
                       <Text
                         fontSize={"xs"}
                         fontWeight={"bold"}
-                        color={"#00000080"}
+                        color={"#ffffff"}
                       >
                         Amount to be Paid
                       </Text>
@@ -454,7 +455,7 @@ const Invoice: FC<InvoiceProps> = ({ params }: { params: { id: number } }) => {
                       <Text
                         fontSize={"xs"}
                         fontWeight={"bold"}
-                        color={"#00000080"}
+                        color={"#ffffff"}
                       >
                         Balance
                       </Text>
@@ -475,7 +476,7 @@ const Invoice: FC<InvoiceProps> = ({ params }: { params: { id: number } }) => {
 
             <Box display={"flex"} flexDir={"column"} gap={"4"} mt={"1rem"}>
               <Box>
-                <Text fontSize={"xs"} fontWeight={"bold"} color={"#00000080"}>
+                <Text fontSize={"xs"} fontWeight={"bold"} color={"#ffffff"}>
                   Summary
                 </Text>
                 <Box
