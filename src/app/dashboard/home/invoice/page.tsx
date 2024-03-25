@@ -39,6 +39,7 @@ import RejectInvoiceModal from "@/components/shared/rejectinvoicemodal";
 import { TbFileInvoice } from "react-icons/tb";
 import { useRouter } from "next/navigation";
 import { MdOutlinePayment } from "react-icons/md";
+import OverpaidBalancePaymentModal from "@/components/shared/overpaidBalancePaymentModal";
 
 interface InvoiceProps {}
 
@@ -78,14 +79,22 @@ const Invoice: FC<InvoiceProps> = ({}) => {
     onOpen: onAcceptModalOpen,
     onClose: onAcceptModalClose,
   } = useDisclosure();
+
   const {
     isOpen: isRejectModalOpen,
     onOpen: onRejectModalOpen,
     onClose: onRejectModalClose,
   } = useDisclosure();
 
-  const [invoiceData, setInvoiceData] = useState<StudentInvoiceProps[]>([]);
+  const {
+    isOpen: isOverpaidModalModalOpen,
+    onOpen: onOverpaidModalModalOpen,
+    onClose: onOverpaidModalModalClose,
+  } = useDisclosure();
 
+  const [invoiceData, setInvoiceData] = useState<StudentInvoiceProps[]>([]);
+  const [overpaidId, setOverpaidId] = useState()
+  const [overpaidBalance, setOverpaidBalance] = useState<number>()
   const [currentInvoiceId, setCurrentInvoiceId] = useState()
 
   const { data: getinvoice } = useQuery(GET_STUDENT_INVOICE, {
@@ -183,6 +192,12 @@ const Invoice: FC<InvoiceProps> = ({}) => {
     onRejectModalOpen();
   };
 
+  const handleOverpaidInvoice = (id: any, balance: number) => {
+    setOverpaidId(id)
+    setOverpaidBalance(balance)
+    onOverpaidModalModalOpen();
+  }
+
   console.log(parentData)
   return (
     <Box mb={{ base: "8rem", lg: "5rem" }}>
@@ -208,6 +223,13 @@ const Invoice: FC<InvoiceProps> = ({}) => {
           onOpen={onRejectModalOpen}
           onClose={onRejectModalClose}
           invoiceId={currentInvoiceId}
+        />
+        <OverpaidBalancePaymentModal
+        isOpen = {isOverpaidModalModalOpen}
+        onOpen={onOverpaidModalModalOpen}
+        onClose={onOverpaidModalModalClose}
+        invoiceId={overpaidId}
+        balance={overpaidBalance}
         />
         <SimpleGrid minChildWidth="200px" spacing={"10px"}>
           <Flex
@@ -556,13 +578,14 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                   <MenuItem
                                     px={"1rem"}
                                     display={
-                                      !["parent overpaid"].includes(
+                                      !["active", 'partial payment'].includes(
                                         item?.status
                                       )
                                         ? "none"
                                         : "flex"
                                     }
                                     gap={"3"}
+                                    onClick={()=>handleOverpaidInvoice(item?.id, item?.balance)}
                                   >
                                     <Icon
                                       as={MdOutlinePayment}
@@ -760,7 +783,11 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                       {activeInvoice?.map((item, index) => {
                         return (
                           <Tr key={index}>
-                            <Td color={"green.700"} fontWeight={"bold"} fontSize={"sm"}>
+                            <Td
+                              color={"green.700"}
+                              fontWeight={"bold"}
+                              fontSize={"sm"}
+                            >
                               {item?.invoiceId}
                             </Td>
                             <Td>
@@ -804,7 +831,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                               </Badge>
                             </Td>
                             <Td>
-                               <Menu>
+                              <Menu>
                                 <MenuButton>
                                   <Icon
                                     as={BsThreeDots}
@@ -853,7 +880,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                     <Icon
                                       as={MdOutlineClose}
                                       boxSize={"4"}
-                                      color={"#005D5D"}
+                                      color={"red.600"}
                                     />
                                     <Text color={"#005D5D"} fontWeight={"600"}>
                                       Reject Invoice
@@ -874,6 +901,20 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                     />
                                     <Text color={"#005D5D"} fontWeight={"600"}>
                                       View Invoice Details
+                                    </Text>
+                                  </MenuItem>
+                                  <MenuItem
+                                    px={"1rem"}
+                                    display={"flex"}
+                                    gap={"3"}
+                                  >
+                                    <Icon
+                                      as={MdOutlinePayment}
+                                      boxSize={"4"}
+                                      color={"#005D5D"}
+                                    />
+                                    <Text color={"#005D5D"} fontWeight={"600"}>
+                                      Pay with overpaid balance
                                     </Text>
                                   </MenuItem>
                                 </MenuList>
