@@ -28,11 +28,14 @@ interface RequestDataProps {
 }
 
 const Page: FC<pageProps> = ({}) => {
-  const { data: parent, loading } = useQuery(GET_PARENT);
+  const { data: parent, loading: parentLoading } = useQuery(GET_PARENT);
   const { parentData } = useUserAPI();
-  const { data: getRequests } = useQuery(PARENT_REQUESTS, {
-    variables: { parentId: parentData?.userId },
-  });
+  const { data: getRequests, loading: requestsLoading } = useQuery(
+    PARENT_REQUESTS,
+    {
+      variables: { parentId: parentData?.userId },
+    }
+  );
   const [requestData, setRequestData] = useState<RequestDataProps[]>([]);
   const {
     isOpen: isModalOpen,
@@ -77,11 +80,11 @@ const Page: FC<pageProps> = ({}) => {
       fetchData();
     }, [getRequests, parent, requestData])
 
+    if (parentLoading || requestsLoading) {
+      return <Loading />;
+    }
+
   return (
-    <>
-      {loading ? (
-        <Loading />
-      ) : (
         <Flex h={"100vh"} overflowY={"auto"}>
           <Box
             h={"100vh"}
@@ -143,8 +146,6 @@ const Page: FC<pageProps> = ({}) => {
             </Flex>
           </Box>
         </Flex>
-      )}
-    </>
   );
 };
 
