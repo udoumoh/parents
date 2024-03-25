@@ -7,16 +7,13 @@ import {
   Text,
   useDisclosure,
   Button,
-  Avatar,
-  useToast,
-  SimpleGrid,
 } from "@chakra-ui/react";
 import { AiOutlinePlus } from "react-icons/ai";
 import SearchStudentModal from "@/components/shared/searchStudentModal";
-import { useRouter } from "next/navigation";
 import { useUserAPI } from "@/hooks/UserContext";
 import { PARENT_REQUESTS } from "@/gql/queries";
 import { useQuery, useMutation } from "@apollo/client";
+import { GET_PARENT } from "@/gql/queries";
 import Loading from "../loading";
 
 interface pageProps {}
@@ -31,6 +28,7 @@ interface RequestDataProps {
 }
 
 const Page: FC<pageProps> = ({}) => {
+  const { data: parent, loading } = useQuery(GET_PARENT);
   const { childData, parentData } = useUserAPI();
   const { data: getRequests } = useQuery(PARENT_REQUESTS, {
     variables: { parentId: parentData?.userId },
@@ -42,13 +40,6 @@ const Page: FC<pageProps> = ({}) => {
     onClose: onModalClose,
   } = useDisclosure();
 
-  if ((childData ?? []).length !== 0) {
-    window.location.replace("/dashboard/home/overview");
-  }
-
-  if ((childData ?? []).length === 0 && requestData.length !== 0 ) {
-    window.location.replace("/dashboard/settings")
-  }
     useEffect(() => {
       const fetchData = async () => {
         try {
@@ -69,11 +60,24 @@ const Page: FC<pageProps> = ({}) => {
         } catch (err: any) {
           console.log(err);
         }
+
+        try {
+          const parentResponse = await parent
+          if ((parentResponse?.parent?.parent?.children ?? []).length !== 0) {
+            window.location.replace("/dashboard/home/overview");
+          }
+
+          if ((parentResponse?.parent?.parent?.children ?? []).length === 0 && requestData.length !== 0) {
+            window.location.replace("/dashboard/settings");
+          }
+        } catch (err) {
+
+        }
       };
       fetchData();
-    }, [getRequests]);
+    }, [getRequests, parent, requestData]);
 
-    if(!childData){
+    if(loading){
       return <Loading />
     }
 
