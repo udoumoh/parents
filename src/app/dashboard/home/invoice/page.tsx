@@ -460,21 +460,21 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                             <Td fontWeight={"bold"}>
                               {item?.status === "rejected by parent"
                                 ? `-`
-                                : `₦${formatNumberWithCommas(
-                                    Math.abs(item?.balance)
-                                  )}`}
+                                : `₦${formatNumberWithCommas(item?.balance)}`}
                             </Td>
                             <Td>
                               <Badge
                                 variant="solid"
                                 colorScheme={
                                   item?.status === "active"
-                                    ? "green"
+                                    ? "blue"
                                     : item?.status === "rejected by parent"
                                     ? "red"
                                     : item?.status === "processing"
                                     ? "yellow"
-                                    : "purple"
+                                    : item?.status === "completed"
+                                    ? "green"
+                                    : "black"
                                 }
                               >
                                 {item?.status}
