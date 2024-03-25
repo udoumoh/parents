@@ -424,7 +424,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                       {invoiceData?.map((item, index) => {
                         return (
                           <Tr key={index}>
-                            <Td fontWeight={"bold"} fontSize={"sm"}>
+                            <Td fontWeight={"bold"} fontSize={"sm"} color={'green.500'}>
                               {item?.invoiceId}
                             </Td>
                             <Td>
