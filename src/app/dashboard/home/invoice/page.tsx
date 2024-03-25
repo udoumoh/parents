@@ -407,7 +407,6 @@ const Invoice: FC<InvoiceProps> = ({}) => {
 
             <TabPanels>
               <TabPanel
-                border={"1px solid #005D5D50"}
                 rounded={"lg"}
                 mt={"1rem"}
               >
@@ -455,8 +454,10 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                 : formatNumberWithCommas(item?.amountPaid)}
                             </Td>
                             <Td fontWeight={"bold"}>
-                              ₦
-                              {formatNumberWithCommas(item?.balance)}
+                              
+                              {
+                              item?.status === 'rejected by parent' ? `-` : `#${formatNumberWithCommas(item?.balance)}`
+                              }
                             </Td>
                             <Td>
                               <Badge
