@@ -38,6 +38,7 @@ import AcceptInvoiceModal from "@/components/shared/acceptInvoiceModal";
 import RejectInvoiceModal from "@/components/shared/rejectinvoicemodal";
 import { TbFileInvoice } from "react-icons/tb";
 import { useRouter } from "next/navigation";
+import { MdOutlinePayment } from "react-icons/md";
 
 interface InvoiceProps {}
 
@@ -564,7 +565,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                     gap={"3"}
                                   >
                                     <Icon
-                                      as={TbFileInvoice}
+                                      as={MdOutlinePayment}
                                       boxSize={"4"}
                                       color={"#005D5D"}
                                     />
