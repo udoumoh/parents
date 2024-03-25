@@ -590,9 +590,9 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                     ? "red"
                                     : item?.status === "processing"
                                     ? "yellow"
-                                    : item?.status === 'completed'
+                                    : item?.status === "completed"
                                     ? "green"
-                                    : 'black'
+                                    : "black"
                                 }
                               >
                                 {item?.status}
@@ -611,7 +611,9 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                   <MenuItem
                                     icon={<FaCheck />}
                                     isDisabled={
-                                      item?.status === "active" ? false : true
+                                      !["active", "partial payment"].includes(
+                                        item?.status
+                                      )
                                     }
                                     onClick={() =>
                                       handleAcceptInvoice(item?.id)
@@ -622,7 +624,9 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                   <MenuItem
                                     icon={<MdOutlineClose />}
                                     isDisabled={
-                                      item?.status === "active" ? false : true
+                                      !["active", "partial payment"].includes(
+                                        item?.status
+                                      )
                                     }
                                     onClick={() =>
                                       handleRejectInvoice(item?.id)
@@ -720,7 +724,9 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                   <MenuItem
                                     icon={<FaCheck />}
                                     isDisabled={
-                                      item?.status === "active" ? false : true
+                                      !["active", "partial payment"].includes(
+                                        item?.status
+                                      )
                                     }
                                     onClick={() =>
                                       handleAcceptInvoice(item?.id)
@@ -731,7 +737,9 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                   <MenuItem
                                     icon={<MdOutlineClose />}
                                     isDisabled={
-                                      item?.status === "active" ? false : true
+                                      !["active", "partial payment"].includes(
+                                        item?.status
+                                      )
                                     }
                                     onClick={() =>
                                       handleRejectInvoice(item?.id)
@@ -829,7 +837,9 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                   <MenuItem
                                     icon={<FaCheck />}
                                     isDisabled={
-                                      item?.status === "active" ? false : true
+                                      !["active", "partial payment"].includes(
+                                        item?.status
+                                      )
                                     }
                                     onClick={() =>
                                       handleAcceptInvoice(item?.id)
@@ -840,7 +850,9 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                   <MenuItem
                                     icon={<MdOutlineClose />}
                                     isDisabled={
-                                      item?.status === "active" ? false : true
+                                      !["active", "partial payment"].includes(
+                                        item?.status
+                                      )
                                     }
                                     onClick={() =>
                                       handleRejectInvoice(item?.id)
@@ -929,7 +941,6 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                               <Menu size={"sm"}>
                                 <MenuButton>
                                   <Icon
-                                    p={1}
                                     as={BsThreeDots}
                                     _hover={{ cursor: "pointer" }}
                                     boxSize={6}
@@ -939,7 +950,9 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                   <MenuItem
                                     icon={<FaCheck />}
                                     isDisabled={
-                                      item?.status === "active" ? false : true
+                                      !["active", "partial payment"].includes(
+                                        item?.status
+                                      )
                                     }
                                     onClick={() =>
                                       handleAcceptInvoice(item?.id)
@@ -950,7 +963,9 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                   <MenuItem
                                     icon={<MdOutlineClose />}
                                     isDisabled={
-                                      item?.status === "active" ? false : true
+                                      !["active", "partial payment"].includes(
+                                        item?.status
+                                      )
                                     }
                                     onClick={() =>
                                       handleRejectInvoice(item?.id)
