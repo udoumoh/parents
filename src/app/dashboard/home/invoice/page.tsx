@@ -82,11 +82,6 @@ const Invoice: FC<InvoiceProps> = ({}) => {
     onOpen: onRejectModalOpen,
     onClose: onRejectModalClose,
   } = useDisclosure();
-  const {
-    isOpen: isDrawerOpen,
-    onOpen: onDrawerOpen,
-    onClose: onDrawerClose,
-  } = useDisclosure();
 
   const [invoiceData, setInvoiceData] = useState<StudentInvoiceProps[]>([]);
 
@@ -467,14 +462,14 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                 variant="solid"
                                 colorScheme={
                                   item?.status === "active"
-                                    ? "blue"
+                                    ? "green"
                                     : item?.status === "rejected by parent"
                                     ? "red"
                                     : item?.status === "processing"
                                     ? "yellow"
                                     : item?.status === "completed"
-                                    ? "green"
-                                    : "black"
+                                    ? "blue"
+                                    : "purple"
                                 }
                               >
                                 {item?.status}
@@ -585,14 +580,14 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                 variant="solid"
                                 colorScheme={
                                   item?.status === "active"
-                                    ? "blue"
+                                    ? "green"
                                     : item?.status === "rejected by parent"
                                     ? "red"
                                     : item?.status === "processing"
                                     ? "yellow"
                                     : item?.status === "completed"
-                                    ? "green"
-                                    : "black"
+                                    ? "blue"
+                                    : "purple"
                                 }
                               >
                                 {item?.status}
@@ -705,6 +700,8 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                     ? "red"
                                     : item?.status === "processing"
                                     ? "yellow"
+                                    : item?.status === "completed"
+                                    ? "blue"
                                     : "purple"
                                 }
                               >
@@ -818,6 +815,8 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                     ? "red"
                                     : item?.status === "processing"
                                     ? "yellow"
+                                    : item?.status === "completed"
+                                    ? "blue"
                                     : "purple"
                                 }
                               >
@@ -931,6 +930,8 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                     ? "red"
                                     : item?.status === "processing"
                                     ? "yellow"
+                                    : item?.status === "completed"
+                                    ? "blue"
                                     : "purple"
                                 }
                               >
