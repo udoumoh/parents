@@ -449,9 +449,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                 ? formatNumberWithCommas(
                                     getCompletedInvoiceAmount(item)
                                   )
-                                : formatNumberWithCommas(
-                                    item?.amountPaid
-                                  )}
+                                : formatNumberWithCommas(item?.amountPaid)}
                             </Td>
                             <Td>
                               <Badge
@@ -493,7 +491,11 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                   <MenuItem
                                     icon={<MdOutlineClose />}
                                     isDisabled={
-                                      item?.status === "active" ? false : true
+                                      ![
+                                        "active",
+                                        "parent overpaid",
+                                        "partial payment",
+                                      ].includes(item?.status)
                                     }
                                     onClick={() =>
                                       handleRejectInvoice(item?.id)

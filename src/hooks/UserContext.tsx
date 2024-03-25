@@ -40,6 +40,9 @@ export interface UserChildren {
   schoolId: number;
   graycase?:Graycase[] | null;
   isVisible: boolean;
+  schoolAccountName: string;
+  schoolAccountNumber: string;
+  schoolBankName: string;
 }
 
 interface ParentDataProps {
@@ -114,6 +117,9 @@ export const UserApiProvider: FC<UserApiProviderProps> = ({ children }) => {
         age: 0,
         schoolId: 0,
         isVisible: false,
+        schoolAccountName: '',
+        schoolAccountNumber: '',
+        schoolBankName: '',
       },
     ],
   });
@@ -169,13 +175,13 @@ export const UserApiProvider: FC<UserApiProviderProps> = ({ children }) => {
             schoolId: child?.school?.school?.id || 0,
             graycase: child?.studentCase?.grayCase,
             isVisible: child?.isVisible,
+            schoolAccountName: child?.school?.school?.accountName,
+            schoolAccountNumber: child?.school?.school?.accountNumber,
+            schoolBankName: child?.school?.school?.bankName,
           })
         );
 
         setChildData(userChildren);
-        // if((childData ?? []).length !== 0) {
-        //   setCurrentId(userChildren[0].id);
-        // }
       } catch (error) {
         console.error("Error fetching data:", error);
       }
