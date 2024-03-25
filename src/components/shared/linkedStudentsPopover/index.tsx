@@ -87,19 +87,19 @@ const LinkedStudentsPopover: FC<LinkedStudentsPopoverProps> = ({onClose}) => {
                 >
                   <Avatar
                     size={"md"}
-                    src={ward.profileImage}
+                    src={ward?.profileImage}
                     pointerEvents={"none"}
                   />
                   <Box lineHeight={"20px"}>
                     <Text fontWeight={"600"} fontSize={"sm"}>
-                      {`${ward.firstName} ${ward.lastName}`}
+                      {`${ward?.firstName} ${ward.lastName}`}
                     </Text>
                     <Text
                       fontSize={"12px"}
                       color={"#AAAAAA"}
                       fontWeight={"600"}
                     >
-                      {ward.greynoteNumber}
+                      {ward?.greynoteNumber}
                     </Text>
                   </Box>
                 </Flex>

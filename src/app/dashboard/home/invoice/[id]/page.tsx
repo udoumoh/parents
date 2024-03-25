@@ -323,6 +323,7 @@ const Invoice: FC<InvoiceProps> = ({ params }: { params: { id: number } }) => {
                             fontSize={"xs"}
                             fontWeight={"bold"}
                             color={"#00000080"}
+                            mb={"0.4rem"}
                           >
                             Summary
                           </Text>
@@ -470,7 +471,12 @@ const Invoice: FC<InvoiceProps> = ({ params }: { params: { id: number } }) => {
 
             <Box display={"flex"} flexDir={"column"} gap={"4"} mt={"1rem"}>
               <Box>
-                <Text fontSize={"xs"} fontWeight={"bold"} color={"#00000080"}>
+                <Text
+                  fontSize={"xs"}
+                  fontWeight={"bold"}
+                  color={"#00000080"}
+                  mb={"0.4rem"}
+                >
                   Summary
                 </Text>
                 <Box
@@ -479,7 +485,9 @@ const Invoice: FC<InvoiceProps> = ({ params }: { params: { id: number } }) => {
                   p={2}
                   rounded={"md"}
                 >
-                  <Text fontSize={'lg'} color={'#000000'}>{currentInvoice?.summary}</Text>
+                  <Text fontSize={"lg"} color={"#000000"}>
+                    {currentInvoice?.summary}
+                  </Text>
                 </Box>
               </Box>
 

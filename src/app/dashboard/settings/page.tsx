@@ -69,7 +69,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
     onOpen: onRemoveStudentModalOpen,
     onClose: onRemoveStudentModalClose,
   } = useDisclosure();
-  const { profileData, parentData, childData } = useUserAPI();
+  const { profileData, parentData, childData, setLocalstorageId } = useUserAPI();
   const { data: getRequests } = useQuery(PARENT_REQUESTS, {
     variables: { parentId: parentData?.userId },
   });
@@ -269,7 +269,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
               gap={"2"}
               colorScheme="red"
             >
-              <Text>Remove student</Text>
+              <Text>Remove Child</Text>
             </Button>
           </Flex>
           <EditProfileModal
@@ -349,6 +349,10 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                         cursor: "pointer",
                       }}
                       w={"full"}
+                      onClick={() => {
+                        setLocalstorageId(item?.id || 0);
+                        window.location.replace('/dashboard/home/overview')
+                      }}
                     >
                       <Box display={"flex"} gap={"2"} alignItems={"center"}>
                         <Avatar
@@ -564,7 +568,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
             <Flex alignItems={"center"} gap={1}>
               <Icon as={RiBookletFill} color="#005D5D" fontWeight={"bold"} />
               <Text fontWeight={"600"} fontSize={"lg"} color={"#005D5D"}>
-                Graycases
+                Greycases
               </Text>
             </Flex>
             <Divider mt={"0.3rem"} mb={"1rem"} />
