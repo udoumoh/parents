@@ -411,7 +411,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                 mt={"1rem"}
               >
                 <TableContainer>
-                  <Table variant="simple" size={{ base: "sm", md: "md" }}>
+                  <Table variant="simple" size={{ base: "sm", md: "md" }} border={'1px solid #005D5D60'}>
                     <Thead>
                       <Tr backgroundColor={'#005D5D40'}>
                         <Th>Inv. ID</Th>
