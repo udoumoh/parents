@@ -82,7 +82,7 @@ const LinkedStudentsPopover: FC<LinkedStudentsPopoverProps> = ({onClose}) => {
                   key={index}
                   onClick={() => {
                     setLocalstorageId(ward?.id || 0);
-                    router.refresh();
+                    window.location.replace('/dashboard/home/overview');
                   }}
                 >
                   <Avatar

@@ -4,6 +4,8 @@ import { useQuery } from "@apollo/client";
 import { GET_PARENT } from "@/gql/queries";
 import { format } from "date-fns";
 import { capitalizeFirstLetter } from "@/helpers/capitalizeFirstLetter";
+import { GET_STUDENT_INVOICE } from "@/gql/queries";
+import { formatDate } from "@/helpers/formatDate";
 
 interface UserBio {
   firstName: string;
@@ -45,6 +47,33 @@ export interface UserChildren {
   schoolBankName: string;
 }
 
+interface StudentInvoiceProps {
+  term: string;
+  year: string;
+  category: string;
+  amountPaid: number;
+  id: number;
+  status: string;
+  summary: string;
+  createdAt: string;
+  invoiceId: string;
+  schoolname: string;
+  schoollogo: string;
+  balance: number;
+  receipt: {
+    amountPaid: number;
+    createdAt: string;
+    creator: string;
+    fileType: string;
+    id: number;
+    parentInvoiceId: string;
+    status: string;
+    summary: string;
+    updatedAt: string;
+    uploadedDocument: string;
+  }[];
+}
+
 interface ParentDataProps {
   agreedTo: boolean;
   children: [];
@@ -83,6 +112,7 @@ interface UserContextProps {
   currentWardProfile?: UserChildren;
   parentData: ParentDataProps | undefined;
   childData: UserChildren[] | undefined;
+  invoiceData: StudentInvoiceProps[];
 }
 
 const UserContext = createContext<UserContextProps | undefined>(undefined);
@@ -126,9 +156,20 @@ export const UserApiProvider: FC<UserApiProviderProps> = ({ children }) => {
   const [parentData, setParentData] = useState<ParentDataProps | undefined>(
     undefined
   );
+
   const [childData, setChildData] = useState<UserChildren[]>([]);
 
   const currentId = Number(localStorage.getItem("currentId") || 0);
+
+  const [invoiceData, setInvoiceData] = useState<StudentInvoiceProps[]>([]);
+
+  const currentWardProfile = (childData || []).find(
+    (child) => child.id === Number(localStorage.getItem("currentId") || 0)
+  );
+
+   const { data: getinvoice } = useQuery(GET_STUDENT_INVOICE, {
+     variables: { studentId: currentWardProfile?.id },
+   });
 
   const updateUserBio = (newBio: any) => {
     setProfileData((previousData) => {
@@ -185,22 +226,44 @@ export const UserApiProvider: FC<UserApiProviderProps> = ({ children }) => {
       } catch (error) {
         console.error("Error fetching data:", error);
       }
+
+      try {
+        const invoiceResponse = await getinvoice;
+        const parsedInvoiceData = invoiceResponse?.getStudentInvoice?.map(
+          (item: any) => ({
+            term: item?.academicTerm,
+            year: item?.academicYear,
+            category: item?.category,
+            amountPaid: item?.amount,
+            id: item?.id,
+            invoiceId: item?.invoiceId,
+            createdAt: formatDate(item?.createdAt),
+            summary: item?.summary,
+            status: item?.status,
+            schoolname: item?.creatorSchool,
+            schoollogo: item?.student?.creator?.admin?.schoolImg,
+            receipt: item?.receipt,
+            balance: item?.balance,
+          })
+        );
+        setInvoiceData(parsedInvoiceData.reverse());
+      } catch (err: any) {
+        console.log(err.message);
+      }
+
     };
 
     fetchData();
-  }, [parent]);
+  }, [parent, getinvoice]);
 
   const setLocalstorageId = (id: any) => {
     localStorage.setItem("currentId", id);
   };
 
-  const currentWardProfile = (childData || []).find(
-    (child) => child.id === Number(localStorage.getItem("currentId") || 0)
-  );
-
   return (
     <UserContext.Provider
       value={{
+        invoiceData,
         profileData,
         setProfileData,
         currentId,

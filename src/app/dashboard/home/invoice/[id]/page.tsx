@@ -22,9 +22,6 @@ import { PDFViewer } from "@/components/shared/uploadedResultPdfViewer";
 import ImgViewer from "@/components/shared/imageViewer";
 import { useUserAPI } from "@/hooks/UserContext";
 import formatNumberWithCommas from "@/helpers/formatNumberWithCommas";
-import { GET_STUDENT_INVOICE } from "@/gql/queries";
-import { useQuery } from "@apollo/client";
-import { formatDate } from "@/helpers/formatDate";
 import { IoIosArrowRoundBack } from "react-icons/io";
 import { useRouter } from "next/navigation";
 import { MdOutlinePayment } from "react-icons/md";
@@ -67,13 +64,8 @@ interface StudentInvoiceProps {
 
 const Invoice: FC<InvoiceProps> = ({ params }: { params: { id: number } }) => {
     const router = useRouter()
-    const { currentWardProfile } = useUserAPI();
+    const { currentWardProfile, invoiceData } = useUserAPI();
     const [overpaidId, setOverpaidId] = useState();
-    const [currentInvoiceId, setCurrentInvoiceId] = useState();
-    const [invoiceData, setInvoiceData] = useState<StudentInvoiceProps[]>([]);
-    const { data: getinvoice } = useQuery(GET_STUDENT_INVOICE, {
-    variables: { studentId: currentWardProfile?.id },
-    });
     const { isOpen: isCollapseOpen, onToggle: onCollapseToggle } =
       useDisclosure();
     const {
@@ -101,41 +93,13 @@ const Invoice: FC<InvoiceProps> = ({ params }: { params: { id: number } }) => {
       return totalCompletedAmount;
     };
 
-    useEffect(() => {
-      const fetchData = async () => {
-        try {
-          const response = await getinvoice;
-          const parsedInvoiceData = response?.getStudentInvoice?.map(
-            (item: any) => ({
-              term: item?.academicTerm,
-              year: item?.academicYear,
-              category: item?.category,
-              amountPaid: item?.amount,
-              id: item?.id,
-              invoiceId: item?.invoiceId,
-              createdAt: formatDate(item?.createdAt),
-              summary: item?.summary,
-              status: item?.status,
-              schoolname: item?.creatorSchool,
-              schoollogo: item?.student?.creator?.admin?.schoolImg,
-              receipt: item?.receipt,
-              balance: item?.balance,
-            })
-          );
-          setInvoiceData(parsedInvoiceData);
-        } catch (err: any) {
-          console.log(err.message);
-        }
-      };
-      fetchData();
-    }, [getinvoice, params]);
     const currentInvoice = invoiceData?.find(
       (invoice: any) => Number(invoice?.id) === Number(params?.id)
     );
 
-      const totalOverpaidAmount = invoiceData
-        .filter((invoice) => invoice.status === "parent overpaid")
-        .reduce((acc, item) => acc + item.balance, 0);
+    const totalOverpaidAmount = invoiceData
+      .filter((invoice) => invoice.status === "parent overpaid")
+      .reduce((acc, item) => acc + item.balance, 0);
 
     const handleOverpaidInvoice = (id: any) => {
       setOverpaidId(id);

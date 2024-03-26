@@ -43,36 +43,9 @@ import OverpaidBalancePaymentModal from "@/components/shared/overpaidBalancePaym
 
 interface InvoiceProps {}
 
-interface StudentInvoiceProps {
-  term: string;
-  year: string;
-  category: string;
-  amountPaid: number;
-  id: number;
-  status: string;
-  summary: string;
-  createdAt: string;
-  invoiceId: string;
-  schoolname: string;
-  schoollogo: string;
-  balance: number;
-  receipt: {
-    amountPaid: number;
-    createdAt: string;
-    creator: string;
-    fileType: string;
-    id: number;
-    parentInvoiceId: string;
-    status: string;
-    summary: string;
-    updatedAt: string;
-    uploadedDocument: string;
-  }[];
-}
-
 const Invoice: FC<InvoiceProps> = ({}) => {
   const router = useRouter()
-  const { currentWardProfile, parentData } = useUserAPI();
+  const { currentWardProfile, parentData, invoiceData } = useUserAPI();
 
   const {
     isOpen: isAcceptModalOpen,
@@ -92,42 +65,12 @@ const Invoice: FC<InvoiceProps> = ({}) => {
     onClose: onOverpaidModalModalClose,
   } = useDisclosure();
 
-  const [invoiceData, setInvoiceData] = useState<StudentInvoiceProps[]>([]);
   const [overpaidId, setOverpaidId] = useState()
   const [currentInvoiceId, setCurrentInvoiceId] = useState()
 
   const { data: getinvoice } = useQuery(GET_STUDENT_INVOICE, {
     variables: { studentId: currentWardProfile?.id },
   });
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await getinvoice;
-        const parsedInvoiceData = response?.getStudentInvoice?.map(
-          (item: any) => ({
-            term: item?.academicTerm,
-            year: item?.academicYear,
-            category: item?.category,
-            amountPaid: item?.amount,
-            id: item?.id,
-            invoiceId: item?.invoiceId,
-            createdAt: formatDate(item?.createdAt),
-            summary: item?.summary,
-            status: item?.status,
-            schoolname: item?.creatorSchool,
-            schoollogo: item?.student?.creator?.admin?.schoolImg,
-            receipt: item?.receipt,
-            balance: item?.balance,
-          })
-        );
-        setInvoiceData(parsedInvoiceData.reverse())
-      } catch (err: any) {
-        console.log(err.message);
-      }
-    };
-    fetchData();
-  }, [getinvoice]);
 
   const getCompletedInvoiceAmount = (invoice: any) => {
     const totalCompletedAmount = invoice?.receipt
