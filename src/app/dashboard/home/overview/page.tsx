@@ -98,7 +98,7 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
                   {currentWardProfile?.dateOfBirth}
                 </Text>
               </Grid>
-              <Grid gap={1} display={{base:"none", md:"block"}}>
+              <Grid gap={1} display={{base:"none", md:"grid"}}>
                 <Text color={"#449c7c"} fontSize={"0.8rem"} fontWeight={"600"}>
                   School
                 </Text>
