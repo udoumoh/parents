@@ -31,7 +31,7 @@ const LinkedStudentsPopover: FC<LinkedStudentsPopoverProps> = ({onClose}) => {
     } = useDisclosure();
     const { currentId, setLocalstorageId, currentWardProfile, childData } =
       useUserAPI();
-    const router = useRouter();
+      
   return (
     <Box display={"flex"} w={"full"} mb={10} alignItems={"center"}>
       <Popover isLazy matchWidth={true}>

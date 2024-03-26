@@ -35,33 +35,6 @@ interface InvoiceProps {
   params: Params;
 }
 
-interface StudentInvoiceProps {
-  term: string;
-  year: string;
-  category: string;
-  amountPaid: number;
-  id: number;
-  status: string;
-  summary: string;
-  createdAt: string;
-  invoiceId: string;
-  schoolname: string;
-  schoollogo: string;
-  balance: number;
-  receipt: {
-    amountPaid: number;
-    createdAt: string;
-    creator: string;
-    fileType: string;
-    id: number;
-    parentInvoiceId: string;
-    status: string;
-    summary: string;
-    updatedAt: string;
-    uploadedDocument: string;
-  }[];
-}
-
 const Invoice: FC<InvoiceProps> = ({ params }: { params: { id: number } }) => {
     const router = useRouter()
     const { currentWardProfile, invoiceData } = useUserAPI();
