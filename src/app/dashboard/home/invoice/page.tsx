@@ -418,7 +418,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                               {item?.status === "completed"
                                 ? formatNumberWithCommas(
                                     getCompletedInvoiceAmount(item)
-                                  )
+                                  ) : item?.status === 'processing' ? formatNumberWithCommas(item?.amountPaid)
                                 : formatNumberWithCommas(
                                     item?.amountPaid +
                                       getCompletedInvoiceAmount(item)
