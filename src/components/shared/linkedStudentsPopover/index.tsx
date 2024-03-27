@@ -24,6 +24,7 @@ interface LinkedStudentsPopoverProps {
 }
 
 const LinkedStudentsPopover: FC<LinkedStudentsPopoverProps> = ({onClose}) => {
+    const router = useRouter()
     const {
       isOpen: isModalOpen,
       onOpen: onModalOpen,
@@ -82,7 +83,7 @@ const LinkedStudentsPopover: FC<LinkedStudentsPopoverProps> = ({onClose}) => {
                   key={index}
                   onClick={() => {
                     setLocalstorageId(ward?.id || 0);
-                    window.location.replace('/dashboard/home/overview');
+                    router.refresh()
                   }}
                 >
                   <Avatar
