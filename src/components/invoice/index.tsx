@@ -54,21 +54,21 @@ const InvoiceItem: FC<InvoiceItemProps> = ({
   } = useDisclosure();
   return (
     <Box border={"1px solid #C2C2C2"} rounded={"xl"} p={"0.4rem"} mb={"1rem"}>
-      <Box backgroundColor={"#44506960"} rounded={"lg"} p={"0.6rem"} pb={"1rem"}>
+      <Box
+        backgroundColor={"#44506960"}
+        rounded={"lg"}
+        p={"0.6rem"}
+        pb={"1rem"}
+      >
         <Box display={"flex"} gap={1} alignItems={"center"}>
-          <Text fontSize={"xs"} >
-            {studentInvoice.term}
-          </Text>{" "}
-          •{" "}
-          <Text fontSize={"xs"} >
-            {studentInvoice.year}
-          </Text>
+          <Text fontSize={"xs"}>{studentInvoice.term}</Text> •{" "}
+          <Text fontSize={"xs"}>{studentInvoice.year}</Text>
         </Box>
         <Text mt={"1.3rem"} fontSize={"xs"}>
           {studentInvoice.category}
         </Text>
         <Text color={"#000"} fontSize={"2xl"} fontWeight={"600"}>
-          ₦ {formatNumberWithCommas(studentInvoice.amountPaid)}
+          ₦{formatNumberWithCommas(studentInvoice.amountPaid)}
         </Text>
       </Box>
       <Box px={"0.5rem"} w={"auto"} mb={"0.5rem"}>
@@ -87,7 +87,17 @@ const InvoiceItem: FC<InvoiceItemProps> = ({
 
         <Badge
           variant={"solid"}
-          colorScheme={"green"}
+          colorScheme={
+            studentInvoice?.status === "active"
+              ? "green"
+              : studentInvoice?.status === "rejected by parent"
+              ? "red"
+              : studentInvoice?.status === "processing"
+              ? "yellow"
+              : studentInvoice?.status === "completed"
+              ? "blue"
+              : "purple"
+          }
           px={"1rem"}
           py={"0.1rem"}
           fontSize={"2xs"}

@@ -35,15 +35,15 @@ const Layout: FC<LayoutProps> = ({ children }) => {
     }
   }, [onOpen]);
 
-  if (parentData?.children.length === 0) {
-    window.location.replace("/dashboard");
-  }
+  // if (parentData?.children.length === 0) {
+  //   window.location.replace("/dashboard");
+  // }
 
   const Overlay = () => <ModalOverlay bg="none" backdropFilter="blur(10px)" />;
   return (
     <SidebarWithHeader>
       {/* ... Your modal content ... */}
-      <Modal
+      {/* <Modal
         isCentered
         isOpen={isOpen}
         onClose={onClose}
@@ -107,9 +107,8 @@ const Layout: FC<LayoutProps> = ({ children }) => {
               );
             })}
           </ModalBody>
-          <ModalFooter></ModalFooter>
         </ModalContent>
-      </Modal>
+      </Modal> */}
       {children}
     </SidebarWithHeader>
   );

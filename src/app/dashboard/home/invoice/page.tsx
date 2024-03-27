@@ -25,6 +25,7 @@ import {
   MenuList,
   MenuItem,
   useDisclosure,
+  Button,
 } from "@chakra-ui/react";
 import { GET_STUDENT_INVOICE } from "@/gql/queries";
 import { BsThreeDots } from "react-icons/bs";
@@ -40,6 +41,8 @@ import { TbFileInvoice } from "react-icons/tb";
 import { useRouter } from "next/navigation";
 import { MdOutlinePayment } from "react-icons/md";
 import OverpaidBalancePaymentModal from "@/components/shared/overpaidBalancePaymentModal";
+import { MdAccountBalanceWallet } from "react-icons/md";
+import SchoolAccountDetailsModal from "@/components/shared/schoolAccountDetailsModal";
 
 interface InvoiceProps {}
 
@@ -65,12 +68,13 @@ const Invoice: FC<InvoiceProps> = ({}) => {
     onClose: onOverpaidModalModalClose,
   } = useDisclosure();
 
-  const [overpaidId, setOverpaidId] = useState()
-  const [currentInvoiceId, setCurrentInvoiceId] = useState()
+  const {
+    isOpen: isSchoolAccountDetailsModalOpen,
+    onOpen: onSchoolAccountDetailsModalOpen,
+    onClose: onSchoolAccountDetailsModalClose,
+  } = useDisclosure();
 
-  const { data: getinvoice } = useQuery(GET_STUDENT_INVOICE, {
-    variables: { studentId: currentWardProfile?.id },
-  });
+  const [currentInvoiceId, setCurrentInvoiceId] = useState()
 
   const getCompletedInvoiceAmount = (invoice: any) => {
     const totalCompletedAmount = invoice?.receipt
@@ -108,9 +112,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
     0
   );
 
-  const totalOverpaidAmount = invoiceData
-      .filter((invoice) => invoice.status === "parent overpaid")
-      .reduce((acc, item) => acc + item.balance, 0);
+  const totalOverpaidAmount = invoiceData?.filter((invoice) => invoice.status === "parent overpaid")?.reduce((acc, item) => acc + item.balance, 0);
 
   const nonEmptyReceipts = invoiceData
     ?.map((invoice) => invoice?.receipt)
@@ -139,7 +141,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
   };
 
   const handleOverpaidInvoice = (id: any) => {
-    setOverpaidId(id)
+    setCurrentInvoiceId(id)
     onOverpaidModalModalOpen();
   }
 
@@ -170,11 +172,15 @@ const Invoice: FC<InvoiceProps> = ({}) => {
           invoiceId={currentInvoiceId}
         />
         <OverpaidBalancePaymentModal
-        isOpen = {isOverpaidModalModalOpen}
-        onOpen={onOverpaidModalModalOpen}
-        onClose={onOverpaidModalModalClose}
-        invoiceId={overpaidId}
-        balance={totalOverpaidAmount}
+          isOpen={isOverpaidModalModalOpen}
+          onOpen={onOverpaidModalModalOpen}
+          onClose={onOverpaidModalModalClose}
+          invoiceId={currentInvoiceId}
+          balance={totalOverpaidAmount}
+        />
+        <SchoolAccountDetailsModal
+          isOpen={isSchoolAccountDetailsModalOpen}
+          onClose={onSchoolAccountDetailsModalClose}
         />
         <SimpleGrid minChildWidth="200px" spacing={"10px"}>
           <Flex
@@ -307,12 +313,31 @@ const Invoice: FC<InvoiceProps> = ({}) => {
             </Badge>
           </Flex>
         </SimpleGrid>
+
+        <Box mt={'1.5rem'}>
+          <Button
+            display={{ base: "flex", lg: "none" }}
+            leftIcon={<MdAccountBalanceWallet />}
+            backgroundColor={"#005D5D"}
+            color={"#ffffff"}
+            _hover={{ backgroundColor: "#004A4A" }}
+            onClick={onSchoolAccountDetailsModalOpen}
+          >
+            School Account
+          </Button>
+        </Box>
       </Box>
 
       <Box mt={"3rem"}>
         <Box>
           <Tabs variant={"unstyled"} size={"xs"} w={"full"}>
-            <Flex overflowX={"auto"}>
+            <Flex
+              gap={4}
+              overflowX={"auto"}
+              justifyContent={"space-between"}
+              alignItems={"center"}
+              flexDir={{ base: "column", md: "row" }}
+            >
               <TabList
                 backgroundColor={"#005D5D40"}
                 p={"0.4rem"}
@@ -366,6 +391,17 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                   Processing
                 </Tab>
               </TabList>
+
+              <Button
+                display={{ base: "none", lg: "flex" }}
+                leftIcon={<MdAccountBalanceWallet />}
+                backgroundColor={"#005D5D"}
+                color={"#ffffff"}
+                _hover={{ backgroundColor: "#004A4A" }}
+                onClick={onSchoolAccountDetailsModalOpen}
+              >
+                School Account
+              </Button>
             </Flex>
 
             <TabPanels>
@@ -418,7 +454,9 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                               {item?.status === "completed"
                                 ? formatNumberWithCommas(
                                     getCompletedInvoiceAmount(item)
-                                  ) : item?.status === 'processing' ? formatNumberWithCommas(item?.amountPaid)
+                                  )
+                                : item?.status === "processing"
+                                ? formatNumberWithCommas(item?.amountPaid)
                                 : formatNumberWithCommas(
                                     item?.amountPaid +
                                       getCompletedInvoiceAmount(item)
@@ -523,14 +561,16 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                   <MenuItem
                                     px={"1rem"}
                                     display={
-                                      !["active", 'partial payment'].includes(
+                                      !["active", "partial payment"].includes(
                                         item?.status
                                       )
                                         ? "none"
                                         : "flex"
                                     }
                                     gap={"3"}
-                                    onClick={()=>handleOverpaidInvoice(item?.id)}
+                                    onClick={() =>
+                                      handleOverpaidInvoice(item?.id)
+                                    }
                                   >
                                     <Icon
                                       as={MdOutlinePayment}
@@ -575,7 +615,11 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                       {completedInvoice?.map((item, index) => {
                         return (
                           <Tr key={index}>
-                            <Td color={"green.700"} fontWeight={"bold"} fontSize={"sm"}>
+                            <Td
+                              color={"green.700"}
+                              fontWeight={"bold"}
+                              fontSize={"sm"}
+                            >
                               {item?.invoiceId}
                             </Td>
                             <Td>
@@ -622,7 +666,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                               </Badge>
                             </Td>
                             <Td>
-                               <Menu>
+                              <Menu>
                                 <MenuButton>
                                   <Icon
                                     as={BsThreeDots}
@@ -741,7 +785,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                 <MenuList>
                                   <MenuItem
                                     px={"1rem"}
-                                    display={'flex'}
+                                    display={"flex"}
                                     gap={"3"}
                                     onClick={() =>
                                       handleAcceptInvoice(item?.id)
@@ -758,7 +802,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                   </MenuItem>
                                   <MenuItem
                                     px={"1rem"}
-                                    display={'flex'}
+                                    display={"flex"}
                                     gap={"3"}
                                     onClick={() =>
                                       handleRejectInvoice(item?.id)
@@ -775,7 +819,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                   </MenuItem>
                                   <MenuItem
                                     px={"1rem"}
-                                    display={'flex'}
+                                    display={"flex"}
                                     gap={"3"}
                                     onClick={() =>
                                       handleOverpaidInvoice(item?.id)
@@ -805,20 +849,6 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                     />
                                     <Text color={"#005D5D"} fontWeight={"600"}>
                                       View Invoice Details
-                                    </Text>
-                                  </MenuItem>
-                                  <MenuItem
-                                    px={"1rem"}
-                                    display={"flex"}
-                                    gap={"3"}
-                                  >
-                                    <Icon
-                                      as={MdOutlinePayment}
-                                      boxSize={"4"}
-                                      color={"#005D5D"}
-                                    />
-                                    <Text color={"#005D5D"} fontWeight={"600"}>
-                                      Pay with overpaid balance
                                     </Text>
                                   </MenuItem>
                                 </MenuList>
@@ -855,7 +885,11 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                       {rejectedInvoice?.map((item, index) => {
                         return (
                           <Tr key={index}>
-                            <Td color={"green.700"} fontWeight={"bold"} fontSize={"sm"}>
+                            <Td
+                              color={"green.700"}
+                              fontWeight={"bold"}
+                              fontSize={"sm"}
+                            >
                               {item?.invoiceId}
                             </Td>
                             <Td>
@@ -899,7 +933,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                               </Badge>
                             </Td>
                             <Td>
-                               <Menu>
+                              <Menu>
                                 <MenuButton>
                                   <Icon
                                     as={BsThreeDots}
@@ -959,7 +993,11 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                       {processingInvoice?.map((item, index) => {
                         return (
                           <Tr key={index}>
-                            <Td color={"green.700"} fontWeight={"bold"} fontSize={"sm"}>
+                            <Td
+                              color={"green.700"}
+                              fontWeight={"bold"}
+                              fontSize={"sm"}
+                            >
                               {item?.invoiceId}
                             </Td>
                             <Td>
@@ -1003,7 +1041,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                               </Badge>
                             </Td>
                             <Td>
-                               <Menu>
+                              <Menu>
                                 <MenuButton>
                                   <Icon
                                     as={BsThreeDots}

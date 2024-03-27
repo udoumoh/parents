@@ -42,9 +42,9 @@ export interface UserChildren {
   schoolId: number;
   graycase?:Graycase[] | null;
   isVisible: boolean;
-  schoolAccountName: string;
-  schoolAccountNumber: string;
-  schoolBankName: string;
+  schoolAccountName: string[];
+  schoolAccountNumber: string[];
+  schoolBankName: string[];
 }
 
 interface StudentInvoiceProps {
@@ -147,9 +147,9 @@ export const UserApiProvider: FC<UserApiProviderProps> = ({ children }) => {
         age: 0,
         schoolId: 0,
         isVisible: false,
-        schoolAccountName: '',
-        schoolAccountNumber: '',
-        schoolBankName: '',
+        schoolAccountName: [""],
+        schoolAccountNumber: [""],
+        schoolBankName: [""],
       },
     ],
   });
@@ -246,9 +246,9 @@ export const UserApiProvider: FC<UserApiProviderProps> = ({ children }) => {
             balance: item?.balance,
           })
         );
-        setInvoiceData(parsedInvoiceData.reverse());
+        setInvoiceData(parsedInvoiceData?.reverse());
       } catch (err: any) {
-        console.log(err.message);
+        console.log(err?.message);
       }
 
     };
