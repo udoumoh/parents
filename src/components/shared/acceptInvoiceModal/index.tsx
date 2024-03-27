@@ -193,7 +193,12 @@ const {
                                   alignItems={"center"}
                                   mb="0.5rem"
                                 >
-                                  <Text color={"#005D5D"}>Amount Paid</Text>
+                                  <Text
+                                    color={"#005D5D"}
+                                    fontSize={{ base: "sm", md: "md" }}
+                                  >
+                                    Amount Paid
+                                  </Text>
                                   <Button
                                     display={
                                       totalOverpaidAmount > 0 ? "flex" : "none"
