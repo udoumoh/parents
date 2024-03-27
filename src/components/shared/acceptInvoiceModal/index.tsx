@@ -193,7 +193,7 @@ const {
                                   </Text>
                                   <Button
                                     display={
-                                      totalOverpaidAmount > 0 ? "flex" : "none"
+                                      totalOverpaidAmount > 0 ? "block" : "none"
                                     }
                                     size={"sm"}
                                     colorScheme="red"

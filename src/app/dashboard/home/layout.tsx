@@ -108,7 +108,7 @@ const Layout: FC<LayoutProps> = ({ children }) => {
             })}
           </ModalBody>
         </ModalContent>
-      </Modal>
+      </Modal>`
       {children}
     </SidebarWithHeader>
   );
