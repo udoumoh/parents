@@ -134,8 +134,8 @@ const InvoiceItem: FC<InvoiceItemProps> = ({
               size={"sm"}
               isDisabled={
                 !["active", "partial payment"].includes(studentInvoice?.status)
-                  ? false
-                  : true
+                  ? true
+                  : false
               }
             />
           </Tooltip>
@@ -154,8 +154,8 @@ const InvoiceItem: FC<InvoiceItemProps> = ({
               size={"sm"}
               isDisabled={
                 !["active", "partial payment"].includes(studentInvoice?.status)
-                  ? false
-                  : true
+                  ? true
+                  : false
               }
             />
           </Tooltip>
