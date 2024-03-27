@@ -48,6 +48,7 @@ const LinkedStudentsPopover: FC<LinkedStudentsPopoverProps> = ({onClose}) => {
               <Avatar
                 size={"md"}
                 src={currentWardProfile?.profileImage}
+                name={`${currentWardProfile?.firstName} ${currentWardProfile?.lastName}`}
                 pointerEvents={"none"}
               />
               <Box lineHeight={"20px"}>
