@@ -187,10 +187,13 @@ const {
                           {({ field, form }: any) => (
                             <FormControl>
                               <Box w={"full"}>
-                                <Flex justifyContent={"space-between"} gap={3} alignItems={'center'} mb='0.5rem'>
-                                  <Text color={"#005D5D"}>
-                                    Amount Paid
-                                  </Text>
+                                <Flex
+                                  justifyContent={"space-between"}
+                                  gap={3}
+                                  alignItems={"center"}
+                                  mb="0.5rem"
+                                >
+                                  <Text color={"#005D5D"}>Amount Paid</Text>
                                   <Button
                                     display={
                                       totalOverpaidAmount > 0 ? "flex" : "none"
@@ -198,14 +201,13 @@ const {
                                     size={"sm"}
                                     colorScheme="red"
                                     gap={"2"}
-                                    onClick={() =>{
+                                    onClick={() => {
                                       onOverpaidModalModalOpen();
-                                      onClose()}
-                                    }
-                                    fontSize={{base:"xs", md:"sm"}}
+                                      onClose();
+                                    }}
                                   >
                                     <Icon as={MdOutlinePayment} boxSize={"4"} />
-                                    <Text fontSize={"sm"}>
+                                    <Text fontSize={{ base: "xs", md: "sm" }}>
                                       Pay with overpaid balance
                                     </Text>
                                   </Button>
