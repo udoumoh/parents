@@ -149,7 +149,7 @@ const {
         isOpen={isOpen}
         onClose={onClose}
         scrollBehavior={"inside"}
-        size={{ base: "sm", md: "md", lg: "xl" }}
+        size={{ base: "xs", sm: "lg", md: "2xl" }}
       >
         <ModalOverlay />
         <ModalContent rounded={"xl"}>

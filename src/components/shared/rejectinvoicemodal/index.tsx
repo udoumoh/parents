@@ -82,7 +82,7 @@ const RejectInvoiceModal: FC<RejectInvoiceModalProps> = ({
       blockScrollOnMount={false}
       isOpen={isOpen}
       onClose={onClose}
-      size={{ base: "sm", md: "md", lg: "xl" }}
+      size={{ base: "xs", sm: "lg", md: "2xl" }}
       scrollBehavior={"inside"}
     >
       <ModalOverlay />

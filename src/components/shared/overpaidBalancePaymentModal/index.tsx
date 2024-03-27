@@ -107,7 +107,7 @@ const OverpaidBalancePaymentModal: FC<OverpaidBalancePaymentModalProps> = ({
       isOpen={isOpen}
       onClose={onClose}
       scrollBehavior={"inside"}
-      size={{ base: "sm", md: "md", lg: "xl" }}
+      size={{ base: "xs", sm: "lg", md: "2xl" }}
     >
       <ModalOverlay />
       <ModalContent rounded={"xl"}>
@@ -129,10 +129,7 @@ const OverpaidBalancePaymentModal: FC<OverpaidBalancePaymentModalProps> = ({
         <ModalBody pb={6} px={"2rem"}>
           <Box>
             <Formik
-              initialValues={{
-
-              }}
-
+              initialValues={{}}
               onSubmit={async (values) => {
                 handleSubmit();
               }}
@@ -151,7 +148,9 @@ const OverpaidBalancePaymentModal: FC<OverpaidBalancePaymentModalProps> = ({
                               <InputGroup backgroundColor={"#FFF"} size={"md"}>
                                 <InputLeftAddon>₦</InputLeftAddon>
                                 <Input
-                                  defaultValue={formatNumberWithCommas(Math.abs(balance || 0))}
+                                  defaultValue={formatNumberWithCommas(
+                                    Math.abs(balance || 0)
+                                  )}
                                   variant={"filled"}
                                   isReadOnly={true}
                                   focusBorderColor="green.600"
