@@ -1,5 +1,5 @@
 "use client";
-import { FC, useEffect } from "react";
+import { FC, useEffect, useState } from "react";
 import {
   Box,
   Flex,
@@ -17,12 +17,28 @@ import { useRouter } from "next/navigation";
 import { useUserAPI } from "@/hooks/UserContext";
 import { capitalizeFirstLetter } from "@/helpers/capitalizeFirstLetter";
 import SidebarWithHeader from "@/components/navigation/secondaryNav";
+import Router from "next/router";
+import TopBarProgress from "react-topbar-progress-indicator";
 
 interface LayoutProps {
   children: React.ReactNode;
 }
 
 const Layout: FC<LayoutProps> = ({ children }) => {
+  const [progress, setProgress] = useState(false);
+
+  Router.events.on("routeChangeStart", () => {
+    setProgress(true);
+  });
+  Router.events.on("routeChangeComplete", () => {
+    setProgress(false);
+  });
+  TopBarProgress.config({
+    barColors: {
+      "0": "#099C9B",
+      "1.0": "#007C7B",
+    },
+  });
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { parentData, childData, setLocalstorageId, currentId } = useUserAPI();
   const router = useRouter();
@@ -48,7 +64,7 @@ const Layout: FC<LayoutProps> = ({ children }) => {
         isOpen={isOpen}
         onClose={onClose}
         closeOnOverlayClick={false}
-        size={{base:"xs", sm:"sm", md:"md"}}
+        size={{ base: "xs", sm: "sm", md: "md" }}
       >
         <Overlay />
         <ModalContent>
@@ -108,7 +124,8 @@ const Layout: FC<LayoutProps> = ({ children }) => {
             })}
           </ModalBody>
         </ModalContent>
-      </Modal>`
+      </Modal>
+      {progress && <TopBarProgress />}
       {children}
     </SidebarWithHeader>
   );
