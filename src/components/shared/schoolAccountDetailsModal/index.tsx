@@ -84,65 +84,59 @@ const SchoolAccountDetailsModal: FC<SchoolAccountDetailsModalProps> = ({isOpen, 
       isOpen={isOpen}
       onClose={onClose}
       isCentered
-      size={{ base: "sm", md: "lg", lg: "xl" }}
+      size={{ base: "xs", sm: "lg", md: "2xl" }}
     >
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>
-            <Text fontSize={"xl"} fontWeight={"bold"} color={"#005D5D"}>
-              School Account Information
-            </Text>
+          <Text fontSize={"xl"} fontWeight={"bold"} color={"#005D5D"}>
+            School Account Information
+          </Text>
           <Divider />
         </ModalHeader>
         <ModalCloseButton />
-        <ModalBody mb={'2rem'}>
-          <Box display={'flex'} flexDir={'column'} gap={'4'}>
-            {
-                schoolAccountDetails?.map((item, index) => {
-                    return (
-                      <Flex
-                        key={index}
-                        justifyContent={"space-between"}
-                        backgroundColor={"#F1FBF6"}
-                        p={3}
-                        rounded={"lg"}
-                      >
-                        <Flex gap={"3"} alignItems={"center"}>
-                          <Avatar
-                            src={
-                              "https://th.bing.com/th?id=OIF.Ik%2bZvTuSYLB%2fFKtY5ZjcDg&w=191&h=140&c=7&r=0&o=5&pid=1.7"
-                            }
-                            size={"md"}
-                          />
-                          <Box>
-                            <Text
-                              fontSize={"lg"}
-                              fontWeight={"500"}
-                              color={"#000"}
-                            >
-                              {item?.accountName}
-                            </Text>
-                            <Flex alignItems={"center"} gap={3}>
-                              <Text color={"#000"}>{item?.bankName}</Text>
-                              <Text color={"#000"}>{"•"}</Text>
-                              <Text color={"#000"}>{item?.accountNumber}</Text>
-                            </Flex>
-                          </Box>
-                        </Flex>
-                        <Tooltip label="Copy Account Number">
-                          <Button
-                            size={"xs"}
-                            colorScheme="green"
-                            variant={"outline"}
-                            onClick={() => handleCopy(item?.accountNumber)}
-                          >
-                            Copy
-                          </Button>
-                        </Tooltip>
+        <ModalBody mb={"2rem"}>
+          <Box display={"flex"} flexDir={"column"} gap={"4"}>
+            {schoolAccountDetails?.map((item, index) => {
+              return (
+                <Flex
+                  key={index}
+                  justifyContent={"space-between"}
+                  backgroundColor={"#F1FBF6"}
+                  p={3}
+                  rounded={"lg"}
+                >
+                  <Flex gap={"3"} alignItems={"center"}>
+                    <Avatar
+                      src={
+                        "https://th.bing.com/th?id=OIF.Ik%2bZvTuSYLB%2fFKtY5ZjcDg&w=191&h=140&c=7&r=0&o=5&pid=1.7"
+                      }
+                      size={"md"}
+                    />
+                    <Box>
+                      <Text fontSize={"lg"} fontWeight={"500"} color={"#000"}>
+                        {item?.accountName}
+                      </Text>
+                      <Flex alignItems={"center"} gap={3}>
+                        <Text color={"#000"}>{item?.bankName}</Text>
+                        <Text color={"#000"}>{"•"}</Text>
+                        <Text color={"#000"}>{item?.accountNumber}</Text>
                       </Flex>
-                    );
-                })
-            }
+                    </Box>
+                  </Flex>
+                  <Tooltip label="Copy Account Number">
+                    <Button
+                      size={"xs"}
+                      colorScheme="green"
+                      variant={"outline"}
+                      onClick={() => handleCopy(item?.accountNumber)}
+                    >
+                      Copy
+                    </Button>
+                  </Tooltip>
+                </Flex>
+              );
+            })}
           </Box>
         </ModalBody>
       </ModalContent>
