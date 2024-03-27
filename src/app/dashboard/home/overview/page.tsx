@@ -175,7 +175,7 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
                 Owing balance
               </Text>
               <Text fontSize={"2xl"} color={"red.700"} fontWeight={"bold"}>
-                ₦{formatNumberWithCommas(totalOwingAmount) || 0}
+                ₦{formatNumberWithCommas(totalOwingAmount || 0)}
               </Text>
             </Flex>
             <Flex
@@ -194,7 +194,7 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
                 Overpaid Balance
               </Text>
               <Text fontSize={"2xl"} color={"#005D5D"} fontWeight={"bold"}>
-                ₦{formatNumberWithCommas(totalOverpaidAmount) || 0}
+                ₦{formatNumberWithCommas(totalOverpaidAmount || 0)}
               </Text>
             </Flex>
           </Box>
