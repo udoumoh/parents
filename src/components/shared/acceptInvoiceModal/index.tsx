@@ -168,7 +168,7 @@ const {
             <Divider color={"#C2C2C2"} my={"0.8rem"} />
             <ModalCloseButton />
           </ModalHeader>
-          <ModalBody pb={6} px={"2rem"}>
+          <ModalBody pb={6} px={{ base: "1rem", md: "2rem" }}>
             <Box>
               <Formik
                 initialValues={{
@@ -195,7 +195,7 @@ const {
                                 >
                                   <Text
                                     color={"#005D5D"}
-                                    fontSize={{ base: "sm", md: "md" }}
+                                    fontSize={{ base: "xs", md: "md" }}
                                   >
                                     Amount Paid
                                   </Text>
@@ -242,7 +242,11 @@ const {
                         </Field>
                       </Flex>
                       <Box>
-                        <Text mb={"0.5rem"} color={"#005D5D"}>
+                        <Text
+                          mb={"0.5rem"}
+                          color={"#005D5D"}
+                          fontSize={{ base: "xs", md: "md" }}
+                        >
                           File Type
                         </Text>
                         <Flex gap={5} flexDir={{ base: "column", md: "row" }}>
@@ -277,7 +281,7 @@ const {
                               backgroundColor={"#007C7B"}
                               color={"#fff"}
                               fontWeight={"400"}
-                              w={"17rem"}
+                              w={"full"}
                               onClick={onFileOpen}
                               _hover={{ backgroundColor: "#099C9B" }}
                             >
@@ -308,13 +312,13 @@ const {
                       <FormLabel
                         fontWeight={"normal"}
                         color={"#005D5D"}
-                        fontSize={"md"}
+                        fontSize={{ base: "xs", md: "md" }}
                       >
                         Summary
                       </FormLabel>
                       <Textarea
                         onChange={handleSummaryChange}
-                        h={"150px"}
+                        h={"100px"}
                         border={"1px solid #005D5D"}
                         rounded={"xl"}
                         backgroundColor={"#fff"}

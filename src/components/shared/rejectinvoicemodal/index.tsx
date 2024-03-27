@@ -102,9 +102,9 @@ const RejectInvoiceModal: FC<RejectInvoiceModalProps> = ({
           <Divider color={"#C2C2C2"} />
           <ModalCloseButton />
         </ModalHeader>
-        <ModalBody pb={6} px={"2rem"}>
+        <ModalBody pb={6} px={{base:"1rem", md:"2rem"}}>
           <Box>
-            <Text fontSize={"lg"} fontWeight={"400"}>
+            <Text fontSize={{base:"sm", md:"lg"}} fontWeight={"400"}>
               You have selected to reject the invoice. Can you tell the school
               admin why you rejected the invoice?
             </Text>
