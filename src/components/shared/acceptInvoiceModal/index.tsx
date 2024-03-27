@@ -187,8 +187,8 @@ const {
                           {({ field, form }: any) => (
                             <FormControl>
                               <Box w={"full"}>
-                                <Flex justifyContent={"space-between"} gap={3} alignItems={'center'}>
-                                  <Text mb={"0.5rem"} color={"#005D5D"}>
+                                <Flex justifyContent={"space-between"} gap={3} alignItems={'center'} mb='0.5rem'>
+                                  <Text color={"#005D5D"}>
                                     Amount Paid
                                   </Text>
                                   <Button
@@ -198,7 +198,6 @@ const {
                                     size={"sm"}
                                     colorScheme="red"
                                     gap={"2"}
-                                    mt={"0.5rem"}
                                     onClick={() =>{
                                       onOverpaidModalModalOpen();
                                       onClose()}
