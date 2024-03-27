@@ -187,7 +187,7 @@ const {
                           {({ field, form }: any) => (
                             <FormControl>
                               <Box w={"full"}>
-                                <Flex justifyContent={"space-between"} gap={3}>
+                                <Flex justifyContent={"space-between"} gap={3} alignItems={'center'}>
                                   <Text mb={"0.5rem"} color={"#005D5D"}>
                                     Amount Paid
                                   </Text>
