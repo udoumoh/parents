@@ -7,9 +7,7 @@ import { Providers } from "./providers";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 import "./globals.css";
 import Loading from "./loading";
-import { useRouter } from "next/router";
-import TopBarProgress from "react-topbar-progress-indicator";
-import LoadingBar from "react-top-loading-bar";
+import NextTopLoader from "nextjs-toploader";
 
 const mulish = Mulish({ subsets: ["cyrillic"] });
 
@@ -24,22 +22,6 @@ const client = new ApolloClient({
 });
 
 const Layout: FC<LayoutProps> = ({ children }) => {
-  const router = useRouter()
-  const [progress, setProgress] = useState(false)
-
-   router.events.on("routeChangeStart", () => {
-     setProgress(true);
-   });
-   router.events.off("routeChangeStart", () => {
-     setProgress(false);
-   });
-
-   TopBarProgress.config({
-     barColors: {
-       "0": "#099C9B",
-       "1.0": "#007C7B",
-     },
-   });
   
   return (
     <html lang="en">
@@ -53,7 +35,7 @@ const Layout: FC<LayoutProps> = ({ children }) => {
               <Loading />
             ) : (
               <UserApiProvider>
-                {progress && <TopBarProgress />}
+                <NextTopLoader />
                 {children}
               </UserApiProvider>
             )}
