@@ -4,6 +4,7 @@ import { Box, Flex, Text, Image, Grid, Avatar, Icon, Divider } from "@chakra-ui/
 import Attendance from "@/components/attendance";
 import Invoice from "@/components/invoice";
 import { useUserAPI } from "@/hooks/UserContext";
+import formatNumberWithCommas from "@/helpers/formatNumberWithCommas";
 
 interface DashboardPageProps {}
 
@@ -16,7 +17,7 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
         invoice.status === "active" || invoice.status === "processing"
     )
     .reduce((acc, invoice) => acc + invoice?.amountPaid, 0);
-    
+
   const totalOverpaidAmount = invoiceData
     ?.filter((invoice) => invoice.status === "parent overpaid")
     ?.reduce((acc, item) => acc + Math.abs(item.balance), 0);
@@ -174,7 +175,7 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
                 Owing balance
               </Text>
               <Text fontSize={"2xl"} color={"red.700"} fontWeight={"bold"}>
-                ₦{totalOwingAmount}
+                ₦{formatNumberWithCommas(totalOwingAmount)}
               </Text>
             </Flex>
             <Flex
@@ -193,7 +194,7 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
                 Overpaid Balance
               </Text>
               <Text fontSize={"2xl"} color={"#005D5D"} fontWeight={"bold"}>
-                ₦{totalOverpaidAmount}
+                ₦{formatNumberWithCommas(totalOverpaidAmount)}
               </Text>
             </Flex>
           </Box>
