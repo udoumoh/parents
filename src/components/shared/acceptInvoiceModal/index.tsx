@@ -202,6 +202,7 @@ const {
                                       onOverpaidModalModalOpen();
                                       onClose()}
                                     }
+                                    fontSize={{base:"xs", md:"sm"}}
                                   >
                                     <Icon as={MdOutlinePayment} boxSize={"4"} />
                                     <Text fontSize={"sm"}>
