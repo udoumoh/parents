@@ -27,11 +27,8 @@ import {
   useDisclosure,
   Button,
 } from "@chakra-ui/react";
-import { GET_STUDENT_INVOICE } from "@/gql/queries";
 import { BsThreeDots } from "react-icons/bs";
 import { useUserAPI } from "@/hooks/UserContext";
-import { useQuery } from "@apollo/client";
-import { formatDate } from "@/helpers/formatDate";
 import formatNumberWithCommas from "@/helpers/formatNumberWithCommas";
 import { FaCheck } from "react-icons/fa6";
 import { MdOutlineClose } from "react-icons/md";
@@ -48,7 +45,7 @@ interface InvoiceProps {}
 
 const Invoice: FC<InvoiceProps> = ({}) => {
   const router = useRouter()
-  const { currentWardProfile, parentData, invoiceData } = useUserAPI();
+  const { parentData, invoiceData } = useUserAPI();
 
   const {
     isOpen: isAcceptModalOpen,
