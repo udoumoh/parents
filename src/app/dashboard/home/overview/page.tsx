@@ -4,12 +4,22 @@ import { Box, Flex, Text, Image, Grid, Avatar, Icon, Divider } from "@chakra-ui/
 import Attendance from "@/components/attendance";
 import Invoice from "@/components/invoice";
 import { useUserAPI } from "@/hooks/UserContext";
-import { FaMoneyBill } from "react-icons/fa6";
 
 interface DashboardPageProps {}
 
 const DashboardPage: FC<DashboardPageProps> = ({}) => {
-  const { currentWardProfile } = useUserAPI();
+  const { currentWardProfile, invoiceData } = useUserAPI();
+
+  const totalOwingAmount = invoiceData
+    ?.filter(
+      (invoice) =>
+        invoice.status === "active" || invoice.status === "processing"
+    )
+    .reduce((acc, invoice) => acc + invoice?.amountPaid, 0);
+    
+  const totalOverpaidAmount = invoiceData
+    ?.filter((invoice) => invoice.status === "parent overpaid")
+    ?.reduce((acc, item) => acc + Math.abs(item.balance), 0);
 
   return (
     <Flex gap={5} flexDir={"column"} mb={{ base: "8rem", lg: "5rem" }}>
@@ -21,13 +31,16 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
       >
         <Box
           width={"full"}
-          rounded={"xl"}
+          rounded={"2xl"}
           border={"1px solid #449c7c"}
           overflow={"hidden"}
           backgroundColor={"#F4FFFB"}
           p={"1rem"}
           bgSize={"cover"}
           my={{ base: "10px", md: "0" }}
+          display={'flex'}
+          flexDir={'column'}
+          justifyContent={'space-between'}
         >
           <Box display={"flex"} justifyContent={"space-between"} gap={3}>
             <Box display={"flex"} alignItems={"center"} gap={3}>
@@ -117,7 +130,7 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
 
         <Box
           border={"1px solid #005D5D50"}
-          rounded={"xl"}
+          rounded={"2xl"}
           pt={4}
           pb={2}
           minW={"300px"}
@@ -152,12 +165,16 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
               py={2}
               mb={"1rem"}
               border={"1px solid red.800"}
+              _hover={{
+                backgroundColor: "#FED3D3",
+                transitionDuration: "0.5s",
+              }}
             >
               <Text fontSize={"sm"} color={"#00000070"} fontWeight={"bold"}>
                 Owing balance
               </Text>
               <Text fontSize={"2xl"} color={"red.700"} fontWeight={"bold"}>
-                ₦10,000
+                ₦{totalOwingAmount}
               </Text>
             </Flex>
             <Flex
@@ -167,12 +184,16 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
               px={4}
               py={2}
               my={"0.5rem"}
+              _hover={{
+                backgroundColor: "#BAF2E5",
+                transitionDuration: "0.5s",
+              }}
             >
               <Text fontSize={"sm"} color={"#00000070"} fontWeight={"bold"}>
                 Overpaid Balance
               </Text>
               <Text fontSize={"2xl"} color={"#005D5D"} fontWeight={"bold"}>
-                ₦10,000
+                ₦{totalOverpaidAmount}
               </Text>
             </Flex>
           </Box>

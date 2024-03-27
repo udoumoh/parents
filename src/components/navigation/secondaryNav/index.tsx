@@ -17,7 +17,12 @@ import {
   Icon,
 } from "@chakra-ui/react";
 import { HiOutlineHome } from "react-icons/hi";
-import { IoReceiptOutline, IoReceipt  } from "react-icons/io5";
+import {
+  IoReceiptOutline,
+  IoReceipt,
+  IoGridOutline,
+  IoGrid,
+} from "react-icons/io5";
 import { TbFile, TbFileFilled } from "react-icons/tb";
 import { BiChevronRight } from "react-icons/bi";
 import { BsFillGridFill, BsGrid } from "react-icons/bs";
@@ -48,8 +53,8 @@ interface SidebarWithHeader {
 const LinkItems: Array<LinkItemProps> = [
   {
     name: "Overview",
-    iconLight: BsGrid,
-    iconFill: BsFillGridFill,
+    iconLight: IoGridOutline,
+    iconFill: IoGrid,
     url: "/dashboard/home/overview",
   },
   {

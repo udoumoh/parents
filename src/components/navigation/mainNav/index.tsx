@@ -119,7 +119,7 @@ const DrawerNavLinkItems = {
     },
     {
       name: "Invoice",
-      icon: IoReceiptOutline,
+      icon: HiOutlineArrowSmRight,
       url: "/dashboard/home/invoice",
     },
   ],
@@ -141,7 +141,6 @@ const DrawerNavLinkItems = {
 
 
 const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
-  const { profileData } = useUserAPI();
   const pathName = usePathname();
 
   return (
@@ -565,6 +564,7 @@ const MainNav: FC<MainNav> = ({ children }) => {
                       size={"md"}
                       src={ward.profileImage}
                       pointerEvents={"none"}
+                      name={`${ward.firstName} ${ward.lastName}`}
                     />
                     <Box lineHeight={"20px"}>
                       <Text fontWeight={"600"} fontSize={"sm"}>

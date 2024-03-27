@@ -212,11 +212,11 @@ const Invoice: FC<InvoiceProps> = ({}) => {
     <Box
       p={"1rem"}
       backgroundColor={"#fff"}
-      rounded={"lg"}
+      rounded={"2xl"}
       w={"full"}
-      border={"1px solid #C2C2C2"}
+      border={"1px solid #005D5D50"}
     >
-      <Flex w={'full'} justifyContent={'space-between'} gap={3}>
+      <Flex w={"full"} justifyContent={"space-between"} gap={3}>
         <Box display={"flex"} alignItems={"center"} gap={2}>
           <Icon as={IoReceiptOutline} boxSize={"5"} color={"#189879"} />
           <Text fontWeight={"600"} fontSize={"xl"}>
@@ -228,7 +228,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
           rounded={"md"}
           border={"1px solid #E2E2E2"}
           size={"sm"}
-          onClick={() => router.push('/dashboard/home/invoice')}
+          onClick={() => router.push("/dashboard/home/invoice")}
         >
           <Text fontSize={"sm"} color={"#747474"}>
             See All
@@ -240,7 +240,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
 
       {invoiceData?.length > 0 ? (
         <Wrap spacing={"15px"}>
-          {invoiceData?.slice(0,3)?.map((student, index) => {
+          {invoiceData?.slice(0, 3)?.map((student, index) => {
             return (
               <WrapItem key={index} w={"auto"}>
                 <InvoiceItem studentInvoice={student} />

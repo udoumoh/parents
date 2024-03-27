@@ -49,9 +49,9 @@ const Attendance: FC<AttendanceProps> = ({}) => {
     <Box
       p={"1rem"}
       backgroundColor={"#fff"}
-      rounded={"lg"}
+      rounded={"2xl"}
       w={"full"}
-      border={"1px solid #C2C2C2"}
+      border={"1px solid #005D5D50"}
       maxW={{ base: "auto", xl: "550px" }}
     >
       <Flex>

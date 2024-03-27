@@ -15,6 +15,7 @@ import {
   Tooltip,
 } from "@chakra-ui/react";
 import { CiReceipt } from "react-icons/ci";
+import { IoReceiptOutline } from "react-icons/io5";
 import { LiaCoinsSolid } from "react-icons/lia";
 import { FaFilePdf } from "react-icons/fa6";
 import { TbFileInvoice } from "react-icons/tb";
@@ -71,8 +72,8 @@ const Invoice: FC<InvoiceProps> = ({ params }: { params: { id: number } }) => {
     );
 
     const totalOverpaidAmount = invoiceData
-      .filter((invoice) => invoice.status === "parent overpaid")
-      .reduce((acc, item) => acc + item.balance, 0);
+      ?.filter((invoice) => invoice.status === "parent overpaid")
+      ?.reduce((acc, item) => acc + item.balance, 0);
 
     const handleOverpaidInvoice = (id: any) => {
       setOverpaidId(id);
@@ -350,8 +351,8 @@ const Invoice: FC<InvoiceProps> = ({ params }: { params: { id: number } }) => {
             shadow="md"
           >
             <Flex justifyContent={"space-between"}>
-              <Box display={"flex"} gap={1} alignItems={"center"}>
-                <Icon as={TbFileInvoice} boxSize={5} color={"#005D5D"} />
+              <Box display={"flex"} gap={2} alignItems={"center"}>
+                <Icon as={IoReceiptOutline} boxSize={4} color={"#005D5D"} />
                 <Text fontSize={"lg"} fontWeight={"bold"} color={"#000000"}>
                   Invoice Details
                 </Text>
