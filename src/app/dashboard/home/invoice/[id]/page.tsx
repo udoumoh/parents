@@ -139,7 +139,7 @@ const Invoice: FC<InvoiceProps> = ({ params }: { params: { id: number } }) => {
               display={
                 !["active", "partial payment"].includes(
                   currentInvoice?.status || ""
-                )
+                ) || totalOverpaidAmount > 0
                   ? "none"
                   : "flex"
               }

@@ -109,7 +109,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
     0
   );
 
-  const totalOverpaidAmount = invoiceData?.filter((invoice) => invoice.status === "parent overpaid")?.reduce((acc, item) => acc + item.balance, 0);
+  const totalOverpaidAmount = invoiceData?.filter((invoice) => invoice.status === "parent overpaid")?.reduce((acc, item) => acc + Math.abs(item.balance), 0);
 
   const nonEmptyReceipts = invoiceData
     ?.map((invoice) => invoice?.receipt)
@@ -560,7 +560,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                     display={
                                       !["active", "partial payment"].includes(
                                         item?.status
-                                      )
+                                      ) || totalOverpaidAmount > 0
                                         ? "none"
                                         : "flex"
                                     }

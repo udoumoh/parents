@@ -1,12 +1,15 @@
 "use client";
 import "./globals.css";
-import { FC } from "react";
+import { FC, useState } from "react";
 import UserApiProvider from "@/hooks/UserContext";
 import { Mulish } from "next/font/google";
 import { Providers } from "./providers";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 import "./globals.css";
 import Loading from "./loading";
+import { useRouter } from "next/router";
+import TopBarProgress from "react-topbar-progress-indicator";
+import LoadingBar from "react-top-loading-bar";
 
 const mulish = Mulish({ subsets: ["cyrillic"] });
 
@@ -21,6 +24,22 @@ const client = new ApolloClient({
 });
 
 const Layout: FC<LayoutProps> = ({ children }) => {
+  const router = useRouter()
+  const [progress, setProgress] = useState(false)
+
+   router.events.on("routeChangeStart", () => {
+     setProgress(true);
+   });
+   router.events.off("routeChangeStart", () => {
+     setProgress(false);
+   });
+
+   TopBarProgress.config({
+     barColors: {
+       "0": "#099C9B",
+       "1.0": "#007C7B",
+     },
+   });
   
   return (
     <html lang="en">
@@ -34,6 +53,7 @@ const Layout: FC<LayoutProps> = ({ children }) => {
               <Loading />
             ) : (
               <UserApiProvider>
+                {progress && <TopBarProgress />}
                 {children}
               </UserApiProvider>
             )}
