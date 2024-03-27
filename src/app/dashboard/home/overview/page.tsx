@@ -39,9 +39,9 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
           p={"1rem"}
           bgSize={"cover"}
           my={{ base: "10px", md: "0" }}
-          display={"flex"}
-          flexDir={"column"}
-          justifyContent={"space-between"}
+          display={'flex'}
+          flexDir={'column'}
+          justifyContent={'space-between'}
         >
           <Box display={"flex"} justifyContent={"space-between"} gap={3}>
             <Box display={"flex"} alignItems={"center"} gap={3}>
@@ -142,7 +142,7 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
             maxW={"200px"}
             roundedRight={"full"}
             alignItems={"center"}
-            bgGradient="linear(to-l, #FC7300, #005D5D)"
+            bgGradient="linear(to-l, #DDA44E, #005D5D)"
             mb={3}
           >
             {/* <Icon as={FaMoneyBill} color={'#005D5D'}/> */}
@@ -175,7 +175,7 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
                 Owing balance
               </Text>
               <Text fontSize={"2xl"} color={"red.700"} fontWeight={"bold"}>
-                ₦{formatNumberWithCommas(totalOwingAmount)}
+                ₦{formatNumberWithCommas(totalOwingAmount) || 0}
               </Text>
             </Flex>
             <Flex
@@ -194,7 +194,7 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
                 Overpaid Balance
               </Text>
               <Text fontSize={"2xl"} color={"#005D5D"} fontWeight={"bold"}>
-                ₦{formatNumberWithCommas(totalOverpaidAmount)}
+                ₦{formatNumberWithCommas(totalOverpaidAmount) || 0}
               </Text>
             </Flex>
           </Box>
