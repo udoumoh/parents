@@ -89,12 +89,9 @@ const SchoolAccountDetailsModal: FC<SchoolAccountDetailsModalProps> = ({isOpen, 
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>
-          <Flex gap={2} alignItems={"center"}>
-            <Icon as={MdOutlineAccountBalance} boxSize={6} color={"#005D5D"} />
             <Text fontSize={"xl"} fontWeight={"bold"} color={"#005D5D"}>
               School Account Information
             </Text>
-          </Flex>
           <Divider />
         </ModalHeader>
         <ModalCloseButton />
