@@ -7,7 +7,6 @@ import { Providers } from "./providers";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 import "./globals.css";
 import Loading from "./loading";
-import NextTopLoader from "nextjs-toploader";
 
 const mulish = Mulish({ subsets: ["cyrillic"] });
 
@@ -35,7 +34,6 @@ const Layout: FC<LayoutProps> = ({ children }) => {
               <Loading />
             ) : (
               <UserApiProvider>
-                <NextTopLoader />
                 {children}
               </UserApiProvider>
             )}

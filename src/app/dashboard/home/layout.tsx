@@ -125,7 +125,6 @@ const Layout: FC<LayoutProps> = ({ children }) => {
           </ModalBody>
         </ModalContent>
       </Modal>
-      {progress && <TopBarProgress />}
       {children}
     </SidebarWithHeader>
   );

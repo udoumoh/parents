@@ -1,9 +1,10 @@
 "use client";
 import { FC } from "react";
-import { Box, Flex, Text, Image, Grid, Avatar } from "@chakra-ui/react";
+import { Box, Flex, Text, Image, Grid, Avatar, Icon, Divider } from "@chakra-ui/react";
 import Attendance from "@/components/attendance";
 import Invoice from "@/components/invoice";
 import { useUserAPI } from "@/hooks/UserContext";
+import { FaMoneyBill } from "react-icons/fa6";
 
 interface DashboardPageProps {}
 
@@ -58,7 +59,7 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
             <Box
               textAlign={"start"}
               display={"flex"}
-              alignItems={'center'}
+              alignItems={"center"}
               gap={{ base: 2, md: 10 }}
               my={"1rem"}
             >
@@ -98,7 +99,7 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
                   {currentWardProfile?.dateOfBirth}
                 </Text>
               </Grid>
-              <Grid gap={1} display={{base:"none", md:"grid"}}>
+              <Grid gap={1} display={{ base: "none", md: "grid" }}>
                 <Text color={"#449c7c"} fontSize={"0.8rem"} fontWeight={"600"}>
                   School
                 </Text>
@@ -111,6 +112,69 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
                 </Text>
               </Grid>
             </Box>
+          </Box>
+        </Box>
+
+        <Box
+          border={"1px solid #005D5D50"}
+          rounded={"xl"}
+          pt={4}
+          pb={2}
+          minW={"300px"}
+        >
+          <Box
+            display={"flex"}
+            w={"auto"}
+            maxW={"200px"}
+            roundedRight={"full"}
+            alignItems={"center"}
+            bgGradient="linear(to-l, #DDA44E, #005D5D)"
+            mb={3}
+          >
+            {/* <Icon as={FaMoneyBill} color={'#005D5D'}/> */}
+            <Text
+              fontWeight={"bold"}
+              color={"#FFFFFF"}
+              fontSize={"md"}
+              px={4}
+              py={1}
+            >
+              Quick Financials
+            </Text>
+          </Box>
+
+          <Box px={4}>
+            <Flex
+              flexDir={"column"}
+              backgroundColor={"#FAEEEE"}
+              rounded={"lg"}
+              px={4}
+              py={2}
+              mb={"1rem"}
+              border={"1px solid red.800"}
+            >
+              <Text fontSize={"sm"} color={"#00000070"} fontWeight={"bold"}>
+                Owing balance
+              </Text>
+              <Text fontSize={"2xl"} color={"red.700"} fontWeight={"bold"}>
+                ₦10,000
+              </Text>
+            </Flex>
+            <Flex
+              flexDir={"column"}
+              backgroundColor={"#EEFAF4"}
+              rounded={"lg"}
+              px={4}
+              py={2}
+              my={"0.5rem"}
+            >
+              <Text fontSize={"sm"} color={"#00000070"} fontWeight={"bold"}>
+                Overpaid Balance
+              </Text>
+              <Text fontSize={"2xl"} color={"#005D5D"} fontWeight={"bold"}>
+                ₦10,000
+              </Text>
+            </Flex>
           </Box>
         </Box>
       </Flex>
