@@ -80,7 +80,7 @@ const {
 
   const totalOverpaidAmount = invoiceData
     ?.filter((invoice) => invoice.status === "parent overpaid")
-    ?.reduce((acc, item) => acc + item.balance, 0);
+    ?.reduce((acc, item) => acc + Math.abs(item.balance), 0);
 
   const handleSubmit = async (values: any) => {
     try {
