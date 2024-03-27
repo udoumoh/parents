@@ -334,7 +334,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
             <Flex
               gap={4}
               overflowX={"auto"}
-              justifyContent={"space-between"}
+              justifyContent={{base:"start", md:"space-between"}}
               alignItems={"center"}
               flexDir={{ base: "column", md: "row" }}
             >

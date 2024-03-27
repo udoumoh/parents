@@ -73,8 +73,8 @@ const {
     uploadedFolder: string,
     uploadedFileName: string
   ) => {
-    setFile(uploadedFileUrl); // Set the file URL received from the upload component
-    setFolder(uploadedFolder); // Set the folder received from the upload component
+    setFile(uploadedFileUrl);
+    setFolder(uploadedFolder);
     setFileName(uploadedFileName);
   };
 
