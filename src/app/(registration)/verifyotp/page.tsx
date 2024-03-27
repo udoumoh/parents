@@ -46,7 +46,7 @@ const Page: FC<PageProps> = ({}) => {
         toast({
           title: "Client Error",
           description: "An error occured while you were creating your account",
-          position: "bottom",
+          position: "top-right",
           variant: "left-accent",
           isClosable: true,
           status: "error",
@@ -55,7 +55,7 @@ const Page: FC<PageProps> = ({}) => {
         toast({
           title: "Server Error",
           description: response.data.verifyParentCode.errors[0].message,
-          position: "bottom",
+          position: "top-right",
           variant: "left-accent",
           isClosable: true,
           status: "error",
@@ -65,7 +65,7 @@ const Page: FC<PageProps> = ({}) => {
           title: "Email Verified",
           description:
             "Your email has been verified, you will be redirected soon.",
-          position: "bottom",
+          position: "top-right",
           variant: "left-accent",
           isClosable: true,
           status: "success",
@@ -76,7 +76,7 @@ const Page: FC<PageProps> = ({}) => {
       toast({
         title: "Error",
         description: e?.message,
-        position: "bottom",
+        position: "top-right",
         variant: "left-accent",
         isClosable: true,
         status: "error",

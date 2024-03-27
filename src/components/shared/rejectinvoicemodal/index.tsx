@@ -46,7 +46,7 @@ const RejectInvoiceModal: FC<RejectInvoiceModalProps> = ({
         toast({
           title: "Error",
           description: "A client side error has occurred",
-          position: "bottom",
+          position: "top-right",
           variant: "left-accent",
           isClosable: true,
           status: "error",
@@ -56,7 +56,7 @@ const RejectInvoiceModal: FC<RejectInvoiceModalProps> = ({
         toast({
           title: "Error",
           description: "Reject Invoice Failed",
-          position: "bottom",
+          position: "top-right",
           variant: "left-accent",
           isClosable: true,
           status: "error",
@@ -66,7 +66,7 @@ const RejectInvoiceModal: FC<RejectInvoiceModalProps> = ({
         toast({
           title: "Success",
           description: "Succssfully rejected invoice",
-          position: "bottom",
+          position: "top-right",
           variant: "left-accent",
           isClosable: true,
           status: "success",

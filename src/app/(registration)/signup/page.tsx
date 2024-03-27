@@ -83,7 +83,7 @@ const Page: FC<pageProps> = ({}) => {
         toast({
           title: "Client Error",
           description: "An error occured while you were creating your account",
-          position: "bottom",
+          position: "top-right",
           variant: "left-accent",
           isClosable: true,
           status: "error",
@@ -93,7 +93,7 @@ const Page: FC<pageProps> = ({}) => {
         toast({
           title: "Server Error",
           description: response.data.registerParent.errors[0].message,
-          position: "bottom",
+          position: "top-right",
           variant: "left-accent",
           isClosable: true,
           status: "error",
@@ -104,7 +104,7 @@ const Page: FC<pageProps> = ({}) => {
           description:
             "Account created! Check your email for an OTP to verify your account.",
           duration: 5000,
-          position: "bottom",
+          position: "top-right",
           variant: "left-accent",
           isClosable: true,
           status: "success",
@@ -116,7 +116,7 @@ const Page: FC<pageProps> = ({}) => {
         title: "Error",
         description: err?.message,
         duration: 5000,
-        position: "bottom",
+        position: "top-right",
         variant: "left-accent",
         isClosable: true,
         status: "error",

@@ -62,7 +62,7 @@ const OverpaidBalancePaymentModal: FC<OverpaidBalancePaymentModalProps> = ({
               toast({
                 title: "Client Error",
                 description: "An error occured while sending your request",
-                position: "bottom",
+                position: "top-right",
                 variant: "left-accent",
                 isClosable: true,
                 status: "error",
@@ -72,7 +72,7 @@ const OverpaidBalancePaymentModal: FC<OverpaidBalancePaymentModalProps> = ({
               toast({
                 title: "Error",
                 description: response?.data?.acceptInvoice?.errors[0]?.message,
-                position: "bottom",
+                position: "top-right",
                 variant: "left-accent",
                 isClosable: true,
                 status: "error",
@@ -82,7 +82,7 @@ const OverpaidBalancePaymentModal: FC<OverpaidBalancePaymentModalProps> = ({
               toast({
                 title: "Success",
                 description: "Receipt has been sent successfully",
-                position: "bottom",
+                position: "top-right",
                 variant: "left-accent",
                 isClosable: true,
                 status: "success",
@@ -93,7 +93,7 @@ const OverpaidBalancePaymentModal: FC<OverpaidBalancePaymentModalProps> = ({
             toast({
               title: "Error",
               description: err.message,
-              position: "bottom",
+              position: "top-right",
               variant: "left-accent",
               isClosable: true,
               status: "error",

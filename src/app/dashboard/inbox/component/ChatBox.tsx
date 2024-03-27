@@ -1073,14 +1073,16 @@ const ChatBox = () => {
                               leftIcon={<IoPaperPlaneOutline />}
                               fontSize={13}
                               fontWeight={500}
-                              onClick={() => {value.length > 0 ? replyMessage() :  toast({
-                                title: "You haven't typed a reply yet 😂",
-                                position: "bottom",
-                                status: "info",
-                                variant: "left-accent",
-                                duration: 5000,
-                                isClosable: true,
-                              })}
+                              onClick={() => {value.length > 0
+                                ? replyMessage()
+                                : toast({
+                                    title: "You haven't typed a reply yet 😂",
+                                    position: "top-right",
+                                    status: "info",
+                                    variant: "left-accent",
+                                    duration: 5000,
+                                    isClosable: true,
+                                  });}
                             }
                             >
                               Send

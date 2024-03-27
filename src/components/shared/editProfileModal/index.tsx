@@ -68,7 +68,7 @@ const EditProfileModal: FC<EditProfileModalProps> = ({
         toast({
           title: "Client Error",
           description: "A client-side error occurred",
-          position: "bottom",
+          position: "top-right",
           variant: "left-accent",
           isClosable: true,
           status: "error",
@@ -79,7 +79,7 @@ const EditProfileModal: FC<EditProfileModalProps> = ({
         toast({
           title: "Success",
           description: "Successfully updated profile image",
-          position: "bottom",
+          position: "top-right",
           variant: "left-accent",
           isClosable: true,
           status: "success",

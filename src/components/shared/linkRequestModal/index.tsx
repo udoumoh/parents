@@ -67,7 +67,7 @@ const LinkRequestModal: FC<LinkRequestModalProps> = ({
           toast({
             title: "Client Error",
             description: "An error occured while creating a request",
-            position: "bottom",
+            position: "top-right",
             variant: "left-accent",
             isClosable: true,
             status: "error",
@@ -77,7 +77,7 @@ const LinkRequestModal: FC<LinkRequestModalProps> = ({
           toast({
             title: "Server Error",
             description: response?.data?.createRequest?.errors[0]?.message,
-            position: "bottom",
+            position: "top-right",
             variant: "left-accent",
             isClosable: true,
             status: "error",
@@ -88,7 +88,7 @@ const LinkRequestModal: FC<LinkRequestModalProps> = ({
               title: "Request Sent",
               description:
                 "Your request for this child has been sent successfully.",
-              position: "bottom",
+              position: "top-right",
               variant: "left-accent",
               isClosable: true,
               status: "success",
@@ -101,7 +101,7 @@ const LinkRequestModal: FC<LinkRequestModalProps> = ({
         toast({
           title: "Server Error",
           description: error.message,
-          position: "bottom",
+          position: "top-right",
           variant: "left-accent",
           isClosable: true,
           status: "error",

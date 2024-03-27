@@ -130,7 +130,7 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
         toast({
           title: "Client Error",
           description: "A client error occurred",
-          position: "bottom",
+          position: "top-right",
           variant: "left-accent",
           isClosable: true,
           status: "error",
@@ -140,7 +140,7 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
         toast({
           title: "Error",
           description: response?.data?.uploadResult?.errors[0]?.message,
-          position: "bottom",
+          position: "top-right",
           variant: "left-accent",
           isClosable: true,
           status: "error",
@@ -150,7 +150,7 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
         toast({
           title: "Success",
           description: "Result for this student has been successfully uploaded",
-          position: "bottom",
+          position: "top-right",
           variant: "left-accent",
           isClosable: true,
           status: "success",
@@ -161,7 +161,7 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
       toast({
         title: "Error",
         description: err.message,
-        position: "bottom",
+        position: "top-right",
         variant: "left-accent",
         isClosable: true,
         status: "error",
