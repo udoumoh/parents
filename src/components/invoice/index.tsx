@@ -132,7 +132,11 @@ const InvoiceItem: FC<InvoiceItemProps> = ({
               icon={<FaCheck />}
               onClick={onAcceptModalOpen}
               size={"sm"}
-              isDisabled={studentInvoice.status === "active" ? false : true}
+              isDisabled={
+                !["active", "partial payment"].includes(studentInvoice?.status)
+                  ? false
+                  : true
+              }
             />
           </Tooltip>
           <Tooltip
@@ -148,7 +152,11 @@ const InvoiceItem: FC<InvoiceItemProps> = ({
               icon={<IoClose size="24" />}
               onClick={onRejectModalOpen}
               size={"sm"}
-              isDisabled={studentInvoice.status === "active" ? false : true}
+              isDisabled={
+                !["active", "partial payment"].includes(studentInvoice?.status)
+                  ? false
+                  : true
+              }
             />
           </Tooltip>
         </Flex>

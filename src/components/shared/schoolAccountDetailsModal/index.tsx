@@ -86,7 +86,7 @@ const SchoolAccountDetailsModal: FC<SchoolAccountDetailsModalProps> = ({isOpen, 
       isCentered
       size={{ base: "sm", md: "lg", lg: "xl" }}
     >
-      <ModalOverlay backdropFilter="blur(10px)" />
+      <ModalOverlay />
       <ModalContent>
         <ModalHeader>
           <Flex gap={2} alignItems={"center"}>

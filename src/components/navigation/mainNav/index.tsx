@@ -271,7 +271,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
         position: "top-right",
         variant: "left-accent",
         isClosable: true,
-        status: "success",
+        status: "info",
       });
       router.push("/signin");
       localStorage.removeItem("currentId");
