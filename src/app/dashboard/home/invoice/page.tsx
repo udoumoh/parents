@@ -26,19 +26,24 @@ import {
   MenuItem,
   useDisclosure,
   Button,
+  IconButton,
 } from "@chakra-ui/react";
 import { BsThreeDots } from "react-icons/bs";
 import { useUserAPI } from "@/hooks/UserContext";
 import formatNumberWithCommas from "@/helpers/formatNumberWithCommas";
 import { FaCheck } from "react-icons/fa6";
-import { MdOutlineClose } from "react-icons/md";
 import AcceptInvoiceModal from "@/components/shared/acceptInvoiceModal";
 import RejectInvoiceModal from "@/components/shared/rejectinvoicemodal";
 import { TbFileInvoice } from "react-icons/tb";
 import { useRouter } from "next/navigation";
-import { MdOutlinePayment } from "react-icons/md";
+import {
+  MdOutlinePayment,
+  MdKeyboardArrowRight,
+  MdKeyboardArrowLeft,
+  MdOutlineClose,
+  MdAccountBalanceWallet,
+} from "react-icons/md";
 import OverpaidBalancePaymentModal from "@/components/shared/overpaidBalancePaymentModal";
-import { MdAccountBalanceWallet } from "react-icons/md";
 import SchoolAccountDetailsModal from "@/components/shared/schoolAccountDetailsModal";
 
 interface InvoiceProps {}
@@ -72,6 +77,9 @@ const Invoice: FC<InvoiceProps> = ({}) => {
   } = useDisclosure();
 
   const [currentInvoiceId, setCurrentInvoiceId] = useState()
+  const [invoiceToShow, setInvoiceToShow] = useState(invoiceData?.slice(0, 10))
+  let currentPage = 1;
+  const itemsPerPage = 10;
 
   const getCompletedInvoiceAmount = (invoice: any) => {
     const totalCompletedAmount = invoice?.receipt
@@ -141,6 +149,20 @@ const Invoice: FC<InvoiceProps> = ({}) => {
     setCurrentInvoiceId(id)
     onOverpaidModalModalOpen();
   }
+
+  const handleNextPage = () => {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    setInvoiceToShow(invoiceData?.slice(startIndex, endIndex))
+    currentPage++
+  }
+
+  const handlePreviousPage = () => {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    setInvoiceToShow(invoiceData?.slice(startIndex, endIndex));
+    currentPage--;
+  };
 
   console.log(parentData)
   return (
@@ -311,7 +333,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
           </Flex>
         </SimpleGrid>
 
-        <Box mt={'1.5rem'}>
+        <Box mt={"1.5rem"}>
           <Button
             display={{ base: "flex", lg: "none" }}
             leftIcon={<MdAccountBalanceWallet />}
@@ -331,7 +353,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
             <Flex
               gap={4}
               overflowX={"auto"}
-              justifyContent={{base:"start", md:"space-between"}}
+              justifyContent={{ base: "start", md: "space-between" }}
               alignItems={"center"}
               flexDir={{ base: "column", md: "row" }}
             >
@@ -422,7 +444,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                       </Tr>
                     </Thead>
                     <Tbody>
-                      {invoiceData?.map((item, index) => {
+                      {invoiceToShow?.map((item, index) => {
                         return (
                           <Tr key={index}>
                             <Td
@@ -587,6 +609,20 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                     </Tbody>
                   </Table>
                 </TableContainer>
+                <Flex justifyContent={'center'}>
+                  <Box mt={'1rem'} display={'flex'} gap={4}>
+                    <IconButton
+                      aria-label="paginate"
+                      icon={<MdKeyboardArrowLeft />}
+                      onClick={handlePreviousPage}
+                    />
+                    <IconButton
+                      aria-label="paginate"
+                      icon={<MdKeyboardArrowRight />}
+                      onClick={handleNextPage}
+                    />
+                  </Box>
+                </Flex>
               </TabPanel>
 
               <TabPanel

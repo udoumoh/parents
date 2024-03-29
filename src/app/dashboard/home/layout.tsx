@@ -40,8 +40,7 @@ const Layout: FC<LayoutProps> = ({ children }) => {
     },
   });
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { parentData, childData, setLocalstorageId, currentId } = useUserAPI();
-  const router = useRouter();
+  const { parentData, childData, setLocalstorageId, currentId } = useUserAPI()
 
   useEffect(() => {
     const currentId = localStorage.getItem("currentId");
@@ -51,15 +50,15 @@ const Layout: FC<LayoutProps> = ({ children }) => {
     }
   }, [onOpen]);
 
-  if (parentData?.children.length === 0) {
-    window.location.replace("/dashboard");
-  }
+  // if (parentData?.children.length === 0) {
+  //   window.location.replace("/dashboard");
+  // }
 
   const Overlay = () => <ModalOverlay bg="none" backdropFilter="blur(10px)" />;
   return (
     <SidebarWithHeader>
       {/* ... Your modal content ... */}
-      <Modal
+      {/* <Modal
         isCentered
         isOpen={isOpen}
         onClose={onClose}
@@ -124,7 +123,7 @@ const Layout: FC<LayoutProps> = ({ children }) => {
             })}
           </ModalBody>
         </ModalContent>
-      </Modal>
+      </Modal> */}
       {children}
     </SidebarWithHeader>
   );
