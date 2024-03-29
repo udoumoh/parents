@@ -115,7 +115,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
     const endIndex = Math.min(startIndex + itemsPerPage, invoiceData?.length);
     setInvoiceToShow(invoiceData?.slice(startIndex, endIndex));
 
-    const newTotalPages = Math.ceil(invoiceData.length / itemsPerPage);
+    const newTotalPages = Math.ceil(invoiceData?.length / itemsPerPage);
     setTotalNumberOfPages(newTotalPages);
   }, [invoiceData, currentPage]);
 
