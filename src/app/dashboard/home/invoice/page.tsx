@@ -46,6 +46,34 @@ import {
 import OverpaidBalancePaymentModal from "@/components/shared/overpaidBalancePaymentModal";
 import SchoolAccountDetailsModal from "@/components/shared/schoolAccountDetailsModal";
 
+
+interface StudentInvoiceProps {
+  term: string;
+  year: string;
+  category: string;
+  amountPaid: number;
+  id: number;
+  status: string;
+  summary: string;
+  createdAt: string;
+  invoiceId: string;
+  schoolname: string;
+  schoollogo: string;
+  balance: number;
+  receipt: {
+    amountPaid: number;
+    createdAt: string;
+    creator: string;
+    fileType: string;
+    id: number;
+    parentInvoiceId: string;
+    status: string;
+    summary: string;
+    updatedAt: string;
+    uploadedDocument: string;
+  }[];
+}
+
 interface InvoiceProps {}
 
 const Invoice: FC<InvoiceProps> = ({}) => {
@@ -77,9 +105,15 @@ const Invoice: FC<InvoiceProps> = ({}) => {
   } = useDisclosure();
 
   const [currentInvoiceId, setCurrentInvoiceId] = useState()
-  const [invoiceToShow, setInvoiceToShow] = useState(invoiceData?.slice(0, 10))
+  const [invoiceToShow, setInvoiceToShow] = useState<StudentInvoiceProps[]>([])
   const [currentPage, setCurrentPage] = useState(1)
   const itemsPerPage = 10;
+
+  useEffect(() => {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = Math.min(startIndex + itemsPerPage, invoiceData?.length);
+    setInvoiceToShow(invoiceData?.slice(startIndex, endIndex));
+  }, []);
 
   const getCompletedInvoiceAmount = (invoice: any) => {
     const totalCompletedAmount = invoice?.receipt
