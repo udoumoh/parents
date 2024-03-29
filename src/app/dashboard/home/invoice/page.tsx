@@ -78,7 +78,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
 
   const [currentInvoiceId, setCurrentInvoiceId] = useState()
   const [invoiceToShow, setInvoiceToShow] = useState(invoiceData?.slice(0, 10))
-  const [currentPage, setCurrentPage] = useState(1)
+  let currentPage = 1;
   const itemsPerPage = 10;
 
   const getCompletedInvoiceAmount = (invoice: any) => {
@@ -151,23 +151,18 @@ const Invoice: FC<InvoiceProps> = ({}) => {
   }
 
   const handleNextPage = () => {
-    const startIndex = currentPage * itemsPerPage;
+    const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
-    if (endIndex < invoiceData.length) {
-      setInvoiceToShow(invoiceData.slice(startIndex, endIndex));
-      setCurrentPage(currentPage + 1);
-    }
-  };
+    setInvoiceToShow(invoiceData?.slice(startIndex, endIndex))
+    currentPage++
+  }
 
   const handlePreviousPage = () => {
-    if (currentPage > 1) {
-      const startIndex = (currentPage - 2) * itemsPerPage;
-      const endIndex = startIndex + itemsPerPage;
-      setInvoiceToShow(invoiceData.slice(startIndex, endIndex));
-      setCurrentPage(currentPage - 1);
-    }
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    setInvoiceToShow(invoiceData?.slice(startIndex, endIndex));
+    currentPage--;
   };
-
 
   console.log(parentData)
   return (
