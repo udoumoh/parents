@@ -77,7 +77,7 @@ const Results: FC<ResultsProps> = ({}) => {
     variables: { studentId: currentWardProfile?.id },
   });
   const { data: getUploadedResult } = useQuery(GET_STUDENT_UPLOADED_RESULT, {
-    variables: { studentId: currentWardProfile?.id, limit: 100 },
+    variables: { studentId: currentWardProfile?.id, limit: 10 },
   });
   const [resultsType, setResultstype] = useState("uploaded");
   const [pdfResult, setPdfResult] = useState<GeneratedResultProps[]>([]);
