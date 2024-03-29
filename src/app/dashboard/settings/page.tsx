@@ -671,7 +671,8 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
             <Divider mt={"0.3rem"} mb={"1rem"} />
           </Box>
           <Flex flexDir={"column"} gap={4}>
-            <Box>
+            <Box display={'flex'} flexDir={{base:"column", md:"row"}} gap={5}>
+              <Box>
               <Text fontSize={"lg"} fontWeight={"500"} mb={"1rem"}>
                 Plan Details
               </Text>
@@ -714,7 +715,9 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                   </Button>
                 </Box>
               </Box>
+              </Box>
 
+              <Box>
               <Text fontSize={"lg"} fontWeight={"500"} mt={"2rem"} mb={"1rem"}>
                 Payment Info
               </Text>
@@ -743,11 +746,12 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                   </Box>
                 </Box>
               </Box>
+              </Box>
 
-              <Button w={'full'} colorScheme="red" variant={'outline'} mt={'1rem'}>
+            </Box>
+              <Button  colorScheme="red" variant={'outline'} mt={'1rem'}>
                 Cancel Membership
               </Button>
-            </Box>
           </Flex>
         </Flex>
       </Box>
