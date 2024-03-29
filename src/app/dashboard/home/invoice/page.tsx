@@ -665,7 +665,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                       icon={<MdKeyboardArrowLeft />}
                       onClick={handlePreviousPage}
                     />
-                    <Text>Page {currentPage} of {totalNumberOfPages}</Text>
+                    <Text>Page {currentPage} of {totalNumberOfPages || currentPage}</Text>
                     <IconButton
                       aria-label="paginate"
                       icon={<MdKeyboardArrowRight />}
