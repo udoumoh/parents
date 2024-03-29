@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import React, { useState, useRef, useEffect } from "react";
 import {
@@ -280,7 +280,7 @@ query Parent {
     }
   }
 }
-`)
+`);
 
 export const GET_REPLY_MESSAGE = gql(`
 mutation ReplyMessage($message: String!, $subject: String!, $parentMessageId: Float!) {
@@ -310,41 +310,23 @@ mutation ReplyMessage($message: String!, $subject: String!, $parentMessageId: Fl
     }
   }
 }
-`)
+`);
 
 export const GET_DELETE_MESSAGE = gql(`
 mutation DeleteMessage($deleteMessageId: Float!) {
   deleteMessage(id: $deleteMessageId)
 }
-`)
+`);
 
-export const GET_RECEIVED_MESSAGES = gql(`
-query GetMyReceivedMessages {
-  getMyReceivedMessages {
-    id
-    parentMessageId
-    subject
-    message
-    sender
-    senderRole
-    senderProfilePicture
-    senderName
-    receiver
-    receiverRole
-    receiverProfilePicture
-    receiverName
-    status
-    isVisible
-    wasEdited
-    createdAt
-    updatedAt
-  }
+export const MARK_AS_READ = gql(`
+mutation MarkMessageAsRead($msgId: Float!) {
+  markMessageAsRead(msgId: $msgId)
 }
 `);
 
-export const GET_DRAFT_MESSAGES = gql(`
-query GetMyDraftMessages {
-  getMyDraftMessages {
+export const GET_MY_MESSAGES = gql(`
+query GetMyMessages($ref: String!) {
+  getMyMessages(ref: $ref) {
     id
     parentMessageId
     subject
@@ -358,30 +340,7 @@ query GetMyDraftMessages {
     receiverProfilePicture
     receiverName
     status
-    isVisible
-    wasEdited
-    createdAt
-    updatedAt
-  }
-}
-`);
-
-export const GET_SENT_MESSAGES = gql(`
-query GetMySentMessages {
-  getMySentMessages {
-    id
-    parentMessageId
-    subject
-    message
-    sender
-    senderRole
-    senderProfilePicture
-    senderName
-    receiver
-    receiverRole
-    receiverProfilePicture
-    receiverName
-    status
+    hasReply
     isVisible
     wasEdited
     createdAt
@@ -414,8 +373,6 @@ query GetMessageReplies($msgId: Float!) {
 }
 `);
 
-
-
 interface MessageProps {
   id: number;
   parentMessageId: number;
@@ -432,6 +389,7 @@ interface MessageProps {
   status: string;
   isVisible: boolean;
   wasEdited: boolean;
+  hasReply: boolean;
   createdAt: string;
   updatedAt: string;
 }
@@ -442,28 +400,67 @@ const ChatBox = () => {
   const [message, setMessage] = useState<MessageProps | null>(null);
   const [selectedMessage, setSelectedMessage] = useState<number | null>();
   const { data: parent } = useQuery(GET_PARENT);
-  const { data, loading, refetch } = useQuery(GET_SENT_MESSAGES, {
-    pollInterval: 5000,
-  });
-  const { data: received } = useQuery(GET_RECEIVED_MESSAGES, {
-    pollInterval: 5000,
-  });
-  const { data: drafts } = useQuery(GET_DRAFT_MESSAGES, {
-    pollInterval: 5000,
+  const admin = parent?.parent?.parent!;
+
+  const { data: received, loading } = useQuery(GET_MY_MESSAGES, {
+    variables: { ref: "parent" },
+    pollInterval: 4000,
   });
   const { data: replies } = useQuery(GET_MESSAGE_REPLIES, {
     variables: { msgId: selectedMessage! },
     pollInterval: 5000,
   });
+
+  const sentMessages = received?.getMyMessages.filter(
+    (item: MessageProps) => item.sender === admin?.userId
+  );
+  const sentMessagesWithReplies = received?.getMyMessages.filter(
+    (item: MessageProps) =>
+      item.hasReply === true &&
+      item?.isVisible === true &&
+      item?.parentMessageId === null &&
+      item?.sender === admin?.userId
+  );
+
+  const receivedMessages = received?.getMyMessages.filter(
+    (item: MessageProps) =>
+      item.receiver.includes(admin?.userId) &&
+      item?.isVisible === true &&
+      item?.parentMessageId === null
+  );
+  const allMyInbox = receivedMessages?.concat(sentMessagesWithReplies);
+  const sortedItems = allMyInbox?.sort((a: MessageProps, b: MessageProps) => {
+    const dateA = new Date(a.createdAt).getTime();
+    const dateB = new Date(b.createdAt).getTime();
+    return dateB - dateA; // Sorting in descending order
+  });
+  const messages = sortedItems?.filter(
+    (item: MessageProps, index: number, self: MessageProps[]) => {
+      // Convert the object to a JSON string to compare them easily
+      const jsonString = JSON.stringify(item);
+      // Return true if the index of the current object is the first occurrence of the object in the array
+      return (
+        index ===
+        self.findIndex(
+          (obj: MessageProps) => JSON.stringify(obj) === jsonString
+        )
+      );
+    }
+  );
+  const draftMessages = received?.getMyMessages.filter(
+    (item: MessageProps) =>
+      item.sender === admin?.userId && item?.isVisible === false
+  );
+
   const [mobile] = useMediaQuery("(max-width: 768px)");
   const router = useRouter();
   const containerRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     setTimeout(() => {
-        if (toggle && containerRef.current) {
+      if (toggle && containerRef.current) {
         containerRef.current.scrollIntoView({ behavior: "smooth" });
       }
-      }, 200)
+    }, 200);
   }, [toggle]);
   const {
     isOpen: isChatBoxOpen,
@@ -476,18 +473,6 @@ const ChatBox = () => {
     onOpen: onSearchOpen,
     onClose: onSearchClose,
   } = useDisclosure();
-
-  const grayStyle = {
-    bg: "white",
-    px: 4,
-    py: 6,
-    h: "60px",
-    w: "full",
-    fontSize: "0.8em",
-    borderRadius: "md",
-    align: "center",
-    role: "group",
-  };
 
   const InboxLink = [
     {
@@ -503,7 +488,6 @@ const ChatBox = () => {
       icon: TbNote,
     },
   ];
-  const admin = parent?.parent?.parent!;
   const adminName = `${admin?.firstName} ${admin?.middleName || ""} ${
     admin?.lastName
   }`;
@@ -517,6 +501,13 @@ const ChatBox = () => {
 
   const [del] = useMutation(GET_DELETE_MESSAGE);
   const [reply] = useMutation(GET_REPLY_MESSAGE);
+  const [read] = useMutation(MARK_AS_READ);
+
+  const markAsRead = (id: number) => {
+    read({
+      variables: { msgId: id },
+    });
+  };
 
   const replyMessage = async () => {
     const response = await reply({
@@ -524,7 +515,7 @@ const ChatBox = () => {
         message: value,
         parentMessageId: selectedMessage!,
         subject: message?.subject!,
-      }
+      },
     });
     if (response.data?.replyMessage.messages !== null || undefined) {
       toast({
@@ -551,7 +542,9 @@ const ChatBox = () => {
   };
 
   const deleteMessage = async () => {
-    const response = await del({ variables: {deleteMessageId: selectedMessage!} });
+    const response = await del({
+      variables: { deleteMessageId: selectedMessage! },
+    });
     if (response.data?.deleteMessage === true) {
       toast({
         title: "Message Deleted",
@@ -579,16 +572,14 @@ const ChatBox = () => {
   let appPage = null;
   if (!mobile) {
     appPage = (
-      <Flex w="100%">
-        {/* <ComingSoon /> */}
+      <Flex w="100%" overflow="hidden" mt={5} px={4}>
         <Tabs variant="unstyled" orientation="vertical" w="full">
           <Flex
-            // justify="space-between"
             w="100%"
-            // ml={"70px"}
-            h="87vh"           
+            h="87vh"
             borderRadius={"md"}
             border="1px solid #E2E2E2"
+            overflow="hidden"
           >
             <Flex direction="column" borderRight="1px solid #E2E2E2" w="26em">
               <Flex
@@ -619,7 +610,7 @@ const ChatBox = () => {
                     }}
                     _hover={{ bg: "#E2e2e2" }}
                     borderRadius={"3px"}
-                    _selected={{ color: "white", bg: "#FDBC52" }}
+                    _selected={{ color: "white", bg: "#007C7B" }}
                     fontSize={12}
                     gap={1}
                     px={2}
@@ -644,7 +635,30 @@ const ChatBox = () => {
               >
                 <Text>Inbox</Text>
               </Flex>
-              <Flex px={2} direction="column">
+              <Flex
+                px={2}
+                direction="column"
+                h="100%"
+                overflowY="auto"
+                sx={{
+                  "&::-webkit-scrollbar": {
+                    width: "0", // Set the initial width to 0
+                  },
+                  "&::-webkit-scrollbar-thumb": {
+                    background: "#FFDDA6",
+                    borderRadius: "12px",
+                  },
+                  "&::-webkit-scrollbar-thumb:hover": {
+                    background: "#F4B95F",
+                  },
+                  "&::-webkit-scrollbar-track": {
+                    background: "#FFF5E6",
+                  },
+                  "&:hover::-webkit-scrollbar": {
+                    width: "5px", // Increase the width on hover
+                  },
+                }}
+              >
                 <Button
                   leftIcon={<PiPencil />}
                   colorScheme="gray"
@@ -658,7 +672,7 @@ const ChatBox = () => {
                 <TabPanels>
                   <TabPanel px={0}>
                     <Flex gap={1} direction="column" mt={3} w="full">
-                      {received?.getMyReceivedMessages?.length! <= 0 ? (
+                      {messages?.length! <= 0 ? (
                         <Flex
                           w="22em"
                           fontSize={12}
@@ -672,7 +686,7 @@ const ChatBox = () => {
                         </Flex>
                       ) : (
                         <>
-                          {received?.getMyReceivedMessages?.map((item: any) => (
+                          {messages?.map((item: any) => (
                             <Flex
                               key={item.id}
                               borderRadius="md"
@@ -681,12 +695,14 @@ const ChatBox = () => {
                               border="1px solid #e2e2e2"
                               _hover={{ bg: "gray.100" }}
                               bg={
-                                selectedMessage === item.id
+                                selectedMessage === item.id &&
+                                item.status === "read"
                                   ? "gray.100"
+                                  : item.status === "delivered"
+                                  ? "teal.100"
                                   : "white"
                               }
                               w="24em"
-                              overflow="hidden"
                               p={2}
                               cursor="pointer"
                               onClick={() => {
@@ -694,6 +710,7 @@ const ChatBox = () => {
                                 setSelectedMessage(item.id);
                                 setToggle(false);
                                 setValue("");
+                                markAsRead(item.id);
                               }}
                             >
                               <Flex
@@ -737,7 +754,20 @@ const ChatBox = () => {
 
                   <TabPanel px={0}>
                     <Flex gap={1} direction="column" mt={3} w="full">
-                      {data?.getMySentMessages?.map((item: any) => (
+                      {sentMessages?.length! <= 0 && (
+                        <Flex
+                          w="22em"
+                          fontSize={12}
+                          color="#747474"
+                          align="center"
+                          gap={1}
+                        >
+                          {" "}
+                          <Icon as={IoWarningOutline} />
+                          you have not sent any messages
+                        </Flex>
+                      )}
+                      {sentMessages?.map((item: any) => (
                         <Flex
                           key={item.id}
                           borderRadius="md"
@@ -786,7 +816,20 @@ const ChatBox = () => {
 
                   <TabPanel px={0}>
                     <Flex gap={1} direction="column" mt={3} w="full">
-                      {drafts?.getMyDraftMessages?.map((item: any) => (
+                      {draftMessages?.length! <= 0 && (
+                        <Flex
+                          w="22em"
+                          fontSize={12}
+                          color="#747474"
+                          align="center"
+                          gap={1}
+                        >
+                          {" "}
+                          <Icon as={IoWarningOutline} />
+                          you have not saved any messages as drafts
+                        </Flex>
+                      )}
+                      {draftMessages?.map((item: any) => (
                         <Flex
                           key={item.id}
                           borderRadius="md"
@@ -852,11 +895,7 @@ const ChatBox = () => {
                 display={message ? "block" : "none"}
                 h="full"
               >
-                <Flex
-                  p={3}
-                  align="start"
-                  justify="space-between"
-                >
+                <Flex p={3} align="start" justify="space-between">
                   <Flex align="start" gap={2}>
                     <Avatar
                       src={message?.senderProfilePicture}
@@ -907,7 +946,11 @@ const ChatBox = () => {
                           <MenuItem
                             icon={<IoTrashBinOutline />}
                             onClick={deleteMessage}
-                            display={admin?.userId !== message?.sender ? 'none': 'flex'}
+                            display={
+                              admin?.userId !== message?.sender
+                                ? "none"
+                                : "flex"
+                            }
                           >
                             Delete all Messages
                           </MenuItem>
@@ -929,7 +972,12 @@ const ChatBox = () => {
                   </Flex>
                 </Flex>
 
-                <Flex direction="column" justify="space-between" h="73vh" overflowY="auto">
+                <Flex
+                  direction="column"
+                  justify="space-between"
+                  h="73vh"
+                  overflowY="auto"
+                >
                   <Accordion defaultIndex={[0]} allowMultiple>
                     <AccordionItem>
                       <AccordionButton justifyContent={"space-between"}>
@@ -1037,76 +1085,78 @@ const ChatBox = () => {
                         </AccordionItem>
                       ))
                     )}
-                  <Collapse in={toggle} animateOpacity>
-                    <Box p={4} w="full" pos="relative" zIndex={4}>
-                      <Flex align="start" gap={3} w="full">
-                        <Avatar
-                          src={admin?.profileImgUrl}
-                          name={admin?.firstName}
-                          size="sm"
-                        />
-                        <Flex
-                          direction="column"
-                          w="full"
-                          borderRadius={"md"}
-                          boxShadow={"md"}
-                          p={3}
-                        >
-                          <Flex align="center" gap={2} fontSize={12}>
-                            <Icon as={IoReturnUpBack} />
-                            <Text>Replying to: {message?.senderName}</Text>
-                          </Flex>
-                          <Textarea
-                            focusBorderColor="#F4B95F"
-                            h="15vh"
-                            mt={4}
-                            w="full"
-                            value={value}
-                            onChange={handleReplyChange}
+                    <Collapse in={toggle} animateOpacity>
+                      <Box p={4} w="full" pos="relative" zIndex={4}>
+                        <Flex align="start" gap={3} w="full">
+                          <Avatar
+                            src={admin?.profileImgUrl}
+                            name={admin?.firstName}
+                            size="sm"
                           />
-                          <Box mt={4} ref={containerRef}>
-                            <Button
-                              mr={2}
-                              px={4}
-                              py={4}
-                              h="2em"
-                              leftIcon={<IoPaperPlaneOutline />}
-                              fontSize={13}
-                              fontWeight={500}
-                              onClick={() => {value.length > 0
-                                ? replyMessage()
-                                : toast({
-                                    title: "You haven't typed a reply yet 😂",
-                                    position: "top-right",
-                                    status: "info",
-                                    variant: "left-accent",
-                                    duration: 5000,
-                                    isClosable: true,
-                                  });}
-                            }
-                            >
-                              Send
-                            </Button>
-                            <Button
-                              variant="outline"
-                              px={4}
-                              py={4}
-                              h="2em"
-                              leftIcon={<IoClose />}
-                              onClick={() => {
-                                setToggle(false);
-                                setValue("");
-                              }}
-                              fontSize={13}
-                              fontWeight={500}
-                            >
-                              Cancel
-                            </Button>
-                          </Box>
+                          <Flex
+                            direction="column"
+                            w="full"
+                            borderRadius={"md"}
+                            boxShadow={"md"}
+                            p={3}
+                          >
+                            <Flex align="center" gap={2} fontSize={12}>
+                              <Icon as={IoReturnUpBack} />
+                              <Text>Replying to: {message?.senderName}</Text>
+                            </Flex>
+                            <Textarea
+                              focusBorderColor="#F4B95F"
+                              h="15vh"
+                              mt={4}
+                              w="full"
+                              value={value}
+                              onChange={handleReplyChange}
+                            />
+                            <Box mt={4} ref={containerRef}>
+                              <Button
+                                mr={2}
+                                px={4}
+                                py={4}
+                                h="2em"
+                                leftIcon={<IoPaperPlaneOutline />}
+                                fontSize={13}
+                                fontWeight={500}
+                                onClick={() => {
+                                  value.length > 0
+                                    ? replyMessage()
+                                    : toast({
+                                        title:
+                                          "You haven't typed a reply yet 😂",
+                                        position: "top-right",
+                                        status: "info",
+                                        variant: "left-accent",
+                                        duration: 5000,
+                                        isClosable: true,
+                                      });
+                                }}
+                              >
+                                Send
+                              </Button>
+                              <Button
+                                variant="outline"
+                                px={4}
+                                py={4}
+                                h="2em"
+                                leftIcon={<IoClose />}
+                                onClick={() => {
+                                  setToggle(false);
+                                  setValue("");
+                                }}
+                                fontSize={13}
+                                fontWeight={500}
+                              >
+                                Cancel
+                              </Button>
+                            </Box>
+                          </Flex>
                         </Flex>
-                      </Flex>
-                    </Box>
-                  </Collapse>
+                      </Box>
+                    </Collapse>
                   </Accordion>
                 </Flex>
               </Flex>

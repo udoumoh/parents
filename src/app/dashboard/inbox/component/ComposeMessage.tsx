@@ -36,6 +36,7 @@ import { TbInfoTriangle, TbSend } from "react-icons/tb";
 import { AiOutlinePlus } from "react-icons/ai";
 import { IoIosSearch } from "react-icons/io";
 import { GET_PARENT } from "./ChatBox";
+import { GET_SCHOOLS } from "@/gql/queries";
 
 interface ComposeMessageProps {
   isOpen: any;
@@ -84,7 +85,7 @@ mutation SendMessage($receiver: [String!]!, $message: String!, $subject: String!
       }
     }
   }
-`)
+`);
 
 const DRAFT_MESSAGE = gql(`
 mutation DraftMessage($receiver: [String!]!, $message: String!, $subject: String!) {
@@ -114,7 +115,7 @@ mutation DraftMessage($receiver: [String!]!, $message: String!, $subject: String
       }
     }
   }
-`)
+`);
 
 const GET_ADMINS = gql(`
 
@@ -181,7 +182,7 @@ query GetAdmins {
       schoolImg
       statusCode
     }
-  }`)
+  }`);
 
 export const ComposeMessage: React.FC<ComposeMessageProps> = ({
   isOpen,
@@ -211,6 +212,8 @@ export const ComposeMessage: React.FC<ComposeMessageProps> = ({
     email: "",
     role: "",
     id: "",
+    school: "",
+    schoolImg: "",
   });
 
   const emptyParents = {
@@ -218,6 +221,8 @@ export const ComposeMessage: React.FC<ComposeMessageProps> = ({
     profileImageUrl: "",
     email: "",
     role: "",
+    school: "",
+    schoolImg: "",
     id: "",
   };
   const [parentData, setParentData] = useState([
@@ -226,6 +231,8 @@ export const ComposeMessage: React.FC<ComposeMessageProps> = ({
       role: "",
       email: "",
       profileImageUrl: "",
+      school: "",
+      schoolImg: "",
       id: "",
     },
   ]);
@@ -240,12 +247,14 @@ export const ComposeMessage: React.FC<ComposeMessageProps> = ({
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = (await search?.getAdmins) || [];
-        const data = response.map((parent: any) => ({
+        const admins = (await search?.getAdmins) || [];
+        const data = admins.map((parent: any) => ({
           name: `${parent?.firstName} ${parent?.middleName || ""} ${
             parent?.lastName
           }`,
           role: parent?.role,
+          school: parent?.school,
+          schoolImg: parent?.schoolImg,
           email: parent?.email,
           profileImageUrl: parent?.profileImgUrl,
           id: parent?.userId,
@@ -260,13 +269,17 @@ export const ComposeMessage: React.FC<ComposeMessageProps> = ({
   }, [search]);
 
   const filteredSearchData = parentData.filter((item) =>
-    item?.name?.toLowerCase().includes(searchInput.toLowerCase())
+    (item?.school?.toLowerCase().includes(searchInput.toLowerCase()) || item?.name?.toLowerCase().includes(searchInput.toLowerCase()) )
   );
   const [receiverId, setReceiverId] = useState<string[]>([]);
+  const [sendMessage, setSendMessage] = useState<Boolean>(false);
+  const [saveAsDraft, setSaveAsDraft] = useState<Boolean>(false);
 
   const handleAddParent = (value: {
     name: string;
     profileImageUrl: string;
+    school: string;
+    schoolImg: string;
     email: string;
     role: string;
     id: string;
@@ -291,52 +304,6 @@ export const ComposeMessage: React.FC<ComposeMessageProps> = ({
     setSearchInput("");
     setSelectedParent(emptyParents);
   };
-
-  const formik = useFormik<DraftValues>({
-    initialValues: {
-      receiver: receiverId,
-      subject: "",
-      body: "",
-    },
-    onSubmit: async (values, actions) => {
-      try {
-        const response = await draft({
-            variables: {
-                message: values.body,
-                subject: values.subject,
-                receiver: receiverId,
-            }
-        });
-        if (response.data?.draftMessage.messages !== undefined || null) {
-          toast({
-            title: "Draft saved successfully",
-            position: "top-right",
-            status: "success",
-            variant: "left-accent",
-            duration: 5000,
-            isClosable: true,
-          });
-          setTimeout(() => {
-            window.location.reload();
-          }, 300);
-        }
-      } catch (error) {
-        if (error) {
-          toast({
-            title: "Inbox Error",
-            position: "top-right",
-            description: "We were unable to save your message",
-            status: "error",
-            variant: "left-accent",
-            duration: 5000,
-            isClosable: true,
-          });
-          actions.resetForm();
-        }
-        console.error("Upload error:", error);
-      }
-    },
-  });
 
   return (
     <Modal
@@ -381,44 +348,95 @@ export const ComposeMessage: React.FC<ComposeMessageProps> = ({
               subject: "",
               message: "",
             }}
-            onSubmit={async (values, { setErrors }) => {
-              const response = await send({
-                variables: {
+            onSubmit={async (values, actions) => {
+              if (sendMessage) {
+                const response = await send({
+                  variables: {
                     receiver: receiverId,
                     message: values.message,
                     subject: values.subject,
+                  },
+                });
+                if (response.data?.sendMessage.errors) {
+                  toast({
+                    title: "Inbox Error",
+                    description: `${response.data.sendMessage.errors[0].message}`,
+                    status: "error",
+                    variant: "left-accent",
+                    duration: 5000,
+                    isClosable: true,
+                  });
+                  // setTimeout(() => {
+                  //   router.reload();
+                  // }, 1000);
+                } else if (
+                  response.data?.sendMessage?.messages !== null ||
+                  undefined
+                ) {
+                  console.log(values);
+                  toast({
+                    title: "Message Sent ✈️",
+                    description: "You just sent a message successfully",
+                    status: "success",
+                    variant: "left-accent",
+                    duration: 5000,
+                    isClosable: true,
+                  });
+                  setTimeout(() => {
+                    onClose();
+                  }, 500);
                 }
-              });
-              if (response.data?.sendMessage.errors) {
-                console.log(values);
-                console.log(response.errors);
-                toast({
-                  title: "Inbox Error",
-                  description: `${response.data.sendMessage.errors}`,
-                  status: "error",
-                  variant: "left-accent",
-                  duration: 5000,
-                  isClosable: true,
-                });
-                // setTimeout(() => {
-                //   window.location.reload();
-                // }, 1000);
-              } else if (
-                response.data?.sendMessage?.messages !== null ||
-                undefined
-              ) {
-                console.log(values);
-                toast({
-                  title: "Message Sent ✈️",
-                  description: "You just sent a message successfully",
-                  status: "success",
-                  variant: "left-accent",
-                  duration: 5000,
-                  isClosable: true,
-                });
-                setTimeout(() => {
-                  window.location.reload();
-                }, 1000);
+              }
+              if (saveAsDraft) {
+                try {
+                  const response = await draft({
+                    variables: {
+                      message: values.message,
+                      subject: values.subject,
+                      receiver: receiverId,
+                    },
+                  });
+                  if (
+                    response.data?.draftMessage.messages !== undefined ||
+                    null
+                  ) {
+                    toast({
+                      title: "Draft saved successfully",
+                      position: "top-right",
+                      status: "success",
+                      variant: "left-accent",
+                      duration: 5000,
+                      isClosable: true,
+                    });
+                    setTimeout(() => {
+                      onClose();
+                    }, 300);
+                  } else {
+                    toast({
+                      title:
+                        "We're unable to save the draft, please try again later",
+                      position: "top-right",
+                      status: "error",
+                      variant: "left-accent",
+                      duration: 5000,
+                      isClosable: true,
+                    });
+                  }
+                } catch (error) {
+                  if (error) {
+                    toast({
+                      title: "Inbox Error",
+                      position: "top-right",
+                      description: "We were unable to save your message",
+                      status: "error",
+                      variant: "left-accent",
+                      duration: 5000,
+                      isClosable: true,
+                    });
+                    actions.resetForm();
+                  }
+                  console.error("Upload error:", error);
+                }
               }
             }}
           >
@@ -435,7 +453,7 @@ export const ComposeMessage: React.FC<ComposeMessageProps> = ({
                         onChange={handleSearchChange}
                         value={searchInput}
                         type="text"
-                        focusBorderColor="#F4B95F"
+                        focusBorderColor="#007C7B"
                         placeholder="Search for Admin"
                         backgroundColor={"#F4F4F4"}
                         _placeholder={{ color: "#C2C2C2" }}
@@ -499,19 +517,19 @@ export const ComposeMessage: React.FC<ComposeMessageProps> = ({
                                   <Flex align="center" gap={2}>
                                     <Avatar
                                       size={"sm"}
-                                      src={item.profileImageUrl}
+                                      src={item.schoolImg}
                                       pointerEvents={"none"}
                                     />
                                     <Box lineHeight={"15px"}>
                                       <Text fontWeight={"700"} fontSize={"12"}>
-                                        {`${item.name}`}
+                                        {`${item.school}`}
                                       </Text>
                                       <Text
                                         fontSize={"9"}
                                         color={"#AAAAAA"}
                                         fontWeight={"500"}
                                       >
-                                        {item.email} • {item.role}
+                                        {item.name} • {item.role}
                                       </Text>
                                     </Box>
                                   </Flex>
@@ -538,7 +556,7 @@ export const ComposeMessage: React.FC<ComposeMessageProps> = ({
                     )}
 
                     <Button
-                      backgroundColor={"#F4B95F"}
+                      backgroundColor={"#007C7B"}
                       mr={3}
                       mt={2}
                       gap={2}
@@ -548,7 +566,7 @@ export const ComposeMessage: React.FC<ComposeMessageProps> = ({
                           ? "flex"
                           : "none"
                       }
-                      _hover={{ backgroundColor: "#DDA44E" }}
+                      _hover={{ backgroundColor: "#099C9B" }}
                       onClick={() => {
                         handleAddParent(selectedParent);
                       }}
@@ -593,7 +611,7 @@ export const ComposeMessage: React.FC<ComposeMessageProps> = ({
                         borderColor={"#e2e2e2"}
                         _placeholder={{ color: "#D4D4D4" }}
                         placeholder="What is the message about?"
-                        focusBorderColor="#F4B95F"
+                        focusBorderColor="#007C7B"
                       />
                     </FormControl>
                   )}
@@ -608,7 +626,7 @@ export const ComposeMessage: React.FC<ComposeMessageProps> = ({
                         borderColor={"#e2e2e2"}
                         _placeholder={{ color: "#D4D4D4" }}
                         placeholder="Enter your message here..."
-                        focusBorderColor="#F4B95F"
+                        focusBorderColor="#007C7B"
                       />
                     </FormControl>
                   )}
@@ -618,20 +636,23 @@ export const ComposeMessage: React.FC<ComposeMessageProps> = ({
                   <Button
                     colorScheme="blackAlpha"
                     variant="outline"
-                    onClick={() => formik.handleSubmit()}
-                    isLoading={formik.isSubmitting}
+                    type="submit"
+                    onClick={() => setSaveAsDraft(true)} // Set saveAsDraft to true when clicked
+                    isLoading={props.isSubmitting}
                   >
                     Save as draft
                   </Button>
                   <Button
-                    bg="#F4B95F"
+                    bg="#007C7B"
                     color="white"
-                    _hover={{ bg: "#DAA65D" }}
+                    _hover={{ bg: "#099C9B" }}
                     ml={3}
                     px={7}
                     type="submit"
                     leftIcon={<TbSend />}
                     isLoading={props.isSubmitting}
+                    onClick={() => setSendMessage(true)} // Set sendMessage to true when clicked
+                    isDisabled={receiverId.length <= 0 ? true : false}
                   >
                     Send Message
                   </Button>

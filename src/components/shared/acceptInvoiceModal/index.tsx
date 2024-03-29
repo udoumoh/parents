@@ -122,7 +122,10 @@ const {
           isClosable: true,
           status: "success",
         });
-        onClose();
+        setTimeout(() => {
+          window.location.reload()
+          onClose();
+        }, 600)
       }
     } catch (err: any) {
       toast({

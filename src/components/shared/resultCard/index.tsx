@@ -112,6 +112,7 @@ const ResultCard: FC<ResultCardProps> = ({ generatedresult }) => {
           height={"2.5rem"}
           width={"2.5rem"}
           pointerEvents={"none"}
+          borderRadius={"md"}
         />
         <Box>
           <Text fontSize={"md"}>{generatedresult.schoolName}</Text>
