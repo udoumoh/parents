@@ -191,9 +191,9 @@ const Invoice: FC<InvoiceProps> = ({}) => {
   const handleNextPage = () => {
     const nextPage = currentPage + 1;
     const startIndex = (nextPage - 1) * itemsPerPage;
-    const endIndex = Math.min(startIndex + itemsPerPage, invoiceData.length);
-    if (startIndex < invoiceData.length) {
-      setInvoiceToShow(invoiceData.slice(startIndex, endIndex));
+    const endIndex = Math.min(startIndex + itemsPerPage, invoiceData?.length);
+    if (startIndex < invoiceData?.length) {
+      setInvoiceToShow(invoiceData?.slice(startIndex, endIndex));
       setCurrentPage(nextPage);
     }
   };
@@ -208,11 +208,6 @@ const Invoice: FC<InvoiceProps> = ({}) => {
       setCurrentPage(prevPage);
     }
   };
-
-
-  console
-
-
   console.log(parentData)
   return (
     <Box mb={{ base: "8rem", lg: "5rem" }}>
@@ -631,7 +626,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                     display={
                                       !["active", "partial payment"].includes(
                                         item?.status
-                                      ) || totalOverpaidAmount > 0
+                                      ) || Math.abs(totalOverpaidAmount) > 0
                                         ? "none"
                                         : "flex"
                                     }

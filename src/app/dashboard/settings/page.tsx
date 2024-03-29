@@ -24,20 +24,22 @@ import {
 } from "@chakra-ui/react";
 import { AiFillClockCircle } from "react-icons/ai";
 import { UserChildren, useUserAPI } from "@/hooks/UserContext";
-import { gql, useQuery, useMutation } from "@apollo/client";
+import { useQuery, useMutation } from "@apollo/client";
 import { formatDate } from "@/helpers/formatDate";
 import { PARENT_REQUESTS } from "@/gql/queries";
 import EditProfileModal from "@/components/shared/editProfileModal";
 import { DELETE_REQUEST } from "@/gql/mutations";
 import { GoPencil } from "react-icons/go";
-import { RiVerifiedBadgeFill } from "react-icons/ri";
 import RemoveStudentModal from "@/components/shared/removeStudentModal";
-import { RiBookletFill } from "react-icons/ri";
+import { RiBookletFill, RiVerifiedBadgeFill } from "react-icons/ri";
 import GraycaseModal from "@/components/shared/greycaseModal";
 import { GET_PARENT } from "@/gql/queries";
 import { formatDateWithSuffix } from "@/helpers/formatDate";
-import { FaChildren } from "react-icons/fa6";
-import { FaCodePullRequest } from "react-icons/fa6";
+import { FaChildren, FaCodePullRequest } from "react-icons/fa6";
+import {
+  MdAccountBalanceWallet,
+  MdOutlineKeyboardArrowRight,
+} from "react-icons/md";
 
 interface SettingsPageProps {}
 
@@ -348,10 +350,10 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                         cursor: "pointer",
                       }}
                       w={"full"}
-                      border={'1px solid #005D5D80'}
+                      border={"1px solid #005D5D80"}
                       onClick={() => {
                         setLocalstorageId(item?.id || 0);
-                        window.location.replace('/dashboard/home/overview')
+                        window.location.replace("/dashboard/home/overview");
                       }}
                     >
                       <Box display={"flex"} gap={"2"} alignItems={"center"}>
@@ -643,6 +645,109 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                 </Table>
               </TableContainer>
             )}
+          </Flex>
+        </Flex>
+
+        {/* Graycases */}
+        <Flex
+          flexDir={"column"}
+          border={"1px solid #005D5D30"}
+          rounded={"xl"}
+          pb={"1rem"}
+          px={"1rem"}
+          mt={"2rem"}
+        >
+          <Box py={"1rem"}>
+            <Flex alignItems={"center"} gap={1}>
+              <Icon
+                as={MdAccountBalanceWallet}
+                color="#005D5D"
+                fontWeight={"bold"}
+              />
+              <Text fontWeight={"600"} fontSize={"lg"} color={"#005D5D"}>
+                Membership Details
+              </Text>
+            </Flex>
+            <Divider mt={"0.3rem"} mb={"1rem"} />
+          </Box>
+          <Flex flexDir={"column"} gap={4}>
+            <Box>
+              <Text fontSize={"lg"} fontWeight={"500"} mb={"1rem"}>
+                Plan Details
+              </Text>
+
+              <Box shadow={"sm"} rounded={"xl"} border={"1px solid #00000030"}>
+                <Box
+                  roundedTop={"xl"}
+                  h={"8px"}
+                  bgGradient="linear(to-l, #DDA44E, #005D5D)"
+                ></Box>
+
+                <Box px={5} mt={"0.5rem"}>
+                  <Text fontWeight={"bold"} fontSize={"xl"}>
+                    Monthly Plan
+                  </Text>
+                  <Text color={"#00000080"} fontWeight={"500"}>
+                    Can register up to 4 children and will be charged{" "}
+                    <span style={{color:"#005D5D", fontWeight:'bold',}}>₦65</span> for every additional child
+                  </Text>
+                  <Divider mt={"1rem"} borderColor={"#005D5D50"} />
+                </Box>
+
+                <Box
+                  display={"flex"}
+                  justifyContent={"space-between"}
+                  w={"full"}
+                  px={2}
+                >
+                  <Button
+                    rightIcon={<MdOutlineKeyboardArrowRight />}
+                    w="full"
+                    justifyContent={"space-between"}
+                    py={"1.5rem"}
+                    fontSize={"lg"}
+                    my={"0.4rem"}
+                    variant={"outline"}
+                    border={"0px solid"}
+                  >
+                    <Text>Change plan</Text>
+                  </Button>
+                </Box>
+              </Box>
+
+              <Text fontSize={"lg"} fontWeight={"500"} mt={"2rem"} mb={"1rem"}>
+                Payment Info
+              </Text>
+
+              <Box rounded={"lg"} shadow={"sm"} border={"1px solid #00000030"} pb={'1rem'}>
+                <Box px={5} mt={"0.5rem"} display={'flex'} flexDir={'column'} gap={1}>
+                  <Text fontWeight={"bold"} fontSize={"xl"}>
+                    Next Payment
+                  </Text>
+                  <Text color={"#00000080"} fontWeight={"bold"}>
+                    21 April 2024
+                  </Text>
+                  <Box display={"flex"} alignItems={"center"} gap={4}>
+                    <Image
+                      alt="mastercard"
+                      src="/images/mastercard.svg"
+                      h={"2rem"}
+                    />
+                    <Text
+                      fontSize={"sm"}
+                      color={"#00000090"}
+                      fontWeight={"bold"}
+                    >
+                      •••• •••• •••• 3300
+                    </Text>
+                  </Box>
+                </Box>
+              </Box>
+
+              <Button w={'full'} colorScheme="red" variant={'outline'} mt={'1rem'}>
+                Cancel Membership
+              </Button>
+            </Box>
           </Flex>
         </Flex>
       </Box>

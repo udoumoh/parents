@@ -124,7 +124,7 @@ const Invoice: FC<InvoiceProps> = ({ params }: { params: { id: number } }) => {
           <Text fontSize={"sm"} color={"#00000090"}>
             {currentWardProfile?.gender} • {currentWardProfile?.age} Years Old
           </Text>
-          <Flex gap={"5"} alignItems={"center"} justifyContent={"center"}>
+          <Flex gap={"5"} alignItems={"center"} justifyContent={"center"} flexDir={{base:"column", md:"row"}}>
             <Button
               size={"sm"}
               colorScheme="gray"
