@@ -107,12 +107,16 @@ const Invoice: FC<InvoiceProps> = ({}) => {
   const [currentInvoiceId, setCurrentInvoiceId] = useState()
   const [invoiceToShow, setInvoiceToShow] = useState<StudentInvoiceProps[]>([])
   const [currentPage, setCurrentPage] = useState(1)
+  const [totalNumberOfPages, setTotalNumberOfPages] = useState(1)
   const itemsPerPage = 10;
 
   useEffect(() => {
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = Math.min(startIndex + itemsPerPage, invoiceData?.length);
     setInvoiceToShow(invoiceData?.slice(startIndex, endIndex));
+
+    const newTotalPages = Math.ceil(invoiceData.length / itemsPerPage);
+    setTotalNumberOfPages(newTotalPages);
   }, [invoiceData, currentPage]);
 
   const getCompletedInvoiceAmount = (invoice: any) => {
@@ -655,12 +659,13 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                   </Table>
                 </TableContainer>
                 <Flex justifyContent={'center'}>
-                  <Box mt={'1rem'} display={'flex'} gap={4}>
+                  <Box mt={'1rem'} display={'flex'} gap={4} alignItems={'center'}>
                     <IconButton
                       aria-label="paginate"
                       icon={<MdKeyboardArrowLeft />}
                       onClick={handlePreviousPage}
                     />
+                    <Text>Page {currentPage} of {totalNumberOfPages}</Text>
                     <IconButton
                       aria-label="paginate"
                       icon={<MdKeyboardArrowRight />}
