@@ -71,7 +71,10 @@ const RejectInvoiceModal: FC<RejectInvoiceModalProps> = ({
           isClosable: true,
           status: "success",
         });
-        onClose();
+        setTimeout(() => {
+          window.location.reload()
+          onClose();
+        }, 600)
       }
     } catch (e: any) {
       console.log(e.message);

@@ -12,6 +12,7 @@ import {
 import { Worker, Viewer, ZoomEvent } from "@react-pdf-viewer/core";
 import "@react-pdf-viewer/core/lib/styles/index.css";
 
+
 export const PDFViewer = ({ isOpen, onClose, path }: any) => {
   const handleZoom = (e: ZoomEvent) => {
     console.log(`Zoom to ${e.scale}`);
@@ -23,7 +24,7 @@ export const PDFViewer = ({ isOpen, onClose, path }: any) => {
         <ModalHeader>Student Academic Result</ModalHeader>
         <ModalCloseButton />
         <ModalBody overflow="auto" maxH="30rem">
-          <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
+          <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.0.279/build/pdf.worker.min.js">
             <Viewer fileUrl={path} onZoom={handleZoom} />
           </Worker>
         </ModalBody>
