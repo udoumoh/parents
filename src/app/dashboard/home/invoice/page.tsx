@@ -151,22 +151,26 @@ const Invoice: FC<InvoiceProps> = ({}) => {
   }
 
   const handleNextPage = () => {
-    const startIndex = currentPage * itemsPerPage;
-    const endIndex = startIndex + itemsPerPage;
-    if (endIndex < invoiceData.length) {
-      setInvoiceToShow(invoiceData?.slice(startIndex, endIndex));
-      setCurrentPage(currentPage + 1);
+    const nextPage = currentPage + 1;
+    const startIndex = (nextPage - 1) * itemsPerPage;
+    const endIndex = Math.min(startIndex + itemsPerPage, invoiceData.length);
+    if (startIndex < invoiceData.length) {
+      setInvoiceToShow(invoiceData.slice(startIndex, endIndex));
+      setCurrentPage(nextPage);
     }
   };
 
   const handlePreviousPage = () => {
-    if (currentPage > 1) {
-      const startIndex = (currentPage - 2) * itemsPerPage;
-      const endIndex = startIndex + itemsPerPage;
-      setInvoiceToShow(invoiceData?.slice(startIndex, endIndex));
-      setCurrentPage(currentPage - 1);
+    const prevPage = currentPage - 1;
+    if (prevPage > 0) {
+      const startIndex = (prevPage - 1) * itemsPerPage;
+      setInvoiceToShow(
+        invoiceData.slice(startIndex, startIndex + itemsPerPage)
+      );
+      setCurrentPage(prevPage);
     }
   };
+
 
   console
 
