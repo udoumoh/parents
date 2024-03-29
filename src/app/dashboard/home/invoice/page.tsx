@@ -113,7 +113,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = Math.min(startIndex + itemsPerPage, invoiceData?.length);
     setInvoiceToShow(invoiceData?.slice(startIndex, endIndex));
-  }, []);
+  }, [invoiceData, currentPage]);
 
   const getCompletedInvoiceAmount = (invoice: any) => {
     const totalCompletedAmount = invoice?.receipt
