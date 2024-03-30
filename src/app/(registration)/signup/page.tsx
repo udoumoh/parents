@@ -109,7 +109,7 @@ const Page: FC<pageProps> = ({}) => {
           isClosable: true,
           status: "success",
         });
-        router.push("/verifyotp");
+        router.push("/confirmOtp");
       }
     } catch (err: any) {
       toast({

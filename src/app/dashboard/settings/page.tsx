@@ -12,8 +12,6 @@ import {
   useDisclosure,
   Badge,
   useToast,
-  SimpleGrid,
-  Center,
   Table,
   Thead,
   Tbody,
@@ -40,6 +38,7 @@ import {
   MdAccountBalanceWallet,
   MdOutlineKeyboardArrowRight,
 } from "react-icons/md";
+import SelectPlanModal from "@/components/shared/selectPlanModal";
 
 interface SettingsPageProps {}
 
@@ -70,6 +69,11 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
     isOpen: isRemoveStudentModalOpen,
     onOpen: onRemoveStudentModalOpen,
     onClose: onRemoveStudentModalClose,
+  } = useDisclosure();
+  const {
+    isOpen: isSelectPlanModalOpen,
+    onOpen: onSelectPlanModalOpen,
+    onClose: onSelectPlanModalClose,
   } = useDisclosure();
   const { profileData, parentData, childData, setLocalstorageId } = useUserAPI();
   const { data: getRequests } = useQuery(PARENT_REQUESTS, {
@@ -566,6 +570,10 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
           px={"1rem"}
           mt={"2rem"}
         >
+          <SelectPlanModal
+            isOpen={isSelectPlanModalOpen}
+            onClose={onSelectPlanModalClose}
+          />
           <Box py={"1rem"}>
             <Flex alignItems={"center"} gap={1}>
               <Icon as={RiBookletFill} color="#005D5D" fontWeight={"bold"} />
@@ -653,7 +661,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
           flexDir={"column"}
           border={"1px solid #005D5D30"}
           rounded={"xl"}
-          pb={"1rem"}
+          pb={"3rem"}
           px={"1rem"}
           mt={"2rem"}
         >
@@ -670,9 +678,8 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
             </Flex>
             <Divider mt={"0.3rem"} mb={"1rem"} />
           </Box>
-          <Flex flexDir={"column"} gap={4}>
-            <Box display={'flex'} flexDir={{base:"column", md:"row"}} gap={5}>
-              <Box>
+          <Flex flexDir={"column"} gap={4} px={{ base: "1rem", md: "10rem" }}>
+            <Box w={"full"}>
               <Text fontSize={"lg"} fontWeight={"500"} mb={"1rem"}>
                 Plan Details
               </Text>
@@ -681,7 +688,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                 <Box
                   roundedTop={"xl"}
                   h={"8px"}
-                  bgGradient="linear(to-l, #DDA44E, #005D5D)"
+                  bgGradient="linear(to-l, #911194, #005D5D)"
                 ></Box>
 
                 <Box px={5} mt={"0.5rem"}>
@@ -690,7 +697,10 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                   </Text>
                   <Text color={"#00000080"} fontWeight={"500"}>
                     Can register up to 4 children and will be charged{" "}
-                    <span style={{color:"#005D5D", fontWeight:'bold',}}>₦65</span> for every additional child
+                    <span style={{ color: "#005D5D", fontWeight: "bold" }}>
+                      ₦65
+                    </span>{" "}
+                    for every additional child
                   </Text>
                   <Divider mt={"1rem"} borderColor={"#005D5D50"} />
                 </Box>
@@ -710,20 +720,33 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                     my={"0.4rem"}
                     variant={"outline"}
                     border={"0px solid"}
+                    onClick={onSelectPlanModalOpen}
+                    _hover={{ backgroundColor: "#EBF6F3" }}
                   >
                     <Text>Change plan</Text>
                   </Button>
                 </Box>
               </Box>
-              </Box>
+            </Box>
 
-              <Box>
-              <Text fontSize={"lg"} fontWeight={"500"} mt={"2rem"} mb={"1rem"}>
+            <Box w={"full"}>
+              <Text fontSize={"lg"} fontWeight={"500"} mt={"1rem"} mb={"1rem"}>
                 Payment Info
               </Text>
 
-              <Box rounded={"lg"} shadow={"sm"} border={"1px solid #00000030"} pb={'1rem'}>
-                <Box px={5} mt={"0.5rem"} display={'flex'} flexDir={'column'} gap={1}>
+              <Box
+                rounded={"lg"}
+                shadow={"sm"}
+                border={"1px solid #00000030"}
+                pb={"1rem"}
+              >
+                <Box
+                  px={5}
+                  mt={"0.5rem"}
+                  display={"flex"}
+                  flexDir={"column"}
+                  gap={1}
+                >
                   <Text fontWeight={"bold"} fontSize={"xl"}>
                     Next Payment
                   </Text>
@@ -746,13 +769,16 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                   </Box>
                 </Box>
               </Box>
-              </Box>
-
             </Box>
-              <Button  colorScheme="red" variant={'outline'} mt={'1rem'}>
-                Cancel Membership
-              </Button>
           </Flex>
+          <Button
+            colorScheme="red"
+            variant={"outline"}
+            mt={"2rem"}
+            mx={{ base: "1rem", md: "10rem" }}
+          >
+            Cancel Membership
+          </Button>
         </Flex>
       </Box>
     </Box>

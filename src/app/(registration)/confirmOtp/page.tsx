@@ -8,9 +8,9 @@ import {
 } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
 
-interface ConfirmationProps {}
+interface ConfirmOtpProps {}
 
-const Confirmation: FC<ConfirmationProps> = ({}) => {
+const ConfirmOtp: FC<ConfirmOtpProps> = ({}) => {
   const router = useRouter();
 
   return (
@@ -43,13 +43,16 @@ const Confirmation: FC<ConfirmationProps> = ({}) => {
             textAlign={"start"}
             display={"flex"}
             flexDir={"column"}
-            gap={"2"}
+            gap={"5"}
           >
             <Text color={"#005D5D"} fontWeight={"bold"} fontSize={"2xl"}>
               Check your email
             </Text>
+            <Image alt="check your email" src={'/images/check.svg'} h={'150px'} />
             <Text color={"#005D5D90"} fontWeight={"600"} fontSize={"md"}>
-              An email containing a password reset link has been sent to your email, please follow that link to reset your password.
+             {` An OTP (One-Time Password) has been sent to your email. Please
+              check your inbox/spam folder and enter the OTP to verify your
+              account. Click 'Proceed' to continue.`}
             </Text>
           </Box>
 
@@ -60,15 +63,14 @@ const Confirmation: FC<ConfirmationProps> = ({}) => {
             mb={"1rem"}
             mt={"3rem"}
           >
-
             <Button
               backgroundColor={"#005D5D"}
               color={"#fff"}
               w={"full"}
               _hover={{ backgroundColor: "#005D5D90" }}
-              onClick={()=>router.push('/signin')}
+              onClick={() => router.push("/verifyotp")}
             >
-              Return to Sign In
+              Proceed to verify OTP
             </Button>
           </Box>
         </Box>
@@ -77,4 +79,4 @@ const Confirmation: FC<ConfirmationProps> = ({}) => {
   );
 };
 
-export default Confirmation;
+export default ConfirmOtp;

@@ -85,13 +85,20 @@ const Page: FC<PageProps> = ({}) => {
   };
   return (
     <>
-      <Flex justifyContent={"center"} minH={"100vh"} alignItems={"center"}>
+      <Flex
+        justifyContent={"center"}
+        minH={"100vh"}
+        alignItems={"center"}
+        backgroundColor={"#005D5D20"}
+      >
         <Box
           px={"1rem"}
           py={"1.5rem"}
           rounded={"lg"}
           w={{ base: "25rem", lg: "30rem" }}
-          border={"1px solid #D5D5D5"}
+          border={"1px solid #005D5D30"}
+          shadow={"md"}
+          backgroundColor={'#FFFFFF'}
         >
           <Flex justifyContent={"center"}>
             <Image
@@ -105,11 +112,12 @@ const Page: FC<PageProps> = ({}) => {
               mt={"2.5rem"}
               fontSize={{ base: "lg", md: "2xl" }}
               fontWeight={"600"}
+              color={"#005D5D"}
             >
               OTP - Email Verification
             </Text>
 
-            <Text fontSize={"sm"} color={"#BFBFBF"} my={"1rem"}>
+            <Text fontSize={"sm"} color={"#00000070"} my={"1rem"}>
               Input the OTP Code that was sent to your email to verify your
               account
             </Text>

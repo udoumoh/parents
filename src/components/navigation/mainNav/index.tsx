@@ -312,6 +312,10 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
         </Text>
       </Button>
 
+      <Flex p={3} border={"2px solid #B80000"} rounded={"lg"}>
+        <Text color={"#B80000"}>You are currently on the 7-day Trial Plan</Text>
+      </Flex>
+
       <Menu>
         <MenuButton>
           <Box display={"flex"} alignItems={"center"} gap={2}>
