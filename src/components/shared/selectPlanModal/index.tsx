@@ -18,9 +18,9 @@ import {
   ListIcon,
   useToast,
 } from "@chakra-ui/react";
-// import { useMeQuery, useSelectTrialPlanMutation } from "../../gql/graphql";
 import { IoCheckmarkCircle } from "react-icons/io5";
-// import { capitalizeString } from "../../utils/capitalizeString";
+import { useUserAPI } from "@/hooks/UserContext";
+import { useRouter } from "next/navigation";
 
 interface SelectPlanModalProps {
   isOpen: boolean;
@@ -28,43 +28,37 @@ interface SelectPlanModalProps {
 }
 
 const SelectPlanModal: FC<SelectPlanModalProps> = ({ isOpen, onClose }) => {
+  const router = useRouter()
   const {
     isOpen: isPlanOpen,
     onOpen: onPlanOpen,
     onClose: onPlanClose,
   } = useDisclosure();
   const toast = useToast();
-  // const [{ data: me }] = useMeQuery();
-  // const [, plan] = useSelectTrialPlanMutation();
-  const [trial, setTrial] = useState("basic plus");
+  const {parentData} = useUserAPI()
+  const [trial, setTrial] = useState("");
 
-  // const handleSubmit = async () => {
-  //   const response = await plan({ plan: trial });
-  //   if (response.data?.selectTrialPlan === true) {
-  //     toast({
-  //       title: "Plan Added",
-  //       description: `You have successfully joined the ${capitalizeString(
-  //         trial
-  //       )} plan`,
-  //       status: "success",
-  //       variant: "left-accent",
-  //       duration: 5000,
-  //       isClosable: true,
-  //     });
-  //     setTimeout(() => {
-  //       router.reload();
-  //     }, 500);
-  //   } else {
-  //     toast({
-  //       title: "Subscription Error",
-  //       description: "An error has occured, unable to select this plan",
-  //       status: "error",
-  //       variant: "left-accent",
-  //       duration: 5000,
-  //       isClosable: true,
-  //     });
-  //   }
-  // };
+  const handleSubmit = async (plan: any) => {
+    const monthlyUrl = `https://paystack.com/pay/gn-parent-monthly/?email=${parentData?.email}&first_name=${parentData?.firstName}&last_name=${parentData?.lastName}&readonly=first_name,last_name,email`;
+    const quaterlyUrl = `https://paystack.com/pay/gn-parent-quarterly/?email=${parentData?.email}&first_name=${parentData?.firstName}&last_name=${parentData?.lastName}&readonly=first_name,last_name,email`;
+    const yearlyUrl = `https://paystack.com/pay/gn-parent-yearly/?email=${parentData?.email}&first_name=${parentData?.firstName}&last_name=${parentData?.lastName}&readonly=first_name,last_name,email`;
+    if(plan === 'monthly'){
+      router.replace(monthlyUrl)
+    } else if(plan === 'quaterly'){
+      router.replace(quaterlyUrl)
+    } else if(plan === 'yearly'){
+      router.replace(yearlyUrl)
+    } else {
+      toast({
+        title: "No plan chosen",
+        description: "Please select a plan to proceed",
+        position: "top-right",
+        variant: "left-accent",
+        isClosable: true,
+        status: "error",
+      });
+    }
+  };
 
   const tabStyle = {
     bg: "#AEF0D8",
@@ -185,7 +179,7 @@ const SelectPlanModal: FC<SelectPlanModalProps> = ({ isOpen, onClose }) => {
                       textAlign={"right"}
                       fontSize={{ base: "xs", md: "md" }}
                     >
-                      <strong>₦2000</strong>
+                      <strong>₦2500</strong>
                       <sub>/Year</sub>
                     </Text>
                   </Flex>
@@ -218,9 +212,9 @@ const SelectPlanModal: FC<SelectPlanModalProps> = ({ isOpen, onClose }) => {
                       color="white"
                       borderRadius={"full"}
                       mt={14}
-                      // onClick={handleSubmit}
+                      onClick={() => handleSubmit("monthly")}
                     >
-                      Try Monthly Plan
+                      Select Monthly Plan
                     </Button>
                   </Flex>
                 </TabPanel>
@@ -249,9 +243,9 @@ const SelectPlanModal: FC<SelectPlanModalProps> = ({ isOpen, onClose }) => {
                       color="white"
                       borderRadius={"full"}
                       mt={14}
-                      // onClick={handleSubmit}
+                      onClick={() => handleSubmit("quaterly")}
                     >
-                      Try Quartely Plan
+                      Select Quartely Plan
                     </Button>
                   </Flex>
                 </TabPanel>
@@ -281,32 +275,14 @@ const SelectPlanModal: FC<SelectPlanModalProps> = ({ isOpen, onClose }) => {
                       color="white"
                       borderRadius={"full"}
                       mt={14}
-                      // onClick={handleSubmit}
+                      onClick={() => handleSubmit("yearly")}
                     >
-                      Try Yearly Plan
+                      Select Yearly Plan
                     </Button>
                   </Flex>
                 </TabPanel>
               </TabPanels>
             </Tabs>
-            {/* <Flex
-              gap={2}
-              //   align="center"
-              direction="column"
-              w="full"
-              pb={3}
-              borderRadius="7px"
-            >
-              <Button
-                size="sm"
-                _hover={{ bg: "#343434" }}
-                bg="black"
-                color="white"
-                borderRadius={"full"
-              >
-                Upgrade now
-              </Button>
-            </Flex> */}
           </Flex>
         </ModalContent>
       </Modal>
