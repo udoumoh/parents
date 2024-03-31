@@ -312,8 +312,17 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
         </Text>
       </Button>
 
-      <Flex p={2} border={"2px solid #B80000"} rounded={"lg"}>
-        <Text color={"#B80000"} fontSize={{base:"xs", md:"md"}}>You are currently on the 14-day Trial Plan</Text>
+      <Flex
+        px={"1rem"}
+        py={"0.3rem"}
+        backgroundColor={"#D71313"}
+        rounded={"md"}
+        alignItems={"center"}
+        display={{ base: "none", md: "flex" }}
+      >
+        <Text color="#FFFFFF" fontSize={{ base: "xs", md: "md" }}>
+          You are currently on the 14-day Trial Plan
+        </Text>
       </Flex>
 
       <Menu>
