@@ -292,7 +292,6 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
     pollInterval: 5000,
   });
   const [notifications, setNoficiations] = useState<Notifications[]>([])
-  const [notificationLength, setNotificationLength] = useState(notifications?.length)
 
   const handleLogout = async () => {
     const response = await logoutParent();
@@ -328,7 +327,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
               status: "info",
             });
           }
-          setNoficiations(response?.fetchMyNotifications)
+          setNoficiations(response?.fetchMyNotifications?.slice(0,5))
         }
       }catch(err){
         console.log(err);
