@@ -1477,126 +1477,283 @@ mutation UpdateParentDetails($profileImgUrl: String!, $email: String!, $phoneNum
 }`)
 
 export const GET_STUDENT_UPLOADED_RESULT = gql(`
-query StudentResult($studentId: Float!, $limit: Float!, $sortBy: String, $cursor: Float) {
-  studentResult(studentId: $studentId, limit: $limit, sortBy: $sortBy, cursor: $cursor) {
-    results {
+query StudentUploadedResult($studentId: Float!) {
+  studentUploadedResult(studentId: $studentId) {
+    id
+    isOfficial
+    wasEdited
+    createdAt
+    approvedAt
+    updatedAt
+    remark
+    fileType
+    resultType
+    document
+    folder
+    verifiedBy
+    studentName
+    isAcknowledged
+    creator
+    creatorRole
+    creatorPicture
+    creatorName
+    student {
       id
-      isOfficial
-      wasEdited
       createdAt
-      approvedAt
-      updatedAt
-      remark
-      fileType
-      resultType
-      document
+      transferedAt
+      firstName
+      middleName
+      lastName
+      gender
+      ageInput
       folder
-      verifiedBy
-      studentName
-      isAcknowledged
-      creator
-      creatorRole
-      creatorPicture
-      creatorName
-      school {
-        id
-        createdAt
-        isDisabled
-        isVerified
-        schoolName
-        rcnumber
-        address
-        type
-        lgarea
-        folder
-        state
-        country
-        description
-        phonenumber
-        email
-        websiteUrl
-        instagramUrl
-        facebookUrl
-        twitterUrl
-        linkedinUrl
-        accountName
-        accountNumber
-        bankName
-        logoImgUrl
-        bannerImgUrl
-        license
-        creator {
-          errors {
-            field
-            message
-          }
-          admin {
+      isOwing
+      isVisible
+      isDuplicate
+      linkedAt
+      linkCount
+      isLinked
+      startDate
+      endDate
+      birthDate
+      isArchived
+      profileImgUrl
+      classroom {
+        errors {
+          field
+          message
+        }
+        classroom {
+          id
+          isValid
+          wasEdited
+          createdAt
+          updatedAt
+          classId
+          className
+          classSubjects
+          description
+          isDisabled
+          students {
             id
-            isPaid
-            userId
-            folder
-            status
-            plan
-            isReferred
-            isDisabled
-            agreedTo
-            referralCode
             createdAt
+            transferedAt
+            firstName
+            middleName
+            lastName
+            gender
+            ageInput
+            folder
+            isOwing
+            isVisible
+            isDuplicate
+            linkedAt
+            linkCount
+            isLinked
+            startDate
+            endDate
+            birthDate
+            isArchived
+            profileImgUrl
+            grayId
+            fatherName
+            fatherEmail
+            fatherNumber
+            motherName
+            motherEmail
+            motherNumber
+            homeAddress
+            lgaOrigin
+            state
+          }
+          teacher {
+            id
+            userId
+            createdAt
+            status
             firstName
             middleName
             lastName
             phoneNumber
             email
-            profileImgUrl
             role
-            accountOfficer {
-              id
-              userId
-              isDisabled
-              isSuper
-              isDirector
-              createdAt
-              fullName
-              username
-              phoneNumber
-              role
-              status
-              department
-              email
-              profileImgUrl
-              greyAdmin {
-                id
-                isPaid
-                userId
-                folder
-                status
-                plan
-                isReferred
-                isDisabled
-                agreedTo
-                referralCode
-                createdAt
-                firstName
-                middleName
-                lastName
-                phoneNumber
-                email
-                profileImgUrl
-                role
-                school
-                schoolImg
-                statusCode
-              }
-            }
-            school
-            schoolImg
-            statusCode
+            folder
+            isDisabled
+            isVisible
+            profileImgUrl
           }
         }
       }
+      school {
+        
+      }
+      parent {
+        id
+        userId
+        status
+        isPaid
+        isVerified
+        isReferred
+        agreedTo
+        createdAt
+        firstName
+        middleName
+        lastName
+        parentRole
+        phoneNumber
+        email
+        role
+        folder
+        isDisabled
+        profileImgUrl
+        children {
+          id
+          createdAt
+          transferedAt
+          firstName
+          middleName
+          lastName
+          gender
+          ageInput
+          folder
+          isOwing
+          isVisible
+          isDuplicate
+          linkedAt
+          linkCount
+          isLinked
+          startDate
+          endDate
+          birthDate
+          isArchived
+          profileImgUrl
+          grayId
+          fatherName
+          fatherEmail
+          fatherNumber
+          motherName
+          motherEmail
+          motherNumber
+          homeAddress
+          lgaOrigin
+          state
+        }
+      }
+      creator {
+        admin {
+          id
+          isPaid
+          userId
+          folder
+          status
+          plan
+          isReferred
+          isDisabled
+          agreedTo
+          referralCode
+          createdAt
+          firstName
+          middleName
+          lastName
+          phoneNumber
+          email
+          profileImgUrl
+          role
+          accountOfficer {
+            id
+            userId
+            isDisabled
+            isSuper
+            isDirector
+            createdAt
+            fullName
+            username
+            phoneNumber
+            role
+            status
+            department
+            email
+            profileImgUrl
+            greyAdmin {
+              id
+              isPaid
+              userId
+              folder
+              status
+              plan
+              isReferred
+              isDisabled
+              agreedTo
+              referralCode
+              createdAt
+              firstName
+              middleName
+              lastName
+              phoneNumber
+              email
+              profileImgUrl
+              role
+              school
+              schoolImg
+              statusCode
+            }
+          }
+          school
+          schoolImg
+          statusCode
+        }
+      }
+      studentCase {
+        grayCase {
+          id
+          createdAt
+          updatedAt
+          category
+          owingAmount
+          note
+          isActive
+          wasEdited
+        }
+      }
+      grayId
+      fatherName
+      fatherEmail
+      fatherNumber
+      motherName
+      motherEmail
+      motherNumber
+      homeAddress
+      lgaOrigin
+      state
     }
-    hasMore
-    cursor
+    school {
+      id
+      createdAt
+      isDisabled
+      isVerified
+      schoolName
+      rcnumber
+      address
+      type
+      lgarea
+      folder
+      state
+      country
+      description
+      phonenumber
+      email
+      websiteUrl
+      instagramUrl
+      facebookUrl
+      twitterUrl
+      linkedinUrl
+      accountName
+      accountNumber
+      bankName
+      logoImgUrl
+      bannerImgUrl
+      license
+    }
   }
 }
 `)
