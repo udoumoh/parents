@@ -291,7 +291,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
     variables: { ref: 'parents' },
   });
   const [notifications, setNoficiations] = useState<Notifications[]>([])
-  const [notificationLength, setNotificationLength] = useState(notifications.length)
+  const [notificationLength, setNotificationLength] = useState(notifications?.length)
 
   const handleLogout = async () => {
     const response = await logoutParent();
