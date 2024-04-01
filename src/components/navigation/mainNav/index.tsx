@@ -325,7 +325,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
   }, [getnotifications])
 
   useEffect(() => {
-    if(notifications.length > notificationLength){
+    if(notifications?.length > notificationLength){
       toast({
         title: "New notification",
         description: "You have received a new notification",
@@ -334,9 +334,9 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
         isClosable: true,
         status: "info",
       });
-      setNotificationLength(notifications.length);
+      setNotificationLength(notifications?.length);
     }
-    setNotificationLength(notifications.length);
+    setNotificationLength(notifications?.length);
   }, [notifications, notificationLength, toast]);
 
   return (
