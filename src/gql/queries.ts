@@ -1822,3 +1822,15 @@ query ParentRequests($parentId: String!) {
     picOfRequesting
   }
 }`)
+
+export const GET_NOTIFICATIONS = gql(`query FetchMyNotifications($ref: String!) {
+  fetchMyNotifications(ref: $ref) {
+    id
+    createdAt
+    isSeen
+    ref
+    userId
+    action
+    message
+  }
+}`)
