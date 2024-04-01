@@ -327,7 +327,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
       </Flex>
 
       <Flex gap={3} alignItems={"center"}>
-        <IconButton aria-label="notification" backgroundColor={'transparent'} icon={<VscBellDot />} />
+        <IconButton aria-label="notification" backgroundColor={'transparent'} icon={<VscBellDot />} boxSize={6} />
         <Menu>
           <MenuButton>
             <Box display={"flex"} alignItems={"center"} gap={2}>
