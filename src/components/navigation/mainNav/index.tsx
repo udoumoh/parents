@@ -315,6 +315,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
         if(!response) console.log('Client error occurred while fetching notifications')
         if(response){
           setNoficiations(response?.fetchMyNotifications)
+          console.log(response)
         }
       }catch(err){
         console.log(err);
