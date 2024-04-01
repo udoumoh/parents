@@ -316,7 +316,10 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
         const response = await getnotifications
         if(!response) console.log('Client error occurred while fetching notifications')
         if(response){
-          if(notifications.length > 0 && response?.length > notifications.length){
+          if (
+            notifications.length > 0 &&
+            response?.fetchMyNotifications?.length > notifications.length
+          ) {
             toast({
               title: "You have a new notification 🔔",
               position: "top-right",
