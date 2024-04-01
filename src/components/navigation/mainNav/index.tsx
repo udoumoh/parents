@@ -316,7 +316,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
       <Flex
         px={"1rem"}
         py={"0.3rem"}
-        backgroundColor={"#D7131370"}
+        backgroundColor={"#D7131390"}
         rounded={"md"}
         alignItems={"center"}
         display={{ base: "none", md: "flex" }}
@@ -326,8 +326,8 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
         </Text>
       </Flex>
 
-      <Flex gap={3} alignItems={'center'}>
-        <Icon as={VscBellDot} boxSize={5} color={'#005D5D'} />
+      <Flex gap={3} alignItems={"center"}>
+        <IconButton aria-label="notification" backgroundColor={'transparent'} icon={<VscBellDot />} />
         <Menu>
           <MenuButton>
             <Box display={"flex"} alignItems={"center"} gap={2}>
