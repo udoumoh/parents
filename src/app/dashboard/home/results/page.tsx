@@ -146,7 +146,7 @@ const Results: FC<ResultsProps> = ({}) => {
         }
         if (response) {
           console.log(response)
-          const parsedResultsData = response?.studentUploadedResult?.results?.map(
+          const parsedResultsData = response?.studentUploadedResult?.map(
             (item: any) => ({
               term: item.academicTerm,
               examType: item.resultType,
