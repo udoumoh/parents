@@ -325,7 +325,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
     fetchData()
   }, [getnotifications])
 
-    if (notifications?.length > 0 && notifications.length > notificationLength) {
+    if (notifications?.length > 0 && notifications?.length > notificationLength) {
       toast({
         title: "You have a new notification 🔔",
         position: "top-right",
