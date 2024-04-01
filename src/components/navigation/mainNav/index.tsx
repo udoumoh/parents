@@ -65,9 +65,19 @@ import { useMutation, useQuery } from "@apollo/client";
 import Lottie from "react-lottie"
 import animationData from '../../../../public/lotties/noNotifications.json'
 import { GET_NOTIFICATIONS } from "@/gql/queries";
+import { formatDateWithSuffix } from "@/helpers/formatDate";
 
 interface MobileProps extends FlexProps {
   onOpen: () => void;
+}
+
+interface Notifications {
+  action: string;
+  createdAt: string;
+  id: number;
+  isSeen: boolean;
+  message: string;
+  ref: string;
 }
 
 interface NavItemProps extends FlexProps {
@@ -280,7 +290,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
   const { data: getnotifications } = useQuery(GET_NOTIFICATIONS, {
     variables: { ref: 'parents' },
   });
-  const [notifications, setNoficiations] = useState()
+  const [notifications, setNoficiations] = useState<Notifications[]>([])
 
   const handleLogout = async () => {
     const response = await logoutParent();
@@ -302,9 +312,9 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
     const fetchData = async () => {
       try{
         const response = await getnotifications
-        if(!response) console.log('No response from server for notifications')
+        if(!response) console.log('Client error occurred while fetching notifications')
         if(response){
-          console.log(response)
+          setNoficiations(response?.fetchMyNotifications)
         }
       }catch(err){
         console.log(err);
@@ -377,37 +387,49 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
             <PopoverHeader>Notifications</PopoverHeader>
             <PopoverBody p={1}>
               <Box>
-                {/* Empty state for notifications */}
-                {/* <Flex flexDir={'column'} alignItems={'center'} py={'1rem'}>
+                {
+                  notifications?.length === 0 ? (
+                 <Flex flexDir={'column'} alignItems={'center'} py={'1rem'}>
                   <Lottie options={options} height={'auto'} width={'auto'} />
                   <Text textAlign={'center'} color={'#00000070'} fontSize={'sm'} fontWeight={'bold'}>NO NOTIFICATIONS</Text>
                   <Text textAlign={'center'} color={'#00000070'} fontSize={'xs'}>{`We'll notify you when there's something new`}</Text>
-                </Flex> */}
-                <Box
-                  p={'0.4rem'}
-                  _hover={{ backgroundColor: "#005D5D10", cursor: "pointer" }}
-                >
-                  <Flex justifyContent={"space-between"} mb={"0.2rem"}>
-                    <Text
-                      fontSize={"xs"}
-                      color={"#005D5D"}
-                      fontWeight={"semibold"}
-                    >
-                      New Message
-                    </Text>
-                    <Text
-                      fontSize={"xs"}
-                      color={"#005D5D"}
-                      fontWeight={"semibold"}
-                    >
-                      1 minute ago
-                    </Text>
-                  </Flex>
-                  <Text fontSize={"sm"}>
-                    You have received a new message in your inbox 📬{" "}
-                  </Text>
-                  <Divider mt={"0.3rem"} />
-                </Box>
+                </Flex>
+                  ) : (
+                    notifications.map((notification, index) => {
+                      return (
+                        <Box
+                          key={index}
+                          p={"0.4rem"}
+                          _hover={{
+                            backgroundColor: "#005D5D10",
+                            cursor: "pointer",
+                          }}
+                        >
+                          <Flex justifyContent={"space-between"} mb={"0.2rem"}>
+                            <Text
+                              fontSize={"xs"}
+                              color={"#005D5D"}
+                              fontWeight={"semibold"}
+                            >
+                              {notification?.action}
+                            </Text>
+                            <Text
+                              fontSize={"xs"}
+                              color={"#005D5D"}
+                              fontWeight={"semibold"}
+                            >
+                              {formatDateWithSuffix(notification?.createdAt)}
+                            </Text>
+                          </Flex>
+                          <Text fontSize={"sm"}>
+                            {notification?.message} 📬{" "}
+                          </Text>
+                          <Divider mt={"0.3rem"} />
+                        </Box>
+                      );
+                    })
+                  )
+                }
               </Box>
             </PopoverBody>
           </PopoverContent>
