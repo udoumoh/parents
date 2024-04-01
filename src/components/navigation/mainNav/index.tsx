@@ -46,12 +46,13 @@ import {
   AiOutlinePlus,
   AiOutlineSetting,
 } from "react-icons/ai";
+import { MdArrowDropDown } from "react-icons/md";
 import { HiOutlineArrowSmRight } from "react-icons/hi";
 import {
   IoClose,
   IoHelpCircleOutline,
-  IoReceiptOutline,
 } from "react-icons/io5";
+import { VscBellDot } from "react-icons/vsc";
 import { IconType } from "react-icons";
 import { useUserAPI } from "@/hooks/UserContext";
 import SearchStudentModal from "@/components/shared/searchStudentModal";
@@ -315,7 +316,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
       <Flex
         px={"1rem"}
         py={"0.3rem"}
-        backgroundColor={"#D71313"}
+        backgroundColor={"#D7131370"}
         rounded={"md"}
         alignItems={"center"}
         display={{ base: "none", md: "flex" }}
@@ -325,57 +326,61 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
         </Text>
       </Flex>
 
-      <Menu>
-        <MenuButton>
-          <Box display={"flex"} alignItems={"center"} gap={2}>
-            <Text fontWeight={"600"} color={"gray.600"} fontSize={"sm"}>
-              Hi, {profileData.userBio.firstName} {profileData.userBio.lastName}
-            </Text>
-            <Avatar
-              src={profileData.userBio.profileImage}
-              size={"sm"}
-              pointerEvents={"none"}
-            />
-            <Icon as={RiArrowDownSLine} color={"#000"} boxSize={6} />
-          </Box>
-        </MenuButton>
-        <MenuList>
-          <MenuItem
-            px={"1rem"}
-            onClick={() => router.push("/dashboard/settings")}
-            display={"flex"}
-            gap={"3"}
-          >
-            <Icon as={IoMdSettings} boxSize={"4"} color={"#005D5D"} />
-            <Text color={"#005D5D"} fontWeight={"600"}>
-              Settings
-            </Text>
-          </MenuItem>
-          <MenuItem
-            px={"1rem"}
-            onClick={() => router.push("/dashboard/inbox")}
-            display={"flex"}
-            gap={"3"}
-          >
-            <Icon as={RiMailOpenFill} boxSize={"4"} color={"#005D5D"} />
-            <Text color={"#005D5D"} fontWeight={"600"}>
-              Inbox
-            </Text>
-          </MenuItem>
-          <MenuDivider />
-          <MenuItem
-            px={"1rem"}
-            onClick={handleLogout}
-            display={"flex"}
-            gap={"3"}
-          >
-            <Icon as={IoLogOut} boxSize={"4"} color={"red.600"} />
-            <Text color={"#005D5D"} fontWeight={"600"}>
-              Logout
-            </Text>
-          </MenuItem>
-        </MenuList>
-      </Menu>
+      <Flex gap={3} alignItems={'center'}>
+        <Icon as={VscBellDot} boxSize={5} color={'#005D5D'} />
+        <Menu>
+          <MenuButton>
+            <Box display={"flex"} alignItems={"center"} gap={2}>
+              <Text fontWeight={"600"} color={"gray.600"} fontSize={"sm"}>
+                Hi, {profileData.userBio.firstName}{" "}
+                {profileData.userBio.lastName}
+              </Text>
+              <Avatar
+                src={profileData.userBio.profileImage}
+                size={"sm"}
+                pointerEvents={"none"}
+              />
+              <Icon as={MdArrowDropDown} color={"#005D5D"} boxSize={4} />
+            </Box>
+          </MenuButton>
+          <MenuList>
+            <MenuItem
+              px={"1rem"}
+              onClick={() => router.push("/dashboard/settings")}
+              display={"flex"}
+              gap={"3"}
+            >
+              <Icon as={IoMdSettings} boxSize={"4"} color={"#005D5D"} />
+              <Text color={"#005D5D"} fontWeight={"600"}>
+                Settings
+              </Text>
+            </MenuItem>
+            <MenuItem
+              px={"1rem"}
+              onClick={() => router.push("/dashboard/inbox")}
+              display={"flex"}
+              gap={"3"}
+            >
+              <Icon as={RiMailOpenFill} boxSize={"4"} color={"#005D5D"} />
+              <Text color={"#005D5D"} fontWeight={"600"}>
+                Inbox
+              </Text>
+            </MenuItem>
+            <MenuDivider />
+            <MenuItem
+              px={"1rem"}
+              onClick={handleLogout}
+              display={"flex"}
+              gap={"3"}
+            >
+              <Icon as={IoLogOut} boxSize={"4"} color={"red.600"} />
+              <Text color={"#005D5D"} fontWeight={"600"}>
+                Logout
+              </Text>
+            </MenuItem>
+          </MenuList>
+        </Menu>
+      </Flex>
 
       <SearchStudentModal
         isSearchOpen={isModalOpen}
