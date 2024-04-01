@@ -239,7 +239,7 @@ const Results: FC<ResultsProps> = ({}) => {
           </>
         ) : (
           <Wrap gap={5} flexDir={{ base: "column", lg: "row" }}>
-            {currentResult.map((result, index) => {
+            {currentResult?.map((result, index) => {
               return (
                 <WrapItem key={index}>
                   <ResultCard key={index} generatedresult={result} />
