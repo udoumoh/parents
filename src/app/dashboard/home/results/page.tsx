@@ -266,7 +266,7 @@ const Results: FC<ResultsProps> = ({}) => {
           >
             <Thead>
               <Tr>
-                {columnNames.map((column, index) => {
+                {columnNames?.map((column, index) => {
                   return (
                     <Th key={index} color={"#000"} fontWeight={"600"}>
                       {column}
@@ -276,7 +276,7 @@ const Results: FC<ResultsProps> = ({}) => {
               </Tr>
             </Thead>
             <Tbody>
-              {currentResult.map((data, index) => {
+              {currentResult?.map((data, index) => {
                 return (
                   <Tr key={index}>
                     <Td color={"#000"}>
