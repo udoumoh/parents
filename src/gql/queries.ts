@@ -1584,9 +1584,6 @@ query StudentUploadedResult($studentId: Float!) {
           }
         }
       }
-      school {
-        
-      }
       parent {
         id
         userId

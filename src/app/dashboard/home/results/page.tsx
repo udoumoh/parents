@@ -253,7 +253,6 @@ const Results: FC<ResultsProps> = ({}) => {
       <Box
         mt={{ base: "12" }}
         display={currentResult.length === 0 ? "none" : "block"}
-        maxHeight={"600px"}
         overflowY={"auto"}
         border={"1px solid #005D5D"}
         rounded={"lg"}
