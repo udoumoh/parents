@@ -287,8 +287,9 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
     onClose: onModalClose,
   } = useDisclosure();
   const [logoutParent] = useMutation(LOGOUT_PARENTS);
-  const { data: getnotifications } = useQuery(GET_NOTIFICATIONS, {
+  const { data: getnotifications, loading } = useQuery(GET_NOTIFICATIONS, {
     variables: { ref: 'parents' },
+    pollInterval: 5000,
   });
   const [notifications, setNoficiations] = useState<Notifications[]>([])
   const [notificationLength, setNotificationLength] = useState(notifications?.length)
@@ -324,19 +325,17 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
     fetchData()
   }, [getnotifications])
 
-  // setInterval(() => {
-  //   if (notifications?.length > 0 && notifications.length > notificationLength) {
-  //     toast({
-  //       title: "New notification",
-  //       description: "You have received a new notification",
-  //       position: "top-right",
-  //       variant: "left-accent",
-  //       isClosable: true,
-  //       status: "info",
-  //     });
-  //     setNotificationLength(notifications?.length);
-  //   }
-  // }, 2000)
+    if (notifications?.length > 0 && notifications.length > notificationLength) {
+      toast({
+        title: "New notification",
+        description: "You have received a new notification",
+        position: "top-right",
+        variant: "left-accent",
+        isClosable: true,
+        status: "info",
+      });
+      setNotificationLength(notifications?.length);
+    }
 
   return (
     <Flex
