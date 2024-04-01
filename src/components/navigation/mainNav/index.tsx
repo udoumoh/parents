@@ -291,6 +291,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
     variables: { ref: 'parents' },
   });
   const [notifications, setNoficiations] = useState<Notifications[]>([])
+  const [notificationLength, setNotificationLength] = useState(notifications.length)
 
   const handleLogout = async () => {
     const response = await logoutParent();
@@ -315,7 +316,6 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
         if(!response) console.log('Client error occurred while fetching notifications')
         if(response){
           setNoficiations(response?.fetchMyNotifications)
-          console.log(response)
         }
       }catch(err){
         console.log(err);
@@ -323,6 +323,21 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
     }
     fetchData()
   }, [getnotifications])
+
+  useEffect(() => {
+    if(notifications.length > notificationLength){
+      toast({
+        title: "New notification",
+        description: "You have received a new notification",
+        position: "top-right",
+        variant: "left-accent",
+        isClosable: true,
+        status: "info",
+      });
+      setNotificationLength(notifications.length);
+    }
+    setNotificationLength(notifications.length);
+  }, [notifications, notificationLength, toast]);
 
   return (
     <Flex
