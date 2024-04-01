@@ -453,7 +453,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
         <Menu>
           <MenuButton>
             <Box display={"flex"} alignItems={"center"} gap={2}>
-              <Text fontWeight={"600"} color={"gray.600"} fontSize={"sm"}>
+              <Text fontWeight={"600"} color={"gray.600"} fontSize={"sm"} display={{base:"none", md:"block"}}>
                 Hi, {profileData.userBio.firstName}{" "}
                 {profileData.userBio.lastName}
               </Text>
