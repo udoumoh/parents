@@ -327,8 +327,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
 
     if (notifications?.length > 0 && notifications.length > notificationLength) {
       toast({
-        title: "New notification",
-        description: "You have received a new notification",
+        title: "You have a new notification 🔔",
         position: "top-right",
         variant: "left-accent",
         isClosable: true,
