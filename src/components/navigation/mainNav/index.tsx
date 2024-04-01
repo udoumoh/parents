@@ -324,8 +324,8 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
     fetchData()
   }, [getnotifications])
 
-  useEffect(() => {
-    if(notifications?.length > notificationLength){
+  setInterval(() => {
+    if (notifications?.length > notificationLength) {
       toast({
         title: "New notification",
         description: "You have received a new notification",
@@ -336,8 +336,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
       });
       setNotificationLength(notifications?.length);
     }
-    setNotificationLength(notifications?.length);
-  }, [notifications, notificationLength, toast]);
+  }, 2000)
 
   return (
     <Flex
