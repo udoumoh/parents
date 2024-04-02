@@ -55,7 +55,7 @@ interface GeneratedResultsProps {
     documentPath: string;
     authorsCreatedAt: string;
     isOfficial: string;
-  } | undefined;
+  };
   isOpen: boolean;
   onClose: () => void;
 }
@@ -176,7 +176,7 @@ const GeneratedResults: React.FC<GeneratedResultsProps> = ({
   );
   const averageOfScore =
     (sumOfTest1 + sumOfTest2 + sumOfTest3 + sumOfTest4 + sumOfScore) /
-    (result?.subjects?.length || 1)
+    (result?.subjects?.length)
   const percentageAverage = (averageOfScore / 100) * 100;
 
   const resultHeader = [
