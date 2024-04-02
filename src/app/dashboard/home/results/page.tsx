@@ -250,168 +250,169 @@ const Results: FC<ResultsProps> = ({}) => {
   };
 
   return (
-    <Box mb={{ base: "8rem", lg: "5rem" }}>
-      <Text>Result Type</Text>
-      <Flex justifyContent={"space-between"} my={"1rem"}>
-        <Box>
-          <Select
-            placeholder="Select Type"
-            value={resultsType}
-            onChange={handleResultsTypeChange}
-            size={"md"}
-            border={"2px solid #007C7B"}
-            fontSize={"sm"}
-            color={"#747474"}
-            rounded={"md"}
-            _hover={{ cursor: "pointer" }}
-          >
-            <option value="uploaded">Uploaded</option>
-            <option value="generated">Generated</option>
-          </Select>
-        </Box>
-        <Button
-          backgroundColor={"#005D5D"}
-          color={"#fff"}
-          colorScheme="teal"
-          size={"md"}
-          onClick={onModalOpen}
-        >
-          <AiOutlinePlus />
-          <Text fontWeight={"light"} pl="0.5rem" fontSize={"sm"}>
-            Upload Result
-          </Text>
-        </Button>
-        <UploadResultModal
-          isOpen={isModalOpen}
-          onOpen={onModalOpen}
-          onClose={onModalClose}
-        />
-      </Flex>
+    <></>
+    // <Box mb={{ base: "8rem", lg: "5rem" }}>
+    //   <Text>Result Type</Text>
+    //   <Flex justifyContent={"space-between"} my={"1rem"}>
+    //     <Box>
+    //       <Select
+    //         placeholder="Select Type"
+    //         value={resultsType}
+    //         onChange={handleResultsTypeChange}
+    //         size={"md"}
+    //         border={"2px solid #007C7B"}
+    //         fontSize={"sm"}
+    //         color={"#747474"}
+    //         rounded={"md"}
+    //         _hover={{ cursor: "pointer" }}
+    //       >
+    //         <option value="uploaded">Uploaded</option>
+    //         <option value="generated">Generated</option>
+    //       </Select>
+    //     </Box>
+    //     <Button
+    //       backgroundColor={"#005D5D"}
+    //       color={"#fff"}
+    //       colorScheme="teal"
+    //       size={"md"}
+    //       onClick={onModalOpen}
+    //     >
+    //       <AiOutlinePlus />
+    //       <Text fontWeight={"light"} pl="0.5rem" fontSize={"sm"}>
+    //         Upload Result
+    //       </Text>
+    //     </Button>
+    //     <UploadResultModal
+    //       isOpen={isModalOpen}
+    //       onOpen={onModalOpen}
+    //       onClose={onModalClose}
+    //     />
+    //   </Flex>
 
-      <Box>
-        <Text mb={"1rem"}>Most Recent</Text>
+    //   <Box>
+    //     <Text mb={"1rem"}>Most Recent</Text>
 
-        {currentResult?.length === 0 ? (
-          <>
-            <Text fontSize={"xl"}>
-              There are no results available for this student
-            </Text>
-          </>
-        ) : (
-          <Wrap gap={5} flexDir={{ base: "column", lg: "row" }}>
-            {currentResult?.slice(0, 5)?.map((result, index) => {
-              return (
-                <WrapItem key={index}>
-                  <ResultCard key={index} generatedresult={result} />
-                </WrapItem>
-              );
-            })}
-          </Wrap>
-        )}
-      </Box>
+    //     {currentResult?.length === 0 ? (
+    //       <>
+    //         <Text fontSize={"xl"}>
+    //           There are no results available for this student
+    //         </Text>
+    //       </>
+    //     ) : (
+    //       <Wrap gap={5} flexDir={{ base: "column", lg: "row" }}>
+    //         {currentResult?.slice(0, 5)?.map((result, index) => {
+    //           return (
+    //             <WrapItem key={index}>
+    //               <ResultCard key={index} generatedresult={result} />
+    //             </WrapItem>
+    //           );
+    //         })}
+    //       </Wrap>
+    //     )}
+    //   </Box>
 
-      <Box
-        mt={{ base: "12" }}
-        display={currentResult?.length === 0 ? "none" : "block"}
-        overflowY={"auto"}
-        border={"1px solid #005D5D50"}
-        rounded={"lg"}
-        p={"1rem"}
-      >
-        <TableContainer>
-          <Table variant="simple" size={{ base: "sm", md: "md" }}>
-            <Thead>
-              <Tr>
-                {columnNames?.map((column, index) => {
-                  return (
-                    <Th key={index} color={"#000"} fontWeight={"600"}>
-                      {column}
-                    </Th>
-                  );
-                })}
-              </Tr>
-            </Thead>
-            <Tbody>
-              {resultToShow?.map((data, index) => {
-                return (
-                  <Tr
-                    key={index}
-                    onClick={() => handleTableItemClick(data)}
-                    _hover={{ backgroundColor: "#005D5D10", cursor: "pointer" }}
-                  >
-                    <Td color={"#000"}>
-                      <Flex gap={2} alignItems={"center"}>
-                        <Image
-                          boxSize={"6"}
-                          src={data?.schoolLogo}
-                          alt="logo"
-                          pointerEvents={"none"}
-                        />
-                        <Text fontSize={"sm"} fontWeight={"500"}>
-                          {data?.schoolName}
-                        </Text>
-                      </Flex>
-                    </Td>
-                    <Td color={"#000"}>
-                      {data?.isOfficial ? "Official" : "Unofficial"}
-                    </Td>
-                    <Td color={"#000"}>{data?.resultType || data?.examType}</Td>
-                    <Td>
-                      <Flex gap={2} alignItems={"center"}>
-                        <Avatar size={"xs"} src={data?.authorsProfileImgUrl} />
-                        <Text fontSize={"md"} fontWeight={"400"}>
-                          {data?.authorsFirstName || data?.sharerFirstName}{" "}
-                          {data?.authorsLastName}
-                        </Text>
-                      </Flex>
-                    </Td>
-                    <Td color={"#000"}>
-                      {data?.shareDate || data?.authorsCreatedAt}
-                    </Td>
-                  </Tr>
-                );
-              })}
-            </Tbody>
-          </Table>
-        </TableContainer>
-        <Flex justifyContent={"center"}>
-          <Box mt={"1rem"} display={"flex"} gap={4} alignItems={"center"}>
-            <IconButton
-              aria-label="paginate"
-              icon={<MdKeyboardArrowLeft />}
-              onClick={handlePreviousPage}
-            />
-            <Text>
-              Page {currentPage} of {totalNumberOfPages || currentPage}
-            </Text>
-            <IconButton
-              aria-label="paginate"
-              icon={<MdKeyboardArrowRight />}
-              onClick={handleNextPage}
-            />
-          </Box>
-        </Flex>
-      </Box>
-      <ImgViewer
-        path={selectedTableResult?.documentPath || ""}
-        isOpen={isImageModalOpen}
-        onClose={onImageModalClose}
-      />
-      <PDFViewer
-        isOpen={isUploadedModalOpen}
-        onClose={onUploadedModalClose}
-        path={selectedTableResult?.documentPath}
-      />
-      {
-        selectedTableResult && (
-          <GeneratedResults
-            result={selectedTableResult}
-            isOpen={isGeneratedModalOpen}
-            onClose={onGeneratedModalClose}
-          />
-        )
-      }
-    </Box>
+    //   <Box
+    //     mt={{ base: "12" }}
+    //     display={currentResult?.length === 0 ? "none" : "block"}
+    //     overflowY={"auto"}
+    //     border={"1px solid #005D5D50"}
+    //     rounded={"lg"}
+    //     p={"1rem"}
+    //   >
+    //     <TableContainer>
+    //       <Table variant="simple" size={{ base: "sm", md: "md" }}>
+    //         <Thead>
+    //           <Tr>
+    //             {columnNames?.map((column, index) => {
+    //               return (
+    //                 <Th key={index} color={"#000"} fontWeight={"600"}>
+    //                   {column}
+    //                 </Th>
+    //               );
+    //             })}
+    //           </Tr>
+    //         </Thead>
+    //         <Tbody>
+    //           {resultToShow?.map((data, index) => {
+    //             return (
+    //               <Tr
+    //                 key={index}
+    //                 onClick={() => handleTableItemClick(data)}
+    //                 _hover={{ backgroundColor: "#005D5D10", cursor: "pointer" }}
+    //               >
+    //                 <Td color={"#000"}>
+    //                   <Flex gap={2} alignItems={"center"}>
+    //                     <Image
+    //                       boxSize={"6"}
+    //                       src={data?.schoolLogo}
+    //                       alt="logo"
+    //                       pointerEvents={"none"}
+    //                     />
+    //                     <Text fontSize={"sm"} fontWeight={"500"}>
+    //                       {data?.schoolName}
+    //                     </Text>
+    //                   </Flex>
+    //                 </Td>
+    //                 <Td color={"#000"}>
+    //                   {data?.isOfficial ? "Official" : "Unofficial"}
+    //                 </Td>
+    //                 <Td color={"#000"}>{data?.resultType || data?.examType}</Td>
+    //                 <Td>
+    //                   <Flex gap={2} alignItems={"center"}>
+    //                     <Avatar size={"xs"} src={data?.authorsProfileImgUrl} />
+    //                     <Text fontSize={"md"} fontWeight={"400"}>
+    //                       {data?.authorsFirstName || data?.sharerFirstName}{" "}
+    //                       {data?.authorsLastName}
+    //                     </Text>
+    //                   </Flex>
+    //                 </Td>
+    //                 <Td color={"#000"}>
+    //                   {data?.shareDate || data?.authorsCreatedAt}
+    //                 </Td>
+    //               </Tr>
+    //             );
+    //           })}
+    //         </Tbody>
+    //       </Table>
+    //     </TableContainer>
+    //     <Flex justifyContent={"center"}>
+    //       <Box mt={"1rem"} display={"flex"} gap={4} alignItems={"center"}>
+    //         <IconButton
+    //           aria-label="paginate"
+    //           icon={<MdKeyboardArrowLeft />}
+    //           onClick={handlePreviousPage}
+    //         />
+    //         <Text>
+    //           Page {currentPage} of {totalNumberOfPages || currentPage}
+    //         </Text>
+    //         <IconButton
+    //           aria-label="paginate"
+    //           icon={<MdKeyboardArrowRight />}
+    //           onClick={handleNextPage}
+    //         />
+    //       </Box>
+    //     </Flex>
+    //   </Box>
+    //   <ImgViewer
+    //     path={selectedTableResult?.documentPath || ""}
+    //     isOpen={isImageModalOpen}
+    //     onClose={onImageModalClose}
+    //   />
+    //   <PDFViewer
+    //     isOpen={isUploadedModalOpen}
+    //     onClose={onUploadedModalClose}
+    //     path={selectedTableResult?.documentPath}
+    //   />
+    //   {
+    //     selectedTableResult && (
+    //       <GeneratedResults
+    //         result={selectedTableResult}
+    //         isOpen={isGeneratedModalOpen}
+    //         onClose={onGeneratedModalClose}
+    //       />
+    //     )
+    //   }
+    // </Box>
   );
 };
 
