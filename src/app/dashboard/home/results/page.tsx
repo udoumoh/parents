@@ -316,7 +316,7 @@ const Results: FC<ResultsProps> = ({}) => {
               </Tr>
             </Thead>
             <Tbody>
-              {currentResult?.map((data, index) => {
+              {resultToShow?.map((data, index) => {
                 return (
                   <Tr key={index}>
                     <Td color={"#000"}>
