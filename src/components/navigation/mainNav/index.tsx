@@ -417,7 +417,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
                             backgroundColor: "#005D5D10",
                             cursor: "pointer",
                           }}
-                          onClick={router.replace('/dashboard/inbox')}
+                          onClick={()=>router.replace('/dashboard/inbox')}
                         >
                           <Flex justifyContent={"space-between"} mb={"0.2rem"}>
                             <Text
