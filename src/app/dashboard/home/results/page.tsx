@@ -250,7 +250,7 @@ const Results: FC<ResultsProps> = ({}) => {
           </Select>
         </Box>
         <Button
-          backgroundColor={"#005D5D"}
+          backgroundColor={"#005D5D50"}
           color={"#fff"}
           colorScheme="teal"
           size={"md"}
