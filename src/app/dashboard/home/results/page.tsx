@@ -243,10 +243,10 @@ const Results: FC<ResultsProps> = ({}) => {
   const handleTableItemClick = (result: any) => {
     setSelectedTableResult(result);
     result?.documentPath?.endsWith(".pdf")
-      ? onUploadedModalOpen
+      ? onUploadedModalOpen()
       : result?.documentPath?.endsWith(".jpg")
-      ? onImageModalOpen
-      : onGeneratedModalOpen;
+      ? onImageModalOpen()
+      : onGeneratedModalOpen();
   };
 
   return (
