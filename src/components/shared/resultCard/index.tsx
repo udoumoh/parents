@@ -89,6 +89,7 @@ const ResultCard: FC<ResultCardProps> = ({ generatedresult }) => {
           ? onUploadedModalOpen : generatedresult?.documentPath?.endsWith(".jpg") ? onImageModalOpen 
           : onModalOpen
       }
+      maxW={'250px'}
     >
       <Flex
         backgroundColor={"#fff"}
@@ -115,7 +116,7 @@ const ResultCard: FC<ResultCardProps> = ({ generatedresult }) => {
           borderRadius={"md"}
         />
         <Box>
-          <Text fontSize={"md"}>{generatedresult.schoolName}</Text>
+          <Text fontSize={"md"} textOverflow={'ellipsis'}>{generatedresult.schoolName}</Text>
           <Text color={"#959595"} fontSize={"xs"}>
             Generated on{" "}
             {generatedresult?.shareDate || generatedresult.authorsCreatedAt}
