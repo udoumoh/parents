@@ -365,6 +365,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                           size={"md"}
                           src={item.profileImage}
                           pointerEvents={"none"}
+                          name={`${item?.firstName} ${item?.lastName}`}
                         />
                         <Box>
                           <Text
