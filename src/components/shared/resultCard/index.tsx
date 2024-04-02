@@ -11,6 +11,7 @@ import {
 import { PDFViewer } from "../uploadedResultPdfViewer";
 import ImgViewer from "../imageViewer";
 import GeneratedResults from "../generatedResults";
+import { capitalizeFirstLetter } from "@/helpers/capitalizeFirstLetter";
 
 interface ResultCardProps {
   generatedresult: {
@@ -107,7 +108,7 @@ const ResultCard: FC<ResultCardProps> = ({ generatedresult }) => {
           borderRadius={"md"}
         />
         <Box>
-          <Text fontSize={"md"} isTruncated={true} maxW={'200px'}>{generatedresult.schoolName}</Text>
+          <Text fontSize={"sm"} maxW={'160px'}>{capitalizeFirstLetter(generatedresult.schoolName.toLowerCase())}</Text>
           <Text color={"#959595"} fontSize={"xs"}>
             Generated on{" "}
             {generatedresult?.shareDate || generatedresult.authorsCreatedAt}
