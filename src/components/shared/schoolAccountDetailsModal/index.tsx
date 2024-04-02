@@ -121,7 +121,7 @@ const SchoolAccountDetailsModal: FC<SchoolAccountDetailsModalProps> = ({isOpen, 
                     <Flex gap={"3"} alignItems={"center"}>
                       <Avatar
                         src={
-                          "https://th.bing.com/th?id=OIF.Ik%2bZvTuSYLB%2fFKtY5ZjcDg&w=191&h=140&c=7&r=0&o=5&pid=1.7"
+                          item?.schoolLogo
                         }
                         size={"md"}
                       />
