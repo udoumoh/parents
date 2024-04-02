@@ -417,7 +417,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                 <Divider mt={"0.3rem"} mb={"1rem"} />
               </Box>
 
-              <Flex w={"full"} mb={"0.5rem"} flexDir={"column"} gap={4}>
+              <Flex w={"full"} mb={"0.5rem"} flexDir={"column"} gap={4} justifyContent={(requestData ?? []).length === 0 ? 'center' : "start"}>
                 {(requestData ?? []).length === 0 ? (
                   <Box
                     display={"flex"}
