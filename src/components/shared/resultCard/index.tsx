@@ -67,6 +67,7 @@ const ResultCard: FC<ResultCardProps> = ({ generatedresult }) => {
 
   return (
     <Box
+      w={'250px'}
       backgroundColor={"#E2F2F2"}
       p={"1rem"}
       rounded={"lg"}
