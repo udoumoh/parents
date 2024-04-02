@@ -73,7 +73,7 @@ const SchoolAccountDetailsModal: FC<SchoolAccountDetailsModalProps> = ({isOpen, 
         description:"Account number has been copied to clipboard",
         variant: 'left-accent',
         position:'top-right',
-        status: "success",
+        status: "info",
         duration: 2000,
         isClosable: true,
       });
