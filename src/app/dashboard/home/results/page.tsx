@@ -33,6 +33,9 @@ import {
   MdKeyboardArrowRight,
   MdKeyboardArrowLeft,
 } from "react-icons/md";
+import ImgViewer from "@/components/shared/imageViewer";
+import { PDFViewer } from "@/components/shared/uploadedResultPdfViewer";
+import GeneratedResults from "@/components/shared/generatedResults";
 
 interface ResultsProps {}
 
@@ -77,6 +80,21 @@ const Results: FC<ResultsProps> = ({}) => {
     onClose: onModalClose,
     onOpen: onModalOpen,
   } = useDisclosure();
+  const {
+    isOpen: isUploadedModalOpen,
+    onClose: onUploadedModalClose,
+    onOpen: onUploadedModalOpen,
+  } = useDisclosure();
+  const {
+    isOpen: isImageModalOpen,
+    onClose: onImageModalClose,
+    onOpen: onImageModalOpen,
+  } = useDisclosure();
+  const {
+    isOpen: isGeneratedModalOpen,
+    onClose: onGeneratedModalClose,
+    onOpen: onGeneratedModalOpen,
+  } = useDisclosure();
   const { currentWardProfile } = useUserAPI();
   const { data: getgeneratedresult } = useQuery(GET_STUDENT_GENERATED_RESULT, {
     variables: { studentId: currentWardProfile?.id },
@@ -84,6 +102,7 @@ const Results: FC<ResultsProps> = ({}) => {
   const { data: getUploadedResult } = useQuery(GET_STUDENT_UPLOADED_RESULT, {
     variables: { studentId: currentWardProfile?.id, },
   });
+  const [selectedTableResult, setSelectedTableResult] = useState<GeneratedResultProps>()
   const [resultsType, setResultstype] = useState("uploaded");
   const [pdfResult, setPdfResult] = useState<GeneratedResultProps[]>([]);
   const [uploadedResults, setUploadedResults] = useState<
@@ -229,6 +248,15 @@ const Results: FC<ResultsProps> = ({}) => {
     }
   };
 
+  const handleTableItemClick = (result: any) => {
+    setSelectedTableResult(result)
+    result?.documentPath?.endsWith(".pdf")
+      ? onUploadedModalOpen
+      : result?.documentPath?.endsWith(".jpg")
+      ? onImageModalOpen
+      : onGeneratedModalOpen;
+  }
+
   return (
     <Box mb={{ base: "8rem", lg: "5rem" }}>
       <Text>Result Type</Text>
@@ -250,7 +278,7 @@ const Results: FC<ResultsProps> = ({}) => {
           </Select>
         </Box>
         <Button
-          backgroundColor={"#005D5D50"}
+          backgroundColor={"#005D5D"}
           color={"#fff"}
           colorScheme="teal"
           size={"md"}
@@ -279,7 +307,7 @@ const Results: FC<ResultsProps> = ({}) => {
           </>
         ) : (
           <Wrap gap={5} flexDir={{ base: "column", lg: "row" }}>
-            {currentResult?.map((result, index) => {
+            {currentResult?.slice(0, 5)?.map((result, index) => {
               return (
                 <WrapItem key={index}>
                   <ResultCard key={index} generatedresult={result} />
@@ -294,16 +322,12 @@ const Results: FC<ResultsProps> = ({}) => {
         mt={{ base: "12" }}
         display={currentResult?.length === 0 ? "none" : "block"}
         overflowY={"auto"}
-        border={"1px solid #005D5D"}
+        border={"1px solid #005D5D50"}
         rounded={"lg"}
         p={"1rem"}
       >
         <TableContainer>
-          <Table
-            size={{ base: "sm", xl: "md" }}
-            variant="striped"
-            borderColor={"#454545"}
-          >
+          <Table variant="simple" size={{ base: "sm", md: "md" }}>
             <Thead>
               <Tr>
                 {columnNames?.map((column, index) => {
@@ -318,7 +342,7 @@ const Results: FC<ResultsProps> = ({}) => {
             <Tbody>
               {resultToShow?.map((data, index) => {
                 return (
-                  <Tr key={index}>
+                  <Tr key={index} onClick={()=>handleTableItemClick(data)}>
                     <Td color={"#000"}>
                       <Flex gap={2} alignItems={"center"}>
                         <Image
@@ -372,6 +396,21 @@ const Results: FC<ResultsProps> = ({}) => {
           </Box>
         </Flex>
       </Box>
+      <ImgViewer
+        path={selectedTableResult?.documentPath || ""}
+        isOpen={isImageModalOpen}
+        onClose={onImageModalClose}
+      />
+      <PDFViewer
+        isOpen={isUploadedModalOpen}
+        onClose={onUploadedModalClose}
+        path={selectedTableResult?.documentPath}
+      />
+      <GeneratedResults
+        result={selectedTableResult}
+        isOpen={isGeneratedModalOpen}
+        onClose={onGeneratedModalClose}
+      />
     </Box>
   );
 };

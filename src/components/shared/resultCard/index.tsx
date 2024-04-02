@@ -64,15 +64,6 @@ const ResultCard: FC<ResultCardProps> = ({ generatedresult }) => {
     onClose: onImageModalClose,
     onOpen: onImageModalOpen,
   } = useDisclosure();
-  const [isImageViewerOpen, setIsImageViewerOpen] = useState(false);
-
-  const openImageViewer = () => {
-    setIsImageViewerOpen(true);
-  };
-
-  const closeImageViewer = () => {
-    setIsImageViewerOpen(false);
-  };
 
   return (
     <Box
@@ -89,7 +80,6 @@ const ResultCard: FC<ResultCardProps> = ({ generatedresult }) => {
           ? onUploadedModalOpen : generatedresult?.documentPath?.endsWith(".jpg") ? onImageModalOpen 
           : onModalOpen
       }
-      maxW={'300px'}
     >
       <Flex
         backgroundColor={"#fff"}
@@ -116,7 +106,7 @@ const ResultCard: FC<ResultCardProps> = ({ generatedresult }) => {
           borderRadius={"md"}
         />
         <Box>
-          <Text fontSize={"md"} textOverflow={'ellipsis'}>{generatedresult.schoolName}</Text>
+          <Text fontSize={"md"} isTruncated={true} maxW={'200px'}>{generatedresult.schoolName}</Text>
           <Text color={"#959595"} fontSize={"xs"}>
             Generated on{" "}
             {generatedresult?.shareDate || generatedresult.authorsCreatedAt}
