@@ -68,7 +68,7 @@ const ResultCard: FC<ResultCardProps> = ({ generatedresult }) => {
 
   return (
     <Box
-      w={'250px'}
+      w={"250px"}
       backgroundColor={"#E2F2F2"}
       p={"1rem"}
       rounded={"lg"}
@@ -79,7 +79,9 @@ const ResultCard: FC<ResultCardProps> = ({ generatedresult }) => {
       }}
       onClick={
         generatedresult?.documentPath?.endsWith(".pdf")
-          ? onUploadedModalOpen : generatedresult?.documentPath?.endsWith(".jpg") ? onImageModalOpen 
+          ? onUploadedModalOpen
+          : generatedresult?.documentPath?.endsWith(".jpg")
+          ? onImageModalOpen
           : onModalOpen
       }
     >
@@ -108,12 +110,16 @@ const ResultCard: FC<ResultCardProps> = ({ generatedresult }) => {
           borderRadius={"md"}
         />
         <Box>
-          <Text fontSize={"sm"} maxW={'160px'}>{capitalizeFirstLetter(generatedresult.schoolName.toLowerCase())}</Text>
-          <Text color={"#959595"} fontSize={"xs"}>
-            Generated on{" "}
-            {generatedresult?.shareDate || generatedresult.authorsCreatedAt}
+          <Text fontSize={"sm"} maxW={"160px"}>
+            {capitalizeFirstLetter(generatedresult.schoolName.toLowerCase())}
           </Text>
         </Box>
+      </Flex>
+      <Flex>
+        <Text color={"#959595"} fontSize={"xs"} mt={'0.3rem'}>
+          Generated on{" "}
+          {generatedresult?.shareDate || generatedresult.authorsCreatedAt}
+        </Text>
       </Flex>
       <Flex
         alignItems={"baseline"}
