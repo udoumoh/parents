@@ -89,7 +89,7 @@ const ResultCard: FC<ResultCardProps> = ({ generatedresult }) => {
           ? onUploadedModalOpen : generatedresult?.documentPath?.endsWith(".jpg") ? onImageModalOpen 
           : onModalOpen
       }
-      maxW={'250px'}
+      maxW={'300px'}
     >
       <Flex
         backgroundColor={"#fff"}

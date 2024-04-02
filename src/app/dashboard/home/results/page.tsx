@@ -18,6 +18,7 @@ import {
   Wrap,
   WrapItem,
   useDisclosure,
+  IconButton,
 } from "@chakra-ui/react";
 
 import { AiOutlinePlus } from "react-icons/ai";
@@ -28,6 +29,10 @@ import { GET_STUDENT_GENERATED_RESULT } from "@/gql/queries";
 import { useQuery } from "@apollo/client";
 import { useUserAPI } from "@/hooks/UserContext";
 import { formatDate } from "@/helpers/formatDate";
+import {
+  MdKeyboardArrowRight,
+  MdKeyboardArrowLeft,
+} from "react-icons/md";
 
 interface ResultsProps {}
 
@@ -87,6 +92,10 @@ const Results: FC<ResultsProps> = ({}) => {
   const [currentResult, setCurrentResult] = useState<GeneratedResultProps[]>(
     []
   );
+  const [resultToShow, setResultToShow] = useState<GeneratedResultProps[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalNumberOfPages, setTotalNumberOfPages] = useState(1);
+  const itemsPerPage = 10;
 
   useEffect(() => {
     const fetchGeneratedResult = async () => {
@@ -171,6 +180,15 @@ const Results: FC<ResultsProps> = ({}) => {
   }, [getgeneratedresult, getUploadedResult, currentWardProfile]);
 
   useEffect(() => {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = Math.min(startIndex + itemsPerPage, currentResult?.length);
+    setResultToShow(currentResult?.slice(startIndex, endIndex));
+
+    const newTotalPages = Math.ceil(currentResult?.length / itemsPerPage);
+    setTotalNumberOfPages(newTotalPages);
+  }, [currentResult, currentPage]);
+
+  useEffect(() => {
     if (resultsType === "uploaded") {
       setCurrentResult(uploadedResults);
     } else if (resultsType === "generated") {
@@ -188,6 +206,27 @@ const Results: FC<ResultsProps> = ({}) => {
 
   const handleResultsTypeChange = (e: any) => {
     setResultstype(e.target.value);
+  };
+
+  const handleNextPage = () => {
+    const nextPage = currentPage + 1;
+    const startIndex = (nextPage - 1) * itemsPerPage;
+    const endIndex = Math.min(startIndex + itemsPerPage, currentResult?.length);
+    if (startIndex < currentResult?.length) {
+      setResultToShow(currentResult?.slice(startIndex, endIndex));
+      setCurrentPage(nextPage);
+    }
+  };
+
+  const handlePreviousPage = () => {
+    const prevPage = currentPage - 1;
+    if (prevPage > 0) {
+      const startIndex = (prevPage - 1) * itemsPerPage;
+      setResultToShow(
+        currentResult.slice(startIndex, startIndex + itemsPerPage)
+      );
+      setCurrentPage(prevPage);
+    }
   };
 
   return (
@@ -315,6 +354,23 @@ const Results: FC<ResultsProps> = ({}) => {
             </Tbody>
           </Table>
         </TableContainer>
+        <Flex justifyContent={"center"}>
+          <Box mt={"1rem"} display={"flex"} gap={4} alignItems={"center"}>
+            <IconButton
+              aria-label="paginate"
+              icon={<MdKeyboardArrowLeft />}
+              onClick={handlePreviousPage}
+            />
+            <Text>
+              Page {currentPage} of {totalNumberOfPages || currentPage}
+            </Text>
+            <IconButton
+              aria-label="paginate"
+              icon={<MdKeyboardArrowRight />}
+              onClick={handleNextPage}
+            />
+          </Box>
+        </Flex>
       </Box>
     </Box>
   );
