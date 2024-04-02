@@ -109,7 +109,7 @@ const Results: FC<ResultsProps> = ({}) => {
   const [currentResult, setCurrentResult] = useState<GeneratedResultProps[]>(
     []
   );
-  const [resultToShow, setResultToShow] = useState<GeneratedResultProps[]>([]);
+  // const [resultToShow, setResultToShow] = useState<GeneratedResultProps[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalNumberOfPages, setTotalNumberOfPages] = useState(1);
   const itemsPerPage = 10;
@@ -196,14 +196,14 @@ const Results: FC<ResultsProps> = ({}) => {
     fetchGeneratedResult();
   }, [getgeneratedresult, getUploadedResult, currentWardProfile]);
 
-  useEffect(() => {
-    const startIndex = (currentPage - 1) * itemsPerPage;
-    const endIndex = Math.min(startIndex + itemsPerPage, currentResult?.length);
-    setResultToShow(currentResult?.slice(startIndex, endIndex));
+  // useEffect(() => {
+  //   const startIndex = (currentPage - 1) * itemsPerPage;
+  //   const endIndex = Math.min(startIndex + itemsPerPage, currentResult?.length);
+  //   setResultToShow(currentResult?.slice(startIndex, endIndex));
 
-    const newTotalPages = Math.ceil(currentResult?.length / itemsPerPage);
-    setTotalNumberOfPages(newTotalPages);
-  }, [currentResult, currentPage]);
+  //   const newTotalPages = Math.ceil(currentResult?.length / itemsPerPage);
+  //   setTotalNumberOfPages(newTotalPages);
+  // }, [currentResult, currentPage]);
 
   useEffect(() => {
     if (resultsType === "uploaded") {
@@ -219,35 +219,35 @@ const Results: FC<ResultsProps> = ({}) => {
     setResultstype(e.target.value);
   };
 
-  const handleNextPage = () => {
-    const nextPage = currentPage + 1;
-    const startIndex = (nextPage - 1) * itemsPerPage;
-    const endIndex = Math.min(startIndex + itemsPerPage, currentResult?.length);
-    if (startIndex < currentResult?.length) {
-      setResultToShow(currentResult?.slice(startIndex, endIndex));
-      setCurrentPage(nextPage);
-    }
-  };
+  // const handleNextPage = () => {
+  //   const nextPage = currentPage + 1;
+  //   const startIndex = (nextPage - 1) * itemsPerPage;
+  //   const endIndex = Math.min(startIndex + itemsPerPage, currentResult?.length);
+  //   if (startIndex < currentResult?.length) {
+  //     setResultToShow(currentResult?.slice(startIndex, endIndex));
+  //     setCurrentPage(nextPage);
+  //   }
+  // };
 
-  const handlePreviousPage = () => {
-    const prevPage = currentPage - 1;
-    if (prevPage > 0) {
-      const startIndex = (prevPage - 1) * itemsPerPage;
-      setResultToShow(
-        currentResult.slice(startIndex, startIndex + itemsPerPage)
-      );
-      setCurrentPage(prevPage);
-    }
-  };
+  // const handlePreviousPage = () => {
+  //   const prevPage = currentPage - 1;
+  //   if (prevPage > 0) {
+  //     const startIndex = (prevPage - 1) * itemsPerPage;
+  //     setResultToShow(
+  //       currentResult.slice(startIndex, startIndex + itemsPerPage)
+  //     );
+  //     setCurrentPage(prevPage);
+  //   }
+  // };
 
-  const handleTableItemClick = (result: any) => {
-    setSelectedTableResult(result);
-    result?.documentPath?.endsWith(".pdf")
-      ? onUploadedModalOpen()
-      : result?.documentPath?.endsWith(".jpg")
-      ? onImageModalOpen()
-      : onGeneratedModalOpen();
-  };
+  // const handleTableItemClick = (result: any) => {
+  //   setSelectedTableResult(result);
+  //   result?.documentPath?.endsWith(".pdf")
+  //     ? onUploadedModalOpen()
+  //     : result?.documentPath?.endsWith(".jpg")
+  //     ? onImageModalOpen()
+  //     : onGeneratedModalOpen();
+  // };
 
   return (
     <Box mb={{ base: "8rem", lg: "5rem" }}>
@@ -291,7 +291,7 @@ const Results: FC<ResultsProps> = ({}) => {
       <Box>
         <Text mb={"1rem"}>Most Recent</Text>
 
-        {resultToShow?.length === 0 ? (
+        {currentResult?.length === 0 ? (
           <>
             <Text fontSize={"xl"}>
               There are no results available for this student
@@ -299,7 +299,7 @@ const Results: FC<ResultsProps> = ({}) => {
           </>
         ) : (
           <Wrap gap={5} flexDir={{ base: "column", lg: "row" }}>
-            {resultToShow?.slice(0, 5)?.map((result, index) => {
+            {currentResult?.slice(0, 5)?.map((result, index) => {
               return (
                 <WrapItem key={index}>
                   <ResultCard key={index} generatedresult={result} />
@@ -312,7 +312,7 @@ const Results: FC<ResultsProps> = ({}) => {
 
       <Box
         mt={{ base: "12" }}
-        display={resultToShow?.length === 0 ? "none" : "block"}
+        display={currentResult?.length === 0 ? "none" : "block"}
         overflowY={"auto"}
         border={"1px solid #005D5D50"}
         rounded={"lg"}
@@ -332,11 +332,11 @@ const Results: FC<ResultsProps> = ({}) => {
               </Tr>
             </Thead>
             <Tbody>
-              {resultToShow?.map((data, index) => {
+              {currentResult?.map((data, index) => {
                 return (
                   <Tr
                     key={index}
-                    onClick={() => handleTableItemClick(data)}
+                    // onClick={() => handleTableItemClick(data)}
                     _hover={{ backgroundColor: "#005D5D10", cursor: "pointer" }}
                   >
                     <Td color={"#000"}>
@@ -374,7 +374,7 @@ const Results: FC<ResultsProps> = ({}) => {
             </Tbody>
           </Table>
         </TableContainer>
-        <Flex justifyContent={"center"}>
+        {/* <Flex justifyContent={"center"}>
           <Box mt={"1rem"} display={"flex"} gap={4} alignItems={"center"}>
             <IconButton
               aria-label="paginate"
@@ -390,9 +390,9 @@ const Results: FC<ResultsProps> = ({}) => {
               onClick={handleNextPage}
             />
           </Box>
-        </Flex>
+        </Flex> */}
       </Box>
-      <ImgViewer
+      {/* <ImgViewer
         path={selectedTableResult?.documentPath || ""}
         isOpen={isImageModalOpen}
         onClose={onImageModalClose}
@@ -406,7 +406,7 @@ const Results: FC<ResultsProps> = ({}) => {
         result={selectedTableResult}
         isOpen={isGeneratedModalOpen}
         onClose={onGeneratedModalClose}
-      />
+      /> */}
     </Box>
   );
 };
