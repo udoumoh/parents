@@ -29,10 +29,7 @@ import { GET_STUDENT_GENERATED_RESULT } from "@/gql/queries";
 import { useQuery } from "@apollo/client";
 import { useUserAPI } from "@/hooks/UserContext";
 import { formatDate } from "@/helpers/formatDate";
-import {
-  MdKeyboardArrowRight,
-  MdKeyboardArrowLeft,
-} from "react-icons/md";
+import { MdKeyboardArrowRight, MdKeyboardArrowLeft } from "react-icons/md";
 import ImgViewer from "@/components/shared/imageViewer";
 import { PDFViewer } from "@/components/shared/uploadedResultPdfViewer";
 import GeneratedResults from "@/components/shared/generatedResults";
@@ -100,9 +97,10 @@ const Results: FC<ResultsProps> = ({}) => {
     variables: { studentId: currentWardProfile?.id },
   });
   const { data: getUploadedResult } = useQuery(GET_STUDENT_UPLOADED_RESULT, {
-    variables: { studentId: currentWardProfile?.id, },
+    variables: { studentId: currentWardProfile?.id },
   });
-  const [selectedTableResult, setSelectedTableResult] = useState<GeneratedResultProps>()
+  const [selectedTableResult, setSelectedTableResult] =
+    useState<GeneratedResultProps>();
   const [resultsType, setResultstype] = useState("uploaded");
   const [pdfResult, setPdfResult] = useState<GeneratedResultProps[]>([]);
   const [uploadedResults, setUploadedResults] = useState<
@@ -173,7 +171,7 @@ const Results: FC<ResultsProps> = ({}) => {
           console.log("failed to fetch results data");
         }
         if (response) {
-          console.log(response)
+          console.log(response);
           const parsedResultsData = response?.studentUploadedResult?.map(
             (item: any) => ({
               term: item.academicTerm,
@@ -215,13 +213,7 @@ const Results: FC<ResultsProps> = ({}) => {
     }
   }, [resultsType, pdfResult, uploadedResults]);
 
-  const columnNames = [
-    "School",
-    "Status",
-    "Type",
-    "Shared by",
-    "Shared date",
-  ];
+  const columnNames = ["School", "Status", "Type", "Shared by", "Shared date"];
 
   const handleResultsTypeChange = (e: any) => {
     setResultstype(e.target.value);
@@ -249,13 +241,13 @@ const Results: FC<ResultsProps> = ({}) => {
   };
 
   const handleTableItemClick = (result: any) => {
-    setSelectedTableResult(result)
+    setSelectedTableResult(result);
     result?.documentPath?.endsWith(".pdf")
       ? onUploadedModalOpen
       : result?.documentPath?.endsWith(".jpg")
       ? onImageModalOpen
       : onGeneratedModalOpen;
-  }
+  };
 
   return (
     <Box mb={{ base: "8rem", lg: "5rem" }}>
@@ -342,7 +334,11 @@ const Results: FC<ResultsProps> = ({}) => {
             <Tbody>
               {resultToShow?.map((data, index) => {
                 return (
-                  <Tr key={index} onClick={()=>handleTableItemClick(data)}>
+                  <Tr
+                    key={index}
+                    onClick={() => handleTableItemClick(data)}
+                    _hover={{ backgroundColor: "#005D5D10", cursor: "pointer" }}
+                  >
                     <Td color={"#000"}>
                       <Flex gap={2} alignItems={"center"}>
                         <Image
