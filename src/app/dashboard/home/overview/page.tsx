@@ -49,6 +49,7 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
                 size={"lg"}
                 src={currentWardProfile?.profileImage}
                 pointerEvents={"none"}
+                name={`${currentWardProfile?.firstName} ${currentWardProfile?.lastName}`}
               />
               <Box lineHeight={"30px"}>
                 <Text fontWeight={"600"} fontSize={{ base: "lg", lg: "2xl" }}>
