@@ -291,7 +291,7 @@ const Results: FC<ResultsProps> = ({}) => {
       <Box>
         <Text mb={"1rem"}>Most Recent</Text>
 
-        {currentResult?.length === 0 ? (
+        {resultToShow?.length === 0 ? (
           <>
             <Text fontSize={"xl"}>
               There are no results available for this student
@@ -299,7 +299,7 @@ const Results: FC<ResultsProps> = ({}) => {
           </>
         ) : (
           <Wrap gap={5} flexDir={{ base: "column", lg: "row" }}>
-            {currentResult?.slice(0, 5)?.map((result, index) => {
+            {resultToShow?.slice(0, 5)?.map((result, index) => {
               return (
                 <WrapItem key={index}>
                   <ResultCard key={index} generatedresult={result} />
@@ -312,7 +312,7 @@ const Results: FC<ResultsProps> = ({}) => {
 
       <Box
         mt={{ base: "12" }}
-        display={currentResult?.length === 0 ? "none" : "block"}
+        display={resultToShow?.length === 0 ? "none" : "block"}
         overflowY={"auto"}
         border={"1px solid #005D5D50"}
         rounded={"lg"}
