@@ -1,5 +1,5 @@
 'use client'
-import { FC, useState } from 'react'
+import { FC } from 'react'
 import {
   Box,
   Flex,
@@ -84,13 +84,14 @@ const LinkedStudentsPopover: FC<LinkedStudentsPopoverProps> = ({onClose}) => {
                   key={index}
                   onClick={() => {
                     setLocalstorageId(ward?.id || 0);
-                    router.refresh()
+                    router.refresh();
                   }}
                 >
                   <Avatar
                     size={"md"}
                     src={ward?.profileImage}
                     pointerEvents={"none"}
+                    name={`${ward?.firstName} ${ward.lastName}`}
                   />
                   <Box lineHeight={"20px"}>
                     <Text fontWeight={"600"} fontSize={"sm"}>
