@@ -652,7 +652,6 @@ const MainNav: FC<MainNav> = ({ children }) => {
                     gap={4}
                     my={"1rem"}
                     color={"#9FC2C2"}
-                    ml={"1.7rem"}
                     onClick={() => {
                       router.push(item.url);
                       onClose();
@@ -663,7 +662,7 @@ const MainNav: FC<MainNav> = ({ children }) => {
                     <Icon
                       as={item.icon}
                       color={active == item.name ? "#fff" : "##9FC2C2"}
-                      boxSize={6}
+                      boxSize={4}
                     />
                     <Text color={active == item.name ? "#fff" : "##9FC2C2"}>
                       {item.name}
@@ -689,7 +688,7 @@ const MainNav: FC<MainNav> = ({ children }) => {
                     }}
                     _hover={{ cursor: "pointer" }}
                   >
-                    <Icon as={item.iconLight} color={"#fff"} boxSize={6} />
+                    <Icon as={item.iconLight} color={"#fff"} boxSize={4} />
                     <Text color={"#fff"} fontSize={"md"}>
                       {item.name}
                     </Text>
