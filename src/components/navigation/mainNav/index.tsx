@@ -386,6 +386,19 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
         </Text>
       </Flex>
 
+      <Flex
+        px={"1rem"}
+        py={"0.3rem"}
+        backgroundColor={"#D71313"}
+        rounded={"md"}
+        alignItems={"center"}
+        display={{ base: "flex", md: "none" }}
+      >
+        <Text color="#FFFFFF" fontSize={{ base: "xs", md: "sm" }}>
+          Trial Plan
+        </Text>
+      </Flex>
+
       <Flex gap={3} alignItems={"center"}>
         <Popover>
           <PopoverTrigger>
@@ -403,50 +416,59 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
             <PopoverHeader>Notifications</PopoverHeader>
             <PopoverBody p={1}>
               <Box>
-                {
-                  notifications?.length === 0 ? (
-                 <Flex flexDir={'column'} alignItems={'center'} py={'1rem'}>
-                  <Lottie options={options} height={'auto'} width={'auto'} />
-                  <Text textAlign={'center'} color={'#00000070'} fontSize={'sm'} fontWeight={'bold'}>NO NOTIFICATIONS</Text>
-                  <Text textAlign={'center'} color={'#00000070'} fontSize={'xs'}>{`We'll notify you when there's something new`}</Text>
-                </Flex>
-                  ) : (
-                    notifications.map((notification, index) => {
-                      return (
-                        <Box
-                          key={index}
-                          p={"0.4rem"}
-                          _hover={{
-                            backgroundColor: "#005D5D10",
-                            cursor: "pointer",
-                          }}
-                          onClick={()=>window.location.replace('/dashboard/inbox')}
-                        >
-                          <Flex justifyContent={"space-between"} mb={"0.2rem"}>
-                            <Text
-                              fontSize={"xs"}
-                              color={"#005D5D"}
-                              fontWeight={"semibold"}
-                            >
-                              {notification?.action}
-                            </Text>
-                            <Text
-                              fontSize={"xs"}
-                              color={"#005D5D"}
-                              fontWeight={"semibold"}
-                            >
-                              {formatDateWithSuffix(notification?.createdAt)}
-                            </Text>
-                          </Flex>
-                          <Text fontSize={"sm"}>
-                            {notification?.message} 📬{" "}
+                {notifications?.length === 0 ? (
+                  <Flex flexDir={"column"} alignItems={"center"} py={"1rem"}>
+                    <Lottie options={options} height={"auto"} width={"auto"} />
+                    <Text
+                      textAlign={"center"}
+                      color={"#00000070"}
+                      fontSize={"sm"}
+                      fontWeight={"bold"}
+                    >
+                      NO NOTIFICATIONS
+                    </Text>
+                    <Text
+                      textAlign={"center"}
+                      color={"#00000070"}
+                      fontSize={"xs"}
+                    >{`We'll notify you when there's something new`}</Text>
+                  </Flex>
+                ) : (
+                  notifications.map((notification, index) => {
+                    return (
+                      <Box
+                        key={index}
+                        p={"0.4rem"}
+                        _hover={{
+                          backgroundColor: "#005D5D10",
+                          cursor: "pointer",
+                        }}
+                        onClick={() =>
+                          window.location.replace("/dashboard/inbox")
+                        }
+                      >
+                        <Flex justifyContent={"space-between"} mb={"0.2rem"}>
+                          <Text
+                            fontSize={"xs"}
+                            color={"#005D5D"}
+                            fontWeight={"semibold"}
+                          >
+                            {notification?.action}
                           </Text>
-                          <Divider mt={"0.3rem"} />
-                        </Box>
-                      );
-                    })
-                  )
-                }
+                          <Text
+                            fontSize={"xs"}
+                            color={"#005D5D"}
+                            fontWeight={"semibold"}
+                          >
+                            {formatDateWithSuffix(notification?.createdAt)}
+                          </Text>
+                        </Flex>
+                        <Text fontSize={"sm"}>{notification?.message} 📬 </Text>
+                        <Divider mt={"0.3rem"} />
+                      </Box>
+                    );
+                  })
+                )}
               </Box>
             </PopoverBody>
           </PopoverContent>
@@ -454,7 +476,12 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
         <Menu>
           <MenuButton>
             <Box display={"flex"} alignItems={"center"} gap={2}>
-              <Text fontWeight={"600"} color={"gray.600"} fontSize={"sm"} display={{base:"none", md:"block"}}>
+              <Text
+                fontWeight={"600"}
+                color={"gray.600"}
+                fontSize={"sm"}
+                display={{ base: "none", md: "block" }}
+              >
                 Hi, {profileData.userBio.firstName}{" "}
                 {profileData.userBio.lastName}
               </Text>
