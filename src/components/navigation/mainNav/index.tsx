@@ -287,8 +287,11 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
     onClose: onModalClose,
   } = useDisclosure();
   const [logoutParent] = useMutation(LOGOUT_PARENTS);
-  const { data: getnotifications, loading } = useQuery(GET_NOTIFICATIONS);
-  const [notifications, setNoficiations] = useState<Notifications[]>([])
+  const { data: getnotifications, loading } = useQuery(GET_NOTIFICATIONS, {
+    variables: { ref: 'parents' },
+    pollInterval: 5000,
+  });
+  const [notifications, setNotifications] = useState<Notifications[]>([])
 
   const handleLogout = async () => {
     const response = await logoutParent();
@@ -308,30 +311,33 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      try{
-        const response = await getnotifications
-        if(!response) console.log('Client error occurred while fetching notifications')
-        if(response){
-          // if (
-          //   notifications.length > 0 &&
-          //   response?.fetchMyNotifications?.length > notifications.length
-          // ) {
-          //   toast({
-          //     title: "You have a new notification 🔔",
-          //     position: "top-right",
-          //     variant: "left-accent",
-          //     isClosable: true,
-          //     status: "info",
-          //   });
-          // }
-          setNoficiations(response?.fetchMyNotifications?.slice(0,5))
+      try {
+        const response = await getnotifications;
+        if (!response)
+          console.log("Client error occurred while fetching notifications");
+        if (response) {
+          if (
+            notifications.length > 0 &&
+            response?.fetchMyNotifications?.length > notifications.length
+          ) {
+            toast({
+              title: "You have a new notification 🔔",
+              position: "top-right",
+              variant: "left-accent",
+              isClosable: true,
+              status: "info",
+            });
+          }
+          setNotifications((prevNotifications) =>
+            response?.fetchMyNotifications?.slice(0, 5)
+          );
         }
-      }catch(err){
+      } catch (err) {
         console.log(err);
       }
-    }
-    fetchData()
-  }, [getnotifications, toast, notifications])
+    };
+    fetchData();
+  }, [getnotifications, toast]);
 
   return (
     <Flex
