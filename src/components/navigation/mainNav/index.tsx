@@ -683,7 +683,6 @@ const MainNav: FC<MainNav> = ({ children }) => {
                     alignItems={"center"}
                     gap={4}
                     my={"1rem"}
-                    ml={"1rem"}
                     onClick={() => {
                       router.push(`/${item.url}`);
                       onClose();
@@ -691,7 +690,7 @@ const MainNav: FC<MainNav> = ({ children }) => {
                     _hover={{ cursor: "pointer" }}
                   >
                     <Icon as={item.iconLight} color={"#fff"} boxSize={6} />
-                    <Text color={"#fff"} fontSize={"lg"}>
+                    <Text color={"#fff"} fontSize={"md"}>
                       {item.name}
                     </Text>
                   </Box>
