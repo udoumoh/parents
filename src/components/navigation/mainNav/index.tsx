@@ -315,18 +315,18 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
         const response = await getnotifications
         if(!response) console.log('Client error occurred while fetching notifications')
         if(response){
-          if (
-            notifications.length > 0 &&
-            response?.fetchMyNotifications?.length > notifications.length
-          ) {
-            toast({
-              title: "You have a new notification 🔔",
-              position: "top-right",
-              variant: "left-accent",
-              isClosable: true,
-              status: "info",
-            });
-          }
+          // if (
+          //   notifications.length > 0 &&
+          //   response?.fetchMyNotifications?.length > notifications.length
+          // ) {
+          //   toast({
+          //     title: "You have a new notification 🔔",
+          //     position: "top-right",
+          //     variant: "left-accent",
+          //     isClosable: true,
+          //     status: "info",
+          //   });
+          // }
           setNoficiations(response?.fetchMyNotifications?.slice(0,5))
         }
       }catch(err){
