@@ -287,10 +287,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
     onClose: onModalClose,
   } = useDisclosure();
   const [logoutParent] = useMutation(LOGOUT_PARENTS);
-  const { data: getnotifications, loading } = useQuery(GET_NOTIFICATIONS, {
-    variables: { ref: 'parents' },
-    // pollInterval: 5000,
-  });
+  const { data: getnotifications, loading } = useQuery(GET_NOTIFICATIONS);
   const [notifications, setNoficiations] = useState<Notifications[]>([])
 
   const handleLogout = async () => {
