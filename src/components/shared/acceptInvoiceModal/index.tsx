@@ -22,6 +22,7 @@ import {
   InputGroup,
   InputLeftAddon,
   useToast,
+  FormErrorMessage,
 } from "@chakra-ui/react";
 import { Formik, Form, Field } from "formik";
 import { FileUpload } from "../fileUpload";
@@ -188,7 +189,7 @@ const {
                       <Flex mb={"1rem"}>
                         <Field name="amountPaid">
                           {({ field, form }: any) => (
-                            <FormControl>
+                            <FormControl isInvalid={form.touched.amountPaid}>
                               <Box w={"full"}>
                                 <Flex
                                   justifyContent={"space-between"}
@@ -238,6 +239,9 @@ const {
                                     _hover={{ border: "1px solid #005D5D" }}
                                     focusBorderColor="#005D5D"
                                   />
+                                  <FormErrorMessage>
+                                    {form.errors.amountPaid}
+                                  </FormErrorMessage>
                                 </InputGroup>
                               </Box>
                             </FormControl>
@@ -287,6 +291,7 @@ const {
                               w={"full"}
                               onClick={onFileOpen}
                               _hover={{ backgroundColor: "#099C9B" }}
+                              isDisabled={!props.dirty}
                             >
                               {file.length > 1
                                 ? "Document Uploaded"
