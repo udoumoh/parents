@@ -618,7 +618,6 @@ const MainNav: FC<MainNav> = ({ children }) => {
               as={"button"}
               textAlign={"start"}
               borderRadius={"8"}
-              px={"1rem"}
               py={"0.7rem"}
               backgroundColor={isDropOpen ? "#114E4D" : ""}
               w={"full"}
@@ -630,15 +629,15 @@ const MainNav: FC<MainNav> = ({ children }) => {
               }}
             >
               <Box display={"flex"} alignItems={"center"} my={"auto"} gap={4}>
-                <Icon as={GoHomeFill} color={"#fff"} boxSize={6} />
-                <Text color={"#fff"} fontWeight={"500"} fontSize={"lg"}>
+                <Icon as={GoHomeFill} color={"#fff"} boxSize={4} />
+                <Text color={"#fff"} fontWeight={"500"} fontSize={"md"}>
                   Home
                 </Text>
               </Box>
               <Icon
                 as={isDropOpen ? RiArrowDownSLine : RiArrowRightSLine}
                 color={"#fff"}
-                boxSize={6}
+                boxSize={4}
               />
             </Box>
             <Box display={!isDropOpen ? "none" : "block"} mt={"0"}>
