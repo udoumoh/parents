@@ -297,7 +297,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
     const response = await logoutParent();
     if (response.data.logoutParent) {
       toast({
-        title: "Success",
+        title: "Logout",
         description: "You have been successfully logged out",
         position: "top-right",
         variant: "left-accent",
@@ -542,6 +542,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
 };
 
 const MainNav: FC<MainNav> = ({ children }) => {
+  const toast = useToast()
   const {
     isOpen: isModalOpen,
     onOpen: onModalOpen,
@@ -558,6 +559,14 @@ const MainNav: FC<MainNav> = ({ children }) => {
   const handleLogout = async () => {
     const response = await logoutParent();
     if (response.data.logoutParent) {
+      toast({
+        title: "Logout",
+        description: "You have been successfully logged out",
+        position: "top-right",
+        variant: "left-accent",
+        isClosable: true,
+        status: "info",
+      });
       router.push("/signin");
       localStorage.removeItem("currentId");
     }

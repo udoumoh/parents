@@ -123,7 +123,7 @@ const Signin: FC<pageProps> = ({}) => {
           backgroundColor={"#fff"}
           w={{ base: "full", md: "500px" }}
           py={5}
-          px={{ base: "1rem", sm: "2rem", md:"3rem" }}
+          px={{ base: "2rem", sm: "2rem", md:"3rem" }}
           rounded={"lg"}
           shadow={"md"}
         >
