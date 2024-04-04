@@ -291,7 +291,6 @@ const {
                               w={"full"}
                               onClick={onFileOpen}
                               _hover={{ backgroundColor: "#099C9B" }}
-                              isDisabled={!props.dirty}
                             >
                               {file.length > 1
                                 ? "Document Uploaded"
@@ -343,6 +342,7 @@ const {
                       _hover={{ backgroundColor: "#099C9B" }}
                       type="submit"
                       isLoading={loading}
+                      isDisabled={!props.dirty}
                     >
                       <Text color={"#fff"} fontWeight={"400"} fontSize={"lg"}>
                         Accept & Send Receipt

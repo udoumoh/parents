@@ -190,7 +190,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
     };
     fetchData();
   }, [getRequests, parent]);
-
+  console.log(parentData)
   return (
     <Box
       display={"flex"}
