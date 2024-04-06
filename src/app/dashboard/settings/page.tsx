@@ -690,7 +690,6 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
             alignItems={"center"}
             justifyContent={"center"}
             gap={3}
-            maxW={'300px'}
           >
             <Text color={"gray.600"}>
               You are currently on the free trial plan that expires in
