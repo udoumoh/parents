@@ -39,6 +39,7 @@ import {
   MdOutlineKeyboardArrowRight,
 } from "react-icons/md";
 import SelectPlanModal from "@/components/shared/selectPlanModal";
+import { calculateTrialCountdown } from "@/helpers/calculateTrialCountdown";
 
 interface SettingsPageProps {}
 
@@ -53,6 +54,7 @@ interface RequestDataProps {
 
 const SettingsPage: FC<SettingsPageProps> = ({}) => {
   const toast = useToast();
+  const [trialCountdown, setTrialCountdown] = useState({})
   const [requestData, setRequestData] = useState<RequestDataProps[]>([]);
   const { data: parent } = useQuery(GET_PARENT);
   const {
@@ -81,13 +83,11 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
   });
   const [graycases, setGraycases] = useState([]);
   const [deleteRequest] = useMutation(DELETE_REQUEST);
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const [currentStudentCase, setCurrentStudentCase] = useState<
     UserChildren | undefined
   >();
 
   const handleRequestDelete = async (requestId: any) => {
-    setIsSubmitting(true);
     try {
       const response = await deleteRequest({
         variables: { deleteRequestId: requestId },
@@ -123,9 +123,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
         isClosable: true,
         status: "error",
       });
-    } finally {
-      setIsSubmitting(false);
-    }
+    } 
   };
  
   const handleGreycaseItem = (graycase: any) => {
@@ -190,6 +188,11 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
     };
     fetchData();
   }, [getRequests, parent]);
+
+  setInterval(() => {
+    setTrialCountdown(calculateTrialCountdown(parentData?.createdAt || ""))
+  }, 1000)
+  console.log(trialCountdown)
   console.log(parentData)
   return (
     <Box
