@@ -415,7 +415,15 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                 <Divider mt={"0.3rem"} mb={"1rem"} />
               </Box>
 
-              <Flex w={"full"} mb={"0.5rem"} flexDir={"column"} gap={4} justifyContent={(requestData ?? []).length === 0 ? 'center' : "start"}>
+              <Flex
+                w={"full"}
+                mb={"0.5rem"}
+                flexDir={"column"}
+                gap={4}
+                justifyContent={
+                  (requestData ?? []).length === 0 ? "center" : "start"
+                }
+              >
                 {(requestData ?? []).length === 0 ? (
                   <Box
                     display={"flex"}
@@ -677,7 +685,23 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
             </Flex>
             <Divider mt={"0.3rem"} mb={"1rem"} />
           </Box>
-          <FreeTrial createdAt={Number(parentData?.createdAt)} />
+          <Flex
+            flexDir={"column"}
+            alignItems={"center"}
+            justifyContent={"center"}
+          >
+            <Text color={"gray.600"}>
+              You are currently on the free trial plan that expires in
+            </Text>
+            <FreeTrial createdAt={Number(parentData?.createdAt)} />
+            <Text color={"gray.600"}>
+              Subscribe to one of our plans now to avoid losing access to your
+              childs data.
+            </Text>
+            <Button colorScheme="green" variant={"outline"}>
+              Subscribe
+            </Button>
+          </Flex>
 
           {/* <Box>
           <Flex flexDir={"column"} gap={4} px={{ base: "1rem", md: "10rem" }}>

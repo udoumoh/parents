@@ -51,7 +51,7 @@ const FreeTrial: React.FC<FreeTrialProps> = ({ createdAt }) => {
           align="center"
           p={2}
           borderRadius="md"
-          bg="#005D5D40"
+          bg="#005D5D30"
         >
           <strong>{timeLeft.days}</strong>
           <Text fontSize={13}>{timeLeft.days > 1 ? "Days" : "Day"} </Text>
@@ -61,7 +61,7 @@ const FreeTrial: React.FC<FreeTrialProps> = ({ createdAt }) => {
           align="center"
           p={2}
           borderRadius="md"
-          bg="#005D5D40"
+          bg="#005D5D30"
         >
           <strong>{timeLeft.hours}</strong>
           <Text fontSize={13}>{timeLeft.hours > 1 ? "Hours" : "Hour"}</Text>
@@ -71,7 +71,7 @@ const FreeTrial: React.FC<FreeTrialProps> = ({ createdAt }) => {
           align="center"
           p={2}
           borderRadius="md"
-          bg="#005D5D40"
+          bg="#005D5D30"
         >
           <strong>{timeLeft.minutes}</strong>
           <Text fontSize={13}>{timeLeft.minutes > 1 ? "Mins" : "Min"}</Text>
@@ -81,7 +81,7 @@ const FreeTrial: React.FC<FreeTrialProps> = ({ createdAt }) => {
           align="center"
           p={2}
           borderRadius="md"
-          bg="#005D5D40"
+          bg="#005D5D30"
         >
           <strong>{timeLeft.seconds}</strong>
           <Text fontSize={13}>{timeLeft.seconds > 1 ? "Secs" : "Sec"}</Text>
