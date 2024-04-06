@@ -39,7 +39,7 @@ import {
   MdOutlineKeyboardArrowRight,
 } from "react-icons/md";
 import SelectPlanModal from "@/components/shared/selectPlanModal";
-import { calculateTrialCountdown } from "@/helpers/calculateTrialCountdown";
+import FreeTrial from "@/components/shared/freeTrial";
 
 interface SettingsPageProps {}
 
@@ -87,17 +87,6 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
     UserChildren | undefined
   >();
 
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      if (parentData?.createdAt) {
-        setTrialCountdown(calculateTrialCountdown(1708483200000));
-      }
-    }, 1000);
-
-    return () => clearInterval(intervalId);
-  }, [parentData?.createdAt]);
-
-  console.log(trialCountdown)
   const handleRequestDelete = async (requestId: any) => {
     try {
       const response = await deleteRequest({
@@ -666,7 +655,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
           </Flex>
         </Flex>
 
-        {/* Graycases */}
+        {/* Subscription */}
         <Flex
           flexDir={"column"}
           border={"1px solid #005D5D30"}
@@ -688,6 +677,9 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
             </Flex>
             <Divider mt={"0.3rem"} mb={"1rem"} />
           </Box>
+          <FreeTrial createdAt={Number(parentData?.createdAt)} />
+
+          {/* <Box>
           <Flex flexDir={"column"} gap={4} px={{ base: "1rem", md: "10rem" }}>
             <Box w={"full"}>
               <Text fontSize={"lg"} fontWeight={"500"} mb={"1rem"}>
@@ -789,6 +781,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
           >
             Cancel Membership
           </Button>
+          </Box> */}
         </Flex>
       </Box>
     </Box>
