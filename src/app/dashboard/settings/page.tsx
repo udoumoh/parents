@@ -691,12 +691,12 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
             justifyContent={"center"}
             gap={3}
           >
-            <Text color={"gray.600"}>
+            <Text color={"gray.600"} textAlign={'center'}>
               You are currently on the<Box as={'span'} fontWeight={'bold'}>Free Trial</Box> plan that
               expires in
             </Text>
             <FreeTrial createdAt={Number(parentData?.createdAt)} />
-            <Text color={"gray.600"}>
+            <Text color={"gray.600"} textAlign={'center'}>
               Subscribe to one of our plans now to avoid losing access to your
               childs data.
             </Text>
