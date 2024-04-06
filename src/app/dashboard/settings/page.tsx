@@ -692,7 +692,8 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
             gap={3}
           >
             <Text color={"gray.600"}>
-              You are currently on the free trial plan that expires in
+              You are currently on the<Box as={'span'} fontWeight={'bold'}>Free Trial</Box> plan that
+              expires in
             </Text>
             <FreeTrial createdAt={Number(parentData?.createdAt)} />
             <Text color={"gray.600"}>
