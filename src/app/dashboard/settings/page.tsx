@@ -89,12 +89,13 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
 
   useEffect(() => {
     const intervalId = setInterval(() => {
+      if (parentData?.createdAt) {
         setTrialCountdown(calculateTrialCountdown(1708483200000));
-      console.log(trialCountdown)
+      }
     }, 1000);
 
     return () => clearInterval(intervalId);
-  }, [parent?.createdAt]);
+  }, [parentData?.createdAt]);
 
   const handleRequestDelete = async (requestId: any) => {
     try {
