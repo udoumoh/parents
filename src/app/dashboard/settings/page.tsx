@@ -192,7 +192,6 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
   setInterval(() => {
     setTrialCountdown(calculateTrialCountdown(parentData?.createdAt || ""))
   }, 1000)
-  console.log(trialCountdown)
   console.log(parentData)
   return (
     <Box
