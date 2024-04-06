@@ -87,6 +87,17 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
     UserChildren | undefined
   >();
 
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      if (parent?.createdAt) {
+        setTrialCountdown(calculateTrialCountdown(1708483200000));
+      }
+      console.log(trialCountdown)
+    }, 1000);
+
+    return () => clearInterval(intervalId);
+  }, [parent?.createdAt]);
+
   const handleRequestDelete = async (requestId: any) => {
     try {
       const response = await deleteRequest({
@@ -188,10 +199,6 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
     };
     fetchData();
   }, [getRequests, parent]);
-
-  // setInterval(() => {
-  //   setTrialCountdown(calculateTrialCountdown(parentData?.createdAt || ""))
-  // }, 1000)
   console.log(parentData)
   return (
     <Box
