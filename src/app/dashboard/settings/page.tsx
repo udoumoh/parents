@@ -97,6 +97,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
     return () => clearInterval(intervalId);
   }, [parentData?.createdAt]);
 
+  console.log(trialCountdown)
   const handleRequestDelete = async (requestId: any) => {
     try {
       const response = await deleteRequest({
