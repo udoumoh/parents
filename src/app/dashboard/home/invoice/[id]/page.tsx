@@ -113,6 +113,7 @@ const Invoice: FC<InvoiceProps> = ({ params }: { params: { id: number } }) => {
         >
           <Avatar
             src={currentWardProfile?.profileImage}
+            name={`${currentWardProfile?.firstName} ${currentWardProfile?.lastName}`}
             size={"xl"}
             border={"2px solid #005D5D"}
             p={"0.2rem"}
