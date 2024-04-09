@@ -72,6 +72,7 @@ const LinkItems: Array<LinkItemProps> = [
 ];
 
 const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
+  const { onOpen: onPopoverOpen, onClose: onPopoverClose, isOpen: isPopoverOpen } = useDisclosure();
   const pathName = usePathname();
   return (
     <Box
@@ -90,7 +91,7 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
         mx={"0.5rem"}
         gap={2}
       >
-          <LinkedStudentsPopover onClose={onClose}/>
+          <LinkedStudentsPopover onClose={onClose} isPopoverOpen={isPopoverOpen} onPopoverClose={onPopoverClose} onPopoverOpen={onPopoverOpen}/>
         {LinkItems.map((item, index) => {
           return (
             <NavItem

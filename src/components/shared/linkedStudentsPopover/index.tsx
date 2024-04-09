@@ -21,9 +21,12 @@ import { useRouter } from 'next/navigation';
 
 interface LinkedStudentsPopoverProps {
   onClose: () => void;
+  isPopoverOpen: boolean;
+  onPopoverClose: () => void;
+  onPopoverOpen: () => void;
 }
 
-const LinkedStudentsPopover: FC<LinkedStudentsPopoverProps> = ({onClose}) => {
+const LinkedStudentsPopover: FC<LinkedStudentsPopoverProps> = ({onClose, isPopoverOpen, onPopoverClose, onPopoverOpen}) => {
     const router = useRouter()
     const {
       isOpen: isModalOpen,
@@ -35,7 +38,11 @@ const LinkedStudentsPopover: FC<LinkedStudentsPopoverProps> = ({onClose}) => {
       
   return (
     <Box display={"flex"} w={"full"} mb={10} alignItems={"center"}>
-      <Popover isLazy matchWidth={true}>
+      <Popover
+        isOpen={isPopoverOpen}
+        onOpen={onPopoverOpen}
+        onClose={onPopoverClose}
+      >
         <PopoverTrigger>
           <Box
             display={"flex"}
@@ -84,6 +91,7 @@ const LinkedStudentsPopover: FC<LinkedStudentsPopoverProps> = ({onClose}) => {
                   key={index}
                   onClick={() => {
                     setLocalstorageId(ward?.id || 0);
+                    onPopoverClose();
                     router.refresh();
                   }}
                 >

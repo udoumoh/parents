@@ -39,7 +39,6 @@ import {
 import { FiMenu } from "react-icons/fi";
 import { IoMdSettings } from "react-icons/io";
 import { RiMailOpenFill } from "react-icons/ri";
-import { IoLogOut } from "react-icons/io5";
 import { PiChatsTeardrop, PiChatsTeardropFill } from "react-icons/pi";
 import { GoHome, GoHomeFill } from "react-icons/go";
 import {
@@ -50,12 +49,9 @@ import {
   AiOutlinePlus,
   AiOutlineSetting,
 } from "react-icons/ai";
-import { MdArrowDropDown } from "react-icons/md";
+import { MdArrowDropDown, MdExplore, MdOutlineExplore } from "react-icons/md";
 import { HiOutlineArrowSmRight } from "react-icons/hi";
-import {
-  IoClose,
-  IoHelpCircleOutline,
-} from "react-icons/io5";
+import { IoClose, IoHelpCircleOutline, IoLogOut,} from "react-icons/io5";
 import { VscBellDot } from "react-icons/vsc";
 import { IconType } from "react-icons";
 import { useUserAPI } from "@/hooks/UserContext";
@@ -113,6 +109,12 @@ const LinkItems: Array<LinkItemProps> = [
     iconLight: PiChatsTeardrop,
     iconFill: PiChatsTeardropFill,
     url: "/dashboard/inbox",
+  },
+  {
+    name: "Discover",
+    iconLight: MdOutlineExplore,
+    iconFill: MdExplore,
+    url: "/dashboard/discover",
   },
   {
     name: "Settings",
