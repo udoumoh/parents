@@ -131,7 +131,7 @@ const {
     } catch (err: any) {
       toast({
         title: "Error",
-        description: 'An error occurred while trying to submit your invoice, please try again',
+        description: 'An error occurred while trying to submit your invoice, please check your internet connection and try again',
         position: "top-right",
         variant: "left-accent",
         isClosable: true,
