@@ -18,7 +18,6 @@ import { CiReceipt } from "react-icons/ci";
 import { IoReceiptOutline } from "react-icons/io5";
 import { LiaCoinsSolid } from "react-icons/lia";
 import { FaFilePdf } from "react-icons/fa6";
-import { TbFileInvoice } from "react-icons/tb";
 import { PDFViewer } from "@/components/shared/uploadedResultPdfViewer";
 import ImgViewer from "@/components/shared/imageViewer";
 import { useUserAPI } from "@/hooks/UserContext";
@@ -290,7 +289,7 @@ const Invoice: FC<InvoiceProps> = ({ params }: { params: { id: number } }) => {
                             <ImgViewer
                               isOpen={isImageViewerOpen}
                               onClose={onImageViewerClose}
-                              path={receipt?.uploadedDocument || ""}
+                              path={receipt?.uploadedDocument}
                             />
                           </Box>
                         </Tooltip>
