@@ -42,6 +42,8 @@ const LinkedStudentsPopover: FC<LinkedStudentsPopoverProps> = ({onClose, isPopov
         isOpen={isPopoverOpen}
         onOpen={onPopoverOpen}
         onClose={onPopoverClose}
+        isLazy
+        matchWidth={true}
       >
         <PopoverTrigger>
           <Box
