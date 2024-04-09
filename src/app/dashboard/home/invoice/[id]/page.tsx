@@ -314,6 +314,7 @@ const Invoice: FC<InvoiceProps> = ({ params }: { params: { id: number } }) => {
                             Summary
                           </Text>
                           <Box
+                            display={receipt?.summary?.length > 0 ? 'block' : 'none'}
                             border={"1px solid #005D5D"}
                             backgroundColor={"#005D5D30"}
                             p={2}
@@ -470,6 +471,7 @@ const Invoice: FC<InvoiceProps> = ({ params }: { params: { id: number } }) => {
                   Summary
                 </Text>
                 <Box
+                  display={(currentInvoice?.summary ?? '')?.length > 0 ? 'block' : 'none'}
                   border={"1px solid #005D5D"}
                   backgroundColor={"#005D5D30"}
                   p={2}
