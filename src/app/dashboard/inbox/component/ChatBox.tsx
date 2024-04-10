@@ -576,7 +576,7 @@ const ChatBox = () => {
             h="87vh"
             borderRadius={"md"}
             border="1px solid #E2E2E2"
-            overflow="hidden"
+            // overflow="hidden"
           >
             <Flex direction="column" borderRight="1px solid #E2E2E2" w="26em">
               <Flex
