@@ -569,7 +569,7 @@ const ChatBox = () => {
   };
 
     return (
-      <Flex w="100%" overflowX="auto" mt={5} px={4}>
+      <Flex w="100%" mt={5} px={4}>
         <Tabs variant="unstyled" orientation="vertical" w="full">
           <Flex
             w="100%"
@@ -620,7 +620,7 @@ const ChatBox = () => {
                 ))}
               </TabList>
             </Flex>
-            <Flex direction="column" borderRight="1px solid #E2E2E2" w={'full'}>
+            <Flex direction="column" borderRight="1px solid #E2E2E2">
               <Flex
                 p={2}
                 borderBottom="1px solid #E2E2E2"
@@ -636,9 +636,7 @@ const ChatBox = () => {
                 px={2}
                 direction="column"
                 h="100%"
-                w={'full'}
-                overflowY={"auto"}
-                overflowX={"auto"}
+                overflowY="auto"
                 sx={{
                   "&::-webkit-scrollbar": {
                     width: "0", // Set the initial width to 0
@@ -662,7 +660,7 @@ const ChatBox = () => {
                   leftIcon={<PiPencil />}
                   colorScheme="gray"
                   fontWeight={500}
-                  w={"full"}
+                  w="full"
                   fontSize={12}
                   onClick={onChatBoxOpen}
                 >
