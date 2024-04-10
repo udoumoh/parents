@@ -620,7 +620,7 @@ const ChatBox = () => {
                 ))}
               </TabList>
             </Flex>
-            <Flex direction="column" borderRight="1px solid #E2E2E2">
+            <Flex direction="column" borderRight="1px solid #E2E2E2" w={'full'}>
               <Flex
                 p={2}
                 borderBottom="1px solid #E2E2E2"
