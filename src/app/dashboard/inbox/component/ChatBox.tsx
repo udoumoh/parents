@@ -451,7 +451,7 @@ const ChatBox = () => {
     (item: MessageProps) =>
       item.sender === admin?.userId && item?.isVisible === false
   );
-  
+
   const router = useRouter();
   const containerRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
@@ -569,7 +569,7 @@ const ChatBox = () => {
   };
 
     return (
-      <Flex w="100%" overflow="hidden" mt={5} px={4}>
+      <Flex w="100%" overflowX="auto" mt={5} px={4}>
         <Tabs variant="unstyled" orientation="vertical" w="full">
           <Flex
             w="100%"
