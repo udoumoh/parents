@@ -636,8 +636,9 @@ const ChatBox = () => {
                 px={2}
                 direction="column"
                 h="100%"
-                overflowY="auto"
-                overflowX={'auto'}
+                w={'full'}
+                overflowY={"auto"}
+                overflowX={"auto"}
                 sx={{
                   "&::-webkit-scrollbar": {
                     width: "0", // Set the initial width to 0
@@ -661,7 +662,7 @@ const ChatBox = () => {
                   leftIcon={<PiPencil />}
                   colorScheme="gray"
                   fontWeight={500}
-                  w="full"
+                  w={"full"}
                   fontSize={12}
                   onClick={onChatBoxOpen}
                 >
