@@ -451,8 +451,7 @@ const ChatBox = () => {
     (item: MessageProps) =>
       item.sender === admin?.userId && item?.isVisible === false
   );
-
-  const [mobile] = useMediaQuery("(max-width: 768px)");
+  
   const router = useRouter();
   const containerRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
@@ -569,9 +568,7 @@ const ChatBox = () => {
     }
   };
 
-  let appPage = null;
-  if (!mobile) {
-    appPage = (
+    return (
       <Flex w="100%" overflow="hidden" mt={5} px={4}>
         <Tabs variant="unstyled" orientation="vertical" w="full">
           <Flex
@@ -1166,11 +1163,6 @@ const ChatBox = () => {
         <ComposeMessage isOpen={isChatBoxOpen} onClose={onChatBoxClose} />
       </Flex>
     );
-  } else if (mobile) {
-    appPage = <></>;
-  }
-
-  return appPage;
 };
 
 export default ChatBox;
