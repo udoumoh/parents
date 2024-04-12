@@ -46,9 +46,9 @@ const Discover: FC<DiscoverProps> = ({}) => {
         }
       }
       fetchData()
-    })
+    }, [getSchools])
 
-    // console.log(schoolProfiles)
+    console.log(schoolProfiles)
   return (
     <Box h={"100vh"} w={"full"} p={"1.5rem"} overflowY={"auto"} pb={"5rem"}>
       <Box
@@ -209,9 +209,11 @@ const Discover: FC<DiscoverProps> = ({}) => {
               <TabPanel px={{base:"0", md:"1rem"}}>
                 <Box>
                   <SimpleGrid columns={[1, null, 2, 3]} spacing="20px">
-                    <PostItem />
-                    <PostItem />
-                    <PostItem />
+                    {schoolProfiles?.map((item, index) => {
+                      return(
+                        <PostItem key={index} profile={item}/>
+                      )
+                    })}
                   </SimpleGrid>
                 </Box>
               </TabPanel>

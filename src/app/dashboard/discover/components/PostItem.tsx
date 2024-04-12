@@ -8,10 +8,32 @@ import { IoCopy, IoVideocam } from "react-icons/io5";
 import SchoolDetailsModal from './SchoolDetailsModal';
 
 interface PostItemProps {
-  
+  profile: {
+    bannerImgUrl:string;
+    country:string;
+    createdAt:string;
+    description:string;
+    email:string;
+    facebookUrl:string;
+    id:number;
+    instagramUrl:string;
+    lgarea:string;
+    linkedinUrl:string;
+    logoImgUrl:string;
+    phonenumber:string;
+    profileLikes:number;
+    profileViews:number;
+    rcnumber:string;
+    schoolName:string;
+    state:string;
+    twitterUrl:string;
+    websiteUrl:string;
+    whoLikedProfile:string []
+    schoolMedia: string [];
+  }
 }
 
-const PostItem: FC<PostItemProps> = ({}) => {
+const PostItem: FC<PostItemProps> = ({profile}) => {
   const [isLiked, setIsLiked] = useState(false)
   const {isOpen, onOpen, onClose} = useDisclosure()
 
@@ -28,14 +50,15 @@ const PostItem: FC<PostItemProps> = ({}) => {
       onClick={onOpen}
       _hover={{ cursor: "pointer" }}
     >
-      <SchoolDetailsModal isOpen={isOpen} onClose={onClose} />
+      <SchoolDetailsModal isOpen={isOpen} onClose={onClose} profile={profile}/>
       <Box position={"relative"}>
         <Image
           rounded={"md"}
           alt="postItem"
-          src="https://upload.wikimedia.org/wikipedia/commons/3/31/Moscow_High_School_Building_(now_the_1912_Center),_Moscow,_Idaho.jpg"
+          src={profile?.schoolMedia[0]}
           h={{ base: "300px", xl: "350px" }}
           objectFit={"cover"}
+          w={'full'}
         />
         <Icon
           as={IoCopy}
@@ -49,19 +72,19 @@ const PostItem: FC<PostItemProps> = ({}) => {
 
       <Flex justifyContent={"space-between"} alignItems={"center"} gap={3}>
         <Flex gap={2} my={"1rem"}>
-          <Avatar size={{base:"sm", md:'md'}} src="https://penji.co/wp-content/uploads/2019/02/Campion-College-School-Logo-Design-1024x791.jpg" />
+          <Avatar size={{base:"sm", md:'md'}} src={profile?.logoImgUrl} name={profile?.schoolName}/>
           <Flex flexDir={"column"} justifyContent={"space-between"}>
             <Text fontWeight={"bold"} fontSize={{ base: "xs", md: "md" }}>
-              Lecture Mate Academy
+              {profile?.schoolName}
             </Text>
-            <Text fontSize={{ base: "xs", md: "md" }}>Lagos, Nigeria</Text>
+            <Text fontSize={{ base: "xs", md: "md" }}>{profile?.state}, Nigeria</Text>
           </Flex>
         </Flex>
 
         <Icon
           as={isLiked ? IoMdHeart : IoMdHeartEmpty}
           boxSize={{base:5, md: 7}}
-          color={isLiked ? "red.500" : "inherit"}
+          color={isLiked ? "red.500" : "#00000070"}
           transition="transform 0.2s ease-in-out"
           onClick={handleLike}
           _hover={{

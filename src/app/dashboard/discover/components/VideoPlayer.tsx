@@ -2,9 +2,11 @@ import { FC, useEffect, useRef, useState } from "react";
 import { Box, Button, Text, Flex, Icon } from "@chakra-ui/react";
 import { FaPlay, FaPause } from "react-icons/fa";
 
-interface VideoPlayerProps {}
+interface VideoPlayerProps {
+    url: string;
+}
 
-const VideoPlayer: FC<VideoPlayerProps> = () => {
+const VideoPlayer: FC<VideoPlayerProps> = ({url}) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isHovered, setIshovered] = useState(false);
@@ -45,10 +47,11 @@ const VideoPlayer: FC<VideoPlayerProps> = () => {
       width={"100%"}
       onMouseEnter={() => setIshovered(true)}
       onMouseLeave={() => setIshovered(false)}
+      h={{base:"300px", md:"500px"}}
     >
       <video ref={videoRef} width="100%" height='auto'>
         <source
-          src={"https://media.w3.org/2010/05/sintel/trailer_hd.mp4"}
+          src={url}
           type="video/mp4"
         />
         Your browser does not support the video tag.

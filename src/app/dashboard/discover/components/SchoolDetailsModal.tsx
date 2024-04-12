@@ -1,5 +1,5 @@
-'use client'
-import { FC, useState } from 'react'
+"use client";
+import { FC, useState } from "react";
 import {
   Modal,
   ModalOverlay,
@@ -17,28 +17,60 @@ import {
   Icon,
   IconButton,
 } from "@chakra-ui/react";
-import Carousel from './Carousel';
+import Carousel from "./Carousel";
 import { IoMdHeartEmpty, IoMdHeart } from "react-icons/io";
-import VideoPlayer from "./VideoPlayer";
-import { BiLeftArrowAlt, BiRightArrowAlt } from "react-icons/bi";
-
+import {
+  BiLeftArrowAlt,
+  BiRightArrowAlt,
+  BiLogoFacebookSquare,
+  BiLogoInstagramAlt,
+  BiLogoLinkedinSquare,
+} from "react-icons/bi";
+import { TbWorld } from "react-icons/tb";
 
 interface SchoolDetailsModalProps {
-    isOpen: boolean;
-    onClose: () => void;
+  isOpen: boolean;
+  onClose: () => void;
+  profile: {
+    bannerImgUrl: string;
+    country: string;
+    createdAt: string;
+    description: string;
+    email: string;
+    facebookUrl: string;
+    id: number;
+    instagramUrl: string;
+    lgarea: string;
+    linkedinUrl: string;
+    logoImgUrl: string;
+    phonenumber: string;
+    profileLikes: number;
+    profileViews: number;
+    rcnumber: string;
+    schoolName: string;
+    state: string;
+    twitterUrl: string;
+    websiteUrl: string;
+    whoLikedProfile: string[];
+    schoolMedia: string[];
+  };
 }
 
-const SchoolDetailsModal: FC<SchoolDetailsModalProps> = ({isOpen, onClose}) => {
-    const [isLiked, setIsLiked] = useState(false);
+const SchoolDetailsModal: FC<SchoolDetailsModalProps> = ({
+  isOpen,
+  onClose,
+  profile,
+}) => {
+  const [isLiked, setIsLiked] = useState(false);
 
-    const handleLike = () => {
-      setIsLiked(!isLiked);
-    };
+  const handleLike = () => {
+    setIsLiked(!isLiked);
+  };
   return (
     <Modal
       isOpen={isOpen}
       onClose={onClose}
-      size={{ base: "xs", sm: "lg", md: "xl" }}
+      size={{ base: "xs", sm: "lg", md: "2xl" }}
     >
       <ModalOverlay />
       <ModalContent position={"relative"}>
@@ -47,7 +79,7 @@ const SchoolDetailsModal: FC<SchoolDetailsModalProps> = ({isOpen, onClose}) => {
           aria-label="Previous"
           position="absolute"
           top="50%"
-          left={-36}
+          left={"-12%"}
           rounded={"full"}
           transform="translateY(-50%)"
         />
@@ -56,14 +88,13 @@ const SchoolDetailsModal: FC<SchoolDetailsModalProps> = ({isOpen, onClose}) => {
           aria-label="Previous"
           position="absolute"
           top="50%"
-          right={-36}
+          right={"-12%"}
           transform="translateY(-50%)"
-          rounded={'full'}
+          rounded={"full"}
         />
         <ModalBody p={0}>
           <Box px={"0"}>
-            <Carousel />
-            {/* <VideoPlayer /> */}
+            <Carousel media={profile?.schoolMedia} />
             <Flex
               mt={"1.5rem"}
               px={"1rem"}
@@ -73,13 +104,13 @@ const SchoolDetailsModal: FC<SchoolDetailsModalProps> = ({isOpen, onClose}) => {
               gap={2}
             >
               <Flex gap={2} alignItems={"center"}>
-                <Avatar src="https://th.bing.com/th/id/OIP.r-V0mO21MZnLfGJrDQKk0wHaHa?rs=1&pid=ImgDetMain" />
+                <Avatar src={profile?.logoImgUrl} />
                 <Flex flexDir={"column"} justifyContent={"space-between"}>
                   <Text fontSize={{ base: "xs", md: "sm" }} fontWeight={"bold"}>
-                    Berry Blast British Academy
+                    {profile?.schoolName}
                   </Text>
                   <Text fontSize={{ base: "xs", md: "sm" }}>
-                    Lagos, Nigeria
+                    {profile?.state}, Nigeria
                   </Text>
                 </Flex>
               </Flex>
@@ -111,26 +142,68 @@ const SchoolDetailsModal: FC<SchoolDetailsModalProps> = ({isOpen, onClose}) => {
               <Text color={"#747474"} fontSize={"sm"} fontWeight={"bold"}>
                 ABOUT SCHOOL
               </Text>
-              <Text mt={"0.8rem"} fontSize={"xs"}>
-                {`Welcome to Berry Blast British Academy! 🍓🎉 At Berry Blast,
-                we're not just any ordinary school; we're a fruity fusion of fun
-                and learning! 📚✨ Nestled in the heart of our vibrant
-                community, we pride ourselves on nurturing young minds to reach
-                for the stars while enjoying the sweetness of education. 🌟🍇
-                With a curriculum as refreshing as a berry smoothie, we blend
-                academic excellence with a splash of creativity, ensuring every
-                student's journey is as exciting as a berry picking adventure!
-                🎨🍓 Join us at Berry Blast British Academy, where learning is a
-                blast! 🚀📚`}
+              <Text mt={"0.8rem"} fontSize={{ base: "xs", md: "sm" }}>
+                {profile?.description}
               </Text>
             </Box>
           </Box>
         </ModalBody>
 
-        <ModalFooter></ModalFooter>
+        <ModalFooter justifyContent={"start"}>
+          <Flex gap={4}>
+            <Icon
+              _hover={{
+                cursor: "pointer",
+                transform: "scale(1.3)",
+                transition: "0.5s",
+              }}
+              as={BiLogoFacebookSquare}
+              boxSize={6}
+              color={"blue.600"}
+              onClick={() => window.open(profile?.facebookUrl, "_blank")}
+              display={profile?.facebookUrl === "#" ? "none" : "inline"}
+            />
+            <Icon
+              _hover={{
+                cursor: "pointer",
+                transform: "scale(1.3)",
+                transition: "0.5s",
+              }}
+              as={BiLogoInstagramAlt}
+              boxSize={6}
+              color={"#E1306C"}
+              onClick={() => window.open(profile?.instagramUrl, "_blank")}
+              display={profile?.instagramUrl === "#" ? "none" : "inline"}
+            />
+            <Icon
+              _hover={{
+                cursor: "pointer",
+                transform: "scale(1.3)",
+                transition: "0.5s",
+              }}
+              as={BiLogoLinkedinSquare}
+              boxSize={6}
+              color={"blue.600"}
+              onClick={() => window.open(profile?.linkedinUrl, "_blank")}
+              display={profile?.linkedinUrl === "#" ? "none" : "inline"}
+            />
+            <Icon
+              _hover={{
+                cursor: "pointer",
+                transform: "scale(1.3)",
+                transition: "0.5s",
+              }}
+              as={TbWorld}
+              boxSize={6}
+              color={"green.600"}
+              onClick={() => window.open(profile?.websiteUrl, "_blank")}
+              display={profile?.websiteUrl === "#" ? "none" : "inline"}
+            />
+          </Flex>
+        </ModalFooter>
       </ModalContent>
     </Modal>
   );
-}
+};
 
-export default SchoolDetailsModal
+export default SchoolDetailsModal;
