@@ -10,13 +10,28 @@ import {
   Flex,
   Input,
   Select,
+  Tabs,
+  TabList,
+  TabPanels,
+  Tab,
+  TabPanel,
+  TabIndicator,
+  SimpleGrid,
+  Center,
 } from "@chakra-ui/react";
 import { HiOutlineLocationMarker } from "react-icons/hi";
 import { RiSchoolLine } from "react-icons/ri";
+import PostItem from "./components/PostItem";
 
 interface DiscoverProps {}
 
 const Discover: FC<DiscoverProps> = ({}) => {
+    const [location, setLocation] = useState("")
+    const [schoolType, setSchoolType] = useState("")
+
+    console.log(location)
+    console.log(schoolType)
+
   return (
     <Box h={"100vh"} w={"full"} p={"1.5rem"} overflowY={"auto"} pb={"5rem"}>
       <Box
@@ -92,10 +107,13 @@ const Discover: FC<DiscoverProps> = ({}) => {
                     p={0}
                     focusBorderColor="#fff"
                     color={"#00000080"}
-                    size={"xs"}
+                    size={"sm"}
                     _placeholder={{
                       fontSize: { base: "2xs", md: "sm" },
                       color: "#00000080",
+                    }}
+                    onChange={(e) => {
+                      setLocation(e.target.value);
                     }}
                   />
                 </Box>
@@ -123,19 +141,17 @@ const Discover: FC<DiscoverProps> = ({}) => {
                   </Text>
                   <Select
                     placeholder="Select School Type"
-                    _placeholder={{
-                      fontSize: { base: "xs", md: "md" },
-                      color: "#00000080",
-                    }}
                     focusBorderColor="#fff"
                     color={"#00000080"}
                     size={"sm"}
-                    variant={'unstyled'}
+                    variant={"unstyled"}
                     p={0}
+                    onChange={(e) => {
+                      setSchoolType(e.target.value);
+                    }}
                   >
-                    <option value="option1">Option 1</option>
-                    <option value="option2">Option 2</option>
-                    <option value="option3">Option 3</option>
+                    <option value="public">Public</option>
+                    <option value="private">Private</option>
                   </Select>
                 </Box>
               </Flex>
@@ -153,6 +169,41 @@ const Discover: FC<DiscoverProps> = ({}) => {
             </Button>
           </Box>
         </Box>
+      </Box>
+
+      <Box mt={"1.5rem"} px={{ base: "0", md: "1.5rem" }}>
+        <Center>
+          <Tabs variant={"unstyled"}>
+            <TabList>
+              <Tab fontSize={"sm"} _selected={{ color: "#007C7B" }}>
+                EXPLORE
+              </Tab>
+              <Tab fontSize={"sm"} _selected={{ color: "#007C7B" }}>
+                LIKED SCHOOLS
+              </Tab>
+            </TabList>
+            <TabIndicator
+              mt="-1.5px"
+              height="2px"
+              bg="#007C7B"
+              borderRadius="1px"
+            />
+            <TabPanels>
+              <TabPanel px={{base:"0", md:"1rem"}}>
+                <Box>
+                  <SimpleGrid columns={[1, null, 2, 3]} spacing="20px">
+                    <PostItem />
+                    <PostItem />
+                    <PostItem />
+                  </SimpleGrid>
+                </Box>
+              </TabPanel>
+              <TabPanel>
+                <p>two!</p>
+              </TabPanel>
+            </TabPanels>
+          </Tabs>
+        </Center>
       </Box>
     </Box>
   );
