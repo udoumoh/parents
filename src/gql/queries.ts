@@ -23,6 +23,7 @@ query Parent {
       email
       role
       folder
+      subscriptionId
       isDisabled
       profileImgUrl
       children {
@@ -46,6 +47,7 @@ query Parent {
         birthDate
         isArchived
         profileImgUrl
+        wallet
         classroom {
           classroom {
             id
@@ -79,6 +81,7 @@ query Parent {
               birthDate
               isArchived
               profileImgUrl
+              wallet
               grayId
               fatherName
               fatherEmail
@@ -119,6 +122,9 @@ query Parent {
             address
             type
             lgarea
+            profileLikes
+            profileViews
+            whoLikedProfile
             folder
             state
             country
@@ -130,6 +136,7 @@ query Parent {
             facebookUrl
             twitterUrl
             linkedinUrl
+            schoolMedia
             accountName
             accountNumber
             bankName

@@ -468,3 +468,11 @@ export const CHANGE_PARENT_PASSWORD = gql(`mutation ChangeParentPassword($newPas
     }
   }
 }`)
+
+export const LIKE_PROFILE = gql(`mutation LikeProfile($schoolId: Float!) {
+  likeProfile(schoolId: $schoolId)
+}`)
+
+export const UNLIKE_PROFILE = gql(`mutation UnlikeProfile($schoolId: Float!) {
+  unlikeProfile(schoolId: $schoolId)
+}`)

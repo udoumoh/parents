@@ -195,7 +195,6 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
       flexDir={"column"}
       justifyContent={"center"}
       alignItems={"center"}
-      mb={"10rem"}
     >
       <Box
         w={"full"}
@@ -203,7 +202,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
         overflowY={"auto"}
         h={"100vh"}
         pt={"2rem"}
-        pb={"10rem"}
+        pb={{base:"10rem", md:"5rem"}}
       >
         <Flex
           justifyContent={"space-between"}

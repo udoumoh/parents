@@ -4,7 +4,7 @@ import {
   IoMdHeartEmpty,
   IoMdHeart,
 } from "react-icons/io";
-import { IoCopy, IoVideocam } from "react-icons/io5";
+import { IoCopy } from "react-icons/io5";
 import SchoolDetailsModal from './SchoolDetailsModal';
 
 interface PostItemProps {
@@ -47,10 +47,9 @@ const PostItem: FC<PostItemProps> = ({profile}) => {
       rounded={"xl"}
       p={"0.4rem"}
       maxW={"400px"}
-      onClick={onOpen}
       _hover={{ cursor: "pointer" }}
     >
-      <SchoolDetailsModal isOpen={isOpen} onClose={onClose} profile={profile}/>
+      <SchoolDetailsModal isOpen={isOpen} onClose={onClose} profile={profile} />
       <Box position={"relative"}>
         <Image
           rounded={"md"}
@@ -58,7 +57,8 @@ const PostItem: FC<PostItemProps> = ({profile}) => {
           src={profile?.schoolMedia[0]}
           h={{ base: "300px", xl: "350px" }}
           objectFit={"cover"}
-          w={'full'}
+          w={"full"}
+          onClick={onOpen}
         />
         <Icon
           as={IoCopy}
@@ -72,18 +72,25 @@ const PostItem: FC<PostItemProps> = ({profile}) => {
 
       <Flex justifyContent={"space-between"} alignItems={"center"} gap={3}>
         <Flex gap={2} my={"1rem"}>
-          <Avatar size={{base:"sm", md:'md'}} src={profile?.logoImgUrl} name={profile?.schoolName}/>
+          <Avatar
+            size={{ base: "sm", md: "md" }}
+            src={profile?.logoImgUrl}
+            name={profile?.schoolName}
+          />
           <Flex flexDir={"column"} justifyContent={"space-between"}>
             <Text fontWeight={"bold"} fontSize={{ base: "xs", md: "md" }}>
               {profile?.schoolName}
             </Text>
-            <Text fontSize={{ base: "xs", md: "md" }}>{profile?.state}, Nigeria</Text>
+            <Text fontSize={{ base: "xs", md: "md" }}>
+              {profile?.state}, Nigeria
+            </Text>
           </Flex>
         </Flex>
 
+        <Flex alignItems={'center'} flexDir={'column'}>
         <Icon
           as={isLiked ? IoMdHeart : IoMdHeartEmpty}
-          boxSize={{base:5, md: 7}}
+          boxSize={{ base: 5, md: 7 }}
           color={isLiked ? "red.500" : "#00000070"}
           transition="transform 0.2s ease-in-out"
           onClick={handleLike}
@@ -93,6 +100,8 @@ const PostItem: FC<PostItemProps> = ({profile}) => {
             transition: "0.2s",
           }}
         />
+        <Text fontSize={'xs'} color={'#00000070'}>{profile?.profileLikes} {profile?.profileLikes !== 1 ? 'Likes' : "Like"}</Text>
+        </Flex>
       </Flex>
     </Box>
   );

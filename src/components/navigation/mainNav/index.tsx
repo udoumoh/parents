@@ -110,12 +110,12 @@ const LinkItems: Array<LinkItemProps> = [
     iconFill: PiChatsTeardropFill,
     url: "/dashboard/inbox",
   },
-  // {
-  //   name: "Discover",
-  //   iconLight: MdOutlineExplore,
-  //   iconFill: MdExplore,
-  //   url: "/dashboard/discover",
-  // },
+  {
+    name: "Discover",
+    iconLight: MdOutlineExplore,
+    iconFill: MdExplore,
+    url: "/dashboard/discover",
+  },
   {
     name: "Settings",
     iconLight: AiOutlineSetting,
