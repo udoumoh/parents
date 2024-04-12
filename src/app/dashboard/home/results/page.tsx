@@ -122,6 +122,7 @@ const Results: FC<ResultsProps> = ({}) => {
           console.log("failed to fetch results data");
         }
         if (response) {
+          console.log(response)
           const pdfViewData = response?.studentGeneratedResult?.map(
             (result: any) => ({
               test1: result?.test1,

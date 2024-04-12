@@ -22,16 +22,33 @@ import {
 import { HiOutlineLocationMarker } from "react-icons/hi";
 import { RiSchoolLine } from "react-icons/ri";
 import PostItem from "./components/PostItem";
+import { useQuery } from "@apollo/client";
+import { GET_SCHOOLS } from "@/gql/queries";
 
 interface DiscoverProps {}
 
 const Discover: FC<DiscoverProps> = ({}) => {
     const [location, setLocation] = useState("")
     const [schoolType, setSchoolType] = useState("")
+    const [schoolProfiles, setSchoolProfiles] = useState([])
+    const {data: getSchools} = useQuery(GET_SCHOOLS)
+    
+    useEffect(() =>{
+      const fetchData = async() => {
+        try{
+            const response = await getSchools
+            if(response){
+              const filteredProfiles = response?.getSchools?.filter((item: any) => item?.schoolMedia !== null)
+              setSchoolProfiles(filteredProfiles)
+            }
+        }catch(err: any){
+          console.log(err?.message)
+        }
+      }
+      fetchData()
+    })
 
-    console.log(location)
-    console.log(schoolType)
-
+    // console.log(schoolProfiles)
   return (
     <Box h={"100vh"} w={"full"} p={"1.5rem"} overflowY={"auto"} pb={"5rem"}>
       <Box
@@ -109,7 +126,7 @@ const Discover: FC<DiscoverProps> = ({}) => {
                     color={"#00000080"}
                     size={"sm"}
                     _placeholder={{
-                      fontSize: { base: "2xs", md: "sm" },
+                      fontSize: { base: "sm", md: "sm" },
                       color: "#00000080",
                     }}
                     onChange={(e) => {

@@ -838,6 +838,9 @@ query GetSchools {
     address
     type
     lgarea
+    profileLikes
+    profileViews
+    whoLikedProfile
     folder
     state
     country
@@ -849,6 +852,10 @@ query GetSchools {
     facebookUrl
     twitterUrl
     linkedinUrl
+    schoolMedia
+    accountName
+    accountNumber
+    bankName
     logoImgUrl
     bannerImgUrl
     license
@@ -876,6 +883,45 @@ query GetSchools {
         email
         profileImgUrl
         role
+        accountOfficer {
+          id
+          userId
+          isDisabled
+          isSuper
+          isDirector
+          createdAt
+          fullName
+          username
+          phoneNumber
+          role
+          status
+          department
+          email
+          profileImgUrl
+          greyAdmin {
+            id
+            isPaid
+            userId
+            folder
+            status
+            plan
+            isReferred
+            isDisabled
+            agreedTo
+            referralCode
+            createdAt
+            firstName
+            middleName
+            lastName
+            phoneNumber
+            email
+            profileImgUrl
+            role
+            school
+            schoolImg
+            statusCode
+          }
+        }
         school
         schoolImg
         statusCode
@@ -929,6 +975,9 @@ query StudentGeneratedResult($studentId: Float!) {
     academicTerm
     resultType
     creator
+    creatorRole
+    creatorPicture
+    creatorName
     student {
       id
       createdAt
@@ -950,6 +999,7 @@ query StudentGeneratedResult($studentId: Float!) {
       birthDate
       isArchived
       profileImgUrl
+      wallet
       classroom {
         errors {
           field
@@ -987,6 +1037,7 @@ query StudentGeneratedResult($studentId: Float!) {
             birthDate
             isArchived
             profileImgUrl
+            wallet
             grayId
             fatherName
             fatherEmail
@@ -1014,6 +1065,60 @@ query StudentGeneratedResult($studentId: Float!) {
             isVisible
             profileImgUrl
           }
+        }
+      }
+      parent {
+        id
+        userId
+        status
+        isPaid
+        isVerified
+        isReferred
+        agreedTo
+        createdAt
+        firstName
+        middleName
+        lastName
+        parentRole
+        phoneNumber
+        email
+        role
+        folder
+        subscriptionId
+        isDisabled
+        profileImgUrl
+        children {
+          id
+          createdAt
+          transferedAt
+          firstName
+          middleName
+          lastName
+          gender
+          ageInput
+          folder
+          isOwing
+          isVisible
+          isDuplicate
+          linkedAt
+          linkCount
+          isLinked
+          startDate
+          endDate
+          birthDate
+          isArchived
+          profileImgUrl
+          wallet
+          grayId
+          fatherName
+          fatherEmail
+          fatherNumber
+          motherName
+          motherEmail
+          motherNumber
+          homeAddress
+          lgaOrigin
+          state
         }
       }
       creator {
@@ -1113,6 +1218,9 @@ query StudentGeneratedResult($studentId: Float!) {
       address
       type
       lgarea
+      profileLikes
+      profileViews
+      whoLikedProfile
       folder
       state
       country
@@ -1124,6 +1232,7 @@ query StudentGeneratedResult($studentId: Float!) {
       facebookUrl
       twitterUrl
       linkedinUrl
+      schoolMedia
       accountName
       accountNumber
       bankName

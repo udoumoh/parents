@@ -62,8 +62,8 @@ const SchoolDetailsModal: FC<SchoolDetailsModalProps> = ({isOpen, onClose}) => {
         />
         <ModalBody p={0}>
           <Box px={"0"}>
-            {/* <Carousel /> */}
-            <VideoPlayer />
+            <Carousel />
+            {/* <VideoPlayer /> */}
             <Flex
               mt={"1.5rem"}
               px={"1rem"}
@@ -108,7 +108,7 @@ const SchoolDetailsModal: FC<SchoolDetailsModalProps> = ({isOpen, onClose}) => {
               </Flex>
             </Flex>
             <Box px={"1.5rem"} mt={"2.5rem"}>
-              <Text color={"#747474"} fontSize={"sm"} fontWeight={"semibold"}>
+              <Text color={"#747474"} fontSize={"sm"} fontWeight={"bold"}>
                 ABOUT SCHOOL
               </Text>
               <Text mt={"0.8rem"} fontSize={"xs"}>

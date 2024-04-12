@@ -3,6 +3,7 @@ import { FC, useState } from 'react'
 import { Box, IconButton, useBreakpointValue } from "@chakra-ui/react";
 import { BiLeftArrowAlt, BiRightArrowAlt } from "react-icons/bi";
 import Slider from 'react-slick'
+import VideoPlayer from './VideoPlayer';
 
 const settings = {
   dots: true,
@@ -85,6 +86,7 @@ const Carousel: FC<CarouselProps> = ({}) => {
             backgroundImage={`url(${url})`}
           />
         ))}
+        <VideoPlayer />
       </Slider>
     </Box>
   );
