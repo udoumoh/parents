@@ -44,6 +44,7 @@ const PostItem: FC<PostItemProps> = ({profile, loading}) => {
   const [like] = useMutation(LIKE_PROFILE)
   const [unlike] = useMutation(UNLIKE_PROFILE);
   const {parentData} = useUserAPI()
+  const [numberOfLikes, setNumberOfLikes] = useState(profile?.profileLikes)
 
 useEffect(() => {
   if (profile?.whoLikedProfile?.includes(parentData?.userId || "")) {
@@ -63,6 +64,7 @@ const handleLike = async () => {
     console.log(response)
     if (response.data) {
       setIsLiked(true); // Update state only if mutation is successful
+      setNumberOfLikes(numberOfLikes + 1)
     }
   } catch (err: any) {
     console.log(err.message);
@@ -79,6 +81,7 @@ const handleUnlike = async () => {
     console.log(response)
     if (response.data) {
       setIsLiked(false); // Update state only if mutation is successful
+      setNumberOfLikes(numberOfLikes - 1);
     }
   } catch (err: any) {
     console.log(err.message);
@@ -151,8 +154,8 @@ const handleUnlike = async () => {
             />
 
             <Text fontSize={"xs"} color={"#00000070"}>
-              {profile?.profileLikes}{" "}
-              {profile?.profileLikes !== 1 ? "Likes" : "Like"}
+              {numberOfLikes}{" "}
+              {numberOfLikes !== 1 ? "Likes" : "Like"}
             </Text>
           </Flex>
         </Flex>
