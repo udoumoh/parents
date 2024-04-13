@@ -9,6 +9,7 @@ interface UserLikesContextProps {
   handleLike: () => void;
   handleUnlike: () => void;
   isLiked: boolean;
+  numberOfLikes: number | undefined;
 }
 
 interface ProfileProps {
@@ -97,6 +98,7 @@ export const UserLikesAPIProvider: FC<UserLikesAPIProviderProps> = ({ children }
         handleLike,
         handleUnlike,
         isLiked,
+        numberOfLikes,
       }}
     >
       {children}
