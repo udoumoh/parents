@@ -45,38 +45,43 @@ const PostItem: FC<PostItemProps> = ({profile, loading}) => {
   const [unlike] = useMutation(UNLIKE_PROFILE);
   const {parentData} = useUserAPI()
 
-  const handleLike = async() => {
-    try{
-      const response = await like({
-        variables: {
-          schoolId: profile?.id
-        }
-      })
-      setIsLiked(true)
-    }catch(err: any){
-      console.log(err?.message)
-    }
+useEffect(() => {
+  if (profile?.whoLikedProfile?.includes(parentData?.userId || "")) {
+    setIsLiked(true);
+  } else {
+    setIsLiked(false);
   }
-  
-    const handleUnLike = async () => {
-      try {
-        const response = await unlike({
-          variables: {
-            schoolId: profile?.id,
-          },
-        });
-        setIsLiked(false);
-      } catch (err: any) {
-        console.log(err?.message);
-      }
-    };
+}, [profile, parentData]);
 
-  useEffect(() => {
-    if (profile?.whoLikedProfile?.includes(parentData?.userId || "")) {
-      setIsLiked(true);
+const handleLike = async () => {
+  try {
+    const response = await like({
+      variables: {
+        schoolId: profile?.id,
+      },
+    });
+    if (response.data) {
+      setIsLiked(true); // Update state only if mutation is successful
     }
-  }, [profile,  parentData]);
-  console.log(parentData, profile)
+  } catch (err: any) {
+    console.log(err.message);
+  }
+};
+
+const handleUnlike = async () => {
+  try {
+    const response = await unlike({
+      variables: {
+        schoolId: profile?.id,
+      },
+    });
+    if (response.data) {
+      setIsLiked(false); // Update state only if mutation is successful
+    }
+  } catch (err: any) {
+    console.log(err.message);
+  }
+};
 
   return (
     <Skeleton isLoaded={!loading}>
@@ -130,33 +135,18 @@ const PostItem: FC<PostItemProps> = ({profile, loading}) => {
           </Flex>
 
           <Flex alignItems={"center"} flexDir={"column"}>
-            {isLiked ? (
-              <Icon
-                as={IoMdHeart}
-                boxSize={{ base: 5, md: 7 }}
-                color={"red.500"}
-                transition="transform 0.2s ease-in-out"
-                onClick={handleLike}
-                _hover={{
-                  cursor: "pointer",
-                  transform: "scale(1.1)",
-                  transition: "0.2s",
-                }}
-              />
-            ) : (
-              <Icon
-                as={IoMdHeartEmpty}
-                boxSize={{ base: 5, md: 7 }}
-                color={"#00000070"}
-                transition="transform 0.2s ease-in-out"
-                onClick={handleUnLike}
-                _hover={{
-                  cursor: "pointer",
-                  transform: "scale(1.1)",
-                  transition: "0.2s",
-                }}
-              />
-            )}
+            <Icon
+              as={isLiked ? IoMdHeart : IoMdHeartEmpty}
+              boxSize={{ base: 5, md: 7 }}
+              color={isLiked ? "red.500" : "#00000070"}
+              transition="transform 0.2s ease-in-out"
+              onClick={isLiked ? handleUnlike : handleLike}
+              _hover={{
+                cursor: "pointer",
+                transform: "scale(1.1)",
+                transition: "0.2s",
+              }}
+            />
 
             <Text fontSize={"xs"} color={"#00000070"}>
               {profile?.profileLikes}{" "}
