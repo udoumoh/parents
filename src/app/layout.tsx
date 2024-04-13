@@ -6,6 +6,7 @@ import { Mulish } from "next/font/google";
 import { Providers } from "./providers";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 import "./globals.css";
+import UserLikesAPIProvider from "@/hooks/UserLikesContext";
 import Loading from "./loading";
 
 const mulish = Mulish({ subsets: ["cyrillic"] });
@@ -34,7 +35,9 @@ const Layout: FC<LayoutProps> = ({ children }) => {
               <Loading />
             ) : (
               <UserApiProvider>
+                <UserLikesAPIProvider>
                 {children}
+                </UserLikesAPIProvider>
               </UserApiProvider>
             )}
           </Providers>
