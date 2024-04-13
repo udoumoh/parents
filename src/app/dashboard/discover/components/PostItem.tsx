@@ -52,10 +52,10 @@ const PostItem: FC<PostItemProps> = ({profile, loading}) => {
           schoolId: profile?.id
         }
       })
+      setIsLiked(true)
     }catch(err: any){
       console.log(err?.message)
     }
-    setIsLiked(true)
   }
   
     const handleUnLike = async () => {
@@ -65,10 +65,10 @@ const PostItem: FC<PostItemProps> = ({profile, loading}) => {
             schoolId: profile?.id,
           },
         });
+        setIsLiked(false);
       } catch (err: any) {
         console.log(err?.message);
       }
-      setIsLiked(false);
     };
 
   useEffect(() => {
