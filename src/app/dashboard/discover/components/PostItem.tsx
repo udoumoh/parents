@@ -76,6 +76,7 @@ const PostItem: FC<PostItemProps> = ({profile, loading}) => {
       setIsLiked(true);
     }
   }, [profile,  parentData]);
+  console.log(parentData, profile)
 
   return (
     <Skeleton isLoaded={!loading}>
