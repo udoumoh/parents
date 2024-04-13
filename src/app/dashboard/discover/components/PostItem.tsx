@@ -60,6 +60,7 @@ const handleLike = async () => {
         schoolId: profile?.id,
       },
     });
+    console.log(response)
     if (response.data) {
       setIsLiked(true); // Update state only if mutation is successful
     }
@@ -75,6 +76,7 @@ const handleUnlike = async () => {
         schoolId: profile?.id,
       },
     });
+    console.log(response)
     if (response.data) {
       setIsLiked(false); // Update state only if mutation is successful
     }
