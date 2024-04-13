@@ -70,10 +70,6 @@ const Invoice: FC<InvoiceProps> = ({ params }: { params: { id: number } }) => {
       (invoice: any) => Number(invoice?.id) === Number(params?.id)
     );
 
-    const totalOverpaidAmount = invoiceData
-      ?.filter((invoice) => invoice.status === "parent overpaid")
-      ?.reduce((acc, item) => acc + item.balance, 0);
-
     const handleOverpaidInvoice = (id: any) => {
       setOverpaidId(id);
       onOverpaidModalModalOpen();
@@ -92,7 +88,7 @@ const Invoice: FC<InvoiceProps> = ({ params }: { params: { id: number } }) => {
         onOpen={onOverpaidModalModalOpen}
         onClose={onOverpaidModalModalClose}
         invoiceId={overpaidId}
-        balance={totalOverpaidAmount}
+        balance={currentWardProfile?.wallet}
       />
       <Button
         mb={"2rem"}
@@ -140,7 +136,7 @@ const Invoice: FC<InvoiceProps> = ({ params }: { params: { id: number } }) => {
               display={
                 !["active", "partial payment"].includes(
                   currentInvoice?.status || ""
-                ) || totalOverpaidAmount > 0
+                ) || (currentWardProfile?.wallet || 0) > 0
                   ? "none"
                   : "flex"
               }

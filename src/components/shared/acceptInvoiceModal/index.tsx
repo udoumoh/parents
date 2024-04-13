@@ -57,7 +57,7 @@ const {
   onClose: onOverpaidModalModalClose,
 } = useDisclosure();
 
-  const {invoiceData} = useUserAPI()
+  const {invoiceData, currentWardProfile} = useUserAPI()
   const [file, setFile] = useState<string>("");
   const [folder, setFolder] = useState<string>("");
   const [fileName, setFileName] = useState<string>("");
@@ -78,10 +78,6 @@ const {
     setFolder(uploadedFolder);
     setFileName(uploadedFileName);
   };
-
-  const totalOverpaidAmount = invoiceData
-    ?.filter((invoice) => invoice.status === "parent overpaid")
-    ?.reduce((acc, item) => acc + Math.abs(item.balance), 0);
 
   const handleSubmit = async (values: any) => {
     try {
@@ -146,7 +142,7 @@ const {
         onOpen={onOverpaidModalModalOpen}
         onClose={onOverpaidModalModalClose}
         invoiceId={invoiceId}
-        balance={totalOverpaidAmount}
+        balance={currentWardProfile?.wallet}
       />
       <Modal
         blockScrollOnMount={false}
@@ -205,7 +201,7 @@ const {
                                   </Text>
                                   <Button
                                     display={
-                                      totalOverpaidAmount > 0 ? "flex" : "none"
+                                      currentWardProfile?.wallet > 0 ? "flex" : "none"
                                     }
                                     size={"sm"}
                                     colorScheme="red"

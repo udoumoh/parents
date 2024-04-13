@@ -45,6 +45,7 @@ export interface UserChildren {
   schoolAccountName: string[];
   schoolAccountNumber: string[];
   schoolBankName: string[];
+  wallet: number;
 }
 
 interface StudentInvoiceProps {
@@ -150,6 +151,7 @@ export const UserApiProvider: FC<UserApiProviderProps> = ({ children }) => {
         schoolAccountName: [""],
         schoolAccountNumber: [""],
         schoolBankName: [""],
+        wallet: 0,
       },
     ],
   });
@@ -219,6 +221,7 @@ export const UserApiProvider: FC<UserApiProviderProps> = ({ children }) => {
             schoolAccountName: child?.school?.school?.accountName,
             schoolAccountNumber: child?.school?.school?.accountNumber,
             schoolBankName: child?.school?.school?.bankName,
+            wallet: child?.wallet
           })
         );
 

@@ -78,7 +78,7 @@ interface InvoiceProps {}
 
 const Invoice: FC<InvoiceProps> = ({}) => {
   const router = useRouter()
-  const { parentData, invoiceData } = useUserAPI();
+  const { parentData, invoiceData, currentWardProfile } = useUserAPI();
 
   const {
     isOpen: isAcceptModalOpen,
@@ -154,8 +154,6 @@ const Invoice: FC<InvoiceProps> = ({}) => {
     (accumulator, invoice) => accumulator + invoice.amountPaid,
     0
   );
-
-  const totalOverpaidAmount = invoiceData?.filter((invoice) => invoice.status === "parent overpaid")?.reduce((acc, item) => acc + Math.abs(item.balance), 0);
 
   const nonEmptyReceipts = invoiceData
     ?.map((invoice) => invoice?.receipt)
@@ -239,7 +237,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
           onOpen={onOverpaidModalModalOpen}
           onClose={onOverpaidModalModalClose}
           invoiceId={currentInvoiceId}
-          balance={totalOverpaidAmount}
+          balance={currentWardProfile?.wallet}
         />
         <SchoolAccountDetailsModal
           isOpen={isSchoolAccountDetailsModalOpen}
@@ -626,7 +624,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                     display={
                                       !["active", "partial payment"].includes(
                                         item?.status
-                                      ) || Math.abs(totalOverpaidAmount) > 0
+                                      ) || (currentWardProfile?.wallet || 0) > 0
                                         ? "none"
                                         : "flex"
                                     }

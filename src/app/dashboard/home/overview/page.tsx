@@ -18,10 +18,6 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
     )
     .reduce((acc, invoice) => acc + invoice?.amountPaid, 0);
 
-  const totalOverpaidAmount = invoiceData
-    ?.filter((invoice) => invoice.status === "parent overpaid")
-    ?.reduce((acc, item) => acc + Math.abs(item.balance), 0);
-
   return (
     <Flex gap={5} flexDir={"column"} mb={{ base: "8rem", lg: "5rem" }}>
       <Flex
@@ -79,7 +75,7 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
               my={"1rem"}
             >
               <Grid gap={1}>
-                <Text color={"#449c7c"} fontSize={"0.8rem"} fontWeight={"600"}>
+                <Text color={"#449c7c"} fontSize={"md"} fontWeight={"600"}>
                   Gender
                 </Text>
                 <Text
@@ -91,7 +87,7 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
                 </Text>
               </Grid>
               <Grid gap={1}>
-                <Text color={"#449c7c"} fontSize={"0.8rem"} fontWeight={"600"}>
+                <Text color={"#449c7c"} fontSize={"md"} fontWeight={"600"}>
                   Class
                 </Text>
                 <Text
@@ -103,7 +99,7 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
                 </Text>
               </Grid>
               <Grid gap={1}>
-                <Text color={"#449c7c"} fontSize={"0.8rem"} fontWeight={"600"}>
+                <Text color={"#449c7c"} fontSize={"md"} fontWeight={"600"}>
                   Date of Birth
                 </Text>
                 <Text
@@ -115,7 +111,7 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
                 </Text>
               </Grid>
               <Grid gap={1} display={{ base: "none", md: "grid" }}>
-                <Text color={"#449c7c"} fontSize={"0.8rem"} fontWeight={"600"}>
+                <Text color={"#449c7c"} fontSize={"md"} fontWeight={"600"}>
                   School
                 </Text>
                 <Text
@@ -195,7 +191,7 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
                 Overpaid Balance
               </Text>
               <Text fontSize={"2xl"} color={"#005D5D"} fontWeight={"bold"}>
-                ₦{formatNumberWithCommas(totalOverpaidAmount || 0)}
+                ₦{formatNumberWithCommas(currentWardProfile?.wallet || 0)}
               </Text>
             </Flex>
           </Box>
