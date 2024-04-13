@@ -9,7 +9,6 @@ import SchoolDetailsModal from './SchoolDetailsModal';
 import { LIKE_PROFILE, UNLIKE_PROFILE } from '@/gql/mutations';
 import { useUserAPI } from '@/hooks/UserContext';
 import { useMutation } from '@apollo/client';
-import { useUserLikesAPI } from "@/hooks/UserLikesContext";
 
 
 interface PostItemProps {
@@ -40,16 +39,54 @@ interface PostItemProps {
 }
 
 const PostItem: FC<PostItemProps> = ({profile, loading}) => {
+  const [isLiked, setIsLiked] = useState(false)
   const {isOpen, onOpen, onClose} = useDisclosure()
+  const [like] = useMutation(LIKE_PROFILE)
+  const [unlike] = useMutation(UNLIKE_PROFILE);
   const {parentData} = useUserAPI()
-  const { setProfile, handleLike, handleUnlike, isLiked, numberOfLikes, setIsLiked } = useUserLikesAPI()
-    useEffect(() => {
-      if (profile?.whoLikedProfile?.includes(parentData?.userId || "")) {
-        setIsLiked(true);
-      } else {
-        setIsLiked(false);
-      }
-    }, [profile, parentData, setIsLiked])
+  const [numberOfLikes, setNumberOfLikes] = useState(profile?.profileLikes)
+
+useEffect(() => {
+  if (profile?.whoLikedProfile?.includes(parentData?.userId || "")) {
+    setIsLiked(true);
+  } else {
+    setIsLiked(false);
+  }
+}, [profile, parentData]);
+
+const handleLike = async () => {
+  try {
+    const response = await like({
+      variables: {
+        schoolId: profile?.id,
+      },
+    });
+    console.log(response)
+    if (response.data) {
+      setIsLiked(true); // Update state only if mutation is successful
+      setNumberOfLikes(numberOfLikes + 1)
+    }
+  } catch (err: any) {
+    console.log(err.message);
+  }
+};
+
+const handleUnlike = async () => {
+  try {
+    const response = await unlike({
+      variables: {
+        schoolId: profile?.id,
+      },
+    });
+    console.log(response)
+    if (response.data) {
+      setIsLiked(false); // Update state only if mutation is successful
+      setNumberOfLikes(numberOfLikes - 1);
+    }
+  } catch (err: any) {
+    console.log(err.message);
+  }
+};
   return (
     <Skeleton isLoaded={!loading}>
       <Box
@@ -107,7 +144,7 @@ const PostItem: FC<PostItemProps> = ({profile, loading}) => {
               boxSize={{ base: 5, md: 7 }}
               color={isLiked ? "red.500" : "#00000070"}
               transition="transform 0.2s ease-in-out"
-              onClick={()=>isLiked ? handleUnlike(profile) : handleLike(profile)}
+              onClick={isLiked ? handleUnlike : handleLike}
               _hover={{
                 cursor: "pointer",
                 transform: "scale(1.1)",

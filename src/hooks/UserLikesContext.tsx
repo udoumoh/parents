@@ -48,7 +48,6 @@ export const UserLikesAPIProvider: FC<UserLikesAPIProviderProps> = ({ children }
     const [isLiked, setIsLiked] = useState(false);
     const [like] = useMutation(LIKE_PROFILE);
     const [unlike] = useMutation(UNLIKE_PROFILE);
-    const { parentData } = useUserAPI();
     const [numberOfLikes, setNumberOfLikes] = useState(profile?.profileLikes);
 
     const handleLike = async (profile: any) => {

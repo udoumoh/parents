@@ -27,8 +27,9 @@ import {
   BiLogoLinkedinSquare,
 } from "react-icons/bi";
 import { TbWorld } from "react-icons/tb";
-import { useUserLikesAPI } from "@/hooks/UserLikesContext";
+import { LIKE_PROFILE, UNLIKE_PROFILE } from "@/gql/mutations";
 import { useUserAPI } from "@/hooks/UserContext";
+import { useMutation } from "@apollo/client";
 
 interface SchoolDetailsModalProps {
   isOpen: boolean;
@@ -63,23 +64,52 @@ const SchoolDetailsModal: FC<SchoolDetailsModalProps> = ({
   onClose,
   profile,
 }) => {
-   const { parentData } = useUserAPI();
-   const {
-     setProfile,
-     handleLike,
-     handleUnlike,
-     isLiked,
-     numberOfLikes,
-     setIsLiked,
-   } = useUserLikesAPI();
-   useEffect(() => {
-     if (profile?.whoLikedProfile?.includes(parentData?.userId || "")) {
-       setIsLiked(true);
-     } else {
-       setIsLiked(false);
-     }
-   }, [profile, parentData, setIsLiked]);
+  const [isLiked, setIsLiked] = useState(false);
+const [like] = useMutation(LIKE_PROFILE);
+const [unlike] = useMutation(UNLIKE_PROFILE);
+const { parentData } = useUserAPI();
+const [numberOfLikes, setNumberOfLikes] = useState(profile?.profileLikes);
+console.log(profile)
 
+useEffect(() => {
+  if (profile?.whoLikedProfile?.includes(parentData?.userId || "")) {
+    setIsLiked(true);
+  } else {
+    setIsLiked(false);
+  }
+}, [profile, parentData]);
+
+const handleLike = async () => {
+  try {
+    const response = await like({
+      variables: {
+        schoolId: profile?.id,
+      },
+    });
+    if (response.data) {
+      setIsLiked(true);
+      setNumberOfLikes(numberOfLikes + 1);
+    }
+  } catch (err: any) {
+    console.log(err.message);
+  }
+};
+
+const handleUnlike = async () => {
+  try {
+    const response = await unlike({
+      variables: {
+        schoolId: profile?.id,
+      },
+    });
+    if (response.data) {
+      setIsLiked(false); // Update state only if mutation is successful
+      setNumberOfLikes(numberOfLikes - 1);
+    }
+  } catch (err: any) {
+    console.log(err.message);
+  }
+};
   return (
     <Modal
       isOpen={isOpen}
@@ -136,9 +166,7 @@ const SchoolDetailsModal: FC<SchoolDetailsModalProps> = ({
                   boxSize={{ base: 5, md: 7 }}
                   color={isLiked ? "red.500" : "#00000070"}
                   transition="transform 0.2s ease-in-out"
-                  onClick={() =>
-                    isLiked ? handleUnlike(profile) : handleLike(profile)
-                  }
+                  onClick={isLiked ? handleUnlike : handleLike}
                   _hover={{
                     cursor: "pointer",
                     transform: "scale(1.1)",
@@ -160,11 +188,7 @@ const SchoolDetailsModal: FC<SchoolDetailsModalProps> = ({
               <Text color={"#747474"} fontSize={"sm"} fontWeight={"bold"}>
                 ABOUT SCHOOL
               </Text>
-              <Text
-                mt={"0.8rem"}
-                fontSize={{ base: "xs", md: "sm" }}
-                whiteSpace={"pre-wrap"}
-              >
+              <Text mt={"0.8rem"} fontSize={{ base: "xs", md: "sm" }} whiteSpace={'pre-wrap'}>
                 {profile?.description}
               </Text>
             </Box>
