@@ -6,10 +6,11 @@ import { useMutation } from "@apollo/client";
 
 interface UserLikesContextProps {
   setProfile: (profile: any) => void;
-  handleLike: () => void;
-  handleUnlike: () => void;
+  handleLike: (profile: any) => void;
+  handleUnlike: (profile: any) => void;
   isLiked: boolean;
   numberOfLikes: number | undefined;
+  setIsLiked: (value: boolean) => void;
 }
 
 interface ProfileProps {
@@ -50,15 +51,7 @@ export const UserLikesAPIProvider: FC<UserLikesAPIProviderProps> = ({ children }
     const { parentData } = useUserAPI();
     const [numberOfLikes, setNumberOfLikes] = useState(profile?.profileLikes);
 
-    useEffect(() => {
-      if (profile?.whoLikedProfile?.includes(parentData?.userId || "")) {
-        setIsLiked(true);
-      } else {
-        setIsLiked(false);
-      }
-    }, [profile, parentData]);
-
-    const handleLike = async () => {
+    const handleLike = async (profile: any) => {
       try {
         const response = await like({
           variables: {
@@ -74,7 +67,7 @@ export const UserLikesAPIProvider: FC<UserLikesAPIProviderProps> = ({ children }
       }
     };
 
-    const handleUnlike = async () => {
+    const handleUnlike = async (profile: any) => {
       try {
         const response = await unlike({
           variables: {
@@ -99,6 +92,7 @@ export const UserLikesAPIProvider: FC<UserLikesAPIProviderProps> = ({ children }
         handleUnlike,
         isLiked,
         numberOfLikes,
+        setIsLiked
       }}
     >
       {children}

@@ -28,6 +28,7 @@ import {
 } from "react-icons/bi";
 import { TbWorld } from "react-icons/tb";
 import { useUserLikesAPI } from "@/hooks/UserLikesContext";
+import { useUserAPI } from "@/hooks/UserContext";
 
 interface SchoolDetailsModalProps {
   isOpen: boolean;
@@ -62,10 +63,22 @@ const SchoolDetailsModal: FC<SchoolDetailsModalProps> = ({
   onClose,
   profile,
 }) => {
-    const { setProfile, handleLike, handleUnlike, isLiked } = useUserLikesAPI()
-    useEffect(() => {
-        setProfile(profile)
-    }, [profile, setProfile])
+   const { parentData } = useUserAPI();
+   const {
+     setProfile,
+     handleLike,
+     handleUnlike,
+     isLiked,
+     numberOfLikes,
+     setIsLiked,
+   } = useUserLikesAPI();
+   useEffect(() => {
+     if (profile?.whoLikedProfile?.includes(parentData?.userId || "")) {
+       setIsLiked(true);
+     } else {
+       setIsLiked(false);
+     }
+   }, [profile, parentData, setIsLiked]);
 
   return (
     <Modal
@@ -123,7 +136,9 @@ const SchoolDetailsModal: FC<SchoolDetailsModalProps> = ({
                   boxSize={{ base: 5, md: 7 }}
                   color={isLiked ? "red.500" : "#00000070"}
                   transition="transform 0.2s ease-in-out"
-                  onClick={isLiked ? handleUnlike : handleLike}
+                  onClick={() =>
+                    isLiked ? handleUnlike(profile) : handleLike(profile)
+                  }
                   _hover={{
                     cursor: "pointer",
                     transform: "scale(1.1)",
@@ -145,7 +160,11 @@ const SchoolDetailsModal: FC<SchoolDetailsModalProps> = ({
               <Text color={"#747474"} fontSize={"sm"} fontWeight={"bold"}>
                 ABOUT SCHOOL
               </Text>
-              <Text mt={"0.8rem"} fontSize={{ base: "xs", md: "sm" }} whiteSpace={'pre-wrap'}>
+              <Text
+                mt={"0.8rem"}
+                fontSize={{ base: "xs", md: "sm" }}
+                whiteSpace={"pre-wrap"}
+              >
                 {profile?.description}
               </Text>
             </Box>

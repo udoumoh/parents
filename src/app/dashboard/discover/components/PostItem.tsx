@@ -41,10 +41,15 @@ interface PostItemProps {
 
 const PostItem: FC<PostItemProps> = ({profile, loading}) => {
   const {isOpen, onOpen, onClose} = useDisclosure()
-  const { setProfile, handleLike, handleUnlike, isLiked, numberOfLikes } = useUserLikesAPI()
+  const {parentData} = useUserAPI()
+  const { setProfile, handleLike, handleUnlike, isLiked, numberOfLikes, setIsLiked } = useUserLikesAPI()
     useEffect(() => {
-        setProfile(profile)
-    }, [profile, setProfile])
+      if (profile?.whoLikedProfile?.includes(parentData?.userId || "")) {
+        setIsLiked(true);
+      } else {
+        setIsLiked(false);
+      }
+    }, [profile, parentData, setIsLiked])
   return (
     <Skeleton isLoaded={!loading}>
       <Box
@@ -102,7 +107,7 @@ const PostItem: FC<PostItemProps> = ({profile, loading}) => {
               boxSize={{ base: 5, md: 7 }}
               color={isLiked ? "red.500" : "#00000070"}
               transition="transform 0.2s ease-in-out"
-              onClick={isLiked ? handleUnlike : handleLike}
+              onClick={()=>isLiked ? handleUnlike(profile) : handleLike(profile)}
               _hover={{
                 cursor: "pointer",
                 transform: "scale(1.1)",
