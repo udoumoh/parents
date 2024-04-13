@@ -100,12 +100,6 @@ interface MainNav {
 
 const LinkItems: Array<LinkItemProps> = [
   {
-    name: "Dashboard",
-    iconLight: GoHome,
-    iconFill: GoHomeFill,
-    url: "/dashboard",
-  },
-  {
     name: "Inbox",
     iconLight: PiChatsTeardrop,
     iconFill: PiChatsTeardropFill,
@@ -171,6 +165,7 @@ const options = {
 
 const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
   const pathName = usePathname();
+  const {parentData} = useUserAPI()
 
   return (
     <Box
@@ -201,6 +196,18 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
           />
         </Box>
         <Grid justifyContent={"center"} gap={4}>
+          <NavItem
+            icon={pathName === "/dashboard" ? GoHomeFill : GoHome}
+            link={
+              (parentData?.children ?? []).length > 0
+                ? "/dashboard/home/overview"
+                : "/dashboard"
+            }
+            backgroundColor={
+              pathName === "/dashboard" ? "#144646" : "transparent"
+            }
+            name={"Dashboard"}
+          />
           {LinkItems.map((item, index) => {
             return (
               <NavItem
@@ -215,9 +222,11 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
             );
           })}
         </Grid>
-        <Box justifyContent={"center"} display={"flex"} alignItems={"center"}>
-          
-        </Box>
+        <Box
+          justifyContent={"center"}
+          display={"flex"}
+          alignItems={"center"}
+        ></Box>
       </Box>
     </Box>
   );
