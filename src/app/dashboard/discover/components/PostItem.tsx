@@ -87,7 +87,7 @@ const handleUnlike = async () => {
     console.log(err.message);
   }
 };
-
+console.log(parentData)
   return (
     <Skeleton isLoaded={!loading}>
       <Box
