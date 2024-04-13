@@ -201,7 +201,7 @@ const {
                                   </Text>
                                   <Button
                                     display={
-                                      currentWardProfile?.wallet > 0 ? "flex" : "none"
+                                      (currentWardProfile?.wallet || 0) > 0 ? "flex" : "none"
                                     }
                                     size={"sm"}
                                     colorScheme="red"
