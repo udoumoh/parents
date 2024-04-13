@@ -62,6 +62,7 @@ import Lottie from "react-lottie"
 import animationData from '../../../../public/lotties/noNotifications.json'
 import { GET_NOTIFICATIONS } from "@/gql/queries";
 import { formatDateWithSuffix } from "@/helpers/formatDate";
+import Link from "next/link";
 
 interface MobileProps extends FlexProps {
   onOpen: () => void;
@@ -239,7 +240,7 @@ const NavItem = ({ icon, link, name, ...rest }: NavItemProps) => {
         as="a"
         w={"auto"}
         h={"auto"}
-        onClick={()=>{link === '/dashboard' ? window.location.replace(link) : router.push(link)}}
+        onClick={()=>{link === '/dashboard' ? window.location.replace(link) : router.push(link); router.prefetch(link)}}
         style={{ textDecoration: "none" }}
         _focus={{ boxShadow: "none" }}
         display={"flex"}

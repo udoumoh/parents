@@ -31,7 +31,7 @@ const Discover: FC<DiscoverProps> = ({}) => {
     const [location, setLocation] = useState("")
     const [schoolType, setSchoolType] = useState("")
     const [schoolProfiles, setSchoolProfiles] = useState([])
-    const {data: getSchools} = useQuery(GET_SCHOOLS)
+    const {data: getSchools, loading} = useQuery(GET_SCHOOLS)
     
     useEffect(() =>{
       const fetchData = async() => {
@@ -211,7 +211,7 @@ const Discover: FC<DiscoverProps> = ({}) => {
                   <SimpleGrid columns={[1, null, 2, 3]} spacing="20px">
                     {schoolProfiles?.map((item, index) => {
                       return(
-                        <PostItem key={index} profile={item}/>
+                        <PostItem key={index} profile={item} loading={loading}/>
                       )
                     })}
                   </SimpleGrid>

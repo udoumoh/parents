@@ -70,11 +70,12 @@ const SchoolDetailsModal: FC<SchoolDetailsModalProps> = ({
     <Modal
       isOpen={isOpen}
       onClose={onClose}
-      size={{ base: "xs", sm: "lg", md: "2xl" }}
+      size={{ base: "sm", sm: "lg", md: "2xl" }}
     >
       <ModalOverlay />
       <ModalContent position={"relative"}>
         <IconButton
+          display={{ base: "none", md: "block" }}
           icon={<BiLeftArrowAlt />}
           aria-label="Previous"
           position="absolute"
@@ -84,6 +85,7 @@ const SchoolDetailsModal: FC<SchoolDetailsModalProps> = ({
           transform="translateY(-50%)"
         />
         <IconButton
+          display={{ base: "none", md: "block" }}
           icon={<BiRightArrowAlt />}
           aria-label="Previous"
           position="absolute"
@@ -98,9 +100,9 @@ const SchoolDetailsModal: FC<SchoolDetailsModalProps> = ({
             <Flex
               mt={"1.5rem"}
               px={"1rem"}
-              alignItems={{ base: "start", md: "center" }}
+              alignItems={"center"}
               justifyContent={"space-between"}
-              flexDir={{ base: "column", md: "row" }}
+            //   flexDir={{ base: "column", md: "row" }}
               gap={2}
             >
               <Flex gap={2} alignItems={"center"}>
