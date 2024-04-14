@@ -185,7 +185,7 @@ const Results: FC<ResultsProps> = ({}) => {
               schoolLogo: item?.school?.logoImgUrl,
               schoolName: item?.school?.schoolName,
               status: item?.isOfficial,
-              authorsProfileUrl:
+              authorsProfileImgUrl:
                 item?.student?.classroom?.classroom?.teacher[0]?.profileImgUrl,
               authorsFirstName:
                 item?.student?.classroom?.classroom?.teacher[0]?.firstName,
