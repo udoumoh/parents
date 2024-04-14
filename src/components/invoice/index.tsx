@@ -209,36 +209,8 @@ const InvoiceItem: FC<InvoiceItemProps> = ({
 };
 
 const Invoice: FC<InvoiceProps> = ({}) => {
-  const {currentWardProfile, invoiceData} = useUserAPI()
-  // const [invoiceData, setInvoiceData] = useState([]);
-  // const { data: getinvoice } = useQuery(GET_STUDENT_INVOICE, {
-  //   variables: { studentId: currentWardProfile?.id},
-  // });
+  const {invoiceData} = useUserAPI()
   const router = useRouter();
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await getinvoice;
-  //       console.log(response)
-  //       const parsedInvoiceData = response?.getStudentInvoice?.map(
-  //         (item: any) => ({
-  //           term: item.academicTerm,
-  //           year: item.academicYear,
-  //           category: item.category,
-  //           amountPaid: item.amount,
-  //           id: item.id,
-  //           createdAt: formatDate(item.createdAt),
-  //           summary: item.summary,
-  //           status: item.status,
-  //         })
-  //       );
-  //       setInvoiceData(parsedInvoiceData?.reverse());
-  //     } catch (err: any) {
-  //       console.log(err.message);
-  //     }
-  //   };
-  //   fetchData();
-  // }, [getinvoice]);
   
 
   return (

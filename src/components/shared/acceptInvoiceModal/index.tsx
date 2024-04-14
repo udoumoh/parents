@@ -256,7 +256,7 @@ const {
                           <Field name="docType">
                             {({ field, form }: any) => (
                               <FormControl
-                              // isInvalid={form.errors.name && form.touched.name}
+                              isInvalid={form.errors.name && form.touched.name}
                               >
                                 <Box w={"full"}>
                                   <Select
