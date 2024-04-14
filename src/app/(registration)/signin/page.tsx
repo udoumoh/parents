@@ -78,7 +78,7 @@ const Signin: FC<pageProps> = ({}) => {
       toast({
         title: "Login successful",
         description: "You are being redirected to your dashboard",
-        position: "top-right",
+        position: "top",
         variant: "left-accent",
         isClosable: true,
         status: "success",
