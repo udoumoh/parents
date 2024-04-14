@@ -38,7 +38,6 @@ interface InvoiceProps {
 const Invoice: FC<InvoiceProps> = ({ params }: { params: { id: number } }) => {
     const router = useRouter()
     const { currentWardProfile, invoiceData } = useUserAPI();
-    const [overpaidInvoice, setOverpaidInvoice] = useState();
     const { isOpen: isCollapseOpen, onToggle: onCollapseToggle } =
       useDisclosure();
     const {
@@ -70,10 +69,7 @@ const Invoice: FC<InvoiceProps> = ({ params }: { params: { id: number } }) => {
       (invoice: any) => Number(invoice?.id) === Number(params?.id)
     );
 
-    const handleOverpaidInvoice = (invoice: any) => {
-      setOverpaidInvoice(invoice);
-      onOverpaidModalModalOpen();
-    };
+    console.log(currentInvoice)
 
   return (
     <Box
@@ -87,7 +83,7 @@ const Invoice: FC<InvoiceProps> = ({ params }: { params: { id: number } }) => {
         isOpen={isOverpaidModalModalOpen}
         onOpen={onOverpaidModalModalOpen}
         onClose={onOverpaidModalModalClose}
-        invoiceData={overpaidInvoice}
+        invoiceData={currentInvoice}
         balance={currentWardProfile?.wallet}
       />
       <Button
@@ -144,7 +140,7 @@ const Invoice: FC<InvoiceProps> = ({ params }: { params: { id: number } }) => {
               colorScheme="red"
               gap={"2"}
               mt={"0.5rem"}
-              onClick={()=>handleOverpaidInvoice(currentInvoice)}
+              onClick={onOverpaidModalModalOpen}
             >
               <Icon as={MdOutlinePayment} boxSize={"4"} />
               <Text fontSize={"sm"}>Pay with overpaid balance</Text>
