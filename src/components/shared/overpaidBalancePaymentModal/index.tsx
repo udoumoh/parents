@@ -177,8 +177,31 @@ const OverpaidBalancePaymentModal: FC<OverpaidBalancePaymentModalProps> = ({
                               <InputGroup backgroundColor={"#FFF"} size={"md"}>
                                 <InputLeftAddon>₦</InputLeftAddon>
                                 <Input
+                                  defaultValue={invoiceData?.amountPaid}
+                                  variant={"filled"}
+                                  isReadOnly={true}
+                                  focusBorderColor="green.600"
+                                />
+                              </InputGroup>
+                            </Box>
+                          </FormControl>
+                        )}
+                      </Field>
+                    </Flex>
+                    <Flex mb={"1rem"}>
+                      <Field name="amountPaid">
+                        {({ field, form }: any) => (
+                          <FormControl>
+                            <Box w={"full"}>
+                              <Text mb={"0.5rem"} color={"#005D5D"}>
+                                Amount to pay
+                              </Text>
+                              <InputGroup backgroundColor={"#FFF"} size={"md"}>
+                                <InputLeftAddon>₦</InputLeftAddon>
+                                <Input
                                   defaultValue={formatNumberWithCommas(
-                                    balance || 0
+                                    (invoiceData?.amountPaid || 0) -
+                                      (balance || 0)
                                   )}
                                   variant={"filled"}
                                   isReadOnly={true}
@@ -192,37 +215,24 @@ const OverpaidBalancePaymentModal: FC<OverpaidBalancePaymentModalProps> = ({
                     </Flex>
                   </Flex>
 
-                  <FormControl>
-                    <FormLabel
-                      fontWeight={"normal"}
-                      color={"#005D5D"}
-                      fontSize={"md"}
+                  <Flex justifyContent={'flex-end'} gap={'2'}>
+                    <Button colorScheme="red" onClick={onClose} ml={3}>
+                      Cnacel
+                    </Button>
+                    <Button
+                      my={"2rem"}
+                      py={"1.5rem"}
+                      backgroundColor={"#007C7B"}
+                      px={"3rem"}
+                      _hover={{ backgroundColor: "#099C9B" }}
+                      type="submit"
+                      isLoading={loading}
                     >
-                      Summary
-                    </FormLabel>
-                    <Textarea
-                      defaultValue={summary}
-                      h={"100px"}
-                      rounded={"xl"}
-                      isReadOnly={true}
-                      variant={"filled"}
-                    />
-                  </FormControl>
-
-                  <Button
-                    my={"2rem"}
-                    w={"full"}
-                    py={"1.5rem"}
-                    backgroundColor={"#007C7B"}
-                    px={"3rem"}
-                    _hover={{ backgroundColor: "#099C9B" }}
-                    type="submit"
-                    isLoading={loading}
-                  >
-                    <Text color={"#fff"} fontWeight={"400"} fontSize={"lg"}>
-                      Pay With Balance
-                    </Text>
-                  </Button>
+                      <Text color={"#fff"} fontWeight={"400"} fontSize={"lg"}>
+                        Pay with balance
+                      </Text>
+                    </Button>
+                  </Flex>
                 </Form>
               )}
             </Formik>
