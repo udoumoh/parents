@@ -36,11 +36,27 @@ interface StudentInvoiceProps {
   term: string;
   year: string;
   category: string;
-  amountPaid: string;
-  id:number;
+  amountPaid: number;
+  id: number;
   status: string;
   summary: string;
   createdAt: string;
+  invoiceId: string;
+  schoolname: string;
+  schoollogo: string;
+  balance: number;
+  receipt: {
+    amountPaid: number;
+    createdAt: string;
+    creator: string;
+    fileType: string;
+    id: number;
+    parentInvoiceId: string;
+    status: string;
+    summary: string;
+    updatedAt: string;
+    uploadedDocument: string;
+  }[];
 }
 
 const InvoiceItem: FC<InvoiceItemProps> = ({
@@ -193,36 +209,36 @@ const InvoiceItem: FC<InvoiceItemProps> = ({
 };
 
 const Invoice: FC<InvoiceProps> = ({}) => {
-  const {currentWardProfile} = useUserAPI()
-  const [invoiceData, setInvoiceData] = useState([]);
-  const { data: getinvoice } = useQuery(GET_STUDENT_INVOICE, {
-    variables: { studentId: currentWardProfile?.id},
-  });
+  const {currentWardProfile, invoiceData} = useUserAPI()
+  // const [invoiceData, setInvoiceData] = useState([]);
+  // const { data: getinvoice } = useQuery(GET_STUDENT_INVOICE, {
+  //   variables: { studentId: currentWardProfile?.id},
+  // });
   const router = useRouter();
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await getinvoice;
-        console.log(response)
-        const parsedInvoiceData = response?.getStudentInvoice?.map(
-          (item: any) => ({
-            term: item.academicTerm,
-            year: item.academicYear,
-            category: item.category,
-            amountPaid: item.amount,
-            id: item.id,
-            createdAt: formatDate(item.createdAt),
-            summary: item.summary,
-            status: item.status,
-          })
-        );
-        setInvoiceData(parsedInvoiceData?.reverse());
-      } catch (err: any) {
-        console.log(err.message);
-      }
-    };
-    fetchData();
-  }, [getinvoice]);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await getinvoice;
+  //       console.log(response)
+  //       const parsedInvoiceData = response?.getStudentInvoice?.map(
+  //         (item: any) => ({
+  //           term: item.academicTerm,
+  //           year: item.academicYear,
+  //           category: item.category,
+  //           amountPaid: item.amount,
+  //           id: item.id,
+  //           createdAt: formatDate(item.createdAt),
+  //           summary: item.summary,
+  //           status: item.status,
+  //         })
+  //       );
+  //       setInvoiceData(parsedInvoiceData?.reverse());
+  //     } catch (err: any) {
+  //       console.log(err.message);
+  //     }
+  //   };
+  //   fetchData();
+  // }, [getinvoice]);
   
 
   return (
