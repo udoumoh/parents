@@ -261,6 +261,7 @@ const OverpaidBalancePaymentModal: FC<OverpaidBalancePaymentModalProps> = ({
                       type="submit"
                       isLoading={loading}
                       size={"sm"}
+                      color={'#fff'}
                     >
                         Pay with balance
                     </Button>
