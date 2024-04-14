@@ -72,7 +72,6 @@ const OverpaidBalancePaymentModal: FC<OverpaidBalancePaymentModalProps> = ({
 }) => {
         const [payWithBalance, { loading }] = useMutation(PAY_WITH_BALANCE);
         const toast = useToast();
-        console.log(invoiceData)
 
         const handleSubmit = async () => {
           try {
@@ -81,31 +80,29 @@ const OverpaidBalancePaymentModal: FC<OverpaidBalancePaymentModalProps> = ({
                 invoiceId: invoiceData?.id,
               },
             });
-            console.log(response)
             if (!response) {
               toast({
-                title: "Client Error",
-                description: "An error occured while sending your request",
+                title: "Oops! Something went wrong. Please try again later.",
                 position: "top-right",
                 variant: "left-accent",
                 isClosable: true,
                 status: "error",
               });
             }
-            if (response?.data?.payInvoiceWithBalance?.errors !== null) {
+            if (!response?.data?.payInvoiceWithBalance) {
               toast({
                 title: "Error",
-                description: response?.data?.payInvoiceWithBalance?.errors[0]?.message,
+                description: 'An error occurred while sending your request',
                 position: "top-right",
                 variant: "left-accent",
                 isClosable: true,
                 status: "error",
               });
             }
-            if (response?.data?.payInvoiceWithBalance?.errors === null) {
+            if (response?.data?.payInvoiceWithBalance) {
               toast({
                 title: "Success",
-                description: "Receipt has been sent successfully",
+                description: "Invoice has been paid with balance",
                 position: "top-right",
                 variant: "left-accent",
                 isClosable: true,
@@ -114,14 +111,7 @@ const OverpaidBalancePaymentModal: FC<OverpaidBalancePaymentModalProps> = ({
               onClose();
             }
           } catch (err: any) {
-            toast({
-              title: "Error",
-              description: err.message,
-              position: "top-right",
-              variant: "left-accent",
-              isClosable: true,
-              status: "error",
-            });
+            console.log(err.message)
           }
         };
 

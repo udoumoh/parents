@@ -52,8 +52,7 @@ const Signin: FC<pageProps> = ({}) => {
 
       if (!response.data) {
         toast({
-          title: "Client Error",
-          description: "An error occurred while logging you in.",
+          title: "Oops! Something went wrong. Please try again later.",
           position: "top-right",
           variant: "left-accent",
           isClosable: true,

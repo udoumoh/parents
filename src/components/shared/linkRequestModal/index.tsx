@@ -65,8 +65,7 @@ const LinkRequestModal: FC<LinkRequestModalProps> = ({
         });
         if (!response) {
           toast({
-            title: "Client Error",
-            description: "An error occured while creating a request",
+            title: "Oops! Something went wrong. Please try again later.",
             position: "top-right",
             variant: "left-accent",
             isClosable: true,

@@ -53,8 +53,7 @@ const RemoveStudentModal: FC<RemoveStudentModalProps> = ({
       });
       if (!response) {
         toast({
-          title: "Client Error",
-          description: "A client-side error occurred",
+          title: "Oops! Something went wrong. Please try again later.",
           position: "top-right",
           variant: "left-accent",
           isClosable: true,
@@ -101,8 +100,7 @@ const RemoveStudentModal: FC<RemoveStudentModalProps> = ({
       });
       if (!response) {
         toast({
-          title: "Client Error",
-          description: "A client-side error occurred",
+          title: "Oops! Something went wrong. Please try again later.",
           position: "top-right",
           variant: "left-accent",
           isClosable: true,

@@ -58,8 +58,7 @@ const Page: FC<PageProps> = ({ params }: { params: { id: string } }) => {
       })
       if(!response) {
         toast({
-          title: "Client Error",
-          description: "A client side error has occurred",
+          title: "Oops! Something went wrong. Please try again later.",
           position: "top-right",
           variant: "left-accent",
           isClosable: true,

@@ -81,8 +81,7 @@ const Page: FC<pageProps> = ({}) => {
 
       if (!response?.data) {
         toast({
-          title: "Client Error",
-          description: "An error occured while you were creating your account",
+          title: "Oops! Something went wrong. Please try again later.",
           position: "top-right",
           variant: "left-accent",
           isClosable: true,
