@@ -133,14 +133,16 @@ const OverpaidBalancePaymentModal: FC<OverpaidBalancePaymentModalProps> = ({
     >
       <ModalOverlay />
       <ModalContent rounded={"xl"}>
-        <ModalHeader mb={0}>
+        <ModalHeader mb={0} pb={0}>
           <Flex>
             <Box alignItems={"center"} gap={2}>
-              <Text fontWeight={"600"} fontSize={"xl"} color={"#005D5D"}>
+              <Text fontWeight={"bold"} fontSize={"lg"} color={"#005D5D"}>
                 {"Pay Invoice With Balance"}
               </Text>
               <Text fontWeight={"500"} fontSize={"sm"} color={"#8F8F8F"}>
-                {"Use your overpaid balance to pay for this outstanding invoice."}
+                {
+                  "Use your overpaid balance to pay for this outstanding invoice."
+                }
               </Text>
             </Box>
           </Flex>
@@ -170,12 +172,40 @@ const OverpaidBalancePaymentModal: FC<OverpaidBalancePaymentModalProps> = ({
                           <FormControl>
                             <Box w={"full"}>
                               <Text mb={"0.5rem"} color={"#005D5D"}>
+                                Overpaid Balance
+                              </Text>
+                              <InputGroup backgroundColor={"#FFF"} size={"md"}>
+                                <InputLeftAddon>₦</InputLeftAddon>
+                                <Input
+                                  pl={0}
+                                  defaultValue={formatNumberWithCommas(
+                                    balance || 0
+                                  )}
+                                  variant={"filled"}
+                                  isReadOnly={true}
+                                  focusBorderColor="green.600"
+                                />
+                              </InputGroup>
+                            </Box>
+                          </FormControl>
+                        )}
+                      </Field>
+                    </Flex>
+                    <Flex mb={"1rem"}>
+                      <Field name="amountPaid">
+                        {({ field, form }: any) => (
+                          <FormControl>
+                            <Box w={"full"}>
+                              <Text mb={"0.5rem"} color={"#005D5D"}>
                                 Invoice Amount
                               </Text>
                               <InputGroup backgroundColor={"#FFF"} size={"md"}>
                                 <InputLeftAddon>₦</InputLeftAddon>
                                 <Input
-                                  defaultValue={formatNumberWithCommas(invoiceData?.amountPaid)}
+                                  pl={0}
+                                  defaultValue={formatNumberWithCommas(
+                                    invoiceData?.amountPaid
+                                  )}
                                   variant={"filled"}
                                   isReadOnly={true}
                                   focusBorderColor="green.600"
@@ -197,10 +227,8 @@ const OverpaidBalancePaymentModal: FC<OverpaidBalancePaymentModalProps> = ({
                               <InputGroup backgroundColor={"#FFF"} size={"md"}>
                                 <InputLeftAddon>₦</InputLeftAddon>
                                 <Input
-                                  defaultValue={formatNumberWithCommas(
-                                    (balance || 0) -
-                                      (invoiceData?.amountPaid || 0)
-                                  )}
+                                  pl={0}
+                                  defaultValue={(balance || 0) > (invoiceData?.amountPaid || 0) ? formatNumberWithCommas(invoiceData?.amountPaid) : balance }
                                   variant={"filled"}
                                   isReadOnly={true}
                                   focusBorderColor="green.600"
@@ -214,6 +242,7 @@ const OverpaidBalancePaymentModal: FC<OverpaidBalancePaymentModalProps> = ({
                   </Flex>
 
                   <Flex
+                    mt={'1rem'}
                     justifyContent={"flex-end"}
                     gap={"4"}
                     alignItems={"center"}
@@ -233,9 +262,7 @@ const OverpaidBalancePaymentModal: FC<OverpaidBalancePaymentModalProps> = ({
                       isLoading={loading}
                       size={"sm"}
                     >
-                      <Text color={"#fff"} fontWeight={"400"} fontSize={"lg"}>
                         Pay with balance
-                      </Text>
                     </Button>
                   </Flex>
                 </Form>
