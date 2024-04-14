@@ -114,6 +114,7 @@ interface UserContextProps {
   parentData: ParentDataProps | undefined;
   childData: UserChildren[] | undefined;
   invoiceData: StudentInvoiceProps[];
+  loading: boolean;
 }
 
 const UserContext = createContext<UserContextProps | undefined>(undefined);
@@ -123,7 +124,7 @@ interface UserApiProviderProps {
 }
 
 export const UserApiProvider: FC<UserApiProviderProps> = ({ children }) => {
-  const { data: parent } = useQuery(GET_PARENT);
+  const { data: parent, loading } = useQuery(GET_PARENT);
   const [profileData, setProfileData] = useState({
     userBio: {
       firstName: "",
@@ -273,6 +274,7 @@ export const UserApiProvider: FC<UserApiProviderProps> = ({ children }) => {
         currentWardProfile,
         parentData,
         childData,
+        loading,
         setLocalstorageId,
       }}
     >

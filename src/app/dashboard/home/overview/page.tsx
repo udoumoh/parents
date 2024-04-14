@@ -1,6 +1,16 @@
 "use client";
 import { FC } from "react";
-import { Box, Flex, Text, Image, Grid, Avatar, Icon, Divider } from "@chakra-ui/react";
+import {
+  Box,
+  Flex,
+  Text,
+  Image,
+  Grid,
+  Avatar,
+  Icon,
+  Divider,
+  Skeleton,
+} from "@chakra-ui/react";
 import Attendance from "@/components/attendance";
 import Invoice from "@/components/invoice";
 import { useUserAPI } from "@/hooks/UserContext";
@@ -9,7 +19,7 @@ import formatNumberWithCommas from "@/helpers/formatNumberWithCommas";
 interface DashboardPageProps {}
 
 const DashboardPage: FC<DashboardPageProps> = ({}) => {
-  const { currentWardProfile, invoiceData } = useUserAPI();
+  const { currentWardProfile, invoiceData, loading } = useUserAPI();
 
   const totalOwingAmount = invoiceData
     ?.filter(
@@ -26,6 +36,7 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
         gap={5}
         columnGap={5}
       >
+        <Skeleton isLoaded={loading}>
         <Box
           width={"full"}
           rounded={"2xl"}
@@ -35,9 +46,9 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
           p={"1rem"}
           bgSize={"cover"}
           my={{ base: "10px", md: "0" }}
-          display={'flex'}
-          flexDir={'column'}
-          justifyContent={'space-between'}
+          display={"flex"}
+          flexDir={"column"}
+          justifyContent={"space-between"}
         >
           <Box display={"flex"} justifyContent={"space-between"} gap={3}>
             <Box display={"flex"} alignItems={"center"} gap={3}>
@@ -125,6 +136,7 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
             </Box>
           </Box>
         </Box>
+        </Skeleton>
 
         <Box
           border={"1px solid #005D5D50"}

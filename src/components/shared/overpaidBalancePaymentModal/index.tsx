@@ -25,7 +25,7 @@ import {
 } from "@chakra-ui/react";
 import { Formik, Form, Field } from "formik";
 import { useMutation } from "@apollo/client";
-import { ACCEPT_INVOICE } from "@/gql/queries";
+import { PAY_WITH_BALANCE } from '@/gql/mutations';
 import formatNumberWithCommas from '@/helpers/formatNumberWithCommas';
 
 interface OverpaidBalancePaymentModalProps {
@@ -70,19 +70,14 @@ const OverpaidBalancePaymentModal: FC<OverpaidBalancePaymentModalProps> = ({
   invoiceData,
   balance,
 }) => {
-        const summary = "Parent paid using overpaid amount balance"
-        const [acceptinvoice, { loading }] = useMutation(ACCEPT_INVOICE);
+        const [payWithBalance, { loading }] = useMutation(PAY_WITH_BALANCE);
         const toast = useToast();
 
         const handleSubmit = async () => {
           try {
-            const response = await acceptinvoice({
+            const response = await payWithBalance({
               variables: {
-                amountPaid: balance || 0,
                 invoiceid: invoiceData?.id,
-                summary: summary,
-                document: "PNG",
-                fileType: 'PNG',
               },
             });
             if (!response) {
@@ -95,17 +90,17 @@ const OverpaidBalancePaymentModal: FC<OverpaidBalancePaymentModalProps> = ({
                 status: "error",
               });
             }
-            if (response?.data?.acceptInvoice?.errors !== null) {
+            if (response?.data?.payInvoiceWithBalance?.errors !== null) {
               toast({
                 title: "Error",
-                description: response?.data?.acceptInvoice?.errors[0]?.message,
+                description: response?.data?.payInvoiceWithBalance?.errors[0]?.message,
                 position: "top-right",
                 variant: "left-accent",
                 isClosable: true,
                 status: "error",
               });
             }
-            if (response?.data?.acceptInvoice?.errors === null) {
+            if (response?.data?.payInvoiceWithBalance?.errors === null) {
               toast({
                 title: "Success",
                 description: "Receipt has been sent successfully",
@@ -138,11 +133,14 @@ const OverpaidBalancePaymentModal: FC<OverpaidBalancePaymentModalProps> = ({
     >
       <ModalOverlay />
       <ModalContent rounded={"xl"}>
-        <ModalHeader>
+        <ModalHeader mb={0}>
           <Flex>
             <Box alignItems={"center"} gap={2}>
               <Text fontWeight={"600"} fontSize={"xl"} color={"#005D5D"}>
                 {"Pay Invoice With Balance"}
+              </Text>
+              <Text fontWeight={"500"} fontSize={"sm"} color={"#8F8F8F"}>
+                {"Use your overpaid balance to pay for this outstanding invoice."}
               </Text>
             </Box>
           </Flex>
@@ -151,7 +149,7 @@ const OverpaidBalancePaymentModal: FC<OverpaidBalancePaymentModalProps> = ({
           <ModalCloseButton />
         </ModalHeader>
         <ModalBody pb={6} px={"2rem"}>
-          <Box>
+          <Box my={"0.8rem"}>
             <Text fontSize={{ base: "sm", md: "lg" }} fontWeight={"400"}>
               You are about to pay this invoice with your overpaid balance
             </Text>
@@ -177,7 +175,7 @@ const OverpaidBalancePaymentModal: FC<OverpaidBalancePaymentModalProps> = ({
                               <InputGroup backgroundColor={"#FFF"} size={"md"}>
                                 <InputLeftAddon>₦</InputLeftAddon>
                                 <Input
-                                  defaultValue={invoiceData?.amountPaid}
+                                  defaultValue={formatNumberWithCommas(invoiceData?.amountPaid)}
                                   variant={"filled"}
                                   isReadOnly={true}
                                   focusBorderColor="green.600"
@@ -200,8 +198,8 @@ const OverpaidBalancePaymentModal: FC<OverpaidBalancePaymentModalProps> = ({
                                 <InputLeftAddon>₦</InputLeftAddon>
                                 <Input
                                   defaultValue={formatNumberWithCommas(
-                                    (invoiceData?.amountPaid || 0) -
-                                      (balance || 0)
+                                    (balance || 0) -
+                                      (invoiceData?.amountPaid || 0)
                                   )}
                                   variant={"filled"}
                                   isReadOnly={true}
@@ -215,18 +213,25 @@ const OverpaidBalancePaymentModal: FC<OverpaidBalancePaymentModalProps> = ({
                     </Flex>
                   </Flex>
 
-                  <Flex justifyContent={'flex-end'} gap={'2'}>
-                    <Button colorScheme="red" onClick={onClose} ml={3}>
-                      Cnacel
+                  <Flex
+                    justifyContent={"flex-end"}
+                    gap={"4"}
+                    alignItems={"center"}
+                  >
+                    <Button
+                      colorScheme="red"
+                      onClick={onClose}
+                      ml={3}
+                      size={"sm"}
+                    >
+                      Cancel
                     </Button>
                     <Button
-                      my={"2rem"}
-                      py={"1.5rem"}
                       backgroundColor={"#007C7B"}
-                      px={"3rem"}
                       _hover={{ backgroundColor: "#099C9B" }}
                       type="submit"
                       isLoading={loading}
+                      size={"sm"}
                     >
                       <Text color={"#fff"} fontWeight={"400"} fontSize={"lg"}>
                         Pay with balance

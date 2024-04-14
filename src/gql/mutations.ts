@@ -476,3 +476,7 @@ export const LIKE_PROFILE = gql(`mutation LikeProfile($schoolId: Float!) {
 export const UNLIKE_PROFILE = gql(`mutation UnlikeProfile($schoolId: Float!) {
   unlikeProfile(schoolId: $schoolId)
 }`)
+
+export const PAY_WITH_BALANCE = gql(`mutation PayInvoiceWithBalance($invoiceId: Float!) {
+  payInvoiceWithBalance(invoiceId: $invoiceId)
+}`)

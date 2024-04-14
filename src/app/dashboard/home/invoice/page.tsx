@@ -472,7 +472,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                 mt={"1rem"}
               >
                 <TableContainer>
-                  <Table variant="simple" size={{ base: "sm", md: "md" }}>
+                  <Table variant="simple" size={'sm'}>
                     <Thead>
                       <Tr>
                         <Th>Inv. ID</Th>
@@ -674,7 +674,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                 mt={"1rem"}
               >
                 <TableContainer>
-                  <Table variant="simple" size={{ base: "sm", md: "md" }}>
+                  <Table variant="simple" size={'sm'}>
                     <Thead>
                       <Tr>
                         <Th>Inv. ID</Th>
@@ -785,7 +785,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                 mt={"1rem"}
               >
                 <TableContainer>
-                  <Table variant="simple" size={{ base: "sm", md: "md" }}>
+                  <Table variant="simple" size={'sm'}>
                     <Thead>
                       <Tr>
                         <Th>Inv. ID</Th>
@@ -944,7 +944,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                 mt={"1rem"}
               >
                 <TableContainer>
-                  <Table variant="simple" size={{ base: "sm", md: "md" }}>
+                  <Table variant="simple" size={'sm'}>
                     <Thead>
                       <Tr>
                         <Th>Inv. ID</Th>
@@ -1052,7 +1052,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                 mt={"1rem"}
               >
                 <TableContainer>
-                  <Table variant="simple" size={{ base: "sm", md: "md" }}>
+                  <Table variant="simple" size={'sm'}>
                     <Thead>
                       <Tr>
                         <Th>Inv. ID</Th>
