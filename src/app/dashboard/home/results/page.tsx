@@ -181,11 +181,11 @@ const Results: FC<ResultsProps> = ({}) => {
               schoolLogo: item?.school?.logoImgUrl,
               schoolName: item?.school?.schoolName,
               status: item?.isOfficial,
-              sharerProfileUrl:
+              authorsProfileUrl:
                 item?.student?.classroom?.classroom?.teacher[0]?.profileImgUrl,
-              sharerFirstName:
+              authorsFirstName:
                 item?.student?.classroom?.classroom?.teacher[0]?.firstName,
-              sharerLastName:
+              authorsLastName:
                 item?.student?.classroom?.classroom?.teacher[0]?.lastName,
               shareDate: formatDate(item?.createdAt),
               documentPath: item?.document,
@@ -365,8 +365,7 @@ const Results: FC<ResultsProps> = ({}) => {
                       <Flex gap={2} alignItems={"center"}>
                         <Avatar size={"xs"} src={data?.authorsProfileImgUrl} />
                         <Text fontSize={"md"} fontWeight={"400"}>
-                          {data?.authorsFirstName || data?.sharerFirstName}{" "}
-                          {data?.authorsLastName}
+                          {data?.authorsFirstName}{" "}{data?.authorsLastName}
                         </Text>
                       </Flex>
                     </Td>
