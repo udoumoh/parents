@@ -130,10 +130,13 @@ const Results: FC<ResultsProps> = ({}) => {
               test3: result?.test3,
               test4: result?.test4,
               scores: result?.scores,
-              authorsFirstName: result?.student?.creator?.admin?.firstName,
+              authorsFirstName:
+                result?.student?.classroom?.classroom?.teacher[0]?.firstName,
               authorsSchoolName: result?.student?.creator?.admin?.school,
-              authorsLastName: result?.student?.creator?.admin?.lastName,
-              authorsMiddleName: result?.student?.creator?.admin?.middleName,
+              authorsLastName:
+                result?.student?.classroom?.classroom?.teacher[0]?.lastName,
+              authorsMiddleName:
+                result?.student?.classroom?.classroom?.teacher[0]?.middleName,
               studentsFirstName: result?.student?.firstName,
               studentsLastName: result?.student?.lastName,
               academicTerm: result?.academicTerm,
@@ -152,9 +155,7 @@ const Results: FC<ResultsProps> = ({}) => {
               authorsProfileImgUrl:
                 result?.student?.creator?.admin?.profileImgUrl,
               documentPath: "",
-              authorsCreatedAt: formatDate(
-                result?.createdAt
-              ),
+              authorsCreatedAt: formatDate(result?.createdAt),
               isOfficial: result?.isOfficial,
             })
           );
@@ -179,9 +180,12 @@ const Results: FC<ResultsProps> = ({}) => {
               schoolLogo: item?.school?.logoImgUrl,
               schoolName: item?.school?.schoolName,
               status: item?.isOfficial,
-              sharerProfileUrl: item?.school?.creator?.admin?.profileImgUrl,
-              sharerFirstName: item?.creatorName,
-              sharerLastName: item?.student?.creator?.admin?.lastName,
+              sharerProfileUrl:
+                item?.student?.classroom?.classroom?.teacher[0]?.profileImgUrl,
+              sharerFirstName:
+                item?.student?.classroom?.classroom?.teacher[0]?.firstName,
+              sharerLastName:
+                item?.student?.classroom?.classroom?.teacher[0]?.lastName,
               shareDate: formatDate(item?.createdAt),
               documentPath: item?.document,
             })
