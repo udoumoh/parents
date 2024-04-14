@@ -52,6 +52,14 @@ const InvoiceItem: FC<InvoiceItemProps> = ({
     onOpen: onRejectModalOpen,
     onClose: onRejectModalClose,
   } = useDisclosure();
+
+  const getCompletedInvoiceAmount = (invoice: any) => {
+    const totalCompletedAmount = invoice?.receipt
+      ?.map((receipt: any) => receipt?.amountPaid)
+      .reduce((acc: any, item: any) => acc + item, 0);
+    return totalCompletedAmount;
+  };
+
   return (
     <Box border={"1px solid #C2C2C2"} rounded={"xl"} p={"0.4rem"} mb={"1rem"}>
       <Box
@@ -68,7 +76,14 @@ const InvoiceItem: FC<InvoiceItemProps> = ({
           {studentInvoice.category}
         </Text>
         <Text color={"#000"} fontSize={"2xl"} fontWeight={"600"}>
-          ₦{formatNumberWithCommas(studentInvoice.amountPaid)}
+          ₦
+          {studentInvoice?.status === "active" ||
+          studentInvoice?.status === "processing"
+            ? formatNumberWithCommas(studentInvoice?.amountPaid)
+            : formatNumberWithCommas(
+                studentInvoice?.amountPaid +
+                  getCompletedInvoiceAmount(studentInvoice)
+              )}
         </Text>
       </Box>
       <Box px={"0.5rem"} w={"auto"} mb={"0.5rem"}>
@@ -208,6 +223,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
     };
     fetchData();
   }, [getinvoice]);
+  
 
   return (
     <Box
