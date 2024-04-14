@@ -172,7 +172,7 @@ const {
         isOpen={isOverpaidModalModalOpen}
         onOpen={onOverpaidModalModalOpen}
         onClose={onOverpaidModalModalClose}
-        invoiceId={invoiceData?.id}
+        invoiceData={invoiceData}
         balance={currentWardProfile?.wallet}
       />
       <Modal
