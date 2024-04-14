@@ -32,7 +32,34 @@ interface OverpaidBalancePaymentModalProps {
   isOpen: boolean;
   onOpen: () => void;
   onClose: () => void;
-  invoiceId: any;
+  invoiceData:
+    | {
+        term: string;
+        year: string;
+        category: string;
+        amountPaid: number;
+        id: number;
+        status: string;
+        summary: string;
+        createdAt: string;
+        invoiceId: string;
+        schoolname: string;
+        schoollogo: string;
+        balance: number;
+        receipt: {
+          amountPaid: number;
+          createdAt: string;
+          creator: string;
+          fileType: string;
+          id: number;
+          parentInvoiceId: string;
+          status: string;
+          summary: string;
+          updatedAt: string;
+          uploadedDocument: string;
+        }[];
+      }
+    | undefined;
   balance: number | undefined;
 }
 
@@ -40,7 +67,7 @@ const OverpaidBalancePaymentModal: FC<OverpaidBalancePaymentModalProps> = ({
   isOpen,
   onOpen,
   onClose,
-  invoiceId,
+  invoiceData,
   balance,
 }) => {
         const summary = "Parent paid using overpaid amount balance"
@@ -51,8 +78,8 @@ const OverpaidBalancePaymentModal: FC<OverpaidBalancePaymentModalProps> = ({
           try {
             const response = await acceptinvoice({
               variables: {
-                amountPaid: Math.abs(balance || 0),
-                invoiceid: invoiceId,
+                amountPaid: balance || 0,
+                invoiceid: invoiceData?.id,
                 summary: summary,
                 document: "PNG",
                 fileType: 'PNG',
@@ -114,11 +141,8 @@ const OverpaidBalancePaymentModal: FC<OverpaidBalancePaymentModalProps> = ({
         <ModalHeader>
           <Flex>
             <Box alignItems={"center"} gap={2}>
-              <Text fontWeight={"600"} fontSize={"xl"}>
-                {"Accept Invoice"}
-              </Text>
-              <Text fontWeight={"500"} fontSize={"sm"} color={"#8F8F8F"}>
-                {"Pay invoice with overpaid balance"}
+              <Text fontWeight={"600"} fontSize={"xl"} color={"#005D5D"}>
+                {"Pay Invoice With Balance"}
               </Text>
             </Box>
           </Flex>
@@ -127,6 +151,11 @@ const OverpaidBalancePaymentModal: FC<OverpaidBalancePaymentModalProps> = ({
           <ModalCloseButton />
         </ModalHeader>
         <ModalBody pb={6} px={"2rem"}>
+          <Box>
+            <Text fontSize={{ base: "sm", md: "lg" }} fontWeight={"400"}>
+              You are about to pay this invoice with your overpaid balance
+            </Text>
+          </Box>
           <Box>
             <Formik
               initialValues={{}}
@@ -143,13 +172,13 @@ const OverpaidBalancePaymentModal: FC<OverpaidBalancePaymentModalProps> = ({
                           <FormControl>
                             <Box w={"full"}>
                               <Text mb={"0.5rem"} color={"#005D5D"}>
-                                Amount Paid
+                                Invoice Amount
                               </Text>
                               <InputGroup backgroundColor={"#FFF"} size={"md"}>
                                 <InputLeftAddon>₦</InputLeftAddon>
                                 <Input
                                   defaultValue={formatNumberWithCommas(
-                                    Math.abs(balance || 0)
+                                    balance || 0
                                   )}
                                   variant={"filled"}
                                   isReadOnly={true}

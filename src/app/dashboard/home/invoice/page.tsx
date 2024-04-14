@@ -104,7 +104,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
     onClose: onSchoolAccountDetailsModalClose,
   } = useDisclosure();
 
-  const [currentInvoiceId, setCurrentInvoiceId] = useState()
+  const [currentInvoice, setCurrentInvoice] = useState<StudentInvoiceProps>()
   const [invoiceToShow, setInvoiceToShow] = useState<StudentInvoiceProps[]>([])
   const [currentPage, setCurrentPage] = useState(1)
   const [totalNumberOfPages, setTotalNumberOfPages] = useState(1)
@@ -171,18 +171,18 @@ const Invoice: FC<InvoiceProps> = ({}) => {
       router.push(`/dashboard/home/invoice/${id}`);
   }
 
-  const handleAcceptInvoice = (id: any) => {
-    setCurrentInvoiceId(id);
+  const handleAcceptInvoice = (invoice: any) => {
+    setCurrentInvoice(invoice);
     onAcceptModalOpen();
   }
 
-  const handleRejectInvoice = (id: any) => {
-    setCurrentInvoiceId(id);
+  const handleRejectInvoice = (invoice: any) => {
+    setCurrentInvoice(invoice);
     onRejectModalOpen();
   };
 
-  const handleOverpaidInvoice = (id: any) => {
-    setCurrentInvoiceId(id)
+  const handleOverpaidInvoice = (invoice: any) => {
+    setCurrentInvoice(invoice)
     onOverpaidModalModalOpen();
   }
 
@@ -224,19 +224,19 @@ const Invoice: FC<InvoiceProps> = ({}) => {
           isOpen={isAcceptModalOpen}
           onOpen={onAcceptModalOpen}
           onClose={onAcceptModalClose}
-          invoiceId={currentInvoiceId}
+          invoiceData={currentInvoice}
         />
         <RejectInvoiceModal
           isOpen={isRejectModalOpen}
           onOpen={onRejectModalOpen}
           onClose={onRejectModalClose}
-          invoiceId={currentInvoiceId}
+          invoiceData={currentInvoice}
         />
         <OverpaidBalancePaymentModal
           isOpen={isOverpaidModalModalOpen}
           onOpen={onOverpaidModalModalOpen}
           onClose={onOverpaidModalModalClose}
-          invoiceId={currentInvoiceId}
+          invoiceData={currentInvoice}
           balance={currentWardProfile?.wallet}
         />
         <SchoolAccountDetailsModal
@@ -567,7 +567,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                     }
                                     gap={"3"}
                                     onClick={() =>
-                                      handleAcceptInvoice(item?.id)
+                                      handleAcceptInvoice(item)
                                     }
                                   >
                                     <Icon
@@ -590,7 +590,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                     }
                                     gap={"3"}
                                     onClick={() =>
-                                      handleRejectInvoice(item?.id)
+                                      handleRejectInvoice(item)
                                     }
                                   >
                                     <Icon
@@ -607,7 +607,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                     display={"flex"}
                                     gap={"3"}
                                     onClick={() => {
-                                      handleSelectedInvoice(item?.id);
+                                      handleSelectedInvoice(item);
                                     }}
                                   >
                                     <Icon
@@ -630,7 +630,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                     }
                                     gap={"3"}
                                     onClick={() =>
-                                      handleOverpaidInvoice(item?.id)
+                                      handleOverpaidInvoice(item)
                                     }
                                   >
                                     <Icon
@@ -756,7 +756,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                     display={"flex"}
                                     gap={"3"}
                                     onClick={() => {
-                                      handleSelectedInvoice(item?.id);
+                                      handleSelectedInvoice(item);
                                     }}
                                   >
                                     <Icon
@@ -864,7 +864,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                     display={"flex"}
                                     gap={"3"}
                                     onClick={() =>
-                                      handleAcceptInvoice(item?.id)
+                                      handleAcceptInvoice(item)
                                     }
                                   >
                                     <Icon
@@ -881,7 +881,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                     display={"flex"}
                                     gap={"3"}
                                     onClick={() =>
-                                      handleRejectInvoice(item?.id)
+                                      handleRejectInvoice(item)
                                     }
                                   >
                                     <Icon
@@ -898,7 +898,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                     display={"flex"}
                                     gap={"3"}
                                     onClick={() =>
-                                      handleOverpaidInvoice(item?.id)
+                                      handleOverpaidInvoice(item)
                                     }
                                   >
                                     <Icon
@@ -915,7 +915,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                     display={"flex"}
                                     gap={"3"}
                                     onClick={() => {
-                                      handleSelectedInvoice(item?.id);
+                                      handleSelectedInvoice(item);
                                     }}
                                   >
                                     <Icon
@@ -1023,7 +1023,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                     display={"flex"}
                                     gap={"3"}
                                     onClick={() => {
-                                      handleSelectedInvoice(item?.id);
+                                      handleSelectedInvoice(item);
                                     }}
                                   >
                                     <Icon
@@ -1137,7 +1137,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                     }
                                     gap={"3"}
                                     onClick={() =>
-                                      handleAcceptInvoice(item?.id)
+                                      handleAcceptInvoice(item)
                                     }
                                   >
                                     <Icon
@@ -1160,7 +1160,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                     }
                                     gap={"3"}
                                     onClick={() =>
-                                      handleRejectInvoice(item?.id)
+                                      handleRejectInvoice(item)
                                     }
                                   >
                                     <Icon
@@ -1177,7 +1177,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                     display={"flex"}
                                     gap={"3"}
                                     onClick={() => {
-                                      handleSelectedInvoice(item?.id);
+                                      handleSelectedInvoice(item);
                                     }}
                                   >
                                     <Icon

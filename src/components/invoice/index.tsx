@@ -195,13 +195,13 @@ const InvoiceItem: FC<InvoiceItemProps> = ({
           isOpen={isAcceptModalOpen}
           onOpen={onAcceptModalOpen}
           onClose={onAcceptModalClose}
-          invoiceId={studentInvoice.id}
+          invoiceData={studentInvoice}
         />
         <RejectInvoiceModal
           isOpen={isRejectModalOpen}
           onOpen={onRejectModalOpen}
           onClose={onRejectModalClose}
-          invoiceId={studentInvoice.id}
+          invoiceData={studentInvoice}
         />
       </Flex>
     </Box>

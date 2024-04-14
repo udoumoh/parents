@@ -21,14 +21,41 @@ interface RejectInvoiceModalProps {
   isOpen: boolean;
   onOpen: () => void;
   onClose: () => void;
-  invoiceId: any;
+  invoiceData:
+    | {
+        term: string;
+        year: string;
+        category: string;
+        amountPaid: number;
+        id: number;
+        status: string;
+        summary: string;
+        createdAt: string;
+        invoiceId: string;
+        schoolname: string;
+        schoollogo: string;
+        balance: number;
+        receipt: {
+          amountPaid: number;
+          createdAt: string;
+          creator: string;
+          fileType: string;
+          id: number;
+          parentInvoiceId: string;
+          status: string;
+          summary: string;
+          updatedAt: string;
+          uploadedDocument: string;
+        }[];
+      }
+    | undefined;
 }
 
 const RejectInvoiceModal: FC<RejectInvoiceModalProps> = ({
   isOpen,
   onOpen,
   onClose,
-  invoiceId,
+  invoiceData,
 }) => {
   const toast = useToast();
   const [rejectinvoice, { loading }] = useMutation(REJECT_INVOICE);
@@ -40,7 +67,7 @@ const RejectInvoiceModal: FC<RejectInvoiceModalProps> = ({
   const handleSubmit = async () => {
     try {
       const response = await rejectinvoice({
-        variables: { response: summary, invoiceid: Number(invoiceId) },
+        variables: { response: summary, invoiceid: Number(invoiceData?.id) },
       });
       if (!response) {
         toast({

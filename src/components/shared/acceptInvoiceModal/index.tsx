@@ -30,21 +30,52 @@ import { useMutation } from "@apollo/client";
 import { ACCEPT_INVOICE } from "@/gql/queries";
 import { MdOutlinePayment } from "react-icons/md";
 import { useUserAPI } from "@/hooks/UserContext";
+import * as Yup from 'yup'
 import OverpaidBalancePaymentModal from "../overpaidBalancePaymentModal";
 
 interface AcceptInvoiceModalProps {
   isOpen: boolean;
   onOpen: () => void;
   onClose: () => void;
-  invoiceId: any;
+  invoiceData: {
+    term: string;
+    year: string;
+    category: string;
+    amountPaid: number;
+    id: number;
+    status: string;
+    summary: string;
+    createdAt: string;
+    invoiceId: string;
+    schoolname: string;
+    schoollogo: string;
+    balance: number;
+    receipt: {
+      amountPaid: number;
+      createdAt: string;
+      creator: string;
+      fileType: string;
+      id: number;
+      parentInvoiceId: string;
+      status: string;
+      summary: string;
+      updatedAt: string;
+      uploadedDocument: string;
+    }[];
+  } | undefined
 }
 
 const AcceptInvoiceModal: FC<AcceptInvoiceModalProps> = ({
   isOpen,
   onOpen,
   onClose,
-  invoiceId,
+  invoiceData,
 }) => {
+
+  const schema = Yup.object().shape({
+    docType: Yup.string().required("Receipt is required"),
+  });
+
   const {
     isOpen: isFileOpen,
     onClose: onFileClose,
@@ -57,7 +88,7 @@ const {
   onClose: onOverpaidModalModalClose,
 } = useDisclosure();
 
-  const {invoiceData, currentWardProfile} = useUserAPI()
+  const {currentWardProfile} = useUserAPI()
   const [file, setFile] = useState<string>("");
   const [folder, setFolder] = useState<string>("");
   const [fileName, setFileName] = useState<string>("");
@@ -86,7 +117,7 @@ const {
           document: file,
           fileType: values.docType,
           amountPaid: Number(values.amountPaid),
-          invoiceid: Number(invoiceId),
+          invoiceid: Number(invoiceData?.id),
           summary: summary,
         },
       });
@@ -141,7 +172,7 @@ const {
         isOpen={isOverpaidModalModalOpen}
         onOpen={onOverpaidModalModalOpen}
         onClose={onOverpaidModalModalClose}
-        invoiceId={invoiceId}
+        invoiceId={invoiceData?.id}
         balance={currentWardProfile?.wallet}
       />
       <Modal
@@ -178,6 +209,7 @@ const {
                 onSubmit={async (values) => {
                   handleSubmit(values);
                 }}
+                validationSchema={schema}
               >
                 {(props) => (
                   <Form>
@@ -201,7 +233,9 @@ const {
                                   </Text>
                                   <Button
                                     display={
-                                      (currentWardProfile?.wallet || 0) > 0 ? "flex" : "none"
+                                      (currentWardProfile?.wallet || 0) > 0
+                                        ? "flex"
+                                        : "none"
                                     }
                                     size={"sm"}
                                     colorScheme="red"
@@ -256,7 +290,9 @@ const {
                           <Field name="docType">
                             {({ field, form }: any) => (
                               <FormControl
-                              isInvalid={form.errors.name && form.touched.name}
+                                isInvalid={
+                                  form.errors.docType && form.touched.docType
+                                }
                               >
                                 <Box w={"full"}>
                                   <Select
@@ -274,6 +310,9 @@ const {
                                     </option>
                                     <option value={"PNG"}>PNG</option>
                                   </Select>
+                                  <FormErrorMessage>
+                                    {form.errors.docType}
+                                  </FormErrorMessage>
                                 </Box>
                               </FormControl>
                             )}
