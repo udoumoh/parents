@@ -72,6 +72,7 @@ const OverpaidBalancePaymentModal: FC<OverpaidBalancePaymentModalProps> = ({
 }) => {
         const [payWithBalance, { loading }] = useMutation(PAY_WITH_BALANCE);
         const toast = useToast();
+        console.log(invoiceData)
 
         const handleSubmit = async () => {
           try {
