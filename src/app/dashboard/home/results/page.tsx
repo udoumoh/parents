@@ -301,7 +301,7 @@ const Results: FC<ResultsProps> = ({}) => {
         <Text mb={"1rem"}>Most Recent</Text>
 
         {loading ? (
-          <Spinner />
+          <Spinner color="green.500"/>
         ) : !loading && currentResult?.length === 0 ? (
           <>
             <Text fontSize={"xl"}>
