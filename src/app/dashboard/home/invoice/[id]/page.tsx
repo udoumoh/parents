@@ -132,9 +132,9 @@ const Invoice: FC<InvoiceProps> = ({ params }: { params: { id: number } }) => {
               display={
                 !["active", "partial payment"].includes(
                   currentInvoice?.status || ""
-                ) || (currentWardProfile?.wallet || 0) > 0
-                  ? "flex"
-                  : "none"
+                ) && (currentWardProfile?.wallet || 0) !> 0
+                  ? "none"
+                  : "flex"
               }
               size={"sm"}
               colorScheme="red"
