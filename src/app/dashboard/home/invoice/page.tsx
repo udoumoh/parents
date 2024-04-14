@@ -167,8 +167,8 @@ const Invoice: FC<InvoiceProps> = ({}) => {
 
   
 
-  const handleSelectedInvoice = (id: any) => {
-      router.push(`/dashboard/home/invoice/${id}`);
+  const handleSelectedInvoice = (invoice: any) => {
+      router.push(`/dashboard/home/invoice/${invoice?.id}`);
   }
 
   const handleAcceptInvoice = (invoice: any) => {
