@@ -19,6 +19,7 @@ import {
   WrapItem,
   useDisclosure,
   IconButton,
+  Spinner,
 } from "@chakra-ui/react";
 
 import { AiOutlinePlus } from "react-icons/ai";
@@ -96,9 +97,12 @@ const Results: FC<ResultsProps> = ({}) => {
   const { data: getgeneratedresult } = useQuery(GET_STUDENT_GENERATED_RESULT, {
     variables: { studentId: currentWardProfile?.id },
   });
-  const { data: getUploadedResult } = useQuery(GET_STUDENT_UPLOADED_RESULT, {
-    variables: { studentId: currentWardProfile?.id },
-  });
+  const { data: getUploadedResult, loading } = useQuery(
+    GET_STUDENT_UPLOADED_RESULT,
+    {
+      variables: { studentId: currentWardProfile?.id },
+    }
+  );
   const [selectedTableResult, setSelectedTableResult] =
     useState<GeneratedResultProps>();
   const [resultsType, setResultstype] = useState("uploaded");
@@ -122,7 +126,7 @@ const Results: FC<ResultsProps> = ({}) => {
           console.log("failed to fetch results data");
         }
         if (response) {
-          console.log(response)
+          console.log(response);
           const pdfViewData = response?.studentGeneratedResult?.map(
             (result: any) => ({
               test1: result?.test1,
@@ -169,7 +173,7 @@ const Results: FC<ResultsProps> = ({}) => {
     const fetchUploadedResult = async () => {
       try {
         const response = await getUploadedResult;
-        console.log(response)
+        console.log(response);
         if (!response) {
           console.log("failed to fetch results data");
         }
@@ -296,7 +300,9 @@ const Results: FC<ResultsProps> = ({}) => {
       <Box>
         <Text mb={"1rem"}>Most Recent</Text>
 
-        {currentResult?.length === 0 ? (
+        {loading ? (
+          <Spinner />
+        ) : !loading && currentResult?.length === 0 ? (
           <>
             <Text fontSize={"xl"}>
               There are no results available for this student
@@ -365,7 +371,7 @@ const Results: FC<ResultsProps> = ({}) => {
                       <Flex gap={2} alignItems={"center"}>
                         <Avatar size={"xs"} src={data?.authorsProfileImgUrl} />
                         <Text fontSize={"md"} fontWeight={"400"}>
-                          {data?.authorsFirstName}{" "}{data?.authorsLastName}
+                          {data?.authorsFirstName} {data?.authorsLastName}
                         </Text>
                       </Flex>
                     </Td>
@@ -406,15 +412,13 @@ const Results: FC<ResultsProps> = ({}) => {
         onClose={onUploadedModalClose}
         path={selectedTableResult?.documentPath}
       />
-      {
-        selectedTableResult && (
-          <GeneratedResults
-            result={selectedTableResult}
-            isOpen={isGeneratedModalOpen}
-            onClose={onGeneratedModalClose}
-          />
-        )
-      }
+      {selectedTableResult && (
+        <GeneratedResults
+          result={selectedTableResult}
+          isOpen={isGeneratedModalOpen}
+          onClose={onGeneratedModalClose}
+        />
+      )}
     </Box>
   );
 };
