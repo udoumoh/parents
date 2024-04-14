@@ -77,9 +77,10 @@ const OverpaidBalancePaymentModal: FC<OverpaidBalancePaymentModalProps> = ({
           try {
             const response = await payWithBalance({
               variables: {
-                invoiceid: invoiceData?.id,
+                invoiceid: Number(invoiceData?.id),
               },
             });
+            console.log(response)
             if (!response) {
               toast({
                 title: "Client Error",
