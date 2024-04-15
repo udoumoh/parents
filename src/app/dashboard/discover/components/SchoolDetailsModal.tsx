@@ -30,6 +30,7 @@ import { TbWorld } from "react-icons/tb";
 import { LIKE_PROFILE, UNLIKE_PROFILE } from "@/gql/mutations";
 import { useUserAPI } from "@/hooks/UserContext";
 import { useMutation } from "@apollo/client";
+import { useUserLikesAPI } from "@/hooks/UserLikesContext";
 
 interface SchoolDetailsModalProps {
   isOpen: boolean;
@@ -64,52 +65,16 @@ const SchoolDetailsModal: FC<SchoolDetailsModalProps> = ({
   onClose,
   profile,
 }) => {
-  const [isLiked, setIsLiked] = useState(false);
-const [like] = useMutation(LIKE_PROFILE);
-const [unlike] = useMutation(UNLIKE_PROFILE);
-const { parentData } = useUserAPI();
-const [numberOfLikes, setNumberOfLikes] = useState(profile?.profileLikes);
-console.log(profile)
+  const { handleLike, handleUnlike, isLiked, numberOfLikes } =
+    useUserLikesAPI();
 
-useEffect(() => {
-  if (profile?.whoLikedProfile?.includes(parentData?.userId || "")) {
-    setIsLiked(true);
-  } else {
-    setIsLiked(false);
-  }
-}, [profile, parentData]);
-
-const handleLike = async () => {
-  try {
-    const response = await like({
-      variables: {
-        schoolId: profile?.id,
-      },
-    });
-    if (response.data) {
-      setIsLiked(true);
-      setNumberOfLikes(numberOfLikes + 1);
+  const handleToggleLike = () => {
+    if (isLiked) {
+      handleUnlike(profile);
+    } else {
+      handleLike(profile);
     }
-  } catch (err: any) {
-    console.log(err.message);
-  }
-};
-
-const handleUnlike = async () => {
-  try {
-    const response = await unlike({
-      variables: {
-        schoolId: profile?.id,
-      },
-    });
-    if (response.data) {
-      setIsLiked(false); // Update state only if mutation is successful
-      setNumberOfLikes(numberOfLikes - 1);
-    }
-  } catch (err: any) {
-    console.log(err.message);
-  }
-};
+  };
   return (
     <Modal
       isOpen={isOpen}
@@ -163,10 +128,10 @@ const handleUnlike = async () => {
               <Flex gap={2} alignItems={"center"}>
                 <Icon
                   as={isLiked ? IoMdHeart : IoMdHeartEmpty}
-                  boxSize={{ base: 5, md: 7 }}
+                  onClick={handleToggleLike}
                   color={isLiked ? "red.500" : "#00000070"}
+                  boxSize={{ base: 5, md: 7 }}
                   transition="transform 0.2s ease-in-out"
-                  onClick={isLiked ? handleUnlike : handleLike}
                   _hover={{
                     cursor: "pointer",
                     transform: "scale(1.1)",
@@ -188,7 +153,11 @@ const handleUnlike = async () => {
               <Text color={"#747474"} fontSize={"sm"} fontWeight={"bold"}>
                 ABOUT SCHOOL
               </Text>
-              <Text mt={"0.8rem"} fontSize={{ base: "xs", md: "sm" }} whiteSpace={'pre-wrap'}>
+              <Text
+                mt={"0.8rem"}
+                fontSize={{ base: "xs", md: "sm" }}
+                whiteSpace={"pre-wrap"}
+              >
                 {profile?.description}
               </Text>
             </Box>

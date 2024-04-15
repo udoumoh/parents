@@ -13,13 +13,14 @@ interface layoutProps {
 const Layout: React.FC<layoutProps> = ({ children }) => {
   const { data: parent, loading } = useQuery(GET_PARENT);
 
-  return loading ? (
-    <Loading />
-  ) : !loading && parent?.parent?.errors !== null ? (
-    <>{window.location.replace("/signin")}</>
-  ) : (
-    <MainNav>{children}</MainNav>
-  );
+    
+  return <MainNav>{children}</MainNav>;
+  // loading ? (
+  //   <Loading />
+  // ) : !loading && parent?.parent?.errors !== null ? (
+  //   <>{window.location.replace("/signin")}</>
+  // ) : (
+  // );
 };
 
 export default Layout;

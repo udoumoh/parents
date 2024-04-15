@@ -166,6 +166,7 @@ const Discover: FC<DiscoverProps> = ({}) => {
                     onChange={(e) => {
                       setSchoolType(e.target.value);
                     }}
+                    _hover={{cursor:"pointer"}}
                   >
                     <option value="public">Public</option>
                     <option value="private">Private</option>
