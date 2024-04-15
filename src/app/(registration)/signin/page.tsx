@@ -197,7 +197,7 @@ const Signin: FC<pageProps> = ({}) => {
                 fontSize={"sm"}
                 color={"#005D5D"}
                 mt={"0.3rem"}
-                onClick={() => router.replace("/forgotpassword")}
+                onClick={() => window.location.replace("/forgotpassword")}
               >
                 Forgot Password?
               </Link>
@@ -211,7 +211,7 @@ const Signin: FC<pageProps> = ({}) => {
                 textAlign={"center"}
               >
                 Don&apos;t have an account?{" "}
-                <Link color={"#007C7B"} onClick={() => router.replace("/signup")}>
+                <Link color={"#007C7B"} onClick={() => window.location.replace("/signup")}>
                   {`Sign Up`}
                 </Link>
               </Text>

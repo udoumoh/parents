@@ -86,7 +86,7 @@ const Page: FC<PageProps> = ({ params }: { params: { id: string } }) => {
           status: "success",
         });
         setTimeout(() => {
-          router.replace('/signin')
+          window.location.replace('/signin')
         }, 2000)
       }
     } catch (err: any) {
@@ -260,7 +260,7 @@ const Page: FC<PageProps> = ({ params }: { params: { id: string } }) => {
                 textAlign={"center"}
               >
                 Already have an account?{" "}
-                <Link color={"#007C7B"} onClick={() => router.replace("/signin")}>
+                <Link color={"#007C7B"} onClick={() => window.location.replace("/signin")}>
                   {`Sign In`}
                 </Link>
               </Text>

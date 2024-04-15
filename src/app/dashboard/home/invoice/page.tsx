@@ -168,7 +168,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
   
 
   const handleSelectedInvoice = (invoice: any) => {
-      router.replace(`/dashboard/home/invoice/${invoice?.id}`);
+      window.location.replace(`/dashboard/home/invoice/${invoice?.id}`);
   }
 
   const handleAcceptInvoice = (invoice: any) => {

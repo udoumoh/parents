@@ -171,7 +171,7 @@ const ForgotPassword: FC<ForgotPasswordProps> = ({}) => {
                 textAlign={"center"}
               >
                 Already have an account?{" "}
-                <Link color={"#007C7B"} onClick={() => router.replace("/signin")}>
+                <Link color={"#007C7B"} onClick={() => window.location.replace("/signin")}>
                   {`Sign In`}
                 </Link>
               </Text>
