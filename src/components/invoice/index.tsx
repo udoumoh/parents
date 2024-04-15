@@ -62,6 +62,7 @@ interface StudentInvoiceProps {
 const InvoiceItem: FC<InvoiceItemProps> = ({
   studentInvoice
 }) => {
+  const router = useRouter()
   const { isOpen: isAcceptModalOpen, onOpen: onAcceptModalOpen, onClose: onAcceptModalClose } = useDisclosure();
   const {
     isOpen: isRejectModalOpen,
@@ -83,6 +84,10 @@ const InvoiceItem: FC<InvoiceItemProps> = ({
         rounded={"lg"}
         p={"0.6rem"}
         pb={"1rem"}
+        _hover={{ cursor: "pointer", backgroundColor: "#44506980" }}
+        onClick={() =>
+          router.push(`/dashboard/home/invoice/${studentInvoice?.id}`)
+        }
       >
         <Box display={"flex"} gap={1} alignItems={"center"}>
           <Text fontSize={"xs"}>{studentInvoice.term}</Text> •{" "}
