@@ -40,16 +40,17 @@ interface PostItemProps {
 }
 
 const PostItem: FC<PostItemProps> = ({profile, loading}) => {
-  const { handleLike, handleUnlike, isLiked, numberOfLikes } =
+  const { likePost, unlikePost, isPostLiked, getNumberOfLikes } =
     useUserLikesAPI();
+
+  const handleToggleLike = () => {
+    if (isPostLiked(profile.id)) {
+      unlikePost(profile.id);
+    } else {
+      likePost(profile.id);
+    }
+  };
  const { isOpen, onOpen, onClose } = useDisclosure();
-    const handleToggleLike = () => {
-      if (isLiked) {
-        handleUnlike(profile);
-      } else {
-        handleLike(profile);
-      }
-    };
     
   return (
     <Skeleton isLoaded={!loading}>
@@ -104,9 +105,9 @@ const PostItem: FC<PostItemProps> = ({profile, loading}) => {
 
           <Flex alignItems={"center"} flexDir={"column"}>
             <Icon
-              as={isLiked ? IoMdHeart : IoMdHeartEmpty}
+              as={isPostLiked(profile.id) ? IoMdHeart : IoMdHeartEmpty}
               onClick={handleToggleLike}
-              color={isLiked ? "red.500" : "#00000070"}
+              color={isPostLiked(profile.id) ? "red.500" : "#00000070"}
               boxSize={{ base: 5, md: 7 }}
               transition="transform 0.2s ease-in-out"
               _hover={{
@@ -117,7 +118,7 @@ const PostItem: FC<PostItemProps> = ({profile, loading}) => {
             />
 
             <Text fontSize={"xs"} color={"#00000070"}>
-              {numberOfLikes} {numberOfLikes !== 1 ? "Likes" : "Like"}
+              {getNumberOfLikes(profile?.id)} {getNumberOfLikes(profile?.id) !== 1 ? "Likes" : "Like"}
             </Text>
           </Flex>
         </Flex>

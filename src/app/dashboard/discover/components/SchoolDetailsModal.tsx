@@ -65,14 +65,14 @@ const SchoolDetailsModal: FC<SchoolDetailsModalProps> = ({
   onClose,
   profile,
 }) => {
-  const { handleLike, handleUnlike, isLiked, numberOfLikes } =
+  const { likePost, unlikePost, isPostLiked, getNumberOfLikes } =
     useUserLikesAPI();
 
   const handleToggleLike = () => {
-    if (isLiked) {
-      handleUnlike(profile);
+    if (isPostLiked(profile.id)) {
+      unlikePost(profile.id);
     } else {
-      handleLike(profile);
+      likePost(profile.id);
     }
   };
   return (
@@ -127,9 +127,9 @@ const SchoolDetailsModal: FC<SchoolDetailsModalProps> = ({
               </Flex>
               <Flex gap={2} alignItems={"center"}>
                 <Icon
-                  as={isLiked ? IoMdHeart : IoMdHeartEmpty}
+                  as={isPostLiked(profile.id) ? IoMdHeart : IoMdHeartEmpty}
                   onClick={handleToggleLike}
-                  color={isLiked ? "red.500" : "#00000070"}
+                  color={isPostLiked(profile.id) ? "red.500" : "#00000070"}
                   boxSize={{ base: 5, md: 7 }}
                   transition="transform 0.2s ease-in-out"
                   _hover={{
