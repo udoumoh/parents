@@ -99,3 +99,5 @@ export const useUserLikesAPI = () => {
 
   return context;
 };
+
+export default UserLikesAPIProvider;
