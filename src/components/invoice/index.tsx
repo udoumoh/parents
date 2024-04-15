@@ -84,7 +84,7 @@ const InvoiceItem: FC<InvoiceItemProps> = ({
         rounded={"lg"}
         p={"0.6rem"}
         pb={"1rem"}
-        _hover={{ cursor: "pointer", backgroundColor: "#44506980" }}
+        _hover={{ cursor: "pointer", backgroundColor: "#44506980", transitionDuration:'0.5s' }}
         onClick={() =>
           router.push(`/dashboard/home/invoice/${studentInvoice?.id}`)
         }
