@@ -316,7 +316,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
         isClosable: true,
         status: "info",
       });
-      router.push("/signin");
+      router.replace("/signin");
       localStorage.removeItem("currentId");
     }
   };
@@ -508,7 +508,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
           <MenuList>
             <MenuItem
               px={"1rem"}
-              onClick={() => router.push("/dashboard/settings")}
+              onClick={() => router.replace("/dashboard/settings")}
               display={"flex"}
               gap={"3"}
             >
@@ -519,7 +519,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
             </MenuItem>
             <MenuItem
               px={"1rem"}
-              onClick={() => router.push("/dashboard/inbox")}
+              onClick={() => router.replace("/dashboard/inbox")}
               display={"flex"}
               gap={"3"}
             >
@@ -579,7 +579,7 @@ const MainNav: FC<MainNav> = ({ children }) => {
         isClosable: true,
         status: "info",
       });
-      router.push("/signin");
+      router.replace("/signin");
       localStorage.removeItem("currentId");
     }
   };
@@ -673,7 +673,7 @@ const MainNav: FC<MainNav> = ({ children }) => {
                     my={"1rem"}
                     color={"#9FC2C2"}
                     onClick={() => {
-                      router.push(item.url);
+                      router.replace(item.url);
                       onClose();
                     }}
                     transition={"ease-in-out 1s"}
@@ -703,7 +703,7 @@ const MainNav: FC<MainNav> = ({ children }) => {
                     gap={4}
                     my={"1rem"}
                     onClick={() => {
-                      router.push(`/${item.url}`);
+                      router.replace(`/${item.url}`);
                       onClose();
                     }}
                     _hover={{ cursor: "pointer" }}

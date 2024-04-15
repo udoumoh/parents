@@ -108,7 +108,10 @@ const OverpaidBalancePaymentModal: FC<OverpaidBalancePaymentModalProps> = ({
                 isClosable: true,
                 status: "success",
               });
-              onClose();
+              setTimeout(() => {
+                onClose();
+                window.location.reload();
+              }, 1000)
             }
           } catch (err: any) {
             console.log(err.message)

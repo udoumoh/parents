@@ -108,7 +108,7 @@ const Page: FC<pageProps> = ({}) => {
           isClosable: true,
           status: "success",
         });
-        router.push("/confirmOtp");
+        router.replace("/confirmOtp");
       }
     } catch (err: any) {
       toast({
@@ -455,7 +455,7 @@ const Page: FC<pageProps> = ({}) => {
                             Already have an account?{" "}
                             <Link
                               color={"#007C7B"}
-                              onClick={() => router.push("/signin")}
+                              onClick={() => router.replace("/signin")}
                             >
                               {`Sign In ->`}
                             </Link>

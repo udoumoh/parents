@@ -394,7 +394,7 @@ const Page: FC<PageProps> = ({}) => {
             fontSize={"xl"}
             mt={"2rem"}
             onClick={() => {
-              router.push("/dashboard");
+              router.replace("/dashboard");
             }}
           >
             Skip

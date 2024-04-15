@@ -69,7 +69,7 @@ const Page: FC<PageProps> = ({}) => {
           isClosable: true,
           status: "success",
         });
-        router.push("/link-child");
+        router.replace("/link-child");
       }
     } catch (e: any) {
       toast({
