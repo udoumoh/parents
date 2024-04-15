@@ -36,7 +36,7 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
         gap={5}
         columnGap={5}
       >
-        {/* <Skeleton isLoaded={loading}> */}
+
         <Box
           width={"full"}
           rounded={"2xl"}
@@ -136,7 +136,6 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
             </Box>
           </Box>
         </Box>
-        {/* </Skeleton> */}
 
         <Box
           border={"1px solid #005D5D50"}
@@ -158,7 +157,7 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
             <Text
               fontWeight={"bold"}
               color={"#FFFFFF"}
-              fontSize={"md"}
+              fontSize={"sm"}
               px={4}
               py={1}
             >
