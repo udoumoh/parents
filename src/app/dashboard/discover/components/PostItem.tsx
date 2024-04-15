@@ -118,7 +118,7 @@ const PostItem: FC<PostItemProps> = ({profile, loading}) => {
             />
 
             <Text fontSize={"xs"} color={"#00000070"}>
-              {getNumberOfLikes(profile?.id)} {getNumberOfLikes(profile?.id) !== 1 ? "Likes" : "Like"}
+              {profile?.profileLikes} {profile?.profileLikes !== 1 ? "Likes" : "Like"}
             </Text>
           </Flex>
         </Flex>
