@@ -55,6 +55,9 @@ interface GeneratedResultsProps {
     documentPath: string;
     authorsCreatedAt: string;
     isOfficial: string;
+    teachersFirstName: string;
+    teachersLastName: string;
+    teachersMiddleName: string;
   };
   isOpen: boolean;
   onClose: () => void;
@@ -190,8 +193,8 @@ const GeneratedResults: React.FC<GeneratedResultsProps> = ({
     "Grade",
   ];
 
-  const author = `${result?.authorsFirstName} ${
-    result?.authorsMiddleName?.length! > 1 ? result?.authorsMiddleName : ""
+  const author = `${result?.teachersFirstName} ${
+    result?.teachersMiddleName?.length! > 1 ? result?.teachersLastName : ""
   } ${result?.authorsLastName}`;
 
   return (

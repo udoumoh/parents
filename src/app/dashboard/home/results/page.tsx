@@ -70,6 +70,9 @@ interface GeneratedResultProps {
   sharerFirstName: string;
   shareDate: string;
   createdAt: string;
+  teachersFirstName: string;
+  teachersLastName: string;
+  teachersMiddleName: string;
 }
 
 const Results: FC<ResultsProps> = ({}) => {
@@ -134,13 +137,10 @@ const Results: FC<ResultsProps> = ({}) => {
               test3: result?.test3,
               test4: result?.test4,
               scores: result?.scores,
-              authorsFirstName:
-                result?.student?.classroom?.classroom?.teacher[0]?.firstName,
+              authorsFirstName: result?.student?.creator?.admin?.firstName,
               authorsSchoolName: result?.student?.creator?.admin?.school,
-              authorsLastName:
-                result?.student?.classroom?.classroom?.teacher[0]?.lastName,
-              authorsMiddleName:
-                result?.student?.classroom?.classroom?.teacher[0]?.middleName,
+              authorsLastName: result?.student?.creator?.admin?.lastName,
+              authorsMiddleName: result?.student?.creator?.admin?.middleName,
               studentsFirstName: result?.student?.firstName,
               studentsLastName: result?.student?.lastName,
               academicTerm: result?.academicTerm,
@@ -161,6 +161,12 @@ const Results: FC<ResultsProps> = ({}) => {
               documentPath: "",
               authorsCreatedAt: formatDate(result?.createdAt),
               isOfficial: result?.isOfficial,
+              teachersFirstName:
+                result?.student?.classroom?.classroom?.teacher[0]?.firstName,
+              teachersLastName:
+                result?.student?.classroom?.classroom?.teacher[0]?.lastName,
+              teachersMiddleName:
+                result?.student?.classroom?.classroom?.teacher[0]?.middleName,
             })
           );
           setPdfResult(pdfViewData);
@@ -185,14 +191,18 @@ const Results: FC<ResultsProps> = ({}) => {
               schoolLogo: item?.school?.logoImgUrl,
               schoolName: item?.school?.schoolName,
               status: item?.isOfficial,
-              authorsProfileImgUrl:
-                item?.student?.classroom?.classroom?.teacher[0]?.profileImgUrl,
-              authorsFirstName:
+              teachersFirstName:
                 item?.student?.classroom?.classroom?.teacher[0]?.firstName,
-              authorsLastName:
+              teachersLastName:
                 item?.student?.classroom?.classroom?.teacher[0]?.lastName,
+              authorsProfileImgUrl:
+                item?.student?.creator?.admin?.profileImgUrl,
+              authorsFirstName: item?.student?.creator?.admin?.firstName,
+              authorsLastName: item?.student?.creator?.admin?.lastName,
               shareDate: formatDate(item?.createdAt),
               documentPath: item?.document,
+              teachersMiddleName:
+                item?.student?.classroom?.classroom?.teacher[0]?.middleName,
             })
           );
           setUploadedResults(parsedResultsData);
