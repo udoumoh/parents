@@ -46,6 +46,9 @@ interface ResultCardProps {
     examType: string;
     shareDate: string;
     createdAt: string;
+    teachersFirstName: string;
+    teachersLastName: string;
+    teachersMiddleName: string;
   };
 }
 
