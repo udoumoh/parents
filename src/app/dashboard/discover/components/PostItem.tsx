@@ -40,7 +40,7 @@ interface PostItemProps {
 }
 
 const PostItem: FC<PostItemProps> = ({profile, loading}) => {
-  const { likePost, unlikePost, isPostLiked, getNumberOfLikes } =
+  const { likePost, unlikePost, isPostLiked, getNumberOfLikes, setLikedPosts } =
     useUserLikesAPI();
 const {parentData} = useUserAPI()
 
@@ -55,9 +55,12 @@ const {parentData} = useUserAPI()
   useEffect(() => {
     const userId = parentData?.userId
     if(profile?.whoLikedProfile?.includes(userId || "")){
-      likePost(profile.id)
+      setLikedPosts((prevState) => ({
+        ...prevState,
+        [profile.id]: true,
+      }));
     }
-  }, [profile, parentData, likePost]);
+  }, [profile, parentData, setLikedPosts]);
  const { isOpen, onOpen, onClose } = useDisclosure();
     
   return (

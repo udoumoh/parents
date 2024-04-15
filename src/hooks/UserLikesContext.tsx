@@ -8,6 +8,9 @@ interface UserLikesContextProps {
   unlikePost: (postId: number) => void;
   isPostLiked: (postId: number) => boolean;
   getNumberOfLikes: (postId: number) => number;
+  setLikedPosts: React.Dispatch<
+    React.SetStateAction<{ [postId: number]: boolean }>
+  >;
 }
 
 interface UserLikesApiProviderProps {
@@ -78,6 +81,7 @@ export const UserLikesAPIProvider: FC<UserLikesApiProviderProps> = ({ children }
     unlikePost,
     isPostLiked,
     getNumberOfLikes,
+    setLikedPosts,
   };
 
   return (
