@@ -36,6 +36,7 @@ interface SchoolDetailsModalProps {
   isOpen: boolean;
   onClose: () => void;
   setProfileLikes: (args: any) => void;
+  profileLikes: number;
   profile: {
     bannerImgUrl: string;
     country: string;
@@ -66,6 +67,7 @@ const SchoolDetailsModal: FC<SchoolDetailsModalProps> = ({
   onClose,
   profile,
   setProfileLikes,
+  profileLikes,
 }) => {
   const { likePost, unlikePost, isPostLiked, } =
     useUserLikesAPI();
@@ -73,14 +75,10 @@ const SchoolDetailsModal: FC<SchoolDetailsModalProps> = ({
   const handleToggleLike = () => {
     if (isPostLiked(profile.id)) {
       unlikePost(profile.id);
-      setProfileLikes((previousValue: any) => {
-        previousValue - 1
-      })
+      setProfileLikes(profileLikes - 1)
     } else {
       likePost(profile.id);
-      setProfileLikes((previousValue: any) => {
-        previousValue + 1;
-      });
+      setProfileLikes(profileLikes + 1);
     }
   };
   return (
