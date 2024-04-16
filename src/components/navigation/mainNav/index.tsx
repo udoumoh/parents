@@ -638,7 +638,7 @@ const MainNav: FC<MainNav> = ({ children }) => {
         returnFocusOnClose={false}
         onOverlayClick={onClose}
       >
-        <DrawerContent>
+        <DrawerContent overflowY={'auto'}>
           <Accordion allowToggle>
             <AccordionItem>
               <DrawerHeader bgColor={"#005D5D"} pb={0}>
