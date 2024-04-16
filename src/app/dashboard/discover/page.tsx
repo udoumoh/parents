@@ -68,7 +68,7 @@ const Discover: FC<DiscoverProps> = ({}) => {
   }, [parentData, schoolProfiles]);
 
   return (
-    <Box h={"100vh"} w={"full"} p={"1.5rem"} overflowY={"auto"} pb={"5rem"}>
+    <Box h={"100vh"} w={"full"} p={"1.5rem"} overflowY={"auto"} pb={"10rem"}>
       <Box
         backgroundImage={"/images/discoverbg.svg"}
         bgSize="cover"
