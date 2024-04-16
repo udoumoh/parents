@@ -43,12 +43,15 @@ const PostItem: FC<PostItemProps> = ({profile, loading}) => {
   const { likePost, unlikePost, isPostLiked, getNumberOfLikes, setLikedPosts } =
     useUserLikesAPI();
 const {parentData} = useUserAPI()
+const [profileLikes, setProfileLikes] = useState(profile?.profileLikes)
 
   const handleToggleLike = () => {
     if (isPostLiked(profile.id)) {
       unlikePost(profile.id);
+      setProfileLikes(profileLikes - 1)
     } else {
       likePost(profile.id);
+      setProfileLikes(profileLikes + 1)
     }
   };
 
@@ -129,7 +132,7 @@ const {parentData} = useUserAPI()
             />
 
             <Text fontSize={"xs"} color={"#00000070"}>
-              {profile?.profileLikes} {profile?.profileLikes !== 1 ? "Likes" : "Like"}
+              {profileLikes} {profileLikes !== 1 ? "Likes" : "Like"}
             </Text>
           </Flex>
         </Flex>
