@@ -732,9 +732,7 @@ const MainNav: FC<MainNav> = ({ children }) => {
                       alignItems={"center"}
                       gap={6}
                       py={"0.8rem"}
-                      onClick={() => {
-                        onModalOpen;
-                      }}
+                      onClick={onModalOpen}
                       _hover={{
                         cursor: "pointer",
                         backgroundColor: "gray.300",
