@@ -24,31 +24,17 @@ import { RiSchoolLine } from "react-icons/ri";
 import PostItem from "./components/PostItem";
 import { useQuery } from "@apollo/client";
 import { GET_SCHOOLS } from "@/gql/queries";
+import { useUserLikesAPI } from "@/hooks/UserLikesContext";
 
 interface DiscoverProps {}
 
 const Discover: FC<DiscoverProps> = ({}) => {
+    const {schoolProfiles} = useUserLikesAPI();
     const [location, setLocation] = useState("")
     const [schoolType, setSchoolType] = useState("")
-    const [schoolProfiles, setSchoolProfiles] = useState([])
     const {data: getSchools, loading} = useQuery(GET_SCHOOLS)
+    const [activeProfileIndex, setActiveProfileIndex] = useState(0)
     
-    useEffect(() =>{
-      const fetchData = async() => {
-        try{
-            const response = await getSchools
-            if(response){
-              const filteredProfiles = response?.getSchools?.filter((item: any) => item?.schoolMedia !== null)
-              setSchoolProfiles(filteredProfiles)
-            }
-        }catch(err: any){
-          console.log(err?.message)
-        }
-      }
-      fetchData()
-    }, [getSchools])
-
-  console.log(schoolProfiles)
   return (
     <Box h={"100vh"} w={"full"} p={"1.5rem"} overflowY={"auto"} pb={"5rem"}>
       <Box
@@ -212,7 +198,7 @@ const Discover: FC<DiscoverProps> = ({}) => {
                   <SimpleGrid columns={[1, null, 2, 3]} spacing="20px">
                     {schoolProfiles?.map((item, index) => {
                       return(
-                        <PostItem key={index} profile={item} loading={loading}/>
+                        <PostItem key={index} profile={item} loading={loading} currentIndex={index}/>
                       )
                     })}
                   </SimpleGrid>

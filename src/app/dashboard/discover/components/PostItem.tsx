@@ -37,13 +37,15 @@ interface PostItemProps {
     schoolMedia: string [];
   }
   loading:boolean;
+  currentIndex:number;
 }
 
-const PostItem: FC<PostItemProps> = ({profile, loading}) => {
-  const { likePost, unlikePost, isPostLiked, setLikedPosts } =
+const PostItem: FC<PostItemProps> = ({profile, loading, currentIndex}) => {
+  const { likePost, unlikePost, isPostLiked, setLikedPosts, setActiveProfileIndex, schoolProfiles } =
     useUserLikesAPI();
 const {parentData} = useUserAPI()
 const [profileLikes, setProfileLikes] = useState(profile?.profileLikes)
+const [postIndex, setPostIndex] = useState(currentIndex)
 
   const handleToggleLike = () => {
     if (isPostLiked(profile.id)) {
@@ -78,8 +80,8 @@ const [profileLikes, setProfileLikes] = useState(profile?.profileLikes)
         <SchoolDetailsModal
           isOpen={isOpen}
           onClose={onClose}
-          profile={profile}
           setProfileLikes={setProfileLikes}
+          setPostIndex={setPostIndex}
         />
         <Box position={"relative"}>
           <Image
@@ -89,7 +91,7 @@ const [profileLikes, setProfileLikes] = useState(profile?.profileLikes)
             h={{ base: "250px", xl: "350px" }}
             objectFit={"cover"}
             w={"full"}
-            onClick={onOpen}
+            onClick={()=>{onOpen(); setActiveProfileIndex(currentIndex)}}
           />
           <Icon
             as={IoCopy}

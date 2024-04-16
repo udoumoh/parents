@@ -33,40 +33,18 @@ interface SchoolDetailsModalProps {
   isOpen: boolean;
   onClose: () => void;
   setProfileLikes: (args: any) => void;
-  profile: {
-    bannerImgUrl: string;
-    country: string;
-    createdAt: string;
-    description: string;
-    email: string;
-    facebookUrl: string;
-    id: number;
-    instagramUrl: string;
-    lgarea: string;
-    linkedinUrl: string;
-    logoImgUrl: string;
-    phonenumber: string;
-    profileLikes: number;
-    profileViews: number;
-    rcnumber: string;
-    schoolName: string;
-    state: string;
-    twitterUrl: string;
-    websiteUrl: string;
-    whoLikedProfile: string[];
-    schoolMedia: string[];
-  };
+  setPostIndex: (args: any) => void;
 }
 
 const SchoolDetailsModal: FC<SchoolDetailsModalProps> = ({
   isOpen,
   onClose,
-  profile,
   setProfileLikes,
+  setPostIndex,
 }) => {
-  const { likePost, unlikePost, isPostLiked, } =
+  const { likePost, unlikePost, isPostLiked, schoolProfiles, activeProfileIndex, setActiveProfileIndex} =
     useUserLikesAPI();
-
+  const profile = schoolProfiles[activeProfileIndex]
  const handleToggleLike = () => {
    if (isPostLiked(profile.id)) {
      unlikePost(profile.id);
@@ -76,6 +54,16 @@ const SchoolDetailsModal: FC<SchoolDetailsModalProps> = ({
      setProfileLikes((prevLikes: any) => prevLikes + 1);
    }
  };
+
+ const handleNextPost = () => {
+    setActiveProfileIndex( activeProfileIndex + 1);
+ }
+
+ const handlePreviousPost = () => {
+   setActiveProfileIndex( activeProfileIndex - 1);
+ };
+
+ console.log(profile)
   return (
     <Modal
       isOpen={isOpen}
@@ -93,6 +81,8 @@ const SchoolDetailsModal: FC<SchoolDetailsModalProps> = ({
           left={"-12%"}
           rounded={"full"}
           transform="translateY(-50%)"
+          onClick={handlePreviousPost}
+          isDisabled={activeProfileIndex <= 0 ? true : false}
         />
         <IconButton
           display={{ base: "none", md: "flex" }}
@@ -103,6 +93,8 @@ const SchoolDetailsModal: FC<SchoolDetailsModalProps> = ({
           right={"-12%"}
           transform="translateY(-50%)"
           rounded={"full"}
+          onClick={handleNextPost}
+          isDisabled={activeProfileIndex >= schoolProfiles?.length - 1 ? true : false}
         />
         <ModalBody p={0}>
           <Box px={"0"}>
