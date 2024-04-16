@@ -693,8 +693,6 @@ const MainNav: FC<MainNav> = ({ children }) => {
                           key={index}
                           onClick={() => {
                             setLocalstorageId(ward?.id || 0);
-                            onClose();
-                            router.refresh();
                           }}
                           _hover={{
                             cursor: "pointer",
