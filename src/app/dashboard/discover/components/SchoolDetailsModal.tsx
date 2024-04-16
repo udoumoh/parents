@@ -72,15 +72,15 @@ const SchoolDetailsModal: FC<SchoolDetailsModalProps> = ({
   const { likePost, unlikePost, isPostLiked, } =
     useUserLikesAPI();
 
-  const handleToggleLike = () => {
-    if (isPostLiked(profile.id)) {
-      unlikePost(profile.id);
-      setProfileLikes(profileLikes - 1)
-    } else {
-      likePost(profile.id);
-      setProfileLikes(profileLikes + 1);
-    }
-  };
+ const handleToggleLike = () => {
+   if (isPostLiked(profile.id)) {
+     unlikePost(profile.id);
+     setProfileLikes((prevLikes: any) => Math.max(prevLikes - 1, 0));
+   } else {
+     likePost(profile.id);
+     setProfileLikes((prevLikes: any) => prevLikes + 1);
+   }
+ };
   return (
     <Modal
       isOpen={isOpen}

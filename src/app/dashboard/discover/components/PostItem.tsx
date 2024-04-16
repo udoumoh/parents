@@ -48,10 +48,10 @@ const [profileLikes, setProfileLikes] = useState(profile?.profileLikes)
   const handleToggleLike = () => {
     if (isPostLiked(profile.id)) {
       unlikePost(profile.id);
-      setProfileLikes(profileLikes - 1)
+      setProfileLikes((prevLikes) => Math.max(prevLikes - 1, 0));
     } else {
       likePost(profile.id);
-      setProfileLikes(profileLikes + 1)
+      setProfileLikes((prevLikes) => prevLikes + 1);
     }
   };
 
