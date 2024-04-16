@@ -120,8 +120,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
   }, [invoiceData, currentPage]);
 
   const getCompletedInvoiceAmount = (invoice: any) => {
-    const totalCompletedAmount = invoice?.receipt
-      ?.map((receipt: any) => receipt?.amountPaid)
+    const totalCompletedAmount = invoice?.receipt?.filter((item: any) => item?.status !== 'rejected by school').map((receipt: any) => receipt?.amountPaid)
       .reduce((acc: any, item: any) => acc + item, 0);
     return totalCompletedAmount;
   };

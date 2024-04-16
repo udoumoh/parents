@@ -40,7 +40,7 @@ interface PostItemProps {
 }
 
 const PostItem: FC<PostItemProps> = ({profile, loading}) => {
-  const { likePost, unlikePost, isPostLiked, getNumberOfLikes, setLikedPosts } =
+  const { likePost, unlikePost, isPostLiked, setLikedPosts } =
     useUserLikesAPI();
 const {parentData} = useUserAPI()
 const [profileLikes, setProfileLikes] = useState(profile?.profileLikes)
@@ -80,7 +80,6 @@ const [profileLikes, setProfileLikes] = useState(profile?.profileLikes)
           onClose={onClose}
           profile={profile}
           setProfileLikes={setProfileLikes}
-          profileLikes={profileLikes}
         />
         <Box position={"relative"}>
           <Image

@@ -27,16 +27,12 @@ import {
   BiLogoLinkedinSquare,
 } from "react-icons/bi";
 import { TbWorld } from "react-icons/tb";
-import { LIKE_PROFILE, UNLIKE_PROFILE } from "@/gql/mutations";
-import { useUserAPI } from "@/hooks/UserContext";
-import { useMutation } from "@apollo/client";
 import { useUserLikesAPI } from "@/hooks/UserLikesContext";
 
 interface SchoolDetailsModalProps {
   isOpen: boolean;
   onClose: () => void;
   setProfileLikes: (args: any) => void;
-  profileLikes: number;
   profile: {
     bannerImgUrl: string;
     country: string;
@@ -67,7 +63,6 @@ const SchoolDetailsModal: FC<SchoolDetailsModalProps> = ({
   onClose,
   profile,
   setProfileLikes,
-  profileLikes,
 }) => {
   const { likePost, unlikePost, isPostLiked, } =
     useUserLikesAPI();
