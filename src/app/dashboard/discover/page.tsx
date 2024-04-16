@@ -54,20 +54,19 @@ interface ProfileProps {
 }
 
 const Discover: FC<DiscoverProps> = ({}) => {
-    const {parentData} = useUserAPI()
-    const {schoolProfiles} = useUserLikesAPI();
-    const [location, setLocation] = useState("")
-    const [schoolType, setSchoolType] = useState("")
-    const {data: getSchools, loading} = useQuery(GET_SCHOOLS)
-    const [likedPosts, setLikedPosts] = useState<ProfileProps[]>([])
+  const { parentData } = useUserAPI();
+  const { schoolProfiles } = useUserLikesAPI();
+  const [location, setLocation] = useState("");
+  const [schoolType, setSchoolType] = useState("");
+  const [likedPosts, setLikedPosts] = useState<ProfileProps[]>([]);
 
-    useEffect(() => {
-      const likedPosts = schoolProfiles?.filter(profile => profile?.whoLikedProfile?.includes(parentData?.userId || ""))
-      setLikedPosts(likedPosts)
-    }, [parentData, schoolProfiles])
+  useEffect(() => {
+    const likedPosts = schoolProfiles?.filter((profile) =>
+      profile?.whoLikedProfile?.includes(parentData?.userId || "")
+    );
+    setLikedPosts(likedPosts);
+  }, [parentData, schoolProfiles]);
 
-    console.log(likedPosts)
-    
   return (
     <Box h={"100vh"} w={"full"} p={"1.5rem"} overflowY={"auto"} pb={"5rem"}>
       <Box
@@ -234,7 +233,6 @@ const Discover: FC<DiscoverProps> = ({}) => {
                         <PostItem
                           key={index}
                           profile={item}
-                          loading={loading}
                           currentIndex={index}
                         />
                       );
@@ -244,18 +242,42 @@ const Discover: FC<DiscoverProps> = ({}) => {
               </TabPanel>
               <TabPanel px={{ base: "0", md: "1rem" }}>
                 <Box>
-                  <SimpleGrid columns={[1, null, 2, 3]} spacing="20px">
-                    {likedPosts?.map((item, index) => {
-                      return (
-                        <PostItem
-                          key={index}
-                          profile={item}
-                          loading={loading}
-                          currentIndex={index}
-                        />
-                      );
-                    })}
-                  </SimpleGrid>
+                  {likedPosts.length === 0 ? (
+                    <Flex
+                      alignItems={"center"}
+                      justifyContent={"center"}
+                      flexDir={"column"}
+                      mt={"1rem"}
+                    >
+                      <Image
+                        alt="no likes"
+                        src="/images/nolikes.svg"
+                        w={{ base: "200", md: "300px" }}
+                        h={"200px"}
+                      />
+                      <Text
+                        textAlign={"center"}
+                        color={"#005D5D"}
+                        fontSize={{ base: "sm", md: "md" }}
+                        mt={"1rem"}
+                      >
+                        You have not liked any post. Like a post and come back
+                        here to see it.
+                      </Text>
+                    </Flex>
+                  ) : (
+                    <SimpleGrid columns={[1, null, 2, 3]} spacing="20px">
+                      {likedPosts?.map((item, index) => {
+                        return (
+                          <PostItem
+                            key={index}
+                            profile={item}
+                            currentIndex={index}
+                          />
+                        );
+                      })}
+                    </SimpleGrid>
+                  )}
                 </Box>
               </TabPanel>
             </TabPanels>

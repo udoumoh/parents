@@ -41,11 +41,10 @@ interface PostItemProps {
     whoLikedProfile: string[];
     schoolMedia: string[];
   };
-  loading: boolean;
   currentIndex: number;
 }
 
-const PostItem: FC<PostItemProps> = ({ profile, loading, currentIndex }) => {
+const PostItem: FC<PostItemProps> = ({ profile, currentIndex }) => {
   const {
     likePost,
     unlikePost,
@@ -90,7 +89,6 @@ const PostItem: FC<PostItemProps> = ({ profile, loading, currentIndex }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
-    <Skeleton isLoaded={!loading}>
       <Box
         border={"1px solid #00000060"}
         rounded={"xl"}
@@ -163,7 +161,6 @@ const PostItem: FC<PostItemProps> = ({ profile, loading, currentIndex }) => {
           </Flex>
         </Flex>
       </Box>
-    </Skeleton>
   );
 };
 
