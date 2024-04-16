@@ -61,7 +61,6 @@ const SchoolDetailsModal: FC<SchoolDetailsModalProps> = ({
    setActiveProfileIndex( activeProfileIndex - 1);
  };
 
- console.log(profile)
   return (
     <Modal
       isOpen={isOpen}

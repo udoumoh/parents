@@ -15,7 +15,6 @@ import "@react-pdf-viewer/core/lib/styles/index.css";
 
 export const PDFViewer = ({ isOpen, onClose, path }: any) => {
   const handleZoom = (e: ZoomEvent) => {
-    console.log(`Zoom to ${e.scale}`);
   };
   return (
     <Modal isOpen={isOpen} onClose={onClose} size="xl">

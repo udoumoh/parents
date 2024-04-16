@@ -49,8 +49,6 @@ const EditProfileModal: FC<EditProfileModalProps> = ({
     setFolder(uploadedFolder); // Set the folder received from the upload component
   };
 
-  console.log(profileUrl);
-
   const handleProfileUpdate = async () => {
     try {
       const response = await updateparent({

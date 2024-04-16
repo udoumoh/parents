@@ -70,8 +70,6 @@ const Invoice: FC<InvoiceProps> = ({ params }: { params: { id: number } }) => {
       (invoice: any) => Number(invoice?.id) === Number(params?.id)
     );
 
-    console.log(currentInvoice)
-
   return (
     <Box
       display={"flex"}

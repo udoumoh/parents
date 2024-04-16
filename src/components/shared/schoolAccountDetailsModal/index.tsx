@@ -79,8 +79,6 @@ const SchoolAccountDetailsModal: FC<SchoolAccountDetailsModalProps> = ({isOpen, 
       });
     };
 
-    console.log(schoolAccountDetails)
-
   return (
     <Modal
       isOpen={isOpen}

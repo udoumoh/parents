@@ -288,7 +288,6 @@ export const ComposeMessage: React.FC<ComposeMessageProps> = ({
     setReceivers(newData);
   };
   useEffect(() => {
-    console.log(receivers);
     const id = receivers.map((item) => item.id);
     setReceiverId(id);
   }, [receivers]);
@@ -373,7 +372,6 @@ export const ComposeMessage: React.FC<ComposeMessageProps> = ({
                   response.data?.sendMessage?.messages !== null ||
                   undefined
                 ) {
-                  console.log(values);
                   toast({
                     title: "Message Sent ✈️",
                     description: "You just sent a message successfully",
