@@ -142,7 +142,7 @@ const SchoolDetailsModal: FC<SchoolDetailsModalProps> = ({
                 </Button>
               </Flex>
             </Flex>
-            <Box px={"1.5rem"} mt={"2.5rem"}>
+            <Box px={"1.5rem"} mt={"2.5rem"} height={'160px'} overflowY={'auto'}>
               <Text color={"#747474"} fontSize={"sm"} fontWeight={"bold"}>
                 ABOUT SCHOOL
               </Text>
