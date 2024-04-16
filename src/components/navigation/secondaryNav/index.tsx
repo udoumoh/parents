@@ -22,10 +22,11 @@ import {
   IoReceipt,
   IoGridOutline,
   IoGrid,
+  IoFolderOutline,
+  IoFolder,
 } from "react-icons/io5";
 import { TbFile, TbFileFilled } from "react-icons/tb";
 import { BiChevronRight } from "react-icons/bi";
-import { BsFillGridFill, BsGrid } from "react-icons/bs";
 import { IconType } from "react-icons";
 import LinkedStudentsPopover from "@/components/shared/linkedStudentsPopover";
 
@@ -59,8 +60,8 @@ const LinkItems: Array<LinkItemProps> = [
   },
   {
     name: "Academic Results",
-    iconLight: TbFile,
-    iconFill: TbFileFilled,
+    iconLight: IoFolderOutline,
+    iconFill: IoFolder,
     url: "/dashboard/home/results",
   },
   {

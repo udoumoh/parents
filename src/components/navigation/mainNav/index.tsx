@@ -35,6 +35,12 @@ import {
   MenuItem,
   MenuDivider,
   useToast,
+  Accordion,
+  AccordionItem,
+  AccordionButton,
+  AccordionPanel,
+  AccordionIcon,
+  AvatarBadge,
 } from "@chakra-ui/react";
 import { FiMenu } from "react-icons/fi";
 import { IoMdSettings } from "react-icons/io";
@@ -42,16 +48,27 @@ import { RiMailOpenFill } from "react-icons/ri";
 import { PiChatsTeardrop, PiChatsTeardropFill } from "react-icons/pi";
 import { GoHome, GoHomeFill } from "react-icons/go";
 import {
-  RiArrowDownSLine,
   RiArrowRightSLine,
 } from "react-icons/ri";
 import {
   AiOutlinePlus,
   AiOutlineSetting,
 } from "react-icons/ai";
-import { MdArrowDropDown, MdExplore, MdOutlineExplore } from "react-icons/md";
-import { HiOutlineArrowSmRight } from "react-icons/hi";
-import { IoClose, IoHelpCircleOutline, IoLogOut,} from "react-icons/io5";
+import { MdArrowDropDown, } from "react-icons/md";
+import {
+  IoClose,
+  IoHelpCircleOutline,
+  IoLogOut,
+  IoReceiptOutline,
+  IoReceipt,
+  IoGridOutline,
+  IoGrid,
+  IoFolderOutline,
+  IoFolder,
+  IoCompassOutline,
+  IoCompass,
+  IoAdd,
+} from "react-icons/io5";
 import { VscBellDot } from "react-icons/vsc";
 import { IconType } from "react-icons";
 import { useUserAPI } from "@/hooks/UserContext";
@@ -62,7 +79,7 @@ import Lottie from "react-lottie"
 import animationData from '../../../../public/lotties/noNotifications.json'
 import { GET_NOTIFICATIONS } from "@/gql/queries";
 import { formatDateWithSuffix } from "@/helpers/formatDate";
-import Link from "next/link";
+
 
 interface MobileProps extends FlexProps {
   onOpen: () => void;
@@ -107,8 +124,8 @@ const LinkItems: Array<LinkItemProps> = [
   },
   {
     name: "Discover",
-    iconLight: MdOutlineExplore,
-    iconFill: MdExplore,
+    iconLight: IoCompassOutline ,
+    iconFill: IoCompass,
     url: "/dashboard/discover",
   },
   {
@@ -123,21 +140,30 @@ const DrawerNavLinkItems = {
   HomeSubLinks: [
     {
       name: "Overview",
-      icon: HiOutlineArrowSmRight,
+      iconLight: IoGridOutline,
+      iconFill: IoGrid,
       url: "/dashboard/home/overview",
     },
     {
-      name: "Results",
-      icon: HiOutlineArrowSmRight,
+      name: "Academic Results",
+      iconLight: IoFolderOutline,
+      iconFill: IoFolder,
       url: "/dashboard/home/results",
     },
     {
       name: "Invoice",
-      icon: HiOutlineArrowSmRight,
+      iconLight: IoReceiptOutline,
+      iconFill: IoReceipt,
       url: "/dashboard/home/invoice",
     },
   ],
   NavLinks: [
+    {
+      name: "Discover",
+      iconLight: IoCompassOutline ,
+      iconFill: IoCompass,
+      url: "/dashboard/discover",
+    },
     {
       name: "Inbox",
       iconLight: PiChatsTeardrop,
@@ -562,10 +588,9 @@ const MainNav: FC<MainNav> = ({ children }) => {
   } = useDisclosure();
   const router = useRouter()
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { profileData, childData, currentId, setLocalstorageId } = useUserAPI();
+  const { profileData, childData, currentId, setLocalstorageId, currentWardProfile } = useUserAPI();
   const pathName = usePathname();
   const [active, setActive] = useState("");
-  const [isDropOpen, setDropOpen] = useState(false);
   const [logoutParent] = useMutation(LOGOUT_PARENTS);
 
   const handleLogout = async () => {
@@ -613,183 +638,197 @@ const MainNav: FC<MainNav> = ({ children }) => {
         returnFocusOnClose={false}
         onOverlayClick={onClose}
       >
-        <DrawerContent bgColor={"#005D5D"}>
-          <DrawerHeader>
-            <Flex justifyContent={"space-between"} alignItems={"center"}>
-              <Image
-                src={"/images/greylight.svg"}
-                width={"2.5rem"}
-                height={"2.5rem"}
-                alt="logolight"
-                pointerEvents={"none"}
-              />
-              <Icon
-                as={IoClose}
-                boxSize={6}
-                color={"#8AACAC"}
-                onClick={onClose}
-              />
-            </Flex>
-
-            <Divider mt={"1.5rem"} borderColor={"#2D6666"} />
-          </DrawerHeader>
-
-          <DrawerBody>
-            <Box
-              as={"button"}
-              textAlign={"start"}
-              borderRadius={"8"}
-              py={"0.7rem"}
-              backgroundColor={isDropOpen ? "#114E4D" : ""}
-              w={"full"}
-              display={"flex"}
-              alignItems={"center"}
-              justifyContent={"space-between"}
-              onClick={() => {
-                setDropOpen(!isDropOpen);
-              }}
-            >
-              <Box display={"flex"} alignItems={"center"} my={"auto"} gap={4}>
-                <Icon as={GoHomeFill} color={"#fff"} boxSize={4} />
-                <Text color={"#fff"} fontWeight={"500"} fontSize={"md"}>
-                  Home
-                </Text>
-              </Box>
-              <Icon
-                as={isDropOpen ? RiArrowDownSLine : RiArrowRightSLine}
-                color={"#fff"}
-                boxSize={4}
-              />
-            </Box>
-            <Box display={!isDropOpen ? "none" : "block"} mt={"0"}>
-              {DrawerNavLinkItems.HomeSubLinks.map((item, index) => {
-                return (
+        <DrawerContent>
+          <Accordion allowToggle>
+            <AccordionItem>
+              <DrawerHeader bgColor={"#005D5D"} pb={0}>
+                <Flex justifyContent={"space-between"} alignItems={"start"}>
+                  <Avatar
+                    src={currentWardProfile?.profileImage}
+                    size={"lg"}
+                    pointerEvents={"none"}
+                  />
+                  <Icon
+                    as={IoClose}
+                    boxSize={6}
+                    color={"#FFFFFF"}
+                    onClick={onClose}
+                  />
+                </Flex>
+                <AccordionButton
+                  px={0}
+                  mt={"0.7rem"}
+                  _hover={{ backgroundColor: "transparent" }}
+                >
                   <Box
-                    as="a"
-                    key={index}
-                    display={"flex"}
-                    alignItems={"center"}
-                    gap={4}
-                    my={"1rem"}
-                    color={"#9FC2C2"}
-                    onClick={() => {
-                      window.location.replace(item.url);
-                      onClose();
-                    }}
-                    transition={"ease-in-out 1s"}
-                    _hover={{ cursor: "pointer" }}
-                  >
-                    <Icon
-                      as={item.icon}
-                      color={active == item.name ? "#fff" : "##9FC2C2"}
-                      boxSize={4}
-                    />
-                    <Text color={active == item.name ? "#fff" : "##9FC2C2"}>
-                      {item.name}
-                    </Text>
-                  </Box>
-                );
-              })}
-            </Box>
-
-            <Box>
-              {DrawerNavLinkItems.NavLinks.map((item, index) => {
-                return (
-                  <Box
-                    as="a"
-                    key={index}
-                    display={"flex"}
-                    alignItems={"center"}
-                    gap={4}
-                    my={"1rem"}
-                    onClick={() => {
-                      window.location.replace(`/${item.url}`);
-                      onClose();
-                    }}
-                    _hover={{ cursor: "pointer" }}
-                  >
-                    <Icon as={item.iconLight} color={"#fff"} boxSize={4} />
-                    <Text color={"#fff"} fontSize={"md"}>
-                      {item.name}
-                    </Text>
-                  </Box>
-                );
-              })}
-            </Box>
-
-            <Divider mt={"1.5rem"} mb={"1.5rem"} borderColor={"#2D6666"} />
-
-            <Box
-              mt={"2rem"}
-              p={"0.4rem"}
-              backgroundColor={"#ffffff"}
-              rounded={"lg"}
-              overflowY={"auto"}
-            >
-              {childData?.map((ward: any, index: number) => {
-                return (
-                  <Flex
-                    alignItems={"center"}
+                    as="span"
+                    flex="1"
+                    textAlign="left"
+                    color={"#FFFFFF"}
                     gap={2}
-                    bgColor={currentId === ward.id ? "#3F999830" : ""}
-                    rounded={"md"}
-                    py={"0.5rem"}
-                    px={"0.5rem"}
-                    mb={"0.4rem"}
-                    _hover={{
-                      backgroundColor: "#3F999830",
-                      cursor: "pointer",
-                    }}
-                    key={index}
-                    onClick={() => {
-                      setLocalstorageId(ward?.id || 0);
-                      onClose()
-                      router.refresh();
-                    }}
+                    display={"flex"}
+                    flexDir={"column"}
                   >
-                    <Avatar
-                      size={"md"}
-                      src={ward.profileImage}
-                      pointerEvents={"none"}
-                      name={`${ward.firstName} ${ward.lastName}`}
-                    />
-                    <Box lineHeight={"20px"}>
-                      <Text fontWeight={"600"} fontSize={"sm"}>
-                        {`${ward.firstName} ${ward.lastName}`}
-                      </Text>
-                      <Text
-                        fontSize={"12px"}
-                        color={"#AAAAAA"}
-                        fontWeight={"600"}
-                      >
-                        {ward.greynoteNumber}
+                    <Text fontWeight={"semibold"} fontSize={"lg"}>
+                      John Udoumoh
+                    </Text>
+                    <Text fontSize={"sm"} color={"#B8E7E7"}>
+                      GN200202
+                    </Text>
+                  </Box>
+                  <AccordionIcon color={"#ffffff"} boxSize={"8"} />
+                </AccordionButton>
+              </DrawerHeader>
+
+              <DrawerBody p={0}>
+                <AccordionPanel p={0}>
+                  <Box>
+                    {childData?.map((ward: any, index: number) => {
+                      return (
+                        <Flex
+                          alignItems={"center"}
+                          gap={3}
+                          px={"1rem"}
+                          py={"0.8rem"}
+                          key={index}
+                          onClick={() => {
+                            setLocalstorageId(ward?.id || 0);
+                            onClose();
+                            router.refresh();
+                          }}
+                          _hover={{
+                            cursor: "pointer",
+                            backgroundColor: "gray.300",
+                            transitionDuration: "0.5s",
+                          }}
+                        >
+                          <Avatar
+                            size={"md"}
+                            src={ward.profileImage}
+                            pointerEvents={"none"}
+                            name={`${ward.firstName} ${ward.lastName}`}
+                          >
+                            <AvatarBadge
+                              display={currentId === ward.id ? "block" : "none"}
+                              boxSize="1.25em"
+                              bg="green.500"
+                            />
+                          </Avatar>
+                          <Box>
+                            <Text fontWeight={"600"} fontSize={"md"}>
+                              {`${ward.firstName} ${ward.lastName}`}
+                            </Text>
+                            <Text fontSize={"sm"} color={"#AAAAAA"}>
+                              {ward.greynoteNumber}
+                            </Text>
+                          </Box>
+                        </Flex>
+                      );
+                    })}
+                    <Box
+                      w={"full"}
+                      as="button"
+                      display={"flex"}
+                      alignItems={"center"}
+                      gap={6}
+                      py={"0.8rem"}
+                      onClick={() => {
+                        onModalOpen;
+                      }}
+                      _hover={{
+                        cursor: "pointer",
+                        backgroundColor: "gray.300",
+                        transitionDuration: "0.5s",
+                      }}
+                      px={"1.3rem"}
+                    >
+                      <Icon as={IoAdd} color={"gray.500"} boxSize={7} />
+                      <Text color={"gray.800"} fontWeight={"semibold"}>
+                        Link your child
                       </Text>
                     </Box>
-                  </Flex>
-                );
-              })}
-              <Flex justifyContent={"center"} mb={"1rem"} mt={"2rem"}>
-                <Button
-                  backgroundColor={"#005D5D"}
-                  color={"#fff"}
-                  colorScheme="teal"
-                  w={"90%"}
-                  _hover={{ backgroundColor: "#044141" }}
-                  onClick={onModalOpen}
-                >
-                  <AiOutlinePlus />
-                  <Text fontWeight={"light"} pl="0.5rem">
-                    Link your Child
-                  </Text>
-                </Button>
-              </Flex>
-            </Box>
-            <SearchStudentModal
-              isSearchOpen={isModalOpen}
-              onSearchOpen={onModalOpen}
-              onSearchClose={onModalClose}
-            />
-          </DrawerBody>
+                    <Divider borderColor={"gray.300"} />
+                  </Box>
+                </AccordionPanel>
+
+                <Box>
+                  {DrawerNavLinkItems.HomeSubLinks.map((item, index) => {
+                    return (
+                      <Box
+                        as="a"
+                        key={index}
+                        display={"flex"}
+                        alignItems={"center"}
+                        gap={6}
+                        py={"0.8rem"}
+                        color={"gray.500"}
+                        onClick={() => {
+                          window.location.replace(item.url);
+                          onClose();
+                        }}
+                        _hover={{
+                          cursor: "pointer",
+                          backgroundColor: "gray.300",
+                          transitionDuration: "0.5s",
+                        }}
+                        px={"1.5rem"}
+                      >
+                        <Icon
+                          as={active ? item.iconLight : item.iconFill}
+                          color={"gray.500"}
+                          boxSize={6}
+                        />
+                        <Text color={"gray.800"} fontWeight={"semibold"}>
+                          {item.name}
+                        </Text>
+                      </Box>
+                    );
+                  })}
+                  <Divider borderColor={"gray.300"} />
+                </Box>
+
+                <Box>
+                  {DrawerNavLinkItems.NavLinks.map((item, index) => {
+                    return (
+                      <Box
+                        as="a"
+                        key={index}
+                        display={"flex"}
+                        alignItems={"center"}
+                        gap={6}
+                        py={"0.8rem"}
+                        onClick={() => {
+                          window.location.replace(`/${item.url}`);
+                          onClose();
+                        }}
+                        _hover={{
+                          cursor: "pointer",
+                          backgroundColor: "gray.300",
+                          transitionDuration: "0.5s",
+                        }}
+                        px={"1.5rem"}
+                      >
+                        <Icon
+                          as={active ? item.iconLight : item.iconFill}
+                          color={"gray.500"}
+                          boxSize={7}
+                        />
+                        <Text color={"gray.800"} fontWeight={"semibold"}>
+                          {item.name}
+                        </Text>
+                      </Box>
+                    );
+                  })}
+                  <Divider borderColor={"gray.300"} />
+                </Box>
+                <SearchStudentModal
+                  isSearchOpen={isModalOpen}
+                  onSearchOpen={onModalOpen}
+                  onSearchClose={onModalClose}
+                />
+              </DrawerBody>
+            </AccordionItem>
+          </Accordion>
 
           <DrawerFooter>
             <Popover>
