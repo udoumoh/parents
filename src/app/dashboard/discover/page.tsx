@@ -214,7 +214,7 @@ const Discover: FC<DiscoverProps> = ({}) => {
               <Tab fontSize={"sm"} _selected={{ color: "#007C7B" }}>
                 EXPLORE
               </Tab>
-              <Tab fontSize={"sm"} _selected={{ color: "#007C7B" }}>
+              <Tab fontSize={"sm"} _selected={{ color: "#007C7B" }} onClick={()=>window.location.reload()}>
                 LIKED SCHOOLS
               </Tab>
             </TabList>
