@@ -79,6 +79,7 @@ const [profileLikes, setProfileLikes] = useState(profile?.profileLikes)
           isOpen={isOpen}
           onClose={onClose}
           profile={profile}
+          setProfileLikes={setProfileLikes}
         />
         <Box position={"relative"}>
           <Image

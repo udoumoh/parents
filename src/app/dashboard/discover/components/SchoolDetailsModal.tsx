@@ -35,6 +35,7 @@ import { useUserLikesAPI } from "@/hooks/UserLikesContext";
 interface SchoolDetailsModalProps {
   isOpen: boolean;
   onClose: () => void;
+  setProfileLikes: (args: any) => void;
   profile: {
     bannerImgUrl: string;
     country: string;
@@ -64,15 +65,18 @@ const SchoolDetailsModal: FC<SchoolDetailsModalProps> = ({
   isOpen,
   onClose,
   profile,
+  setProfileLikes,
 }) => {
-  const { likePost, unlikePost, isPostLiked, getNumberOfLikes } =
+  const { likePost, unlikePost, isPostLiked, } =
     useUserLikesAPI();
 
   const handleToggleLike = () => {
     if (isPostLiked(profile.id)) {
       unlikePost(profile.id);
+      setProfileLikes(profile?.profileLikes - 1)
     } else {
       likePost(profile.id);
+      setProfileLikes(profile?.profileLikes + 1);
     }
   };
   return (
