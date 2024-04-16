@@ -670,17 +670,17 @@ const MainNav: FC<MainNav> = ({ children }) => {
                     flexDir={"column"}
                   >
                     <Text fontWeight={"semibold"} fontSize={"lg"}>
-                      John Udoumoh
+                      {`${currentWardProfile?.firstName} ${currentWardProfile?.lastName}`}
                     </Text>
                     <Text fontSize={"sm"} color={"#B8E7E7"}>
-                      GN200202
+                      {currentWardProfile?.greynoteNumber}
                     </Text>
                   </Box>
                   <AccordionIcon color={"#ffffff"} boxSize={"8"} />
                 </AccordionButton>
               </DrawerHeader>
 
-              <DrawerBody p={0}>
+              <DrawerBody p={0} overflowY={'auto'}>
                 <AccordionPanel p={0}>
                   <Box>
                     {childData?.map((ward: any, index: number) => {
@@ -693,6 +693,7 @@ const MainNav: FC<MainNav> = ({ children }) => {
                           key={index}
                           onClick={() => {
                             setLocalstorageId(ward?.id || 0);
+                            router.refresh()
                           }}
                           _hover={{
                             cursor: "pointer",
@@ -815,7 +816,6 @@ const MainNav: FC<MainNav> = ({ children }) => {
                       </Box>
                     );
                   })}
-                  <Divider borderColor={"gray.300"} />
                 </Box>
                 <SearchStudentModal
                   isSearchOpen={isModalOpen}
@@ -848,16 +848,16 @@ const MainNav: FC<MainNav> = ({ children }) => {
                     />
                     <Grid lineHeight={"1rem"}>
                       <Text
-                        color={"#fff"}
-                        fontWeight={"600"}
-                        fontSize={"sm"}
+                        color={"gray.800"}
+                        fontWeight={"semibold"}
+                        fontSize={"md"}
                       >{`${profileData.userBio.firstName} ${profileData.userBio.lastName}`}</Text>
-                      <Text color={"#629B9B"} fontSize={"xs"}>
+                      <Text color={"gray.300"} fontSize={"sm"}>
                         {profileData.userBio.email}
                       </Text>
                     </Grid>
                   </Box>
-                  <Icon as={RiArrowRightSLine} color={"#fff"} boxSize={6} />
+                  <Icon as={RiArrowRightSLine} color={"gray.800"} boxSize={6} />
                 </Box>
               </PopoverTrigger>
               <PopoverContent
