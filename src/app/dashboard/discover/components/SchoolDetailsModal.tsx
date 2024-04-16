@@ -73,10 +73,14 @@ const SchoolDetailsModal: FC<SchoolDetailsModalProps> = ({
   const handleToggleLike = () => {
     if (isPostLiked(profile.id)) {
       unlikePost(profile.id);
-      setProfileLikes(profile?.profileLikes - 1)
+      setProfileLikes((previousValue: any) => {
+        previousValue - 1
+      })
     } else {
       likePost(profile.id);
-      setProfileLikes(profile?.profileLikes + 1);
+      setProfileLikes((previousValue: any) => {
+        previousValue + 1;
+      });
     }
   };
   return (
