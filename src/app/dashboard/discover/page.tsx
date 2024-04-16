@@ -59,14 +59,14 @@ const Discover: FC<DiscoverProps> = ({}) => {
     const [location, setLocation] = useState("")
     const [schoolType, setSchoolType] = useState("")
     const {data: getSchools, loading} = useQuery(GET_SCHOOLS)
-    // const [likedPosts, setLikedPosts] = useState<ProfileProps[]>([])
+    const [likedPosts, setLikedPosts] = useState<ProfileProps[]>([])
 
-    // useEffect(() => {
-    //   const likedPosts = schoolProfiles?.filter(profile => profile?.whoLikedProfile?.includes(parentData?.userId || ""))
-    //   setLikedPosts(likedPosts)
-    // }, [parentData, schoolProfiles])
+    useEffect(() => {
+      const likedPosts = schoolProfiles?.filter(profile => profile?.whoLikedProfile?.includes(parentData?.userId || ""))
+      setLikedPosts(likedPosts)
+    }, [parentData, schoolProfiles])
 
-    // console.log(likedPosts)
+    console.log(likedPosts)
     
   return (
     <Box h={"100vh"} w={"full"} p={"1.5rem"} overflowY={"auto"} pb={"5rem"}>
@@ -244,7 +244,7 @@ const Discover: FC<DiscoverProps> = ({}) => {
               </TabPanel>
               <TabPanel px={{ base: "0", md: "1rem" }}>
                 <Box>
-                  {/* <SimpleGrid columns={[1, null, 2, 3]} spacing="20px">
+                  <SimpleGrid columns={[1, null, 2, 3]} spacing="20px">
                     {likedPosts?.map((item, index) => {
                       return (
                         <PostItem
@@ -255,7 +255,7 @@ const Discover: FC<DiscoverProps> = ({}) => {
                         />
                       );
                     })}
-                  </SimpleGrid> */}
+                  </SimpleGrid>
                 </Box>
               </TabPanel>
             </TabPanels>
