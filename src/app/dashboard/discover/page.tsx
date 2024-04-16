@@ -25,15 +25,48 @@ import PostItem from "./components/PostItem";
 import { useQuery } from "@apollo/client";
 import { GET_SCHOOLS } from "@/gql/queries";
 import { useUserLikesAPI } from "@/hooks/UserLikesContext";
+import { useUserAPI } from "@/hooks/UserContext";
 
 interface DiscoverProps {}
 
+interface ProfileProps {
+  bannerImgUrl: string;
+  country: string;
+  createdAt: string;
+  description: string;
+  email: string;
+  facebookUrl: string;
+  id: number;
+  instagramUrl: string;
+  lgarea: string;
+  linkedinUrl: string;
+  logoImgUrl: string;
+  phonenumber: string;
+  profileLikes: number;
+  profileViews: number;
+  rcnumber: string;
+  schoolName: string;
+  state: string;
+  twitterUrl: string;
+  websiteUrl: string;
+  whoLikedProfile: string[];
+  schoolMedia: string[];
+}
+
 const Discover: FC<DiscoverProps> = ({}) => {
+    const {parentData} = useUserAPI()
     const {schoolProfiles} = useUserLikesAPI();
     const [location, setLocation] = useState("")
     const [schoolType, setSchoolType] = useState("")
     const {data: getSchools, loading} = useQuery(GET_SCHOOLS)
-    const [activeProfileIndex, setActiveProfileIndex] = useState(0)
+    const [likedPosts, setLikedPosts] = useState<ProfileProps[]>([])
+
+    useEffect(() => {
+      const likedPosts = schoolProfiles.filter(profile => profile?.whoLikedProfile?.includes(parentData?.userId || ""))
+      setLikedPosts(likedPosts)
+    }, [parentData, schoolProfiles])
+
+    console.log(likedPosts)
     
   return (
     <Box h={"100vh"} w={"full"} p={"1.5rem"} overflowY={"auto"} pb={"5rem"}>
@@ -152,7 +185,7 @@ const Discover: FC<DiscoverProps> = ({}) => {
                     onChange={(e) => {
                       setSchoolType(e.target.value);
                     }}
-                    _hover={{cursor:"pointer"}}
+                    _hover={{ cursor: "pointer" }}
                   >
                     <option value="public">Public</option>
                     <option value="private">Private</option>
@@ -193,19 +226,37 @@ const Discover: FC<DiscoverProps> = ({}) => {
               borderRadius="1px"
             />
             <TabPanels>
-              <TabPanel px={{base:"0", md:"1rem"}}>
+              <TabPanel px={{ base: "0", md: "1rem" }}>
                 <Box>
                   <SimpleGrid columns={[1, null, 2, 3]} spacing="20px">
                     {schoolProfiles?.map((item, index) => {
-                      return(
-                        <PostItem key={index} profile={item} loading={loading} currentIndex={index}/>
-                      )
+                      return (
+                        <PostItem
+                          key={index}
+                          profile={item}
+                          loading={loading}
+                          currentIndex={index}
+                        />
+                      );
                     })}
                   </SimpleGrid>
                 </Box>
               </TabPanel>
-              <TabPanel>
-                <p>two!</p>
+              <TabPanel px={{ base: "0", md: "1rem" }}>
+                <Box>
+                  <SimpleGrid columns={[1, null, 2, 3]} spacing="20px">
+                    {likedPosts?.map((item, index) => {
+                      return (
+                        <PostItem
+                          key={index}
+                          profile={item}
+                          loading={loading}
+                          currentIndex={index}
+                        />
+                      );
+                    })}
+                  </SimpleGrid>
+                </Box>
               </TabPanel>
             </TabPanels>
           </Tabs>
