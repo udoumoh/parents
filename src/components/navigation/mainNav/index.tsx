@@ -647,14 +647,15 @@ const MainNav: FC<MainNav> = ({ children }) => {
                     src={currentWardProfile?.profileImage}
                     size={"lg"}
                     pointerEvents={"none"}
-                    border={"1px solid #CB8C11"}
-                    p={"0.5rem"}
+                    border={"2px solid #CB8C11"}
+                    p={"0.2rem"}
                   />
                   <Icon
                     as={IoClose}
                     boxSize={6}
                     color={"#FFFFFF"}
                     onClick={onClose}
+                    _hover={{cursor:'pointer'}}
                   />
                 </Flex>
                 <AccordionButton
@@ -832,7 +833,7 @@ const MainNav: FC<MainNav> = ({ children }) => {
             <Popover>
               <PopoverTrigger>
                 <Box
-                  mt={"5rem"}
+                  mt={"4rem"}
                   as={"a"}
                   w={"full"}
                   display={"flex"}

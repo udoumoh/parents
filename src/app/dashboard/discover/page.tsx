@@ -59,6 +59,13 @@ const Discover: FC<DiscoverProps> = ({}) => {
   const [location, setLocation] = useState("");
   const [schoolType, setSchoolType] = useState("");
   const [likedPosts, setLikedPosts] = useState<ProfileProps[]>([]);
+  const [selectedTab, setSelectedTab] = useState(0);
+
+  const handleTabChange = (index: any) => {
+    setSelectedTab(index);
+    window.location.reload();
+  };
+
 
   useEffect(() => {
     const likedPosts = schoolProfiles?.filter((profile) =>
@@ -209,12 +216,12 @@ const Discover: FC<DiscoverProps> = ({}) => {
 
       <Box mt={"1.5rem"} px={{ base: "0", md: "1.5rem" }}>
         <Center>
-          <Tabs variant={"unstyled"}>
+          <Tabs variant={"unstyled"} onChange={handleTabChange}>
             <TabList>
               <Tab fontSize={"sm"} _selected={{ color: "#007C7B" }}>
                 EXPLORE
               </Tab>
-              <Tab fontSize={"sm"} _selected={{ color: "#007C7B" }} onClick={()=>window.location.reload()}>
+              <Tab fontSize={"sm"} _selected={{ color: "#007C7B" }}>
                 LIKED SCHOOLS
               </Tab>
             </TabList>
@@ -247,7 +254,7 @@ const Discover: FC<DiscoverProps> = ({}) => {
                       alignItems={"center"}
                       justifyContent={"center"}
                       flexDir={"column"}
-                      mt={"1rem"}
+                      my={"2rem"}
                     >
                       <Image
                         alt="no likes"
@@ -257,9 +264,9 @@ const Discover: FC<DiscoverProps> = ({}) => {
                       />
                       <Text
                         textAlign={"center"}
-                        color={"#005D5D"}
-                        fontSize={{ base: "sm", md: "md" }}
-                        mt={"1rem"}
+                        color={"gray.500"}
+                        fontSize={{ base: "md", md: "lg" }}
+                        mt={"2rem"}
                       >
                         You have not liked any post. Like a post and come back
                         here to see it.
