@@ -638,7 +638,7 @@ const MainNav: FC<MainNav> = ({ children }) => {
         returnFocusOnClose={false}
         onOverlayClick={onClose}
       >
-        <DrawerContent overflowY={'auto'}>
+        <DrawerContent overflowY={"auto"}>
           <Accordion allowToggle>
             <AccordionItem>
               <DrawerHeader bgColor={"#005D5D"} pb={0}>
@@ -647,6 +647,8 @@ const MainNav: FC<MainNav> = ({ children }) => {
                     src={currentWardProfile?.profileImage}
                     size={"lg"}
                     pointerEvents={"none"}
+                    border={"1px solid #CB8C11"}
+                    p={"0.5rem"}
                   />
                   <Icon
                     as={IoClose}
@@ -748,7 +750,7 @@ const MainNav: FC<MainNav> = ({ children }) => {
                   </Box>
                 </AccordionPanel>
 
-                <Box>
+                <Box my={'1rem'}>
                   {DrawerNavLinkItems.HomeSubLinks.map((item, index) => {
                     return (
                       <Box
@@ -781,10 +783,10 @@ const MainNav: FC<MainNav> = ({ children }) => {
                       </Box>
                     );
                   })}
-                  <Divider borderColor={"gray.300"} />
                 </Box>
+                  <Divider borderColor={"gray.300"} />
 
-                <Box>
+                <Box my={'1rem'}>
                   {DrawerNavLinkItems.NavLinks.map((item, index) => {
                     return (
                       <Box
@@ -830,7 +832,7 @@ const MainNav: FC<MainNav> = ({ children }) => {
             <Popover>
               <PopoverTrigger>
                 <Box
-                  mt={'4rem'}
+                  mt={"5rem"}
                   as={"a"}
                   w={"full"}
                   display={"flex"}
@@ -920,7 +922,7 @@ const MainNav: FC<MainNav> = ({ children }) => {
                   onClick={handleLogout}
                   fontWeight={400}
                   w="full"
-                  leftIcon={<IoLogOut size={"22"}/>}
+                  leftIcon={<IoLogOut size={"22"} />}
                 >
                   Logout
                 </Button>
