@@ -680,7 +680,7 @@ const MainNav: FC<MainNav> = ({ children }) => {
                 </AccordionButton>
               </DrawerHeader>
 
-              <DrawerBody p={0} overflowY={'auto'}>
+              <DrawerBody p={0} overflowY={"auto"}>
                 <AccordionPanel p={0}>
                   <Box>
                     {childData?.map((ward: any, index: number) => {
@@ -693,7 +693,7 @@ const MainNav: FC<MainNav> = ({ children }) => {
                           key={index}
                           onClick={() => {
                             setLocalstorageId(ward?.id || 0);
-                            router.refresh()
+                            router.refresh();
                           }}
                           _hover={{
                             cursor: "pointer",
@@ -830,6 +830,7 @@ const MainNav: FC<MainNav> = ({ children }) => {
             <Popover>
               <PopoverTrigger>
                 <Box
+                  mt={'4rem'}
                   as={"a"}
                   w={"full"}
                   display={"flex"}
@@ -852,7 +853,7 @@ const MainNav: FC<MainNav> = ({ children }) => {
                         fontWeight={"semibold"}
                         fontSize={"md"}
                       >{`${profileData.userBio.firstName} ${profileData.userBio.lastName}`}</Text>
-                      <Text color={"gray.300"} fontSize={"sm"}>
+                      <Text color={"#AAAAAA"} fontSize={"sm"}>
                         {profileData.userBio.email}
                       </Text>
                     </Grid>
@@ -919,6 +920,7 @@ const MainNav: FC<MainNav> = ({ children }) => {
                   onClick={handleLogout}
                   fontWeight={400}
                   w="full"
+                  leftIcon={<IoLogOut size={"22"}/>}
                 >
                   Logout
                 </Button>
