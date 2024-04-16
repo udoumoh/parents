@@ -47,13 +47,10 @@ const VideoPlayer: FC<VideoPlayerProps> = ({url}) => {
       width={"100%"}
       onMouseEnter={() => setIshovered(true)}
       onMouseLeave={() => setIshovered(false)}
-      h={{base:"300px", md:"500px"}}
+      h={{ base: "300px", md: "500px" }}
     >
-      <video ref={videoRef} width="100%" height='auto'>
-        <source
-          src={url}
-          type="video/mp4"
-        />
+      <video ref={videoRef} width="100%" height="auto">
+        <source src={url} type="video/mp4" />
         Your browser does not support the video tag.
       </video>
       {/* Custom play/pause button */}
@@ -64,15 +61,18 @@ const VideoPlayer: FC<VideoPlayerProps> = ({url}) => {
         transform="translate(-50%, -50%)"
         alignItems="center"
         justifyContent="center"
-        width="100%"
-        height="100%"
+        width="auto"
+        height="auto"
+        backgroundColor={"#00000040"}
+        rounded={"full"}
+        p={"0.8rem"}
+        display={isHovered ? "flex" : "none"}
       >
         <Icon
           as={isPlaying ? FaPause : FaPlay}
           onClick={handleTogglePlay}
           color={"#fff"}
           _hover={{ cursor: "pointer" }}
-          display={isHovered ? "block" : "none"}
           boxSize={6}
         />
       </Flex>
