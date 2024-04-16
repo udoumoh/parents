@@ -1,4 +1,10 @@
-import React, { createContext, useContext, useState, FC, useEffect } from "react";
+import React, {
+  createContext,
+  useContext,
+  useState,
+  FC,
+  useEffect,
+} from "react";
 import { useMutation } from "@apollo/client";
 import { LIKE_PROFILE, UNLIKE_PROFILE } from "@/gql/mutations";
 import { GET_SCHOOLS } from "@/gql/queries";
@@ -50,10 +56,12 @@ const UserLikesContext = createContext<UserLikesContextProps | undefined>(
 );
 
 // Custom provider component
-export const UserLikesAPIProvider: FC<UserLikesApiProviderProps> = ({ children }) => {
-    const { data: getSchools, loading } = useQuery(GET_SCHOOLS);
-    const [schoolProfiles, setSchoolProfiles] = useState([]);
-  const [activeProfileIndex, setActiveProfileIndex] = useState(0)
+export const UserLikesAPIProvider: FC<UserLikesApiProviderProps> = ({
+  children,
+}) => {
+  const { data: getSchools, loading } = useQuery(GET_SCHOOLS);
+  const [schoolProfiles, setSchoolProfiles] = useState([]);
+  const [activeProfileIndex, setActiveProfileIndex] = useState(0);
   const [likedPosts, setLikedPosts] = useState<{ [postId: number]: boolean }>(
     {}
   );

@@ -68,11 +68,11 @@ const PostItem: FC<PostItemProps> = ({ profile, currentIndex }) => {
   });
 
   const handleToggleLike = () => {
-    if (isPostLiked(profile.id)) {
-      unlikePost(profile.id);
+    if (isPostLiked(profile?.id)) {
+      unlikePost(profile?.id);
       setProfileLikes((prevLikes) => Math.max(prevLikes - 1, 0));
     } else {
-      likePost(profile.id);
+      likePost(profile?.id);
       setProfileLikes((prevLikes) => prevLikes + 1);
     }
   };
@@ -143,9 +143,9 @@ const PostItem: FC<PostItemProps> = ({ profile, currentIndex }) => {
 
           <Flex alignItems={"center"} flexDir={"column"}>
             <Icon
-              as={isPostLiked(profile.id) ? IoMdHeart : IoMdHeartEmpty}
+              as={isPostLiked(profile?.id) ? IoMdHeart : IoMdHeartEmpty}
               onClick={handleToggleLike}
-              color={isPostLiked(profile.id) ? "red.500" : "#00000070"}
+              color={isPostLiked(profile?.id) ? "red.500" : "#00000070"}
               boxSize={{ base: 5, md: 7 }}
               transition="transform 0.2s ease-in-out"
               _hover={{

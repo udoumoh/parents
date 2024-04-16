@@ -849,6 +849,10 @@ query GetSchools {
     profileViews
     whoLikedProfile
     folder
+    schoolType
+    priceRange
+    genderType
+    studentPerClassroom
     state
     country
     description
@@ -879,6 +883,7 @@ query GetSchools {
         status
         plan
         isReferred
+        isBeginner
         isDisabled
         agreedTo
         referralCode
@@ -913,6 +918,7 @@ query GetSchools {
             status
             plan
             isReferred
+            isBeginner
             isDisabled
             agreedTo
             referralCode
