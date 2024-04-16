@@ -33,14 +33,12 @@ interface SchoolDetailsModalProps {
   isOpen: boolean;
   onClose: () => void;
   setProfileLikes: (args: any) => void;
-  setPostIndex: (args: any) => void;
 }
 
 const SchoolDetailsModal: FC<SchoolDetailsModalProps> = ({
   isOpen,
   onClose,
   setProfileLikes,
-  setPostIndex,
 }) => {
   const { likePost, unlikePost, isPostLiked, schoolProfiles, activeProfileIndex, setActiveProfileIndex} =
     useUserLikesAPI();

@@ -1,51 +1,72 @@
-import { FC, useState, useEffect } from 'react'
-import { Box, Image, Text, Avatar, Flex, Icon, useDisclosure, Skeleton } from '@chakra-ui/react'
+import { FC, useState, useEffect } from "react";
 import {
-  IoMdHeartEmpty,
-  IoMdHeart,
-} from "react-icons/io";
+  Box,
+  Image,
+  Text,
+  Avatar,
+  Flex,
+  Icon,
+  useDisclosure,
+  Skeleton,
+} from "@chakra-ui/react";
+import { IoMdHeartEmpty, IoMdHeart } from "react-icons/io";
 import { IoCopy } from "react-icons/io5";
-import SchoolDetailsModal from './SchoolDetailsModal';
-import { LIKE_PROFILE, UNLIKE_PROFILE } from '@/gql/mutations';
-import { useUserAPI } from '@/hooks/UserContext';
-import { useMutation } from '@apollo/client';
-import { useUserLikesAPI } from '@/hooks/UserLikesContext';
-
+import SchoolDetailsModal from "./SchoolDetailsModal";
+import { LIKE_PROFILE, UNLIKE_PROFILE } from "@/gql/mutations";
+import { useUserAPI } from "@/hooks/UserContext";
+import { useMutation } from "@apollo/client";
+import { useUserLikesAPI } from "@/hooks/UserLikesContext";
 
 interface PostItemProps {
   profile: {
-    bannerImgUrl:string;
-    country:string;
-    createdAt:string;
-    description:string;
-    email:string;
-    facebookUrl:string;
-    id:number;
-    instagramUrl:string;
-    lgarea:string;
-    linkedinUrl:string;
-    logoImgUrl:string;
-    phonenumber:string;
-    profileLikes:number;
-    profileViews:number;
-    rcnumber:string;
-    schoolName:string;
-    state:string;
-    twitterUrl:string;
-    websiteUrl:string;
-    whoLikedProfile:string []
-    schoolMedia: string [];
-  }
-  loading:boolean;
-  currentIndex:number;
+    bannerImgUrl: string;
+    country: string;
+    createdAt: string;
+    description: string;
+    email: string;
+    facebookUrl: string;
+    id: number;
+    instagramUrl: string;
+    lgarea: string;
+    linkedinUrl: string;
+    logoImgUrl: string;
+    phonenumber: string;
+    profileLikes: number;
+    profileViews: number;
+    rcnumber: string;
+    schoolName: string;
+    state: string;
+    twitterUrl: string;
+    websiteUrl: string;
+    whoLikedProfile: string[];
+    schoolMedia: string[];
+  };
+  loading: boolean;
+  currentIndex: number;
 }
 
-const PostItem: FC<PostItemProps> = ({profile, loading, currentIndex}) => {
-  const { likePost, unlikePost, isPostLiked, setLikedPosts, setActiveProfileIndex, schoolProfiles } =
-    useUserLikesAPI();
-const {parentData} = useUserAPI()
-const [profileLikes, setProfileLikes] = useState(profile?.profileLikes)
-const [postIndex, setPostIndex] = useState(currentIndex)
+const PostItem: FC<PostItemProps> = ({ profile, loading, currentIndex }) => {
+  const {
+    likePost,
+    unlikePost,
+    isPostLiked,
+    setLikedPosts,
+    setActiveProfileIndex,
+    schoolProfiles,
+  } = useUserLikesAPI();
+  const { parentData } = useUserAPI();
+  const [profileLikes, setProfileLikes] = useState(profile?.profileLikes);
+  const imageLinks: string[] = [];
+
+  profile?.schoolMedia?.forEach((link) => {
+    if (
+      link.endsWith(".jpg") ||
+      link.endsWith(".jpeg") ||
+      link.endsWith(".png")
+    ) {
+      imageLinks.push(link);
+    }
+  });
 
   const handleToggleLike = () => {
     if (isPostLiked(profile.id)) {
@@ -58,16 +79,16 @@ const [postIndex, setPostIndex] = useState(currentIndex)
   };
 
   useEffect(() => {
-    const userId = parentData?.userId
-    if(profile?.whoLikedProfile?.includes(userId || "")){
+    const userId = parentData?.userId;
+    if (profile?.whoLikedProfile?.includes(userId || "")) {
       setLikedPosts((prevState) => ({
         ...prevState,
         [profile.id]: true,
       }));
     }
   }, [profile, parentData, setLikedPosts]);
- const { isOpen, onOpen, onClose } = useDisclosure();
-    
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
   return (
     <Skeleton isLoaded={!loading}>
       <Box
@@ -81,17 +102,19 @@ const [postIndex, setPostIndex] = useState(currentIndex)
           isOpen={isOpen}
           onClose={onClose}
           setProfileLikes={setProfileLikes}
-          setPostIndex={setPostIndex}
         />
         <Box position={"relative"}>
           <Image
             rounded={"md"}
             alt="postItem"
-            src={profile?.schoolMedia[0]}
+            src={imageLinks[0]}
             h={{ base: "250px", xl: "350px" }}
             objectFit={"cover"}
             w={"full"}
-            onClick={()=>{onOpen(); setActiveProfileIndex(currentIndex)}}
+            onClick={() => {
+              onOpen();
+              setActiveProfileIndex(currentIndex);
+            }}
           />
           <Icon
             as={IoCopy}
@@ -142,6 +165,6 @@ const [postIndex, setPostIndex] = useState(currentIndex)
       </Box>
     </Skeleton>
   );
-}
+};
 
-export default PostItem
+export default PostItem;
