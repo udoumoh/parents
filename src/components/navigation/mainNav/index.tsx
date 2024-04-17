@@ -648,8 +648,6 @@ const MainNav: FC<MainNav> = ({ children }) => {
                       src={currentWardProfile?.profileImage}
                       size={"lg"}
                       pointerEvents={"none"}
-                      border={"2px solid #CB8C11"}
-                      p={"0.2rem"}
                     />
                     <Icon
                       as={IoClose}
@@ -673,7 +671,7 @@ const MainNav: FC<MainNav> = ({ children }) => {
                       display={"flex"}
                       flexDir={"column"}
                     >
-                      <Text fontWeight={"semibold"} fontSize={"lg"}>
+                      <Text fontWeight={"semibold"} fontSize={"md"}>
                         {`${currentWardProfile?.firstName} ${currentWardProfile?.lastName}`}
                       </Text>
                       <Text fontSize={"sm"} color={"#B8E7E7"}>
@@ -720,7 +718,7 @@ const MainNav: FC<MainNav> = ({ children }) => {
                               />
                             </Avatar>
                             <Box>
-                              <Text fontWeight={"600"} fontSize={"md"}>
+                              <Text fontWeight={'bold'} fontSize={"md"}>
                                 {`${ward.firstName} ${ward.lastName}`}
                               </Text>
                               <Text fontSize={"sm"} color={"#AAAAAA"}>
