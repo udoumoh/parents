@@ -206,6 +206,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
     }
   };
   console.log(parentData)
+  console.log(invoiceData)
   return (
     <Box mb={{ base: "8rem", lg: "5rem" }}>
       <Box>
