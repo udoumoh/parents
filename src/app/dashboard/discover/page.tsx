@@ -59,12 +59,6 @@ const Discover: FC<DiscoverProps> = ({}) => {
   const [location, setLocation] = useState("");
   const [schoolType, setSchoolType] = useState("");
   const [likedPosts, setLikedPosts] = useState<ProfileProps[]>([]);
-  const [selectedTab, setSelectedTab] = useState(0);
-
-  const handleTabChange = (index: any) => {
-    setSelectedTab(index);
-    window.location.reload();
-  };
 
 
   useEffect(() => {
@@ -216,7 +210,7 @@ const Discover: FC<DiscoverProps> = ({}) => {
 
       <Box mt={"1.5rem"} px={{ base: "0", md: "1.5rem" }}>
         <Center>
-          <Tabs variant={"unstyled"} onChange={handleTabChange}>
+          <Tabs variant={"unstyled"}>
             <TabList>
               <Tab fontSize={"sm"} _selected={{ color: "#007C7B" }}>
                 EXPLORE
