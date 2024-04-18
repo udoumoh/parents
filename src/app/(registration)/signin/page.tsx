@@ -103,32 +103,36 @@ const Signin: FC<pageProps> = ({}) => {
   return (
     <Box
       display={"flex"}
-      alignItems={"center"}
+      alignItems={{ base: "initial", sm: "center" }}
       justifyContent={"center"}
       h={"100vh"}
-      backgroundColor={"#005D5D20"}
+      backgroundColor={{base:"#FFFFFF", sm:"#005D5D20"}}
       backdropBlur={"30px"}
     >
       <Box
         display={"flex"}
         flexDir={"column"}
-        alignItems={"center"}
-        justifyContent={"center"}
+        alignItems={{ base: "initial", sm: "center" }}
+        justifyContent={{ base: "initial", sm: "center" }}
         gap={10}
         p={2}
       >
-        <Image src="/images/greylightBordered.svg" alt="logo" />
+        <Image
+          src="/images/greylightBordered.svg"
+          alt="logo"
+          display={{ base: "none", sm: "block" }}
+        />
         <Box
           backgroundColor={"#fff"}
-          w={{ base: "full", md: "500px" }}
+          w={{ base: "full", sm:"450px", md: "500px" }}
           py={5}
-          px={{ base: "2rem", sm: "2rem", md:"3rem" }}
+          px={{ base: "1rem", sm: "3rem" }}
           rounded={"lg"}
-          shadow={"md"}
+          shadow={{ base: "none", md: "md" }}
         >
           <Box textAlign={"center"}>
             <Text color={"#005D5D"} fontWeight={"bold"} fontSize={"2xl"}>
-              Welcome back
+              Welcome back!
             </Text>
             <Text color={"#005D5D90"} fontWeight={"600"} fontSize={"sm"}>
               Enter your credentials to access your account
@@ -143,44 +147,67 @@ const Signin: FC<pageProps> = ({}) => {
             mt={"2rem"}
             w={"full"}
           >
-            <InputGroup>
-              <InputLeftElement pointerEvents="none">
-                <MdEmail color="#005D5D" size={20} />
-              </InputLeftElement>
-              <Input
-                onChange={handleEmailChange}
-                type="email"
-                placeholder="Enter your email"
-                pl={"2.5rem"}
-                focusBorderColor="#005D5D80"
-                border={"1px solid #005D5D30"}
-              />
-            </InputGroup>
-
-            <InputGroup>
-              <InputLeftElement pointerEvents="none">
-                <IoMdLock color="#005D5D" size={20} />
-              </InputLeftElement>
-              <Input
-                onChange={handlePasswordChange}
-                type={show ? "text" : "password"}
-                placeholder="Enter your password"
-                pl={"2.5rem"}
-                focusBorderColor="#005D5D80"
-                border={"1px solid #005D5D30"}
-              />
-              <InputRightElement width="4.5rem">
-                <Icon
-                  _hover={{ cursor: "pointer" }}
-                  boxSize={5}
-                  as={show ? IoMdEyeOff : IoMdEye}
-                  onClick={() => {
-                    setShow(!show);
-                  }}
-                  color={"#005D5D"}
+            <Box>
+              <Text
+                fontSize={"sm"}
+                fontWeight={"semibold"}
+                color={"gray.700"}
+                mb={"0.3rem"}
+                display={{ base: "block", sm: "none" }}
+              >
+                Email Address
+              </Text>
+              <InputGroup>
+                <InputLeftElement pointerEvents="none">
+                  <MdEmail color="#005D5D" size={20} />
+                </InputLeftElement>
+                <Input
+                  onChange={handleEmailChange}
+                  type="email"
+                  placeholder="Enter your email"
+                  pl={"2.5rem"}
+                  focusBorderColor="#005D5D80"
+                  border={"1px solid #005D5D30"}
+                  fontSize={{ base: "sm", sm: "md" }}
                 />
-              </InputRightElement>
-            </InputGroup>
+              </InputGroup>
+            </Box>
+
+            <Box>
+              <Text
+                fontSize={"sm"}
+                fontWeight={"semibold"}
+                color={"gray.700"}
+                mb={"0.3rem"}
+                display={{ base: "block", sm: "none" }}
+              >
+                Password
+              </Text>
+              <InputGroup>
+                <InputLeftElement pointerEvents="none">
+                  <IoMdLock color="#005D5D" size={20} />
+                </InputLeftElement>
+                <Input
+                  onChange={handlePasswordChange}
+                  type={show ? "text" : "password"}
+                  placeholder="Enter your password"
+                  pl={"2.5rem"}
+                  focusBorderColor="#005D5D80"
+                  border={"1px solid #005D5D30"}
+                />
+                <InputRightElement width="4.5rem">
+                  <Icon
+                    _hover={{ cursor: "pointer" }}
+                    boxSize={5}
+                    as={show ? IoMdEyeOff : IoMdEye}
+                    onClick={() => {
+                      setShow(!show);
+                    }}
+                    color={"#005D5D"}
+                  />
+                </InputRightElement>
+              </InputGroup>
+            </Box>
 
             <Box w={"full"} textAlign={"right"}>
               <Button
@@ -211,7 +238,10 @@ const Signin: FC<pageProps> = ({}) => {
                 textAlign={"center"}
               >
                 Don&apos;t have an account?{" "}
-                <Link color={"#007C7B"} onClick={() => window.location.replace("/signup")}>
+                <Link
+                  color={"#007C7B"}
+                  onClick={() => window.location.replace("/signup")}
+                >
                   {`Sign Up`}
                 </Link>
               </Text>
