@@ -16,6 +16,7 @@ import {
   Button,
   Icon,
   IconButton,
+  useDisclosure,
 } from "@chakra-ui/react";
 import Carousel from "./Carousel";
 import { IoMdHeartEmpty, IoMdHeart } from "react-icons/io";
@@ -28,6 +29,7 @@ import {
 } from "react-icons/bi";
 import { TbWorld } from "react-icons/tb";
 import { useUserLikesAPI } from "@/hooks/UserLikesContext";
+import { ComposeMessage } from "../../inbox/component/ComposeMessage";
 
 interface SchoolDetailsModalProps {
   isOpen: boolean;
@@ -40,6 +42,7 @@ const SchoolDetailsModal: FC<SchoolDetailsModalProps> = ({
   onClose,
   setProfileLikes,
 }) => {
+  const {isOpen: isComposeModalOpen, onClose: onComposeModalClose, onOpen: onComposeModalOpen} = useDisclosure()
   const { likePost, unlikePost, isPostLiked, schoolProfiles, activeProfileIndex, setActiveProfileIndex} =
     useUserLikesAPI();
   const profile = schoolProfiles[activeProfileIndex]
@@ -65,8 +68,12 @@ const SchoolDetailsModal: FC<SchoolDetailsModalProps> = ({
     <Modal
       isOpen={isOpen}
       onClose={onClose}
-      size={{ base: "sm", sm: "lg", md: "2xl" }}
+      size={{ base: "xs", sm: "lg", md: "2xl" }}
     >
+      <ComposeMessage
+        isOpen={isComposeModalOpen}
+        onClose={onComposeModalClose}
+      />
       <ModalOverlay />
       <ModalContent position={"relative"}>
         <IconButton
@@ -91,28 +98,28 @@ const SchoolDetailsModal: FC<SchoolDetailsModalProps> = ({
           transform="translateY(-50%)"
           rounded={"full"}
           onClick={handleNextPost}
-          isDisabled={activeProfileIndex >= schoolProfiles?.length - 1 ? true : false}
+          isDisabled={
+            activeProfileIndex >= schoolProfiles?.length - 1 ? true : false
+          }
         />
         <ModalBody p={0}>
           <Box px={"0"}>
             <Carousel media={profile?.schoolMedia} />
             <Flex
+              display={{ base: "none", md: "flex" }}
               mt={"1.5rem"}
               px={"1rem"}
               alignItems={"center"}
               justifyContent={"space-between"}
-              //   flexDir={{ base: "column", md: "row" }}
               gap={2}
             >
               <Flex gap={2} alignItems={"center"}>
                 <Avatar src={profile?.logoImgUrl} />
                 <Flex flexDir={"column"} justifyContent={"space-between"}>
-                  <Text fontSize={{ base: "xs", md: "sm" }} fontWeight={"bold"}>
+                  <Text fontSize={"sm"} fontWeight={"bold"}>
                     {profile?.schoolName}
                   </Text>
-                  <Text fontSize={{ base: "xs", md: "sm" }}>
-                    {profile?.state}, Nigeria
-                  </Text>
+                  <Text fontSize={"sm"}>{profile?.state}, Nigeria</Text>
                 </Flex>
               </Flex>
               <Flex gap={2} alignItems={"center"}>
@@ -120,7 +127,7 @@ const SchoolDetailsModal: FC<SchoolDetailsModalProps> = ({
                   as={isPostLiked(profile.id) ? IoMdHeart : IoMdHeartEmpty}
                   onClick={handleToggleLike}
                   color={isPostLiked(profile.id) ? "red.500" : "#00000070"}
-                  boxSize={{ base: 5, md: 7 }}
+                  boxSize={7}
                   transition="transform 0.2s ease-in-out"
                   _hover={{
                     cursor: "pointer",
@@ -129,17 +136,65 @@ const SchoolDetailsModal: FC<SchoolDetailsModalProps> = ({
                   }}
                 />
                 <Button
-                  fontSize={{ base: "2xs", md: "xs" }}
                   backgroundColor={"#005D5D"}
-                  size={{ base: "xs", md: "sm" }}
+                  size={"sm"}
                   _hover={{ backgroundColor: "#007C7B" }}
                   color={"#fff"}
+                  onClick={onComposeModalOpen}
                 >
                   Send a Message
                 </Button>
               </Flex>
             </Flex>
-            <Box px={"1.5rem"} mt={"2.5rem"} height={'160px'} overflowY={'auto'}>
+
+            <Box px={"1rem"} display={{ base: "block", md: "none" }}>
+              <Flex
+                mt={"1.5rem"}
+                alignItems={"center"}
+                justifyContent={"space-between"}
+                gap={2}
+              >
+                <Flex gap={2} alignItems={"center"}>
+                  <Avatar src={profile?.logoImgUrl} />
+                  <Flex flexDir={"column"} justifyContent={"space-between"}>
+                    <Text fontSize={"sm"} fontWeight={"bold"}>
+                      {profile?.schoolName}
+                    </Text>
+                    <Text fontSize={"sm"}>{profile?.state}, Nigeria</Text>
+                  </Flex>
+                </Flex>
+                <Flex gap={2} alignItems={"center"}>
+                  <Icon
+                    as={isPostLiked(profile.id) ? IoMdHeart : IoMdHeartEmpty}
+                    onClick={handleToggleLike}
+                    color={isPostLiked(profile.id) ? "red.500" : "#00000070"}
+                    boxSize={7}
+                    transition="transform 0.2s ease-in-out"
+                    _hover={{
+                      cursor: "pointer",
+                      transform: "scale(1.1)",
+                      transition: "0.2s",
+                    }}
+                  />
+                </Flex>
+              </Flex>
+              <Button
+                mt={"0.8rem"}
+                backgroundColor={"#005D5D"}
+                size={"sm"}
+                _hover={{ backgroundColor: "#007C7B" }}
+                color={"#fff"}
+                onClick={onComposeModalOpen}
+              >
+                Send a Message
+              </Button>
+            </Box>
+            <Box
+              px={"1.5rem"}
+              mt={"2.5rem"}
+              height={"160px"}
+              overflowY={"auto"}
+            >
               <Text color={"#747474"} fontSize={"sm"} fontWeight={"bold"}>
                 ABOUT SCHOOL
               </Text>
@@ -154,7 +209,11 @@ const SchoolDetailsModal: FC<SchoolDetailsModalProps> = ({
           </Box>
         </ModalBody>
 
-        <ModalFooter justifyContent={"start"}>
+        <ModalFooter
+          justifyContent={"start"}
+          alignItems={"flex-start"}
+          flexDir={"column"}
+        >
           <Flex gap={4}>
             <Icon
               _hover={{
@@ -204,6 +263,30 @@ const SchoolDetailsModal: FC<SchoolDetailsModalProps> = ({
               onClick={() => window.open(profile?.websiteUrl, "_blank")}
               display={profile?.websiteUrl === "#" ? "none" : "inline"}
             />
+          </Flex>
+          <Flex
+            mt={'0.8rem'}
+            w={"full"}
+            justifyContent={"flex-end"}
+            gap={3}
+            display={{ base: "flex", md: "none" }}
+          >
+            <Button
+              size={"sm"}
+              onClick={handlePreviousPost}
+              isDisabled={activeProfileIndex <= 0 ? true : false}
+            >
+              Prev
+            </Button>
+            <Button
+              size={"sm"}
+              onClick={handleNextPost}
+              isDisabled={
+                activeProfileIndex >= schoolProfiles?.length - 1 ? true : false
+              }
+            >
+              Next
+            </Button>
           </Flex>
         </ModalFooter>
       </ModalContent>

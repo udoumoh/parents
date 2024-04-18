@@ -162,7 +162,7 @@ const DrawerNavLinkItems = {
       name: "Discover",
       iconLight: IoCompassOutline ,
       iconFill: IoCompass,
-      url: "/dashboard/discover",
+      url: "dashboard/discover",
     },
     {
       name: "Inbox",

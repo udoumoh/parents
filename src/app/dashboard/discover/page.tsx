@@ -59,6 +59,7 @@ const Discover: FC<DiscoverProps> = ({}) => {
   const [location, setLocation] = useState("");
   const [schoolType, setSchoolType] = useState("");
   const [likedPosts, setLikedPosts] = useState<ProfileProps[]>([]);
+  console.log(schoolProfiles)
 
 
   useEffect(() => {

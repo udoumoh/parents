@@ -47,7 +47,7 @@ const VideoPlayer: FC<VideoPlayerProps> = ({url}) => {
       width={"100%"}
       onMouseEnter={() => setIshovered(true)}
       onMouseLeave={() => setIshovered(false)}
-      h={{ base: "300px", md: "500px" }}
+      h={{ base: "200px", md: "500px" }}
     >
       <video ref={videoRef} width="100%" height="auto">
         <source src={url} type="video/mp4" />
@@ -56,7 +56,7 @@ const VideoPlayer: FC<VideoPlayerProps> = ({url}) => {
       {/* Custom play/pause button */}
       <Flex
         position="absolute"
-        top="50%"
+        top={{base:"40%", md:"50%"}}
         left="50%"
         transform="translate(-50%, -50%)"
         alignItems="center"
