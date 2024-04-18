@@ -146,7 +146,7 @@ const PostItem: FC<PostItemProps> = ({ profile, currentIndex }) => {
               as={isPostLiked(profile?.id) ? IoMdHeart : IoMdHeartEmpty}
               onClick={handleToggleLike}
               color={isPostLiked(profile?.id) ? "red.500" : "#00000070"}
-              boxSize={{ base: 5, md: 7 }}
+              boxSize={7}
               transition="transform 0.2s ease-in-out"
               _hover={{
                 cursor: "pointer",
