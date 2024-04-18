@@ -375,7 +375,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
       }
     };
     fetchData();
-  });
+  }, [getnotifications, toast]);
 
   return (
     <Flex
