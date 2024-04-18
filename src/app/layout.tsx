@@ -27,7 +27,7 @@ const Layout: FC<LayoutProps> = ({ children }) => {
     <html lang="en">
       <head>
         <link rel="icon" href="/images/greylightBordered.svg" />
-        <link rel="manifest" href="/manifest.json" />
+        <link rel="manifest" href="/manifest.json" />   
       </head>
       <body className={mulish.className}>
         <ApolloProvider client={client}>

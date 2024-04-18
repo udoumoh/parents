@@ -3,8 +3,10 @@ const withPWA = require('next-pwa')({
     dest: 'public'
 })
 const nextConfig = {
-    webpack: (config) => {
-    config.resolve.alias.canvas = false;
+    webpack: (config, {isServer}) => {
+    if (!isServer) {
+      config.resolve.alias.canvas = false;
+    }
 
     return config;
  },

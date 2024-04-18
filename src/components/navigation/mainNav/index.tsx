@@ -375,7 +375,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
       }
     };
     fetchData();
-  }, [getnotifications, toast]);
+  });
 
   return (
     <Flex
@@ -648,6 +648,7 @@ const MainNav: FC<MainNav> = ({ children }) => {
                       src={currentWardProfile?.profileImage}
                       size={"lg"}
                       pointerEvents={"none"}
+                      name={`${currentWardProfile?.firstName} ${currentWardProfile?.lastName}`}
                     />
                     <Icon
                       as={IoClose}
