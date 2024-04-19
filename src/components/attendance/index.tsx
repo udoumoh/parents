@@ -123,7 +123,7 @@ const Attendance: FC<AttendanceProps> = ({}) => {
                 Present
               </Text>
 
-              {presentDays?.map((item, index) => (
+              {presentDays?.slice(0,8)?.map((item, index) => (
                 <Flex justifyContent={"space-between"} my={"1rem"} key={index}>
                   <Box display={"flex"} flexDir={"column"}>
                     <Text
