@@ -106,7 +106,7 @@ const Signin: FC<pageProps> = ({}) => {
       alignItems={{ base: "initial", sm: "center" }}
       justifyContent={"center"}
       h={"100vh"}
-      backgroundColor={{base:"#FFFFFF", sm:"#005D5D20"}}
+      backgroundColor={{ base: "#FFFFFF", sm: "#005D5D20" }}
       backdropBlur={"30px"}
     >
       <Box
@@ -124,7 +124,7 @@ const Signin: FC<pageProps> = ({}) => {
         />
         <Box
           backgroundColor={"#fff"}
-          w={{ base: "full", sm:"450px", md: "500px" }}
+          w={{ base: "full", sm: "450px", md: "500px" }}
           py={5}
           px={{ base: "1rem", sm: "3rem" }}
           rounded={"lg"}
@@ -194,6 +194,7 @@ const Signin: FC<pageProps> = ({}) => {
                   pl={"2.5rem"}
                   focusBorderColor="#005D5D80"
                   border={"1px solid #005D5D30"}
+                  fontSize={{ base: "sm", sm: "md" }}
                 />
                 <InputRightElement width="4.5rem">
                   <Icon
