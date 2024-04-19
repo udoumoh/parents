@@ -22,6 +22,9 @@ interface UserLikesContextProps {
   activeProfileIndex: number;
   setActiveProfileIndex: (id: number) => void;
   schoolProfiles: {
+    genderType: string;
+    schoolType: string;
+    type: string;
     bannerImgUrl: string;
     country: string;
     createdAt: string;
@@ -120,7 +123,7 @@ export const UserLikesAPIProvider: FC<UserLikesApiProviderProps> = ({
         const response = await getSchools;
         if (response) {
           const filteredProfiles = response?.getSchools?.filter(
-            (item: any) => item?.schoolMedia !== null
+            (item: any) => item?.schoolMedia !== null && item?.schoolMedia?.length > 0
           );
           setSchoolProfiles(filteredProfiles);
         }

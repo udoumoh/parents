@@ -30,6 +30,9 @@ import { useUserAPI } from "@/hooks/UserContext";
 interface DiscoverProps {}
 
 interface ProfileProps {
+  genderType: string;
+  schoolType: string;
+  type: string;
   bannerImgUrl: string;
   country: string;
   createdAt: string;
@@ -56,11 +59,26 @@ interface ProfileProps {
 const Discover: FC<DiscoverProps> = ({}) => {
   const { parentData } = useUserAPI();
   const { schoolProfiles } = useUserLikesAPI();
-  const [location, setLocation] = useState("");
+  const [type, setType] = useState("");
+  const [genderType, setGenderType] = useState("");
   const [schoolType, setSchoolType] = useState("");
+  const [filterParams, setFilterParams] = useState(
+    {
+      type: "", 
+      genderType: "", 
+      schoolType: "" 
+    }
+  )
   const [likedPosts, setLikedPosts] = useState<ProfileProps[]>([]);
   console.log(schoolProfiles)
 
+  const handleFilter = () => {
+    setFilterParams({
+      type:type,
+      genderType: genderType,
+      schoolType: schoolType,
+    })
+  }
 
   useEffect(() => {
     const likedPosts = schoolProfiles?.filter((profile) =>
@@ -68,6 +86,10 @@ const Discover: FC<DiscoverProps> = ({}) => {
     );
     setLikedPosts(likedPosts);
   }, [parentData, schoolProfiles]);
+
+  const tempData = schoolProfiles?.filter((profile) => profile?.type === filterParams?.type || profile?.genderType === filterParams?.genderType || profile?.schoolType === filterParams?.schoolType)
+
+  console.log(tempData)
 
   return (
     <Box h={"100vh"} w={"full"} p={"1.5rem"} overflowY={"auto"} pb={"10rem"}>
@@ -136,23 +158,23 @@ const Discover: FC<DiscoverProps> = ({}) => {
                     fontSize={{ base: "2xs", md: "sm" }}
                     fontWeight={"bold"}
                   >
-                    LOCATION
+                    TYPE
                   </Text>
-                  <Input
-                    placeholder="Search Location"
-                    border={"0px"}
-                    p={0}
+                  <Select
+                    placeholder="Select Type"
                     focusBorderColor="#fff"
                     color={"#00000080"}
                     size={"sm"}
-                    _placeholder={{
-                      fontSize: { base: "sm", md: "sm" },
-                      color: "#00000080",
-                    }}
+                    variant={"unstyled"}
+                    p={0}
                     onChange={(e) => {
-                      setLocation(e.target.value);
+                      setType(e.target.value);
                     }}
-                  />
+                    _hover={{ cursor: "pointer" }}
+                  >
+                    <option value="public">Public</option>
+                    <option value="private">Private</option>
+                  </Select>
                 </Box>
               </Flex>
 
@@ -188,8 +210,48 @@ const Discover: FC<DiscoverProps> = ({}) => {
                     }}
                     _hover={{ cursor: "pointer" }}
                   >
-                    <option value="public">Public</option>
-                    <option value="private">Private</option>
+                    <option value="day">Day</option>
+                    <option value="boarding">Boarding</option>
+                    <option value="mixed">Mixed</option>
+                  </Select>
+                </Box>
+              </Flex>
+
+              <Flex alignItems={"center"} gap={2}>
+                <Icon
+                  as={RiSchoolLine}
+                  boxSize={{ base: 8, md: 9 }}
+                  color={"#007C7B"}
+                  border={"1px solid #00000040"}
+                  rounded={"full"}
+                  p={"0.5rem"}
+                />
+                <Box
+                  display={"flex"}
+                  flexDir={"column"}
+                  justifyContent={"space-between"}
+                >
+                  <Text
+                    fontSize={{ base: "2xs", md: "sm" }}
+                    fontWeight={"bold"}
+                  >
+                    GENDER TYPE
+                  </Text>
+                  <Select
+                    placeholder="Select Gender Type"
+                    focusBorderColor="#fff"
+                    color={"#00000080"}
+                    size={"sm"}
+                    variant={"unstyled"}
+                    p={0}
+                    onChange={(e) => {
+                      setGenderType(e.target.value);
+                    }}
+                    _hover={{ cursor: "pointer" }}
+                  >
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="mixed">Mixed</option>
                   </Select>
                 </Box>
               </Flex>
@@ -201,6 +263,7 @@ const Discover: FC<DiscoverProps> = ({}) => {
               size={{ base: "sm", md: "md" }}
               px={"2rem"}
               fontSize={{ base: "3xs", md: "xs" }}
+              onClick={handleFilter}
               color={"#FFFFFF"}
             >
               Search schools

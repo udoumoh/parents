@@ -16,9 +16,13 @@ import { LIKE_PROFILE, UNLIKE_PROFILE } from "@/gql/mutations";
 import { useUserAPI } from "@/hooks/UserContext";
 import { useMutation } from "@apollo/client";
 import { useUserLikesAPI } from "@/hooks/UserLikesContext";
+import { capitalizeFirstLetter } from "@/helpers/capitalizeFirstLetter";
 
 interface PostItemProps {
   profile: {
+    genderType: string;
+    schoolType: string;
+    type: string;
     bannerImgUrl: string;
     country: string;
     createdAt: string;
@@ -124,7 +128,7 @@ const PostItem: FC<PostItemProps> = ({ profile, currentIndex }) => {
           />
         </Box>
 
-        <Flex justifyContent={"space-between"} alignItems={"center"} gap={3}>
+        <Flex justifyContent={"space-between"} alignItems={"center"}>
           <Flex gap={2} my={"1rem"}>
             <Avatar
               size={{ base: "sm", md: "md" }}
@@ -133,7 +137,7 @@ const PostItem: FC<PostItemProps> = ({ profile, currentIndex }) => {
             />
             <Flex flexDir={"column"} justifyContent={"space-between"}>
               <Text fontWeight={"bold"} fontSize={{ base: "xs", md: "md" }}>
-                {profile?.schoolName}
+                {capitalizeFirstLetter(profile?.schoolName.toLowerCase())}
               </Text>
               <Text fontSize={{ base: "xs", md: "md" }}>
                 {profile?.state}, Nigeria
