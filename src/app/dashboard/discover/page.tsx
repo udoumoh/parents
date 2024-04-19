@@ -70,7 +70,7 @@ const Discover: FC<DiscoverProps> = ({}) => {
     }
   )
   const [likedPosts, setLikedPosts] = useState<ProfileProps[]>([]);
-  console.log(schoolProfiles)
+  // console.log(schoolProfiles)
 
   const handleFilter = () => {
     setFilterParams({
@@ -87,9 +87,14 @@ const Discover: FC<DiscoverProps> = ({}) => {
     setLikedPosts(likedPosts);
   }, [parentData, schoolProfiles]);
 
-  const tempData = schoolProfiles?.filter((profile) => profile?.type === filterParams?.type || profile?.genderType === filterParams?.genderType || profile?.schoolType === filterParams?.schoolType)
-
-  console.log(tempData)
+  const postsToShow = schoolProfiles?.filter(
+    (profile) =>
+      profile?.type.toLowerCase() === filterParams?.type.toLowerCase() ||
+      profile?.genderType.toLowerCase() ===
+        filterParams?.genderType.toLowerCase() ||
+      profile?.schoolType.toLowerCase() ===
+        filterParams?.schoolType.toLowerCase()
+  );
 
   return (
     <Box h={"100vh"} w={"full"} p={"1.5rem"} overflowY={"auto"} pb={"10rem"}>
@@ -292,17 +297,41 @@ const Discover: FC<DiscoverProps> = ({}) => {
             <TabPanels>
               <TabPanel px={{ base: "0", md: "1rem" }}>
                 <Box>
-                  <SimpleGrid columns={[1, null, 2, 3]} spacing="20px">
-                    {schoolProfiles?.map((item, index) => {
-                      return (
-                        <PostItem
-                          key={index}
-                          profile={item}
-                          currentIndex={index}
-                        />
-                      );
-                    })}
-                  </SimpleGrid>
+                  {postsToShow?.length === 0 ? (
+                    <Flex
+                      alignItems={"center"}
+                      justifyContent={"center"}
+                      flexDir={"column"}
+                      my={"2rem"}
+                    >
+                      <Image
+                        alt="no likes"
+                        src="/images/nosearchresult.svg"
+                        w={{ base: "300", md: "300px" }}
+                        h={"200px"}
+                      />
+                      <Text
+                        textAlign={"center"}
+                        color={"gray.500"}
+                        fontSize={{ base: "md", md: "lg" }}
+                        mt={"2rem"}
+                      >
+                        There are no results for your search criteria
+                      </Text>
+                    </Flex>
+                  ) : (
+                    <SimpleGrid columns={[1, null, 2, 3]} spacing="20px">
+                      {postsToShow?.map((item, index) => {
+                        return (
+                          <PostItem
+                            key={index}
+                            profile={item}
+                            currentIndex={index}
+                          />
+                        );
+                      })}
+                    </SimpleGrid>
+                  )}
                 </Box>
               </TabPanel>
               <TabPanel px={{ base: "0", md: "1rem" }}>

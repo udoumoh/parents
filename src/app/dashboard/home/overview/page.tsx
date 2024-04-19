@@ -24,12 +24,13 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
   const { currentWardProfile, invoiceData } = useUserAPI();
   const [show, setShow] = useState(false);
 
+  const totalBalance = invoiceData?.reduce((acc, invoice) => acc + invoice?.balance,  0)
   const totalOwingAmount = invoiceData
     ?.filter(
       (invoice) =>
         invoice.status === "active" || invoice.status === "processing"
     )
-    .reduce((acc, invoice) => acc + invoice?.amountPaid, 0);
+    .reduce((acc, invoice) => acc + invoice?.amountPaid, 0) + totalBalance
 
   useEffect(() => {
     const timeout = setTimeout(() => {
