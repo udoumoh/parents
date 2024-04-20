@@ -202,13 +202,21 @@ const Discover: FC<DiscoverProps> = ({}) => {
                       </Flex>
                     </MenuButton>
                     <Portal>
-                      <MenuList>
+                      <MenuList px={"0.5rem"}>
                         <MenuItem
+                          _hover={{
+                            backgroundColor: "#005D5D15",
+                            color: "#005D5D",
+                          }}
                           onClick={() => handleFilterChange("type", "public")}
                         >
                           Public
                         </MenuItem>
                         <MenuItem
+                          _hover={{
+                            backgroundColor: "#005D5D15",
+                            color: "#005D5D",
+                          }}
                           onClick={() => handleFilterChange("type", "private")}
                         >
                           Private
@@ -254,8 +262,12 @@ const Discover: FC<DiscoverProps> = ({}) => {
                       </Flex>
                     </MenuButton>
                     <Portal>
-                      <MenuList>
+                      <MenuList px={"0.5rem"}>
                         <MenuItem
+                          _hover={{
+                            backgroundColor: "#005D5D15",
+                            color: "#005D5D",
+                          }}
                           onClick={() =>
                             handleFilterChange("schoolType", "day")
                           }
@@ -263,6 +275,10 @@ const Discover: FC<DiscoverProps> = ({}) => {
                           Day
                         </MenuItem>
                         <MenuItem
+                          _hover={{
+                            backgroundColor: "#005D5D15",
+                            color: "#005D5D",
+                          }}
                           onClick={() =>
                             handleFilterChange("schoolType", "boarding")
                           }
@@ -270,6 +286,10 @@ const Discover: FC<DiscoverProps> = ({}) => {
                           Boarding
                         </MenuItem>
                         <MenuItem
+                          _hover={{
+                            backgroundColor: "#005D5D15",
+                            color: "#005D5D",
+                          }}
                           onClick={() =>
                             handleFilterChange("schoolType", "mixed")
                           }
@@ -317,8 +337,23 @@ const Discover: FC<DiscoverProps> = ({}) => {
                       </Flex>
                     </MenuButton>
                     <Portal>
-                      <MenuList>
+                      <MenuList px={"0.5rem"}>
                         <MenuItem
+                          _hover={{
+                            backgroundColor: "#005D5D15",
+                            color: "#005D5D",
+                          }}
+                          onClick={() =>
+                            handleFilterChange("genderType", "")
+                          }
+                        >
+                          - Any -
+                        </MenuItem>
+                        <MenuItem
+                          _hover={{
+                            backgroundColor: "#005D5D15",
+                            color: "#005D5D",
+                          }}
                           onClick={() =>
                             handleFilterChange("genderType", "male")
                           }
@@ -326,6 +361,10 @@ const Discover: FC<DiscoverProps> = ({}) => {
                           Male
                         </MenuItem>
                         <MenuItem
+                          _hover={{
+                            backgroundColor: "#005D5D15",
+                            color: "#005D5D",
+                          }}
                           onClick={() =>
                             handleFilterChange("genderType", "female")
                           }
@@ -333,6 +372,10 @@ const Discover: FC<DiscoverProps> = ({}) => {
                           Female
                         </MenuItem>
                         <MenuItem
+                          _hover={{
+                            backgroundColor: "#005D5D15",
+                            color: "#005D5D",
+                          }}
                           onClick={() =>
                             handleFilterChange("genderType", "mixed")
                           }

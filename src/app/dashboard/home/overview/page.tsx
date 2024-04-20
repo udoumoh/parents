@@ -24,7 +24,9 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
   const { currentWardProfile, invoiceData } = useUserAPI();
   const [show, setShow] = useState(false);
 
-  const totalBalance = invoiceData?.reduce((acc, invoice) => acc + invoice?.balance,  0)
+  const totalBalance = invoiceData
+    ?.filter((invoice) => invoice.status === "partial payment")
+    ?.reduce((acc, invoice) => acc + invoice?.balance, 0);
   const totalOwingAmount = invoiceData
     ?.filter(
       (invoice) =>
