@@ -18,14 +18,23 @@ import {
   TabIndicator,
   SimpleGrid,
   Center,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  MenuItemOption,
+  MenuGroup,
+  MenuOptionGroup,
+  MenuDivider,
+  Portal,
 } from "@chakra-ui/react";
 import { HiOutlineLocationMarker } from "react-icons/hi";
 import { RiSchoolLine } from "react-icons/ri";
 import PostItem from "./components/PostItem";
-import { useQuery } from "@apollo/client";
-import { GET_SCHOOLS } from "@/gql/queries";
 import { useUserLikesAPI } from "@/hooks/UserLikesContext";
 import { useUserAPI } from "@/hooks/UserContext";
+import { IoIosArrowDown } from "react-icons/io";
+import { RiGenderlessLine } from "react-icons/ri";
 
 interface DiscoverProps {}
 
@@ -58,43 +67,56 @@ interface ProfileProps {
 
 const Discover: FC<DiscoverProps> = ({}) => {
   const { parentData } = useUserAPI();
-  const { schoolProfiles } = useUserLikesAPI();
+  const { filteredPosts, setFilteredPosts, schoolProfiles } = useUserLikesAPI();
   const [type, setType] = useState("");
   const [genderType, setGenderType] = useState("");
   const [schoolType, setSchoolType] = useState("");
-  const [filterParams, setFilterParams] = useState(
-    {
-      type: "", 
-      genderType: "", 
-      schoolType: "" 
-    }
-  )
   const [likedPosts, setLikedPosts] = useState<ProfileProps[]>([]);
-  // console.log(schoolProfiles)
+  const [filterParams, setFilterParams] = useState({
+    type: "",
+    genderType: "",
+    schoolType: "",
+  });
 
-  const handleFilter = () => {
+  const handleFilterChange = (filterName: any, value: any) => {
     setFilterParams({
-      type:type,
-      genderType: genderType,
-      schoolType: schoolType,
-    })
-  }
+      ...filterParams,
+      [filterName]: value,
+    });
+  };
+
+  const applyFilters = () => {
+    let filteredResults = schoolProfiles;
+
+    if (filterParams?.type) {
+      filteredResults = filteredResults?.filter(
+        (post) => post?.type?.toLowerCase() === filterParams?.type?.toLowerCase()
+      );
+    }
+    if (filterParams?.schoolType) {
+      filteredResults = filteredResults?.filter(
+        (post) =>
+          post?.schoolType?.toLowerCase() ===
+          filterParams?.schoolType?.toLowerCase()
+      );
+    }
+    if (filterParams?.genderType) {
+      filteredResults = filteredResults?.filter(
+        (post) =>
+          post?.genderType?.toLowerCase() ===
+          filterParams?.genderType?.toLowerCase()
+      );
+    }
+
+    setFilteredPosts(filteredResults);
+  };
 
   useEffect(() => {
-    const likedPosts = schoolProfiles?.filter((profile) =>
+    const likedPosts = filteredPosts?.filter((profile) =>
       profile?.whoLikedProfile?.includes(parentData?.userId || "")
     );
     setLikedPosts(likedPosts);
-  }, [parentData, schoolProfiles]);
-
-  const postsToShow = schoolProfiles?.filter(
-    (profile) =>
-      profile?.type.toLowerCase() === filterParams?.type.toLowerCase() ||
-      profile?.genderType.toLowerCase() ===
-        filterParams?.genderType.toLowerCase() ||
-      profile?.schoolType.toLowerCase() ===
-        filterParams?.schoolType.toLowerCase()
-  );
+  }, [parentData, filteredPosts]);
 
   return (
     <Box h={"100vh"} w={"full"} p={"1.5rem"} overflowY={"auto"} pb={"10rem"}>
@@ -150,7 +172,7 @@ const Discover: FC<DiscoverProps> = ({}) => {
                   as={HiOutlineLocationMarker}
                   boxSize={{ base: 8, md: 9 }}
                   color={"#007C7B"}
-                  border={"1px solid #00000040"}
+                  border={"1px solid #005D5D"}
                   rounded={"full"}
                   p={"0.5rem"}
                 />
@@ -165,21 +187,35 @@ const Discover: FC<DiscoverProps> = ({}) => {
                   >
                     TYPE
                   </Text>
-                  <Select
-                    placeholder="Select Type"
-                    focusBorderColor="#fff"
-                    color={"#00000080"}
-                    size={"sm"}
-                    variant={"unstyled"}
-                    p={0}
-                    onChange={(e) => {
-                      setType(e.target.value);
-                    }}
-                    _hover={{ cursor: "pointer" }}
-                  >
-                    <option value="public">Public</option>
-                    <option value="private">Private</option>
-                  </Select>
+                  <Menu isLazy>
+                    <MenuButton
+                      color={"#00000080"}
+                      _hover={{ cursor: "pointer" }}
+                    >
+                      <Flex gap={3} alignItems={"center"}>
+                        <Text fontSize={"sm"}>
+                          {filterParams?.type.length === 0
+                            ? "Select Type"
+                            : filterParams?.type}
+                        </Text>
+                        <Icon as={IoIosArrowDown} />
+                      </Flex>
+                    </MenuButton>
+                    <Portal>
+                      <MenuList>
+                        <MenuItem
+                          onClick={() => handleFilterChange("type", "public")}
+                        >
+                          Public
+                        </MenuItem>
+                        <MenuItem
+                          onClick={() => handleFilterChange("type", "private")}
+                        >
+                          Private
+                        </MenuItem>
+                      </MenuList>
+                    </Portal>
+                  </Menu>
                 </Box>
               </Flex>
 
@@ -188,7 +224,7 @@ const Discover: FC<DiscoverProps> = ({}) => {
                   as={RiSchoolLine}
                   boxSize={{ base: 8, md: 9 }}
                   color={"#007C7B"}
-                  border={"1px solid #00000040"}
+                  border={"1px solid #005D5D"}
                   rounded={"full"}
                   p={"0.5rem"}
                 />
@@ -203,31 +239,55 @@ const Discover: FC<DiscoverProps> = ({}) => {
                   >
                     SCHOOL TYPE
                   </Text>
-                  <Select
-                    placeholder="Select School Type"
-                    focusBorderColor="#fff"
-                    color={"#00000080"}
-                    size={"sm"}
-                    variant={"unstyled"}
-                    p={0}
-                    onChange={(e) => {
-                      setSchoolType(e.target.value);
-                    }}
-                    _hover={{ cursor: "pointer" }}
-                  >
-                    <option value="day">Day</option>
-                    <option value="boarding">Boarding</option>
-                    <option value="mixed">Mixed</option>
-                  </Select>
+                  <Menu isLazy>
+                    <MenuButton
+                      color={"#00000080"}
+                      _hover={{ cursor: "pointer" }}
+                    >
+                      <Flex gap={3} alignItems={"center"}>
+                        <Text fontSize={"sm"}>
+                          {filterParams?.schoolType.length === 0
+                            ? "Select School Type"
+                            : filterParams?.schoolType}
+                        </Text>
+                        <Icon as={IoIosArrowDown} />
+                      </Flex>
+                    </MenuButton>
+                    <Portal>
+                      <MenuList>
+                        <MenuItem
+                          onClick={() =>
+                            handleFilterChange("schoolType", "day")
+                          }
+                        >
+                          Day
+                        </MenuItem>
+                        <MenuItem
+                          onClick={() =>
+                            handleFilterChange("schoolType", "boarding")
+                          }
+                        >
+                          Boarding
+                        </MenuItem>
+                        <MenuItem
+                          onClick={() =>
+                            handleFilterChange("schoolType", "mixed")
+                          }
+                        >
+                          Mixed
+                        </MenuItem>
+                      </MenuList>
+                    </Portal>
+                  </Menu>
                 </Box>
               </Flex>
 
               <Flex alignItems={"center"} gap={2}>
                 <Icon
-                  as={RiSchoolLine}
+                  as={RiGenderlessLine}
                   boxSize={{ base: 8, md: 9 }}
                   color={"#007C7B"}
-                  border={"1px solid #00000040"}
+                  border={"1px solid #005D5D"}
                   rounded={"full"}
                   p={"0.5rem"}
                 />
@@ -242,34 +302,56 @@ const Discover: FC<DiscoverProps> = ({}) => {
                   >
                     GENDER TYPE
                   </Text>
-                  <Select
-                    placeholder="Select Gender Type"
-                    focusBorderColor="#fff"
-                    color={"#00000080"}
-                    size={"sm"}
-                    variant={"unstyled"}
-                    p={0}
-                    onChange={(e) => {
-                      setGenderType(e.target.value);
-                    }}
-                    _hover={{ cursor: "pointer" }}
-                  >
-                    <option value="male">Male</option>
-                    <option value="female">Female</option>
-                    <option value="mixed">Mixed</option>
-                  </Select>
+                  <Menu isLazy>
+                    <MenuButton
+                      color={"#00000080"}
+                      _hover={{ cursor: "pointer" }}
+                    >
+                      <Flex gap={3} alignItems={"center"}>
+                        <Text fontSize={"sm"}>
+                          {filterParams?.genderType.length === 0
+                            ? "Select Gender Type"
+                            : filterParams?.genderType}
+                        </Text>
+                        <Icon as={IoIosArrowDown} />
+                      </Flex>
+                    </MenuButton>
+                    <Portal>
+                      <MenuList>
+                        <MenuItem
+                          onClick={() =>
+                            handleFilterChange("genderType", "male")
+                          }
+                        >
+                          Male
+                        </MenuItem>
+                        <MenuItem
+                          onClick={() =>
+                            handleFilterChange("genderType", "female")
+                          }
+                        >
+                          Female
+                        </MenuItem>
+                        <MenuItem
+                          onClick={() =>
+                            handleFilterChange("genderType", "mixed")
+                          }
+                        >
+                          Mixed
+                        </MenuItem>
+                      </MenuList>
+                    </Portal>
+                  </Menu>
                 </Box>
               </Flex>
             </Box>
             <Button
-              _hover={{ backgroundColor: "#007C7B" }}
               rounded={"full"}
-              backgroundColor={"#005D5D"}
               size={{ base: "sm", md: "md" }}
               px={"2rem"}
-              fontSize={{ base: "3xs", md: "xs" }}
-              onClick={handleFilter}
-              color={"#FFFFFF"}
+              // fontSize={{ base: "3xs", md: "xs" }}
+              colorScheme="teal"
+              onClick={applyFilters}
             >
               Search schools
             </Button>
@@ -297,7 +379,7 @@ const Discover: FC<DiscoverProps> = ({}) => {
             <TabPanels>
               <TabPanel px={{ base: "0", md: "1rem" }}>
                 <Box>
-                  {postsToShow?.length === 0 ? (
+                  {filteredPosts?.length === 0 ? (
                     <Flex
                       alignItems={"center"}
                       justifyContent={"center"}
@@ -321,7 +403,7 @@ const Discover: FC<DiscoverProps> = ({}) => {
                     </Flex>
                   ) : (
                     <SimpleGrid columns={[1, null, 2, 3]} spacing="20px">
-                      {postsToShow?.map((item, index) => {
+                      {filteredPosts?.map((item, index) => {
                         return (
                           <PostItem
                             key={index}

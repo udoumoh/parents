@@ -43,9 +43,9 @@ const SchoolDetailsModal: FC<SchoolDetailsModalProps> = ({
   setProfileLikes,
 }) => {
   const {isOpen: isComposeModalOpen, onClose: onComposeModalClose, onOpen: onComposeModalOpen} = useDisclosure()
-  const { likePost, unlikePost, isPostLiked, schoolProfiles, activeProfileIndex, setActiveProfileIndex} =
+  const { likePost, unlikePost, isPostLiked, filteredPosts, activeProfileIndex, setActiveProfileIndex} =
     useUserLikesAPI();
-  const profile = schoolProfiles[activeProfileIndex]
+  const profile = filteredPosts[activeProfileIndex]
  const handleToggleLike = () => {
    if (isPostLiked(profile.id)) {
      unlikePost(profile.id);
@@ -99,7 +99,7 @@ const SchoolDetailsModal: FC<SchoolDetailsModalProps> = ({
           rounded={"full"}
           onClick={handleNextPost}
           isDisabled={
-            activeProfileIndex >= schoolProfiles?.length - 1 ? true : false
+            activeProfileIndex >= filteredPosts?.length - 1 ? true : false
           }
         />
         <ModalBody p={0}>
@@ -282,7 +282,7 @@ const SchoolDetailsModal: FC<SchoolDetailsModalProps> = ({
               size={"sm"}
               onClick={handleNextPost}
               isDisabled={
-                activeProfileIndex >= schoolProfiles?.length - 1 ? true : false
+                activeProfileIndex >= filteredPosts?.length - 1 ? true : false
               }
             >
               Next

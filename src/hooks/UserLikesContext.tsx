@@ -10,18 +10,7 @@ import { LIKE_PROFILE, UNLIKE_PROFILE } from "@/gql/mutations";
 import { GET_SCHOOLS } from "@/gql/queries";
 import { useQuery } from "@apollo/client";
 
-// Define the context shape
-interface UserLikesContextProps {
-  likePost: (postId: number) => void;
-  unlikePost: (postId: number) => void;
-  isPostLiked: (postId: number) => boolean;
-  getNumberOfLikes: (postId: number) => number;
-  setLikedPosts: React.Dispatch<
-    React.SetStateAction<{ [postId: number]: boolean }>
-  >;
-  activeProfileIndex: number;
-  setActiveProfileIndex: (id: number) => void;
-  schoolProfiles: {
+interface SchoolProfilesProps {
     genderType: string;
     schoolType: string;
     type: string;
@@ -46,23 +35,38 @@ interface UserLikesContextProps {
     websiteUrl: string;
     whoLikedProfile: string[];
     schoolMedia: string[];
-  }[];
+}
+
+
+interface UserLikesContextProps {
+  likePost: (postId: number) => void;
+  unlikePost: (postId: number) => void;
+  isPostLiked: (postId: number) => boolean;
+  getNumberOfLikes: (postId: number) => number;
+  setLikedPosts: React.Dispatch<
+    React.SetStateAction<{ [postId: number]: boolean }>
+  >;
+  activeProfileIndex: number;
+  setActiveProfileIndex: (id: number) => void;
+  schoolProfiles: SchoolProfilesProps[];
+  filteredPosts: SchoolProfilesProps[];
+  setFilteredPosts: (posts: any) => void;
 }
 
 interface UserLikesApiProviderProps {
   children: React.ReactNode;
 }
 
-// Create the context
+
 const UserLikesContext = createContext<UserLikesContextProps | undefined>(
   undefined
 );
 
-// Custom provider component
+
 export const UserLikesAPIProvider: FC<UserLikesApiProviderProps> = ({
   children,
 }) => {
-  const { data: getSchools, loading } = useQuery(GET_SCHOOLS);
+  const { data: getSchools } = useQuery(GET_SCHOOLS);
   const [schoolProfiles, setSchoolProfiles] = useState([]);
   const [activeProfileIndex, setActiveProfileIndex] = useState(0);
   const [likedPosts, setLikedPosts] = useState<{ [postId: number]: boolean }>(
@@ -73,16 +77,21 @@ export const UserLikesAPIProvider: FC<UserLikesApiProviderProps> = ({
   }>({});
   const [likeMutation] = useMutation(LIKE_PROFILE);
   const [unlikeMutation] = useMutation(UNLIKE_PROFILE);
+  const [filteredPosts, setFilteredPosts] = useState<SchoolProfilesProps[]>([])
+
+  useEffect(() => {
+  setFilteredPosts(schoolProfiles);
+  }, [schoolProfiles]);
 
   const likePost = async (postId: number) => {
-    // Perform like mutation
+
     await likeMutation({
       variables: {
         schoolId: postId,
       },
     });
 
-    // Update liked state and number of likes
+
     setLikedPosts((prevState) => ({
       ...prevState,
       [postId]: true,
@@ -102,7 +111,7 @@ export const UserLikesAPIProvider: FC<UserLikesApiProviderProps> = ({
       },
     });
 
-    // Update liked state and number of likes
+
     setLikedPosts((prevState) => ({
       ...prevState,
       [postId]: false,
@@ -143,6 +152,8 @@ export const UserLikesAPIProvider: FC<UserLikesApiProviderProps> = ({
     activeProfileIndex,
     setActiveProfileIndex,
     schoolProfiles,
+    filteredPosts,
+    setFilteredPosts,
   };
 
   return (
@@ -152,7 +163,6 @@ export const UserLikesAPIProvider: FC<UserLikesApiProviderProps> = ({
   );
 };
 
-// Custom hook to consume the context
 export const useUserLikesAPI = () => {
   const context = useContext(UserLikesContext);
 

@@ -55,7 +55,6 @@ const PostItem: FC<PostItemProps> = ({ profile, currentIndex }) => {
     isPostLiked,
     setLikedPosts,
     setActiveProfileIndex,
-    schoolProfiles,
   } = useUserLikesAPI();
   const { parentData } = useUserAPI();
   const [profileLikes, setProfileLikes] = useState(profile?.profileLikes);
@@ -73,11 +72,11 @@ const PostItem: FC<PostItemProps> = ({ profile, currentIndex }) => {
 
   const handleToggleLike = () => {
     if (isPostLiked(profile?.id)) {
-      unlikePost(profile?.id);
       setProfileLikes((prevLikes) => Math.max(prevLikes - 1, 0));
+      unlikePost(profile?.id);
     } else {
-      likePost(profile?.id);
       setProfileLikes((prevLikes) => prevLikes + 1);
+      likePost(profile?.id);
     }
   };
 
