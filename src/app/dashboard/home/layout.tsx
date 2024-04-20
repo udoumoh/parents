@@ -53,7 +53,7 @@ const Layout: FC<LayoutProps> = ({ children }) => {
 
   if (parentData?.children.length === 0) {
     window.location.replace("/dashboard");
-  // }
+  }
 
   const Overlay = () => <ModalOverlay bg="none" backdropFilter="blur(10px)" />;
   return (
