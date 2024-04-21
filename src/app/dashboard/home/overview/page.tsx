@@ -98,7 +98,7 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
               my={"1rem"}
             >
               <Grid gap={1}>
-                <Text color={"#449c7c"} fontSize={{ base: "xs", md: "sm", lg:"lg" }} fontWeight={"600"}>
+                <Text color={"#449c7c"} fontSize={{ base: "xs", md: "sm", xl:"lg" }} fontWeight={"600"}>
                   Gender
                 </Text>
                 <Text
@@ -110,7 +110,7 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
                 </Text>
               </Grid>
               <Grid gap={1}>
-                <Text color={"#449c7c"} fontSize={{ base: "xs", md: "sm", lg:"lg" }} fontWeight={"600"}>
+                <Text color={"#449c7c"} fontSize={{ base: "xs", md: "sm", xl:"lg" }} fontWeight={"600"}>
                   Class
                 </Text>
                 <Text
@@ -122,7 +122,7 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
                 </Text>
               </Grid>
               <Grid gap={1}>
-                <Text color={"#449c7c"} fontSize={{ base: "xs", md: "sm", lg:"lg" }} fontWeight={"600"}>
+                <Text color={"#449c7c"} fontSize={{ base: "xs", md: "sm", xl:"lg" }} fontWeight={"600"}>
                   Date of Birth
                 </Text>
                 <Text
@@ -134,7 +134,7 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
                 </Text>
               </Grid>
               <Grid gap={1} display={{ base: "none", md: "grid" }}>
-                <Text color={"#449c7c"} fontSize={{ base: "xs", md: "sm", lg:"lg" }} fontWeight={"600"}>
+                <Text color={"#449c7c"} fontSize={{ base: "xs", md: "sm", xl:"lg" }} fontWeight={"600"}>
                   School
                 </Text>
                 <Text
