@@ -103,7 +103,7 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
                 </Text>
                 <Text
                   fontWeight={"500"}
-                  fontSize={{ base: "xs", md: "sm", lg: "lg" }}
+                  fontSize={{ base: "xs", md: "sm", xl: "lg" }}
                   color={"#606162"}
                 >
                   {currentWardProfile?.gender}
@@ -115,7 +115,7 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
                 </Text>
                 <Text
                   fontWeight={"500"}
-                  fontSize={{ base: "xs", md: "sm", lg: "lg" }}
+                  fontSize={{ base: "xs", md: "sm", xl: "lg" }}
                   color={"#606162"}
                 >
                   {currentWardProfile?.class}
@@ -127,7 +127,7 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
                 </Text>
                 <Text
                   fontWeight={"500"}
-                  fontSize={{ base: "xs", md: "sm", lg: "lg" }}
+                  fontSize={{ base: "xs", md: "sm", xl: "lg" }}
                   color={"#606162"}
                 >
                   {currentWardProfile?.dateOfBirth}
@@ -139,7 +139,7 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
                 </Text>
                 <Text
                   fontWeight={"500"}
-                  fontSize={{ base: "xs", md: "sm", lg: "lg" }}
+                  fontSize={{ base: "xs", md: "sm", xl: "lg" }}
                   color={"#606162"}
                 >
                   {currentWardProfile?.school}
