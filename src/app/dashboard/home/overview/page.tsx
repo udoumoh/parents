@@ -49,7 +49,7 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
         gap={5}
         columnGap={5}
       >
-        <Skeleton isLoaded={currentWardProfile?.profileImage === undefined ? false : true}>
+        <Skeleton isLoaded={currentWardProfile?.profileImage === undefined ? false : true} display={'flex'}>
         <Box
           width={"full"}
           rounded={"2xl"}
