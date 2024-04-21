@@ -47,11 +47,11 @@ const SchoolDetailsModal: FC<SchoolDetailsModalProps> = ({
     useUserLikesAPI();
   const profile = filteredPosts[activeProfileIndex]
  const handleToggleLike = () => {
-   if (isPostLiked(profile.id)) {
-     unlikePost(profile.id);
+   if (isPostLiked(profile?.id)) {
+     unlikePost(profile?.id);
      setProfileLikes((prevLikes: any) => Math.max(prevLikes - 1, 0));
    } else {
-     likePost(profile.id);
+     likePost(profile?.id);
      setProfileLikes((prevLikes: any) => prevLikes + 1);
    }
  };
@@ -124,9 +124,9 @@ const SchoolDetailsModal: FC<SchoolDetailsModalProps> = ({
               </Flex>
               <Flex gap={2} alignItems={"center"}>
                 <Icon
-                  as={isPostLiked(profile.id) ? IoMdHeart : IoMdHeartEmpty}
+                  as={isPostLiked(profile?.id) ? IoMdHeart : IoMdHeartEmpty}
                   onClick={handleToggleLike}
-                  color={isPostLiked(profile.id) ? "red.500" : "#00000070"}
+                  color={isPostLiked(profile?.id) ? "red.500" : "#00000070"}
                   boxSize={7}
                   transition="transform 0.2s ease-in-out"
                   _hover={{
@@ -165,9 +165,9 @@ const SchoolDetailsModal: FC<SchoolDetailsModalProps> = ({
                 </Flex>
                 <Flex gap={2} alignItems={"center"}>
                   <Icon
-                    as={isPostLiked(profile.id) ? IoMdHeart : IoMdHeartEmpty}
+                    as={isPostLiked(profile?.id) ? IoMdHeart : IoMdHeartEmpty}
                     onClick={handleToggleLike}
-                    color={isPostLiked(profile.id) ? "red.500" : "#00000070"}
+                    color={isPostLiked(profile?.id) ? "red.500" : "#00000070"}
                     boxSize={7}
                     transition="transform 0.2s ease-in-out"
                     _hover={{

@@ -208,9 +208,9 @@ const Page: FC<PageProps> = ({}) => {
           name: student.firstName + " " + student.lastName,
           age: student.ageInput,
           className: student?.classroom?.classroom?.className,
-          gender: student.gender,
-          profileImageUrl: student.profileImgUrl,
-          id: student.id,
+          gender: student?.gender,
+          profileImageUrl: student?.profileImgUrl,
+          id: student?.id,
         }));
         setStudentData(data);
       } catch (error) {
