@@ -31,13 +31,10 @@ const Layout: FC<LayoutProps> = ({ children }) => {
       <body className={mulish.className}>
         <Providers>
           <ApolloProvider client={client}>
-            {typeof window === "undefined" ? (
-              <Loading />
-            ) : (
+            
               <UserApiProvider>
                 <UserLikesAPIProvider>{children}</UserLikesAPIProvider>
               </UserApiProvider>
-            )}
           </ApolloProvider>
         </Providers>
       </body>
