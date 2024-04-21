@@ -22,11 +22,10 @@ import {
   MenuButton,
   MenuList,
   MenuItem,
-  MenuItemOption,
-  MenuGroup,
-  MenuOptionGroup,
-  MenuDivider,
   Portal,
+  IconButton,
+  Tooltip,
+  useDisclosure,
 } from "@chakra-ui/react";
 import { HiOutlineLocationMarker } from "react-icons/hi";
 import { RiSchoolLine } from "react-icons/ri";
@@ -35,6 +34,8 @@ import { useUserLikesAPI } from "@/hooks/UserLikesContext";
 import { useUserAPI } from "@/hooks/UserContext";
 import { IoIosArrowDown } from "react-icons/io";
 import { RiGenderlessLine } from "react-icons/ri";
+import { IoFilterOutline } from "react-icons/io5";
+import FilterModal from "./components/FilterModal";
 
 interface DiscoverProps {}
 
@@ -66,50 +67,10 @@ interface ProfileProps {
 }
 
 const Discover: FC<DiscoverProps> = ({}) => {
+  const {isOpen, onClose, onOpen} = useDisclosure()
   const { parentData } = useUserAPI();
-  const { filteredPosts, setFilteredPosts, schoolProfiles } = useUserLikesAPI();
-  const [type, setType] = useState("");
-  const [genderType, setGenderType] = useState("");
-  const [schoolType, setSchoolType] = useState("");
+  const { filteredPosts, handleFilterChange, filterParams, applyFilters } = useUserLikesAPI();
   const [likedPosts, setLikedPosts] = useState<ProfileProps[]>([]);
-  const [filterParams, setFilterParams] = useState({
-    type: "",
-    genderType: "",
-    schoolType: "",
-  });
-
-  const handleFilterChange = (filterName: any, value: any) => {
-    setFilterParams({
-      ...filterParams,
-      [filterName]: value,
-    });
-  };
-
-  const applyFilters = () => {
-    let filteredResults = schoolProfiles;
-
-    if (filterParams?.type) {
-      filteredResults = filteredResults?.filter(
-        (post) => post?.type?.toLowerCase() === filterParams?.type?.toLowerCase()
-      );
-    }
-    if (filterParams?.schoolType) {
-      filteredResults = filteredResults?.filter(
-        (post) =>
-          post?.schoolType?.toLowerCase() ===
-          filterParams?.schoolType?.toLowerCase()
-      );
-    }
-    if (filterParams?.genderType) {
-      filteredResults = filteredResults?.filter(
-        (post) =>
-          post?.genderType?.toLowerCase() ===
-          filterParams?.genderType?.toLowerCase()
-      );
-    }
-
-    setFilteredPosts(filteredResults);
-  };
 
   useEffect(() => {
     const likedPosts = filteredPosts?.filter((profile) =>
@@ -120,6 +81,7 @@ const Discover: FC<DiscoverProps> = ({}) => {
 
   return (
     <Box h={"100vh"} w={"full"} p={"1.5rem"} overflowY={"auto"} pb={"10rem"}>
+      <FilterModal isOpen={isOpen} onClose={onClose} />
       <Box
         backgroundImage={"/images/discoverbg.svg"}
         bgSize="cover"
@@ -277,9 +239,7 @@ const Discover: FC<DiscoverProps> = ({}) => {
                             backgroundColor: "#005D5D15",
                             color: "#005D5D",
                           }}
-                          onClick={() =>
-                            handleFilterChange("schoolType", "")
-                          }
+                          onClick={() => handleFilterChange("schoolType", "")}
                         >
                           - Any -
                         </MenuItem>
@@ -404,6 +364,19 @@ const Discover: FC<DiscoverProps> = ({}) => {
                     </Portal>
                   </Menu>
                 </Box>
+              </Flex>
+
+              <Flex alignItems={'center'}>
+                <Tooltip label={'more filter options'}>
+                <IconButton
+                  aria-label="filter"
+                  variant="outline"
+                  colorScheme="teal"
+                  icon={<IoFilterOutline size={20}/>}
+                  onClick={onOpen}
+                  // rounded={'full'}
+                />
+                </Tooltip>
               </Flex>
             </Box>
             <Button

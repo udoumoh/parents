@@ -51,6 +51,13 @@ interface UserLikesContextProps {
   schoolProfiles: SchoolProfilesProps[];
   filteredPosts: SchoolProfilesProps[];
   setFilteredPosts: (posts: any) => void;
+  handleFilterChange: (filterName: any, value: any) => void;
+  filterParams: {
+    type: string;
+    genderType: string;
+    schoolType: string;
+  };
+  applyFilters: () => void;
 }
 
 interface UserLikesApiProviderProps {
@@ -82,6 +89,46 @@ export const UserLikesAPIProvider: FC<UserLikesApiProviderProps> = ({
   useEffect(() => {
   setFilteredPosts(schoolProfiles);
   }, [schoolProfiles]);
+
+  const [filterParams, setFilterParams] = useState({
+    type: "",
+    genderType: "",
+    schoolType: "",
+  });
+
+  const handleFilterChange = (filterName: any, value: any) => {
+    setFilterParams({
+      ...filterParams,
+      [filterName]: value,
+    });
+  };
+
+  const applyFilters = () => {
+    let filteredResults: SchoolProfilesProps[] = schoolProfiles;
+
+    if (filterParams?.type) {
+      filteredResults = filteredResults?.filter(
+        (post) =>
+          post?.type?.toLowerCase() === filterParams?.type?.toLowerCase()
+      );
+    }
+    if (filterParams?.schoolType) {
+      filteredResults = filteredResults?.filter(
+        (post) =>
+          post?.schoolType?.toLowerCase() ===
+          filterParams?.schoolType?.toLowerCase()
+      );
+    }
+    if (filterParams?.genderType) {
+      filteredResults = filteredResults?.filter(
+        (post) =>
+          post?.genderType?.toLowerCase() ===
+          filterParams?.genderType?.toLowerCase()
+      );
+    }
+
+    setFilteredPosts(filteredResults);
+  };
 
   const likePost = async (postId: number) => {
 
@@ -154,6 +201,9 @@ export const UserLikesAPIProvider: FC<UserLikesApiProviderProps> = ({
     schoolProfiles,
     filteredPosts,
     setFilteredPosts,
+    handleFilterChange,
+    filterParams,
+    applyFilters,
   };
 
   return (
