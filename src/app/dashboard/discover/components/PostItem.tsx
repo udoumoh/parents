@@ -88,7 +88,7 @@ const PostItem: FC<PostItemProps> = ({ profile, currentIndex }) => {
     if (profile?.whoLikedProfile?.includes(userId || "")) {
       setLikedPosts((prevState) => ({
         ...prevState,
-        [profile.id]: true,
+        [profile?.id]: true,
       }));
     }
   }, [profile, parentData, setLikedPosts]);
