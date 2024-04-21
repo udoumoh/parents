@@ -144,8 +144,8 @@ const FilterModal: FC<FilterModalProps> = ({isOpen, onClose}) => {
                   value={filterParams?.state}
                   onChange={(e) => handleFilterChange("state", e.target.value)}
                 >
-                  {states?.map((state) => (
-                    <option value={state}>{state}</option>
+                  {states?.map((state, index) => (
+                    <option value={state} key={index}>{state}</option>
                   ))}
                 </Select>
               </Box>
@@ -158,8 +158,8 @@ const FilterModal: FC<FilterModalProps> = ({isOpen, onClose}) => {
                   value={filterParams?.lga}
                   onChange={(e) => handleFilterChange("lga", e.target.value)}
                 >
-                  {LGAs[filterParams.state]?.map((lga) => (
-                    <option value={lga}>{lga}</option>
+                  {LGAs[filterParams.state]?.map((lga, index) => (
+                    <option value={lga} key={index}>{lga}</option>
                   ))}
                 </Select>
               </Box>
