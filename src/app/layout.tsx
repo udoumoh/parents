@@ -22,15 +22,16 @@ const client = new ApolloClient({
 });
 
 const Layout: FC<LayoutProps> = ({ children }) => {
+  
   return (
     <html lang="en">
       <head>
         <link rel="icon" href="/images/greylightBordered.svg" />
-        <link rel="manifest" href="/manifest.json" />
+        <link rel="manifest" href="/manifest.json" />   
       </head>
       <body className={mulish.className}>
-        <Providers>
-          <ApolloProvider client={client}>
+        <ApolloProvider client={client}>
+          <Providers>
             {typeof window === "undefined" ? (
               <Loading />
             ) : (
@@ -38,8 +39,8 @@ const Layout: FC<LayoutProps> = ({ children }) => {
                 <UserLikesAPIProvider>{children}</UserLikesAPIProvider>
               </UserApiProvider>
             )}
-          </ApolloProvider>
-        </Providers>
+          </Providers>
+        </ApolloProvider>
       </body>
     </html>
   );
