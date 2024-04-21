@@ -43,13 +43,13 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
 
   return (
     <Flex gap={5} flexDir={"column"} mb={{ base: "8rem", lg: "5rem" }}>
+      <Skeleton isLoaded={currentWardProfile?.profileImage === undefined ? false : true} display={'flex'} rounded={'xl'}>
       <Flex
         flexDir={{ base: "column", lg: "row" }}
         justifyContent={"space-between"}
         gap={5}
         columnGap={5}
       >
-        <Skeleton isLoaded={currentWardProfile?.profileImage === undefined ? false : true} display={'flex'}>
         <Box
           width={"full"}
           rounded={"2xl"}
@@ -149,7 +149,6 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
             </Box>
           </Box>
         </Box>
-        </Skeleton>
 
         <Box
           border={"1px solid #005D5D50"}
@@ -174,7 +173,7 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
               fontSize={"sm"}
               px={4}
               py={1}
-            >
+              >
               Quick Financials
             </Text>
           </Box>
@@ -192,7 +191,7 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
                 backgroundColor: "#FED3D3",
                 transitionDuration: "0.5s",
               }}
-            >
+              >
               <Text fontSize={"sm"} color={"#00000070"} fontWeight={"bold"}>
                 Owing balance
               </Text>
@@ -211,7 +210,7 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
                 backgroundColor: "#BAF2E5",
                 transitionDuration: "0.5s",
               }}
-            >
+              >
               <Text fontSize={"sm"} color={"#00000070"} fontWeight={"bold"}>
                 Overpaid Balance
               </Text>
@@ -222,6 +221,7 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
           </Box>
         </Box>
       </Flex>
+      </Skeleton>
 
       <Flex
         flexDir={{ base: "column", xl: "row" }}
