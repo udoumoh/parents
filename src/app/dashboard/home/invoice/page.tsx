@@ -622,11 +622,11 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                   <MenuItem
                                     px={"1rem"}
                                     display={
-                                      !["active", "partial payment"].includes(
+                                      ["active", "partial payment"].includes(
                                         item?.status
-                                      ) || (currentWardProfile?.wallet || 0) > 0
-                                        ? "none"
-                                        : "flex"
+                                      ) && (currentWardProfile?.wallet || 0) > 0
+                                        ? "flex"
+                                        : "none"
                                     }
                                     gap={"3"}
                                     onClick={() =>
