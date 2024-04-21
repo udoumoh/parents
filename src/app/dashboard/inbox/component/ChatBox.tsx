@@ -685,7 +685,7 @@ const ChatBox = () => {
                         <>
                           {messages?.map((item: any) => (
                             <Flex
-                              key={item.id}
+                              key={item?.id}
                               borderRadius="md"
                               gap={2}
                               direction="column"

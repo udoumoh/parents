@@ -6,12 +6,6 @@ const withPWA = require('next-pwa')({
     scope: "/",
     sw: "/service-worker.js",
 })
-const nextConfig = {
-    webpack: (config) => {
-    config.resolve.alias.canvas = false;
-
-    return config;
- },
-}
+const nextConfig = {}
 
 module.exports = withPWA(nextConfig)
