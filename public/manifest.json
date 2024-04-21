@@ -19,7 +19,7 @@
   ],
   "theme_color": "#FFFFFF",
   "background_color": "#FFFFFF",
-  "start_url": "https://parent.greynote.app/dashboard/overview",
+  "start_url": "https://parent.greynote.app/dashboard/home/overview",
   "display": "standalone",
   "orientation": "portrait"
 }
