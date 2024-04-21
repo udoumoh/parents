@@ -35,6 +35,9 @@ interface SchoolProfilesProps {
     websiteUrl: string;
     whoLikedProfile: string[];
     schoolMedia: string[];
+    address: string;
+    priceRange: string;
+    studentPerClassroom: string;
 }
 
 
@@ -54,10 +57,16 @@ interface UserLikesContextProps {
   handleFilterChange: (filterName: any, value: any) => void;
   filterParams: {
     type: string;
-    genderType: string;
     schoolType: string;
+    genderType: string;
+    schoolSize: string;
+    state: string;
+    lga: string;
+    address: string;
+    priceRange: string;
   };
   applyFilters: () => void;
+  setFilterParams: (filters: any) => void;
 }
 
 interface UserLikesApiProviderProps {
@@ -92,8 +101,13 @@ export const UserLikesAPIProvider: FC<UserLikesApiProviderProps> = ({
 
   const [filterParams, setFilterParams] = useState({
     type: "",
-    genderType: "",
     schoolType: "",
+    genderType: "",
+    schoolSize: "",
+    state: "",
+    lga: "",
+    address: "",
+    priceRange: "",
   });
 
   const handleFilterChange = (filterName: any, value: any) => {
@@ -124,6 +138,36 @@ export const UserLikesAPIProvider: FC<UserLikesApiProviderProps> = ({
         (post) =>
           post?.genderType?.toLowerCase() ===
           filterParams?.genderType?.toLowerCase()
+      );
+    }
+    if (filterParams?.state) {
+      filteredResults = filteredResults?.filter(
+        (post) =>
+          post?.state?.toLowerCase() ===
+          filterParams?.state?.toLowerCase()
+      );
+    }
+    if (filterParams?.lga) {
+      filteredResults = filteredResults?.filter(
+        (post) =>
+          post?.lgarea?.toLowerCase() === filterParams?.lga?.toLowerCase()
+      );
+    }
+    if (filterParams?.address) {
+      filteredResults = filteredResults?.filter(
+        (post) =>
+          post?.address?.toLowerCase().includes(filterParams?.address?.toLowerCase())
+      );
+    }
+    if (filterParams?.schoolSize) {
+      filteredResults = filteredResults?.filter(
+        (post) => Number(post?.studentPerClassroom) <= Number(filterParams?.schoolSize)
+      );
+    }
+    if (filterParams?.priceRange) {
+      filteredResults = filteredResults?.filter(
+        (post) =>
+          Number(post?.priceRange) <= Number(filterParams?.priceRange)
       );
     }
 
@@ -203,6 +247,7 @@ export const UserLikesAPIProvider: FC<UserLikesApiProviderProps> = ({
     setFilteredPosts,
     handleFilterChange,
     filterParams,
+    setFilterParams,
     applyFilters,
   };
 

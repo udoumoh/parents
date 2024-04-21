@@ -7,14 +7,12 @@ import {
   Flex,
   Icon,
   useDisclosure,
-  Skeleton,
+  ScaleFade,
 } from "@chakra-ui/react";
 import { IoMdHeartEmpty, IoMdHeart } from "react-icons/io";
 import { IoCopy } from "react-icons/io5";
 import SchoolDetailsModal from "./SchoolDetailsModal";
-import { LIKE_PROFILE, UNLIKE_PROFILE } from "@/gql/mutations";
 import { useUserAPI } from "@/hooks/UserContext";
-import { useMutation } from "@apollo/client";
 import { useUserLikesAPI } from "@/hooks/UserLikesContext";
 import { capitalizeFirstLetter } from "@/helpers/capitalizeFirstLetter";
 
@@ -44,11 +42,15 @@ interface PostItemProps {
     websiteUrl: string;
     whoLikedProfile: string[];
     schoolMedia: string[];
+    address: string;
+    priceRange: string;
+    studentPerClassroom: string;
   };
   currentIndex: number;
 }
 
 const PostItem: FC<PostItemProps> = ({ profile, currentIndex }) => {
+  const { isOpen, onToggle } = useDisclosure();
   const {
     likePost,
     unlikePost,
@@ -72,11 +74,11 @@ const PostItem: FC<PostItemProps> = ({ profile, currentIndex }) => {
 
   const handleToggleLike = () => {
     if (isPostLiked(profile?.id)) {
-      setProfileLikes((prevLikes) => Math.max(prevLikes - 1, 0));
       unlikePost(profile?.id);
+      setProfileLikes((prevLikes) => Math.max(prevLikes - 1, 0));
     } else {
-      setProfileLikes((prevLikes) => prevLikes + 1);
       likePost(profile?.id);
+      setProfileLikes((prevLikes) => prevLikes + 1);
     }
   };
 
@@ -89,9 +91,15 @@ const PostItem: FC<PostItemProps> = ({ profile, currentIndex }) => {
       }));
     }
   }, [profile, parentData, setLikedPosts]);
-  const { isOpen, onOpen, onClose } = useDisclosure();
+
+  useEffect(()=>{
+    onToggle()
+  }, [])
+
+  const { isOpen: isSchoolModalOpen, onOpen, onClose } = useDisclosure();
 
   return (
+    <ScaleFade initialScale={0.6} in={isOpen}>
       <Box
         border={"1px solid #00000060"}
         rounded={"xl"}
@@ -100,7 +108,7 @@ const PostItem: FC<PostItemProps> = ({ profile, currentIndex }) => {
         _hover={{ cursor: "pointer" }}
       >
         <SchoolDetailsModal
-          isOpen={isOpen}
+          isOpen={isSchoolModalOpen}
           onClose={onClose}
           setProfileLikes={setProfileLikes}
         />
@@ -164,6 +172,7 @@ const PostItem: FC<PostItemProps> = ({ profile, currentIndex }) => {
           </Flex>
         </Flex>
       </Box>
+    </ScaleFade>
   );
 };
 

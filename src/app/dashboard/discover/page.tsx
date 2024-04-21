@@ -27,7 +27,6 @@ import {
   Tooltip,
   useDisclosure,
 } from "@chakra-ui/react";
-import { HiOutlineLocationMarker } from "react-icons/hi";
 import { RiSchoolLine } from "react-icons/ri";
 import PostItem from "./components/PostItem";
 import { useUserLikesAPI } from "@/hooks/UserLikesContext";
@@ -36,6 +35,7 @@ import { IoIosArrowDown } from "react-icons/io";
 import { RiGenderlessLine } from "react-icons/ri";
 import { IoFilterOutline } from "react-icons/io5";
 import FilterModal from "./components/FilterModal";
+import { PiUserGear } from "react-icons/pi";
 
 interface DiscoverProps {}
 
@@ -64,6 +64,9 @@ interface ProfileProps {
   websiteUrl: string;
   whoLikedProfile: string[];
   schoolMedia: string[];
+  address: string;
+  priceRange: string;
+  studentPerClassroom: string;
 }
 
 const Discover: FC<DiscoverProps> = ({}) => {
@@ -108,7 +111,6 @@ const Discover: FC<DiscoverProps> = ({}) => {
           borderTopRadius={"2xl"}
           display={"flex"}
           alignItems={"center"}
-          justifyContent={"center"}
           p={"1rem"}
           backdropFilter={"blur(6px)"}
         >
@@ -126,12 +128,12 @@ const Discover: FC<DiscoverProps> = ({}) => {
           >
             <Box
               display={"flex"}
-              flexDir={{ base: "column", sm: "row" }}
-              gap={{ base: 4, md: 16 }}
+              flexDir={{ base: "column", md: "row" }}
+              gap={{ base: 4, md: 8 }}
             >
               <Flex alignItems={"center"} gap={2}>
                 <Icon
-                  as={HiOutlineLocationMarker}
+                  as={PiUserGear}
                   boxSize={{ base: 8, md: 9 }}
                   color={"#007C7B"}
                   border={"1px solid #005D5D"}
@@ -365,30 +367,31 @@ const Discover: FC<DiscoverProps> = ({}) => {
                   </Menu>
                 </Box>
               </Flex>
+            </Box>
 
-              <Flex alignItems={'center'}>
-                <Tooltip label={'more filter options'}>
-                <IconButton
-                  aria-label="filter"
-                  variant="outline"
-                  colorScheme="teal"
-                  icon={<IoFilterOutline size={20}/>}
-                  onClick={onOpen}
-                  // rounded={'full'}
-                />
+            <Flex alignItems={"center"} gap={3}>
+              <Flex alignItems={"center"}>
+                <Tooltip label={"more filter options"}>
+                  <IconButton
+                    size={'md'}
+                    aria-label="filter"
+                    colorScheme="teal"
+                    icon={<IoFilterOutline size={20} />}
+                    onClick={onOpen}
+                    rounded={"full"}
+                  />
                 </Tooltip>
               </Flex>
-            </Box>
-            <Button
-              rounded={"full"}
-              size={{ base: "sm", md: "md" }}
-              px={"2rem"}
-              // fontSize={{ base: "3xs", md: "xs" }}
-              colorScheme="teal"
-              onClick={applyFilters}
-            >
-              Search schools
-            </Button>
+              <Button
+                rounded={"full"}
+                size={{ base: "sm", md: "md" }}
+                px={"2rem"}
+                colorScheme="teal"
+                onClick={applyFilters}
+              >
+                Search schools
+              </Button>
+            </Flex>
           </Box>
         </Box>
       </Box>
