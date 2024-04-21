@@ -1,6 +1,5 @@
-"use client";
-import "./globals.css";
-import { FC, useState } from "react";
+'use client'
+import { FC, useEffect, useState } from "react";
 import UserApiProvider from "@/hooks/UserContext";
 import { Mulish } from "next/font/google";
 import { Providers } from "./providers";
@@ -22,25 +21,33 @@ const client = new ApolloClient({
 });
 
 const Layout: FC<LayoutProps> = ({ children }) => {
-  
+  const [isLocalStorageAvailable, setIsLocalStorageAvailable] =
+    useState<boolean>(false);
+
+  useEffect(() => {
+    setIsLocalStorageAvailable(
+      typeof window !== "undefined" && window.localStorage !== undefined
+    );
+  }, []);
+
+  if (!isLocalStorageAvailable) {
+    return <Loading />; 
+  }
+
   return (
     <html lang="en">
       <head>
         <link rel="icon" href="/images/greylightBordered.svg" />
-        <link rel="manifest" href="/manifest.json" />   
+        <link rel="manifest" href="/manifest.json" />
       </head>
       <body className={mulish.className}>
-        <ApolloProvider client={client}>
-          <Providers>
-            {typeof window === "undefined" ? (
-              <Loading />
-            ) : (
-              <UserApiProvider>
-                <UserLikesAPIProvider>{children}</UserLikesAPIProvider>
-              </UserApiProvider>
-            )}
-          </Providers>
-        </ApolloProvider>
+        <Providers>
+          <ApolloProvider client={client}>
+            <UserApiProvider>
+              <UserLikesAPIProvider>{children}</UserLikesAPIProvider>
+            </UserApiProvider>
+          </ApolloProvider>
+        </Providers>
       </body>
     </html>
   );
