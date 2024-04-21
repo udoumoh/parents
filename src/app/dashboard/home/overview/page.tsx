@@ -43,7 +43,6 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
 
   return (
     <Flex gap={5} flexDir={"column"} mb={{ base: "8rem", lg: "5rem" }}>
-      <Skeleton isLoaded={currentWardProfile?.profileImage === undefined ? false : true} display={'flex'} rounded={'xl'}>
       <Flex
         flexDir={{ base: "column", lg: "row" }}
         justifyContent={"space-between"}
@@ -221,7 +220,6 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
           </Box>
         </Box>
       </Flex>
-      </Skeleton>
 
       <Flex
         flexDir={{ base: "column", xl: "row" }}
