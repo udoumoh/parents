@@ -8,6 +8,7 @@ import {
   Icon,
   useDisclosure,
   ScaleFade,
+  Skeleton,
 } from "@chakra-ui/react";
 import { IoMdHeartEmpty, IoMdHeart } from "react-icons/io";
 import { IoCopy } from "react-icons/io5";
@@ -100,6 +101,7 @@ const PostItem: FC<PostItemProps> = ({ profile, currentIndex }) => {
 
   return (
     <ScaleFade initialScale={0.6} in={isOpen}>
+      <Skeleton isLoaded={profile?.logoImgUrl === undefined ? false : true}>
       <Box
         border={"1px solid #00000060"}
         rounded={"xl"}
@@ -172,6 +174,7 @@ const PostItem: FC<PostItemProps> = ({ profile, currentIndex }) => {
           </Flex>
         </Flex>
       </Box>
+      </Skeleton>
     </ScaleFade>
   );
 };
