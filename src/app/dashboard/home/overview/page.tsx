@@ -9,7 +9,9 @@ import {
   Avatar,
   Icon,
   Divider,
-  Skeleton,
+  Skeleton, 
+  SkeletonCircle, 
+  SkeletonText,
   SlideFade,
   useDisclosure,
 } from "@chakra-ui/react";
