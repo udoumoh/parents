@@ -86,7 +86,7 @@ const Discover: FC<DiscoverProps> = ({}) => {
     <Box h={"100vh"} w={"full"} p={"1.5rem"} overflowY={"auto"} pb={"10rem"}>
       <FilterModal isOpen={isOpen} onClose={onClose} />
       <Box
-        backgroundImage={"/images/discoverbg.svg"}
+        backgroundImage={"/images/discoverbg.png"}
         bgSize="cover"
         bgPosition="top"
         bgRepeat="no-repeat"
