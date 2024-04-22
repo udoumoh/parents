@@ -30,6 +30,7 @@ import {
 import { TbWorld } from "react-icons/tb";
 import { useUserLikesAPI } from "@/hooks/UserLikesContext";
 import { ComposeMessage } from "../../inbox/component/ComposeMessage";
+import { MdOutlineMailOutline } from "react-icons/md";
 
 interface SchoolDetailsModalProps {
   isOpen: boolean;
@@ -136,10 +137,9 @@ const SchoolDetailsModal: FC<SchoolDetailsModalProps> = ({
                   }}
                 />
                 <Button
-                  backgroundColor={"#005D5D"}
+                  leftIcon={<MdOutlineMailOutline size={18}/>}
+                  colorScheme="teal"
                   size={"sm"}
-                  _hover={{ backgroundColor: "#007C7B" }}
-                  color={"#fff"}
                   onClick={onComposeModalOpen}
                 >
                   Send a Message
