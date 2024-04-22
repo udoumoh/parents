@@ -95,7 +95,7 @@ const FilterModal: FC<FilterModalProps> = ({isOpen, onClose}) => {
                 >
                   <option value="day">Day</option>
                   <option value="boarding">Boarding</option>
-                  <option value="mixed">Mixed</option>
+                  <option value="mixed-genders">Mixed-Genders</option>
                 </Select>
               </Box>
             </Flex>

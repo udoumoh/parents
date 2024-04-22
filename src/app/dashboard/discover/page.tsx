@@ -273,10 +273,10 @@ const Discover: FC<DiscoverProps> = ({}) => {
                             color: "#005D5D",
                           }}
                           onClick={() =>
-                            handleFilterChange("schoolType", "mixed")
+                            handleFilterChange("schoolType", "mixed-genders")
                           }
                         >
-                          Mixed
+                          Mixed-Genders
                         </MenuItem>
                       </MenuList>
                     </Portal>
