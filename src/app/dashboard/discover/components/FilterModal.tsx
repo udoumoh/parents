@@ -42,6 +42,7 @@ const FilterModal: FC<FilterModalProps> = ({isOpen, onClose}) => {
           priceRange: "",
         };
         setFilterParams(defaultParams)
+        applyFilters()
     }
 
   return (
