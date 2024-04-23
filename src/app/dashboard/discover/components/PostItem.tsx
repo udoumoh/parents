@@ -138,7 +138,7 @@ const PostItem: FC<PostItemProps> = ({ profile, currentIndex }) => {
         </Box>
 
         <Flex justifyContent={"space-between"} alignItems={"center"}>
-          <Flex gap={2} my={"1rem"}>
+          <Flex gap={2} my={"1rem"} maxW={'300px'}>
             <Avatar
               size={{ base: "sm", md: "md" }}
               src={profile?.logoImgUrl}
