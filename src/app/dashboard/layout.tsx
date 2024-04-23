@@ -1,6 +1,5 @@
 "use client";
 import React, { ReactNode, useState } from "react";
-import { Box, Flex, Button, Text } from "@chakra-ui/react";
 import MainNav from "@/components/navigation/mainNav";
 import { useQuery } from "@apollo/client";
 import { GET_PARENT } from "@/gql/queries";
