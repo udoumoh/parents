@@ -310,7 +310,7 @@ const Invoice: FC<InvoiceProps> = ({ params }: { params: { id: number } }) => {
                             p={2}
                             rounded={"md"}
                           >
-                            <Text fontSize={"md"} color={"#000000"}>
+                            <Text fontSize={"sm"} color={"#000000"}>
                               {receipt?.summary}
                             </Text>
                           </Box>
@@ -465,7 +465,7 @@ const Invoice: FC<InvoiceProps> = ({ params }: { params: { id: number } }) => {
                   p={2}
                   rounded={"md"}
                 >
-                  <Text fontSize={"md"} color={"#000000"}>
+                  <Text fontSize={"sm"} color={"#000000"}>
                     {currentInvoice?.summary}
                   </Text>
                 </Box>
