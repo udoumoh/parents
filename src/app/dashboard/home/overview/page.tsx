@@ -9,9 +9,7 @@ import {
   Avatar,
   Icon,
   Divider,
-  Skeleton, 
-  SkeletonCircle, 
-  SkeletonText,
+  Skeleton,
   SlideFade,
   useDisclosure,
 } from "@chakra-ui/react";
@@ -66,43 +64,29 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
         >
           <Box display={"flex"} justifyContent={"space-between"} gap={3}>
             <Box display={"flex"} alignItems={"center"} gap={3}>
-              <SkeletonCircle
-                isLoaded={
-                  currentWardProfile?.profileImage === undefined ? false : true
-                }
-              >
-                <Avatar
-                  size={"lg"}
-                  src={currentWardProfile?.profileImage}
-                  pointerEvents={"none"}
-                  name={`${currentWardProfile?.firstName} ${currentWardProfile?.lastName}`}
-                />
-              </SkeletonCircle>
+              <Avatar
+                size={"lg"}
+                src={currentWardProfile?.profileImage}
+                pointerEvents={"none"}
+                name={`${currentWardProfile?.firstName} ${currentWardProfile?.lastName}`}
+              />
               <Box lineHeight={"30px"}>
-                <SkeletonText
-                  isLoaded={
-                    currentWardProfile?.firstName === undefined ? false : true
-                  }
-                >
-                  <Text fontWeight={"600"} fontSize={{ base: "lg", lg: "2xl" }}>
-                    {`${currentWardProfile?.firstName || ""} ${
-                      currentWardProfile?.lastName || ""
-                    }`}
-                  </Text>
-                </SkeletonText>
+                <Text fontWeight={"600"} fontSize={{ base: "lg", lg: "2xl" }}>
+                  {`${currentWardProfile?.firstName || ""} ${
+                    currentWardProfile?.lastName || ""
+                  }`}
+                </Text>
               </Box>
             </Box>
             <Box display={"flex"} gap={2} alignItems={"initial"}>
-              <Skeleton isLoaded={currentWardProfile?.schoollogo === undefined ? false : true} rounded={'xl'}>
-                <Image
-                  rounded={"lg"}
-                  src={currentWardProfile?.schoollogo}
-                  alt="profileImg"
-                  w={{ base: "2.5rem", lg: "4.5rem" }}
-                  h={{ base: "2.5rem", lg: "4.5rem" }}
-                  pointerEvents={"none"}
-                />
-              </Skeleton>
+              <Image
+                rounded={"lg"}
+                src={currentWardProfile?.schoollogo}
+                alt="profileImg"
+                w={{ base: "2.5rem", lg: "4.5rem" }}
+                h={{ base: "2.5rem", lg: "4.5rem" }}
+                pointerEvents={"none"}
+              />
             </Box>
           </Box>
           <Box>
@@ -114,11 +98,7 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
               my={"1rem"}
             >
               <Grid gap={1}>
-                <Text
-                  color={"#449c7c"}
-                  fontSize={{ base: "xs", md: "sm", xl: "lg" }}
-                  fontWeight={"600"}
-                >
+                <Text color={"#449c7c"} fontSize={{ base: "xs", md: "sm", xl:"lg" }} fontWeight={"600"}>
                   Gender
                 </Text>
                 <Text
@@ -130,11 +110,7 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
                 </Text>
               </Grid>
               <Grid gap={1}>
-                <Text
-                  color={"#449c7c"}
-                  fontSize={{ base: "xs", md: "sm", xl: "lg" }}
-                  fontWeight={"600"}
-                >
+                <Text color={"#449c7c"} fontSize={{ base: "xs", md: "sm", xl:"lg" }} fontWeight={"600"}>
                   Class
                 </Text>
                 <Text
@@ -146,11 +122,7 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
                 </Text>
               </Grid>
               <Grid gap={1}>
-                <Text
-                  color={"#449c7c"}
-                  fontSize={{ base: "xs", md: "sm", xl: "lg" }}
-                  fontWeight={"600"}
-                >
+                <Text color={"#449c7c"} fontSize={{ base: "xs", md: "sm", xl:"lg" }} fontWeight={"600"}>
                   Date of Birth
                 </Text>
                 <Text
@@ -162,11 +134,7 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
                 </Text>
               </Grid>
               <Grid gap={1} display={{ base: "none", md: "grid" }}>
-                <Text
-                  color={"#449c7c"}
-                  fontSize={{ base: "xs", md: "sm", xl: "lg" }}
-                  fontWeight={"600"}
-                >
+                <Text color={"#449c7c"} fontSize={{ base: "xs", md: "sm", xl:"lg" }} fontWeight={"600"}>
                   School
                 </Text>
                 <Text
@@ -204,7 +172,7 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
               fontSize={"sm"}
               px={4}
               py={1}
-            >
+              >
               Quick Financials
             </Text>
           </Box>
@@ -222,7 +190,7 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
                 backgroundColor: "#FED3D3",
                 transitionDuration: "0.5s",
               }}
-            >
+              >
               <Text fontSize={"sm"} color={"#00000070"} fontWeight={"bold"}>
                 Owing balance
               </Text>
@@ -241,7 +209,7 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
                 backgroundColor: "#BAF2E5",
                 transitionDuration: "0.5s",
               }}
-            >
+              >
               <Text fontSize={"sm"} color={"#00000070"} fontWeight={"bold"}>
                 Overpaid Balance
               </Text>
