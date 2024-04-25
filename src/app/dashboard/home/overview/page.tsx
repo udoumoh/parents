@@ -238,13 +238,14 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
                 <Text fontSize={"sm"} color={"#00000070"} fontWeight={"bold"}>
                   Overpaid Balance
                 </Text>
-                <Popover placement="left" closeOnBlur={false} size={'xl'}>
+                <Popover placement="left" closeOnBlur={false} size={"xl"}>
                   <PopoverTrigger>
                     <IconButton
                       aria-label="warning"
                       icon={<CiWarning size={"16"} />}
                       color={"red"}
                       size={"xs"}
+                      backgroundColor={"#EEFAF4"}
                     />
                   </PopoverTrigger>
                   <PopoverContent
@@ -278,8 +279,7 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
                       display="flex"
                       alignItems="center"
                       justifyContent="space-between"
-                    >
-                    </PopoverFooter>
+                    ></PopoverFooter>
                   </PopoverContent>
                 </Popover>
               </Flex>
