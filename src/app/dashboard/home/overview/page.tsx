@@ -7,16 +7,24 @@ import {
   Image,
   Grid,
   Avatar,
+  IconButton,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  PopoverHeader,
+  PopoverBody,
+  PopoverFooter,
+  PopoverArrow,
+  PopoverCloseButton,
+  PopoverAnchor,
   Icon,
-  Divider,
-  Skeleton,
-  SlideFade,
-  useDisclosure,
 } from "@chakra-ui/react";
 import Attendance from "@/components/attendance";
 import Invoice from "@/components/invoice";
 import { useUserAPI } from "@/hooks/UserContext";
 import formatNumberWithCommas from "@/helpers/formatNumberWithCommas";
+import { CiWarning } from "react-icons/ci";
+import { IoIosWarning } from "react-icons/io";
 
 interface DashboardPageProps {}
 
@@ -98,7 +106,11 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
               my={"1rem"}
             >
               <Grid gap={1}>
-                <Text color={"#449c7c"} fontSize={{ base: "xs", md: "sm", xl:"lg" }} fontWeight={"600"}>
+                <Text
+                  color={"#449c7c"}
+                  fontSize={{ base: "xs", md: "sm", xl: "lg" }}
+                  fontWeight={"600"}
+                >
                   Gender
                 </Text>
                 <Text
@@ -110,7 +122,11 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
                 </Text>
               </Grid>
               <Grid gap={1}>
-                <Text color={"#449c7c"} fontSize={{ base: "xs", md: "sm", xl:"lg" }} fontWeight={"600"}>
+                <Text
+                  color={"#449c7c"}
+                  fontSize={{ base: "xs", md: "sm", xl: "lg" }}
+                  fontWeight={"600"}
+                >
                   Class
                 </Text>
                 <Text
@@ -122,7 +138,11 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
                 </Text>
               </Grid>
               <Grid gap={1}>
-                <Text color={"#449c7c"} fontSize={{ base: "xs", md: "sm", xl:"lg" }} fontWeight={"600"}>
+                <Text
+                  color={"#449c7c"}
+                  fontSize={{ base: "xs", md: "sm", xl: "lg" }}
+                  fontWeight={"600"}
+                >
                   Date of Birth
                 </Text>
                 <Text
@@ -134,7 +154,11 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
                 </Text>
               </Grid>
               <Grid gap={1} display={{ base: "none", md: "grid" }}>
-                <Text color={"#449c7c"} fontSize={{ base: "xs", md: "sm", xl:"lg" }} fontWeight={"600"}>
+                <Text
+                  color={"#449c7c"}
+                  fontSize={{ base: "xs", md: "sm", xl: "lg" }}
+                  fontWeight={"600"}
+                >
                   School
                 </Text>
                 <Text
@@ -172,7 +196,7 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
               fontSize={"sm"}
               px={4}
               py={1}
-              >
+            >
               Quick Financials
             </Text>
           </Box>
@@ -190,7 +214,7 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
                 backgroundColor: "#FED3D3",
                 transitionDuration: "0.5s",
               }}
-              >
+            >
               <Text fontSize={"sm"} color={"#00000070"} fontWeight={"bold"}>
                 Owing balance
               </Text>
@@ -209,10 +233,56 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
                 backgroundColor: "#BAF2E5",
                 transitionDuration: "0.5s",
               }}
-              >
-              <Text fontSize={"sm"} color={"#00000070"} fontWeight={"bold"}>
-                Overpaid Balance
-              </Text>
+            >
+              <Flex justifyContent={"space-between"} alignItems={"center"}>
+                <Text fontSize={"sm"} color={"#00000070"} fontWeight={"bold"}>
+                  Overpaid Balance
+                </Text>
+                <Popover placement="left" closeOnBlur={false} size={'xl'}>
+                  <PopoverTrigger>
+                    <IconButton
+                      aria-label="warning"
+                      icon={<CiWarning size={"16"} />}
+                      color={"red"}
+                      size={"xs"}
+                    />
+                  </PopoverTrigger>
+                  <PopoverContent
+                    color="#fff"
+                    bg="red.800"
+                    borderColor="red.800"
+                  >
+                    <PopoverHeader pt={4} fontWeight="bold" border="0">
+                      <Flex alignItems={"center"} gap={2}>
+                        <Icon as={IoIosWarning} color={"orange"} />
+                        <Text color={"orange"}>Disclaimer!!!</Text>
+                      </Flex>
+                    </PopoverHeader>
+                    <PopoverArrow bg="blue.800" />
+                    <PopoverCloseButton />
+                    <PopoverBody fontSize={"sm"}>
+                      Before starting the process of transferring your child to
+                      another school, it's crucial to use up your Overpaid
+                      balance in your current school. Unpaid balances cannot be
+                      transferred to a new school. Greynote doesn't manage
+                      payments or receive funds for schools or parents. Please
+                      note that all funds in your wallet belong to the school,
+                      and if you choose to withdraw your child, the school is
+                      responsible for refunding your wallet balance. Greynote
+                      cannot be held responsible if parents fail to deplete
+                      their wallet balance before transferring a child to
+                      another school.
+                    </PopoverBody>
+                    <PopoverFooter
+                      border="0"
+                      display="flex"
+                      alignItems="center"
+                      justifyContent="space-between"
+                    >
+                    </PopoverFooter>
+                  </PopoverContent>
+                </Popover>
+              </Flex>
               <Text fontSize={"2xl"} color={"#005D5D"} fontWeight={"bold"}>
                 ₦{formatNumberWithCommas(currentWardProfile?.wallet || 0)}
               </Text>
