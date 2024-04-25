@@ -238,7 +238,7 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
                 <Text fontSize={"sm"} color={"#00000070"} fontWeight={"bold"}>
                   Overpaid Balance
                 </Text>
-                <Popover placement="left" closeOnBlur={false} size={"xl"}>
+                <Popover placement="left" closeOnBlur={false}>
                   <PopoverTrigger>
                     <IconButton
                       aria-label="warning"
