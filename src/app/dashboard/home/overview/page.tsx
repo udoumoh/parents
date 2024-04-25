@@ -261,7 +261,8 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
                     </PopoverHeader>
                     <PopoverArrow bg="blue.800" />
                     <PopoverCloseButton />
-                    <PopoverBody fontSize={"sm"}>
+                    <PopoverBody>
+                      <Text fontSize={{base:"2xs", sm:"xs" }}>
                       Before starting the process of transferring your child to
                       another school, it's crucial to use up your Overpaid
                       balance in your current school. Unpaid balances cannot be
@@ -273,6 +274,7 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
                       cannot be held responsible if parents fail to deplete
                       their wallet balance before transferring a child to
                       another school.
+                      </Text>
                     </PopoverBody>
                     <PopoverFooter
                       border="0"
