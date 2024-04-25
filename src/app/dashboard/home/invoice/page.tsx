@@ -82,7 +82,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
   const { data: getEducationHistory } = useQuery(
     GET_STUDENT_EDUCATION_HISTORY,
     {
-      variables: { studentId: currentWardProfile?.id },
+      variables: { studentId: currentWardProfile?.id},
     }
   );
 
@@ -110,7 +110,6 @@ const Invoice: FC<InvoiceProps> = ({}) => {
     onClose: onSchoolAccountDetailsModalClose,
   } = useDisclosure();
 
-  const [filterParam, setFilterParam] = useState("");
   const [invoices, setInvoices] = useState<StudentInvoiceProps[]>([]);
   const [schoolsAttended, setSchoolsAttended] = useState([]);
   const [currentInvoice, setCurrentInvoice] = useState<StudentInvoiceProps>();
@@ -118,6 +117,10 @@ const Invoice: FC<InvoiceProps> = ({}) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalNumberOfPages, setTotalNumberOfPages] = useState(1);
   const itemsPerPage = 10;
+
+  useEffect(() => {
+    setInvoices(invoiceData);
+  }, [invoiceData]);
 
   useEffect(() => {
     const startIndex = (currentPage - 1) * itemsPerPage;
@@ -145,13 +148,8 @@ const Invoice: FC<InvoiceProps> = ({}) => {
     fetchData();
   }, [getEducationHistory]);
 
-  useEffect(() => {
-    setInvoices(invoiceData);
-  }, []);
-
   const handleFilterChange = (filterParam: any) => {
     let filteredInvoices = invoiceData;
-    setFilterParam(filterParam);
     if (filterParam) {
       filteredInvoices = filteredInvoices?.filter(
         (invoice) => invoice?.schoolname === filterParam
