@@ -66,7 +66,7 @@ const Page: FC<pageProps> = ({}) => {
     };
 
     fetchData();
-  }, [getRequests]); // Only trigger effect when `getRequests` changes
+  }, [getRequests]);
 
   useEffect(() => {
     const parentResponse = parent;
@@ -78,7 +78,7 @@ const Page: FC<pageProps> = ({}) => {
     } else if (childrenCount !== 0) {
       window.location.replace("/dashboard/home/overview");
     }
-  }, [parent, requestData]); // Trigger based on `parent` and `requestData`
+  }, [parent, requestData]);
 
   if (parentLoading || requestsLoading) {
     return <Loading />;

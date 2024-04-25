@@ -308,6 +308,7 @@ const {
                                       PDF
                                     </option>
                                     <option value={"PNG"}>PNG</option>
+                                    <option value={"No File"}>No file</option>
                                   </Select>
                                   <FormErrorMessage>
                                     {form.errors.docType}

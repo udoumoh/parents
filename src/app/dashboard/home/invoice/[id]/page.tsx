@@ -254,7 +254,11 @@ const Invoice: FC<InvoiceProps> = ({ params }: { params: { id: number } }) => {
                           rounded={"md"}
                         >
                           <Box
-                            display={"flex"}
+                            display={
+                              receipt?.uploadedDocument?.length === 0
+                                ? "none"
+                                : "flex"
+                            }
                             border={"1px solid #00000020"}
                             rounded={"lg"}
                             alignItems={"center"}
@@ -304,7 +308,9 @@ const Invoice: FC<InvoiceProps> = ({ params }: { params: { id: number } }) => {
                             Summary
                           </Text>
                           <Box
-                            display={receipt?.summary?.length > 0 ? 'block' : 'none'}
+                            display={
+                              receipt?.summary?.length > 0 ? "block" : "none"
+                            }
                             border={"1px solid #005D5D"}
                             backgroundColor={"#005D5D30"}
                             p={2}
