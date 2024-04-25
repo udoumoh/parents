@@ -238,7 +238,7 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
                 <Text fontSize={"sm"} color={"#00000070"} fontWeight={"bold"}>
                   Overpaid Balance
                 </Text>
-                <Popover placement="left" closeOnBlur={false}>
+                <Popover placement="bottom" closeOnBlur={false}>
                   <PopoverTrigger>
                     <IconButton
                       aria-label="warning"
@@ -262,7 +262,7 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
                     <PopoverArrow bg="blue.800" />
                     <PopoverCloseButton />
                     <PopoverBody>
-                      <Text fontSize={{base:"2xs", sm:"xs" }}>
+                      <Text fontSize={{base:"xs", sm:"sm" }}>
                       Before starting the process of transferring your child to
                       another school, it's crucial to use up your Overpaid
                       balance in your current school. Unpaid balances cannot be
