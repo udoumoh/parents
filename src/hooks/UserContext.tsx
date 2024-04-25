@@ -171,7 +171,7 @@ export const UserApiProvider: FC<UserApiProviderProps> = ({ children }) => {
   );
 
    const { data: getinvoice } = useQuery(GET_STUDENT_INVOICE, {
-     variables: { studentId: currentWardProfile?.id },
+     variables: { studentId: currentWardProfile?.id},
    });
 
   const updateUserBio = (newBio: any) => {

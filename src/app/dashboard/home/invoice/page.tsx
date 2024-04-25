@@ -27,10 +27,6 @@ import {
   useDisclosure,
   Button,
   IconButton,
-  MenuItemOption,
-  MenuGroup,
-  MenuOptionGroup,
-  MenuDivider,
 } from "@chakra-ui/react";
 import { BsThreeDots } from "react-icons/bs";
 import { useUserAPI } from "@/hooks/UserContext";
@@ -51,7 +47,6 @@ import SchoolAccountDetailsModal from "@/components/shared/schoolAccountDetailsM
 import { GET_STUDENT_EDUCATION_HISTORY } from "@/gql/queries";
 import { useQuery } from "@apollo/client";
 import { IoFilterOutline } from "react-icons/io5";
-
 
 interface StudentInvoiceProps {
   term: string;
@@ -83,10 +78,13 @@ interface StudentInvoiceProps {
 interface InvoiceProps {}
 
 const Invoice: FC<InvoiceProps> = ({}) => {
-  const { parentData, invoiceData, currentWardProfile } = useUserAPI();
-  const { data: getEducationHistory } = useQuery(GET_STUDENT_EDUCATION_HISTORY, {
-    variables: { studentId: currentWardProfile?.id || 1 },
-  });
+  const { invoiceData, currentWardProfile } = useUserAPI();
+  const { data: getEducationHistory } = useQuery(
+    GET_STUDENT_EDUCATION_HISTORY,
+    {
+      variables: { studentId: currentWardProfile?.id },
+    }
+  );
 
   const {
     isOpen: isAcceptModalOpen,
@@ -112,13 +110,13 @@ const Invoice: FC<InvoiceProps> = ({}) => {
     onClose: onSchoolAccountDetailsModalClose,
   } = useDisclosure();
 
-  const [filterParam, setFilterParam] = useState("")
-  const [invoices, setInvoices] = useState<StudentInvoiceProps[]>([])
-  const [schoolsAttended, setSchoolsAttended] = useState([])
-  const [currentInvoice, setCurrentInvoice] = useState<StudentInvoiceProps>()
-  const [invoiceToShow, setInvoiceToShow] = useState<StudentInvoiceProps[]>([])
-  const [currentPage, setCurrentPage] = useState(1)
-  const [totalNumberOfPages, setTotalNumberOfPages] = useState(1)
+  const [filterParam, setFilterParam] = useState("");
+  const [invoices, setInvoices] = useState<StudentInvoiceProps[]>([]);
+  const [schoolsAttended, setSchoolsAttended] = useState([]);
+  const [currentInvoice, setCurrentInvoice] = useState<StudentInvoiceProps>();
+  const [invoiceToShow, setInvoiceToShow] = useState<StudentInvoiceProps[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalNumberOfPages, setTotalNumberOfPages] = useState(1);
   const itemsPerPage = 10;
 
   useEffect(() => {
@@ -131,31 +129,41 @@ const Invoice: FC<InvoiceProps> = ({}) => {
   }, [invoices, currentPage]);
 
   useEffect(() => {
-    const fetchData = async() => {
-      try{
-        const response = await getEducationHistory
-        if (response){
-          const schools = response?.getStudentEducationHistory?.map((history: any) => history?.school )
-          setSchoolsAttended(schools)
+    const fetchData = async () => {
+      try {
+        const response = await getEducationHistory;
+        if (response) {
+          const schools = response?.getStudentEducationHistory?.map(
+            (history: any) => history?.school
+          );
+          setSchoolsAttended(schools);
         }
-      }catch(err: any){
-        console.log(err)
+      } catch (err: any) {
+        console.log(err);
       }
-    }
-    fetchData()
-  }, [getEducationHistory])
+    };
+    fetchData();
+  }, [getEducationHistory]);
+
+  useEffect(() => {
+    setInvoices(invoiceData);
+  }, []);
 
   const handleFilterChange = (filterParam: any) => {
-    let filteredInvoices = invoiceData
-    setFilterParam(filterParam)
-    if(filterParam){
-      filteredInvoices = invoices?.filter(invoice => invoice?.schoolname === filterParam)
+    let filteredInvoices = invoiceData;
+    setFilterParam(filterParam);
+    if (filterParam) {
+      filteredInvoices = filteredInvoices?.filter(
+        (invoice) => invoice?.schoolname === filterParam
+      );
     }
-    setInvoices(filteredInvoices)
-  }
+    setInvoices(filteredInvoices);
+  };
 
   const getCompletedInvoiceAmount = (invoice: any) => {
-    const totalCompletedAmount = invoice?.receipt?.filter((item: any) => item?.status !== 'rejected by school').map((receipt: any) => receipt?.amountPaid)
+    const totalCompletedAmount = invoice?.receipt
+      ?.filter((item: any) => item?.status !== "rejected by school")
+      .map((receipt: any) => receipt?.amountPaid)
       .reduce((acc: any, item: any) => acc + item, 0);
     return totalCompletedAmount;
   };
@@ -199,16 +207,14 @@ const Invoice: FC<InvoiceProps> = ({}) => {
     )
     .reduce((acc: any, item: any) => acc + item, 0);
 
-  
-
   const handleSelectedInvoice = (invoice: any) => {
-      window.location.replace(`/dashboard/home/invoice/${invoice?.id}`);
-  }
+    window.location.replace(`/dashboard/home/invoice/${invoice?.id}`);
+  };
 
   const handleAcceptInvoice = (invoice: any) => {
     setCurrentInvoice(invoice);
     onAcceptModalOpen();
-  }
+  };
 
   const handleRejectInvoice = (invoice: any) => {
     setCurrentInvoice(invoice);
@@ -216,9 +222,9 @@ const Invoice: FC<InvoiceProps> = ({}) => {
   };
 
   const handleOverpaidInvoice = (invoice: any) => {
-    setCurrentInvoice(invoice)
+    setCurrentInvoice(invoice);
     onOverpaidModalModalOpen();
-  }
+  };
 
   const handleNextPage = () => {
     const nextPage = currentPage + 1;
@@ -234,14 +240,10 @@ const Invoice: FC<InvoiceProps> = ({}) => {
     const prevPage = currentPage - 1;
     if (prevPage > 0) {
       const startIndex = (prevPage - 1) * itemsPerPage;
-      setInvoiceToShow(
-        invoices.slice(startIndex, startIndex + itemsPerPage)
-      );
+      setInvoiceToShow(invoices.slice(startIndex, startIndex + itemsPerPage));
       setCurrentPage(prevPage);
     }
   };
-  console.log(parentData)
-  console.log(invoices)
   return (
     <Box mb={{ base: "8rem", lg: "5rem" }}>
       <Box>
@@ -410,7 +412,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
           </Flex>
         </SimpleGrid>
 
-        <Flex alignItems={"center"} mt={"1.5rem"}>
+        <Flex alignItems={"center"} mt={"1.5rem"} gap={2}>
           <Menu isLazy>
             <MenuButton>
               <IconButton
@@ -525,11 +527,14 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                 </Tab>
               </TabList>
 
-              <Flex alignItems={"center"} gap={2}>
+              <Flex
+                alignItems={"center"}
+                gap={2}
+                display={{ base: "none", lg: "flex" }}
+              >
                 <Menu isLazy>
                   <MenuButton>
                     <IconButton
-                      display={{ base: "none", lg: "flex" }}
                       size={"md"}
                       variant={"outline"}
                       aria-label="filter"
@@ -564,7 +569,6 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                   </MenuList>
                 </Menu>
                 <Button
-                  display={{ base: "none", lg: "flex" }}
                   leftIcon={<MdAccountBalanceWallet />}
                   backgroundColor={"#005D5D"}
                   color={"#ffffff"}
