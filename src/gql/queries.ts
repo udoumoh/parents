@@ -2047,3 +2047,17 @@ export const GET_NOTIFICATIONS = gql(`query FetchMyNotifications($ref: String!) 
     message
   }
 }`)
+
+export const GET_STUDENT_EDUCATION_HISTORY = gql(`query GetStudentEducationHistory($studentId: Float!) {
+  getStudentEducationHistory(studentId: $studentId) {
+    id
+    createdAt
+    transferedAt
+    startDate
+    endDate
+    classroom
+    student
+    school
+    schoolImg
+  }
+}`)

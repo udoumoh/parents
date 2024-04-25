@@ -259,7 +259,7 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
                         <Text color={"orange"}>Disclaimer!!!</Text>
                       </Flex>
                     </PopoverHeader>
-                    <PopoverArrow bg="blue.800" />
+                    <PopoverArrow bg="red.800" />
                     <PopoverCloseButton />
                     <PopoverBody>
                       <Text fontSize={{base:"xs", sm:"sm" }}>

@@ -27,6 +27,10 @@ import {
   useDisclosure,
   Button,
   IconButton,
+  MenuItemOption,
+  MenuGroup,
+  MenuOptionGroup,
+  MenuDivider,
 } from "@chakra-ui/react";
 import { BsThreeDots } from "react-icons/bs";
 import { useUserAPI } from "@/hooks/UserContext";
@@ -35,7 +39,6 @@ import { FaCheck } from "react-icons/fa6";
 import AcceptInvoiceModal from "@/components/shared/acceptInvoiceModal";
 import RejectInvoiceModal from "@/components/shared/rejectinvoicemodal";
 import { TbFileInvoice } from "react-icons/tb";
-import { useRouter } from "next/navigation";
 import {
   MdOutlinePayment,
   MdKeyboardArrowRight,
@@ -45,6 +48,9 @@ import {
 } from "react-icons/md";
 import OverpaidBalancePaymentModal from "@/components/shared/overpaidBalancePaymentModal";
 import SchoolAccountDetailsModal from "@/components/shared/schoolAccountDetailsModal";
+import { GET_STUDENT_EDUCATION_HISTORY } from "@/gql/queries";
+import { useQuery } from "@apollo/client";
+import { IoFilterOutline } from "react-icons/io5";
 
 
 interface StudentInvoiceProps {
@@ -77,8 +83,10 @@ interface StudentInvoiceProps {
 interface InvoiceProps {}
 
 const Invoice: FC<InvoiceProps> = ({}) => {
-  const router = useRouter()
   const { parentData, invoiceData, currentWardProfile } = useUserAPI();
+  const { data: getEducationHistory } = useQuery(GET_STUDENT_EDUCATION_HISTORY, {
+    variables: { studentId: currentWardProfile?.id || 1 },
+  });
 
   const {
     isOpen: isAcceptModalOpen,
@@ -104,6 +112,9 @@ const Invoice: FC<InvoiceProps> = ({}) => {
     onClose: onSchoolAccountDetailsModalClose,
   } = useDisclosure();
 
+  const [filterParam, setFilterParam] = useState("")
+  const [invoices, setInvoices] = useState<StudentInvoiceProps[]>([])
+  const [schoolsAttended, setSchoolsAttended] = useState([])
   const [currentInvoice, setCurrentInvoice] = useState<StudentInvoiceProps>()
   const [invoiceToShow, setInvoiceToShow] = useState<StudentInvoiceProps[]>([])
   const [currentPage, setCurrentPage] = useState(1)
@@ -112,12 +123,36 @@ const Invoice: FC<InvoiceProps> = ({}) => {
 
   useEffect(() => {
     const startIndex = (currentPage - 1) * itemsPerPage;
-    const endIndex = Math.min(startIndex + itemsPerPage, invoiceData?.length);
-    setInvoiceToShow(invoiceData?.slice(startIndex, endIndex));
+    const endIndex = Math.min(startIndex + itemsPerPage, invoices?.length);
+    setInvoiceToShow(invoices?.slice(startIndex, endIndex));
 
-    const newTotalPages = Math.ceil(invoiceData?.length / itemsPerPage);
+    const newTotalPages = Math.ceil(invoices?.length / itemsPerPage);
     setTotalNumberOfPages(newTotalPages);
-  }, [invoiceData, currentPage]);
+  }, [invoices, currentPage]);
+
+  useEffect(() => {
+    const fetchData = async() => {
+      try{
+        const response = await getEducationHistory
+        if (response){
+          const schools = response?.getStudentEducationHistory?.map((history: any) => history?.school )
+          setSchoolsAttended(schools)
+        }
+      }catch(err: any){
+        console.log(err)
+      }
+    }
+    fetchData()
+  }, [getEducationHistory])
+
+  const handleFilterChange = (filterParam: any) => {
+    let filteredInvoices = invoiceData
+    setFilterParam(filterParam)
+    if(filterParam){
+      filteredInvoices = invoices?.filter(invoice => invoice?.schoolname === filterParam)
+    }
+    setInvoices(filteredInvoices)
+  }
 
   const getCompletedInvoiceAmount = (invoice: any) => {
     const totalCompletedAmount = invoice?.receipt?.filter((item: any) => item?.status !== 'rejected by school').map((receipt: any) => receipt?.amountPaid)
@@ -125,16 +160,16 @@ const Invoice: FC<InvoiceProps> = ({}) => {
     return totalCompletedAmount;
   };
 
-  const completedInvoice = invoiceData?.filter(
+  const completedInvoice = invoices?.filter(
     (invoice) => invoice.status === "completed"
   );
-  const activeInvoice = invoiceData?.filter(
+  const activeInvoice = invoices?.filter(
     (invoice) => invoice.status === "active"
   );
-  const rejectedInvoice = invoiceData?.filter(
+  const rejectedInvoice = invoices?.filter(
     (invoice) => invoice.status === "rejected by parent"
   );
-  const processingInvoice = invoiceData?.filter(
+  const processingInvoice = invoices?.filter(
     (invoice) => invoice.status === "processing"
   );
 
@@ -154,7 +189,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
     0
   );
 
-  const nonEmptyReceipts = invoiceData
+  const nonEmptyReceipts = invoices
     ?.map((invoice) => invoice?.receipt)
     ?.filter((receipt: any) => receipt?.length !== 0);
 
@@ -188,9 +223,9 @@ const Invoice: FC<InvoiceProps> = ({}) => {
   const handleNextPage = () => {
     const nextPage = currentPage + 1;
     const startIndex = (nextPage - 1) * itemsPerPage;
-    const endIndex = Math.min(startIndex + itemsPerPage, invoiceData?.length);
-    if (startIndex < invoiceData?.length) {
-      setInvoiceToShow(invoiceData?.slice(startIndex, endIndex));
+    const endIndex = Math.min(startIndex + itemsPerPage, invoices?.length);
+    if (startIndex < invoices?.length) {
+      setInvoiceToShow(invoices?.slice(startIndex, endIndex));
       setCurrentPage(nextPage);
     }
   };
@@ -200,13 +235,13 @@ const Invoice: FC<InvoiceProps> = ({}) => {
     if (prevPage > 0) {
       const startIndex = (prevPage - 1) * itemsPerPage;
       setInvoiceToShow(
-        invoiceData.slice(startIndex, startIndex + itemsPerPage)
+        invoices.slice(startIndex, startIndex + itemsPerPage)
       );
       setCurrentPage(prevPage);
     }
   };
   console.log(parentData)
-  console.log(invoiceData)
+  console.log(invoices)
   return (
     <Box mb={{ base: "8rem", lg: "5rem" }}>
       <Box>
@@ -375,7 +410,44 @@ const Invoice: FC<InvoiceProps> = ({}) => {
           </Flex>
         </SimpleGrid>
 
-        <Box mt={"1.5rem"}>
+        <Flex alignItems={"center"} mt={"1.5rem"}>
+          <Menu isLazy>
+            <MenuButton>
+              <IconButton
+                display={{ base: "flex", lg: "none" }}
+                size={"md"}
+                variant={"outline"}
+                aria-label="filter"
+                colorScheme="teal"
+                icon={<IoFilterOutline size={20} />}
+              />
+            </MenuButton>
+            <MenuList px={"0.5rem"}>
+              <MenuItem
+                _hover={{
+                  backgroundColor: "#005D5D15",
+                  color: "#005D5D",
+                }}
+                onClick={() => handleFilterChange("")}
+              >
+                - Any -
+              </MenuItem>
+              {schoolsAttended?.map((school, index) => {
+                return (
+                  <MenuItem
+                    _hover={{
+                      backgroundColor: "#005D5D15",
+                      color: "#005D5D",
+                    }}
+                    key={index}
+                    onClick={() => handleFilterChange(school)}
+                  >
+                    {school}
+                  </MenuItem>
+                );
+              })}
+            </MenuList>
+          </Menu>
           <Button
             display={{ base: "flex", lg: "none" }}
             leftIcon={<MdAccountBalanceWallet />}
@@ -386,7 +458,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
           >
             School Account
           </Button>
-        </Box>
+        </Flex>
       </Box>
 
       <Box mt={"3rem"}>
@@ -453,16 +525,55 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                 </Tab>
               </TabList>
 
-              <Button
-                display={{ base: "none", lg: "flex" }}
-                leftIcon={<MdAccountBalanceWallet />}
-                backgroundColor={"#005D5D"}
-                color={"#ffffff"}
-                _hover={{ backgroundColor: "#004A4A" }}
-                onClick={onSchoolAccountDetailsModalOpen}
-              >
-                School Account
-              </Button>
+              <Flex alignItems={"center"} gap={2}>
+                <Menu isLazy>
+                  <MenuButton>
+                    <IconButton
+                      display={{ base: "none", lg: "flex" }}
+                      size={"md"}
+                      variant={"outline"}
+                      aria-label="filter"
+                      colorScheme="teal"
+                      icon={<IoFilterOutline size={20} />}
+                    />
+                  </MenuButton>
+                  <MenuList px={"0.5rem"}>
+                    <MenuItem
+                      _hover={{
+                        backgroundColor: "#005D5D15",
+                        color: "#005D5D",
+                      }}
+                      onClick={() => handleFilterChange("")}
+                    >
+                      - Any -
+                    </MenuItem>
+                    {schoolsAttended?.map((school, index) => {
+                      return (
+                        <MenuItem
+                          _hover={{
+                            backgroundColor: "#005D5D15",
+                            color: "#005D5D",
+                          }}
+                          key={index}
+                          onClick={() => handleFilterChange(school)}
+                        >
+                          {school}
+                        </MenuItem>
+                      );
+                    })}
+                  </MenuList>
+                </Menu>
+                <Button
+                  display={{ base: "none", lg: "flex" }}
+                  leftIcon={<MdAccountBalanceWallet />}
+                  backgroundColor={"#005D5D"}
+                  color={"#ffffff"}
+                  _hover={{ backgroundColor: "#004A4A" }}
+                  onClick={onSchoolAccountDetailsModalOpen}
+                >
+                  School Account
+                </Button>
+              </Flex>
             </Flex>
 
             <TabPanels>
@@ -472,7 +583,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                 mt={"1rem"}
               >
                 <TableContainer>
-                  <Table variant="simple" size={'sm'}>
+                  <Table variant="simple" size={"sm"}>
                     <Thead>
                       <Tr>
                         <Th>Inv. ID</Th>
@@ -566,9 +677,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                         : "flex"
                                     }
                                     gap={"3"}
-                                    onClick={() =>
-                                      handleAcceptInvoice(item)
-                                    }
+                                    onClick={() => handleAcceptInvoice(item)}
                                   >
                                     <Icon
                                       as={FaCheck}
@@ -589,9 +698,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                         : "flex"
                                     }
                                     gap={"3"}
-                                    onClick={() =>
-                                      handleRejectInvoice(item)
-                                    }
+                                    onClick={() => handleRejectInvoice(item)}
                                   >
                                     <Icon
                                       as={MdOutlineClose}
@@ -629,9 +736,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                         : "none"
                                     }
                                     gap={"3"}
-                                    onClick={() =>
-                                      handleOverpaidInvoice(item)
-                                    }
+                                    onClick={() => handleOverpaidInvoice(item)}
                                   >
                                     <Icon
                                       as={MdOutlinePayment}
@@ -651,14 +756,21 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                     </Tbody>
                   </Table>
                 </TableContainer>
-                <Flex justifyContent={'center'}>
-                  <Box mt={'1rem'} display={'flex'} gap={4} alignItems={'center'}>
+                <Flex justifyContent={"center"}>
+                  <Box
+                    mt={"1rem"}
+                    display={"flex"}
+                    gap={4}
+                    alignItems={"center"}
+                  >
                     <IconButton
                       aria-label="paginate"
                       icon={<MdKeyboardArrowLeft />}
                       onClick={handlePreviousPage}
                     />
-                    <Text>Page {currentPage} of {totalNumberOfPages || currentPage}</Text>
+                    <Text>
+                      Page {currentPage} of {totalNumberOfPages || currentPage}
+                    </Text>
                     <IconButton
                       aria-label="paginate"
                       icon={<MdKeyboardArrowRight />}
@@ -674,7 +786,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                 mt={"1rem"}
               >
                 <TableContainer>
-                  <Table variant="simple" size={'sm'}>
+                  <Table variant="simple" size={"sm"}>
                     <Thead>
                       <Tr>
                         <Th>Inv. ID</Th>
@@ -785,7 +897,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                 mt={"1rem"}
               >
                 <TableContainer>
-                  <Table variant="simple" size={'sm'}>
+                  <Table variant="simple" size={"sm"}>
                     <Thead>
                       <Tr>
                         <Th>Inv. ID</Th>
@@ -863,9 +975,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                     px={"1rem"}
                                     display={"flex"}
                                     gap={"3"}
-                                    onClick={() =>
-                                      handleAcceptInvoice(item)
-                                    }
+                                    onClick={() => handleAcceptInvoice(item)}
                                   >
                                     <Icon
                                       as={FaCheck}
@@ -880,9 +990,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                     px={"1rem"}
                                     display={"flex"}
                                     gap={"3"}
-                                    onClick={() =>
-                                      handleRejectInvoice(item)
-                                    }
+                                    onClick={() => handleRejectInvoice(item)}
                                   >
                                     <Icon
                                       as={MdOutlineClose}
@@ -897,9 +1005,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                     px={"1rem"}
                                     display={"flex"}
                                     gap={"3"}
-                                    onClick={() =>
-                                      handleOverpaidInvoice(item)
-                                    }
+                                    onClick={() => handleOverpaidInvoice(item)}
                                   >
                                     <Icon
                                       as={MdOutlinePayment}
@@ -944,7 +1050,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                 mt={"1rem"}
               >
                 <TableContainer>
-                  <Table variant="simple" size={'sm'}>
+                  <Table variant="simple" size={"sm"}>
                     <Thead>
                       <Tr>
                         <Th>Inv. ID</Th>
@@ -1052,7 +1158,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                 mt={"1rem"}
               >
                 <TableContainer>
-                  <Table variant="simple" size={'sm'}>
+                  <Table variant="simple" size={"sm"}>
                     <Thead>
                       <Tr>
                         <Th>Inv. ID</Th>
@@ -1136,9 +1242,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                         : "flex"
                                     }
                                     gap={"3"}
-                                    onClick={() =>
-                                      handleAcceptInvoice(item)
-                                    }
+                                    onClick={() => handleAcceptInvoice(item)}
                                   >
                                     <Icon
                                       as={FaCheck}
@@ -1159,9 +1263,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                         : "flex"
                                     }
                                     gap={"3"}
-                                    onClick={() =>
-                                      handleRejectInvoice(item)
-                                    }
+                                    onClick={() => handleRejectInvoice(item)}
                                   >
                                     <Icon
                                       as={MdOutlineClose}
