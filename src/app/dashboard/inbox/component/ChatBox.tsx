@@ -79,6 +79,7 @@ query Parent {
       isDisabled
       profileImgUrl
 }
+}}
 `);
 
 export const GET_REPLY_MESSAGE = gql(`
