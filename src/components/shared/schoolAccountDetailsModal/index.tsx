@@ -89,7 +89,7 @@ const SchoolAccountDetailsModal: FC<SchoolAccountDetailsModalProps> = ({isOpen, 
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>
-          <Text fontSize={"xl"} fontWeight={"bold"} color={"#005D5D"}>
+          <Text fontSize={{base:"md", md:"xl"}} fontWeight={"bold"} color={"#005D5D"}>
             School Account Information
           </Text>
           <Divider />
