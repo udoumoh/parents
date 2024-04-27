@@ -154,7 +154,10 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
           isClosable: true,
           status: "success",
         });
-        onClose();
+        setTimeout(() => {
+          onClose();
+          window.location.reload();
+        }, 1000)
       }
     } catch (err: any) {
       toast({
