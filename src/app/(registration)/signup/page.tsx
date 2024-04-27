@@ -543,7 +543,7 @@ const Page: FC<pageProps> = ({}) => {
                                       Mother
                                     </option>
                                     <option value={"Father"}>Father</option>
-                                    <option value={"Father"}>Guardian</option>
+                                    <option value={"Guardian"}>Guardian</option>
                                   </Select>
                                 </Box>
                               </FormControl>
