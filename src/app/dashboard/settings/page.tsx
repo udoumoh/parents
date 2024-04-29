@@ -56,7 +56,6 @@ interface RequestDataProps {
 
 const SettingsPage: FC<SettingsPageProps> = ({}) => {
   const toast = useToast();
-  const [trialCountdown, setTrialCountdown] = useState({})
   const [subscriptionData, setSubscriptionData] = useState<any>({});
   const [requestData, setRequestData] = useState<RequestDataProps[]>([]);
   const { data: parent } = useQuery(GET_PARENT);
@@ -90,6 +89,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
   const [currentStudentCase, setCurrentStudentCase] = useState<
     UserChildren | undefined
   >();
+  const token = process.env.NEXT_PUBLIC_API_TOKEN;
 
 
   useEffect(() => {
@@ -100,13 +100,13 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
             `https://api.paystack.co/subscription/${parentData?.subscriptionId}`,
             {
               headers: {
-                Authorization: `Bearer ${process.env.NEXT_PUBLIC_API_TOKEN}`,
+                Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
               },
             }
           )
           .then((response) => {
-            setSubscriptionData(response.data.data[0]);
+            setSubscriptionData(response?.data?.data[0]);
           });
       } catch (err: any) {
         console.log(err?.mesage);
