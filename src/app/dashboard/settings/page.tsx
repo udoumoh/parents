@@ -97,7 +97,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
       try {
         await axios
           .get(
-            `https://api.paystack.co/subscription/${parentData?.subscriptionId}`,
+            `https://api.paystack.co/subscription?email=${parentData?.email}`,
             {
               headers: {
                 Authorization: `Bearer ${token}`,
