@@ -762,7 +762,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
 
                   <Box px={5} mt={"0.5rem"}>
                     <Text fontWeight={"bold"} fontSize={"xl"}>
-                      {capitalizeFirstLetter(subscriptionData?.plan?.interval)}{" "}
+                      {/* {capitalizeFirstLetter(subscriptionData?.plan?.interval)}{" "} */}
                       Plan
                     </Text>
                     <Text color={"#00000080"} fontWeight={"500"}>
@@ -831,20 +831,20 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                       Next Payment
                     </Text>
                     <Text color={"#00000080"} fontWeight={"bold"}>
-                      {/* {formatDate(subscriptionData?.most_recent_invoice?.period_end)} */}
+                      {formatDate(subscriptionData?.most_recent_invoice?.period_end)}
                     </Text>
                     <Box display={"flex"} alignItems={"center"} gap={4}>
                       <Image
                         alt="mastercard"
-                        // src={
-                        //   subscriptionData?.authorization?.brand ===
-                        //   "mastercard"
-                        //     ? "/images/mastercard.svg"
-                        //     : subscriptionData?.authorization?.brand ===
-                        //       "visa"
-                        //     ? "/images/visa.svg"
-                        //     : "/images/verve.svg"
-                        // }
+                        src={
+                          subscriptionData?.authorization?.brand ===
+                          "mastercard"
+                            ? "/images/mastercard.svg"
+                            : subscriptionData?.authorization?.brand ===
+                              "visa"
+                            ? "/images/visa.svg"
+                            : "/images/verve.svg"
+                        }
                         h={"2rem"}
                       />
                       <Text
@@ -852,7 +852,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                         color={"#00000090"}
                         fontWeight={"bold"}
                       >
-                        {/* •••• •••• •••• {subscriptionData?.authorization?.last4} */}
+                        •••• •••• •••• {subscriptionData?.authorization?.last4}
                       </Text>
                     </Box>
                   </Box>
