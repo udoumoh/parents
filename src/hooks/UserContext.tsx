@@ -95,6 +95,7 @@ interface ParentDataProps {
   role: string;
   status: string;
   userId: string;
+  subscriptionId: string;
 }
 
 interface UserContextProps {

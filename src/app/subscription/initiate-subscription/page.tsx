@@ -8,10 +8,6 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { useMutation } from "@apollo/client";
-import { LOGIN_PARENT } from "@/gql/mutations";
-import { GET_PARENT } from "@/gql/queries";
-import { useQuery } from "@apollo/client";
-import Loading from "@/app/loading";
 import { useUserAPI } from "@/hooks/UserContext";
 import axios from "axios";
 import { INITIATE_PARENT_SUBSCRIPTION } from "@/gql/mutations";

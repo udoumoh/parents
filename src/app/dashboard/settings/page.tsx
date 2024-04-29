@@ -20,10 +20,10 @@ import {
   Td,
   TableContainer,
 } from "@chakra-ui/react";
+import axios from "axios";
 import { AiFillClockCircle } from "react-icons/ai";
 import { UserChildren, useUserAPI } from "@/hooks/UserContext";
 import { useQuery, useMutation } from "@apollo/client";
-import { formatDate } from "@/helpers/formatDate";
 import { PARENT_REQUESTS } from "@/gql/queries";
 import EditProfileModal from "@/components/shared/editProfileModal";
 import { DELETE_REQUEST } from "@/gql/mutations";
@@ -40,6 +40,8 @@ import {
 } from "react-icons/md";
 import SelectPlanModal from "@/components/shared/selectPlanModal";
 import FreeTrial from "@/components/shared/freeTrial";
+import { capitalizeFirstLetter } from "@/helpers/capitalizeFirstLetter";
+import { formatDate } from "@/helpers/formatDate";
 
 interface SettingsPageProps {}
 
@@ -55,8 +57,10 @@ interface RequestDataProps {
 const SettingsPage: FC<SettingsPageProps> = ({}) => {
   const toast = useToast();
   const [trialCountdown, setTrialCountdown] = useState({})
+  const [subscriptionData, setSubscriptionData] = useState<any>({});
   const [requestData, setRequestData] = useState<RequestDataProps[]>([]);
   const { data: parent } = useQuery(GET_PARENT);
+
   const {
     isOpen: isModalOpen,
     onOpen: onModalOpen,
@@ -86,6 +90,31 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
   const [currentStudentCase, setCurrentStudentCase] = useState<
     UserChildren | undefined
   >();
+
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        await axios
+          .get(
+            `https://api.paystack.co/subscription/${parentData?.subscriptionId}`,
+            {
+              headers: {
+                Authorization: `Bearer ${process.env.NEXT_PUBLIC_API_TOKEN}`,
+                "Content-Type": "application/json",
+              },
+            }
+          )
+          .then((response) => {
+            setSubscriptionData(response.data.data[0]);
+          });
+      } catch (err: any) {
+        console.log(err?.mesage);
+      }
+    };
+    fetchData();
+  }, [parentData]);
+
 
   const handleRequestDelete = async (requestId: any) => {
     try {
@@ -732,12 +761,18 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
 
                   <Box px={5} mt={"0.5rem"}>
                     <Text fontWeight={"bold"} fontSize={"xl"}>
-                      Monthly Plan
+                      {capitalizeFirstLetter(subscriptionData?.plan?.interval)}{" "}
+                      Plan
                     </Text>
                     <Text color={"#00000080"} fontWeight={"500"}>
                       Can register up to 4 children and will be charged{" "}
                       <span style={{ color: "#005D5D", fontWeight: "bold" }}>
-                        ₦65
+                        ₦
+                        {subscriptionData?.plan?.interval === "monthly"
+                          ? "65"
+                          : subscriptionData?.plan?.interval === "quaterly"
+                          ? "195"
+                          : "500"}
                       </span>{" "}
                       for every additional child
                     </Text>
@@ -795,12 +830,20 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                       Next Payment
                     </Text>
                     <Text color={"#00000080"} fontWeight={"bold"}>
-                      21 April 2024
+                      {formatDate(subscriptionData?.most_recent_invoice?.period_end)}
                     </Text>
                     <Box display={"flex"} alignItems={"center"} gap={4}>
                       <Image
                         alt="mastercard"
-                        src="/images/mastercard.svg"
+                        src={
+                          subscriptionData?.authorization?.brand ===
+                          "mastercard"
+                            ? "/images/mastercard.svg"
+                            : subscriptionData?.authorization?.brand ===
+                              "visa"
+                            ? "/images/visa.svg"
+                            : "/images/verve.svg"
+                        }
                         h={"2rem"}
                       />
                       <Text
@@ -808,7 +851,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                         color={"#00000090"}
                         fontWeight={"bold"}
                       >
-                        •••• •••• •••• 3300
+                        •••• •••• •••• {subscriptionData?.authorization?.last4}
                       </Text>
                     </Box>
                   </Box>
