@@ -839,7 +839,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                       Next Payment
                     </Text>
                     <Text color={"#00000080"} fontWeight={"bold"}>
-                      {date}
+                      {/* {date} */}
                     </Text>
                     <Box display={"flex"} alignItems={"center"} gap={4}>
                       <Image
