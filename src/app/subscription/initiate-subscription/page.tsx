@@ -78,7 +78,7 @@ const Page: FC<pageProps> = ({}) => {
   useEffect(() => {
     const fetchData = async() => {
       try {
-        axios.get(
+        await axios.get(
           `https://api.paystack.co/subscription?email=${parentData?.email}`,
           {
             headers: {
