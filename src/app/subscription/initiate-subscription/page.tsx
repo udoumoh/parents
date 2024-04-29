@@ -94,7 +94,7 @@ const Page: FC<pageProps> = ({}) => {
       }
     }
     fetchData()
-  }, [])
+  }, [parentData])
 
   return  (
     <Box
