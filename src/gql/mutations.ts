@@ -480,3 +480,8 @@ export const UNLIKE_PROFILE = gql(`mutation UnlikeProfile($schoolId: Float!) {
 export const PAY_WITH_BALANCE = gql(`mutation PayInvoiceWithBalance($invoiceId: Float!) {
   payInvoiceWithBalance(invoiceId: $invoiceId)
 }`)
+
+export const INITIATE_PARENT_SUBSCRIPTION = gql(`
+mutation InitiateParentSubscription($subAmount: Float!, $plan: String!, $code: String!) {
+  initiateParentSubscription(subAmount: $subAmount, plan: $plan, code: $code)
+}`)

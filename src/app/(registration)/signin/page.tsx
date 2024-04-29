@@ -109,7 +109,7 @@ const Signin: FC<pageProps> = ({}) => {
       display={"flex"}
       alignItems={{ base: "initial", sm: "center" }}
       justifyContent={"center"}
-      h={"100vh"}
+      minH={"100vh"}
       backgroundColor={{ base: "#FFFFFF", sm: "#005D5D20" }}
       backdropBlur={"30px"}
     >
