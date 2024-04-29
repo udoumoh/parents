@@ -751,7 +751,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
           </Flex>
 
           <Box display={parentData?.isPaid ? "block" : "none"}>
-            <Flex flexDir={"column"} gap={4} px={{ base: "1rem", md: "10rem" }}>
+            <Flex flexDir={"column"} gap={4} px={{ base: "1rem", md: "5rem" }}>
               <Box w={"full"}>
                 <Text fontSize={"lg"} fontWeight={"500"} mb={"1rem"}>
                   Plan Details
@@ -770,7 +770,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
 
                   <Box px={5} mt={"0.5rem"}>
                     <Text fontWeight={"bold"} fontSize={"xl"}>
-                      {/* {capitalizeFirstLetter(subscriptionData?.plan?.interval) || ""}{" "} */}
+                      {capitalizeFirstLetter(subscriptionData?.plan?.interval) || ""}{" "}
                       Plan
                     </Text>
                     <Text color={"#00000080"} fontWeight={"500"}>
