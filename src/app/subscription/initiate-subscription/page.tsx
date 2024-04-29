@@ -78,19 +78,17 @@ const Page: FC<pageProps> = ({}) => {
   useEffect(() => {
     const fetchData = async() => {
       try {
-        await axios
-          .get(
-            `https://api.paystack.co/subscription?email=${parentData?.email}`,
-            {
-              headers: {
-                Authorization: `Bearer sk_live_7defd2eaa0c7ef5238b92760bc9a2a5b255b07fb`,
+        await axios.get(
+          `https://api.paystack.co/subscription?email=${parentData?.email}`,
+          {
+            headers: {
+                Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
               },
-            }
-          )
-          .then((response) => {
-            setSubscriptionData(response.data.data[0]);
-          });
+          }
+        ).then((response) => {
+          setSubscriptionData(response.data.data[0])
+        })
       } catch (err: any) {
           console.log(err?.mesage)
       }
