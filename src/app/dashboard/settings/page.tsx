@@ -770,7 +770,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
 
                   <Box px={5} mt={"0.5rem"}>
                     <Text fontWeight={"bold"} fontSize={"xl"}>
-                      {capitalizeFirstLetter(subscriptionData?.plan?.interval) || ""}{" "}
+                      {subscriptionData?.plan?.interval}{" "}
                       Plan
                     </Text>
                     <Text color={"#00000080"} fontWeight={"500"}>
