@@ -318,7 +318,7 @@ const NavItem = ({ icon, link, name, ...rest }: NavItemProps) => {
 const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
   const toast = useToast()
   const router = useRouter()
-  const {profileData} = useUserAPI()
+  const {profileData, parentData} = useUserAPI()
   const {
     isOpen: isModalOpen,
     onOpen: onModalOpen,
@@ -417,7 +417,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
         backgroundColor={"#D71313"}
         rounded={"md"}
         alignItems={"center"}
-        display={{ base: "none", md: "flex" }}
+        display={parentData?.isPaid ? "none" : { base: "none", md: "flex" }}
       >
         <Text color="#FFFFFF" fontSize={{ base: "xs", md: "sm" }}>
           You are currently on the 14-day Trial Plan
@@ -430,7 +430,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
         backgroundColor={"#D71313"}
         rounded={"md"}
         alignItems={"center"}
-        display={{ base: "flex", md: "none" }}
+        display={parentData?.isPaid ? 'none' : { base: "flex", md: "none" }}
       >
         <Text color="#FFFFFF" fontSize={{ base: "xs", md: "sm" }}>
           Trial Plan

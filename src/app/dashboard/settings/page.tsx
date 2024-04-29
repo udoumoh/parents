@@ -202,7 +202,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
         overflowY={"auto"}
         h={"100vh"}
         pt={"2rem"}
-        pb={{base:"10rem", md:"5rem"}}
+        pb={{ base: "10rem", md: "5rem" }}
       >
         <Flex
           justifyContent={"space-between"}
@@ -689,6 +689,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
             alignItems={"center"}
             justifyContent={"center"}
             gap={3}
+            display={parentData?.isPaid ? "none" : "flex"}
           >
             <Text color={"gray.600"} textAlign={"center"}>
               You are currently on the{" "}
@@ -711,109 +712,118 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
             </Button>
           </Flex>
 
-          {/* <Box>
-          <Flex flexDir={"column"} gap={4} px={{ base: "1rem", md: "10rem" }}>
-            <Box w={"full"}>
-              <Text fontSize={"lg"} fontWeight={"500"} mb={"1rem"}>
-                Plan Details
-              </Text>
-
-              <Box shadow={"sm"} rounded={"xl"} border={"1px solid #00000030"}>
-                <Box
-                  roundedTop={"xl"}
-                  h={"8px"}
-                  bgGradient="linear(to-l, #911194, #005D5D)"
-                ></Box>
-
-                <Box px={5} mt={"0.5rem"}>
-                  <Text fontWeight={"bold"} fontSize={"xl"}>
-                    Monthly Plan
-                  </Text>
-                  <Text color={"#00000080"} fontWeight={"500"}>
-                    Can register up to 4 children and will be charged{" "}
-                    <span style={{ color: "#005D5D", fontWeight: "bold" }}>
-                      ₦65
-                    </span>{" "}
-                    for every additional child
-                  </Text>
-                  <Divider mt={"1rem"} borderColor={"#005D5D50"} />
-                </Box>
+          <Box display={parentData?.isPaid ? "flex" : "none"}>
+            <Flex flexDir={"column"} gap={4} px={{ base: "1rem", md: "10rem" }}>
+              <Box w={"full"}>
+                <Text fontSize={"lg"} fontWeight={"500"} mb={"1rem"}>
+                  Plan Details
+                </Text>
 
                 <Box
-                  display={"flex"}
-                  justifyContent={"space-between"}
-                  w={"full"}
-                  px={2}
+                  shadow={"sm"}
+                  rounded={"xl"}
+                  border={"1px solid #00000030"}
                 >
-                  <Button
-                    rightIcon={<MdOutlineKeyboardArrowRight />}
-                    w="full"
-                    justifyContent={"space-between"}
-                    py={"1.5rem"}
-                    fontSize={"lg"}
-                    my={"0.4rem"}
-                    variant={"outline"}
-                    border={"0px solid"}
-                    onClick={onSelectPlanModalOpen}
-                    _hover={{ backgroundColor: "#EBF6F3" }}
-                  >
-                    <Text>Change plan</Text>
-                  </Button>
-                </Box>
-              </Box>
-            </Box>
+                  <Box
+                    roundedTop={"xl"}
+                    h={"8px"}
+                    bgGradient="linear(to-l, #911194, #005D5D)"
+                  ></Box>
 
-            <Box w={"full"}>
-              <Text fontSize={"lg"} fontWeight={"500"} mt={"1rem"} mb={"1rem"}>
-                Payment Info
-              </Text>
-
-              <Box
-                rounded={"lg"}
-                shadow={"sm"}
-                border={"1px solid #00000030"}
-                pb={"1rem"}
-              >
-                <Box
-                  px={5}
-                  mt={"0.5rem"}
-                  display={"flex"}
-                  flexDir={"column"}
-                  gap={1}
-                >
-                  <Text fontWeight={"bold"} fontSize={"xl"}>
-                    Next Payment
-                  </Text>
-                  <Text color={"#00000080"} fontWeight={"bold"}>
-                    21 April 2024
-                  </Text>
-                  <Box display={"flex"} alignItems={"center"} gap={4}>
-                    <Image
-                      alt="mastercard"
-                      src="/images/mastercard.svg"
-                      h={"2rem"}
-                    />
-                    <Text
-                      fontSize={"sm"}
-                      color={"#00000090"}
-                      fontWeight={"bold"}
-                    >
-                      •••• •••• •••• 3300
+                  <Box px={5} mt={"0.5rem"}>
+                    <Text fontWeight={"bold"} fontSize={"xl"}>
+                      Monthly Plan
                     </Text>
+                    <Text color={"#00000080"} fontWeight={"500"}>
+                      Can register up to 4 children and will be charged{" "}
+                      <span style={{ color: "#005D5D", fontWeight: "bold" }}>
+                        ₦65
+                      </span>{" "}
+                      for every additional child
+                    </Text>
+                    <Divider mt={"1rem"} borderColor={"#005D5D50"} />
+                  </Box>
+
+                  <Box
+                    display={"flex"}
+                    justifyContent={"space-between"}
+                    w={"full"}
+                    px={2}
+                  >
+                    <Button
+                      rightIcon={<MdOutlineKeyboardArrowRight />}
+                      w="full"
+                      justifyContent={"space-between"}
+                      py={"1.5rem"}
+                      fontSize={"lg"}
+                      my={"0.4rem"}
+                      variant={"outline"}
+                      border={"0px solid"}
+                      onClick={onSelectPlanModalOpen}
+                      _hover={{ backgroundColor: "#EBF6F3" }}
+                    >
+                      <Text>Change plan</Text>
+                    </Button>
                   </Box>
                 </Box>
               </Box>
-            </Box>
-          </Flex>
-          <Button
-            colorScheme="red"
-            variant={"outline"}
-            mt={"2rem"}
-            mx={{ base: "1rem", md: "10rem" }}
-          >
-            Cancel Membership
-          </Button>
-          </Box> */}
+
+              <Box w={"full"}>
+                <Text
+                  fontSize={"lg"}
+                  fontWeight={"500"}
+                  mt={"1rem"}
+                  mb={"1rem"}
+                >
+                  Payment Info
+                </Text>
+
+                <Box
+                  rounded={"lg"}
+                  shadow={"sm"}
+                  border={"1px solid #00000030"}
+                  pb={"1rem"}
+                >
+                  <Box
+                    px={5}
+                    mt={"0.5rem"}
+                    display={"flex"}
+                    flexDir={"column"}
+                    gap={1}
+                  >
+                    <Text fontWeight={"bold"} fontSize={"xl"}>
+                      Next Payment
+                    </Text>
+                    <Text color={"#00000080"} fontWeight={"bold"}>
+                      21 April 2024
+                    </Text>
+                    <Box display={"flex"} alignItems={"center"} gap={4}>
+                      <Image
+                        alt="mastercard"
+                        src="/images/mastercard.svg"
+                        h={"2rem"}
+                      />
+                      <Text
+                        fontSize={"sm"}
+                        color={"#00000090"}
+                        fontWeight={"bold"}
+                      >
+                        •••• •••• •••• 3300
+                      </Text>
+                    </Box>
+                  </Box>
+                </Box>
+              </Box>
+            </Flex>
+            <Button
+              colorScheme="red"
+              variant={"outline"}
+              mt={"2rem"}
+              mx={{ base: "1rem", md: "10rem" }}
+            >
+              Cancel Membership
+            </Button>
+          </Box>
         </Flex>
       </Box>
     </Box>

@@ -115,6 +115,8 @@ interface UserContextProps {
   childData: UserChildren[] | undefined;
   invoiceData: StudentInvoiceProps[];
   loading: boolean;
+  isTrialOver: boolean;
+  setIsTrialOver: (arg: boolean) => void;
 }
 
 const UserContext = createContext<UserContextProps | undefined>(undefined);
@@ -159,6 +161,8 @@ export const UserApiProvider: FC<UserApiProviderProps> = ({ children }) => {
   const [parentData, setParentData] = useState<ParentDataProps | undefined>(
     undefined
   );
+
+  const [isTrialOver, setIsTrialOver] = useState<boolean>(false)
 
   const [childData, setChildData] = useState<UserChildren[]>([]);
 
@@ -276,6 +280,8 @@ export const UserApiProvider: FC<UserApiProviderProps> = ({ children }) => {
         childData,
         loading,
         setLocalstorageId,
+        isTrialOver,
+        setIsTrialOver,
       }}
     >
       {children}

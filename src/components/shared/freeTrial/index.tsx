@@ -1,19 +1,22 @@
 import { Flex, Text } from "@chakra-ui/react";
 import React, { useState, useEffect } from "react";
+import { useUserAPI } from "@/hooks/UserContext";
 
 interface FreeTrialProps {
   createdAt: number;
 }
 
 const FreeTrial: React.FC<FreeTrialProps> = ({ createdAt }) => {
+  const {setIsTrialOver} = useUserAPI()
   const targetDate = new Date(createdAt);
-  targetDate.setDate(targetDate.getDate() + 100);
+  targetDate.setDate(targetDate.getDate() + 14);
 
   const calculateTimeLeft = () => {
     const now = new Date();
     const difference = targetDate.getTime() - now.getTime();
 
     if (difference <= 0) {
+      setIsTrialOver(true);
       // Countdown has reached zero or beyond
       return { days: 0, hours: 0, minutes: 0, seconds: 0 };
     }
