@@ -770,7 +770,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
 
                   <Box px={5} mt={"0.5rem"}>
                     <Text fontWeight={"bold"} fontSize={"xl"}>
-                      {capitalizeFirstLetter(subscriptionData?.plan?.interval) || ""}{" "}
+                      {/* {capitalizeFirstLetter(subscriptionData?.plan?.interval) || ""}{" "} */}
                       Plan
                     </Text>
                     <Text color={"#00000080"} fontWeight={"500"}>
@@ -839,7 +839,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                       Next Payment
                     </Text>
                     <Text color={"#00000080"} fontWeight={"bold"}>
-                      {/* {date} */}
+                      {date}
                     </Text>
                     <Box display={"flex"} alignItems={"center"} gap={4}>
                       <Image
