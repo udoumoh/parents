@@ -712,7 +712,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
             </Button>
           </Flex>
 
-          <Box display={parentData?.isPaid ? "flex" : "none"}>
+          <Box display={parentData?.isPaid ? "block" : "none"}>
             <Flex flexDir={"column"} gap={4} px={{ base: "1rem", md: "10rem" }}>
               <Box w={"full"}>
                 <Text fontSize={"lg"} fontWeight={"500"} mb={"1rem"}>
