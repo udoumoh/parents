@@ -9,7 +9,7 @@ interface FreeTrialProps {
 const FreeTrial: React.FC<FreeTrialProps> = ({ createdAt }) => {
   const {setIsTrialOver} = useUserAPI()
   const targetDate = new Date(createdAt);
-  targetDate.setDate(targetDate.getDate() + 2);
+  targetDate.setDate(targetDate.getDate() + 14);
 
   const calculateTimeLeft = () => {
     const now = new Date();
