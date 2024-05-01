@@ -40,7 +40,6 @@ import {
 } from "react-icons/md";
 import SelectPlanModal from "@/components/shared/selectPlanModal";
 import FreeTrial from "@/components/shared/freeTrial";
-import { capitalizeFirstLetter } from "@/helpers/capitalizeFirstLetter";
 import { formatDate } from "@/helpers/formatDate";
 
 interface SettingsPageProps {}
