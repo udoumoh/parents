@@ -184,7 +184,7 @@ const SchoolDetailsModal: FC<SchoolDetailsModalProps> = ({
                         variant="solid"
                         colorScheme="red"
                         display={
-                          profile?.creator?.admin?.plan?.includes("discover")
+                          profile?.creator?.admin?.plan?.includes("Discover")
                             ? "block"
                             : "none"
                         }
