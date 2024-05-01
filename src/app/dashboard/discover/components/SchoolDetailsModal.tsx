@@ -17,6 +17,8 @@ import {
   Icon,
   IconButton,
   useDisclosure,
+  Badge,
+  Tooltip,
 } from "@chakra-ui/react";
 import Carousel from "./Carousel";
 import { IoMdHeartEmpty, IoMdHeart } from "react-icons/io";
@@ -120,7 +122,22 @@ const SchoolDetailsModal: FC<SchoolDetailsModalProps> = ({
                   <Text fontSize={"sm"} fontWeight={"bold"}>
                     {profile?.schoolName}
                   </Text>
-                  <Text fontSize={"sm"}>{profile?.state}, Nigeria</Text>
+                  <Flex alignItems={"center"} gap={2}>
+                    <Text fontSize={"sm"}>{profile?.state}, Nigeria</Text>
+                    <Tooltip label="This school is not currently utilizing the Greynote School Management Application and is only on the Discover plan.">
+                      <Badge
+                        variant="solid"
+                        colorScheme="red"
+                        display={
+                          profile?.creator?.admin?.plan?.includes("discover")
+                            ? "block"
+                            : "none"
+                        }
+                      >
+                        Discover
+                      </Badge>
+                    </Tooltip>
+                  </Flex>
                 </Flex>
               </Flex>
               <Flex gap={2} alignItems={"center"}>
@@ -137,7 +154,7 @@ const SchoolDetailsModal: FC<SchoolDetailsModalProps> = ({
                   }}
                 />
                 <Button
-                  leftIcon={<MdOutlineMailOutline size={18}/>}
+                  leftIcon={<MdOutlineMailOutline size={18} />}
                   colorScheme="teal"
                   size={"sm"}
                   onClick={onComposeModalOpen}
@@ -160,7 +177,22 @@ const SchoolDetailsModal: FC<SchoolDetailsModalProps> = ({
                     <Text fontSize={"sm"} fontWeight={"bold"}>
                       {profile?.schoolName}
                     </Text>
-                    <Text fontSize={"sm"}>{profile?.state}, Nigeria</Text>
+                    <Flex alignItems={"center"} gap={2}>
+                      <Text fontSize={"sm"}>{profile?.state}, Nigeria</Text>
+                      <Tooltip label="This school is not currently utilizing the Greynote School Management Application and is only on the Discover plan.">
+                      <Badge
+                        variant="solid"
+                        colorScheme="red"
+                        display={
+                          profile?.creator?.admin?.plan?.includes("discover")
+                            ? "block"
+                            : "none"
+                        }
+                      >
+                        Discover
+                      </Badge>
+                      </Tooltip>
+                    </Flex>
                   </Flex>
                 </Flex>
                 <Flex gap={2} alignItems={"center"}>
@@ -265,7 +297,7 @@ const SchoolDetailsModal: FC<SchoolDetailsModalProps> = ({
             />
           </Flex>
           <Flex
-            mt={'0.8rem'}
+            mt={"0.8rem"}
             w={"full"}
             justifyContent={"flex-end"}
             gap={3}

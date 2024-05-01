@@ -1,14 +1,40 @@
 'use client'
 import { FC } from 'react'
-import {Box, Text, Flex, Button, Icon, Image} from '@chakra-ui/react'
+import {Box, Text, Flex, Button, Icon, Image, useToast,} from '@chakra-ui/react'
 import { IoCheckmarkSharp } from "react-icons/io5";
 import { FaLock } from "react-icons/fa6";
+import { useUserAPI } from '@/hooks/UserContext';
 
 interface ChooseSubscriptionProps {
   
 }
 
 const ChooseSubscription: FC<ChooseSubscriptionProps> = ({}) => {
+  const toast = useToast()
+  const {parentData} = useUserAPI();
+
+  const handleSubmit = async (plan: any) => {
+    const monthlyUrl = `https://paystack.com/pay/gn-parent-monthly/?email=${parentData?.email}&first_name=${parentData?.firstName}&last_name=${parentData?.lastName}&readonly=first_name,last_name,email`;
+    const quaterlyUrl = `https://paystack.com/pay/gn-parent-quarterly/?email=${parentData?.email}&first_name=${parentData?.firstName}&last_name=${parentData?.lastName}&readonly=first_name,last_name,email`;
+    const yearlyUrl = `https://paystack.com/pay/gn-parent-yearly/?email=${parentData?.email}&first_name=${parentData?.firstName}&last_name=${parentData?.lastName}&readonly=first_name,last_name,email`;
+    if (plan === "monthly") {
+      window.location.replace(monthlyUrl);
+    } else if (plan === "quaterly") {
+      window.location.replace(quaterlyUrl);
+    } else if (plan === "yearly") {
+      window.location.replace(yearlyUrl);
+    } else {
+      toast({
+        title: "No plan chosen",
+        description: "Please select a plan to proceed",
+        position: "top-right",
+        variant: "left-accent",
+        isClosable: true,
+        status: "error",
+      });
+    }
+  };
+
   return (
     <Box
       minH={"100vh"}
@@ -31,7 +57,8 @@ const ChooseSubscription: FC<ChooseSubscriptionProps> = ({}) => {
           Plans for every Parent/Guardian
         </Text>
         <Text mt={"1.5rem"} fontWeight={"semibold"}>
-          30-day free trial. Cancel anytime.
+          Your previous subscription has expired, please renew your subscription
+          to access your dashboard.
         </Text>
       </Flex>
       <Flex
@@ -92,8 +119,13 @@ const ChooseSubscription: FC<ChooseSubscriptionProps> = ({}) => {
             <Icon as={IoCheckmarkSharp} boxSize={5} color={"green.500"} />
             <Text>Pay every month to renew subscription</Text>
           </Flex>
-          <Button fontSize={"md"} w={"full"} colorScheme="green">
-            Start free trial
+          <Button
+            fontSize={"md"}
+            w={"full"}
+            colorScheme="green"
+            onClick={() => handleSubmit("monthly")}
+          >
+            Select Monthly Plan
           </Button>
         </Box>
 
@@ -148,8 +180,13 @@ const ChooseSubscription: FC<ChooseSubscriptionProps> = ({}) => {
             <Icon as={IoCheckmarkSharp} boxSize={5} color={"green.500"} />
             <Text>Pay every 3 months to renew subscription</Text>
           </Flex>
-          <Button fontSize={"md"} w={"full"} colorScheme="green">
-            Start free trial
+          <Button
+            fontSize={"md"}
+            w={"full"}
+            colorScheme="green"
+            onClick={() => handleSubmit("quaterly")}
+          >
+            Select Quaterly Plan
           </Button>
         </Box>
 
@@ -210,8 +247,13 @@ const ChooseSubscription: FC<ChooseSubscriptionProps> = ({}) => {
             <Icon as={IoCheckmarkSharp} boxSize={5} color={"green.500"} />
             <Text>Pay every year to renew subscription</Text>
           </Flex>
-          <Button fontSize={"md"} w={"full"} colorScheme="green">
-            Start free trial
+          <Button
+            fontSize={"md"}
+            w={"full"}
+            colorScheme="green"
+            onClick={() => handleSubmit("yearly")}
+          >
+            Select Yearly Plan
           </Button>
         </Box>
       </Flex>

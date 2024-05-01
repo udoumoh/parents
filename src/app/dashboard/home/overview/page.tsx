@@ -271,7 +271,7 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
                       note that all funds in your wallet belong to the school,
                       and if you choose to withdraw your child, the school is
                       responsible for refunding your wallet balance. Greynote
-                      cannot be held responsible if parents fail to deplete
+                      will not be held responsible if parents fail to deplete
                       their wallet balance before transferring a child to
                       another school.
                       </Text>

@@ -11,33 +11,38 @@ import { GET_SCHOOLS } from "@/gql/queries";
 import { useQuery } from "@apollo/client";
 
 interface SchoolProfilesProps {
-    genderType: string;
-    schoolType: string;
-    type: string;
-    bannerImgUrl: string;
-    country: string;
-    createdAt: string;
-    description: string;
-    email: string;
-    facebookUrl: string;
-    id: number;
-    instagramUrl: string;
-    lgarea: string;
-    linkedinUrl: string;
-    logoImgUrl: string;
-    phonenumber: string;
-    profileLikes: number;
-    profileViews: number;
-    rcnumber: string;
-    schoolName: string;
-    state: string;
-    twitterUrl: string;
-    websiteUrl: string;
-    whoLikedProfile: string[];
-    schoolMedia: string[];
-    address: string;
-    priceRange: string;
-    studentPerClassroom: string;
+  genderType: string;
+  schoolType: string;
+  type: string;
+  bannerImgUrl: string;
+  country: string;
+  createdAt: string;
+  description: string;
+  email: string;
+  facebookUrl: string;
+  id: number;
+  instagramUrl: string;
+  lgarea: string;
+  linkedinUrl: string;
+  logoImgUrl: string;
+  phonenumber: string;
+  profileLikes: number;
+  profileViews: number;
+  rcnumber: string;
+  schoolName: string;
+  state: string;
+  twitterUrl: string;
+  websiteUrl: string;
+  whoLikedProfile: string[];
+  schoolMedia: string[];
+  address: string;
+  priceRange: string;
+  studentPerClassroom: string;
+  creator: {
+    admin: {
+      plan: string;
+    };
+  };
 }
 
 
