@@ -87,7 +87,7 @@ const Results: FC<ResultsProps> = ({}) => {
     ".svg",
   ];
   const isImage = imageExtensions.some((ext) =>
-    selectedTableResult?.documentPath?.toLowerCase().endsWith(ext)
+    selectedTableResult?.documentPath?.toLowerCase()?.endsWith(ext)
   );
   const {
     isOpen: isModalOpen,
