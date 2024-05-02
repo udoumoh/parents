@@ -196,9 +196,9 @@ const Results: FC<ResultsProps> = ({}) => {
               teachersLastName:
                 item?.student?.classroom?.classroom?.teacher[0]?.lastName,
               authorsProfileImgUrl:
-                item?.student?.creator?.admin?.profileImgUrl,
-              authorsFirstName: item?.student?.creator?.admin?.firstName,
-              authorsLastName: item?.student?.creator?.admin?.lastName,
+                item?.creatorPicture,
+              authorsFirstName: item?.creatorName,
+              authorsLastName: "",
               shareDate: formatDate(item?.createdAt),
               documentPath: item?.document,
               teachersMiddleName:
