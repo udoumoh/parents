@@ -53,6 +53,19 @@ interface ResultCardProps {
 }
 
 const ResultCard: FC<ResultCardProps> = ({ generatedresult }) => {
+  const imageExtensions = [
+    ".jpg",
+    ".jpeg",
+    ".png",
+    ".gif",
+    ".bmp",
+    ".webp",
+    ".tiff",
+    ".svg",
+  ];
+  const isImage = imageExtensions.some((ext) =>
+    generatedresult?.documentPath?.toLowerCase().endsWith(ext)
+  );
   const {
     isOpen: isModalOpen,
     onClose: onModalClose,
@@ -83,7 +96,7 @@ const ResultCard: FC<ResultCardProps> = ({ generatedresult }) => {
       onClick={
         generatedresult?.documentPath?.endsWith(".pdf")
           ? onUploadedModalOpen
-          : generatedresult?.documentPath?.endsWith(".jpg")
+          : isImage
           ? onImageModalOpen
           : onModalOpen
       }
