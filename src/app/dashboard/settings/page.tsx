@@ -224,8 +224,6 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
     };
     fetchData();
   }, [getRequests, parent]);
-  console.log(parentData)
-  console.log(subscriptionData)
   return (
     <Box
       display={"flex"}

@@ -1,11 +1,12 @@
 "use client";
 import React, { ReactNode, useState, useEffect } from "react";
-import { Box, Flex, Button, Text } from "@chakra-ui/react";
 import MainNav from "@/components/navigation/mainNav";
 import { useQuery } from "@apollo/client";
 import { GET_PARENT } from "@/gql/queries";
 import Loading from "../loading";
 import { useUserAPI } from "@/hooks/UserContext";
+import { LOGOUT_PARENTS } from "@/gql/mutations";
+import { useMutation } from "@apollo/client";
 
 interface layoutProps {
   children: ReactNode;
@@ -14,10 +15,19 @@ interface layoutProps {
 const Layout: React.FC<layoutProps> = ({ children }) => {
   const {parentData, isTrialOver} = useUserAPI();
   const { data: parent, loading } = useQuery(GET_PARENT);
+  const [logoutParent] = useMutation(LOGOUT_PARENTS);
 
   useEffect(() => {
     if(!parentData?.isPaid && isTrialOver){
-      window.location.replace('/subscription/choose')
+      const handleLogout = async () => {
+        const response = await logoutParent();
+        if (response.data.logoutParent) {
+          localStorage.removeItem("currentId");
+          window.location.replace('/subscription/choose')
+        }
+      };
+
+      handleLogout()
     }
   }, [parentData, isTrialOver])
 

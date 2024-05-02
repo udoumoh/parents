@@ -138,7 +138,6 @@ const Results: FC<ResultsProps> = ({}) => {
     const fetchGeneratedResult = async () => {
       try {
         const response = await getgeneratedresult;
-        console.log(response)
         if (!response) {
           console.log("failed to fetch results data");
         }
@@ -192,7 +191,6 @@ const Results: FC<ResultsProps> = ({}) => {
     const fetchUploadedResult = async () => {
       try {
         const response = await getUploadedResult;
-        console.log(response)
         if (!response) {
           console.log("failed to fetch results data");
         }

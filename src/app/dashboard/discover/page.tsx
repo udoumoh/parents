@@ -87,8 +87,6 @@ const Discover: FC<DiscoverProps> = ({}) => {
     setLikedPosts(likedPosts);
   }, [parentData, filteredPosts]);
 
-  console.log(filteredPosts)
-
   return (
     <Box h={"100vh"} w={"full"} p={"1.5rem"} overflowY={"auto"} pb={"10rem"}>
       <FilterModal isOpen={isOpen} onClose={onClose} />

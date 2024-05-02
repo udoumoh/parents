@@ -29,7 +29,6 @@ const Page: FC<pageProps> = ({}) => {
       const response = await initiateSubscription({
         variables: { subAmount: subscriptionData?.amount, plan: subscriptionData?.plan?.name, code: subscriptionData?.subscription_code },
       });
-      console.log(response)
       if (!response.data) {
         toast({
           title: "Oops! Something went wrong. Please try again later.",
