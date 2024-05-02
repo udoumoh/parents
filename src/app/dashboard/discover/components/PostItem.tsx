@@ -160,7 +160,7 @@ const PostItem: FC<PostItemProps> = ({ profile, currentIndex }) => {
                     {profile?.state}, Nigeria
                   </Text>
                   <Tooltip label="This school is not currently utilizing the Greynote School Management Application and is only on the Discover plan.">
-                  <Badge variant="solid" colorScheme="red" display={profile?.creator?.admin?.plan?.includes('discover') ? "block" : "none"}>
+                  <Badge variant="solid" colorScheme="red" display={profile?.creator?.admin?.plan?.includes('Discover') ? "block" : "none"}>
                     Discover
                   </Badge>
                   </Tooltip>
