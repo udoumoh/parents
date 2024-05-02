@@ -86,9 +86,7 @@ const Results: FC<ResultsProps> = ({}) => {
     ".tiff",
     ".svg",
   ];
-  const isImage = imageExtensions.some((ext) =>
-    selectedTableResult?.documentPath?.toLowerCase()?.endsWith(ext)
-  );
+  
   const {
     isOpen: isModalOpen,
     onClose: onModalClose,
@@ -271,6 +269,9 @@ const Results: FC<ResultsProps> = ({}) => {
   };
 
   const handleTableItemClick = (result: any) => {
+    const isImage = imageExtensions.some((ext) =>
+      result?.documentPath?.toLowerCase()?.endsWith(ext)
+    );
     setSelectedTableResult(result);
     result?.documentPath?.endsWith(".pdf")
       ? onUploadedModalOpen()
