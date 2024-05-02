@@ -76,6 +76,19 @@ interface GeneratedResultProps {
 }
 
 const Results: FC<ResultsProps> = ({}) => {
+  const imageExtensions = [
+    ".jpg",
+    ".jpeg",
+    ".png",
+    ".gif",
+    ".bmp",
+    ".webp",
+    ".tiff",
+    ".svg",
+  ];
+  const isImage = imageExtensions.some((ext) =>
+    selectedTableResult?.documentPath?.toLowerCase().endsWith(ext)
+  );
   const {
     isOpen: isModalOpen,
     onClose: onModalClose,
@@ -263,7 +276,7 @@ const Results: FC<ResultsProps> = ({}) => {
     setSelectedTableResult(result);
     result?.documentPath?.endsWith(".pdf")
       ? onUploadedModalOpen()
-      : result?.documentPath?.endsWith(".jpg")
+      : isImage
       ? onImageModalOpen()
       : onGeneratedModalOpen();
   };
