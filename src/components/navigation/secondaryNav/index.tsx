@@ -116,7 +116,7 @@ const NavItem = ({ icon, children, link, ...rest }: NavItemProps) => {
   return (
     <Box
       as="a"
-      onClick={() => window.location.replace(link)}
+      onClick={() => window.location.assign(link)}
       style={{ textDecoration: "none" }}
       _focus={{ boxShadow: "none" }}
     >

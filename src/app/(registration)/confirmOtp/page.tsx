@@ -68,7 +68,7 @@ const ConfirmOtp: FC<ConfirmOtpProps> = ({}) => {
               color={"#fff"}
               w={"full"}
               _hover={{ backgroundColor: "#005D5D90" }}
-              onClick={() => window.location.replace("/verifyotp")}
+              onClick={() => window.location.assign("/verifyotp")}
             >
               Proceed to verify OTP
             </Button>

@@ -43,11 +43,11 @@ const SelectPlanModal: FC<SelectPlanModalProps> = ({ isOpen, onClose }) => {
     const quaterlyUrl = `https://paystack.com/pay/gn-parent-quarterly/?email=${parentData?.email}&first_name=${parentData?.firstName}&last_name=${parentData?.lastName}&readonly=first_name,last_name,email`;
     const yearlyUrl = `https://paystack.com/pay/gn-parent-yearly/?email=${parentData?.email}&first_name=${parentData?.firstName}&last_name=${parentData?.lastName}&readonly=first_name,last_name,email`;
     if(plan === 'monthly'){
-      window.location.replace(monthlyUrl)
+      window.location.assign(monthlyUrl)
     } else if(plan === 'quaterly'){
-      window.location.replace(quaterlyUrl)
+      window.location.assign(quaterlyUrl)
     } else if(plan === 'yearly'){
-      window.location.replace(yearlyUrl)
+      window.location.assign(yearlyUrl)
     } else {
       toast({
         title: "No plan chosen",

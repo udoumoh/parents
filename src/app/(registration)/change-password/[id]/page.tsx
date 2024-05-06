@@ -86,7 +86,7 @@ const Page: FC<PageProps> = ({ params }: { params: { id: string } }) => {
           status: "success",
         });
         setTimeout(() => {
-          window.location.replace('/signin')
+          window.location.assign('/signin')
         }, 2000)
       }
     } catch (err: any) {
@@ -260,7 +260,7 @@ const Page: FC<PageProps> = ({ params }: { params: { id: string } }) => {
                 textAlign={"center"}
               >
                 Already have an account?{" "}
-                <Link color={"#007C7B"} onClick={() => window.location.replace("/signin")}>
+                <Link color={"#007C7B"} onClick={() => window.location.assign("/signin")}>
                   {`Sign In`}
                 </Link>
               </Text>

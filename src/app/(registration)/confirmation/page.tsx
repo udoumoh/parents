@@ -66,7 +66,7 @@ const Confirmation: FC<ConfirmationProps> = ({}) => {
               color={"#fff"}
               w={"full"}
               _hover={{ backgroundColor: "#005D5D90" }}
-              onClick={()=>window.location.replace('/signin')}
+              onClick={()=>window.location.assign('/signin')}
             >
               Return to Sign In
             </Button>

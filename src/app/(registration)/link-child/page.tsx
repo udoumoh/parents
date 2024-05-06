@@ -394,7 +394,7 @@ const Page: FC<PageProps> = ({}) => {
             fontSize={"xl"}
             mt={"2rem"}
             onClick={() => {
-              window.location.replace("/dashboard");
+              window.location.assign("/dashboard");
             }}
           >
             Skip

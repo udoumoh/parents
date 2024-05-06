@@ -23,7 +23,7 @@ const Layout: React.FC<layoutProps> = ({ children }) => {
         const response = await logoutParent();
         if (response.data.logoutParent) {
           localStorage.removeItem("currentId");
-          window.location.replace('/subscription/choose')
+          window.location.assign('/subscription/choose')
         }
       };
 
@@ -34,7 +34,7 @@ const Layout: React.FC<layoutProps> = ({ children }) => {
   return loading ? (
     <Loading />
   ) : !loading && parent?.parent?.errors !== null ? (
-    <>{window.location.replace("/signin")}</>
+    <>{window.location.assign("/signin")}</>
   ) : (
     <MainNav>{children}</MainNav>
   );

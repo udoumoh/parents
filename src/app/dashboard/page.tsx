@@ -74,9 +74,9 @@ const Page: FC<pageProps> = ({}) => {
       .length;
 
     if (parentResponse && childrenCount === 0 && requestData.length > 0) {
-      window.location.replace("/dashboard/settings");
+      window.location.assign("/dashboard/settings");
     } else if (childrenCount !== 0) {
-      window.location.replace("/dashboard/home/overview");
+      window.location.assign("/dashboard/home/overview");
     }
   }, [parent, requestData]);
 

@@ -108,7 +108,7 @@ const Page: FC<pageProps> = ({}) => {
           isClosable: true,
           status: "success",
         });
-        window.location.replace("/confirmOtp");
+        window.location.assign("/confirmOtp");
       }
     } catch (err: any) {
       toast({
@@ -455,7 +455,7 @@ const Page: FC<pageProps> = ({}) => {
                             Already have an account?{" "}
                             <Link
                               color={"#007C7B"}
-                              onClick={() => window.location.replace("/signin")}
+                              onClick={() => window.location.assign("/signin")}
                             >
                               {`Sign In ->`}
                             </Link>

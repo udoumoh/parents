@@ -275,7 +275,7 @@ const NavItem = ({ icon, link, name, ...rest }: NavItemProps) => {
         as="a"
         w={"auto"}
         h={"auto"}
-        onClick={()=>{window.location.replace(link); router.prefetch(link)}}
+        onClick={()=>{window.location.assign(link); router.prefetch(link)}}
         style={{ textDecoration: "none" }}
         _focus={{ boxShadow: "none" }}
         display={"flex"}
@@ -342,7 +342,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
         isClosable: true,
         status: "info",
       });
-      window.location.replace("/signin");
+      window.location.assign("/signin");
       localStorage.removeItem("currentId");
     }
   };
@@ -482,7 +482,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
                           cursor: "pointer",
                         }}
                         onClick={() =>
-                          window.location.replace("/dashboard/inbox")
+                          window.location.assign("/dashboard/inbox")
                         }
                       >
                         <Flex justifyContent={"space-between"} mb={"0.2rem"}>
@@ -604,7 +604,7 @@ const MainNav: FC<MainNav> = ({ children }) => {
         isClosable: true,
         status: "info",
       });
-      window.location.replace("/signin");
+      window.location.assign("/signin");
       localStorage.removeItem("currentId");
     }
   };
@@ -800,7 +800,7 @@ const MainNav: FC<MainNav> = ({ children }) => {
                           gap={6}
                           py={"0.8rem"}
                           onClick={() => {
-                            window.location.replace(`/${item.url}`);
+                            window.location.assign(`/${item.url}`);
                             onClose();
                           }}
                           _hover={{

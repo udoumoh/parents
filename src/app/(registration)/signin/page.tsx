@@ -83,7 +83,7 @@ const Signin: FC<pageProps> = ({}) => {
         isClosable: true,
         status: "success",
       });
-        window.location.replace("/dashboard/home/overview")
+        window.location.assign("/dashboard/home/overview")
     } catch (error: any) {
       toast({
         title: "Error",
@@ -103,7 +103,7 @@ const Signin: FC<pageProps> = ({}) => {
   return loading ? (
     <Loading />
   ) : !loading && parent?.parent?.errors === null ? (
-    <>{window.location.replace("/dashboard/home/overview")}</>
+    <>{window.location.assign("/dashboard/home/overview")}</>
   ) : (
     <Box
       display={"flex"}
@@ -229,7 +229,7 @@ const Signin: FC<pageProps> = ({}) => {
                 fontSize={"sm"}
                 color={"#005D5D"}
                 mt={"0.3rem"}
-                onClick={() => window.location.replace("/forgotpassword")}
+                onClick={() => window.location.assign("/forgotpassword")}
               >
                 Forgot Password?
               </Link>
@@ -245,7 +245,7 @@ const Signin: FC<pageProps> = ({}) => {
                 Don&apos;t have an account?{" "}
                 <Link
                   color={"#007C7B"}
-                  onClick={() => window.location.replace("/signup")}
+                  onClick={() => window.location.assign("/signup")}
                 >
                   {`Sign Up`}
                 </Link>
@@ -381,7 +381,7 @@ const Signin: FC<pageProps> = ({}) => {
   //               fontSize={"sm"}
   //               color={"#005D5D"}
   //               mt={"0.3rem"}
-  //               onClick={() => window.location.replace("/forgotpassword")}
+  //               onClick={() => window.location.assign("/forgotpassword")}
   //             >
   //               Forgot Password?
   //             </Link>
@@ -397,7 +397,7 @@ const Signin: FC<pageProps> = ({}) => {
   //               Don&apos;t have an account?{" "}
   //               <Link
   //                 color={"#007C7B"}
-  //                 onClick={() => window.location.replace("/signup")}
+  //                 onClick={() => window.location.assign("/signup")}
   //               >
   //                 {`Sign Up`}
   //               </Link>

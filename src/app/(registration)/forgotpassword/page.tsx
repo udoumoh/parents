@@ -73,7 +73,7 @@ const ForgotPassword: FC<ForgotPasswordProps> = ({}) => {
             status: "success",
           });
           setTimeout(() => {
-            window.location.replace('/confirmation')
+            window.location.assign('/confirmation')
           }, 2000)
       }
     } catch (error: any) {
@@ -171,7 +171,7 @@ const ForgotPassword: FC<ForgotPasswordProps> = ({}) => {
                 textAlign={"center"}
               >
                 Already have an account?{" "}
-                <Link color={"#007C7B"} onClick={() => window.location.replace("/signin")}>
+                <Link color={"#007C7B"} onClick={() => window.location.assign("/signin")}>
                   {`Sign In`}
                 </Link>
               </Text>

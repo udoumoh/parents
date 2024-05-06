@@ -50,7 +50,7 @@ const Page: FC<pageProps> = ({}) => {
           status: "success",
         });
         setTimeout(() => {
-          window.location.replace("/dashboard/home/overview");
+          window.location.assign("/dashboard/home/overview");
         }, 1000);
       } else {
         toast({

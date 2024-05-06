@@ -7,9 +7,9 @@ const Home = () => {
 
   useEffect(() => {
     if(parentData){
-      window.location.replace("/dashboard/home/overview"); 
+      window.location.assign("/dashboard/home/overview"); 
     } else {
-      window.location.replace('/signin')
+      window.location.assign('/signin')
     }
   }, [parentData]);
 

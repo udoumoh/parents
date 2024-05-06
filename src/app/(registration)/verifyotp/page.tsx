@@ -69,7 +69,7 @@ const Page: FC<PageProps> = ({}) => {
           isClosable: true,
           status: "success",
         });
-        window.location.replace("/link-child");
+        window.location.assign("/link-child");
       }
     } catch (e: any) {
       toast({

@@ -87,7 +87,7 @@ const InvoiceItem: FC<InvoiceItemProps> = ({
         pb={"1rem"}
         _hover={{ cursor: "pointer", backgroundColor: "#44506980", transitionDuration:'0.5s' }}
         onClick={() =>
-          window.location.replace(`/dashboard/home/invoice/${studentInvoice?.id}`)
+          window.location.assign(`/dashboard/home/invoice/${studentInvoice?.id}`)
         }
       >
         <Box display={"flex"} gap={1} alignItems={"center"}>
@@ -239,7 +239,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
           rounded={"md"}
           border={"1px solid #E2E2E2"}
           size={"sm"}
-          onClick={() => window.location.replace("/dashboard/home/invoice")}
+          onClick={() => window.location.assign("/dashboard/home/invoice")}
         >
           <Text fontSize={"sm"} color={"#747474"}>
             See All

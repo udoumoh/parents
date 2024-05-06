@@ -208,7 +208,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
     .reduce((acc: any, item: any) => acc + item, 0);
 
   const handleSelectedInvoice = (invoice: any) => {
-    window.location.replace(`/dashboard/home/invoice/${invoice?.id}`);
+    window.location.assign(`/dashboard/home/invoice/${invoice?.id}`);
   };
 
   const handleAcceptInvoice = (invoice: any) => {

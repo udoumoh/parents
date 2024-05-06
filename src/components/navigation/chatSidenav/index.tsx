@@ -54,7 +54,7 @@ const ChatContactItem: FC<ChatContactItemProps> = ({ chat }) => {
         backgroundColor: "#2A938C30",
         transition: "0.3s",
       }}
-      onClick={() => window.location.replace(`/dashboard/inbox/${chat.id}`)}
+      onClick={() => window.location.assign(`/dashboard/inbox/${chat.id}`)}
       borderRadius="5"
     >
       <Avatar size={{ base: "sm", md: "md" }} src={chat.profileImage} />
