@@ -213,7 +213,7 @@ const SchoolDetailsModal: FC<SchoolDetailsModalProps> = ({
               <Button
                 mt={"0.8rem"}
                 backgroundColor={"#005D5D"}
-                size={"sm"}
+                size={"xs"}
                 _hover={{ backgroundColor: "#007C7B" }}
                 color={"#fff"}
                 onClick={onComposeModalOpen}

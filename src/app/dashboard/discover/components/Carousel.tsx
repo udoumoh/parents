@@ -57,41 +57,43 @@ const Carousel: FC<CarouselProps> = ({media}) => {
       {/* Left Icon */}
       <IconButton
         aria-label="left-arrow"
-        backgroundColor={'#FFFFFF'}
-        color={'#000000'}
+        backgroundColor={"#FFFFFF"}
+        color={"#000000"}
         borderRadius="full"
         position="absolute"
         left={side}
         top={top}
-        size={'sm'}
+        size={"sm"}
         transform={"translate(0%, -50%)"}
         zIndex={2}
         onClick={() => slider?.slickPrev()}
+        display={{ base: "none", md: "flex" }}
       >
-        <BiLeftArrowAlt size={18}/>
+        <BiLeftArrowAlt size={18} />
       </IconButton>
       {/* Right Icon */}
       <IconButton
         aria-label="right-arrow"
-        backgroundColor={'#FFFFFF'}
-        color={'#000000'}
+        backgroundColor={"#FFFFFF"}
+        color={"#000000"}
         borderRadius="full"
         position="absolute"
         right={side}
-        size={'sm'}
+        size={"sm"}
         top={top}
         transform={"translate(0%, -50%)"}
         zIndex={2}
         onClick={() => slider?.slickNext()}
+        display={{ base: "none", md: "flex" }}
       >
-        <BiRightArrowAlt size={18}/>
+        <BiRightArrowAlt size={18} />
       </IconButton>
       {/* Slider */}
       <Slider {...settings} ref={(slider) => setSlider(slider)}>
         {imageLinks?.map((url, index) => (
           <Box
             key={index}
-            height={{base:"2xs", md:"lg"}}
+            height={{ base: "2xs", md: "lg" }}
             position="relative"
             backgroundPosition="center"
             backgroundRepeat="no-repeat"
@@ -99,11 +101,9 @@ const Carousel: FC<CarouselProps> = ({media}) => {
             backgroundImage={`url(${url})`}
           />
         ))}
-        {
-          videoLinks?.map((url, index) => (
-            <VideoPlayer url={url} key={index}/>
-          ))
-        }
+        {videoLinks?.map((url, index) => (
+          <VideoPlayer url={url} key={index} />
+        ))}
       </Slider>
     </Box>
   );

@@ -1,23 +1,29 @@
 import { FC, useEffect, useRef, useState } from "react";
-import { Box, Button, Text, Flex, Icon } from "@chakra-ui/react";
+import { Box, Flex, Icon } from "@chakra-ui/react";
 import { FaPlay, FaPause } from "react-icons/fa";
 
 interface VideoPlayerProps {
-    url: string;
+  url: string;
 }
 
-const VideoPlayer: FC<VideoPlayerProps> = ({url}) => {
+const VideoPlayer: FC<VideoPlayerProps> = ({ url }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [isHovered, setIshovered] = useState(false);
+  const [showControls, setShowControls] = useState(true);
 
   useEffect(() => {
     const video = videoRef.current;
 
     if (video) {
-      // Event listener to update playing state
-      const handlePlay = () => setIsPlaying(true);
-      const handlePause = () => setIsPlaying(false);
+      const handlePlay = () => {
+        setIsPlaying(true);
+        setShowControls(false); // Hide controls when video starts playing
+      };
+
+      const handlePause = () => {
+        setIsPlaying(false);
+        setShowControls(true); // Show controls when video is paused
+      };
 
       video.addEventListener("play", handlePlay);
       video.addEventListener("pause", handlePause);
@@ -41,41 +47,53 @@ const VideoPlayer: FC<VideoPlayerProps> = ({url}) => {
     }
   };
 
+  const handleVideoClick = () => {
+    const video = videoRef.current;
+
+    if (video) {
+      if (video.paused) {
+        video.play();
+      } else {
+        video.pause();
+      }
+    }
+  };
+
   return (
-    <Box
-      position={"relative"}
-      width={"100%"}
-      onMouseEnter={() => setIshovered(true)}
-      onMouseLeave={() => setIshovered(false)}
-      h={{ base: "200px", md: "500px" }}
-    >
-      <video ref={videoRef} width="100%" height="auto">
+    <Box position="relative" width="100%">
+      <video
+        ref={videoRef}
+        width="100%"
+        onClick={handleVideoClick}
+        onTouchStart={() => setShowControls(true)}
+        onTouchEnd={() => setShowControls(false)}
+      >
         <source src={url} type="video/mp4" />
         Your browser does not support the video tag.
       </video>
+
       {/* Custom play/pause button */}
-      <Flex
-        position="absolute"
-        top={{base:"40%", md:"50%"}}
-        left="50%"
-        transform="translate(-50%, -50%)"
-        alignItems="center"
-        justifyContent="center"
-        width="auto"
-        height="auto"
-        backgroundColor={"#00000040"}
-        rounded={"full"}
-        p={"0.8rem"}
-        display={isHovered ? "flex" : "none"}
-      >
-        <Icon
-          as={isPlaying ? FaPause : FaPlay}
+      {showControls && (
+        <Flex
+          position="absolute"
+          top="50%"
+          left="50%"
+          transform="translate(-50%, -50%)"
+          alignItems="center"
+          justifyContent="center"
+          backgroundColor="#00000080"
+          borderRadius="50%"
+          p="0.8rem"
           onClick={handleTogglePlay}
-          color={"#fff"}
-          _hover={{ cursor: "pointer" }}
-          boxSize={6}
-        />
-      </Flex>
+        >
+          <Icon
+            as={isPlaying ? FaPause : FaPlay}
+            color="#fff"
+            boxSize={4}
+            _hover={{ cursor: "pointer" }}
+          />
+        </Flex>
+      )}
     </Box>
   );
 };
