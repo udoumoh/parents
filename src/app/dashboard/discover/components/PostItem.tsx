@@ -18,6 +18,7 @@ import SchoolDetailsModal from "./SchoolDetailsModal";
 import { useUserAPI } from "@/hooks/UserContext";
 import { useUserLikesAPI } from "@/hooks/UserLikesContext";
 import { capitalizeFirstLetter } from "@/helpers/capitalizeFirstLetter";
+import { useRouter } from "next/navigation";
 
 interface PostItemProps {
   profile: {
@@ -58,6 +59,7 @@ interface PostItemProps {
 }
 
 const PostItem: FC<PostItemProps> = ({ profile, currentIndex }) => {
+  const router = useRouter()
   const { isOpen, onToggle } = useDisclosure();
   const {
     likePost,
@@ -84,9 +86,11 @@ const PostItem: FC<PostItemProps> = ({ profile, currentIndex }) => {
     if (isPostLiked(profile?.id)) {
       unlikePost(profile?.id);
       setProfileLikes((prevLikes) => Math.max(prevLikes - 1, 0));
+      router.refresh()
     } else {
       likePost(profile?.id);
       setProfileLikes((prevLikes) => prevLikes + 1);
+      router.refresh()
     }
   };
 
