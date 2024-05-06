@@ -90,7 +90,7 @@ const Invoice: FC<InvoiceProps> = ({ params }: { params: { id: number } }) => {
         leftIcon={<IoIosArrowRoundBack />}
         variant={"outline"}
         colorScheme="green"
-        onClick={() => window.location.replace("/dashboard/home/invoice")}
+        onClick={() => router.push("/dashboard/home/invoice")}
       >
         Back to invoice page
       </Button>

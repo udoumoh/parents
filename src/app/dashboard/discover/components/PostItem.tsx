@@ -86,11 +86,9 @@ const PostItem: FC<PostItemProps> = ({ profile, currentIndex }) => {
     if (isPostLiked(profile?.id)) {
       unlikePost(profile?.id);
       setProfileLikes((prevLikes) => Math.max(prevLikes - 1, 0));
-      router.refresh()
     } else {
       likePost(profile?.id);
       setProfileLikes((prevLikes) => prevLikes + 1);
-      router.refresh()
     }
   };
 
