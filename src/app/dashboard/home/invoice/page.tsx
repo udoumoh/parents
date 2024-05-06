@@ -78,7 +78,6 @@ interface StudentInvoiceProps {
 interface InvoiceProps {}
 
 const Invoice: FC<InvoiceProps> = ({}) => {
-  const router = useRouter()
   const { invoiceData, currentWardProfile } = useUserAPI();
   const { data: getEducationHistory } = useQuery(
     GET_STUDENT_EDUCATION_HISTORY,
