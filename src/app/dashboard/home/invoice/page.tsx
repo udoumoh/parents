@@ -47,6 +47,7 @@ import SchoolAccountDetailsModal from "@/components/shared/schoolAccountDetailsM
 import { GET_STUDENT_EDUCATION_HISTORY } from "@/gql/queries";
 import { useQuery } from "@apollo/client";
 import { IoFilterOutline } from "react-icons/io5";
+import { useRouter } from "next/router";
 
 interface StudentInvoiceProps {
   term: string;
@@ -78,6 +79,7 @@ interface StudentInvoiceProps {
 interface InvoiceProps {}
 
 const Invoice: FC<InvoiceProps> = ({}) => {
+  const router = useRouter()
   const { invoiceData, currentWardProfile } = useUserAPI();
   const { data: getEducationHistory } = useQuery(
     GET_STUDENT_EDUCATION_HISTORY,
@@ -206,7 +208,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
     .reduce((acc: any, item: any) => acc + item, 0);
 
   const handleSelectedInvoice = (invoice: any) => {
-    window.location.replace(`/dashboard/home/invoice/${invoice?.id}`);
+    router.push(`/dashboard/home/invoice/${invoice?.id}`);
   };
 
   const handleAcceptInvoice = (invoice: any) => {
