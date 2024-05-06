@@ -534,7 +534,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
           <MenuList>
             <MenuItem
               px={"1rem"}
-              onClick={() =>router.push("/dashboard/settings")}
+              onClick={() =>window.location.assign("/dashboard/settings")}
               display={"flex"}
               gap={"3"}
             >
@@ -545,7 +545,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
             </MenuItem>
             <MenuItem
               px={"1rem"}
-              onClick={() =>router.push("/dashboard/inbox")}
+              onClick={() =>window.location.assign("/dashboard/inbox")}
               display={"flex"}
               gap={"3"}
             >
@@ -765,7 +765,7 @@ const MainNav: FC<MainNav> = ({ children }) => {
                           py={"0.8rem"}
                           color={"gray.500"}
                           onClick={() => {
-                          router.push(item?.url);
+                          window.location.assign(item?.url);
                             onClose();
                           }}
                           _hover={{
