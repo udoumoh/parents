@@ -556,7 +556,6 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
             </MenuItem>
             <MenuDivider />
             <MenuItem
-              px={"1rem"}
               onClick={handleLogout}
               display={"flex"}
               gap={"3"}

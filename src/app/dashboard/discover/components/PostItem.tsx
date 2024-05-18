@@ -19,6 +19,7 @@ import { useUserAPI } from "@/hooks/UserContext";
 import { useUserLikesAPI } from "@/hooks/UserLikesContext";
 import { capitalizeFirstLetter } from "@/helpers/capitalizeFirstLetter";
 import { useRouter } from "next/navigation";
+import SchoolDetailsDrawer from "./schoolDetailsDrawer";
 
 interface PostItemProps {
   profile: {
@@ -107,6 +108,7 @@ const PostItem: FC<PostItemProps> = ({ profile, currentIndex }) => {
   }, [])
 
   const { isOpen: isSchoolModalOpen, onOpen, onClose } = useDisclosure();
+  const { isOpen: isSchoolDrawerOpen, onOpen: onDrawerOpen, onClose: onDrawerClose } = useDisclosure();
 
   return (
     <ScaleFade initialScale={0.6} in={isOpen}>
@@ -123,6 +125,11 @@ const PostItem: FC<PostItemProps> = ({ profile, currentIndex }) => {
             onClose={onClose}
             setProfileLikes={setProfileLikes}
           />
+          {/* <SchoolDetailsDrawer
+            isOpen={isSchoolDrawerOpen}
+            onClose={onDrawerClose}
+            setProfileLikes={setProfileLikes}
+          /> */}
           <Box position={"relative"}>
             <Image
               rounded={"md"}
@@ -132,7 +139,7 @@ const PostItem: FC<PostItemProps> = ({ profile, currentIndex }) => {
               objectFit={"cover"}
               w={"full"}
               onClick={() => {
-                onOpen();
+                onDrawerOpen();
                 setActiveProfileIndex(currentIndex);
               }}
             />
@@ -157,14 +164,22 @@ const PostItem: FC<PostItemProps> = ({ profile, currentIndex }) => {
                 <Text fontWeight={"bold"} fontSize={{ base: "xs", md: "sm" }}>
                   {capitalizeFirstLetter(profile?.schoolName.toLowerCase())}
                 </Text>
-                <Flex alignItems={'center'} gap={2}>
+                <Flex alignItems={"center"} gap={2}>
                   <Text fontSize={{ base: "xs", md: "sm" }}>
                     {profile?.state}, Nigeria
                   </Text>
                   <Tooltip label="This school is not currently utilizing the Greynote School Management Application and is only on the Discover plan.">
-                  <Badge variant="solid" colorScheme="red" display={profile?.creator?.admin?.plan?.includes('Discover') ? "block" : "none"}>
-                    Discover
-                  </Badge>
+                    <Badge
+                      variant="solid"
+                      colorScheme="red"
+                      display={
+                        profile?.creator?.admin?.plan?.includes("Discover")
+                          ? "block"
+                          : "none"
+                      }
+                    >
+                      Discover
+                    </Badge>
                   </Tooltip>
                 </Flex>
               </Flex>
