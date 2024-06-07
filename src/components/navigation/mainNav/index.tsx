@@ -224,11 +224,7 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
         <Grid justifyContent={"center"} gap={4}>
           <NavItem
             icon={pathName === "/dashboard" ? GoHomeFill : GoHome}
-            link={
-              (parentData?.children ?? []).length > 0
-                ? "/dashboard/home/overview"
-                : "/dashboard"
-            }
+            link={ "/dashboard/home/overview"}
             backgroundColor={
               pathName === "/dashboard" ? "#144646" : "transparent"
             }
