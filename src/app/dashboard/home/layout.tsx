@@ -51,7 +51,7 @@ const Layout: FC<LayoutProps> = ({ children }) => {
     }
   }, [onOpen]);
 
-  if (parentData?.children?.length === 0) {
+  if (parentData?.children.length === 0) {
     window.location.replace("/dashboard");
   }
 
