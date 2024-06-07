@@ -139,7 +139,7 @@ const PostItem: FC<PostItemProps> = ({ profile, currentIndex }) => {
               objectFit={"cover"}
               w={"full"}
               onClick={() => {
-                onDrawerOpen();
+                onOpen();
                 setActiveProfileIndex(currentIndex);
               }}
             />
