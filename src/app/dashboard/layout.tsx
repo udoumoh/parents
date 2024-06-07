@@ -31,14 +31,13 @@ const Layout: React.FC<layoutProps> = ({ children }) => {
     }
   }, [parentData, isTrialOver])
 
-  return <MainNav>{children}</MainNav>;
-  // loading ? (
-  //   <Loading />
-  // ) : !loading && parent?.parent?.errors !== null ? (
-  //   <>{window.location.replace("/signin")}</>
-  // ) : (
-  //   <MainNav>{children}</MainNav>
-  // );
+  return loading ? (
+    <Loading />
+  ) : !loading && parent?.parent?.errors !== null ? (
+    <>{window.location.replace("/signin")}</>
+  ) : (
+    <MainNav>{children}</MainNav>
+  );
 };
 
 export default Layout;
