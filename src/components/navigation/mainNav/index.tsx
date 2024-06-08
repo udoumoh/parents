@@ -638,7 +638,13 @@ const MainNav: FC<MainNav> = ({ children }) => {
         onOverlayClick={onClose}
       >
         <DrawerContent overflowY={"auto"}>
-          <Box h={'full'} display={'flex'} flexDir={'column'} justifyContent={'space-between'} overflowY={'auto'}>
+          <Box
+            h={"full"}
+            display={"flex"}
+            flexDir={"column"}
+            justifyContent={"space-between"}
+            overflowY={"auto"}
+          >
             <Accordion allowToggle>
               <AccordionItem>
                 <DrawerHeader bgColor={"#005D5D"} pb={0}>
@@ -718,7 +724,7 @@ const MainNav: FC<MainNav> = ({ children }) => {
                               />
                             </Avatar>
                             <Box>
-                              <Text fontWeight={'bold'} fontSize={"md"}>
+                              <Text fontWeight={"bold"} fontSize={"md"}>
                                 {`${ward.firstName} ${ward.lastName}`}
                               </Text>
                               <Text fontSize={"sm"} color={"#AAAAAA"}>
@@ -764,7 +770,7 @@ const MainNav: FC<MainNav> = ({ children }) => {
                           py={"0.8rem"}
                           color={"gray.500"}
                           onClick={() => {
-                          window.location.assign(item?.url);
+                            window.location.assign(item?.url);
                             onClose();
                           }}
                           _hover={{
@@ -830,105 +836,114 @@ const MainNav: FC<MainNav> = ({ children }) => {
               </AccordionItem>
             </Accordion>
 
-            <Box px={'1.5rem'} my={'1rem'}>
-            <Popover>
-              <PopoverTrigger>
-                <Box
-                  as={"a"}
-                  w={"full"}
-                  display={"flex"}
-                  justifyContent={"space-between"}
-                  alignItems={"center"}
-                  href="#"
-                >
-                  <Box display={"flex"} alignItems={"center"} gap={2}>
-                    <Image
-                      src={profileData.userBio.profileImage}
-                      width={"2.5rem"}
-                      height={"2.5rem"}
-                      alt="profile"
-                      pointerEvents={"none"}
-                      rounded={"md"}
+            <Box px={"1.5rem"} my={"1rem"}>
+              <Popover>
+                <PopoverTrigger>
+                  <Box
+                    as={"a"}
+                    w={"full"}
+                    display={"flex"}
+                    justifyContent={"space-between"}
+                    alignItems={"center"}
+                    href="#"
+                  >
+                    <Box display={"flex"} alignItems={"center"} gap={2}>
+                      <Image
+                        src={profileData.userBio.profileImage}
+                        width={"2.5rem"}
+                        height={"2.5rem"}
+                        alt="profile"
+                        pointerEvents={"none"}
+                        rounded={"md"}
+                      />
+                      <Grid lineHeight={"1rem"}>
+                        <Text
+                          color={"gray.800"}
+                          fontWeight={"semibold"}
+                          fontSize={"md"}
+                        >{`${profileData.userBio.firstName} ${profileData.userBio.lastName}`}</Text>
+                        <Text color={"#AAAAAA"} fontSize={"sm"}>
+                          {profileData.userBio.email}
+                        </Text>
+                      </Grid>
+                    </Box>
+                    <Icon
+                      as={RiArrowRightSLine}
+                      color={"gray.800"}
+                      boxSize={6}
                     />
-                    <Grid lineHeight={"1rem"}>
-                      <Text
-                        color={"gray.800"}
-                        fontWeight={"semibold"}
-                        fontSize={"md"}
-                      >{`${profileData.userBio.firstName} ${profileData.userBio.lastName}`}</Text>
-                      <Text color={"#AAAAAA"} fontSize={"sm"}>
-                        {profileData.userBio.email}
-                      </Text>
-                    </Grid>
                   </Box>
-                  <Icon as={RiArrowRightSLine} color={"gray.800"} boxSize={6} />
-                </Box>
-              </PopoverTrigger>
-              <PopoverContent
-                p={2}
-                borderRadius="15px"
-                justifyContent="center"
-                alignItems="center"
-                gap={2}
-                maxW={"270px"}
-              >
-                <Flex
-                  direction="column"
-                  justify="center"
-                  align="center"
-                  border="1px solid #e3e3e3"
-                  borderRadius={"10px"}
-                  p={3}
-                  w={"full"}
+                </PopoverTrigger>
+                <PopoverContent
+                  p={2}
+                  borderRadius="15px"
+                  justifyContent="center"
+                  alignItems="center"
+                  gap={2}
+                  maxW={"270px"}
                 >
-                  <Avatar
-                    src={profileData?.userBio?.profileImage}
-                    name={`${profileData?.userBio?.firstName} ${profileData?.userBio?.lastName}`}
-                  />
-                  <Flex align="center" justify="center" mt={2} gap={1}>
-                    <Text
-                      textTransform={"capitalize"}
-                      fontSize={{ base: "lg", lg: "2xl" }}
-                      fontWeight={"bold"}
-                    >{`${profileData?.userBio?.firstName} ${profileData?.userBio?.lastName}`}</Text>
-                    <Image
-                      src="/images/verifiedtag.png"
-                      alt="badge"
-                      w={"1rem"}
-                      h={"1rem"}
-                      pointerEvents={"none"}
-                      display={
-                        (childData ?? []).length === 0 ? "none" : "block"
-                      }
+                  <Flex
+                    direction="column"
+                    justify="center"
+                    align="center"
+                    border="1px solid #e3e3e3"
+                    borderRadius={"10px"}
+                    p={3}
+                    w={"full"}
+                  >
+                    <Avatar
+                      src={profileData?.userBio?.profileImage}
+                      name={`${profileData?.userBio?.firstName} ${profileData?.userBio?.lastName}`}
                     />
+                    <Flex align="center" justify="center" mt={2} gap={1}>
+                      <Text
+                        textTransform={"capitalize"}
+                        fontSize={{ base: "lg", lg: "2xl" }}
+                        fontWeight={"bold"}
+                      >{`${profileData?.userBio?.firstName} ${profileData?.userBio?.lastName}`}</Text>
+                      <Image
+                        src="/images/verifiedtag.png"
+                        alt="badge"
+                        w={"1rem"}
+                        h={"1rem"}
+                        pointerEvents={"none"}
+                        display={
+                          (childData ?? []).length === 0 ? "none" : "block"
+                        }
+                      />
+                    </Flex>
+                    <Text color="#A7A7A7" fontSize="12">
+                      {profileData?.userBio?.email}
+                    </Text>
                   </Flex>
-                  <Text color="#A7A7A7" fontSize="12">
-                    {profileData?.userBio?.email}
-                  </Text>
-                </Flex>
-                <Button
-                  leftIcon={<IoHelpCircleOutline />}
-                  variant="ghost"
-                  fontWeight={400}
-                  w="full"
-                  color="#747474"
-                >
-                  Contact Support
-                </Button>
-                <Button
-                  mb={4}
-                  bg="#FFC5C5"
-                  color="#E03F3F"
-                  _hover={{ bg: "#E03F3F", color: "white" }}
-                  onClick={handleLogout}
-                  fontWeight={400}
-                  w="full"
-                  leftIcon={<IoLogOut size={"22"} />}
-                >
-                  Logout
-                </Button>
-              </PopoverContent>
-            </Popover>
+                  <Button
+                    leftIcon={<IoHelpCircleOutline />}
+                    variant="ghost"
+                    fontWeight={400}
+                    w="full"
+                    color="#747474"
+                    onClick={() =>
+                      (window.location.href = `mailto:admin@greynote.app?subject=Parent app (${encodeURIComponent(
+                        `${profileData?.userBio?.firstName} ${profileData.userBio?.lastName}`
+                      )}): Support`)
+                    }
+                  >
+                    Contact Support
+                  </Button>
+                  <Button
+                    mb={4}
+                    bg="#FFC5C5"
+                    color="#E03F3F"
+                    _hover={{ bg: "#E03F3F", color: "white" }}
+                    onClick={handleLogout}
+                    fontWeight={400}
+                    w="full"
+                    leftIcon={<IoLogOut size={"22"} />}
+                  >
+                    Logout
+                  </Button>
+                </PopoverContent>
+              </Popover>
             </Box>
           </Box>
         </DrawerContent>
