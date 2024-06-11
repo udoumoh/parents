@@ -171,7 +171,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
     (invoice) => invoice.status === "completed"
   );
   const activeInvoice = invoices?.filter(
-    (invoice) => invoice.status === "active"
+    (invoice) => invoice.status === "active" || invoice.status === "partial payment"
   );
   const rejectedInvoice = invoices?.filter(
     (invoice) => invoice.status === "rejected by parent"

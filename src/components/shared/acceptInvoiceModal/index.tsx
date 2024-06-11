@@ -203,7 +203,7 @@ const {
           <ModalBody pb={6} px={{ base: "1rem", md: "2rem" }}>
             <Box>
               <Flex mb={'1rem'}>
-                <Badge colorScheme="green">{invoiceData?.isRefundable}</Badge>
+                <Badge colorScheme={invoiceData?.isRefundable ? 'green' : !invoiceData?.isRefundable ? 'red' : 'default'}>{invoiceData?.isRefundable ? "Refundable" : "Non-Refundable"}</Badge>
               </Flex>
               <Formik
                 initialValues={{
