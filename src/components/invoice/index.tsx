@@ -42,6 +42,7 @@ interface StudentInvoiceProps {
   summary: string;
   createdAt: string;
   invoiceId: string;
+  isRefundable: boolean;
   schoolname: string;
   schoollogo: string;
   balance: number;
