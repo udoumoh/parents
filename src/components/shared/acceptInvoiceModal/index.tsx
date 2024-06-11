@@ -23,6 +23,7 @@ import {
   InputLeftAddon,
   useToast,
   FormErrorMessage,
+  Badge,
 } from "@chakra-ui/react";
 import { Formik, Form, Field } from "formik";
 import { FileUpload } from "../fileUpload";
@@ -50,6 +51,7 @@ interface AcceptInvoiceModalProps {
     schoolname: string;
     schoollogo: string;
     balance: number;
+    isRefundable: boolean;
     receipt: {
       amountPaid: number;
       createdAt: string;
@@ -200,6 +202,9 @@ const {
           </ModalHeader>
           <ModalBody pb={6} px={{ base: "1rem", md: "2rem" }}>
             <Box>
+              <Flex mb={'1rem'}>
+                <Badge colorScheme="green">{invoiceData?.isRefundable}</Badge>
+              </Flex>
               <Formik
                 initialValues={{
                   amountPaid: "",

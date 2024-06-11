@@ -61,6 +61,7 @@ interface StudentInvoiceProps {
   schoolname: string;
   schoollogo: string;
   balance: number;
+  isRefundable: boolean;
   receipt: {
     amountPaid: number;
     createdAt: string;
@@ -253,6 +254,7 @@ export const UserApiProvider: FC<UserApiProviderProps> = ({ children }) => {
             schoollogo: item?.student?.creator?.admin?.schoolImg,
             receipt: item?.receipt,
             balance: item?.balance,
+            isRefundable: item?.isRefundable,
           })
         );
         setInvoiceData(parsedInvoiceData?.reverse());
