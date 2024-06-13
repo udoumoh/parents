@@ -146,7 +146,9 @@ const FilterModal: FC<FilterModalProps> = ({isOpen, onClose}) => {
                   onChange={(e) => handleFilterChange("state", e.target.value)}
                 >
                   {states?.map((state, index) => (
-                    <option value={state} key={index}>{state}</option>
+                    <option value={state} key={index}>
+                      {state}
+                    </option>
                   ))}
                 </Select>
               </Box>
@@ -160,7 +162,9 @@ const FilterModal: FC<FilterModalProps> = ({isOpen, onClose}) => {
                   onChange={(e) => handleFilterChange("lga", e.target.value)}
                 >
                   {LGAs[filterParams.state]?.map((lga, index) => (
-                    <option value={lga} key={index}>{lga}</option>
+                    <option value={lga} key={index}>
+                      {lga}
+                    </option>
                   ))}
                 </Select>
               </Box>
@@ -186,15 +190,20 @@ const FilterModal: FC<FilterModalProps> = ({isOpen, onClose}) => {
 
               <Box display={"flex"} flexDir={"column"} gap={2} w={"full"}>
                 <Text fontWeight={"semibold"}>Price Range</Text>
-                <Input
-                  placeholder={"Enter Price Range"}
-                  type="number"
-                  focusBorderColor="green.500"
+                <Select
+                  placeholder={"Select Price Range"}
                   value={filterParams?.priceRange}
+                  focusBorderColor="green.500"
                   onChange={(e) =>
                     handleFilterChange("priceRange", e.target.value)
                   }
-                />
+                >
+                  <option value="1000-50000">1,000 - 50,000</option>
+                  <option value="50000-100000">50,000 - 100,000</option>
+                  <option value="100000-500000">100,000 - 500,000</option>
+                  <option value="500000-1000000">500,000 - 1,000,000</option>
+                  <option value="1000000+">Above 1 Million</option>
+                </Select>
               </Box>
             </Flex>
           </Flex>
