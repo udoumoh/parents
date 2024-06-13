@@ -172,7 +172,7 @@ export const UserLikesAPIProvider: FC<UserLikesApiProviderProps> = ({
     if (filterParams?.priceRange) {
       filteredResults = filteredResults?.filter(
         (post) =>
-          post?.priceRange == filterParams?.priceRange
+          post?.priceRange === filterParams?.priceRange
       );
     }
 
