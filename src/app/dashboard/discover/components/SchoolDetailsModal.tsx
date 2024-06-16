@@ -97,7 +97,7 @@ const SchoolDetailsModal: FC<SchoolDetailsModalProps> = ({
 
   return (
     <Box>
-      {isSmall ? (
+      {/* {isSmall ? (
         <Drawer isOpen={isOpen} onClose={onClose} size={"full"}>
           <ComposeMessage
             isOpen={isComposeModalOpen}
@@ -359,7 +359,7 @@ const SchoolDetailsModal: FC<SchoolDetailsModalProps> = ({
             </DrawerFooter>
           </DrawerContent>
         </Drawer>
-      ) : (
+      ) : ( */}
         <Modal
           isOpen={isOpen}
           onClose={onClose}
@@ -625,7 +625,7 @@ const SchoolDetailsModal: FC<SchoolDetailsModalProps> = ({
             </ModalFooter>
           </ModalContent>
         </Modal>
-      )}
+      {/* )} */}
     </Box>
   );
 };
