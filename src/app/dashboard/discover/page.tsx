@@ -419,7 +419,7 @@ const Discover: FC<DiscoverProps> = ({}) => {
               borderRadius="1px"
             />
             <TabPanels>
-              <TabPanel px={{ base: "0", md: "1rem" }}>
+              <TabPanel px={0}>
                 <Box>
                   {filteredPosts?.length === 0 ? (
                     <Flex
@@ -458,7 +458,7 @@ const Discover: FC<DiscoverProps> = ({}) => {
                   )}
                 </Box>
               </TabPanel>
-              <TabPanel px={{ base: "0", md: "1rem" }}>
+              <TabPanel px={0}>
                 <Box>
                   {likedPosts.length === 0 ? (
                     <Flex
@@ -484,7 +484,7 @@ const Discover: FC<DiscoverProps> = ({}) => {
                       </Text>
                     </Flex>
                   ) : (
-                    <SimpleGrid columns={[1, null, 2, 3]} spacing="20px">
+                    <SimpleGrid columns={[1, null, 2, 4]} spacing="15px">
                       {likedPosts?.map((item, index) => {
                         return (
                           <PostItem
