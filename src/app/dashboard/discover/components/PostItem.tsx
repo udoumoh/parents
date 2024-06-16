@@ -19,7 +19,6 @@ import { useUserAPI } from "@/hooks/UserContext";
 import { useUserLikesAPI } from "@/hooks/UserLikesContext";
 import { capitalizeFirstLetter } from "@/helpers/capitalizeFirstLetter";
 import { useRouter } from "next/navigation";
-import SchoolDetailsDrawer from "./schoolDetailsDrawer";
 
 interface PostItemProps {
   profile: {
@@ -125,11 +124,6 @@ const PostItem: FC<PostItemProps> = ({ profile, currentIndex }) => {
             onClose={onClose}
             setProfileLikes={setProfileLikes}
           />
-          {/* <SchoolDetailsDrawer
-            isOpen={isSchoolDrawerOpen}
-            onClose={onDrawerClose}
-            setProfileLikes={setProfileLikes}
-          /> */}
           <Box position={"relative"}>
             <Image
               rounded={"md"}
