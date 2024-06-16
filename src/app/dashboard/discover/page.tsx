@@ -401,7 +401,7 @@ const Discover: FC<DiscoverProps> = ({}) => {
         </Box>
       </Box>
 
-      <Box mt={"1.5rem"} px={{ base: "0", md: "1.5rem" }}>
+      <Box mt={"1.5rem"}>
         <Center>
           <Tabs variant={"unstyled"}>
             <TabList>
@@ -444,7 +444,7 @@ const Discover: FC<DiscoverProps> = ({}) => {
                       </Text>
                     </Flex>
                   ) : (
-                    <SimpleGrid columns={[1, null, 2, 3]} spacing="20px">
+                    <SimpleGrid columns={[1, null, 2, 4]} spacing="15px">
                       {filteredPosts?.map((item, index) => {
                         return (
                           <PostItem
