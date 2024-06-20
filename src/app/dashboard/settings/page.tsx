@@ -363,8 +363,8 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                 >
                   <Image
                     src="/images/nochild.svg"
-                    maxH={"200px"}
-                    maxW={"300px"}
+                    maxH={{ base: "100px", md: "200px" }}
+                    maxW={{ base: "150px", md: "300px" }}
                     alt="bg"
                   />
                   <Text mt={"1rem"} fontSize={"lg"}>
@@ -592,7 +592,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                                 color: "#FFFFFF",
                               }}
                               variant={"outline"}
-                              rounded={"lg"}
+                              rounded={"sm"}
                               onClick={() => handleRequestDelete(item?.id)}
                             >
                               Withdraw request
@@ -644,11 +644,11 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
               >
                 <Image
                   src="/images/nofile.svg"
-                  maxH={{base:"100px", md:"200px"}}
-                  maxW={{base:"150px", md:"300px"}}
+                  maxH={{ base: "100px", md: "200px" }}
+                  maxW={{ base: "150px", md: "300px" }}
                   alt="bg"
                 />
-                <Text mt={"1rem"} fontSize={{base:"sm", md:"lg"}}>
+                <Text mt={"1rem"} fontSize={{ base: "sm", md: "lg" }}>
                   No graycase records for this child
                 </Text>
               </Box>
