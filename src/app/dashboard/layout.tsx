@@ -4,6 +4,9 @@ import MainNav from "@/components/navigation/mainNav";
 import { useQuery } from "@apollo/client";
 import { GET_PARENT } from "@/gql/queries";
 import Loading from "../loading";
+import { LOGOUT_PARENTS } from "@/gql/mutations";
+import { useMutation } from "@apollo/client";
+import { useUserAPI } from "@/hooks/UserContext";
 
 interface layoutProps {
   children: ReactNode;
@@ -11,6 +14,23 @@ interface layoutProps {
 
 const Layout: React.FC<layoutProps> = ({ children }) => {
   const { data: parent, loading } = useQuery(GET_PARENT);
+  const { parentData, isTrialOver } = useUserAPI();
+  const [logoutParent] = useMutation(LOGOUT_PARENTS);
+
+  useEffect(() => {
+    if(parentData){
+      if (!parentData?.isPaid && isTrialOver) {
+        const handleLogout = async () => {
+          const response = await logoutParent();
+          if (response.data.logoutParent) {
+            localStorage.removeItem("currentId");
+            window.location.replace("/subscription/choose");
+          }
+        };
+        handleLogout();
+      }
+    }
+  }, [parentData, isTrialOver]);
 
   return loading ? (
     <Loading />
