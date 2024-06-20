@@ -12,12 +12,14 @@ interface ChooseSubscriptionProps {
 const ChooseSubscription: FC<ChooseSubscriptionProps> = ({}) => {
   const toast = useToast()
   const {parentData} = useUserAPI();
-  console.log(parentData)
+  let parentEmail = localStorage.getItem('userEmail')
+  let parentFirstName = localStorage.getItem('userFirstName')
+  let parentLastName = localStorage.getItem('userLastName')
 
   const handleSubmit = async (plan: any) => {
-    const monthlyUrl = `https://paystack.com/pay/gn-parent-monthly/?email=${parentData?.email}&first_name=${parentData?.firstName}&last_name=${parentData?.lastName}&readonly=first_name,last_name,email`;
-    const quaterlyUrl = `https://paystack.com/pay/gn-parent-quarterly/?email=${parentData?.email}&first_name=${parentData?.firstName}&last_name=${parentData?.lastName}&readonly=first_name,last_name,email`;
-    const yearlyUrl = `https://paystack.com/pay/gn-parent-yearly/?email=${parentData?.email}&first_name=${parentData?.firstName}&last_name=${parentData?.lastName}&readonly=first_name,last_name,email`;
+    const monthlyUrl = `https://paystack.com/pay/gn-parent-monthly/?email=${parentEmail}&first_name=${parentFirstName}&last_name=${parentLastName}&readonly=first_name,last_name,email`;
+    const quaterlyUrl = `https://paystack.com/pay/gn-parent-quarterly/?email=${parentEmail}&first_name=${parentFirstName}&last_name=${parentLastName}&readonly=first_name,last_name,email`;
+    const yearlyUrl = `https://paystack.com/pay/gn-parent-yearly/?email=${parentEmail}&first_name=${parentFirstName}&last_name=${parentLastName}&readonly=first_name,last_name,email`;
     if (plan === "monthly") {
       window.location.assign(monthlyUrl);
     } else if (plan === "quaterly") {
