@@ -1,5 +1,5 @@
 'use client'
-import { FC, useState } from "react";
+import { FC, useState, useEffect } from "react";
 import {
   Modal,
   ModalOverlay,
@@ -43,19 +43,34 @@ const EditProfileModal: FC<EditProfileModalProps> = ({
     onClose: onModalClose,
     onOpen: onModalOpen,
   } = useDisclosure();
-  const {parentData} = useUserAPI();
+  const { parentData } = useUserAPI();
   const [updateparent] = useMutation(UPDATE_PARENT);
   const [profileUrl, setProfileUrl] = useState(parentData?.profileImgUrl);
   const [profileData, setProfileData] = useState({
-    email: parentData?.email || "",
-    phoneNumber: parentData?.phoneNumber || "",
-    lastName: parentData?.lastName || "",
-    middleName: parentData?.middleName || "",
-    firstName: parentData?.firstName || "",
+    email: "",
+    phoneNumber: "",
+    lastName: "",
+    middleName: "",
+    firstName: "",
     countryCode: "",
-  })
+  });
   const [folder, setFolder] = useState<string>("");
   const toast = useToast();
+
+  // Effect to update state when parentData is available
+  useEffect(() => {
+    if (parentData) {
+      setProfileData({
+        email: parentData.email || "",
+        phoneNumber: parentData.phoneNumber || "",
+        lastName: parentData.lastName || "",
+        middleName: parentData.middleName || "",
+        firstName: parentData.firstName || "",
+        countryCode: "",
+      });
+      setProfileUrl(parentData.profileImgUrl);
+    }
+  }, [parentData]);
 
   const handleImageUpload = (
     uploadedImageUrl: string,
@@ -66,12 +81,11 @@ const EditProfileModal: FC<EditProfileModalProps> = ({
   };
 
   const handleProfileChange = (field: any, value: any) => {
-    setProfileData(previous => ({
-      ...previous, 
-      [field]: value
-    })
-  )
-  }
+    setProfileData((previous) => ({
+      ...previous,
+      [field]: value,
+    }));
+  };
 
   const handleProfileUpdate = async () => {
     try {
@@ -245,7 +259,7 @@ const EditProfileModal: FC<EditProfileModalProps> = ({
                     <option value="+234">+234</option>
                   </Select>
                 </Box>
-                
+
                 <Box display={"flex"} flexDir={"column"} gap={2} w={"full"}>
                   <Input
                     placeholder={"80 9999 9999"}
