@@ -300,7 +300,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
               _hover={{ color: "green", backgroundColor: "green.100" }}
             >
               <Icon as={GoPencil} boxSize={4} />
-              <Text>Edit Profile Image</Text>
+              <Text>Edit Profile</Text>
             </Button>
             <Button
               onClick={onRemoveStudentModalOpen}

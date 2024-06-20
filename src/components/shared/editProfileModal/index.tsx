@@ -1,3 +1,4 @@
+'use client'
 import { FC, useState } from "react";
 import {
   Modal,
@@ -15,12 +16,16 @@ import {
   useToast,
   Icon,
   Divider,
+  Text,
+  Box,
+  Select,
 } from "@chakra-ui/react";
 import { ImageUpload } from "@/components/imageUpload/ImageUpload";
 import { useMutation } from "@apollo/client";
 import { UPDATE_PARENT } from "@/gql/queries";
 import { FaEdit } from "react-icons/fa";
 import { useUserAPI } from "@/hooks/UserContext";
+import { CiEdit } from "react-icons/ci";
 
 interface EditProfileModalProps {
   isOpen: boolean;
@@ -38,14 +43,16 @@ const EditProfileModal: FC<EditProfileModalProps> = ({
     onClose: onModalClose,
     onOpen: onModalOpen,
   } = useDisclosure();
+  const {parentData} = useUserAPI();
   const [updateparent] = useMutation(UPDATE_PARENT);
-  const [profileUrl, setProfileUrl] = useState("");
+  const [profileUrl, setProfileUrl] = useState(parentData?.profileImgUrl);
   const [profileData, setProfileData] = useState({
-    email: "",
-    phoneNumber: "",
-    lastName: "",
-    middleName: "",
-    firstName: "",
+    email: parentData?.email || "",
+    phoneNumber: parentData?.phoneNumber || "",
+    lastName: parentData?.lastName || "",
+    middleName: parentData?.middleName || "",
+    firstName: parentData?.firstName || "",
+    countryCode: "",
   })
   const [folder, setFolder] = useState<string>("");
   const toast = useToast();
@@ -71,11 +78,11 @@ const EditProfileModal: FC<EditProfileModalProps> = ({
       const response = await updateparent({
         variables: {
           profileImgUrl: profileUrl,
-          email: "",
-          phoneNumber: "",
-          lastName: "",
-          middleName: "",
-          firstName: "",
+          email: profileData.email,
+          phoneNumber: profileData.phoneNumber,
+          lastName: profileData.lastName,
+          middleName: profileData.middleName,
+          firstName: profileData.firstName,
         },
       });
 
@@ -111,48 +118,157 @@ const EditProfileModal: FC<EditProfileModalProps> = ({
     <Modal
       isOpen={isOpen}
       onClose={onClose}
-      size={{ base: "xs", sm: "sm", md: "md", lg:"2xl" }}
+      size={{ base: "xs", sm: "sm", md: "md", lg: "2xl" }}
     >
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader fontSize={'lg'} fontWeight={'bold'}>Edit your profile</ModalHeader>
-        <Divider />
+        <ModalHeader>
+          <Flex alignItems={"center"} gap={3}>
+            <Icon as={CiEdit} boxSize={6} color={"#005D5D"} />
+            <Text fontSize={"md"}>Edit your profile</Text>
+          </Flex>
+        </ModalHeader>
         <ModalCloseButton />
+        <Divider />
         <ModalBody>
-          <Flex justifyContent={"center"} mt={"1rem"}>
-            <Avatar size={"xl"} src={profileUrl} />
-            <Icon
-              as={FaEdit}
-              boxSize={4}
-              color={"#005D5D"}
-              onClick={() => {
-                onModalOpen();
-              }}
-              _hover={{ cursor: "pointer" }}
-            />
+          <Flex gap={4}>
+            <Flex justifyContent={"center"} mt={"1rem"}>
+              <Avatar size={"xl"} src={profileUrl} />
+              <Icon
+                as={FaEdit}
+                boxSize={4}
+                color={"#005D5D"}
+                onClick={() => {
+                  onModalOpen();
+                }}
+                _hover={{ cursor: "pointer" }}
+              />
+
+              <ImageUpload
+                isModalOpen={isModalOpen}
+                onModalClose={onModalClose}
+                type="parentImg"
+                imageFolder={folder}
+                onUpload={handleImageUpload}
+              />
+            </Flex>
           </Flex>
 
-          <Flex justifyContent={"center"} mb={"1.5rem"}>
-            <Button
-              mt={4}
-              fontSize={"md"}
-              backgroundColor={"#007C7B"}
-              color={"#fff"}
-              fontWeight={"400"}
-              onClick={handleProfileUpdate}
-              _hover={{ backgroundColor: "#099C9B" }}
+          <Box>
+            <Flex
+              mt={"1rem"}
+              gap={5}
+              justifyContent={"space-between"}
+              flexDir={{ base: "column", sm: "row" }}
             >
-              Update profile image
-            </Button>
-            <ImageUpload
-              isModalOpen={isModalOpen}
-              onModalClose={onModalClose}
-              type="parentImg"
-              imageFolder={folder}
-              onUpload={handleImageUpload}
-            />
-          </Flex>
+              <Box display={"flex"} flexDir={"column"} gap={2} w={"full"}>
+                <Text fontWeight={"semibold"} fontSize={"sm"}>
+                  First Name
+                </Text>
+                <Input
+                  placeholder={"Enter First Name"}
+                  value={profileData.firstName}
+                  type="text"
+                  focusBorderColor="green.500"
+                  onChange={(e) =>
+                    handleProfileChange("firstName", e.target.value)
+                  }
+                />
+              </Box>
+
+              <Box display={"flex"} flexDir={"column"} gap={2} w={"full"}>
+                <Text fontWeight={"semibold"} fontSize={"sm"}>
+                  Middle Name
+                </Text>
+                <Input
+                  placeholder={"Enter Middle Name"}
+                  value={profileData.middleName}
+                  type="text"
+                  focusBorderColor="green.500"
+                  onChange={(e) =>
+                    handleProfileChange("middleName", e.target.value)
+                  }
+                />
+              </Box>
+            </Flex>
+
+            <Flex
+              mt={"1rem"}
+              gap={5}
+              justifyContent={"space-between"}
+              flexDir={{ base: "column", sm: "row" }}
+            >
+              <Box display={"flex"} flexDir={"column"} gap={2} w={"full"}>
+                <Text fontWeight={"semibold"} fontSize={"sm"}>
+                  Last Name
+                </Text>
+                <Input
+                  placeholder={"Enter Last Name"}
+                  value={profileData.lastName}
+                  type="text"
+                  focusBorderColor="green.500"
+                  onChange={(e) =>
+                    handleProfileChange("lastName", e.target.value)
+                  }
+                />
+              </Box>
+
+              <Box display={"flex"} flexDir={"column"} gap={2} w={"full"}>
+                <Text fontWeight={"semibold"} fontSize={"sm"}>
+                  Email
+                </Text>
+                <Input
+                  placeholder={"Enter Email"}
+                  value={profileData.email}
+                  type="email"
+                  focusBorderColor="green.500"
+                  onChange={(e) => handleProfileChange("email", e.target.value)}
+                />
+              </Box>
+            </Flex>
+
+            <Box mt={"1rem"}>
+              <Text fontWeight={"semibold"} fontSize={"sm"}>
+                Phone Number
+              </Text>
+              <Flex mt={"0.5rem"} gap={5} justifyContent={"space-between"}>
+                <Box>
+                  <Select
+                    placeholder={"country code"}
+                    focusBorderColor="green.500"
+                    value={profileData?.countryCode}
+                    onChange={(e) =>
+                      handleProfileChange("countryCode", e.target.value)
+                    }
+                    w={"90px"}
+                  >
+                    <option value="+234">+234</option>
+                  </Select>
+                </Box>
+                
+                <Box display={"flex"} flexDir={"column"} gap={2} w={"full"}>
+                  <Input
+                    placeholder={"80 9999 9999"}
+                    value={profileData.phoneNumber}
+                    type="number"
+                    focusBorderColor="green.500"
+                    onChange={(e) =>
+                      handleProfileChange("phoneNumber", e.target.value)
+                    }
+                  />
+                </Box>
+              </Flex>
+            </Box>
+          </Box>
         </ModalBody>
+        <ModalFooter>
+          <Button colorScheme="gray" mr={3} onClick={onClose}>
+            Close
+          </Button>
+          <Button colorScheme="teal" onClick={handleProfileUpdate}>
+            Save changes
+          </Button>
+        </ModalFooter>
       </ModalContent>
     </Modal>
   );
