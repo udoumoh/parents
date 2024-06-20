@@ -91,7 +91,6 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
   >();
   const token = process.env.NEXT_PUBLIC_API_TOKEN;
 
-console.log(subscriptionData)
   useEffect(() => {
     const fetchData = async () => {
       try {
