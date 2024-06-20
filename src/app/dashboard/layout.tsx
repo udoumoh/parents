@@ -17,19 +17,19 @@ const Layout: React.FC<layoutProps> = ({ children }) => {
   const { data: parent, loading } = useQuery(GET_PARENT);
   const [logoutParent] = useMutation(LOGOUT_PARENTS);
 
-  // useEffect(() => {
-  //   if(!parentData?.isPaid && isTrialOver){
-  //     const handleLogout = async () => {
-  //       const response = await logoutParent();
-  //       if (response.data.logoutParent) {
-  //         localStorage.removeItem("currentId");
-  //         window.location.replace('/subscription/choose')
-  //       }
-  //     };
+  useEffect(() => {
+    if(!parentData?.isPaid && isTrialOver){
+      const handleLogout = async () => {
+        const response = await logoutParent();
+        if (response.data.logoutParent) {
+          localStorage.removeItem("currentId");
+          window.location.replace('/subscription/choose')
+        }
+      };
 
-  //     handleLogout()
-  //   }
-  // }, [parentData, isTrialOver])
+      handleLogout()
+    }
+  }, [parentData, isTrialOver])
 
   return loading ? (
     <Loading />

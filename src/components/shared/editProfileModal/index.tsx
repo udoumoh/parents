@@ -5,6 +5,7 @@ import {
   ModalContent,
   ModalHeader,
   ModalFooter,
+  Input,
   ModalBody,
   ModalCloseButton,
   Button,
@@ -13,6 +14,7 @@ import {
   Flex,
   useToast,
   Icon,
+  Divider,
 } from "@chakra-ui/react";
 import { ImageUpload } from "@/components/imageUpload/ImageUpload";
 import { useMutation } from "@apollo/client";
@@ -38,6 +40,13 @@ const EditProfileModal: FC<EditProfileModalProps> = ({
   } = useDisclosure();
   const [updateparent] = useMutation(UPDATE_PARENT);
   const [profileUrl, setProfileUrl] = useState("");
+  const [profileData, setProfileData] = useState({
+    email: "",
+    phoneNumber: "",
+    lastName: "",
+    middleName: "",
+    firstName: "",
+  })
   const [folder, setFolder] = useState<string>("");
   const toast = useToast();
 
@@ -48,6 +57,14 @@ const EditProfileModal: FC<EditProfileModalProps> = ({
     setProfileUrl(uploadedImageUrl); // Set the image URL received from the upload component
     setFolder(uploadedFolder); // Set the folder received from the upload component
   };
+
+  const handleProfileChange = (field: any, value: any) => {
+    setProfileData(previous => ({
+      ...previous, 
+      [field]: value
+    })
+  )
+  }
 
   const handleProfileUpdate = async () => {
     try {
@@ -94,11 +111,12 @@ const EditProfileModal: FC<EditProfileModalProps> = ({
     <Modal
       isOpen={isOpen}
       onClose={onClose}
-      size={{ base: "xs", sm: "sm", md: "md" }}
+      size={{ base: "xs", sm: "sm", md: "md", lg:"2xl" }}
     >
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>Update your profile image</ModalHeader>
+        <ModalHeader fontSize={'lg'} fontWeight={'bold'}>Edit your profile</ModalHeader>
+        <Divider />
         <ModalCloseButton />
         <ModalBody>
           <Flex justifyContent={"center"} mt={"1rem"}>

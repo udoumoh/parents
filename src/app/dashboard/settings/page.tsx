@@ -91,7 +91,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
   >();
   const token = process.env.NEXT_PUBLIC_API_TOKEN;
 
-
+console.log(subscriptionData)
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -776,9 +776,9 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                       Can register up to 4 children and will be charged{" "}
                       <span style={{ color: "#005D5D", fontWeight: "bold" }}>
                         ₦
-                        {subscriptionData?.plan?.interval === "monthly"
+                        {subscriptionData?.plan?.interval?.toLowerCase() === "monthly"
                           ? "65"
-                          : subscriptionData?.plan?.interval === "quaterly"
+                          : subscriptionData?.plan?.interval?.toLowerCase() === "quaterly"
                           ? "195"
                           : "500"}
                       </span>{" "}
