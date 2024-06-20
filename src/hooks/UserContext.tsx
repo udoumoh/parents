@@ -272,6 +272,17 @@ export const UserApiProvider: FC<UserApiProviderProps> = ({ children }) => {
     fetchData();
   }, [parent, getinvoice]);
 
+  useEffect(() => {
+    const targetDate = new Date(parentData?.createdAt || "");
+    targetDate.setDate(targetDate.getDate() + 14);
+    const now = new Date();
+    const difference = targetDate.getTime() - now.getTime();
+
+    if (difference <= 0) {
+      setIsTrialOver(true);
+    }
+  }, [parentData])
+
   const setLocalstorageId = (id: any) => {
     localStorage.setItem("currentId", id);
   };
