@@ -18,7 +18,6 @@ const Layout: React.FC<layoutProps> = ({ children }) => {
   const [logoutParent] = useMutation(LOGOUT_PARENTS);
 
   useEffect(() => {
-    if(parentData){
       if (!parentData?.isPaid && isTrialOver) {
         const handleLogout = async () => {
           const response = await logoutParent();
@@ -29,7 +28,6 @@ const Layout: React.FC<layoutProps> = ({ children }) => {
         };
         handleLogout();
       }
-    }
   }, [parentData, isTrialOver]);
 
   return loading ? (
