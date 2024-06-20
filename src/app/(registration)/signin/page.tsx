@@ -75,6 +75,10 @@ const Signin: FC<pageProps> = ({}) => {
         return;
       }
 
+      localStorage.setItem("userEmail", response?.data?.email);
+      localStorage.setItem("userFirstName", response?.data?.firstName);
+      localStorage.setItem("userLastName", response?.data?.lastName);
+      
       toast({
         title: "Login successful",
         description: "You are being redirected to your dashboard",
