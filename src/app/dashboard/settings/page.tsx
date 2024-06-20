@@ -778,7 +778,7 @@ console.log(subscriptionData)
                         ₦
                         {subscriptionData?.plan?.interval?.toLowerCase() === "monthly"
                           ? "65"
-                          : subscriptionData?.plan?.interval?.toLowerCase() === "quaterly"
+                          : subscriptionData?.plan?.interval?.toLowerCase() === "quarterly"
                           ? "195"
                           : "500"}
                       </span>{" "}
