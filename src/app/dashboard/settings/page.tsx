@@ -367,7 +367,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                     maxW={{ base: "150px", md: "300px" }}
                     alt="bg"
                   />
-                  <Text mt={"1rem"} fontSize={"lg"}>
+                  <Text mt={"1rem"} fontSize={{ base: "sm", md: "lg" }}>
                     No child has been linked to your account
                   </Text>
                 </Box>
@@ -475,11 +475,11 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                   >
                     <Image
                       src="/images/norequests.svg"
-                      maxH={"200px"}
-                      maxW={"300px"}
+                      maxH={{ base: "100px", md: "200px" }}
+                      maxW={{ base: "150px", md: "300px" }}
                       alt="bg"
                     />
-                    <Text mt={"1rem"} fontSize={"lg"}>
+                    <Text mt={"1rem"} fontSize={{ base: "sm", md: "lg" }}>
                       There are no active requests
                     </Text>
                   </Box>
@@ -576,6 +576,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                               </Button>
                             </Flex>
                             <Text
+                              mt={{base:"0.4rem", md:"0"}}
                               fontSize={{ base: "xs", lg: "sm" }}
                               color={"gray.500"}
                               fontWeight={"600"}
@@ -591,7 +592,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                                 backgroundColor: "red.600",
                                 color: "#FFFFFF",
                               }}
-                              variant={"outline"}
+                              // variant={"outline"}
                               rounded={"sm"}
                               onClick={() => handleRequestDelete(item?.id)}
                             >
