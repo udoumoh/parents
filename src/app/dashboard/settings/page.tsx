@@ -586,14 +586,14 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                           </Box>
                           <Flex mt={"1rem"} gap={3}>
                             <Button
-                              size={{ base: "xs", md: "md" }}
+                              size={{ base: "xs", md: "sm" }}
                               colorScheme="red"
                               _hover={{
                                 backgroundColor: "red.600",
                                 color: "#FFFFFF",
                               }}
                               // variant={"outline"}
-                              rounded={"sm"}
+                              rounded={{base:"sm", md:"md"}}
                               onClick={() => handleRequestDelete(item?.id)}
                             >
                               Withdraw request
