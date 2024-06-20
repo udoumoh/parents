@@ -1,13 +1,21 @@
 "use client";
 import "./globals.css";
-import { FC, useState } from "react";
-import UserApiProvider from "@/hooks/UserContext";
+import { FC, useEffect } from "react";
+import UserApiProvider, { useUserAPI } from "@/hooks/UserContext";
 import { Mulish } from "next/font/google";
 import { Providers } from "./providers";
-import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
+import {
+  ApolloClient,
+  InMemoryCache,
+  ApolloProvider,
+  useQuery,
+  useMutation,
+} from "@apollo/client";
 import "./globals.css";
 import UserLikesAPIProvider from "@/hooks/UserLikesContext";
 import Loading from "./loading";
+import { GET_PARENT } from "@/gql/queries";
+import { LOGOUT_PARENTS } from "@/gql/mutations";
 
 const mulish = Mulish({ subsets: ["cyrillic"] });
 
@@ -22,6 +30,23 @@ const client = new ApolloClient({
 });
 
 const Layout: FC<LayoutProps> = ({ children }) => {
+  const { parentData, isTrialOver } = useUserAPI();
+  const { data: parent, loading } = useQuery(GET_PARENT);
+  const [logoutParent] = useMutation(LOGOUT_PARENTS);
+
+  useEffect(() => {
+    if (!parentData?.isPaid && isTrialOver) {
+      const handleLogout = async () => {
+        const response = await logoutParent();
+        if (response.data.logoutParent) {
+          localStorage.removeItem("currentId");
+          window.location.replace("/subscription/choose");
+        }
+      };
+      handleLogout();
+    }
+  }, [parentData, isTrialOver, logoutParent]);
+
   return (
     <html lang="en">
       <head>
