@@ -490,11 +490,11 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                         rounded={"md"}
                         p={"1rem"}
                         w={"full"}
-                        _hover={{
-                          backgroundColor: "#005D5D30",
-                          transitionDuration: "0.5s",
-                          cursor: "pointer",
-                        }}
+                        // _hover={{
+                        //   backgroundColor: "#005D5D30",
+                        //   transitionDuration: "0.5s",
+                        //   cursor: "pointer",
+                        // }}
                       >
                         <Avatar
                           size={"lg"}
