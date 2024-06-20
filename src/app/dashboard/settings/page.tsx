@@ -644,11 +644,11 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
               >
                 <Image
                   src="/images/nofile.svg"
-                  maxH={"200px"}
-                  maxW={"300px"}
+                  maxH={{base:"100px", md:"200px"}}
+                  maxW={{base:"150px", md:"300px"}}
                   alt="bg"
                 />
-                <Text mt={"1rem"} fontSize={"lg"}>
+                <Text mt={"1rem"} fontSize={{base:"sm", md:"lg"}}>
                   No graycase records for this child
                 </Text>
               </Box>
@@ -755,7 +755,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
           </Flex>
 
           <Box display={parentData?.isPaid ? "block" : "none"}>
-            <Flex flexDir={"column"} gap={4} px={{ base: "1rem", md: "5rem" }}>
+            <Flex flexDir={"column"} gap={4}>
               <Box w={"full"}>
                 <Text fontSize={"lg"} fontWeight={"500"} mb={"1rem"}>
                   Plan Details
@@ -775,12 +775,16 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                   <Box px={5} mt={"0.5rem"}>
                     <Text
                       fontWeight={"bold"}
-                      fontSize={"xl"}
+                      fontSize={{ base: "md", md: "xl" }}
                       textTransform={"capitalize"}
                     >
                       {subscriptionData?.plan?.interval} Plan
                     </Text>
-                    <Text color={"#00000080"} fontWeight={"500"}>
+                    <Text
+                      color={"#00000080"}
+                      fontWeight={"500"}
+                      fontSize={{ base: "sm", md: "lg" }}
+                    >
                       Can register up to 4 children and will be charged{" "}
                       <span style={{ color: "#005D5D", fontWeight: "bold" }}>
                         ₦
@@ -815,7 +819,9 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                       onClick={onSelectPlanModalOpen}
                       _hover={{ backgroundColor: "#EBF6F3" }}
                     >
-                      <Text>Change plan</Text>
+                      <Text fontSize={{ base: "sm", md: "lg" }}>
+                        Change plan
+                      </Text>
                     </Button>
                   </Box>
                 </Box>
@@ -844,7 +850,10 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                     flexDir={"column"}
                     gap={1}
                   >
-                    <Text fontWeight={"bold"} fontSize={"xl"}>
+                    <Text
+                      fontWeight={"bold"}
+                      fontSize={{ base: "md", md: "xl" }}
+                    >
                       Next Payment
                     </Text>
                     <Text color={"#00000080"} fontWeight={"bold"}>
@@ -878,7 +887,6 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                 colorScheme="red"
                 variant={"outline"}
                 mt={"2rem"}
-                mx={{ base: "1rem", md: "0rem" }}
                 maxW={"200px"}
               >
                 Cancel Membership

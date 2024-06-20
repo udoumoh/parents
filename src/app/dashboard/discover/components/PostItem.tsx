@@ -17,8 +17,8 @@ import { IoCopy } from "react-icons/io5";
 import SchoolDetailsModal from "./SchoolDetailsModal";
 import { useUserAPI } from "@/hooks/UserContext";
 import { useUserLikesAPI } from "@/hooks/UserLikesContext";
-import { capitalizeFirstLetter } from "@/helpers/capitalizeFirstLetter";
 import { useRouter } from "next/navigation";
+import { capitalizeFirstLetterOfEachWord } from "@/helpers/capitalizeFirstLetter";
 
 interface PostItemProps {
   profile: {
@@ -156,7 +156,7 @@ const PostItem: FC<PostItemProps> = ({ profile, currentIndex }) => {
               />
               <Flex flexDir={"column"} justifyContent={"space-between"}>
                 <Text fontWeight={"bold"} fontSize={{ base: "xs", md: "sm" }}>
-                  {capitalizeFirstLetter(profile?.schoolName.toLowerCase())}
+                  {capitalizeFirstLetterOfEachWord(profile?.schoolName.toLowerCase())}
                 </Text>
                 <Flex alignItems={"center"} gap={2}>
                   <Text fontSize={{ base: "xs", md: "sm" }}>
