@@ -273,7 +273,7 @@ export const UserApiProvider: FC<UserApiProviderProps> = ({ children }) => {
   }, [parent, getinvoice]);
 
   useEffect(() => {
-    const targetDate = new Date(parentData?.createdAt || "");
+    const targetDate = new Date(Number(parentData?.createdAt));
     targetDate.setDate(targetDate.getDate() + 14);
     const now = new Date();
     const difference = targetDate.getTime() - now.getTime();
