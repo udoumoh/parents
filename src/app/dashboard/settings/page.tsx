@@ -273,7 +273,9 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                   fontWeight={"bold"}
                   color={"#FCF4D9"}
                 >
-                  {`${profileData?.userBio?.firstName} ${profileData?.userBio?.middleName || ""} ${profileData?.userBio?.lastName}`}{" "}
+                  {`${profileData?.userBio?.firstName} ${
+                    profileData?.userBio?.middleName || ""
+                  } ${profileData?.userBio?.lastName}`}{" "}
                 </Text>
                 <Icon as={RiVerifiedBadgeFill} boxSize={"4"} color={"orange"} />
               </Flex>
@@ -406,7 +408,8 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                             fontSize={"lg"}
                             pointerEvents={"none"}
                           >
-                            {item?.firstName} {item?.middleName || ""} {item?.lastName}
+                            {item?.firstName} {item?.middleName || ""}{" "}
+                            {item?.lastName}
                           </Text>
                           <Text
                             fontSize={"sm"}
@@ -521,7 +524,9 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                                 fontSize={"lg"}
                                 pointerEvents={"none"}
                               >
-                                {item?.studentFirstName} {item?.studentMiddleName || ""} {item?.studentLastName}
+                                {item?.studentFirstName}{" "}
+                                {item?.studentMiddleName || ""}{" "}
+                                {item?.studentLastName}
                               </Text>
                               <Badge
                                 display={{ base: "block", md: "none" }}
@@ -672,7 +677,8 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                           }}
                         >
                           <Td>
-                            {graycase?.firstName} {graycase?.middleName || ""} {graycase?.lastName}
+                            {graycase?.firstName} {graycase?.middleName || ""}{" "}
+                            {graycase?.lastName}
                           </Td>
                           <Td>{graycase?.category}</Td>
                           <Td>
@@ -767,17 +773,22 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                   ></Box>
 
                   <Box px={5} mt={"0.5rem"}>
-                    <Text fontWeight={"bold"} fontSize={"xl"} textTransform={'capitalize'}>
-                      {subscriptionData?.plan?.interval}{" "}
-                      Plan
+                    <Text
+                      fontWeight={"bold"}
+                      fontSize={"xl"}
+                      textTransform={"capitalize"}
+                    >
+                      {subscriptionData?.plan?.interval} Plan
                     </Text>
                     <Text color={"#00000080"} fontWeight={"500"}>
                       Can register up to 4 children and will be charged{" "}
                       <span style={{ color: "#005D5D", fontWeight: "bold" }}>
                         ₦
-                        {subscriptionData?.plan?.interval?.toLowerCase() === "monthly"
+                        {subscriptionData?.plan?.interval?.toLowerCase() ===
+                        "monthly"
                           ? "65"
-                          : subscriptionData?.plan?.interval?.toLowerCase() === "quarterly"
+                          : subscriptionData?.plan?.interval?.toLowerCase() ===
+                            "quarterly"
                           ? "195"
                           : "500"}
                       </span>{" "}
@@ -846,8 +857,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                           subscriptionData?.authorization?.brand ===
                           "mastercard"
                             ? "/images/mastercard.svg"
-                            : subscriptionData?.authorization?.brand ===
-                              "visa"
+                            : subscriptionData?.authorization?.brand === "visa"
                             ? "/images/visa.svg"
                             : "/images/verve.svg"
                         }
@@ -864,15 +874,16 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                   </Box>
                 </Box>
               </Box>
+              <Button
+                colorScheme="red"
+                variant={"outline"}
+                mt={"2rem"}
+                mx={{ base: "1rem", md: "0rem" }}
+                maxW={"200px"}
+              >
+                Cancel Membership
+              </Button>
             </Flex>
-            <Button
-              colorScheme="red"
-              variant={"outline"}
-              mt={"2rem"}
-              mx={{ base: "1rem", md: "10rem" }}
-            >
-              Cancel Membership
-            </Button>
           </Box>
         </Flex>
       </Box>
