@@ -411,7 +411,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
         </Text>
       </Button>
 
-      {/* <Flex
+      <Flex
         px={"1rem"}
         py={"0.3rem"}
         backgroundColor={"#D71313"}
@@ -422,7 +422,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
         <Text color="#FFFFFF" fontSize={{ base: "xs", md: "sm" }}>
           You are currently on the 14-day Trial Plan
         </Text>
-      </Flex> */}
+      </Flex>
 
       <Flex
         px={"1rem"}
@@ -481,9 +481,9 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
                           backgroundColor: "#005D5D10",
                           cursor: "pointer",
                         }}
-                        onClick={() =>
-                          window.location.assign("/dashboard/inbox")
-                        }
+                        // onClick={() =>
+                        //   window.location.assign("/dashboard/inbox")
+                        // }
                       >
                         <Flex justifyContent={"space-between"} mb={"0.2rem"}>
                           <Text
