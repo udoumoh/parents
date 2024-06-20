@@ -12,6 +12,7 @@ interface ChooseSubscriptionProps {
 const ChooseSubscription: FC<ChooseSubscriptionProps> = ({}) => {
   const toast = useToast()
   const {parentData} = useUserAPI();
+  console.log(parentData)
 
   const handleSubmit = async (plan: any) => {
     const monthlyUrl = `https://paystack.com/pay/gn-parent-monthly/?email=${parentData?.email}&first_name=${parentData?.firstName}&last_name=${parentData?.lastName}&readonly=first_name,last_name,email`;
