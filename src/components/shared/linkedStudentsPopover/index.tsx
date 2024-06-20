@@ -62,7 +62,7 @@ const LinkedStudentsPopover: FC<LinkedStudentsPopoverProps> = ({onClose, isPopov
               />
               <Box lineHeight={"20px"}>
                 <Text fontWeight={"600"} fontSize={"sm"}>
-                  {`${currentWardProfile?.firstName || ""} ${
+                  {`${currentWardProfile?.firstName || ""} ${currentWardProfile?.middleName || ""} ${
                     currentWardProfile?.lastName || ""
                   }`}
                 </Text>
@@ -105,7 +105,7 @@ const LinkedStudentsPopover: FC<LinkedStudentsPopoverProps> = ({onClose, isPopov
                   />
                   <Box lineHeight={"20px"}>
                     <Text fontWeight={"600"} fontSize={"sm"}>
-                      {`${ward?.firstName} ${ward.lastName}`}
+                      {`${ward?.firstName} ${ward?.middleName} ${ward.lastName}`}
                     </Text>
                     <Text
                       fontSize={"12px"}

@@ -520,8 +520,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
                 fontSize={"sm"}
                 display={{ base: "none", md: "block" }}
               >
-                Hi, {profileData.userBio.firstName}{" "}
-                {profileData.userBio.lastName}
+                Hi, {profileData.userBio.firstName + " " + profileData.userBio.middleName + " " + profileData.userBio.lastName}
               </Text>
               <Avatar
                 src={profileData.userBio.profileImage}
@@ -678,7 +677,7 @@ const MainNav: FC<MainNav> = ({ children }) => {
                       flexDir={"column"}
                     >
                       <Text fontWeight={"semibold"} fontSize={"md"}>
-                        {`${currentWardProfile?.firstName} ${currentWardProfile?.lastName}`}
+                        {`${currentWardProfile?.firstName} ${currentWardProfile?.middleName || ""} ${currentWardProfile?.lastName}`}
                       </Text>
                       <Text fontSize={"sm"} color={"#B8E7E7"}>
                         {currentWardProfile?.greynoteNumber}
@@ -713,7 +712,7 @@ const MainNav: FC<MainNav> = ({ children }) => {
                               size={"md"}
                               src={ward.profileImage}
                               pointerEvents={"none"}
-                              name={`${ward.firstName} ${ward.lastName}`}
+                              name={`${ward.firstName} ${ward?.middleName} ${ward.lastName}`}
                             >
                               <AvatarBadge
                                 display={
@@ -725,7 +724,7 @@ const MainNav: FC<MainNav> = ({ children }) => {
                             </Avatar>
                             <Box>
                               <Text fontWeight={"bold"} fontSize={"md"}>
-                                {`${ward.firstName} ${ward.lastName}`}
+                                {`${ward.firstName} ${ward?.middleName} ${ward.lastName}`}
                               </Text>
                               <Text fontSize={"sm"} color={"#AAAAAA"}>
                                 {ward.greynoteNumber}
@@ -861,7 +860,7 @@ const MainNav: FC<MainNav> = ({ children }) => {
                           color={"gray.800"}
                           fontWeight={"semibold"}
                           fontSize={"md"}
-                        >{`${profileData.userBio.firstName} ${profileData.userBio.lastName}`}</Text>
+                        >{`${profileData.userBio.firstName} ${profileData?.userBio?.middleName || ""} ${profileData.userBio.lastName}`}</Text>
                         <Text color={"#AAAAAA"} fontSize={"sm"}>
                           {profileData.userBio.email}
                         </Text>
@@ -900,7 +899,7 @@ const MainNav: FC<MainNav> = ({ children }) => {
                         textTransform={"capitalize"}
                         fontSize={{ base: "lg", lg: "2xl" }}
                         fontWeight={"bold"}
-                      >{`${profileData?.userBio?.firstName} ${profileData?.userBio?.lastName}`}</Text>
+                      >{`${profileData?.userBio?.firstName} ${profileData?.userBio?.middleName || ""} ${profileData?.userBio?.lastName}`}</Text>
                       <Image
                         src="/images/verifiedtag.png"
                         alt="badge"
@@ -924,7 +923,7 @@ const MainNav: FC<MainNav> = ({ children }) => {
                     color="#747474"
                     onClick={() =>
                       (window.location.href = `mailto:admin@greynote.app?subject=Parent app (${encodeURIComponent(
-                        `${profileData?.userBio?.firstName} ${profileData.userBio?.lastName}`
+                        `${profileData?.userBio?.firstName} ${profileData?.userBio?.middleName || ""} ${profileData.userBio?.lastName}`
                       )}): Support`)
                     }
                   >

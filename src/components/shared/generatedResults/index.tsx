@@ -36,6 +36,7 @@ interface GeneratedResultsProps {
     authorsLastName: string;
     authorsMiddleName: string;
     studentsFirstName: string;
+    studentsMiddleName: string;
     studentsLastName: string;
     academicTerm: string;
     resultType: string;
@@ -194,15 +195,20 @@ const GeneratedResults: React.FC<GeneratedResultsProps> = ({
   ];
 
   const author = `${result?.teachersFirstName} ${
-    result?.teachersMiddleName?.length! > 1 ? result?.teachersLastName : ""
-  } ${result?.authorsLastName}`;
+    result?.teachersMiddleName?.length! > 1 ? result?.teachersMiddleName : ""
+  } ${result?.teachersLastName}`;
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} isCentered size="3xl">
       <ModalOverlay />
       <ModalContent h="90vh">
         <ModalHeader>
-          Viewing {result?.studentsFirstName} {result?.studentsLastName}{" "}
+          Viewing{" "}
+          {result?.studentsFirstName +
+            " " +
+            result?.studentsMiddleName +
+            " " +
+            result?.studentsLastName}
           Academic Result
         </ModalHeader>
         <ModalCloseButton />
@@ -214,7 +220,7 @@ const GeneratedResults: React.FC<GeneratedResultsProps> = ({
               style={{ borderRadius: "10px" }}
             >
               <Document
-                title={`${result?.studentsFirstName} ${result?.studentsLastName} ${result?.academicTerm}(${result?.resultType})`}
+                title={`${result?.studentsFirstName} ${result?.studentsMiddleName} ${result?.studentsLastName} ${result?.academicTerm}(${result?.resultType})`}
                 author={result?.creator}
                 style={styles.document}
                 subject={`${result?.academicTerm} ${result?.resultType} Result`}
@@ -300,8 +306,7 @@ const GeneratedResults: React.FC<GeneratedResultsProps> = ({
                                   fontSize: "12px",
                                 }}
                               >
-                                {result?.studentsFirstName}{" "}
-                                {result?.studentsLastName}
+                                {result?.studentsFirstName + " " + result?.studentsMiddleName + " " + result?.studentsLastName}
                               </Text>
                             </View>
                             <View

@@ -44,7 +44,7 @@ const GraycaseModal: FC<GraycaseModalProps> = ({isOpen, onClose, graycase}) => {
             <Avatar size={"lg"} src={graycase?.profileImage} />
             <Box>
               <Text fontSize={"lg"} fontWeight={"bold"}>
-                {graycase?.firstName} {graycase?.lastName}
+                {graycase?.firstName + " " + graycase?.middleName + " " + graycase?.lastName}
               </Text>
               <Text fontSize={"xs"}>
                 {graycase?.age} Years Old | {graycase?.gender} |{" "}

@@ -48,6 +48,7 @@ interface GeneratedResultProps {
   authorsLastName: string;
   authorsMiddleName: string;
   studentsFirstName: string;
+  studentsMiddleName: string;
   studentsLastName: string;
   academicTerm: string;
   resultType: string;
@@ -152,6 +153,7 @@ const Results: FC<ResultsProps> = ({}) => {
               authorsLastName: result?.student?.creator?.admin?.lastName,
               authorsMiddleName: result?.student?.creator?.admin?.middleName,
               studentsFirstName: result?.student?.firstName,
+              studentsMiddleName: result?.student?.middleName,
               studentsLastName: result?.student?.lastName,
               academicTerm: result?.academicTerm,
               resultType: result?.resultType,
@@ -202,6 +204,8 @@ const Results: FC<ResultsProps> = ({}) => {
               status: item?.isOfficial,
               teachersFirstName:
                 item?.student?.classroom?.classroom?.teacher[0]?.firstName,
+                teachersMiddleName:
+                  item?.student?.classroom?.classroom?.teacher[0]?.middleName,
               teachersLastName:
                 item?.student?.classroom?.classroom?.teacher[0]?.lastName,
               authorsProfileImgUrl:
@@ -210,8 +214,6 @@ const Results: FC<ResultsProps> = ({}) => {
               authorsLastName: "",
               shareDate: formatDate(item?.createdAt),
               documentPath: item?.document,
-              teachersMiddleName:
-                item?.student?.classroom?.classroom?.teacher[0]?.middleName,
             })
           );
           setUploadedResults(parsedResultsData);
@@ -393,7 +395,7 @@ const Results: FC<ResultsProps> = ({}) => {
                       <Flex gap={2} alignItems={"center"}>
                         <Avatar size={"xs"} src={data?.authorsProfileImgUrl} />
                         <Text fontSize={"md"} fontWeight={"400"}>
-                          {data?.authorsFirstName} {data?.authorsLastName}
+                          {data?.authorsFirstName} {data?.authorsMiddleName} {data?.authorsLastName}
                         </Text>
                       </Flex>
                     </Td>

@@ -20,6 +20,7 @@ interface pageProps {}
 
 interface RequestDataProps {
   studentFirstName: string;
+  studentMiddleName: string;
   studentLastName: string;
   studentProfileImgUrl: string;
   message: string;
@@ -52,6 +53,7 @@ const Page: FC<pageProps> = ({}) => {
         } else {
           const newData = response?.parentRequests.map((item: any) => ({
             studentFirstName: item?.student?.firstName,
+            studentMiddleName: item?.student?.middleName,
             studentLastName: item?.student?.lastName,
             studentProfileImgUrl: item?.student?.profileImgUrl,
             message: item?.message,

@@ -70,9 +70,11 @@ const Layout: FC<LayoutProps> = ({ children }) => {
         <ModalContent>
           <ModalHeader>
             Hello{", "}
-            {`${capitalizeFirstLetter(parentData?.firstName || "")} ${
-              parentData?.lastName
-            }`}
+            {`${capitalizeFirstLetter(
+              parentData?.firstName || ""
+            )} ${capitalizeFirstLetter(
+              parentData?.middleName || ""
+            )} ${capitalizeFirstLetter(parentData?.lastName || "")}`}
             🙃
           </ModalHeader>
           <ModalBody>
@@ -109,7 +111,7 @@ const Layout: FC<LayoutProps> = ({ children }) => {
                   />
                   <Box lineHeight={"20px"}>
                     <Text fontWeight={"600"} fontSize={"sm"}>
-                      {`${ward.firstName} ${ward.lastName}`}
+                      {`${ward.firstName} ${ward.middleName || ""} ${ward.lastName}`}
                     </Text>
                     <Text
                       fontSize={"12px"}

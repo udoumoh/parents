@@ -189,7 +189,7 @@ const RemoveStudentModal: FC<RemoveStudentModalProps> = ({
                           <Avatar src={child.profileImage} size={"md"} />
                           <Box>
                             <Text fontWeight={"600"} fontSize={"sm"}>
-                              {`${child.firstName} ${child.lastName}`}
+                              {`${child.firstName + " " + child?.middleName + " " + child?.lastName}`}
                             </Text>
                             <Text
                               fontSize={"12px"}
@@ -205,13 +205,11 @@ const RemoveStudentModal: FC<RemoveStudentModalProps> = ({
                     <AccordionPanel>
                       {child.isVisible ? (
                         <Text>
-                          Are you sure you want to delete {child.firstName}{" "}
-                          {child.lastName} data from greynote?
+                          Are you sure you want to delete {child.firstName + " " + child?.middleName + " " + child.lastName}{" "} data from greynote?
                         </Text>
                       ) : (
                         <Text>
-                          Are you sure you want to recover {child.firstName}{" "}
-                          {child.lastName}
+                          Are you sure you want to recover {child.firstName + " " + child?.middleName + " " + child?.lastName}
                         </Text>
                       )}
                       <Flex alignItems={"end"} mt={"1rem"}>

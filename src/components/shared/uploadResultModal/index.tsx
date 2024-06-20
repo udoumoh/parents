@@ -229,7 +229,7 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
                 fontWeight={"500"}
                 mt={"0.5rem"}
               >
-                {currentWardProfile?.firstName} {currentWardProfile?.lastName}
+                {currentWardProfile?.firstName} {currentWardProfile?.middleName} {currentWardProfile?.lastName}
               </Text>
               <Text color={"#747474"} fontSize={{ base: "xs", md: "md" }}>
                 {currentWardProfile?.firstName} • {currentWardProfile?.class} •{" "}

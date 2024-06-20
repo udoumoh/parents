@@ -46,6 +46,7 @@ interface SettingsPageProps {}
 
 interface RequestDataProps {
   studentFirstName: string;
+  studentMiddleName: string;
   studentLastName: string;
   studentProfileImgUrl: string;
   message: string;
@@ -176,6 +177,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
         } else {
           const newData = response?.parentRequests?.map((item: any) => ({
             studentFirstName: item?.student?.firstName,
+            studentMiddleName: item?.student?.middleName,
             studentLastName: item?.student?.lastName,
             studentProfileImgUrl: item?.student?.profileImgUrl,
             message: item?.message,
@@ -272,7 +274,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                   fontWeight={"bold"}
                   color={"#FCF4D9"}
                 >
-                  {`${profileData?.userBio?.firstName} ${profileData?.userBio?.lastName}`}{" "}
+                  {`${profileData?.userBio?.firstName} ${profileData?.userBio?.middleName || ""} ${profileData?.userBio?.lastName}`}{" "}
                 </Text>
                 <Icon as={RiVerifiedBadgeFill} boxSize={"4"} color={"orange"} />
               </Flex>
@@ -405,7 +407,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                             fontSize={"lg"}
                             pointerEvents={"none"}
                           >
-                            {item?.firstName} {item?.lastName}
+                            {item?.firstName} {item?.middleName || ""} {item?.lastName}
                           </Text>
                           <Text
                             fontSize={"sm"}
@@ -520,7 +522,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                                 fontSize={"lg"}
                                 pointerEvents={"none"}
                               >
-                                {item?.studentFirstName} {item?.studentLastName}
+                                {item?.studentFirstName} {item?.studentMiddleName || ""} {item?.studentLastName}
                               </Text>
                               <Badge
                                 display={{ base: "block", md: "none" }}
@@ -671,7 +673,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                           }}
                         >
                           <Td>
-                            {graycase?.firstName} {graycase?.lastName}
+                            {graycase?.firstName} {graycase?.middleName || ""} {graycase?.lastName}
                           </Td>
                           <Td>{graycase?.category}</Td>
                           <Td>

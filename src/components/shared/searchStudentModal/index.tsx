@@ -70,7 +70,7 @@ const SearchStudentModal: FC<SearchStudentModalProps> = ({isSearchOpen, onSearch
       try {
         const response = await search?.getStudent || [];
         const data = response.map((student: any) => ({
-          name: student?.firstName + " " + student.lastName,
+          name: student?.firstName + " " + student?.middleName + " " + student.lastName,
           age: student?.ageInput,
           className: student?.classroom?.classroom?.className || "",
           gender: student?.gender,

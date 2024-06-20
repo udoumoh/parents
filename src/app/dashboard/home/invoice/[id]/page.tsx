@@ -103,19 +103,24 @@ const Invoice: FC<InvoiceProps> = ({ params }: { params: { id: number } }) => {
         >
           <Avatar
             src={currentWardProfile?.profileImage}
-            name={`${currentWardProfile?.firstName} ${currentWardProfile?.lastName}`}
+            name={`${currentWardProfile?.firstName} ${currentWardProfile?.middleName || ""} ${currentWardProfile?.lastName}`}
             size={"xl"}
             border={"2px solid #005D5D"}
             p={"0.2rem"}
             mb={"0.5rem"}
           />
           <Text fontSize={"lg"}>
-            {`${currentWardProfile?.firstName} ${currentWardProfile?.middleName} ${currentWardProfile?.lastName}`}
+            {`${currentWardProfile?.firstName} ${currentWardProfile?.middleName || ""} ${currentWardProfile?.lastName}`}
           </Text>
           <Text fontSize={"sm"} color={"#00000090"}>
             {currentWardProfile?.gender} • {currentWardProfile?.age} Years Old
           </Text>
-          <Flex gap={{base:"2", md:"5"}} alignItems={"center"} justifyContent={"center"} flexDir={{base:"column", md:"row"}}>
+          <Flex
+            gap={{ base: "2", md: "5" }}
+            alignItems={"center"}
+            justifyContent={"center"}
+            flexDir={{ base: "column", md: "row" }}
+          >
             <Button
               size={"sm"}
               colorScheme="gray"
@@ -415,7 +420,8 @@ const Invoice: FC<InvoiceProps> = ({ params }: { params: { id: number } }) => {
                         color={"#000000"}
                       >
                         ₦
-                        {(currentInvoice?.status === "active" || currentInvoice?.status === "processing")
+                        {currentInvoice?.status === "active" ||
+                        currentInvoice?.status === "processing"
                           ? formatNumberWithCommas(currentInvoice?.amountPaid)
                           : formatNumberWithCommas(
                               currentInvoice?.amountPaid +
@@ -465,7 +471,11 @@ const Invoice: FC<InvoiceProps> = ({ params }: { params: { id: number } }) => {
                   Summary
                 </Text>
                 <Box
-                  display={(currentInvoice?.summary ?? '')?.length > 0 ? 'block' : 'none'}
+                  display={
+                    (currentInvoice?.summary ?? "")?.length > 0
+                      ? "block"
+                      : "none"
+                  }
                   border={"1px solid #005D5D"}
                   backgroundColor={"#005D5D30"}
                   p={2}

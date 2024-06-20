@@ -10,6 +10,7 @@ import { formatDate } from "@/helpers/formatDate";
 interface UserBio {
   firstName: string;
   lastName: string;
+  middleName: string;
   profileImage: string;
   email: string;
   parentRole: string;
@@ -133,6 +134,7 @@ export const UserApiProvider: FC<UserApiProviderProps> = ({ children }) => {
     userBio: {
       firstName: "",
       lastName: "",
+      middleName: "",
       profileImage: "",
       email: "",
       parentRole: "",
@@ -200,6 +202,9 @@ export const UserApiProvider: FC<UserApiProviderProps> = ({ children }) => {
           ),
           lastName: capitalizeFirstLetter(
             response?.parent?.parent?.lastName || ""
+          ),
+          middleName: capitalizeFirstLetter(
+            response?.parent?.parent?.middleName || ""
           ),
           profileImage: response?.parent?.parent?.profileImgUrl || "",
           email: response?.parent?.parent?.email || "",

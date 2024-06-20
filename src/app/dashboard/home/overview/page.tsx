@@ -35,12 +35,13 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
   const totalBalance = invoiceData
     ?.filter((invoice) => invoice.status === "partial payment")
     ?.reduce((acc, invoice) => acc + invoice?.balance, 0);
-  const totalOwingAmount = invoiceData
-    ?.filter(
-      (invoice) =>
-        invoice.status === "active" || invoice.status === "processing"
-    )
-    .reduce((acc, invoice) => acc + invoice?.amountPaid, 0) + totalBalance
+  const totalOwingAmount =
+    invoiceData
+      ?.filter(
+        (invoice) =>
+          invoice.status === "active" || invoice.status === "processing"
+      )
+      .reduce((acc, invoice) => acc + invoice?.amountPaid, 0) + totalBalance;
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -76,13 +77,16 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
                 size={"lg"}
                 src={currentWardProfile?.profileImage}
                 pointerEvents={"none"}
-                name={`${currentWardProfile?.firstName} ${currentWardProfile?.lastName}`}
+                name={`${currentWardProfile?.firstName} ${
+                  currentWardProfile?.middleName || ""
+                } ${currentWardProfile?.lastName}`}
               />
               <Box lineHeight={"30px"}>
                 <Text fontWeight={"600"} fontSize={{ base: "lg", lg: "2xl" }}>
                   {`${currentWardProfile?.firstName || ""} ${
-                    currentWardProfile?.lastName || ""
-                  }`}
+                    currentWardProfile?.middleName || ""
+                  }
+                   ${currentWardProfile?.lastName || ""}`}
                 </Text>
               </Box>
             </Box>
@@ -262,18 +266,18 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
                     <PopoverArrow bg="red.800" />
                     <PopoverCloseButton />
                     <PopoverBody>
-                      <Text fontSize={{base:"xs", sm:"sm" }}>
-                      Before starting the process of transferring your child to
-                      another school, it's crucial to use up your Overpaid
-                      balance in your current school. Unpaid balances cannot be
-                      transferred to a new school. Greynote doesn't manage
-                      payments or receive funds for schools or parents. Please
-                      note that all funds in your wallet belong to the school,
-                      and if you choose to withdraw your child, the school is
-                      responsible for refunding your wallet balance. Greynote
-                      will not be held responsible if parents fail to deplete
-                      their wallet balance before transferring a child to
-                      another school.
+                      <Text fontSize={{ base: "xs", sm: "sm" }}>
+                        Before starting the process of transferring your child
+                        to another school, it's crucial to use up your Overpaid
+                        balance in your current school. Unpaid balances cannot
+                        be transferred to a new school. Greynote doesn't manage
+                        payments or receive funds for schools or parents. Please
+                        note that all funds in your wallet belong to the school,
+                        and if you choose to withdraw your child, the school is
+                        responsible for refunding your wallet balance. Greynote
+                        will not be held responsible if parents fail to deplete
+                        their wallet balance before transferring a child to
+                        another school.
                       </Text>
                     </PopoverBody>
                     <PopoverFooter

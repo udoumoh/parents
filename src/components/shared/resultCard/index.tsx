@@ -25,6 +25,7 @@ interface ResultCardProps {
     authorsLastName: string;
     authorsMiddleName: string;
     studentsFirstName: string;
+    studentsMiddleName: string;
     studentsLastName: string;
     academicTerm: string;
     resultType: string;

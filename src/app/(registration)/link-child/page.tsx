@@ -21,6 +21,7 @@ import { IoIosSearch } from "react-icons/io";
 import { AiOutlinePlus } from "react-icons/ai";
 import { gql, useQuery } from "@apollo/client";
 import { useRouter } from "next/navigation";
+import { GET_STUDENTS } from "@/gql/queries";
 
 interface PageProps {}
 
@@ -32,149 +33,6 @@ interface Student {
   profileImageUrl: string;
   id: string;
 }
-
-const GET_STUDENTS = gql(`
-query GetStudent {
-  getStudent {
-    id
-    createdAt
-    transferedAt
-    firstName
-    middleName
-    lastName
-    gender
-    ageInput
-    folder
-    isOwing
-    isVisible
-    isDuplicate
-    startDate
-    endDate
-    birthDate
-    isArchived
-    profileImgUrl
-    classroom {
-      errors {
-        field
-        message
-      }
-      classroom {
-        id
-        isValid
-        wasEdited
-        createdAt
-        updatedAt
-        classId
-        className
-        description
-        isDisabled
-        students {
-          id
-          createdAt
-          transferedAt
-          firstName
-          middleName
-          lastName
-          gender
-          ageInput
-          folder
-          isOwing
-          isVisible
-          isDuplicate
-          startDate
-          endDate
-          birthDate
-          isArchived
-          profileImgUrl
-          grayId
-          fatherName
-          fatherEmail
-          fatherNumber
-          motherName
-          motherEmail
-          motherNumber
-          homeAddress
-          lgaOrigin
-          state
-        }
-      }
-    }
-    school {
-      school {
-        id
-        createdAt
-        isDisabled
-        isVerified
-        schoolName
-        rcnumber
-        address
-        type
-        lgarea
-        folder
-        state
-        country
-        description
-        phonenumber
-        email
-        websiteUrl
-        instagramUrl
-        facebookUrl
-        twitterUrl
-        linkedinUrl
-        logoImgUrl
-        bannerImgUrl
-        license
-      }
-    }
-    creator {
-      admin {
-        id
-        isPaid
-        userId
-        folder
-        status
-        plan
-        isReferred
-        isDisabled
-        agreedTo
-        referralCode
-        createdAt
-        firstName
-        middleName
-        lastName
-        phoneNumber
-        email
-        profileImgUrl
-        role
-        school
-        schoolImg
-        statusCode
-      }
-    }
-    studentCase {
-      grayCase {
-        id
-        createdAt
-        updatedAt
-        category
-        owingAmount
-        note
-        isActive
-        wasEdited
-      }
-    }
-    grayId
-    fatherName
-    fatherEmail
-    fatherNumber
-    motherName
-    motherEmail
-    motherNumber
-    homeAddress
-    lgaOrigin
-    state
-  }
-}`);
 
 const Page: FC<PageProps> = ({}) => {
   const router = useRouter();
@@ -205,7 +63,7 @@ const Page: FC<PageProps> = ({}) => {
       try {
         const response = (await search?.getStudent) || [];
         const data = response.map((student: any) => ({
-          name: student.firstName + " " + student.lastName,
+          name: student.firstName + student?.middleName || "" + student.lastName,
           age: student.ageInput,
           className: student?.classroom?.classroom?.className,
           gender: student?.gender,

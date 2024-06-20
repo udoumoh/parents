@@ -32,6 +32,7 @@ interface ChatContactItemProps {
     profileImage: string;
     firstName: string;
     lastName: string;
+    middleName: string;
     schoolName: string;
     lastMessage: string;
     timeSent: string;
@@ -61,7 +62,7 @@ const ChatContactItem: FC<ChatContactItemProps> = ({ chat }) => {
       <Box>
         <Flex alignItems={"center"} pointerEvents={"none"}>
           <Text fontSize={"xs"} fontWeight={"600"}>
-            {`${chat.firstName} ${chat.lastName}`}
+            {`${chat.firstName} ${chat?.middleName || ""} ${chat.lastName}`}
           </Text>
           <Icon
             as={BsDot}
@@ -155,7 +156,7 @@ const ChatSidenav: FC<ChatSidenavProps> = ({ children }) => {
                     />
                     <Box lineHeight={"20px"}>
                       <Text fontWeight={"600"} fontSize={"sm"}>
-                        {`${currentWardProfile?.firstName} ${currentWardProfile?.lastName}`}
+                        {`${currentWardProfile?.firstName} ${currentWardProfile?.middleName || ""} ${currentWardProfile?.lastName}`}
                       </Text>
                       <Text
                         fontSize={"12px"}
@@ -211,7 +212,7 @@ const ChatSidenav: FC<ChatSidenavProps> = ({ children }) => {
                         />
                         <Box lineHeight={"20px"}>
                           <Text fontWeight={"600"} fontSize={"sm"}>
-                            {`${ward.firstName} ${ward.lastName}`}
+                            {`${ward.firstName} ${ward?.middleName || ""} ${ward.lastName}`}
                           </Text>
                           <Text
                             fontSize={"12px"}
