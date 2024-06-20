@@ -167,7 +167,7 @@ const EditProfileModal: FC<EditProfileModalProps> = ({
                 </Text>
                 <Input
                   placeholder={"Enter First Name"}
-                  value={profileData.firstName}
+                  value={profileData?.firstName}
                   type="text"
                   focusBorderColor="green.500"
                   onChange={(e) =>
@@ -182,7 +182,7 @@ const EditProfileModal: FC<EditProfileModalProps> = ({
                 </Text>
                 <Input
                   placeholder={"Enter Middle Name"}
-                  value={profileData.middleName}
+                  value={profileData?.middleName}
                   type="text"
                   focusBorderColor="green.500"
                   onChange={(e) =>
@@ -204,7 +204,7 @@ const EditProfileModal: FC<EditProfileModalProps> = ({
                 </Text>
                 <Input
                   placeholder={"Enter Last Name"}
-                  value={profileData.lastName}
+                  value={profileData?.lastName}
                   type="text"
                   focusBorderColor="green.500"
                   onChange={(e) =>
@@ -219,7 +219,7 @@ const EditProfileModal: FC<EditProfileModalProps> = ({
                 </Text>
                 <Input
                   placeholder={"Enter Email"}
-                  value={profileData.email}
+                  value={profileData?.email}
                   type="email"
                   focusBorderColor="green.500"
                   onChange={(e) => handleProfileChange("email", e.target.value)}
@@ -249,7 +249,7 @@ const EditProfileModal: FC<EditProfileModalProps> = ({
                 <Box display={"flex"} flexDir={"column"} gap={2} w={"full"}>
                   <Input
                     placeholder={"80 9999 9999"}
-                    value={profileData.phoneNumber}
+                    value={profileData?.phoneNumber}
                     type="number"
                     focusBorderColor="green.500"
                     onChange={(e) =>
