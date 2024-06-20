@@ -19,8 +19,15 @@ const Layout: React.FC<layoutProps> = ({ children }) => {
 
   useEffect(() => {
       if (!parentData?.isPaid && isTrialOver) {
+        const handleLogout = async () => {
+          const response = await logoutParent();
+          if (response.data.logoutParent) {
+            localStorage.removeItem("currentId");
             window.location.replace("/subscription/choose");
+          }
         };
+        handleLogout();
+      }
   }, [parentData, isTrialOver]);
 
   return loading ? (
