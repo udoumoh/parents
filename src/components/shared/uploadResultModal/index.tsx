@@ -33,6 +33,7 @@ import { useQuery } from "@apollo/client";
 import { GET_SCHOOLS } from "@/gql/queries";
 import { UPLOAD_RESULT } from "@/gql/queries";
 import { AiOutlineSearch } from "react-icons/ai";
+import { capitalizeFirstLetterOfEachWord } from "@/helpers/capitalizeFirstLetter";
 
 interface UploadResultModalProps {
   isOpen: boolean;
@@ -327,7 +328,7 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
                           size={{ base: "xs", lg: "lg" }}
                         />
                         <Text fontSize={{ base: "xs", lg: "md" }} py={"0.5rem"}>
-                          {item.schoolname}
+                          {capitalizeFirstLetterOfEachWord(item.schoolname)}
                         </Text>
                       </Box>
                     );
