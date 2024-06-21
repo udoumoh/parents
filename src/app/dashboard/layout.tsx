@@ -7,6 +7,7 @@ import Loading from "../loading";
 import { LOGOUT_PARENTS } from "@/gql/mutations";
 import { useMutation } from "@apollo/client";
 import { useUserAPI } from "@/hooks/UserContext";
+import BottomNav from "@/components/navigation/mobileNav";
 
 interface layoutProps {
   children: ReactNode;
@@ -35,7 +36,10 @@ const Layout: React.FC<layoutProps> = ({ children }) => {
   ) : !loading && parent?.parent?.errors !== null ? (
     <>{window.location.replace("/signin")}</>
   ) : (
-    <MainNav>{children}</MainNav>
+    <MainNav>
+      <BottomNav />
+      {children}
+    </MainNav>
   );
 };
 

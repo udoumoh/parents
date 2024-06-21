@@ -57,7 +57,7 @@ const Attendance: FC<AttendanceProps> = ({}) => {
       <Flex>
         <Box display={"flex"} alignItems={"center"} gap={3}>
           <Icon as={BsArchive} boxSize={"5"} color={"#189879"} />
-          <Text fontWeight={"600"} fontSize={"xl"}>
+          <Text fontWeight={"600"} fontSize={{base:"md", md:"xl"}}>
             {"Weekly Attendance"}
           </Text>
         </Box>
@@ -156,10 +156,10 @@ const Attendance: FC<AttendanceProps> = ({}) => {
           <Image
             src="/images/attendanceEmptyState.svg"
             alt="No invoice card"
-            width={"300px"}
+            maxW={{base:"200px", md:"300px"}}
             pointerEvents={"none"}
           />
-          <Text color={"#747474"} mt={"2rem"}>
+          <Text color={"#747474"} mt={"2rem"} textAlign={'center'}>
             No attendance has been recorded for your ward
           </Text>
         </Box>

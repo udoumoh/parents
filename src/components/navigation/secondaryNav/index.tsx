@@ -25,7 +25,6 @@ import {
   IoFolderOutline,
   IoFolder,
 } from "react-icons/io5";
-import { TbFile, TbFileFilled } from "react-icons/tb";
 import { BiChevronRight } from "react-icons/bi";
 import { IconType } from "react-icons";
 import LinkedStudentsPopover from "@/components/shared/linkedStudentsPopover";

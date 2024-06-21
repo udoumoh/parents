@@ -231,7 +231,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
       <Flex w={"full"} justifyContent={"space-between"} gap={3}>
         <Box display={"flex"} alignItems={"center"} gap={2}>
           <Icon as={IoReceiptOutline} boxSize={"5"} color={"#189879"} />
-          <Text fontWeight={"600"} fontSize={"xl"}>
+          <Text fontWeight={"600"} fontSize={{ base: "md", md: "xl" }}>
             {"Invoice Received"}
           </Text>
         </Box>
@@ -271,7 +271,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
           <Image
             src="/images/emptyStateInvoice.svg"
             alt="No invoice card"
-            width={"300px"}
+            maxW={{ base: "200px", md: "300px" }}
             pointerEvents={"none"}
           />
           <Text color={"#747474"} mt={"2rem"}>
