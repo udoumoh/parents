@@ -60,6 +60,7 @@ interface GeneratedResultsProps {
     teachersFirstName: string;
     teachersLastName: string;
     teachersMiddleName: string;
+    shareDate: string;
   };
   isOpen: boolean;
   onClose: () => void;
@@ -159,6 +160,7 @@ const GeneratedResults: React.FC<GeneratedResultsProps> = ({
   isOpen,
   onClose,
 }) => {
+  console.log(result)
   const sumOfTest1 = result?.test1?.reduce(
     (acc: any, num: any) => acc + num,
     0
@@ -650,7 +652,7 @@ const GeneratedResults: React.FC<GeneratedResultsProps> = ({
                     </View>
 
                     <Text style={styles.footer}>
-                      Generated with Greynote - {formatDateWithSuffix(result?.createdAt)}
+                      Generated with Greynote - {result?.shareDate || result?.authorsCreatedAt}
                     </Text>
                   </View>
                 </Page>
