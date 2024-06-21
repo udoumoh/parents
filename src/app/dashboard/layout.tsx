@@ -16,19 +16,11 @@ interface layoutProps {
 const Layout: React.FC<layoutProps> = ({ children }) => {
   const { data: parent, loading } = useQuery(GET_PARENT);
   const { parentData, isTrialOver } = useUserAPI();
-  const [logoutParent] = useMutation(LOGOUT_PARENTS);
 
   useEffect(() => {
       if (!parentData?.isPaid && isTrialOver) {
-        const handleLogout = async () => {
-          const response = await logoutParent();
-          if (response.data.logoutParent) {
-            localStorage.removeItem("currentId");
             window.location.replace("/subscription/choose");
           }
-        };
-        handleLogout();
-      }
   }, [parentData, isTrialOver]);
 
   return loading ? (
