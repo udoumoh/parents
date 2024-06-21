@@ -20,6 +20,7 @@ const Page: FC<pageProps> = ({}) => {
   const [initiateSubscription] = useMutation(INITIATE_PARENT_SUBSCRIPTION);
   const [subscriptionData, setSubscriptionData] = useState<any>({})
   const [isLoading, setIsloading] = useState(false)
+  let parentEmail = localStorage.getItem("userEmail");
 
   const token = process.env.NEXT_PUBLIC_API_TOKEN;
 
@@ -74,7 +75,7 @@ const Page: FC<pageProps> = ({}) => {
     const fetchData = async() => {
       try {
         await axios.get(
-          `https://api.paystack.co/subscription?email=${parentData?.email}`,
+          `https://api.paystack.co/subscription?email=${parentEmail}`,
           {
             headers: {
                 Authorization: `Bearer ${token}`,
