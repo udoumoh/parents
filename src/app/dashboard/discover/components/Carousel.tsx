@@ -16,10 +16,11 @@ const settings = {
 
 interface CarouselProps {
   media: string[];
+  slider: any;
+  setSlider: any;
 }
 
-const Carousel: FC<CarouselProps> = ({media}) => {
-    const [slider, setSlider] = useState<Slider | null>(null);
+const Carousel: FC<CarouselProps> = ({media, slider, setSlider}) => {
     
     const top = useBreakpointValue({ base: "50%", md: "50%" });
     const side = useBreakpointValue({ base: "10%", md: "10px" });
@@ -66,7 +67,7 @@ const Carousel: FC<CarouselProps> = ({media}) => {
         size={"sm"}
         transform={"translate(0%, -50%)"}
         zIndex={2}
-        onClick={() => slider?.slickPrev()}
+        onClick={() => {slider?.slickPrev()}}
         display={{ base: "none", md: "flex" }}
       >
         <BiLeftArrowAlt size={18} />

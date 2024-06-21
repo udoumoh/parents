@@ -33,6 +33,7 @@ import { useUserLikesAPI } from "@/hooks/UserLikesContext";
 import { ComposeMessage } from "../../inbox/component/ComposeMessage";
 import { MdOutlineMailOutline } from "react-icons/md";
 import { capitalizeFirstLetterOfEachWord } from "@/helpers/capitalizeFirstLetter";
+import Slider from "react-slick";
 
 interface SchoolDetailsModalProps {
   isOpen: boolean;
@@ -45,6 +46,9 @@ const SchoolDetailsModal: FC<SchoolDetailsModalProps> = ({
   onClose,
   setProfileLikes,
 }) => {
+
+  const [slider, setSlider] = useState<Slider | null>(null);
+
   const {
     isOpen: isComposeModalOpen,
     onClose: onComposeModalClose,
@@ -74,10 +78,12 @@ const SchoolDetailsModal: FC<SchoolDetailsModalProps> = ({
 
   const handleNextPost = () => {
     setActiveProfileIndex(activeProfileIndex + 1);
+    slider?.slickGoTo(0);
   };
 
   const handlePreviousPost = () => {
     setActiveProfileIndex(activeProfileIndex - 1);
+    slider?.slickGoTo(0);
   };
 
   return (
@@ -122,7 +128,7 @@ const SchoolDetailsModal: FC<SchoolDetailsModalProps> = ({
           />
           <ModalBody p={0}>
             <Box px={"0"}>
-              <Carousel media={profile?.schoolMedia} />
+              <Carousel media={profile?.schoolMedia} slider={slider} setSlider={setSlider}/>
               <Flex
                 display={{ base: "none", md: "flex" }}
                 mt={"1.5rem"}
