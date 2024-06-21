@@ -30,7 +30,7 @@ const Page: FC<pageProps> = ({}) => {
       const response = await initiateSubscription({
         variables: { subAmount: subscriptionData?.amount, plan: subscriptionData?.plan?.name, code: subscriptionData?.subscription_code },
       });
-      if (!response.data) {
+      if (!response?.data) {
         toast({
           title: "Oops! Something went wrong. Please try again later.",
           position: "top-right",
@@ -44,7 +44,7 @@ const Page: FC<pageProps> = ({}) => {
       if (response?.data?.initiateParentSubscription) {
         toast({
           title: "Plan Initialized Successfully",
-          description: `You have successfully joined the ${subscriptionData?.plan.name}`,
+          description: `You have successfully joined the ${subscriptionData?.plan?.name}`,
           position: "top-right",
           variant: "left-accent",
           isClosable: true,
