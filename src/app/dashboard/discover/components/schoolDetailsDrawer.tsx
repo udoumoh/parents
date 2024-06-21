@@ -117,7 +117,7 @@ const SchoolDetailsDrawer: FC<SchoolDetailsDrawerProps> = ({
         />
         <DrawerBody p={0}>
           <Box px={"0"}>
-            <Carousel media={profile?.schoolMedia} />
+            {/* <Carousel media={profile?.schoolMedia} /> */}
             <Flex
               display={{ base: "none", md: "flex" }}
               mt={"1.5rem"}
