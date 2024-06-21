@@ -23,6 +23,7 @@ import {
 } from "@react-pdf/renderer";
 import React from "react";
 import { formatDate } from "@/helpers/formatDate";
+import { formatDateWithSuffix } from "@/helpers/formatDate";
 
 interface GeneratedResultsProps {
   result: {
@@ -649,7 +650,7 @@ const GeneratedResults: React.FC<GeneratedResultsProps> = ({
                     </View>
 
                     <Text style={styles.footer}>
-                      Generated with Greynote - {formatDate(result?.createdAt)}
+                      Generated with Greynote - {formatDateWithSuffix(result?.createdAt)}
                     </Text>
                   </View>
                 </Page>

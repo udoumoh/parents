@@ -120,7 +120,7 @@ const Results: FC<ResultsProps> = ({}) => {
   );
   const [selectedTableResult, setSelectedTableResult] =
     useState<GeneratedResultProps>();
-  const [resultsType, setResultstype] = useState("uploaded");
+  const [resultsType, setResultstype] = useState("generated");
   const [pdfResult, setPdfResult] = useState<GeneratedResultProps[]>([]);
   const [uploadedResults, setUploadedResults] = useState<
     GeneratedResultProps[]
