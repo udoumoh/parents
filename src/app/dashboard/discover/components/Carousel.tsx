@@ -1,6 +1,6 @@
 'use client'
-import { FC, useState } from 'react'
-import { Box, IconButton, useBreakpointValue } from "@chakra-ui/react";
+import { FC, useState, useEffect } from 'react'
+import { Box, IconButton, useBreakpointValue, Image } from "@chakra-ui/react";
 import { BiLeftArrowAlt, BiRightArrowAlt } from "react-icons/bi";
 import Slider from 'react-slick'
 import VideoPlayer from './VideoPlayer';
@@ -15,7 +15,7 @@ const settings = {
 };
 
 interface CarouselProps {
-  media: string [];
+  media: string[];
 }
 
 const Carousel: FC<CarouselProps> = ({media}) => {
@@ -83,7 +83,7 @@ const Carousel: FC<CarouselProps> = ({media}) => {
         top={top}
         transform={"translate(0%, -50%)"}
         zIndex={2}
-        onClick={() => slider?.slickNext()}
+        onClick={() => {slider?.slickNext()}}
         display={{ base: "none", md: "flex" }}
       >
         <BiRightArrowAlt size={18} />
@@ -95,11 +95,30 @@ const Carousel: FC<CarouselProps> = ({media}) => {
             key={index}
             height={{ base: "2xs", md: "lg" }}
             position="relative"
-            backgroundPosition="center"
-            backgroundRepeat="no-repeat"
-            backgroundSize="cover"
-            backgroundImage={`url(${url})`}
-          />
+            backgroundColor={"#FFFFFF55"}
+            backdropFilter={"blur(6px)"}
+          >
+            <Box
+              position="absolute"
+              top="0"
+              left="0"
+              right="0"
+              bottom="0"
+              backgroundImage={`url(${url})`}
+              backgroundSize="cover"
+              backgroundPosition="center"
+              filter="blur(10px)"
+              zIndex={1}
+            />
+            <Image
+              src={url}
+              w={"100%"}
+              h={"100%"}
+              objectFit={"contain"}
+              position="relative"
+              zIndex={2}
+            />
+          </Box>
         ))}
         {videoLinks?.map((url, index) => (
           <VideoPlayer url={url} key={index} />
