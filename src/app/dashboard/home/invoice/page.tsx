@@ -695,7 +695,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                                   <MenuItem
                                     px={"1rem"}
                                     display={
-                                      !["active", "partial payment"].includes(
+                                      !["active", "partial payment", "school fees", "extra curricular"].includes(
                                         item?.status
                                       )
                                         ? "none"
