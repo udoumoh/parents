@@ -1,23 +1,12 @@
 "use client";
-import { FC, useState, useEffect } from "react";
+import { FC, useState, useEffect, useCallback, useMemo } from "react";
 import {
   Box,
   Text,
   Button,
   Icon,
   Image,
-  Avatar,
   Flex,
-  Input,
-  Select,
-  Tabs,
-  TabList,
-  TabPanels,
-  Tab,
-  TabPanel,
-  TabIndicator,
-  SimpleGrid,
-  Center,
   Menu,
   MenuButton,
   MenuList,
@@ -26,18 +15,23 @@ import {
   IconButton,
   Tooltip,
   useDisclosure,
+  Tabs,
+  TabList,
+  TabPanels,
+  Tab,
+  TabPanel,
+  TabIndicator,
+  SimpleGrid,
+  Center,
 } from "@chakra-ui/react";
-import { RiSchoolLine } from "react-icons/ri";
+import { RiSchoolLine, RiGenderlessLine } from "react-icons/ri";
+import { IoFilterOutline } from "react-icons/io5";
+import { IoIosArrowDown } from "react-icons/io";
+import { PiUserGear } from "react-icons/pi";
+import dynamic from "next/dynamic";
 import PostItem from "./components/PostItem";
 import { useUserLikesAPI } from "@/hooks/UserLikesContext";
 import { useUserAPI } from "@/hooks/UserContext";
-import { IoIosArrowDown } from "react-icons/io";
-import { RiGenderlessLine } from "react-icons/ri";
-import { IoFilterOutline } from "react-icons/io5";
-import FilterModal from "./components/FilterModal";
-import { PiUserGear } from "react-icons/pi";
-
-interface DiscoverProps {}
 
 interface ProfileProps {
   genderType: string;
@@ -74,18 +68,104 @@ interface ProfileProps {
   };
 }
 
+// Dynamic import of the FilterModal to avoid loading it initially
+const FilterModal = dynamic(() => import("./components/FilterModal"), {
+  loading: () => <p>Loading...</p>,
+});
+
+interface DiscoverProps {}
+
 const Discover: FC<DiscoverProps> = ({}) => {
-  const {isOpen, onClose, onOpen} = useDisclosure()
+  const { isOpen, onClose, onOpen } = useDisclosure();
   const { parentData } = useUserAPI();
-  const { filteredPosts, handleFilterChange, filterParams, applyFilters } = useUserLikesAPI();
+  const { filteredPosts, handleFilterChange, filterParams, applyFilters } =
+    useUserLikesAPI();
   const [likedPosts, setLikedPosts] = useState<ProfileProps[]>([]);
 
-  useEffect(() => {
+  // Use useCallback to memoize the function
+  const filterLikedPosts = useCallback(() => {
     const likedPosts = filteredPosts?.filter((profile) =>
       profile?.whoLikedProfile?.includes(parentData?.userId || "")
     );
     setLikedPosts(likedPosts);
-  }, [parentData, filteredPosts]);
+  }, [filteredPosts, parentData]);
+
+  // Use useEffect to trigger the memoized function
+  useEffect(() => {
+    filterLikedPosts();
+  }, [filterLikedPosts]);
+
+  // Use useMemo to memoize component props and reduce unnecessary renders
+  const renderFilteredPosts = useMemo(() => {
+    if (filteredPosts?.length === 0) {
+      return (
+        <Flex
+          alignItems={"center"}
+          justifyContent={"center"}
+          flexDir={"column"}
+          my={"2rem"}
+        >
+          <Image
+            alt="no likes"
+            src="/images/nosearchresult.svg"
+            w={{ base: "300", md: "300px" }}
+            h={"200px"}
+          />
+          <Text
+            textAlign={"center"}
+            color={"gray.500"}
+            fontSize={{ base: "md", md: "lg" }}
+            mt={"2rem"}
+          >
+            There are no results for your search criteria
+          </Text>
+        </Flex>
+      );
+    }
+    return (
+      <SimpleGrid columns={[1, null, 2, 4]} spacing="15px">
+        {filteredPosts.map((item, index) => (
+          <PostItem key={index} profile={item} currentIndex={index} />
+        ))}
+      </SimpleGrid>
+    );
+  }, [filteredPosts]);
+
+  const renderLikedPosts = useMemo(() => {
+    if (likedPosts.length === 0) {
+      return (
+        <Flex
+          alignItems={"center"}
+          justifyContent={"center"}
+          flexDir={"column"}
+          my={"2rem"}
+        >
+          <Image
+            alt="no likes"
+            src="/images/nolikes.svg"
+            w={{ base: "200", md: "300px" }}
+            h={"200px"}
+          />
+          <Text
+            textAlign={"center"}
+            color={"gray.500"}
+            fontSize={{ base: "md", md: "lg" }}
+            mt={"2rem"}
+          >
+            You have not liked any post. Like a post and come back here to see
+            it.
+          </Text>
+        </Flex>
+      );
+    }
+    return (
+      <SimpleGrid columns={[1, null, 2, 4]} spacing="15px">
+        {likedPosts.map((item, index) => (
+          <PostItem key={index} profile={item} currentIndex={index} />
+        ))}
+      </SimpleGrid>
+    );
+  }, [likedPosts]);
 
   return (
     <Box h={"100vh"} w={"full"} p={"1.5rem"} overflowY={"auto"} pb={"10rem"}>
@@ -109,7 +189,6 @@ const Discover: FC<DiscoverProps> = ({}) => {
           </Text>
           <Text mt={"3rem"}>Find the ideal school for your child</Text>
         </Box>
-
         <Box
           backgroundColor={"#FFFFFF55"}
           rounded={"xl"}
@@ -204,7 +283,6 @@ const Discover: FC<DiscoverProps> = ({}) => {
                   </Menu>
                 </Box>
               </Flex>
-
               <Flex alignItems={"center"} gap={2}>
                 <Icon
                   as={RiSchoolLine}
@@ -288,7 +366,6 @@ const Discover: FC<DiscoverProps> = ({}) => {
                   </Menu>
                 </Box>
               </Flex>
-
               <Flex alignItems={"center"} gap={2}>
                 <Icon
                   as={RiGenderlessLine}
@@ -373,20 +450,17 @@ const Discover: FC<DiscoverProps> = ({}) => {
                 </Box>
               </Flex>
             </Box>
-
             <Flex alignItems={"center"} gap={3}>
-              <Flex alignItems={"center"}>
-                <Tooltip label={"more filter options"}>
-                  <IconButton
-                    size={'md'}
-                    aria-label="filter"
-                    colorScheme="teal"
-                    icon={<IoFilterOutline size={20} />}
-                    onClick={onOpen}
-                    rounded={"full"}
-                  />
-                </Tooltip>
-              </Flex>
+              <Tooltip label={"more filter options"}>
+                <IconButton
+                  size={"md"}
+                  aria-label="filter"
+                  colorScheme="teal"
+                  icon={<IoFilterOutline size={20} />}
+                  onClick={onOpen}
+                  rounded={"full"}
+                />
+              </Tooltip>
               <Button
                 rounded={"full"}
                 size={{ base: "sm", md: "md" }}
@@ -400,7 +474,6 @@ const Discover: FC<DiscoverProps> = ({}) => {
           </Box>
         </Box>
       </Box>
-
       <Box mt={"1.5rem"}>
         <Center>
           <Tabs variant={"unstyled"}>
@@ -419,85 +492,8 @@ const Discover: FC<DiscoverProps> = ({}) => {
               borderRadius="1px"
             />
             <TabPanels>
-              <TabPanel px={0}>
-                <Box>
-                  {filteredPosts?.length === 0 ? (
-                    <Flex
-                      alignItems={"center"}
-                      justifyContent={"center"}
-                      flexDir={"column"}
-                      my={"2rem"}
-                    >
-                      <Image
-                        alt="no likes"
-                        src="/images/nosearchresult.svg"
-                        w={{ base: "300", md: "300px" }}
-                        h={"200px"}
-                      />
-                      <Text
-                        textAlign={"center"}
-                        color={"gray.500"}
-                        fontSize={{ base: "md", md: "lg" }}
-                        mt={"2rem"}
-                      >
-                        There are no results for your search criteria
-                      </Text>
-                    </Flex>
-                  ) : (
-                    <SimpleGrid columns={[1, null, 2, 4]} spacing="15px">
-                      {filteredPosts?.map((item, index) => {
-                        return (
-                          <PostItem
-                            key={index}
-                            profile={item}
-                            currentIndex={index}
-                          />
-                        );
-                      })}
-                    </SimpleGrid>
-                  )}
-                </Box>
-              </TabPanel>
-              <TabPanel px={0}>
-                <Box>
-                  {likedPosts.length === 0 ? (
-                    <Flex
-                      alignItems={"center"}
-                      justifyContent={"center"}
-                      flexDir={"column"}
-                      my={"2rem"}
-                    >
-                      <Image
-                        alt="no likes"
-                        src="/images/nolikes.svg"
-                        w={{ base: "200", md: "300px" }}
-                        h={"200px"}
-                      />
-                      <Text
-                        textAlign={"center"}
-                        color={"gray.500"}
-                        fontSize={{ base: "md", md: "lg" }}
-                        mt={"2rem"}
-                      >
-                        You have not liked any post. Like a post and come back
-                        here to see it.
-                      </Text>
-                    </Flex>
-                  ) : (
-                    <SimpleGrid columns={[1, null, 2, 4]} spacing="15px">
-                      {likedPosts?.map((item, index) => {
-                        return (
-                          <PostItem
-                            key={index}
-                            profile={item}
-                            currentIndex={index}
-                          />
-                        );
-                      })}
-                    </SimpleGrid>
-                  )}
-                </Box>
-              </TabPanel>
+              <TabPanel px={0}>{renderFilteredPosts}</TabPanel>
+              <TabPanel px={0}>{renderLikedPosts}</TabPanel>
             </TabPanels>
           </Tabs>
         </Center>

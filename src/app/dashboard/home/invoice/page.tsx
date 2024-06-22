@@ -243,7 +243,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
       setCurrentPage(prevPage);
     }
   };
-  console.log(invoiceData)
+  
   return (
     <Box mb={{ base: "8rem", lg: "5rem" }}>
       <Box>
