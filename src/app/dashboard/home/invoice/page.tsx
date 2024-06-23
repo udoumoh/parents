@@ -171,27 +171,24 @@ const Invoice: FC<InvoiceProps> = ({}) => {
     return invoices?.filter((invoice: StudentInvoiceProps) => status.includes(invoice.status))
   }
 
+  const calculateTotalAmount = (invoices: StudentInvoiceProps[], amountFn: (invoice: StudentInvoiceProps) => number) => {
+    invoices?.reduce((acc, invoice) => acc + amountFn(invoice), 0)
+  }
+
   const completedInvoice = filterInvoicesByStatus(invoices, ['completed'])
   const activeInvoice = filterInvoicesByStatus(invoices, ["active", "partial payment"]);
   const rejectedInvoice = filterInvoicesByStatus(invoices, ["rejected by parent"]);
   const processingInvoice = filterInvoicesByStatus(invoices, ["processing"]);
 
-  const totalActiveAmount = activeInvoice?.reduce(
-    (accumulator, invoice) =>
-      accumulator + (invoice.amountPaid + getCompletedInvoiceAmount(invoice)),
-    0
+  const totalActiveAmount = calculateTotalAmount(
+    activeInvoice,
+    (invoice) => invoice.amountPaid + getCompletedInvoiceAmount(invoice)
   );
 
-  const totalRejectedAmount = rejectedInvoice?.reduce(
-    (accumulator, invoice) => accumulator + invoice.amountPaid,
-    0
-  );
-
-  const totalProcessingAmount = processingInvoice?.reduce(
-    (accumulator, invoice) => accumulator + invoice.amountPaid,
-    0
-  );
-
+  const totalRejectedAmount = calculateTotalAmount(rejectedInvoice, (invoice) => invoice.amountPaid)
+  
+  const totalProcessingAmount = calculateTotalAmount(processingInvoice, (invoice) => invoice.amountPaid)
+  
   const nonEmptyReceipts = invoices
     ?.map((invoice) => invoice?.receipt)
     ?.filter((receipt: any) => receipt?.length !== 0);
