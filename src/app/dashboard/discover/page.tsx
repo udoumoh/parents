@@ -69,9 +69,7 @@ interface ProfileProps {
 }
 
 // Dynamic import of the FilterModal to avoid loading it initially
-const FilterModal = dynamic(() => import("./components/FilterModal"), {
-  loading: () => <p>Loading...</p>,
-});
+const FilterModal = dynamic(() => import("./components/FilterModal"));
 
 interface DiscoverProps {}
 
