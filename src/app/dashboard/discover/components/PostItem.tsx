@@ -14,7 +14,6 @@ import {
 } from "@chakra-ui/react";
 import { IoMdHeartEmpty, IoMdHeart } from "react-icons/io";
 import { IoCopy } from "react-icons/io5";
-// import SchoolDetailsModal from "./SchoolDetailsModal";
 import dynamic from "next/dynamic";
 import { useUserAPI } from "@/hooks/UserContext";
 import { useUserLikesAPI } from "@/hooks/UserLikesContext";
@@ -110,7 +109,6 @@ const PostItem: FC<PostItemProps> = ({ profile, currentIndex }) => {
   }, [])
 
   const { isOpen: isSchoolModalOpen, onOpen, onClose } = useDisclosure();
-  const { isOpen: isSchoolDrawerOpen, onOpen: onDrawerOpen, onClose: onDrawerClose } = useDisclosure();
 
   return (
     <ScaleFade initialScale={0.6} in={isOpen}>
