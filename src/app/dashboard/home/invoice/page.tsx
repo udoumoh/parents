@@ -167,18 +167,14 @@ const Invoice: FC<InvoiceProps> = ({}) => {
     return totalCompletedAmount;
   };
 
-  const completedInvoice = invoices?.filter(
-    (invoice) => invoice.status === "completed"
-  );
-  const activeInvoice = invoices?.filter(
-    (invoice) => invoice.status === "active" || invoice.status === "partial payment"
-  );
-  const rejectedInvoice = invoices?.filter(
-    (invoice) => invoice.status === "rejected by parent"
-  );
-  const processingInvoice = invoices?.filter(
-    (invoice) => invoice.status === "processing"
-  );
+  const filterInvoicesByStatus = (invoices: StudentInvoiceProps[], status: string[]) => {
+    return invoices?.filter((invoice: StudentInvoiceProps) => status.includes(invoice.status))
+  }
+
+  const completedInvoice = filterInvoicesByStatus(invoices, ['completed'])
+  const activeInvoice = filterInvoicesByStatus(invoices, ["active", "partial payment"]);
+  const rejectedInvoice = filterInvoicesByStatus(invoices, ["rejected by parent"]);
+  const processingInvoice = filterInvoicesByStatus(invoices, ["processing"]);
 
   const totalActiveAmount = activeInvoice?.reduce(
     (accumulator, invoice) =>
@@ -439,6 +435,509 @@ const Invoice: FC<InvoiceProps> = ({}) => {
       </>
     );
   }, [invoiceToShow])
+
+  const renderCompletedInvoices = useMemo(() => {
+    return (
+      <>
+        <TableContainer>
+          <Table variant="simple" size={"sm"}>
+            <Thead>
+              <Tr>
+                <Th>Inv. ID</Th>
+                <Th>School</Th>
+                <Th>Category</Th>
+                <Th>Date</Th>
+                <Th>Amount</Th>
+                <Th>Balance</Th>
+                <Th>Status</Th>
+                <Th></Th>
+              </Tr>
+            </Thead>
+            <Tbody>
+              {completedInvoice?.map((item, index) => {
+                return (
+                  <Tr key={index}>
+                    <Td color={"green.700"} fontWeight={"bold"} fontSize={"sm"}>
+                      {item?.invoiceId}
+                    </Td>
+                    <Td>
+                      <Flex gap={2} alignItems={"center"}>
+                        <Avatar
+                          src={item?.schoollogo}
+                          pointerEvents={"none"}
+                          size={"sm"}
+                        />
+                        <Text fontSize={"sm"} fontWeight={"500"}>
+                          {item?.schoolname}
+                        </Text>
+                      </Flex>
+                    </Td>
+                    <Td>{item?.category}</Td>
+                    <Td>{item?.createdAt}</Td>
+                    <Td fontWeight={"bold"}>
+                      ₦{formatNumberWithCommas(getCompletedInvoiceAmount(item))}
+                    </Td>
+                    <Td fontWeight={"bold"}>
+                      {item?.status === "rejected by parent"
+                        ? `-`
+                        : `₦${formatNumberWithCommas(item?.balance)}`}
+                    </Td>
+                    <Td>
+                      <Badge
+                        variant="subtle"
+                        colorScheme={
+                          item?.status === "active"
+                            ? "green"
+                            : item?.status === "rejected by parent"
+                            ? "red"
+                            : item?.status === "processing"
+                            ? "yellow"
+                            : item?.status === "completed"
+                            ? "blue"
+                            : "purple"
+                        }
+                      >
+                        {item?.status}
+                      </Badge>
+                    </Td>
+                    <Td>
+                      <Menu>
+                        <MenuButton>
+                          <Icon
+                            as={BsThreeDots}
+                            _hover={{ cursor: "pointer" }}
+                            boxSize={6}
+                          />
+                        </MenuButton>
+                        <MenuList>
+                          <MenuItem
+                            px={"1rem"}
+                            display={"flex"}
+                            gap={"3"}
+                            onClick={() => {
+                              handleSelectedInvoice(item);
+                            }}
+                          >
+                            <Icon
+                              as={TbFileInvoice}
+                              boxSize={"4"}
+                              color={"#005D5D"}
+                            />
+                            <Text color={"#005D5D"} fontWeight={"600"}>
+                              View Invoice Details
+                            </Text>
+                          </MenuItem>
+                        </MenuList>
+                      </Menu>
+                    </Td>
+                  </Tr>
+                );
+              })}
+            </Tbody>
+          </Table>
+        </TableContainer>
+      </>
+    );
+  }, [completedInvoice])
+
+  const renderActiveInvoices = useMemo(() => {
+    return (
+      <>
+        <TableContainer>
+          <Table variant="simple" size={"sm"}>
+            <Thead>
+              <Tr>
+                <Th>Inv. ID</Th>
+                <Th>School</Th>
+                <Th>Category</Th>
+                <Th>Date</Th>
+                <Th>Amount</Th>
+                <Th>Balance</Th>
+                <Th>Status</Th>
+                <Th></Th>
+              </Tr>
+            </Thead>
+            <Tbody>
+              {activeInvoice?.map((item, index) => {
+                return (
+                  <Tr key={index}>
+                    <Td color={"green.700"} fontWeight={"bold"} fontSize={"sm"}>
+                      {item?.invoiceId}
+                    </Td>
+                    <Td>
+                      <Flex gap={2} alignItems={"center"}>
+                        <Avatar
+                          src={item?.schoollogo}
+                          pointerEvents={"none"}
+                          size={"sm"}
+                        />
+                        <Text fontSize={"sm"} fontWeight={"500"}>
+                          {item?.schoolname}
+                        </Text>
+                      </Flex>
+                    </Td>
+                    <Td>{item?.category}</Td>
+                    <Td>{item?.createdAt}</Td>
+                    <Td fontWeight={"bold"}>
+                      ₦{formatNumberWithCommas(item?.amountPaid)}
+                    </Td>
+                    <Td fontWeight={"bold"}>
+                      {item?.status === "rejected by parent"
+                        ? `-`
+                        : `₦${formatNumberWithCommas(item?.balance)}`}
+                    </Td>
+                    <Td>
+                      <Badge
+                        variant="subtle"
+                        colorScheme={
+                          item?.status === "active"
+                            ? "green"
+                            : item?.status === "rejected by parent"
+                            ? "red"
+                            : item?.status === "processing"
+                            ? "yellow"
+                            : item?.status === "completed"
+                            ? "blue"
+                            : "purple"
+                        }
+                      >
+                        {item?.status}
+                      </Badge>
+                    </Td>
+                    <Td>
+                      <Menu>
+                        <MenuButton>
+                          <Icon
+                            as={BsThreeDots}
+                            _hover={{ cursor: "pointer" }}
+                            boxSize={6}
+                          />
+                        </MenuButton>
+                        <MenuList>
+                          <MenuItem
+                            px={"1rem"}
+                            display={"flex"}
+                            gap={"3"}
+                            onClick={() => handleAcceptInvoice(item)}
+                          >
+                            <Icon
+                              as={FaCheck}
+                              boxSize={"4"}
+                              color={"#005D5D"}
+                            />
+                            <Text color={"#005D5D"} fontWeight={"600"}>
+                              Accept Invoice
+                            </Text>
+                          </MenuItem>
+                          <MenuItem
+                            px={"1rem"}
+                            display={"flex"}
+                            gap={"3"}
+                            onClick={() => handleRejectInvoice(item)}
+                          >
+                            <Icon
+                              as={MdOutlineClose}
+                              boxSize={"4"}
+                              color={"red.600"}
+                            />
+                            <Text color={"red.600"} fontWeight={"600"}>
+                              Reject Invoice
+                            </Text>
+                          </MenuItem>
+                          <MenuItem
+                            px={"1rem"}
+                            display={"flex"}
+                            gap={"3"}
+                            onClick={() => handleOverpaidInvoice(item)}
+                          >
+                            <Icon
+                              as={MdOutlinePayment}
+                              boxSize={"4"}
+                              color={"#005D5D"}
+                            />
+                            <Text color={"#005D5D"} fontWeight={"600"}>
+                              Pay with overpaid balance
+                            </Text>
+                          </MenuItem>
+                          <MenuItem
+                            px={"1rem"}
+                            display={"flex"}
+                            gap={"3"}
+                            onClick={() => {
+                              handleSelectedInvoice(item);
+                            }}
+                          >
+                            <Icon
+                              as={TbFileInvoice}
+                              boxSize={"4"}
+                              color={"#005D5D"}
+                            />
+                            <Text color={"#005D5D"} fontWeight={"600"}>
+                              View Invoice Details
+                            </Text>
+                          </MenuItem>
+                        </MenuList>
+                      </Menu>
+                    </Td>
+                  </Tr>
+                );
+              })}
+            </Tbody>
+          </Table>
+        </TableContainer>
+      </>
+    );
+  }, [activeInvoice])
+
+  const renderRejectedInvoices = useMemo(() => {
+    return (
+      <>
+        <TableContainer>
+          <Table variant="simple" size={"sm"}>
+            <Thead>
+              <Tr>
+                <Th>Inv. ID</Th>
+                <Th>School</Th>
+                <Th>Category</Th>
+                <Th>Date</Th>
+                <Th>Amount</Th>
+                <Th>Balance</Th>
+                <Th>Status</Th>
+                <Th></Th>
+              </Tr>
+            </Thead>
+            <Tbody>
+              {rejectedInvoice?.map((item, index) => {
+                return (
+                  <Tr key={index}>
+                    <Td color={"green.700"} fontWeight={"bold"} fontSize={"sm"}>
+                      {item?.invoiceId}
+                    </Td>
+                    <Td>
+                      <Flex gap={2} alignItems={"center"}>
+                        <Avatar
+                          src={item?.schoollogo}
+                          pointerEvents={"none"}
+                          size={"sm"}
+                        />
+                        <Text fontSize={"sm"} fontWeight={"500"}>
+                          {item?.schoolname}
+                        </Text>
+                      </Flex>
+                    </Td>
+                    <Td>{item?.category}</Td>
+                    <Td>{item?.createdAt}</Td>
+                    <Td fontWeight={"bold"}>
+                      ₦{formatNumberWithCommas(item?.amountPaid)}
+                    </Td>
+                    <Td fontWeight={"bold"}>
+                      {item?.status === "rejected by parent"
+                        ? `-`
+                        : `₦${formatNumberWithCommas(item?.balance)}`}
+                    </Td>
+                    <Td>
+                      <Badge
+                        variant="subtle"
+                        colorScheme={
+                          item?.status === "active"
+                            ? "green"
+                            : item?.status === "rejected by parent"
+                            ? "red"
+                            : item?.status === "processing"
+                            ? "yellow"
+                            : item?.status === "completed"
+                            ? "blue"
+                            : "purple"
+                        }
+                      >
+                        {item?.status}
+                      </Badge>
+                    </Td>
+                    <Td>
+                      <Menu>
+                        <MenuButton>
+                          <Icon
+                            as={BsThreeDots}
+                            _hover={{ cursor: "pointer" }}
+                            boxSize={6}
+                          />
+                        </MenuButton>
+                        <MenuList>
+                          <MenuItem
+                            px={"1rem"}
+                            display={"flex"}
+                            gap={"3"}
+                            onClick={() => {
+                              handleSelectedInvoice(item);
+                            }}
+                          >
+                            <Icon
+                              as={TbFileInvoice}
+                              boxSize={"4"}
+                              color={"#005D5D"}
+                            />
+                            <Text color={"#005D5D"} fontWeight={"600"}>
+                              View Invoice Details
+                            </Text>
+                          </MenuItem>
+                        </MenuList>
+                      </Menu>
+                    </Td>
+                  </Tr>
+                );
+              })}
+            </Tbody>
+          </Table>
+        </TableContainer>
+      </>
+    );
+  }, [rejectedInvoice])
+
+  const renderProcessingInvoices = useMemo(() => {
+    return (
+      <>
+        <TableContainer>
+          <Table variant="simple" size={"sm"}>
+            <Thead>
+              <Tr>
+                <Th>Inv. ID</Th>
+                <Th>School</Th>
+                <Th>Category</Th>
+                <Th>Date</Th>
+                <Th>Amount</Th>
+                <Th>Balance</Th>
+                <Th>Status</Th>
+                <Th></Th>
+              </Tr>
+            </Thead>
+            <Tbody>
+              {processingInvoice?.map((item, index) => {
+                return (
+                  <Tr key={index}>
+                    <Td color={"green.700"} fontWeight={"bold"} fontSize={"sm"}>
+                      {item?.invoiceId}
+                    </Td>
+                    <Td>
+                      <Flex gap={2} alignItems={"center"}>
+                        <Avatar
+                          src={item?.schoollogo}
+                          pointerEvents={"none"}
+                          size={"sm"}
+                        />
+                        <Text fontSize={"sm"} fontWeight={"500"}>
+                          {item?.schoolname}
+                        </Text>
+                      </Flex>
+                    </Td>
+                    <Td>{item?.category}</Td>
+                    <Td>{item?.createdAt}</Td>
+                    <Td fontWeight={"bold"}>
+                      ₦{formatNumberWithCommas(item?.amountPaid)}
+                    </Td>
+                    <Td fontWeight={"bold"}>
+                      {item?.status === "rejected by parent"
+                        ? `-`
+                        : `₦${formatNumberWithCommas(item?.balance)}`}
+                    </Td>
+                    <Td>
+                      <Badge
+                        variant="subtle"
+                        colorScheme={
+                          item?.status === "active"
+                            ? "green"
+                            : item?.status === "rejected by parent"
+                            ? "red"
+                            : item?.status === "processing"
+                            ? "yellow"
+                            : item?.status === "completed"
+                            ? "blue"
+                            : "purple"
+                        }
+                      >
+                        {item?.status}
+                      </Badge>
+                    </Td>
+                    <Td>
+                      <Menu>
+                        <MenuButton>
+                          <Icon
+                            as={BsThreeDots}
+                            _hover={{ cursor: "pointer" }}
+                            boxSize={6}
+                          />
+                        </MenuButton>
+                        <MenuList>
+                          <MenuItem
+                            px={"1rem"}
+                            display={
+                              !["active", "partial payment"].includes(
+                                item?.status
+                              )
+                                ? "none"
+                                : "flex"
+                            }
+                            gap={"3"}
+                            onClick={() => handleAcceptInvoice(item)}
+                          >
+                            <Icon
+                              as={FaCheck}
+                              boxSize={"4"}
+                              color={"#005D5D"}
+                            />
+                            <Text color={"#005D5D"} fontWeight={"600"}>
+                              Accept Invoice
+                            </Text>
+                          </MenuItem>
+                          <MenuItem
+                            px={"1rem"}
+                            display={
+                              !["active", "partial payment"].includes(
+                                item?.status
+                              )
+                                ? "none"
+                                : "flex"
+                            }
+                            gap={"3"}
+                            onClick={() => handleRejectInvoice(item)}
+                          >
+                            <Icon
+                              as={MdOutlineClose}
+                              boxSize={"4"}
+                              color={"#005D5D"}
+                            />
+                            <Text color={"red.600"} fontWeight={"600"}>
+                              Reject Invoice
+                            </Text>
+                          </MenuItem>
+                          <MenuItem
+                            px={"1rem"}
+                            display={"flex"}
+                            gap={"3"}
+                            onClick={() => {
+                              handleSelectedInvoice(item);
+                            }}
+                          >
+                            <Icon
+                              as={TbFileInvoice}
+                              boxSize={"4"}
+                              color={"#005D5D"}
+                            />
+                            <Text color={"#005D5D"} fontWeight={"600"}>
+                              View Invoice Details
+                            </Text>
+                          </MenuItem>
+                        </MenuList>
+                      </Menu>
+                    </Td>
+                  </Tr>
+                );
+              })}
+            </Tbody>
+          </Table>
+        </TableContainer>
+      </>
+    );
+  }, [processingInvoice])
 
   return (
     <Box mb={{ base: "8rem", lg: "5rem" }}>
@@ -790,110 +1289,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                 rounded={"lg"}
                 mt={"1rem"}
               >
-                <TableContainer>
-                  <Table variant="simple" size={"sm"}>
-                    <Thead>
-                      <Tr>
-                        <Th>Inv. ID</Th>
-                        <Th>School</Th>
-                        <Th>Category</Th>
-                        <Th>Date</Th>
-                        <Th>Amount</Th>
-                        <Th>Balance</Th>
-                        <Th>Status</Th>
-                        <Th></Th>
-                      </Tr>
-                    </Thead>
-                    <Tbody>
-                      {completedInvoice?.map((item, index) => {
-                        return (
-                          <Tr key={index}>
-                            <Td
-                              color={"green.700"}
-                              fontWeight={"bold"}
-                              fontSize={"sm"}
-                            >
-                              {item?.invoiceId}
-                            </Td>
-                            <Td>
-                              <Flex gap={2} alignItems={"center"}>
-                                <Avatar
-                                  src={item?.schoollogo}
-                                  pointerEvents={"none"}
-                                  size={"sm"}
-                                />
-                                <Text fontSize={"sm"} fontWeight={"500"}>
-                                  {item?.schoolname}
-                                </Text>
-                              </Flex>
-                            </Td>
-                            <Td>{item?.category}</Td>
-                            <Td>{item?.createdAt}</Td>
-                            <Td fontWeight={"bold"}>
-                              ₦
-                              {formatNumberWithCommas(
-                                getCompletedInvoiceAmount(item)
-                              )}
-                            </Td>
-                            <Td fontWeight={"bold"}>
-                              {item?.status === "rejected by parent"
-                                ? `-`
-                                : `₦${formatNumberWithCommas(item?.balance)}`}
-                            </Td>
-                            <Td>
-                              <Badge
-                                variant="subtle"
-                                colorScheme={
-                                  item?.status === "active"
-                                    ? "green"
-                                    : item?.status === "rejected by parent"
-                                    ? "red"
-                                    : item?.status === "processing"
-                                    ? "yellow"
-                                    : item?.status === "completed"
-                                    ? "blue"
-                                    : "purple"
-                                }
-                              >
-                                {item?.status}
-                              </Badge>
-                            </Td>
-                            <Td>
-                              <Menu>
-                                <MenuButton>
-                                  <Icon
-                                    as={BsThreeDots}
-                                    _hover={{ cursor: "pointer" }}
-                                    boxSize={6}
-                                  />
-                                </MenuButton>
-                                <MenuList>
-                                  <MenuItem
-                                    px={"1rem"}
-                                    display={"flex"}
-                                    gap={"3"}
-                                    onClick={() => {
-                                      handleSelectedInvoice(item);
-                                    }}
-                                  >
-                                    <Icon
-                                      as={TbFileInvoice}
-                                      boxSize={"4"}
-                                      color={"#005D5D"}
-                                    />
-                                    <Text color={"#005D5D"} fontWeight={"600"}>
-                                      View Invoice Details
-                                    </Text>
-                                  </MenuItem>
-                                </MenuList>
-                              </Menu>
-                            </Td>
-                          </Tr>
-                        );
-                      })}
-                    </Tbody>
-                  </Table>
-                </TableContainer>
+                {renderCompletedInvoices}
               </TabPanel>
 
               <TabPanel
@@ -901,152 +1297,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                 rounded={"lg"}
                 mt={"1rem"}
               >
-                <TableContainer>
-                  <Table variant="simple" size={"sm"}>
-                    <Thead>
-                      <Tr>
-                        <Th>Inv. ID</Th>
-                        <Th>School</Th>
-                        <Th>Category</Th>
-                        <Th>Date</Th>
-                        <Th>Amount</Th>
-                        <Th>Balance</Th>
-                        <Th>Status</Th>
-                        <Th></Th>
-                      </Tr>
-                    </Thead>
-                    <Tbody>
-                      {activeInvoice?.map((item, index) => {
-                        return (
-                          <Tr key={index}>
-                            <Td
-                              color={"green.700"}
-                              fontWeight={"bold"}
-                              fontSize={"sm"}
-                            >
-                              {item?.invoiceId}
-                            </Td>
-                            <Td>
-                              <Flex gap={2} alignItems={"center"}>
-                                <Avatar
-                                  src={item?.schoollogo}
-                                  pointerEvents={"none"}
-                                  size={"sm"}
-                                />
-                                <Text fontSize={"sm"} fontWeight={"500"}>
-                                  {item?.schoolname}
-                                </Text>
-                              </Flex>
-                            </Td>
-                            <Td>{item?.category}</Td>
-                            <Td>{item?.createdAt}</Td>
-                            <Td fontWeight={"bold"}>
-                              ₦{formatNumberWithCommas(item?.amountPaid)}
-                            </Td>
-                            <Td fontWeight={"bold"}>
-                              {item?.status === "rejected by parent"
-                                ? `-`
-                                : `₦${formatNumberWithCommas(item?.balance)}`}
-                            </Td>
-                            <Td>
-                              <Badge
-                                variant="subtle"
-                                colorScheme={
-                                  item?.status === "active"
-                                    ? "green"
-                                    : item?.status === "rejected by parent"
-                                    ? "red"
-                                    : item?.status === "processing"
-                                    ? "yellow"
-                                    : item?.status === "completed"
-                                    ? "blue"
-                                    : "purple"
-                                }
-                              >
-                                {item?.status}
-                              </Badge>
-                            </Td>
-                            <Td>
-                              <Menu>
-                                <MenuButton>
-                                  <Icon
-                                    as={BsThreeDots}
-                                    _hover={{ cursor: "pointer" }}
-                                    boxSize={6}
-                                  />
-                                </MenuButton>
-                                <MenuList>
-                                  <MenuItem
-                                    px={"1rem"}
-                                    display={"flex"}
-                                    gap={"3"}
-                                    onClick={() => handleAcceptInvoice(item)}
-                                  >
-                                    <Icon
-                                      as={FaCheck}
-                                      boxSize={"4"}
-                                      color={"#005D5D"}
-                                    />
-                                    <Text color={"#005D5D"} fontWeight={"600"}>
-                                      Accept Invoice
-                                    </Text>
-                                  </MenuItem>
-                                  <MenuItem
-                                    px={"1rem"}
-                                    display={"flex"}
-                                    gap={"3"}
-                                    onClick={() => handleRejectInvoice(item)}
-                                  >
-                                    <Icon
-                                      as={MdOutlineClose}
-                                      boxSize={"4"}
-                                      color={"red.600"}
-                                    />
-                                    <Text color={"red.600"} fontWeight={"600"}>
-                                      Reject Invoice
-                                    </Text>
-                                  </MenuItem>
-                                  <MenuItem
-                                    px={"1rem"}
-                                    display={"flex"}
-                                    gap={"3"}
-                                    onClick={() => handleOverpaidInvoice(item)}
-                                  >
-                                    <Icon
-                                      as={MdOutlinePayment}
-                                      boxSize={"4"}
-                                      color={"#005D5D"}
-                                    />
-                                    <Text color={"#005D5D"} fontWeight={"600"}>
-                                      Pay with overpaid balance
-                                    </Text>
-                                  </MenuItem>
-                                  <MenuItem
-                                    px={"1rem"}
-                                    display={"flex"}
-                                    gap={"3"}
-                                    onClick={() => {
-                                      handleSelectedInvoice(item);
-                                    }}
-                                  >
-                                    <Icon
-                                      as={TbFileInvoice}
-                                      boxSize={"4"}
-                                      color={"#005D5D"}
-                                    />
-                                    <Text color={"#005D5D"} fontWeight={"600"}>
-                                      View Invoice Details
-                                    </Text>
-                                  </MenuItem>
-                                </MenuList>
-                              </Menu>
-                            </Td>
-                          </Tr>
-                        );
-                      })}
-                    </Tbody>
-                  </Table>
-                </TableContainer>
+                {renderActiveInvoices}
               </TabPanel>
 
               <TabPanel
@@ -1054,107 +1305,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                 rounded={"lg"}
                 mt={"1rem"}
               >
-                <TableContainer>
-                  <Table variant="simple" size={"sm"}>
-                    <Thead>
-                      <Tr>
-                        <Th>Inv. ID</Th>
-                        <Th>School</Th>
-                        <Th>Category</Th>
-                        <Th>Date</Th>
-                        <Th>Amount</Th>
-                        <Th>Balance</Th>
-                        <Th>Status</Th>
-                        <Th></Th>
-                      </Tr>
-                    </Thead>
-                    <Tbody>
-                      {rejectedInvoice?.map((item, index) => {
-                        return (
-                          <Tr key={index}>
-                            <Td
-                              color={"green.700"}
-                              fontWeight={"bold"}
-                              fontSize={"sm"}
-                            >
-                              {item?.invoiceId}
-                            </Td>
-                            <Td>
-                              <Flex gap={2} alignItems={"center"}>
-                                <Avatar
-                                  src={item?.schoollogo}
-                                  pointerEvents={"none"}
-                                  size={"sm"}
-                                />
-                                <Text fontSize={"sm"} fontWeight={"500"}>
-                                  {item?.schoolname}
-                                </Text>
-                              </Flex>
-                            </Td>
-                            <Td>{item?.category}</Td>
-                            <Td>{item?.createdAt}</Td>
-                            <Td fontWeight={"bold"}>
-                              ₦{formatNumberWithCommas(item?.amountPaid)}
-                            </Td>
-                            <Td fontWeight={"bold"}>
-                              {item?.status === "rejected by parent"
-                                ? `-`
-                                : `₦${formatNumberWithCommas(item?.balance)}`}
-                            </Td>
-                            <Td>
-                              <Badge
-                                variant="subtle"
-                                colorScheme={
-                                  item?.status === "active"
-                                    ? "green"
-                                    : item?.status === "rejected by parent"
-                                    ? "red"
-                                    : item?.status === "processing"
-                                    ? "yellow"
-                                    : item?.status === "completed"
-                                    ? "blue"
-                                    : "purple"
-                                }
-                              >
-                                {item?.status}
-                              </Badge>
-                            </Td>
-                            <Td>
-                              <Menu>
-                                <MenuButton>
-                                  <Icon
-                                    as={BsThreeDots}
-                                    _hover={{ cursor: "pointer" }}
-                                    boxSize={6}
-                                  />
-                                </MenuButton>
-                                <MenuList>
-                                  <MenuItem
-                                    px={"1rem"}
-                                    display={"flex"}
-                                    gap={"3"}
-                                    onClick={() => {
-                                      handleSelectedInvoice(item);
-                                    }}
-                                  >
-                                    <Icon
-                                      as={TbFileInvoice}
-                                      boxSize={"4"}
-                                      color={"#005D5D"}
-                                    />
-                                    <Text color={"#005D5D"} fontWeight={"600"}>
-                                      View Invoice Details
-                                    </Text>
-                                  </MenuItem>
-                                </MenuList>
-                              </Menu>
-                            </Td>
-                          </Tr>
-                        );
-                      })}
-                    </Tbody>
-                  </Table>
-                </TableContainer>
+                {renderRejectedInvoices}
               </TabPanel>
 
               <TabPanel
@@ -1162,149 +1313,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                 rounded={"lg"}
                 mt={"1rem"}
               >
-                <TableContainer>
-                  <Table variant="simple" size={"sm"}>
-                    <Thead>
-                      <Tr>
-                        <Th>Inv. ID</Th>
-                        <Th>School</Th>
-                        <Th>Category</Th>
-                        <Th>Date</Th>
-                        <Th>Amount</Th>
-                        <Th>Balance</Th>
-                        <Th>Status</Th>
-                        <Th></Th>
-                      </Tr>
-                    </Thead>
-                    <Tbody>
-                      {processingInvoice?.map((item, index) => {
-                        return (
-                          <Tr key={index}>
-                            <Td
-                              color={"green.700"}
-                              fontWeight={"bold"}
-                              fontSize={"sm"}
-                            >
-                              {item?.invoiceId}
-                            </Td>
-                            <Td>
-                              <Flex gap={2} alignItems={"center"}>
-                                <Avatar
-                                  src={item?.schoollogo}
-                                  pointerEvents={"none"}
-                                  size={"sm"}
-                                />
-                                <Text fontSize={"sm"} fontWeight={"500"}>
-                                  {item?.schoolname}
-                                </Text>
-                              </Flex>
-                            </Td>
-                            <Td>{item?.category}</Td>
-                            <Td>{item?.createdAt}</Td>
-                            <Td fontWeight={"bold"}>
-                              ₦{formatNumberWithCommas(item?.amountPaid)}
-                            </Td>
-                            <Td fontWeight={"bold"}>
-                              {item?.status === "rejected by parent"
-                                ? `-`
-                                : `₦${formatNumberWithCommas(item?.balance)}`}
-                            </Td>
-                            <Td>
-                              <Badge
-                                variant="subtle"
-                                colorScheme={
-                                  item?.status === "active"
-                                    ? "green"
-                                    : item?.status === "rejected by parent"
-                                    ? "red"
-                                    : item?.status === "processing"
-                                    ? "yellow"
-                                    : item?.status === "completed"
-                                    ? "blue"
-                                    : "purple"
-                                }
-                              >
-                                {item?.status}
-                              </Badge>
-                            </Td>
-                            <Td>
-                              <Menu>
-                                <MenuButton>
-                                  <Icon
-                                    as={BsThreeDots}
-                                    _hover={{ cursor: "pointer" }}
-                                    boxSize={6}
-                                  />
-                                </MenuButton>
-                                <MenuList>
-                                  <MenuItem
-                                    px={"1rem"}
-                                    display={
-                                      !["active", "partial payment"].includes(
-                                        item?.status
-                                      )
-                                        ? "none"
-                                        : "flex"
-                                    }
-                                    gap={"3"}
-                                    onClick={() => handleAcceptInvoice(item)}
-                                  >
-                                    <Icon
-                                      as={FaCheck}
-                                      boxSize={"4"}
-                                      color={"#005D5D"}
-                                    />
-                                    <Text color={"#005D5D"} fontWeight={"600"}>
-                                      Accept Invoice
-                                    </Text>
-                                  </MenuItem>
-                                  <MenuItem
-                                    px={"1rem"}
-                                    display={
-                                      !["active", "partial payment"].includes(
-                                        item?.status
-                                      )
-                                        ? "none"
-                                        : "flex"
-                                    }
-                                    gap={"3"}
-                                    onClick={() => handleRejectInvoice(item)}
-                                  >
-                                    <Icon
-                                      as={MdOutlineClose}
-                                      boxSize={"4"}
-                                      color={"#005D5D"}
-                                    />
-                                    <Text color={"red.600"} fontWeight={"600"}>
-                                      Reject Invoice
-                                    </Text>
-                                  </MenuItem>
-                                  <MenuItem
-                                    px={"1rem"}
-                                    display={"flex"}
-                                    gap={"3"}
-                                    onClick={() => {
-                                      handleSelectedInvoice(item);
-                                    }}
-                                  >
-                                    <Icon
-                                      as={TbFileInvoice}
-                                      boxSize={"4"}
-                                      color={"#005D5D"}
-                                    />
-                                    <Text color={"#005D5D"} fontWeight={"600"}>
-                                      View Invoice Details
-                                    </Text>
-                                  </MenuItem>
-                                </MenuList>
-                              </Menu>
-                            </Td>
-                          </Tr>
-                        );
-                      })}
-                    </Tbody>
-                  </Table>
-                </TableContainer>
+                {renderProcessingInvoices}
               </TabPanel>
             </TabPanels>
           </Tabs>
