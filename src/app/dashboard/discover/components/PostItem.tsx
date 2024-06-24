@@ -105,12 +105,7 @@ const PostItem: FC<PostItemProps> = ({ profile, currentIndex }) => {
   const { isOpen: isSchoolModalOpen, onOpen, onClose } = useDisclosure();
 
   return (
-    // <ScaleFade initialScale={0.6} in={isOpen}>
         <Box
-          // border={"1px solid #00000060"}
-          // rounded={"xl"}
-          // p={"0.4rem"}
-          // maxW={{ base: "300px", md: "400px" }}
           _hover={{ cursor: "pointer" }}
         >
           <SchoolDetailsModal
@@ -123,7 +118,7 @@ const PostItem: FC<PostItemProps> = ({ profile, currentIndex }) => {
               rounded={"2xl"}
               alt="postItem"
               src={imageLinks[0]}
-              h={{ base: "250px", xl: "250px" }}
+              h={{ base: "200px", xl: "250px" }}
               objectFit={"cover"}
               w={"full"}
               onClick={() => {
@@ -193,7 +188,6 @@ const PostItem: FC<PostItemProps> = ({ profile, currentIndex }) => {
             </Flex>
           </Flex>
         </Box>
-    // </ScaleFade>
   );
 };
 
