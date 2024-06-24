@@ -75,7 +75,6 @@ const FilterModal = dynamic(() => import("./components/FilterModal"));
 interface DiscoverProps {}
 
 const Discover: FC<DiscoverProps> = ({}) => {
-  const { isOpen: isScaleOpen, onToggle } = useDisclosure();
   const { isOpen, onClose, onOpen } = useDisclosure();
   const { parentData } = useUserAPI();
   const { filteredPosts, handleFilterChange, filterParams, applyFilters } =
@@ -123,7 +122,7 @@ const Discover: FC<DiscoverProps> = ({}) => {
     }
     return (
       <SimpleGrid columns={[1, null, 2, 4]} spacing="15px" px={0} mx={0}>
-        {filteredPosts.map((item, index) => (
+        {filteredPosts?.map((item, index) => (
           <PostItem key={index} profile={item} currentIndex={index} />
         ))}
       </SimpleGrid>
@@ -159,7 +158,7 @@ const Discover: FC<DiscoverProps> = ({}) => {
     }
     return (
       <SimpleGrid columns={[1, null, 2, 4]} spacing="15px">
-        {likedPosts.map((item, index) => (
+        {likedPosts?.map((item, index) => (
           <PostItem key={index} profile={item} currentIndex={index} />
         ))}
       </SimpleGrid>
