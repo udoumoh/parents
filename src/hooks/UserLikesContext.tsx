@@ -4,11 +4,11 @@ import React, {
   useState,
   FC,
   useEffect,
+  useCallback,
 } from "react";
-import { useMutation } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import { LIKE_PROFILE, UNLIKE_PROFILE } from "@/gql/mutations";
 import { GET_SCHOOLS } from "@/gql/queries";
-import { useQuery } from "@apollo/client";
 
 interface SchoolProfilesProps {
   genderType: string;
@@ -45,7 +45,6 @@ interface SchoolProfilesProps {
   };
 }
 
-
 interface UserLikesContextProps {
   likePost: (postId: number) => void;
   unlikePost: (postId: number) => void;
@@ -78,17 +77,17 @@ interface UserLikesApiProviderProps {
   children: React.ReactNode;
 }
 
-
 const UserLikesContext = createContext<UserLikesContextProps | undefined>(
   undefined
 );
-
 
 export const UserLikesAPIProvider: FC<UserLikesApiProviderProps> = ({
   children,
 }) => {
   const { data: getSchools } = useQuery(GET_SCHOOLS);
-  const [schoolProfiles, setSchoolProfiles] = useState([]);
+  const [schoolProfiles, setSchoolProfiles] = useState<SchoolProfilesProps[]>(
+    []
+  );
   const [activeProfileIndex, setActiveProfileIndex] = useState(0);
   const [likedPosts, setLikedPosts] = useState<{ [postId: number]: boolean }>(
     {}
@@ -98,11 +97,7 @@ export const UserLikesAPIProvider: FC<UserLikesApiProviderProps> = ({
   }>({});
   const [likeMutation] = useMutation(LIKE_PROFILE);
   const [unlikeMutation] = useMutation(UNLIKE_PROFILE);
-  const [filteredPosts, setFilteredPosts] = useState<SchoolProfilesProps[]>([])
-
-  useEffect(() => {
-  setFilteredPosts(schoolProfiles);
-  }, [schoolProfiles]);
+  const [filteredPosts, setFilteredPosts] = useState<SchoolProfilesProps[]>([]);
 
   const [filterParams, setFilterParams] = useState({
     type: "",
@@ -115,14 +110,18 @@ export const UserLikesAPIProvider: FC<UserLikesApiProviderProps> = ({
     priceRange: "",
   });
 
-  const handleFilterChange = (filterName: any, value: any) => {
-    setFilterParams({
-      ...filterParams,
-      [filterName]: value,
-    });
-  };
+  useEffect(() => {
+    setFilteredPosts(schoolProfiles);
+  }, [schoolProfiles]);
 
-  const applyFilters = () => {
+  const handleFilterChange = useCallback((filterName: any, value: any) => {
+    setFilterParams((prev) => ({
+      ...prev,
+      [filterName]: value,
+    }));
+  }, []);
+
+  const applyFilters = useCallback(() => {
     let filteredResults: SchoolProfilesProps[] = schoolProfiles;
 
     if (filterParams?.type) {
@@ -148,8 +147,7 @@ export const UserLikesAPIProvider: FC<UserLikesApiProviderProps> = ({
     if (filterParams?.state) {
       filteredResults = filteredResults?.filter(
         (post) =>
-          post?.state?.toLowerCase() ===
-          filterParams?.state?.toLowerCase()
+          post?.state?.toLowerCase() === filterParams?.state?.toLowerCase()
       );
     }
     if (filterParams?.lga) {
@@ -159,85 +157,96 @@ export const UserLikesAPIProvider: FC<UserLikesApiProviderProps> = ({
       );
     }
     if (filterParams?.address) {
-      filteredResults = filteredResults?.filter(
-        (post) =>
-          post?.address?.toLowerCase().includes(filterParams?.address?.toLowerCase())
+      filteredResults = filteredResults?.filter((post) =>
+        post?.address
+          ?.toLowerCase()
+          .includes(filterParams?.address?.toLowerCase())
       );
     }
     if (filterParams?.schoolSize) {
       filteredResults = filteredResults?.filter(
-        (post) => Number(post?.studentPerClassroom) <= Number(filterParams?.schoolSize)
+        (post) =>
+          Number(post?.studentPerClassroom) <= Number(filterParams?.schoolSize)
       );
     }
     if (filterParams?.priceRange) {
       filteredResults = filteredResults?.filter(
-        (post) =>
-          post?.priceRange === filterParams?.priceRange
+        (post) => post?.priceRange === filterParams?.priceRange
       );
     }
 
     setFilteredPosts(filteredResults);
-  };
+  }, [filterParams, schoolProfiles]);
 
-  const likePost = async (postId: number) => {
+  const likePost = useCallback(
+    async (postId: number) => {
+      await likeMutation({
+        variables: {
+          schoolId: postId,
+        },
+      });
 
-    await likeMutation({
-      variables: {
-        schoolId: postId,
-      },
-    });
+      setLikedPosts((prevState) => ({
+        ...prevState,
+        [postId]: true,
+      }));
 
+      setNumberOfLikes((prevState) => ({
+        ...prevState,
+        [postId]: (prevState[postId] || 0) + 1,
+      }));
+    },
+    [likeMutation]
+  );
 
-    setLikedPosts((prevState) => ({
-      ...prevState,
-      [postId]: true,
-    }));
+  const unlikePost = useCallback(
+    async (postId: number) => {
+      await unlikeMutation({
+        variables: {
+          schoolId: postId,
+        },
+      });
 
-    setNumberOfLikes((prevState) => ({
-      ...prevState,
-      [postId]: (prevState[postId] || 0) + 1,
-    }));
-  };
+      setLikedPosts((prevState) => ({
+        ...prevState,
+        [postId]: false,
+      }));
 
-  const unlikePost = async (postId: number) => {
-    // Perform unlike mutation
-    await unlikeMutation({
-      variables: {
-        schoolId: postId,
-      },
-    });
+      setNumberOfLikes((prevState) => ({
+        ...prevState,
+        [postId]: Math.max((prevState[postId] || 0) - 1, 0),
+      }));
+    },
+    [unlikeMutation]
+  );
 
+  const isPostLiked = useCallback(
+    (postId: number) => likedPosts[postId] || false,
+    [likedPosts]
+  );
+  const getNumberOfLikes = useCallback(
+    (postId: number) => numberOfLikes[postId] || 0,
+    [numberOfLikes]
+  );
 
-    setLikedPosts((prevState) => ({
-      ...prevState,
-      [postId]: false,
-    }));
-
-    setNumberOfLikes((prevState) => ({
-      ...prevState,
-      [postId]: Math.max((prevState[postId] || 0) - 1, 0),
-    }));
-  };
-
-  const isPostLiked = (postId: number) => likedPosts[postId] || false;
-  const getNumberOfLikes = (postId: number) => numberOfLikes[postId] || 0;
+  const fetchSchoolProfiles = useCallback(async () => {
+    try {
+      const response = await getSchools;
+      if (response) {
+        const filteredProfiles = response?.getSchools?.filter(
+          (item: any) =>
+            item?.schoolMedia !== null && item?.schoolMedia?.length > 0
+        );
+        setSchoolProfiles(filteredProfiles);
+      }
+    } catch (err: any) {
+      console.log(err?.message);
+    }
+  }, [getSchools]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await getSchools;
-        if (response) {
-          const filteredProfiles = response?.getSchools?.filter(
-            (item: any) => item?.schoolMedia !== null && item?.schoolMedia?.length > 0
-          );
-          setSchoolProfiles(filteredProfiles);
-        }
-      } catch (err: any) {
-        console.log(err?.message);
-      }
-    };
-    fetchData();
-  }, [getSchools]);
+    fetchSchoolProfiles();
+  }, [fetchSchoolProfiles]);
 
   const contextValue: UserLikesContextProps = {
     likePost,

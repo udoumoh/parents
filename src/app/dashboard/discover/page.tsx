@@ -23,6 +23,7 @@ import {
   TabIndicator,
   SimpleGrid,
   Center,
+  ScaleFade,
 } from "@chakra-ui/react";
 import { RiSchoolLine, RiGenderlessLine } from "react-icons/ri";
 import { IoFilterOutline } from "react-icons/io5";
@@ -74,6 +75,7 @@ const FilterModal = dynamic(() => import("./components/FilterModal"));
 interface DiscoverProps {}
 
 const Discover: FC<DiscoverProps> = ({}) => {
+  const { isOpen: isScaleOpen, onToggle } = useDisclosure();
   const { isOpen, onClose, onOpen } = useDisclosure();
   const { parentData } = useUserAPI();
   const { filteredPosts, handleFilterChange, filterParams, applyFilters } =
@@ -88,7 +90,6 @@ const Discover: FC<DiscoverProps> = ({}) => {
     setLikedPosts(likedPosts);
   }, [filteredPosts, parentData]);
 
-  // Use useEffect to trigger the memoized function
   useEffect(() => {
     filterLikedPosts();
   }, [filterLikedPosts]);
@@ -121,7 +122,7 @@ const Discover: FC<DiscoverProps> = ({}) => {
       );
     }
     return (
-      <SimpleGrid columns={[1, null, 2, 4]} spacing="15px">
+      <SimpleGrid columns={[1, null, 2, 4]} spacing="15px" px={0} mx={0}>
         {filteredPosts.map((item, index) => (
           <PostItem key={index} profile={item} currentIndex={index} />
         ))}
@@ -490,7 +491,9 @@ const Discover: FC<DiscoverProps> = ({}) => {
               borderRadius="1px"
             />
             <TabPanels>
-              <TabPanel px={0}>{renderFilteredPosts}</TabPanel>
+              <TabPanel px={0}>
+                {renderFilteredPosts}
+              </TabPanel>
               <TabPanel px={0}>{renderLikedPosts}</TabPanel>
             </TabPanels>
           </Tabs>

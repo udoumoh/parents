@@ -17,7 +17,6 @@ import { IoCopy } from "react-icons/io5";
 import dynamic from "next/dynamic";
 import { useUserAPI } from "@/hooks/UserContext";
 import { useUserLikesAPI } from "@/hooks/UserLikesContext";
-import { useRouter } from "next/navigation";
 import { capitalizeFirstLetterOfEachWord } from "@/helpers/capitalizeFirstLetter";
 
 const SchoolDetailsModal = dynamic(() => import("./SchoolDetailsModal"))
@@ -61,7 +60,6 @@ interface PostItemProps {
 }
 
 const PostItem: FC<PostItemProps> = ({ profile, currentIndex }) => {
-  const router = useRouter()
   const { isOpen, onToggle } = useDisclosure();
   const {
     likePost,
@@ -104,20 +102,15 @@ const PostItem: FC<PostItemProps> = ({ profile, currentIndex }) => {
     }
   }, [profile, parentData, setLikedPosts]);
 
-  useEffect(()=>{
-    onToggle()
-  }, [])
-
   const { isOpen: isSchoolModalOpen, onOpen, onClose } = useDisclosure();
 
   return (
-    <ScaleFade initialScale={0.6} in={isOpen}>
-      <Skeleton isLoaded={profile?.logoImgUrl === undefined ? false : true}>
+    // <ScaleFade initialScale={0.6} in={isOpen}>
         <Box
-          border={"1px solid #00000060"}
-          rounded={"xl"}
-          p={"0.4rem"}
-          maxW={{ base: "300px", md: "400px" }}
+          // border={"1px solid #00000060"}
+          // rounded={"xl"}
+          // p={"0.4rem"}
+          // maxW={{ base: "300px", md: "400px" }}
           _hover={{ cursor: "pointer" }}
         >
           <SchoolDetailsModal
@@ -127,10 +120,10 @@ const PostItem: FC<PostItemProps> = ({ profile, currentIndex }) => {
           />
           <Box position={"relative"}>
             <Image
-              rounded={"md"}
+              rounded={"2xl"}
               alt="postItem"
               src={imageLinks[0]}
-              h={{ base: "250px", xl: "350px" }}
+              h={{ base: "250px", xl: "250px" }}
               objectFit={"cover"}
               w={"full"}
               onClick={() => {
@@ -200,8 +193,7 @@ const PostItem: FC<PostItemProps> = ({ profile, currentIndex }) => {
             </Flex>
           </Flex>
         </Box>
-      </Skeleton>
-    </ScaleFade>
+    // </ScaleFade>
   );
 };
 
