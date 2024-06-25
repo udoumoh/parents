@@ -61,9 +61,9 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
         <Box
           width={"full"}
           rounded={"2xl"}
-          border={"1px solid #449c7c"}
+          // border={"1px solid #449c7c"}
           overflow={"hidden"}
-          backgroundColor={"#F4FFFB"}
+          backgroundColor={"#006769"}
           p={"1rem"}
           bgSize={"cover"}
           my={{ base: "10px", md: "0" }}
@@ -82,7 +82,7 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
                 } ${currentWardProfile?.lastName}`}
               />
               <Box lineHeight={"30px"}>
-                <Text fontWeight={"600"} fontSize={{ base: "lg", lg: "2xl" }}>
+                <Text fontWeight={"600"} fontSize={{ base: "lg", lg: "2xl" }} color={"#FFFFFF"}>
                   {`${currentWardProfile?.firstName || ""} ${
                     currentWardProfile?.middleName || ""
                   }
@@ -111,7 +111,7 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
             >
               <Grid gap={1}>
                 <Text
-                  color={"#449c7c"}
+                  color={"#FFFFFF"}
                   fontSize={{ base: "xs", md: "sm", xl: "lg" }}
                   fontWeight={"600"}
                 >
@@ -127,7 +127,7 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
               </Grid>
               <Grid gap={1}>
                 <Text
-                  color={"#449c7c"}
+                  color={"#FFFFFF"}
                   fontSize={{ base: "xs", md: "sm", xl: "lg" }}
                   fontWeight={"600"}
                 >
@@ -143,7 +143,7 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
               </Grid>
               <Grid gap={1}>
                 <Text
-                  color={"#449c7c"}
+                  color={"#FFFFFF"}
                   fontSize={{ base: "xs", md: "sm", xl: "lg" }}
                   fontWeight={"600"}
                 >
@@ -159,7 +159,7 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
               </Grid>
               <Grid gap={1} display={{ base: "none", md: "grid" }}>
                 <Text
-                  color={"#449c7c"}
+                  color={"#FFFFFF"}
                   fontSize={{ base: "xs", md: "sm", xl: "lg" }}
                   fontWeight={"600"}
                 >
