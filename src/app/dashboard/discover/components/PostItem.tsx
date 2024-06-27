@@ -125,6 +125,7 @@ const PostItem: FC<PostItemProps> = ({ profile, currentIndex }) => {
                 onOpen();
                 setActiveProfileIndex(currentIndex);
               }}
+              loading="lazy"
             />
             <Icon
               as={IoCopy}
