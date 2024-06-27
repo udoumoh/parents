@@ -1,8 +1,13 @@
 "use client";
-import { useEffect } from "react";
+import { useEffect, FC } from "react";
 import { useUserAPI } from "@/hooks/UserContext";
+import { Providers } from "./providers";
 
-const Home = () => {
+interface HomeProps {
+  children: React.ReactNode
+}
+
+const Home: FC<HomeProps> = ({children}) => {
   const {parentData} = useUserAPI();
 
   useEffect(() => {
@@ -13,7 +18,7 @@ const Home = () => {
     }
   }, [parentData]);
 
-  return null;
+  return <Providers>{children}</Providers>
 };
 
 export default Home;

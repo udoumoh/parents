@@ -1,9 +1,10 @@
-'use client'
-import { FC, useState, useEffect } from 'react'
-import { Box, IconButton, useBreakpointValue, Image } from "@chakra-ui/react";
+"use client";
+import { FC } from "react";
+import { Box, IconButton, useBreakpointValue } from "@chakra-ui/react";
 import { BiLeftArrowAlt, BiRightArrowAlt } from "react-icons/bi";
-import Slider from 'react-slick'
-import VideoPlayer from './VideoPlayer';
+import Slider from "react-slick";
+import Image from "next/image";
+import VideoPlayer from "./VideoPlayer";
 
 const settings = {
   dots: true,
@@ -20,28 +21,27 @@ interface CarouselProps {
   setSlider: any;
 }
 
-const Carousel: FC<CarouselProps> = ({media, slider, setSlider}) => {
-    
-    const top = useBreakpointValue({ base: "50%", md: "50%" });
-    const side = useBreakpointValue({ base: "10%", md: "10px" });
-    const videoLinks: string [] = [];
-    const imageLinks: string [] = []
+const Carousel: FC<CarouselProps> = ({ media, slider, setSlider }) => {
+  const top = useBreakpointValue({ base: "50%", md: "50%" });
+  const side = useBreakpointValue({ base: "10%", md: "10px" });
+  const videoLinks: string[] = [];
+  const imageLinks: string[] = [];
 
-    media?.forEach((link) => {
-      if (
-        link.endsWith(".mp4") ||
-        link.endsWith(".webm") ||
-        link.endsWith(".mov")
-      ) {
-        videoLinks.push(link);
-      } else if (
-        link.endsWith(".jpg") ||
-        link.endsWith(".jpeg") ||
-        link.endsWith(".png")
-      ) {
-        imageLinks.push(link);
-      }
-    });
+  media?.forEach((link) => {
+    if (
+      link.endsWith(".mp4") ||
+      link.endsWith(".webm") ||
+      link.endsWith(".mov")
+    ) {
+      videoLinks.push(link);
+    } else if (
+      link.endsWith(".jpg") ||
+      link.endsWith(".jpeg") ||
+      link.endsWith(".png")
+    ) {
+      imageLinks.push(link);
+    }
+  });
 
   return (
     <Box position={"relative"} width={"full"}>
@@ -67,7 +67,9 @@ const Carousel: FC<CarouselProps> = ({media, slider, setSlider}) => {
         size={"sm"}
         transform={"translate(0%, -50%)"}
         zIndex={2}
-        onClick={() => {slider?.slickPrev()}}
+        onClick={() => {
+          slider?.slickPrev();
+        }}
         display={{ base: "none", md: "flex" }}
       >
         <BiLeftArrowAlt size={18} />
@@ -84,7 +86,9 @@ const Carousel: FC<CarouselProps> = ({media, slider, setSlider}) => {
         top={top}
         transform={"translate(0%, -50%)"}
         zIndex={2}
-        onClick={() => {slider?.slickNext()}}
+        onClick={() => {
+          slider?.slickNext();
+        }}
         display={{ base: "none", md: "flex" }}
       >
         <BiRightArrowAlt size={18} />
@@ -94,7 +98,7 @@ const Carousel: FC<CarouselProps> = ({media, slider, setSlider}) => {
         {imageLinks?.map((url, index) => (
           <Box
             key={index}
-            height={{ base: "2xs", md: "lg" }}
+            height={{ base: "300px", md: "400px" }}
             position="relative"
             backgroundColor={"#FFFFFF55"}
             backdropFilter={"blur(6px)"}
@@ -111,14 +115,14 @@ const Carousel: FC<CarouselProps> = ({media, slider, setSlider}) => {
               filter="blur(10px)"
               zIndex={1}
             />
-            <Image
-              src={url}
-              w={"100%"}
-              h={"100%"}
-              objectFit={"contain"}
-              position="relative"
-              zIndex={2}
-            />
+            <Box position="relative" w="100%" h="100%" zIndex={2}>
+              <Image
+                src={url}
+                layout="fill"
+                objectFit="contain"
+                alt={`image-${index}`}
+              />
+            </Box>
           </Box>
         ))}
         {videoLinks?.map((url, index) => (
@@ -127,6 +131,6 @@ const Carousel: FC<CarouselProps> = ({media, slider, setSlider}) => {
       </Slider>
     </Box>
   );
-}
+};
 
-export default Carousel
+export default Carousel;

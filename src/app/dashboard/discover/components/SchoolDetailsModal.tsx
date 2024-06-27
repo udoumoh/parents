@@ -88,11 +88,10 @@ const SchoolDetailsModal: FC<SchoolDetailsModalProps> = ({
 
   return (
     <Box>
-      
       <Modal
         isOpen={isOpen}
         onClose={onClose}
-        size={{ base: "xs", sm: "lg", md: "2xl" }}
+        size={{ base: "full", sm: "lg", md: "2xl", lg: "4xl" }}
       >
         <ComposeMessage
           isOpen={isComposeModalOpen}
@@ -128,66 +127,17 @@ const SchoolDetailsModal: FC<SchoolDetailsModalProps> = ({
           />
           <ModalBody p={0}>
             <Box px={"0"}>
-              <Carousel media={profile?.schoolMedia} slider={slider} setSlider={setSlider}/>
-              <Flex
-                display={{ base: "none", md: "flex" }}
-                mt={"1.5rem"}
-                px={"1rem"}
-                alignItems={"center"}
-                justifyContent={"space-between"}
-                gap={2}
-              >
-                <Flex gap={2} alignItems={"center"}>
-                  <Avatar src={profile?.logoImgUrl} />
-                  <Flex flexDir={"column"} justifyContent={"space-between"}>
-                    <Text fontSize={"sm"} fontWeight={"bold"}>
-                      {capitalizeFirstLetterOfEachWord(profile?.schoolName)}
-                    </Text>
-                    <Flex alignItems={"center"} gap={2}>
-                      <Text fontSize={"sm"}>{profile?.state}, Nigeria</Text>
-                      <Tooltip label="This school is not currently utilizing the Greynote School Management Application and is only on the Discover plan.">
-                        <Badge
-                          variant="solid"
-                          colorScheme="red"
-                          display={
-                            profile?.creator?.admin?.plan?.includes("Discover")
-                              ? "block"
-                              : "none"
-                          }
-                        >
-                          Discover
-                        </Badge>
-                      </Tooltip>
-                    </Flex>
-                  </Flex>
-                </Flex>
-                <Flex gap={2} alignItems={"center"}>
-                  <Icon
-                    as={isPostLiked(profile?.id) ? IoMdHeart : IoMdHeartEmpty}
-                    onClick={handleToggleLike}
-                    color={isPostLiked(profile?.id) ? "red.500" : "#00000070"}
-                    boxSize={7}
-                    transition="transform 0.2s ease-in-out"
-                    _hover={{
-                      cursor: "pointer",
-                      transform: "scale(1.1)",
-                      transition: "0.2s",
-                    }}
-                  />
-                  <Button
-                    leftIcon={<MdOutlineMailOutline size={18} />}
-                    colorScheme="teal"
-                    size={"sm"}
-                    onClick={onComposeModalOpen}
-                  >
-                    Send a Message
-                  </Button>
-                </Flex>
-              </Flex>
+              <Carousel
+                media={profile?.schoolMedia}
+                slider={slider}
+                setSlider={setSlider}
+              />
 
-              <Box px={"1rem"} display={{ base: "block", md: "none" }}>
+              <Box>
                 <Flex
+                  display={{ base: "none", md: "flex" }}
                   mt={"1.5rem"}
+                  px={"1rem"}
                   alignItems={"center"}
                   justifyContent={"space-between"}
                   gap={2}
@@ -231,35 +181,97 @@ const SchoolDetailsModal: FC<SchoolDetailsModalProps> = ({
                         transition: "0.2s",
                       }}
                     />
+                    <Button
+                      leftIcon={<MdOutlineMailOutline size={18} />}
+                      colorScheme="teal"
+                      size={"sm"}
+                      onClick={onComposeModalOpen}
+                    >
+                      Send a Message
+                    </Button>
                   </Flex>
                 </Flex>
-                <Button
-                  mt={"0.8rem"}
-                  backgroundColor={"#005D5D"}
-                  size={"xs"}
-                  _hover={{ backgroundColor: "#007C7B" }}
-                  color={"#fff"}
-                  onClick={onComposeModalOpen}
+
+                <Box px={"1rem"} display={{ base: "block", md: "none" }}>
+                  <Flex
+                    mt={"1.5rem"}
+                    alignItems={"center"}
+                    justifyContent={"space-between"}
+                    gap={2}
+                  >
+                    <Flex gap={2} alignItems={"center"}>
+                      <Avatar src={profile?.logoImgUrl} />
+                      <Flex flexDir={"column"} justifyContent={"space-between"}>
+                        <Text fontSize={"sm"} fontWeight={"bold"}>
+                          {capitalizeFirstLetterOfEachWord(profile?.schoolName)}
+                        </Text>
+                        <Flex alignItems={"center"} gap={2}>
+                          <Text fontSize={"sm"}>{profile?.state}, Nigeria</Text>
+                          <Tooltip label="This school is not currently utilizing the Greynote School Management Application and is only on the Discover plan.">
+                            <Badge
+                              variant="solid"
+                              colorScheme="red"
+                              display={
+                                profile?.creator?.admin?.plan?.includes(
+                                  "Discover"
+                                )
+                                  ? "block"
+                                  : "none"
+                              }
+                            >
+                              Discover
+                            </Badge>
+                          </Tooltip>
+                        </Flex>
+                      </Flex>
+                    </Flex>
+                    <Flex gap={2} alignItems={"center"}>
+                      <Icon
+                        as={
+                          isPostLiked(profile?.id) ? IoMdHeart : IoMdHeartEmpty
+                        }
+                        onClick={handleToggleLike}
+                        color={
+                          isPostLiked(profile?.id) ? "red.500" : "#00000070"
+                        }
+                        boxSize={7}
+                        transition="transform 0.2s ease-in-out"
+                        _hover={{
+                          cursor: "pointer",
+                          transform: "scale(1.1)",
+                          transition: "0.2s",
+                        }}
+                      />
+                    </Flex>
+                  </Flex>
+                  <Button
+                    mt={"0.8rem"}
+                    backgroundColor={"#005D5D"}
+                    size={"xs"}
+                    _hover={{ backgroundColor: "#007C7B" }}
+                    color={"#fff"}
+                    onClick={onComposeModalOpen}
+                  >
+                    Send a Message
+                  </Button>
+                </Box>
+                <Box
+                  px={"1.5rem"}
+                  mt={"2.5rem"}
+                  height={"160px"}
+                  overflowY={"auto"}
                 >
-                  Send a Message
-                </Button>
-              </Box>
-              <Box
-                px={"1.5rem"}
-                mt={"2.5rem"}
-                height={"160px"}
-                overflowY={"auto"}
-              >
-                <Text color={"#747474"} fontSize={"sm"} fontWeight={"bold"}>
-                  ABOUT SCHOOL
-                </Text>
-                <Text
-                  mt={"0.8rem"}
-                  fontSize={{ base: "xs", md: "sm" }}
-                  whiteSpace={"pre-wrap"}
-                >
-                  {profile?.description}
-                </Text>
+                  <Text color={"#747474"} fontSize={"sm"} fontWeight={"bold"}>
+                    ABOUT SCHOOL
+                  </Text>
+                  <Text
+                    mt={"0.8rem"}
+                    fontSize={{ base: "xs", md: "sm" }}
+                    whiteSpace={"pre-wrap"}
+                  >
+                    {profile?.description}
+                  </Text>
+                </Box>
               </Box>
             </Box>
           </ModalBody>
@@ -350,10 +362,18 @@ const SchoolDetailsModal: FC<SchoolDetailsModalProps> = ({
             <Flex
               mt={"0.8rem"}
               w={"full"}
-              justifyContent={"flex-end"}
+              justifyContent={"space-between"}
               gap={3}
               display={{ base: "flex", md: "none" }}
             >
+              <Button
+                size={"sm"}
+                onClick={onClose}
+              >
+                Close
+              </Button>
+
+              <Flex gap={3}>
               <Button
                 size={"sm"}
                 onClick={handlePreviousPost}
@@ -370,6 +390,7 @@ const SchoolDetailsModal: FC<SchoolDetailsModalProps> = ({
               >
                 Next
               </Button>
+              </Flex>
             </Flex>
           </ModalFooter>
         </ModalContent>

@@ -1,7 +1,6 @@
 import { FC, useState, useEffect } from "react";
 import {
   Box,
-  Image,
   Text,
   Avatar,
   Flex,
@@ -18,6 +17,7 @@ import dynamic from "next/dynamic";
 import { useUserAPI } from "@/hooks/UserContext";
 import { useUserLikesAPI } from "@/hooks/UserLikesContext";
 import { capitalizeFirstLetterOfEachWord } from "@/helpers/capitalizeFirstLetter";
+import Image from "next/image";
 
 const SchoolDetailsModal = dynamic(() => import("./SchoolDetailsModal"))
 
@@ -105,90 +105,93 @@ const PostItem: FC<PostItemProps> = ({ profile, currentIndex }) => {
   const { isOpen: isSchoolModalOpen, onOpen, onClose } = useDisclosure();
 
   return (
-        <Box
-          _hover={{ cursor: "pointer" }}
-        >
-          <SchoolDetailsModal
-            isOpen={isSchoolModalOpen}
-            onClose={onClose}
-            setProfileLikes={setProfileLikes}
+    <Box _hover={{ cursor: "pointer" }}>
+      <SchoolDetailsModal
+        isOpen={isSchoolModalOpen}
+        onClose={onClose}
+        setProfileLikes={setProfileLikes}
+      />
+      <Box position={"relative"}>
+        <Box h={{ base: "150px", xl: "200px" }} w={"full"}>
+          <Image
+            fill={true}
+            alt="postItem"
+            src={imageLinks[0]}
+            objectFit={"cover"}
+            onClick={() => {
+              onOpen();
+              setActiveProfileIndex(currentIndex);
+            }}
+            loading="lazy"
+            style={{ borderRadius: "20px"}}
+            placeholder="blur"
+            blurDataURL="/images/mountain.jpg"
           />
-          <Box position={"relative"}>
-            <Image
-              rounded={"2xl"}
-              alt="postItem"
-              src={imageLinks[0]}
-              h={{ base: "200px", xl: "250px" }}
-              objectFit={"cover"}
-              w={"full"}
-              onClick={() => {
-                onOpen();
-                setActiveProfileIndex(currentIndex);
-              }}
-              loading="lazy"
-            />
-            <Icon
-              as={IoCopy}
-              position="absolute"
-              top="8px"
-              right="8px"
-              boxSize={6}
-              color={"white"}
-            />
-          </Box>
+        </Box>
+        <Icon
+          as={IoCopy}
+          position="absolute"
+          top="8px"
+          right="8px"
+          boxSize={6}
+          color={"white"}
+        />
+      </Box>
 
-          <Flex justifyContent={"space-between"} alignItems={"center"}>
-            <Flex gap={2} my={"1rem"}>
-              <Avatar
-                size={{ base: "sm", md: "md" }}
-                src={profile?.logoImgUrl}
-                name={profile?.schoolName}
-              />
-              <Flex flexDir={"column"} justifyContent={"space-between"}>
-                <Text fontWeight={"bold"} fontSize={{ base: "xs", md: "sm" }}>
-                  {capitalizeFirstLetterOfEachWord(profile?.schoolName.toLowerCase())}
-                </Text>
-                <Flex alignItems={"center"} gap={2}>
-                  <Text fontSize={{ base: "xs", md: "sm" }}>
-                    {profile?.state}, Nigeria
-                  </Text>
-                  <Tooltip label="This school is not currently utilizing the Greynote School Management Application and is only on the Discover plan.">
-                    <Badge
-                      variant="solid"
-                      colorScheme="red"
-                      display={
-                        profile?.creator?.admin?.plan?.includes("Discover")
-                          ? "block"
-                          : "none"
-                      }
-                    >
-                      Discover
-                    </Badge>
-                  </Tooltip>
-                </Flex>
-              </Flex>
-            </Flex>
-
-            <Flex alignItems={"center"} flexDir={"column"}>
-              <Icon
-                as={isPostLiked(profile?.id) ? IoMdHeart : IoMdHeartEmpty}
-                onClick={handleToggleLike}
-                color={isPostLiked(profile?.id) ? "red.500" : "#00000070"}
-                boxSize={7}
-                transition="transform 0.2s ease-in-out"
-                _hover={{
-                  cursor: "pointer",
-                  transform: "scale(1.1)",
-                  transition: "0.2s",
-                }}
-              />
-
-              <Text fontSize={"xs"} color={"#00000070"}>
-                {profileLikes} {profileLikes !== 1 ? "Likes" : "Like"}
+      <Flex justifyContent={"space-between"} alignItems={"center"}>
+        <Flex gap={2} my={"1rem"}>
+          <Avatar
+            size={{ base: "sm", md: "md" }}
+            src={profile?.logoImgUrl}
+            name={profile?.schoolName}
+          />
+          <Flex flexDir={"column"} justifyContent={"space-between"}>
+            <Text fontWeight={"bold"} fontSize={{ base: "xs", md: "sm" }}>
+              {capitalizeFirstLetterOfEachWord(
+                profile?.schoolName.toLowerCase()
+              )}
+            </Text>
+            <Flex alignItems={"center"} gap={2}>
+              <Text fontSize={{ base: "xs", md: "sm" }}>
+                {profile?.state}, Nigeria
               </Text>
+              <Tooltip label="This school is not currently utilizing the Greynote School Management Application and is only on the Discover plan.">
+                <Badge
+                  variant="solid"
+                  colorScheme="red"
+                  display={
+                    profile?.creator?.admin?.plan?.includes("Discover")
+                      ? "block"
+                      : "none"
+                  }
+                >
+                  Discover
+                </Badge>
+              </Tooltip>
             </Flex>
           </Flex>
-        </Box>
+        </Flex>
+
+        <Flex alignItems={"center"} flexDir={"column"}>
+          <Icon
+            as={isPostLiked(profile?.id) ? IoMdHeart : IoMdHeartEmpty}
+            onClick={handleToggleLike}
+            color={isPostLiked(profile?.id) ? "red.500" : "#00000070"}
+            boxSize={7}
+            transition="transform 0.2s ease-in-out"
+            _hover={{
+              cursor: "pointer",
+              transform: "scale(1.1)",
+              transition: "0.2s",
+            }}
+          />
+
+          <Text fontSize={"xs"} color={"#00000070"}>
+            {profileLikes} {profileLikes !== 1 ? "Likes" : "Like"}
+          </Text>
+        </Flex>
+      </Flex>
+    </Box>
   );
 };
 
