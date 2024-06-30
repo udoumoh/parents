@@ -137,7 +137,6 @@ const SchoolDetailsModal: FC<SchoolDetailsModalProps> = ({
                 <Flex
                   display={{ base: "none", md: "flex" }}
                   mt={"1.5rem"}
-                  px={"1rem"}
                   alignItems={"center"}
                   justifyContent={"space-between"}
                   gap={2}
@@ -223,6 +222,7 @@ const SchoolDetailsModal: FC<SchoolDetailsModalProps> = ({
                     </Flex>
                   </Flex>
                   <Button
+                    leftIcon={<MdOutlineMailOutline size={18} />}
                     mt={"0.8rem"}
                     size={"sm"}
                     colorScheme="blue"
@@ -237,7 +237,11 @@ const SchoolDetailsModal: FC<SchoolDetailsModalProps> = ({
                   height={"160px"}
                   overflowY={"auto"}
                 >
-                  <Text color={"#000"} fontSize={{base:"sm", md:"md"}} fontWeight={"bold"}>
+                  <Text
+                    color={"#000"}
+                    fontSize={{ base: "sm", md: "md" }}
+                    fontWeight={"bold"}
+                  >
                     ABOUT SCHOOL
                   </Text>
                   <Text
