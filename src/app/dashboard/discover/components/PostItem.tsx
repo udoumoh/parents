@@ -18,8 +18,7 @@ import { useUserAPI } from "@/hooks/UserContext";
 import { useUserLikesAPI } from "@/hooks/UserLikesContext";
 import { capitalizeFirstLetterOfEachWord } from "@/helpers/capitalizeFirstLetter";
 import Image from "next/image";
-
-const SchoolDetailsModal = dynamic(() => import("./SchoolDetailsModal"))
+import SchoolDetailsModal from "./SchoolDetailsModal";
 
 interface PostItemProps {
   profile: {
@@ -124,7 +123,7 @@ const PostItem: FC<PostItemProps> = ({ profile, currentIndex }) => {
               setActiveProfileIndex(currentIndex);
             }}
             loading="lazy"
-            style={{ borderRadius: "13px"}}
+            style={{ borderRadius: "13px" }}
             placeholder="blur"
             blurDataURL="/images/mountain.jpg"
           />
@@ -145,9 +144,11 @@ const PostItem: FC<PostItemProps> = ({ profile, currentIndex }) => {
             size={{ base: "sm", md: "md" }}
             src={profile?.logoImgUrl}
             name={profile?.schoolName}
+            border={"1px solid #005D5D"}
+            p={"0.1rem"}
           />
           <Flex flexDir={"column"} justifyContent={"space-between"}>
-            <Text fontWeight={"bold"} fontSize={{ base: "xs", md: "sm" }}>
+            <Text fontWeight={"bold"} fontSize={{ base: "sm", md: "md" }}>
               {capitalizeFirstLetterOfEachWord(
                 profile?.schoolName.toLowerCase()
               )}
@@ -156,19 +157,6 @@ const PostItem: FC<PostItemProps> = ({ profile, currentIndex }) => {
               <Text fontSize={{ base: "xs", md: "sm" }}>
                 {profile?.state}, Nigeria
               </Text>
-              <Tooltip label="This school is not currently utilizing the Greynote School Management Application and is only on the Discover plan.">
-                <Badge
-                  variant="solid"
-                  colorScheme="red"
-                  display={
-                    profile?.creator?.admin?.plan?.includes("Discover")
-                      ? "block"
-                      : "none"
-                  }
-                >
-                  Discover
-                </Badge>
-              </Tooltip>
             </Flex>
           </Flex>
         </Flex>
@@ -178,7 +166,7 @@ const PostItem: FC<PostItemProps> = ({ profile, currentIndex }) => {
             as={isPostLiked(profile?.id) ? IoMdHeart : IoMdHeartEmpty}
             onClick={handleToggleLike}
             color={isPostLiked(profile?.id) ? "red.500" : "#00000070"}
-            boxSize={7}
+            boxSize={6}
             transition="transform 0.2s ease-in-out"
             _hover={{
               cursor: "pointer",

@@ -15,7 +15,6 @@ import {
   IconButton,
   useDisclosure,
 } from "@chakra-ui/react";
-import Carousel from "./Carousel";
 import { IoMdHeartEmpty, IoMdHeart } from "react-icons/io";
 import {
   BiLeftArrowAlt,
@@ -30,6 +29,9 @@ import { ComposeMessage } from "../../inbox/component/ComposeMessage";
 import { MdOutlineMailOutline } from "react-icons/md";
 import { capitalizeFirstLetterOfEachWord } from "@/helpers/capitalizeFirstLetter";
 import Slider from "react-slick";
+import dynamic from "next/dynamic";
+
+const Carousel = dynamic(() => import("./Carousel"), { ssr: false });
 
 interface SchoolDetailsModalProps {
   isOpen: boolean;
