@@ -9,15 +9,11 @@ import {
   Box,
   Flex,
   Text,
-  Image,
   Avatar,
   Button,
   Icon,
   IconButton,
   useDisclosure,
-  Badge,
-  Tooltip,
-  useBreakpointValue,
 } from "@chakra-ui/react";
 import Carousel from "./Carousel";
 import { IoMdHeartEmpty, IoMdHeart } from "react-icons/io";
@@ -133,7 +129,7 @@ const SchoolDetailsModal: FC<SchoolDetailsModalProps> = ({
                 setSlider={setSlider}
               />
 
-              <Box>
+              <Box px={'0.5rem'}>
                 <Flex
                   display={{ base: "none", md: "flex" }}
                   mt={"1.5rem"}
@@ -180,7 +176,7 @@ const SchoolDetailsModal: FC<SchoolDetailsModalProps> = ({
                   </Flex>
                 </Flex>
 
-                <Box px={"1rem"} display={{ base: "block", md: "none" }}>
+                <Box display={{ base: "block", md: "none" }}>
                   <Flex
                     mt={"1.5rem"}
                     alignItems={"center"}
@@ -232,7 +228,6 @@ const SchoolDetailsModal: FC<SchoolDetailsModalProps> = ({
                   </Button>
                 </Box>
                 <Box
-                  px={"1.5rem"}
                   mt={"2.5rem"}
                   height={"160px"}
                   overflowY={"auto"}
