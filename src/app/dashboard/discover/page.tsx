@@ -157,7 +157,7 @@ const Discover: FC<DiscoverProps> = ({}) => {
       );
     }
     return (
-      <SimpleGrid columns={[1, null, 2, 4, 5]} spacing="20px">
+      <SimpleGrid columns={[1, 2, 3, 4]} spacing="20px">
         {likedPosts?.map((item, index) => (
           <PostItem key={index} profile={item} currentIndex={index} />
         ))}
@@ -166,7 +166,7 @@ const Discover: FC<DiscoverProps> = ({}) => {
   }, [likedPosts]);
 
   return (
-    <Box h={"100vh"} w={"full"} p={"1.5rem"} overflowY={"auto"} pb={"10rem"}>
+    <Box h={"100vh"} w={"full"} p={"1rem"} overflowY={"auto"} pb={"10rem"}>
       <FilterModal isOpen={isOpen} onClose={onClose} />
       <Box
         backgroundImage={"/images/discoverbg.png"}
@@ -472,8 +472,7 @@ const Discover: FC<DiscoverProps> = ({}) => {
           </Box>
         </Box>
       </Box>
-      <Box mt={"1.5rem"}>
-        <Center>
+      <Box mt={"1.5rem"} px={{base:"0", lg:"5rem"}}>
           <Tabs variant={"unstyled"}>
             <TabList>
               <Tab fontSize={"sm"} _selected={{ color: "#007C7B" }}>
@@ -489,14 +488,13 @@ const Discover: FC<DiscoverProps> = ({}) => {
               bg="#007C7B"
               borderRadius="1px"
             />
-            <TabPanels>
+            <TabPanels mt={'1rem'}>
               <TabPanel px={0}>
                 {renderFilteredPosts}
               </TabPanel>
               <TabPanel px={0}>{renderLikedPosts}</TabPanel>
             </TabPanels>
           </Tabs>
-        </Center>
       </Box>
     </Box>
   );

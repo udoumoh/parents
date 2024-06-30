@@ -91,7 +91,7 @@ const SchoolDetailsModal: FC<SchoolDetailsModalProps> = ({
       <Modal
         isOpen={isOpen}
         onClose={onClose}
-        size={{ base: "full", sm: "lg", md: "2xl", lg: "4xl" }}
+        size={{ base: "full", sm: "lg", md: "2xl" }}
       >
         <ComposeMessage
           isOpen={isComposeModalOpen}
@@ -125,7 +125,7 @@ const SchoolDetailsModal: FC<SchoolDetailsModalProps> = ({
               activeProfileIndex >= filteredPosts?.length - 1 ? true : false
             }
           />
-          <ModalBody p={0}>
+          <ModalBody p={"0.5rem"}>
             <Box px={"0"}>
               <Carousel
                 media={profile?.schoolMedia}
@@ -142,29 +142,18 @@ const SchoolDetailsModal: FC<SchoolDetailsModalProps> = ({
                   justifyContent={"space-between"}
                   gap={2}
                 >
-                  <Flex gap={2} alignItems={"center"}>
-                    <Avatar src={profile?.logoImgUrl} />
+                  <Flex gap={2} alignItems={"initial"}>
+                    <Avatar
+                      src={profile?.logoImgUrl}
+                      border={"1px solid #005D5D"}
+                      p={"0.1rem"}
+                    />
                     <Flex flexDir={"column"} justifyContent={"space-between"}>
-                      <Text fontSize={"sm"} fontWeight={"bold"}>
+                      <Text fontSize={"lg"} fontWeight={"bold"}>
                         {capitalizeFirstLetterOfEachWord(profile?.schoolName)}
                       </Text>
                       <Flex alignItems={"center"} gap={2}>
                         <Text fontSize={"sm"}>{profile?.state}, Nigeria</Text>
-                        <Tooltip label="This school is not currently utilizing the Greynote School Management Application and is only on the Discover plan.">
-                          <Badge
-                            variant="solid"
-                            colorScheme="red"
-                            display={
-                              profile?.creator?.admin?.plan?.includes(
-                                "Discover"
-                              )
-                                ? "block"
-                                : "none"
-                            }
-                          >
-                            Discover
-                          </Badge>
-                        </Tooltip>
                       </Flex>
                     </Flex>
                   </Flex>
@@ -183,7 +172,7 @@ const SchoolDetailsModal: FC<SchoolDetailsModalProps> = ({
                     />
                     <Button
                       leftIcon={<MdOutlineMailOutline size={18} />}
-                      colorScheme="teal"
+                      colorScheme="blue"
                       size={"sm"}
                       onClick={onComposeModalOpen}
                     >
@@ -199,29 +188,18 @@ const SchoolDetailsModal: FC<SchoolDetailsModalProps> = ({
                     justifyContent={"space-between"}
                     gap={2}
                   >
-                    <Flex gap={2} alignItems={"center"}>
-                      <Avatar src={profile?.logoImgUrl} />
+                    <Flex gap={2} alignItems={"initial"}>
+                      <Avatar
+                        src={profile?.logoImgUrl}
+                        border={"1px solid #005D5D"}
+                        p={"0.1rem"}
+                      />
                       <Flex flexDir={"column"} justifyContent={"space-between"}>
-                        <Text fontSize={"sm"} fontWeight={"bold"}>
+                        <Text fontSize={"md"} fontWeight={"bold"}>
                           {capitalizeFirstLetterOfEachWord(profile?.schoolName)}
                         </Text>
                         <Flex alignItems={"center"} gap={2}>
                           <Text fontSize={"sm"}>{profile?.state}, Nigeria</Text>
-                          <Tooltip label="This school is not currently utilizing the Greynote School Management Application and is only on the Discover plan.">
-                            <Badge
-                              variant="solid"
-                              colorScheme="red"
-                              display={
-                                profile?.creator?.admin?.plan?.includes(
-                                  "Discover"
-                                )
-                                  ? "block"
-                                  : "none"
-                              }
-                            >
-                              Discover
-                            </Badge>
-                          </Tooltip>
                         </Flex>
                       </Flex>
                     </Flex>
@@ -246,10 +224,8 @@ const SchoolDetailsModal: FC<SchoolDetailsModalProps> = ({
                   </Flex>
                   <Button
                     mt={"0.8rem"}
-                    backgroundColor={"#005D5D"}
-                    size={"xs"}
-                    _hover={{ backgroundColor: "#007C7B" }}
-                    color={"#fff"}
+                    size={"sm"}
+                    colorScheme="blue"
                     onClick={onComposeModalOpen}
                   >
                     Send a Message
@@ -261,12 +237,12 @@ const SchoolDetailsModal: FC<SchoolDetailsModalProps> = ({
                   height={"160px"}
                   overflowY={"auto"}
                 >
-                  <Text color={"#747474"} fontSize={"sm"} fontWeight={"bold"}>
+                  <Text color={"#000"} fontSize={{base:"sm", md:"md"}} fontWeight={"bold"}>
                     ABOUT SCHOOL
                   </Text>
                   <Text
                     mt={"0.8rem"}
-                    fontSize={{ base: "xs", md: "sm" }}
+                    fontSize={{ base: "sm", md: "md" }}
                     whiteSpace={"pre-wrap"}
                   >
                     {profile?.description}
@@ -366,30 +342,29 @@ const SchoolDetailsModal: FC<SchoolDetailsModalProps> = ({
               gap={3}
               display={{ base: "flex", md: "none" }}
             >
-              <Button
-                size={"sm"}
-                onClick={onClose}
-              >
+              <Button size={"sm"} onClick={onClose}>
                 Close
               </Button>
 
               <Flex gap={3}>
-              <Button
-                size={"sm"}
-                onClick={handlePreviousPost}
-                isDisabled={activeProfileIndex <= 0 ? true : false}
-              >
-                Prev
-              </Button>
-              <Button
-                size={"sm"}
-                onClick={handleNextPost}
-                isDisabled={
-                  activeProfileIndex >= filteredPosts?.length - 1 ? true : false
-                }
-              >
-                Next
-              </Button>
+                <Button
+                  size={"sm"}
+                  onClick={handlePreviousPost}
+                  isDisabled={activeProfileIndex <= 0 ? true : false}
+                >
+                  Prev
+                </Button>
+                <Button
+                  size={"sm"}
+                  onClick={handleNextPost}
+                  isDisabled={
+                    activeProfileIndex >= filteredPosts?.length - 1
+                      ? true
+                      : false
+                  }
+                >
+                  Next
+                </Button>
               </Flex>
             </Flex>
           </ModalFooter>

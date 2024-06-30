@@ -104,6 +104,7 @@ const PostItem: FC<PostItemProps> = ({ profile, currentIndex }) => {
 
   const { isOpen: isSchoolModalOpen, onOpen, onClose } = useDisclosure();
 
+  
   return (
     <Box _hover={{ cursor: "pointer" }}>
       <SchoolDetailsModal
@@ -123,7 +124,7 @@ const PostItem: FC<PostItemProps> = ({ profile, currentIndex }) => {
               setActiveProfileIndex(currentIndex);
             }}
             loading="lazy"
-            style={{ borderRadius: "20px"}}
+            style={{ borderRadius: "13px"}}
             placeholder="blur"
             blurDataURL="/images/mountain.jpg"
           />
@@ -131,9 +132,9 @@ const PostItem: FC<PostItemProps> = ({ profile, currentIndex }) => {
         <Icon
           as={IoCopy}
           position="absolute"
-          top="8px"
-          right="8px"
-          boxSize={6}
+          top="10px"
+          right="10px"
+          boxSize={4}
           color={"white"}
         />
       </Box>

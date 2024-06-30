@@ -1,20 +1,26 @@
-'use client'
-import { FC } from 'react'
-import {Box, Text, Flex, Button, Icon, Image, useToast,} from '@chakra-ui/react'
+"use client";
+import { FC } from "react";
+import {
+  Box,
+  Text,
+  Flex,
+  Button,
+  Icon,
+  Image,
+  useToast,
+} from "@chakra-ui/react";
 import { IoCheckmarkSharp } from "react-icons/io5";
 import { FaLock } from "react-icons/fa6";
-import { useUserAPI } from '@/hooks/UserContext';
+import { useUserAPI } from "@/hooks/UserContext";
 
-interface ChooseSubscriptionProps {
-  
-}
+interface ChooseSubscriptionProps {}
 
 const ChooseSubscription: FC<ChooseSubscriptionProps> = ({}) => {
-  const toast = useToast()
-  const {parentData} = useUserAPI();
-  let parentEmail = localStorage.getItem('userEmail')
-  let parentFirstName = localStorage.getItem('userFirstName')
-  let parentLastName = localStorage.getItem('userLastName')
+  const toast = useToast();
+  const { parentData } = useUserAPI();
+  let parentEmail = localStorage.getItem("userEmail");
+  let parentFirstName = localStorage.getItem("userFirstName");
+  let parentLastName = localStorage.getItem("userLastName");
 
   const handleSubmit = async (plan: any) => {
     const monthlyUrl = `https://paystack.com/pay/gn-parent-monthly/?email=${parentEmail}&first_name=${parentFirstName}&last_name=${parentLastName}&readonly=first_name,last_name,email`;
@@ -194,7 +200,6 @@ const ChooseSubscription: FC<ChooseSubscriptionProps> = ({}) => {
         </Box>
 
         <Box
-          px={"1.5rem"}
           py={"1rem"}
           backgroundColor={"#FFFFFF"}
           w="full"
@@ -203,61 +208,84 @@ const ChooseSubscription: FC<ChooseSubscriptionProps> = ({}) => {
           borderBottomLeftRadius={"lg"}
           _hover={{ transform: "scale(1.02)", transition: "0.5s" }}
         >
-          <Text>Yearly</Text>
-          <Text fontSize={{ base: "md", md: "4xl" }} mt={"1rem"}>
-            <strong>₦2500</strong>
-            <sub
-              style={{
-                color: "#00000070",
-                fontSize: "16px",
-                fontWeight: "600",
-              }}
+          <Flex justifyContent={"space-between"}>
+            <Text pl={"1.5rem"}>Yearly</Text>
+            <Box
+              display={"flex"}
+              w={"auto"}
+              roundedLeft={"full"}
+              alignItems={"center"}
+              bgGradient="linear(to-l, #fc4a1a, #f7b733)"
+              mb={3}
             >
-              /year
-            </sub>
-          </Text>
-          <Text fontSize={"xs"} color={"#00000090"}>
-            *Billed yearly (₦2500/year).
-          </Text>
-          <Flex
-            gap={3}
-            alignItems={"center"}
-            mt={"3rem"}
-            fontSize={{ base: "sm", md: "md" }}
-          >
-            <Icon as={IoCheckmarkSharp} boxSize={5} color={"green.500"} />
-            <Text>
-              Register up to <strong>4</strong> children
+              {/* <Icon as={FaMoneyBill} color={'#005D5D'}/> */}
+              <Text
+                fontWeight={"bold"}
+                color={"#FFFFFF"}
+                fontSize={"sm"}
+                px={4}
+                py={1}
+              >
+                Best Value (Save up to 17%)
+              </Text>
+            </Box>
+          </Flex>
+          <Box px={"1.5rem"}>
+            <Text fontSize={{ base: "md", md: "4xl" }} mt={"1rem"}>
+              <strong>₦2500</strong>
+              <sub
+                style={{
+                  color: "#00000070",
+                  fontSize: "16px",
+                  fontWeight: "600",
+                }}
+              >
+                /year
+              </sub>
             </Text>
-          </Flex>
-          <Flex
-            gap={3}
-            alignItems={"center"}
-            fontSize={{ base: "sm", md: "md" }}
-          >
-            <Icon as={IoCheckmarkSharp} boxSize={5} color={"green.500"} />
-            <Text>
-              Pay an additional <strong>₦500</strong> per child if you have more
-              than 4 children
+            <Text fontSize={"xs"} color={"#00000090"}>
+              *Billed yearly (₦2500/year).
             </Text>
-          </Flex>
-          <Flex
-            gap={3}
-            alignItems={"center"}
-            mb={"3rem"}
-            fontSize={{ base: "sm", md: "md" }}
-          >
-            <Icon as={IoCheckmarkSharp} boxSize={5} color={"green.500"} />
-            <Text>Pay every year to renew subscription</Text>
-          </Flex>
-          <Button
-            fontSize={"md"}
-            w={"full"}
-            colorScheme="green"
-            onClick={() => handleSubmit("yearly")}
-          >
-            Select Yearly Plan
-          </Button>
+            <Flex
+              gap={3}
+              alignItems={"center"}
+              mt={"3rem"}
+              fontSize={{ base: "sm", md: "md" }}
+            >
+              <Icon as={IoCheckmarkSharp} boxSize={5} color={"green.500"} />
+              <Text>
+                Register up to <strong>4</strong> children
+              </Text>
+            </Flex>
+            <Flex
+              gap={3}
+              alignItems={"center"}
+              fontSize={{ base: "sm", md: "md" }}
+            >
+              <Icon as={IoCheckmarkSharp} boxSize={5} color={"green.500"} />
+              <Text>
+                Pay an additional <strong>₦500</strong> per child if you have
+                more than 4 children
+              </Text>
+            </Flex>
+            <Flex
+              gap={3}
+              alignItems={"center"}
+              mb={"3rem"}
+              fontSize={{ base: "sm", md: "md" }}
+            >
+              <Icon as={IoCheckmarkSharp} boxSize={5} color={"green.500"} />
+              <Text>Pay every year to renew subscription</Text>
+            </Flex>
+            <Button
+              fontSize={"md"}
+              w={"full"}
+              colorScheme="green"
+              onClick={() => handleSubmit("yearly")}
+            >
+              Select Yearly Plan
+            </Button>
+          </Box>
         </Box>
       </Flex>
 
@@ -275,6 +303,6 @@ const ChooseSubscription: FC<ChooseSubscriptionProps> = ({}) => {
       </Flex>
     </Box>
   );
-}
+};
 
 export default ChooseSubscription;
