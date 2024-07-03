@@ -13,6 +13,7 @@ import {
   TabPanels,
   Tab,
   TabPanel,
+  Divider,
 } from "@chakra-ui/react";
 import { IoCheckmarkSharp } from "react-icons/io5";
 import { FaLock } from "react-icons/fa6";
@@ -54,7 +55,7 @@ const ChooseSubscription: FC<ChooseSubscriptionProps> = ({}) => {
       minH={"100vh"}
       px={{ base: "1rem", md: "5rem", xl: "15rem" }}
       backgroundColor={"#005D5D10"}
-      overflow={'hidden'}
+      overflow={"hidden"}
     >
       <Flex py={"2rem"}>
         <Image alt="logo" src={"/images/greylightBordered.svg"} h={"50px"} />
@@ -80,12 +81,13 @@ const ChooseSubscription: FC<ChooseSubscriptionProps> = ({}) => {
       <Flex w={"full"} justifyContent={"center"} mt={"3rem"}>
         <Tabs variant="soft-rounded" isFitted>
           <TabList
-            border={"1px solid #00000020"}
+            shadow={"sm"}
             rounded={"full"}
-            p={"0.2rem"}
+            p={"0.5rem"}
             w={"full"}
             maxW={"400px"}
             mx={"auto"}
+            backgroundColor={"#fff"}
           >
             <Tab
               _selected={{
@@ -93,7 +95,7 @@ const ChooseSubscription: FC<ChooseSubscriptionProps> = ({}) => {
                 color: "#fff",
               }}
               fontSize={"xs"}
-              py={"0.2rem"}
+              py={"0.5rem"}
             >
               Monthly
             </Tab>
@@ -103,7 +105,7 @@ const ChooseSubscription: FC<ChooseSubscriptionProps> = ({}) => {
                 color: "#fff",
               }}
               fontSize={"xs"}
-              py={"0.2rem"}
+              py={"0.5rem"}
             >
               Anually - Get 10% off!
             </Tab>
@@ -127,6 +129,7 @@ const ChooseSubscription: FC<ChooseSubscriptionProps> = ({}) => {
                   _hover={{ transform: "scale(1.02)", transition: "0.5s" }}
                 >
                   <Text>Monthly</Text>
+                  <Divider py={"0.2rem"} />
                   <Text fontSize={{ base: "xl", md: "4xl" }} mt={"1rem"}>
                     <strong>₦250</strong>
                     <sub
@@ -199,6 +202,7 @@ const ChooseSubscription: FC<ChooseSubscriptionProps> = ({}) => {
                   _hover={{ transform: "scale(1.02)", transition: "0.5s" }}
                 >
                   <Text>Quarterly</Text>
+                  <Divider py={"0.2rem"} />
                   <Text fontSize={{ base: "xl", md: "4xl" }} mt={"1rem"}>
                     <strong>₦750</strong>
                     <sub
@@ -290,6 +294,7 @@ const ChooseSubscription: FC<ChooseSubscriptionProps> = ({}) => {
                     </Box>
                   </Flex>
                   <Box px={"1.5rem"}>
+                    <Divider py={"0.2rem"} />
                     <Text fontSize={{ base: "xl", md: "4xl" }} mt={"1rem"}>
                       <strong>₦2500</strong>
                       <sub
@@ -372,6 +377,7 @@ const ChooseSubscription: FC<ChooseSubscriptionProps> = ({}) => {
                   _hover={{ transform: "scale(1.02)", transition: "0.5s" }}
                 >
                   <Text>Monthly</Text>
+                  <Divider py={"0.2rem"} />
                   <Text fontSize={{ base: "xl", md: "4xl" }} mt={"1rem"}>
                     <strong>₦250</strong>
                     <sub
@@ -444,6 +450,7 @@ const ChooseSubscription: FC<ChooseSubscriptionProps> = ({}) => {
                   _hover={{ transform: "scale(1.02)", transition: "0.5s" }}
                 >
                   <Text>Quarterly</Text>
+                  <Divider py={"0.2rem"} />
                   <Text fontSize={{ base: "xl", md: "4xl" }} mt={"1rem"}>
                     <strong>₦750</strong>
                     <sub
@@ -535,6 +542,7 @@ const ChooseSubscription: FC<ChooseSubscriptionProps> = ({}) => {
                     </Box>
                   </Flex>
                   <Box px={"1.5rem"}>
+                    <Divider py={"0.2rem"} />
                     <Text fontSize={{ base: "xl", md: "4xl" }} mt={"1rem"}>
                       <strong>₦2500</strong>
                       <sub
