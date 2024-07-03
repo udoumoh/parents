@@ -8,6 +8,11 @@ import {
   Icon,
   Image,
   useToast,
+  Tabs,
+  TabList,
+  TabPanels,
+  Tab,
+  TabPanel,
 } from "@chakra-ui/react";
 import { IoCheckmarkSharp } from "react-icons/io5";
 import { FaLock } from "react-icons/fa6";
@@ -47,8 +52,9 @@ const ChooseSubscription: FC<ChooseSubscriptionProps> = ({}) => {
   return (
     <Box
       minH={"100vh"}
-      px={{ base: "2rem", md: "5rem", xl: "15rem" }}
+      px={{ base: "1rem", md: "5rem", xl: "15rem" }}
       backgroundColor={"#005D5D10"}
+      overflow={'hidden'}
     >
       <Flex py={"2rem"}>
         <Image alt="logo" src={"/images/greylightBordered.svg"} h={"50px"} />
@@ -62,231 +68,538 @@ const ChooseSubscription: FC<ChooseSubscriptionProps> = ({}) => {
         textAlign={"center"}
         px={"2rem"}
       >
-        <Text fontSize={{ base: "3xl", xl: "5xl" }} fontWeight={"semibold"}>
+        <Text fontSize={{ base: "3xl", xl: "3xl" }} fontWeight={"800"}>
           Plans for every Parent/Guardian
         </Text>
-        <Text mt={"1.5rem"} fontWeight={"semibold"}>
+        <Text mt={"1rem"} fontSize={"lg"}>
           Your previous subscription has expired, please renew your subscription
           to access your dashboard.
         </Text>
       </Flex>
-      <Flex
-        w={"full"}
-        gap={5}
-        mt={"2rem"}
-        flexDir={{ base: "column", md: "row" }}
-      >
-        <Box
-          px={"1.5rem"}
-          py={"1rem"}
-          backgroundColor={"#FFFFFF"}
-          w="full"
-          border={"1px solid #005D5D"}
-          borderTopRadius={"lg"}
-          borderBottomRightRadius={"lg"}
-          _hover={{ transform: "scale(1.02)", transition: "0.5s" }}
-        >
-          <Text>Monthly</Text>
-          <Text fontSize={{ base: "md", md: "4xl" }} mt={"1rem"}>
-            <strong>₦250</strong>
-            <sub
-              style={{
-                color: "#00000070",
-                fontSize: "16px",
-                fontWeight: "600",
-              }}
-            >
-              /month
-            </sub>
-          </Text>
-          <Text fontSize={"xs"} color={"#00000090"}>
-            *Billed monthly (₦250/month).
-          </Text>
-          <Flex gap={3} alignItems={"center"} mt={"3rem"}>
-            <Icon as={IoCheckmarkSharp} boxSize={5} color={"green.600"} />
-            <Text>
-              Register up to <strong>4</strong> children
-            </Text>
-          </Flex>
-          <Flex
-            gap={3}
-            alignItems={"center"}
-            fontSize={{ base: "sm", md: "md" }}
-          >
-            <Icon as={IoCheckmarkSharp} boxSize={5} color={"green.500"} />
-            <Text>
-              Pay an additional <strong>₦65</strong> per child if you have more
-              than 4 children
-            </Text>
-          </Flex>
-          <Flex
-            gap={3}
-            alignItems={"center"}
-            mb={"3rem"}
-            fontSize={{ base: "sm", md: "md" }}
-          >
-            <Icon as={IoCheckmarkSharp} boxSize={5} color={"green.500"} />
-            <Text>Pay every month to renew subscription</Text>
-          </Flex>
-          <Button
-            fontSize={"md"}
-            w={"full"}
-            colorScheme="green"
-            onClick={() => handleSubmit("monthly")}
-          >
-            Select Monthly Plan
-          </Button>
-        </Box>
 
-        <Box
-          px={"1.5rem"}
-          py={"1rem"}
-          backgroundColor={"#FFFFFF"}
-          w="full"
-          border={"1px solid #005D5D"}
-          rounded={"lg"}
-          _hover={{ transform: "scale(1.02)", transition: "0.5s" }}
-        >
-          <Text>Quarterly</Text>
-          <Text fontSize={{ base: "md", md: "4xl" }} mt={"1rem"}>
-            <strong>₦750</strong>
-            <sub
-              style={{
-                color: "#00000070",
-                fontSize: "16px",
-                fontWeight: "600",
-              }}
-            >
-              /3 months
-            </sub>
-          </Text>
-          <Text fontSize={"xs"} color={"#00000090"}>
-            *Billed monthly (₦750/3 months).
-          </Text>
-          <Flex gap={3} alignItems={"center"} mt={"3rem"}>
-            <Icon as={IoCheckmarkSharp} boxSize={5} color={"green.500"} />
-            <Text>
-              Register up to <strong>4</strong> children
-            </Text>
-          </Flex>
-          <Flex
-            gap={3}
-            alignItems={"center"}
-            fontSize={{ base: "sm", md: "md" }}
-          >
-            <Icon as={IoCheckmarkSharp} boxSize={5} color={"green.500"} />
-            <Text>
-              Pay an additional <strong>₦195</strong> per child if you have more
-              than 4 children
-            </Text>
-          </Flex>
-          <Flex
-            gap={3}
-            alignItems={"center"}
-            mb={"3rem"}
-            fontSize={{ base: "sm", md: "md" }}
-          >
-            <Icon as={IoCheckmarkSharp} boxSize={5} color={"green.500"} />
-            <Text>Pay every 3 months to renew subscription</Text>
-          </Flex>
-          <Button
-            fontSize={"md"}
+      <Flex w={"full"} justifyContent={"center"} mt={"3rem"}>
+        <Tabs variant="soft-rounded" isFitted>
+          <TabList
+            border={"1px solid #00000020"}
+            rounded={"full"}
+            p={"0.2rem"}
             w={"full"}
-            colorScheme="green"
-            onClick={() => handleSubmit("quaterly")}
+            maxW={"400px"}
+            mx={"auto"}
           >
-            Select Quaterly Plan
-          </Button>
-        </Box>
+            <Tab
+              _selected={{
+                backgroundColor: "#074173",
+                color: "#fff",
+              }}
+              fontSize={"xs"}
+              py={"0.2rem"}
+            >
+              Monthly
+            </Tab>
+            <Tab
+              _selected={{
+                backgroundColor: "#074173",
+                color: "#fff",
+              }}
+              fontSize={"xs"}
+              py={"0.2rem"}
+            >
+              Anually - Get 10% off!
+            </Tab>
+          </TabList>
+          <TabPanels>
+            <TabPanel px={0}>
+              <Flex
+                w={"full"}
+                gap={5}
+                mt={"2rem"}
+                flexDir={{ base: "column", md: "row" }}
+              >
+                <Box
+                  px={"1.5rem"}
+                  py={"1rem"}
+                  backgroundColor={"#FFFFFF"}
+                  w="full"
+                  border={"1px solid #00000010"}
+                  rounded={"lg"}
+                  shadow={"lg"}
+                  _hover={{ transform: "scale(1.02)", transition: "0.5s" }}
+                >
+                  <Text>Monthly</Text>
+                  <Text fontSize={{ base: "xl", md: "4xl" }} mt={"1rem"}>
+                    <strong>₦250</strong>
+                    <sub
+                      style={{
+                        color: "#00000070",
+                        fontSize: "16px",
+                        fontWeight: "600",
+                      }}
+                    >
+                      /month
+                    </sub>
+                  </Text>
+                  <Text fontSize={"xs"} color={"#00000090"}>
+                    *Billed monthly (₦250/month).
+                  </Text>
+                  <Box display={"grid"} gap={3} mt={"3rem"}>
+                    <Flex gap={3} alignItems={"flex-start"} fontSize={"sm"}>
+                      <Icon
+                        as={IoCheckmarkSharp}
+                        boxSize={5}
+                        color={"green.600"}
+                      />
+                      <Text>
+                        Register up to <strong>4</strong> children
+                      </Text>
+                    </Flex>
+                    <Flex gap={3} alignItems={"flex-start"} fontSize={"sm"}>
+                      <Icon
+                        as={IoCheckmarkSharp}
+                        boxSize={5}
+                        color={"green.500"}
+                      />
+                      <Text>
+                        Pay an additional <strong>₦65</strong> per child if you
+                        have more than 4 children
+                      </Text>
+                    </Flex>
+                    <Flex
+                      gap={3}
+                      alignItems={"flex-start"}
+                      mb={"3rem"}
+                      fontSize={"sm"}
+                    >
+                      <Icon
+                        as={IoCheckmarkSharp}
+                        boxSize={5}
+                        color={"green.500"}
+                      />
+                      <Text>Pay every month to renew subscription</Text>
+                    </Flex>
+                  </Box>
+                  <Button
+                    fontSize={"md"}
+                    w={"full"}
+                    colorScheme="green"
+                    onClick={() => handleSubmit("monthly")}
+                  >
+                    Select Monthly Plan
+                  </Button>
+                </Box>
 
-        <Box
-          py={"1rem"}
-          backgroundColor={"#FFFFFF"}
-          w="full"
-          border={"1px solid #005D5D"}
-          borderTopRadius={"lg"}
-          borderBottomLeftRadius={"lg"}
-          _hover={{ transform: "scale(1.02)", transition: "0.5s" }}
-        >
-          <Flex justifyContent={"space-between"}>
-            <Text pl={"1.5rem"}>Yearly</Text>
-            <Box
-              display={"flex"}
-              w={"auto"}
-              roundedLeft={"full"}
-              alignItems={"center"}
-              bgGradient="linear(to-l, #fc4a1a, #f7b733)"
-              mb={3}
-            >
-              {/* <Icon as={FaMoneyBill} color={'#005D5D'}/> */}
-              <Text
-                fontWeight={"bold"}
-                color={"#FFFFFF"}
-                fontSize={"sm"}
-                px={4}
-                py={1}
+                <Box
+                  px={"1.5rem"}
+                  py={"1rem"}
+                  backgroundColor={"#FFFFFF"}
+                  w="full"
+                  border={"1px solid #00000010"}
+                  rounded={"lg"}
+                  shadow={"lg"}
+                  _hover={{ transform: "scale(1.02)", transition: "0.5s" }}
+                >
+                  <Text>Quarterly</Text>
+                  <Text fontSize={{ base: "xl", md: "4xl" }} mt={"1rem"}>
+                    <strong>₦750</strong>
+                    <sub
+                      style={{
+                        color: "#00000070",
+                        fontSize: "16px",
+                        fontWeight: "600",
+                      }}
+                    >
+                      /3 months
+                    </sub>
+                  </Text>
+                  <Text fontSize={"xs"} color={"#00000090"}>
+                    *Billed monthly (₦750/3 months).
+                  </Text>
+                  <Box display={"grid"} gap={3} mt={"3rem"}>
+                    <Flex gap={3} alignItems={"center"} fontSize={"sm"}>
+                      <Icon
+                        as={IoCheckmarkSharp}
+                        boxSize={5}
+                        color={"green.500"}
+                      />
+                      <Text>
+                        Register up to <strong>4</strong> children
+                      </Text>
+                    </Flex>
+                    <Flex gap={3} alignItems={"center"} fontSize={"sm"}>
+                      <Icon
+                        as={IoCheckmarkSharp}
+                        boxSize={5}
+                        color={"green.500"}
+                      />
+                      <Text>
+                        Pay an additional <strong>₦195</strong> per child if you
+                        have more than 4 children
+                      </Text>
+                    </Flex>
+                    <Flex
+                      gap={3}
+                      alignItems={"center"}
+                      mb={"3rem"}
+                      fontSize={"sm"}
+                    >
+                      <Icon
+                        as={IoCheckmarkSharp}
+                        boxSize={5}
+                        color={"green.500"}
+                      />
+                      <Text>Pay every 3 months to renew subscription</Text>
+                    </Flex>
+                  </Box>
+                  <Button
+                    fontSize={"md"}
+                    w={"full"}
+                    colorScheme="green"
+                    onClick={() => handleSubmit("quaterly")}
+                  >
+                    Select Quaterly Plan
+                  </Button>
+                </Box>
+
+                <Box
+                  py={"1rem"}
+                  backgroundColor={"#FFFFFF"}
+                  w="full"
+                  border={"1px solid #00000010"}
+                  rounded={"lg"}
+                  shadow={"lg"}
+                  _hover={{ transform: "scale(1.02)", transition: "0.5s" }}
+                >
+                  <Flex justifyContent={"space-between"} gap={2}>
+                    <Text pl={"1.5rem"}>Yearly</Text>
+                    <Box
+                      display={"flex"}
+                      w={"auto"}
+                      roundedLeft={"full"}
+                      alignItems={"center"}
+                      bgGradient="linear(to-l, #fc4a1a, #f7b733)"
+                    >
+                      <Text
+                        fontWeight={"bold"}
+                        color={"#FFFFFF"}
+                        fontSize={{ base: "2xs", sm: "xs", md: "sm" }}
+                        px={4}
+                        py={1}
+                      >
+                        Best Value (Save up to 17%)
+                      </Text>
+                    </Box>
+                  </Flex>
+                  <Box px={"1.5rem"}>
+                    <Text fontSize={{ base: "xl", md: "4xl" }} mt={"1rem"}>
+                      <strong>₦2500</strong>
+                      <sub
+                        style={{
+                          color: "#00000070",
+                          fontSize: "16px",
+                          fontWeight: "600",
+                        }}
+                      >
+                        /year
+                      </sub>
+                    </Text>
+                    <Text fontSize={"xs"} color={"#00000090"}>
+                      *Billed yearly (₦2500/year).
+                    </Text>
+                    <Box display={"grid"} gap={3} mt={"3rem"}>
+                      <Flex gap={3} alignItems={"center"} fontSize={"sm"}>
+                        <Icon
+                          as={IoCheckmarkSharp}
+                          boxSize={5}
+                          color={"green.500"}
+                        />
+                        <Text>
+                          Register up to <strong>4</strong> children
+                        </Text>
+                      </Flex>
+                      <Flex gap={3} alignItems={"center"} fontSize={"sm"}>
+                        <Icon
+                          as={IoCheckmarkSharp}
+                          boxSize={5}
+                          color={"green.500"}
+                        />
+                        <Text>
+                          Pay an additional <strong>₦500</strong> per child if
+                          you have more than 4 children
+                        </Text>
+                      </Flex>
+                      <Flex
+                        gap={3}
+                        alignItems={"center"}
+                        mb={"3rem"}
+                        fontSize={"sm"}
+                      >
+                        <Icon
+                          as={IoCheckmarkSharp}
+                          boxSize={5}
+                          color={"green.500"}
+                        />
+                        <Text>Pay every year to renew subscription</Text>
+                      </Flex>
+                    </Box>
+                    <Button
+                      fontSize={"md"}
+                      w={"full"}
+                      colorScheme="green"
+                      onClick={() => handleSubmit("yearly")}
+                    >
+                      Select Yearly Plan
+                    </Button>
+                  </Box>
+                </Box>
+              </Flex>
+            </TabPanel>
+
+            <TabPanel px={0}>
+              <Flex
+                w={"full"}
+                gap={5}
+                mt={"2rem"}
+                flexDir={{ base: "column", md: "row" }}
               >
-                Best Value (Save up to 17%)
-              </Text>
-            </Box>
-          </Flex>
-          <Box px={"1.5rem"}>
-            <Text fontSize={{ base: "md", md: "4xl" }} mt={"1rem"}>
-              <strong>₦2500</strong>
-              <sub
-                style={{
-                  color: "#00000070",
-                  fontSize: "16px",
-                  fontWeight: "600",
-                }}
-              >
-                /year
-              </sub>
-            </Text>
-            <Text fontSize={"xs"} color={"#00000090"}>
-              *Billed yearly (₦2500/year).
-            </Text>
-            <Flex
-              gap={3}
-              alignItems={"center"}
-              mt={"3rem"}
-              fontSize={{ base: "sm", md: "md" }}
-            >
-              <Icon as={IoCheckmarkSharp} boxSize={5} color={"green.500"} />
-              <Text>
-                Register up to <strong>4</strong> children
-              </Text>
-            </Flex>
-            <Flex
-              gap={3}
-              alignItems={"center"}
-              fontSize={{ base: "sm", md: "md" }}
-            >
-              <Icon as={IoCheckmarkSharp} boxSize={5} color={"green.500"} />
-              <Text>
-                Pay an additional <strong>₦500</strong> per child if you have
-                more than 4 children
-              </Text>
-            </Flex>
-            <Flex
-              gap={3}
-              alignItems={"center"}
-              mb={"3rem"}
-              fontSize={{ base: "sm", md: "md" }}
-            >
-              <Icon as={IoCheckmarkSharp} boxSize={5} color={"green.500"} />
-              <Text>Pay every year to renew subscription</Text>
-            </Flex>
-            <Button
-              fontSize={"md"}
-              w={"full"}
-              colorScheme="green"
-              onClick={() => handleSubmit("yearly")}
-            >
-              Select Yearly Plan
-            </Button>
-          </Box>
-        </Box>
+                <Box
+                  px={"1.5rem"}
+                  py={"1rem"}
+                  backgroundColor={"#FFFFFF"}
+                  w="full"
+                  border={"1px solid #00000010"}
+                  rounded={"lg"}
+                  shadow={"lg"}
+                  _hover={{ transform: "scale(1.02)", transition: "0.5s" }}
+                >
+                  <Text>Monthly</Text>
+                  <Text fontSize={{ base: "xl", md: "4xl" }} mt={"1rem"}>
+                    <strong>₦250</strong>
+                    <sub
+                      style={{
+                        color: "#00000070",
+                        fontSize: "16px",
+                        fontWeight: "600",
+                      }}
+                    >
+                      /month
+                    </sub>
+                  </Text>
+                  <Text fontSize={"xs"} color={"#00000090"}>
+                    *Billed monthly (₦250/month).
+                  </Text>
+                  <Box display={"grid"} gap={3} mt={"3rem"}>
+                    <Flex gap={3} alignItems={"flex-start"} fontSize={"sm"}>
+                      <Icon
+                        as={IoCheckmarkSharp}
+                        boxSize={5}
+                        color={"green.600"}
+                      />
+                      <Text>
+                        Register up to <strong>4</strong> children
+                      </Text>
+                    </Flex>
+                    <Flex gap={3} alignItems={"flex-start"} fontSize={"sm"}>
+                      <Icon
+                        as={IoCheckmarkSharp}
+                        boxSize={5}
+                        color={"green.500"}
+                      />
+                      <Text>
+                        Pay an additional <strong>₦65</strong> per child if you
+                        have more than 4 children
+                      </Text>
+                    </Flex>
+                    <Flex
+                      gap={3}
+                      alignItems={"flex-start"}
+                      mb={"3rem"}
+                      fontSize={"sm"}
+                    >
+                      <Icon
+                        as={IoCheckmarkSharp}
+                        boxSize={5}
+                        color={"green.500"}
+                      />
+                      <Text>Pay every month to renew subscription</Text>
+                    </Flex>
+                  </Box>
+                  <Button
+                    fontSize={"md"}
+                    w={"full"}
+                    colorScheme="green"
+                    onClick={() => handleSubmit("monthly")}
+                  >
+                    Select Monthly Plan
+                  </Button>
+                </Box>
+
+                <Box
+                  px={"1.5rem"}
+                  py={"1rem"}
+                  backgroundColor={"#FFFFFF"}
+                  w="full"
+                  border={"1px solid #00000010"}
+                  rounded={"lg"}
+                  shadow={"lg"}
+                  _hover={{ transform: "scale(1.02)", transition: "0.5s" }}
+                >
+                  <Text>Quarterly</Text>
+                  <Text fontSize={{ base: "xl", md: "4xl" }} mt={"1rem"}>
+                    <strong>₦750</strong>
+                    <sub
+                      style={{
+                        color: "#00000070",
+                        fontSize: "16px",
+                        fontWeight: "600",
+                      }}
+                    >
+                      /3 months
+                    </sub>
+                  </Text>
+                  <Text fontSize={"xs"} color={"#00000090"}>
+                    *Billed monthly (₦750/3 months).
+                  </Text>
+                  <Box display={"grid"} gap={3} mt={"3rem"}>
+                    <Flex gap={3} alignItems={"center"} fontSize={"sm"}>
+                      <Icon
+                        as={IoCheckmarkSharp}
+                        boxSize={5}
+                        color={"green.500"}
+                      />
+                      <Text>
+                        Register up to <strong>4</strong> children
+                      </Text>
+                    </Flex>
+                    <Flex gap={3} alignItems={"center"} fontSize={"sm"}>
+                      <Icon
+                        as={IoCheckmarkSharp}
+                        boxSize={5}
+                        color={"green.500"}
+                      />
+                      <Text>
+                        Pay an additional <strong>₦195</strong> per child if you
+                        have more than 4 children
+                      </Text>
+                    </Flex>
+                    <Flex
+                      gap={3}
+                      alignItems={"center"}
+                      mb={"3rem"}
+                      fontSize={"sm"}
+                    >
+                      <Icon
+                        as={IoCheckmarkSharp}
+                        boxSize={5}
+                        color={"green.500"}
+                      />
+                      <Text>Pay every 3 months to renew subscription</Text>
+                    </Flex>
+                  </Box>
+                  <Button
+                    fontSize={"md"}
+                    w={"full"}
+                    colorScheme="green"
+                    onClick={() => handleSubmit("quaterly")}
+                  >
+                    Select Quaterly Plan
+                  </Button>
+                </Box>
+
+                <Box
+                  py={"1rem"}
+                  backgroundColor={"#FFFFFF"}
+                  w="full"
+                  border={"1px solid #00000010"}
+                  rounded={"lg"}
+                  shadow={"lg"}
+                  _hover={{ transform: "scale(1.02)", transition: "0.5s" }}
+                >
+                  <Flex justifyContent={"space-between"} gap={2}>
+                    <Text pl={"1.5rem"}>Yearly</Text>
+                    <Box
+                      display={"flex"}
+                      w={"auto"}
+                      roundedLeft={"full"}
+                      alignItems={"center"}
+                      bgGradient="linear(to-l, #fc4a1a, #f7b733)"
+                    >
+                      <Text
+                        fontWeight={"bold"}
+                        color={"#FFFFFF"}
+                        fontSize={{ base: "2xs", sm: "xs", md: "sm" }}
+                        px={4}
+                        py={1}
+                      >
+                        Best Value (Save up to 17%)
+                      </Text>
+                    </Box>
+                  </Flex>
+                  <Box px={"1.5rem"}>
+                    <Text fontSize={{ base: "xl", md: "4xl" }} mt={"1rem"}>
+                      <strong>₦2500</strong>
+                      <sub
+                        style={{
+                          color: "#00000070",
+                          fontSize: "16px",
+                          fontWeight: "600",
+                        }}
+                      >
+                        /year
+                      </sub>
+                    </Text>
+                    <Text fontSize={"xs"} color={"#00000090"}>
+                      *Billed yearly (₦2500/year).
+                    </Text>
+                    <Box display={"grid"} gap={3} mt={"3rem"}>
+                      <Flex gap={3} alignItems={"center"} fontSize={"sm"}>
+                        <Icon
+                          as={IoCheckmarkSharp}
+                          boxSize={5}
+                          color={"green.500"}
+                        />
+                        <Text>
+                          Register up to <strong>4</strong> children
+                        </Text>
+                      </Flex>
+                      <Flex gap={3} alignItems={"center"} fontSize={"sm"}>
+                        <Icon
+                          as={IoCheckmarkSharp}
+                          boxSize={5}
+                          color={"green.500"}
+                        />
+                        <Text>
+                          Pay an additional <strong>₦500</strong> per child if
+                          you have more than 4 children
+                        </Text>
+                      </Flex>
+                      <Flex
+                        gap={3}
+                        alignItems={"center"}
+                        mb={"3rem"}
+                        fontSize={"sm"}
+                      >
+                        <Icon
+                          as={IoCheckmarkSharp}
+                          boxSize={5}
+                          color={"green.500"}
+                        />
+                        <Text>Pay every year to renew subscription</Text>
+                      </Flex>
+                    </Box>
+                    <Button
+                      fontSize={"md"}
+                      w={"full"}
+                      colorScheme="green"
+                      onClick={() => handleSubmit("yearly")}
+                    >
+                      Select Yearly Plan
+                    </Button>
+                  </Box>
+                </Box>
+              </Flex>
+            </TabPanel>
+          </TabPanels>
+        </Tabs>
       </Flex>
 
       <Flex
