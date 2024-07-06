@@ -83,7 +83,7 @@ const BottomNav: FC<BottomNavProps> = ({}) => {
       boxShadow="0 -2px 5px rgba(0,0,0,0.1)"
       zIndex="1000"
     >
-      <Flex justify={"space-around"} align={"center"} py={"0.6rem"}>
+      <Flex justify={"space-around"} align={"center"} py={"0.8rem"}>
         {LinkItems.map((item, index) => (
           <Box
             as="a"
@@ -95,7 +95,7 @@ const BottomNav: FC<BottomNavProps> = ({}) => {
           >
             <Icon
               as={pathName.includes(item.url) ? item.iconFill : item.iconLight}
-              color={"green.700"}
+              color={"green.900"}
               boxSize={6}
               _hover={{
                 transform: "scale(1.1)",

@@ -97,7 +97,7 @@ const ChooseSubscription: FC<ChooseSubscriptionProps> = ({}) => {
               fontSize={"xs"}
               py={"0.5rem"}
             >
-              Monthly
+              Recurring Payment
             </Tab>
             <Tab
               _selected={{
@@ -107,7 +107,7 @@ const ChooseSubscription: FC<ChooseSubscriptionProps> = ({}) => {
               fontSize={"xs"}
               py={"0.5rem"}
             >
-              Anually - Get 10% off!
+              One-off Payment
             </Tab>
           </TabList>
           <TabPanels>
@@ -125,8 +125,13 @@ const ChooseSubscription: FC<ChooseSubscriptionProps> = ({}) => {
                   w="full"
                   border={"1px solid #00000010"}
                   rounded={"lg"}
-                  shadow={"lg"}
-                  _hover={{ transform: "scale(1.02)", transition: "0.5s" }}
+                  transition="transform 0.5s, box-shadow 0.5s"
+                  _hover={{
+                    transform: "scale(1.04)",
+                    transition: "0.5s",
+                    boxShadow: "4px 4px 6px rgba(0, 0, 0, 0.1)",
+                    cursor: "pointer",
+                  }}
                 >
                   <Text>Monthly</Text>
                   <Divider py={"0.2rem"} />
@@ -198,8 +203,13 @@ const ChooseSubscription: FC<ChooseSubscriptionProps> = ({}) => {
                   w="full"
                   border={"1px solid #00000010"}
                   rounded={"lg"}
-                  shadow={"lg"}
-                  _hover={{ transform: "scale(1.02)", transition: "0.5s" }}
+                  transition="transform 0.5s, box-shadow 0.5s"
+                  _hover={{
+                    transform: "scale(1.04)",
+                    transition: "0.5s",
+                    boxShadow: "4px 4px 6px rgba(0, 0, 0, 0.1)",
+                    cursor: "pointer",
+                  }}
                 >
                   <Text>Quarterly</Text>
                   <Divider py={"0.2rem"} />
@@ -219,7 +229,7 @@ const ChooseSubscription: FC<ChooseSubscriptionProps> = ({}) => {
                     *Billed monthly (₦750/3 months).
                   </Text>
                   <Box display={"grid"} gap={3} mt={"3rem"}>
-                    <Flex gap={3} alignItems={"center"} fontSize={"sm"}>
+                    <Flex gap={3} alignItems={"flex-start"} fontSize={"sm"}>
                       <Icon
                         as={IoCheckmarkSharp}
                         boxSize={5}
@@ -229,7 +239,7 @@ const ChooseSubscription: FC<ChooseSubscriptionProps> = ({}) => {
                         Register up to <strong>4</strong> children
                       </Text>
                     </Flex>
-                    <Flex gap={3} alignItems={"center"} fontSize={"sm"}>
+                    <Flex gap={3} alignItems={"flex-start"} fontSize={"sm"}>
                       <Icon
                         as={IoCheckmarkSharp}
                         boxSize={5}
@@ -242,7 +252,7 @@ const ChooseSubscription: FC<ChooseSubscriptionProps> = ({}) => {
                     </Flex>
                     <Flex
                       gap={3}
-                      alignItems={"center"}
+                      alignItems={"flex-start"}
                       mb={"3rem"}
                       fontSize={"sm"}
                     >
@@ -270,8 +280,13 @@ const ChooseSubscription: FC<ChooseSubscriptionProps> = ({}) => {
                   w="full"
                   border={"1px solid #00000010"}
                   rounded={"lg"}
-                  shadow={"lg"}
-                  _hover={{ transform: "scale(1.02)", transition: "0.5s" }}
+                  transition="transform 0.5s, box-shadow 0.5s"
+                  _hover={{
+                    transform: "scale(1.04)",
+                    transition: "0.5s",
+                    boxShadow: "4px 4px 6px rgba(0, 0, 0, 0.1)",
+                    cursor: "pointer",
+                  }}
                 >
                   <Flex justifyContent={"space-between"} gap={2}>
                     <Text pl={"1.5rem"}>Yearly</Text>
@@ -311,7 +326,7 @@ const ChooseSubscription: FC<ChooseSubscriptionProps> = ({}) => {
                       *Billed yearly (₦2500/year).
                     </Text>
                     <Box display={"grid"} gap={3} mt={"3rem"}>
-                      <Flex gap={3} alignItems={"center"} fontSize={"sm"}>
+                      <Flex gap={3} alignItems={"flex-start"} fontSize={"sm"}>
                         <Icon
                           as={IoCheckmarkSharp}
                           boxSize={5}
@@ -321,7 +336,7 @@ const ChooseSubscription: FC<ChooseSubscriptionProps> = ({}) => {
                           Register up to <strong>4</strong> children
                         </Text>
                       </Flex>
-                      <Flex gap={3} alignItems={"center"} fontSize={"sm"}>
+                      <Flex gap={3} alignItems={"flex-start"} fontSize={"sm"}>
                         <Icon
                           as={IoCheckmarkSharp}
                           boxSize={5}
@@ -334,7 +349,7 @@ const ChooseSubscription: FC<ChooseSubscriptionProps> = ({}) => {
                       </Flex>
                       <Flex
                         gap={3}
-                        alignItems={"center"}
+                        alignItems={"flex-start"}
                         mb={"3rem"}
                         fontSize={"sm"}
                       >
@@ -373,8 +388,13 @@ const ChooseSubscription: FC<ChooseSubscriptionProps> = ({}) => {
                   w="full"
                   border={"1px solid #00000010"}
                   rounded={"lg"}
-                  shadow={"lg"}
-                  _hover={{ transform: "scale(1.02)", transition: "0.5s" }}
+                  transition="transform 0.5s, box-shadow 0.5s"
+                  _hover={{
+                    transform: "scale(1.04)",
+                    transition: "0.5s",
+                    boxShadow: "4px 4px 6px rgba(0, 0, 0, 0.1)",
+                    cursor: "pointer",
+                  }}
                 >
                   <Text>Monthly</Text>
                   <Divider py={"0.2rem"} />
@@ -446,8 +466,13 @@ const ChooseSubscription: FC<ChooseSubscriptionProps> = ({}) => {
                   w="full"
                   border={"1px solid #00000010"}
                   rounded={"lg"}
-                  shadow={"lg"}
-                  _hover={{ transform: "scale(1.02)", transition: "0.5s" }}
+                  transition="transform 0.5s, box-shadow 0.5s"
+                  _hover={{
+                    transform: "scale(1.04)",
+                    transition: "0.5s",
+                    boxShadow: "4px 4px 6px rgba(0, 0, 0, 0.1)",
+                    cursor: "pointer",
+                  }}
                 >
                   <Text>Quarterly</Text>
                   <Divider py={"0.2rem"} />
@@ -467,7 +492,7 @@ const ChooseSubscription: FC<ChooseSubscriptionProps> = ({}) => {
                     *Billed monthly (₦750/3 months).
                   </Text>
                   <Box display={"grid"} gap={3} mt={"3rem"}>
-                    <Flex gap={3} alignItems={"center"} fontSize={"sm"}>
+                    <Flex gap={3} alignItems={"flex-start"} fontSize={"sm"}>
                       <Icon
                         as={IoCheckmarkSharp}
                         boxSize={5}
@@ -477,7 +502,7 @@ const ChooseSubscription: FC<ChooseSubscriptionProps> = ({}) => {
                         Register up to <strong>4</strong> children
                       </Text>
                     </Flex>
-                    <Flex gap={3} alignItems={"center"} fontSize={"sm"}>
+                    <Flex gap={3} alignItems={"flex-start"} fontSize={"sm"}>
                       <Icon
                         as={IoCheckmarkSharp}
                         boxSize={5}
@@ -490,7 +515,7 @@ const ChooseSubscription: FC<ChooseSubscriptionProps> = ({}) => {
                     </Flex>
                     <Flex
                       gap={3}
-                      alignItems={"center"}
+                      alignItems={"flex-start"}
                       mb={"3rem"}
                       fontSize={"sm"}
                     >
@@ -518,8 +543,13 @@ const ChooseSubscription: FC<ChooseSubscriptionProps> = ({}) => {
                   w="full"
                   border={"1px solid #00000010"}
                   rounded={"lg"}
-                  shadow={"lg"}
-                  _hover={{ transform: "scale(1.02)", transition: "0.5s" }}
+                  transition="transform 0.5s, box-shadow 0.5s"
+                  _hover={{
+                    transform: "scale(1.04)",
+                    transition: "0.5s",
+                    boxShadow: "4px 4px 6px rgba(0, 0, 0, 0.1)",
+                    cursor: "pointer",
+                  }}
                 >
                   <Flex justifyContent={"space-between"} gap={2}>
                     <Text pl={"1.5rem"}>Yearly</Text>
@@ -559,7 +589,7 @@ const ChooseSubscription: FC<ChooseSubscriptionProps> = ({}) => {
                       *Billed yearly (₦2500/year).
                     </Text>
                     <Box display={"grid"} gap={3} mt={"3rem"}>
-                      <Flex gap={3} alignItems={"center"} fontSize={"sm"}>
+                      <Flex gap={3} alignItems={"flex-start"} fontSize={"sm"}>
                         <Icon
                           as={IoCheckmarkSharp}
                           boxSize={5}
@@ -569,7 +599,7 @@ const ChooseSubscription: FC<ChooseSubscriptionProps> = ({}) => {
                           Register up to <strong>4</strong> children
                         </Text>
                       </Flex>
-                      <Flex gap={3} alignItems={"center"} fontSize={"sm"}>
+                      <Flex gap={3} alignItems={"flex-start"} fontSize={"sm"}>
                         <Icon
                           as={IoCheckmarkSharp}
                           boxSize={5}
@@ -582,7 +612,7 @@ const ChooseSubscription: FC<ChooseSubscriptionProps> = ({}) => {
                       </Flex>
                       <Flex
                         gap={3}
-                        alignItems={"center"}
+                        alignItems={"flex-start"}
                         mb={"3rem"}
                         fontSize={"sm"}
                       >

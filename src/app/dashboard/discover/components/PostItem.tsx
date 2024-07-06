@@ -59,7 +59,6 @@ interface PostItemProps {
 }
 
 const PostItem: FC<PostItemProps> = ({ profile, currentIndex }) => {
-  const { isOpen, onToggle } = useDisclosure();
   const {
     likePost,
     unlikePost,
@@ -139,15 +138,14 @@ const PostItem: FC<PostItemProps> = ({ profile, currentIndex }) => {
       </Box>
 
       <Flex justifyContent={"space-between"} alignItems={"center"}>
-        <Flex gap={2} my={"1rem"}>
-          <Avatar
-            size={{ base: "sm", md: "md" }}
-            src={profile?.logoImgUrl}
-            name={profile?.schoolName}
-            border={"1px solid #005D5D"}
-            p={"0.1rem"}
-          />
-          <Flex flexDir={"column"} justifyContent={"space-between"}>
+        <Flex gap={2} mt={"0.8rem"} alignItems={'flex-start'}>
+              <Avatar
+                size={'sm'}
+                src={profile?.logoImgUrl}
+                name={profile?.schoolName}
+                borderRadius="full"
+              />
+          <Flex flexDir={"column"} justifyContent={"center"}>
             <Text fontWeight={"bold"} fontSize={{ base: "sm", md: "md" }}>
               {capitalizeFirstLetterOfEachWord(
                 profile?.schoolName.toLowerCase()
