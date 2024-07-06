@@ -446,6 +446,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
               icon={<VscBellDot />}
               fontSize={"18px"}
               color={"#005D5D"}
+              _hover={{rounded:"full"}}
             />
           </PopoverTrigger>
           <PopoverContent>
@@ -520,7 +521,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
                 fontSize={"sm"}
                 display={{ base: "none", md: "block" }}
               >
-                Hi, {profileData.userBio.firstName + " " + profileData.userBio.middleName + " " + profileData.userBio.lastName}
+                Hi, {profileData.userBio.firstName}
               </Text>
               <Avatar
                 src={profileData.userBio.profileImage}
