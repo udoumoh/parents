@@ -210,7 +210,7 @@ const InvoiceDataModal: FC<InvoiceDataModalProps> = ({invoice, isOpen, onClose})
                         return (
                           <Box
                             key={index}
-                            border={"1px solid #005D5D60"}
+                            border={"1px dashed #005D5D60"}
                             p={3}
                             color="white"
                             mt="4"
@@ -398,7 +398,7 @@ const InvoiceDataModal: FC<InvoiceDataModalProps> = ({invoice, isOpen, onClose})
 
               <Flex flexDir={"column"}>
                 <Box
-                  border={"1px dotted #00000030"}
+                  border={"1px dashed #00000030"}
                   p={3}
                   color="white"
                   mt="4"
