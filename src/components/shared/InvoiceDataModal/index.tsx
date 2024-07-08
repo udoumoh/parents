@@ -29,7 +29,6 @@ import { PDFViewer } from "@/components/shared/uploadedResultPdfViewer";
 import ImgViewer from "@/components/shared/imageViewer";
 import { useUserAPI } from "@/hooks/UserContext";
 import formatNumberWithCommas from "@/helpers/formatNumberWithCommas";
-import { IoIosArrowRoundBack } from "react-icons/io";
 import { useRouter } from "next/navigation";
 import { MdOutlinePayment } from "react-icons/md";
 import OverpaidBalancePaymentModal from "@/components/shared/overpaidBalancePaymentModal";
@@ -128,15 +127,6 @@ const InvoiceDataModal: FC<InvoiceDataModalProps> = ({invoice, isOpen, onClose})
               invoiceData={invoice}
               balance={currentWardProfile?.wallet}
             />
-            <Button
-              mb={"2rem"}
-              leftIcon={<IoIosArrowRoundBack />}
-              variant={"outline"}
-              colorScheme="green"
-              onClick={() => window.location.assign("/dashboard/home/invoice")}
-            >
-              Back to invoice page
-            </Button>
             <Box
               rounded={"lg"}
               border={"1px solid #005D5D40"}

@@ -1,5 +1,13 @@
 "use client";
-import { FC, useState, useEffect, useMemo, useCallback } from "react";
+import {
+  FC,
+  useState,
+  useEffect,
+  useMemo,
+  useCallback,
+  Suspense,
+  lazy,
+} from "react";
 import {
   Box,
   Text,
@@ -32,8 +40,6 @@ import { BsThreeDots } from "react-icons/bs";
 import { useUserAPI } from "@/hooks/UserContext";
 import formatNumberWithCommas from "@/helpers/formatNumberWithCommas";
 import { FaCheck } from "react-icons/fa6";
-import AcceptInvoiceModal from "@/components/shared/acceptInvoiceModal";
-import RejectInvoiceModal from "@/components/shared/rejectinvoicemodal";
 import { TbFileInvoice } from "react-icons/tb";
 import {
   MdOutlinePayment,
@@ -42,12 +48,25 @@ import {
   MdOutlineClose,
   MdAccountBalanceWallet,
 } from "react-icons/md";
-import OverpaidBalancePaymentModal from "@/components/shared/overpaidBalancePaymentModal";
-import SchoolAccountDetailsModal from "@/components/shared/schoolAccountDetailsModal";
 import { GET_STUDENT_EDUCATION_HISTORY } from "@/gql/queries";
 import { useQuery } from "@apollo/client";
 import { IoFilterOutline } from "react-icons/io5";
-import InvoiceDataModal from "@/components/shared/InvoiceDataModal";
+
+const AcceptInvoiceModal = lazy(
+  () => import("@/components/shared/acceptInvoiceModal")
+);
+const RejectInvoiceModal = lazy(
+  () => import("@/components/shared/rejectinvoicemodal")
+);
+const OverpaidBalancePaymentModal = lazy(
+  () => import("@/components/shared/overpaidBalancePaymentModal")
+);
+const SchoolAccountDetailsModal = lazy(
+  () => import("@/components/shared/schoolAccountDetailsModal")
+);
+const InvoiceDataModal = lazy(
+  () => import("@/components/shared/InvoiceDataModal")
+);
 
 interface StudentInvoiceProps {
   term: string;
@@ -225,6 +244,11 @@ const Invoice: FC<InvoiceProps> = ({}) => {
     onOverpaidModalModalOpen();
   };
 
+  const handleInvoiceDetailsModal = (invoice: any) => {
+    setCurrentInvoice(invoice);
+    onInvoiceDataModalOpen();
+  }
+
   const handleNextPage = () => {
     const nextPage = currentPage + 1;
     const startIndex = (nextPage - 1) * itemsPerPage;
@@ -377,8 +401,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                             display={"flex"}
                             gap={"3"}
                             onClick={() => {
-                              setCurrentInvoice(item)
-                              onInvoiceDataModalOpen()
+                              handleInvoiceDetailsModal(item)
                             }}
                           >
                             <Icon
