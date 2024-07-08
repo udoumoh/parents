@@ -29,7 +29,7 @@ import { PDFViewer } from "@/components/shared/uploadedResultPdfViewer";
 import ImgViewer from "@/components/shared/imageViewer";
 import { useUserAPI } from "@/hooks/UserContext";
 import formatNumberWithCommas from "@/helpers/formatNumberWithCommas";
-import { useRouter } from "next/navigation";
+import { TbFileInvoice } from "react-icons/tb";
 import { MdOutlinePayment } from "react-icons/md";
 import OverpaidBalancePaymentModal from "@/components/shared/overpaidBalancePaymentModal";
 
@@ -68,8 +68,7 @@ interface InvoiceDataModalProps {
 }
 
 const InvoiceDataModal: FC<InvoiceDataModalProps> = ({invoice, isOpen, onClose}) => {
-    const router = useRouter();
-    const { currentWardProfile, invoiceData } = useUserAPI();
+    const { currentWardProfile } = useUserAPI();
     const { isOpen: isCollapseOpen, onToggle: onCollapseToggle } =
       useDisclosure();
     const {
@@ -98,8 +97,6 @@ const InvoiceDataModal: FC<InvoiceDataModalProps> = ({invoice, isOpen, onClose})
       return totalCompletedAmount;
     };
 
-    console.log(invoice)
-
   return (
     <Modal
       isOpen={isOpen}
@@ -109,6 +106,10 @@ const InvoiceDataModal: FC<InvoiceDataModalProps> = ({invoice, isOpen, onClose})
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>
+          <Flex alignItems={"center"} gap={3}>
+            <Icon as={TbFileInvoice} boxSize={6} color={"#005D5D"} />
+            <Text fontSize={"md"}>Invoice Data</Text>
+          </Flex>
         </ModalHeader>
         <ModalCloseButton />
         <Divider />
@@ -118,7 +119,6 @@ const InvoiceDataModal: FC<InvoiceDataModalProps> = ({invoice, isOpen, onClose})
             alignItems={"start"}
             justifyContent={"center"}
             flexDir={"column"}
-            pb={"10rem"}
           >
             <OverpaidBalancePaymentModal
               isOpen={isOverpaidModalModalOpen}
@@ -128,10 +128,6 @@ const InvoiceDataModal: FC<InvoiceDataModalProps> = ({invoice, isOpen, onClose})
               balance={currentWardProfile?.wallet}
             />
             <Box
-              rounded={"lg"}
-              border={"1px solid #005D5D40"}
-              w={"full"}
-              p={"1rem"}
             >
               <Flex
                 alignItems={"center"}
@@ -213,7 +209,7 @@ const InvoiceDataModal: FC<InvoiceDataModalProps> = ({invoice, isOpen, onClose})
                         return (
                           <Box
                             key={index}
-                            border={"1px solid #005D5D60"}
+                            border={"1px dotted #00000030"}
                             p={3}
                             color="white"
                             mt="4"
@@ -388,8 +384,7 @@ const InvoiceDataModal: FC<InvoiceDataModalProps> = ({invoice, isOpen, onClose})
                                   fontSize={{ base: "xs", md: "sm" }}
                                   color={"gray.500"}
                                 >
-                                  {invoice?.term} -{" "}
-                                  {invoice?.year}
+                                  {invoice?.term} - {invoice?.year}
                                 </Text>
                               </Box>
                             </Box>
@@ -403,7 +398,7 @@ const InvoiceDataModal: FC<InvoiceDataModalProps> = ({invoice, isOpen, onClose})
 
               <Flex flexDir={"column"}>
                 <Box
-                  border={"1px solid #93080830"}
+                  border={"1px dotted #00000030"}
                   p={3}
                   color="white"
                   mt="4"
@@ -507,9 +502,7 @@ const InvoiceDataModal: FC<InvoiceDataModalProps> = ({invoice, isOpen, onClose})
                               ₦
                               {invoice?.status === "active" ||
                               invoice?.status === "processing"
-                                ? formatNumberWithCommas(
-                                    invoice?.amountPaid
-                                  )
+                                ? formatNumberWithCommas(invoice?.amountPaid)
                                 : formatNumberWithCommas(
                                     invoice?.amountPaid +
                                       getCompletedInvoiceAmount(invoice)
