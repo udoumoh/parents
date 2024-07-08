@@ -228,7 +228,7 @@ const InvoiceDataModal: FC<InvoiceDataModalProps> = ({invoice, isOpen, onClose})
                                   color={"#005D5D"}
                                 />
                                 <Text
-                                  fontSize={"lg"}
+                                  fontSize={"md"}
                                   fontWeight={"bold"}
                                   color={"#000000"}
                                 >
@@ -412,7 +412,7 @@ const InvoiceDataModal: FC<InvoiceDataModalProps> = ({invoice, isOpen, onClose})
                         color={"#005D5D"}
                       />
                       <Text
-                        fontSize={"lg"}
+                        fontSize={"md"}
                         fontWeight={"bold"}
                         color={"#000000"}
                       >
