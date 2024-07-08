@@ -215,6 +215,7 @@ const InvoiceDataModal: FC<InvoiceDataModalProps> = ({invoice, isOpen, onClose})
                             color="white"
                             mt="4"
                             rounded="lg"
+                            style={{borderSpacing:"10px 5px"}}
                           >
                             <Flex justifyContent={"space-between"}>
                               <Box
