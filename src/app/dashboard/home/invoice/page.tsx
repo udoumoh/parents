@@ -388,7 +388,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                             gap={"3"}
                             onClick={() => {
                               handleInvoiceDataModal(item?.id);
-                              onInvoiceDataModalOpen();
+                              onInvoiceDataModalOpen
                             }}
                           >
                             <Icon
