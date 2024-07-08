@@ -219,11 +219,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
     ?.map((invoice) => invoice?.receipt)
     ?.filter((receipt: any) => receipt?.length !== 0);
 
-  const totalAmountPaid = nonEmptyReceipts
-    ?.map((receiptItem) =>
-      receiptItem?.reduce((acc, item) => acc + item?.amountPaid, 0)
-    )
-    .reduce((acc: any, item: any) => acc + item, 0);
+  const totalAmountPaid = nonEmptyReceipts?.map((receiptItem) => receiptItem?.reduce((acc, item) => acc + item?.amountPaid, 0)).reduce((acc: any, item: any) => acc + item, 0);
 
   const handleSelectedInvoice = (invoice: any) => {
     window.location.assign(`/dashboard/home/invoice/${invoice?.id}`);
@@ -1008,12 +1004,14 @@ const Invoice: FC<InvoiceProps> = ({}) => {
           onClose={onInvoiceDataModalClose}
           invoice={currentInvoice}
         />
+
+        {/* Overview grid cards for total, rejected, processing and active */}
         <SimpleGrid minChildWidth="200px" spacing={"10px"}>
           <Flex
             flexDir={"column"}
             backgroundColor={"#DBEEFC"}
             border={"1px solid #83ACC960"}
-            rounded={"2xl"}
+            rounded={"lg"}
             px={5}
             py={2}
             gap={"2"}
@@ -1046,7 +1044,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
             flexDir={"column"}
             backgroundColor={"#E7FDF5"}
             border={"1px solid #449C8760"}
-            rounded={"2xl"}
+            rounded={"lg"}
             px={5}
             py={2}
             gap={"2"}
@@ -1078,7 +1076,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
             flexDir={"column"}
             backgroundColor={"#FDE7E7"}
             border={"1px solid #9C444460"}
-            rounded={"2xl"}
+            rounded={"lg"}
             px={5}
             py={2}
             gap={"2"}
@@ -1110,7 +1108,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
             flexDir={"column"}
             backgroundColor={"#FCF1DB"}
             border={"1px solid #C9973760"}
-            rounded={"2xl"}
+            rounded={"lg"}
             px={5}
             py={2}
             gap={"2"}
