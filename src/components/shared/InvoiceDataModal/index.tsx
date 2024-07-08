@@ -128,6 +128,7 @@ const InvoiceDataModal: FC<InvoiceDataModalProps> = ({invoice, isOpen, onClose})
               balance={currentWardProfile?.wallet}
             />
             <Box
+              w={"full"}
             >
               <Flex
                 alignItems={"center"}
@@ -193,7 +194,7 @@ const InvoiceDataModal: FC<InvoiceDataModalProps> = ({invoice, isOpen, onClose})
                   <Collapse in={isCollapseOpen} animateOpacity>
                     {invoice?.receipt?.length === 0 ? (
                       <Box
-                        border={"1px solid #005D5D60"}
+                        border={"1px dotted #00000030"}
                         p={3}
                         color="white"
                         mt="4"
@@ -209,12 +210,11 @@ const InvoiceDataModal: FC<InvoiceDataModalProps> = ({invoice, isOpen, onClose})
                         return (
                           <Box
                             key={index}
-                            border={"1px dotted #00000030"}
+                            border={"1px solid #005D5D60"}
                             p={3}
                             color="white"
                             mt="4"
                             rounded="lg"
-                            shadow="md"
                           >
                             <Flex justifyContent={"space-between"}>
                               <Box
@@ -403,7 +403,6 @@ const InvoiceDataModal: FC<InvoiceDataModalProps> = ({invoice, isOpen, onClose})
                   color="white"
                   mt="4"
                   rounded="lg"
-                  shadow="md"
                 >
                   <Flex justifyContent={"space-between"}>
                     <Box display={"flex"} gap={2} alignItems={"center"}>
