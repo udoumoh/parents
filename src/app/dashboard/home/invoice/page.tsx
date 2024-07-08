@@ -47,6 +47,7 @@ import SchoolAccountDetailsModal from "@/components/shared/schoolAccountDetailsM
 import { GET_STUDENT_EDUCATION_HISTORY } from "@/gql/queries";
 import { useQuery } from "@apollo/client";
 import { IoFilterOutline } from "react-icons/io5";
+import InvoiceDataModal from "@/components/shared/InvoiceDataModal";
 
 interface StudentInvoiceProps {
   term: string;
@@ -91,6 +92,12 @@ const Invoice: FC<InvoiceProps> = ({}) => {
     isOpen: isAcceptModalOpen,
     onOpen: onAcceptModalOpen,
     onClose: onAcceptModalClose,
+  } = useDisclosure();
+
+  const {
+    isOpen: isInvoiceDataModalOpen,
+    onOpen: onInvoiceDataModalOpen,
+    onClose: onInvoiceDataModalClose,
   } = useDisclosure();
 
   const {
@@ -237,6 +244,16 @@ const Invoice: FC<InvoiceProps> = ({}) => {
     }
   };
 
+  const handleInvoiceDataModal = (id: any) => {
+    return (
+      <InvoiceDataModal
+        isOpen={isInvoiceDataModalOpen}
+        onClose={onInvoiceDataModalClose}
+        id={id}
+      />
+    );
+  }
+
   const renderAllInvoices = useMemo(() => {
     return (
       <>
@@ -370,7 +387,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                             display={"flex"}
                             gap={"3"}
                             onClick={() => {
-                              handleSelectedInvoice(item);
+                              handleInvoiceDataModal(item?.id);
                             }}
                           >
                             <Icon

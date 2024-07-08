@@ -57,7 +57,7 @@ const Attendance: FC<AttendanceProps> = ({}) => {
       <Flex>
         <Box display={"flex"} alignItems={"center"} gap={3}>
           <Icon as={BsArchive} boxSize={"5"} color={"#189879"} />
-          <Text fontWeight={"600"} fontSize={{base:"md", md:"xl"}}>
+          <Text fontWeight={"bold"} fontSize={'md'}>
             {"Weekly Attendance"}
           </Text>
         </Box>

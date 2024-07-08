@@ -113,6 +113,12 @@ const Signin: FC<pageProps> = ({}) => {
     }
   };
 
+  const handleKeyDown = (e: any) => {
+    if (e.key === "Enter") {
+      handleLogin();
+    }
+  };
+
   return loading ? (
     <Loading />
   ) : !loading && parent?.parent?.errors === null ? (
@@ -212,6 +218,7 @@ const Signin: FC<pageProps> = ({}) => {
                   focusBorderColor="#005D5D80"
                   border={"1px solid #005D5D30"}
                   fontSize={{ base: "sm", sm: "md" }}
+                  onKeyDown={handleKeyDown}
                 />
                 <InputRightElement width="4.5rem">
                   <Icon

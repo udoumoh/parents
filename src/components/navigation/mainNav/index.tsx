@@ -446,7 +446,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
               icon={<VscBellDot />}
               fontSize={"18px"}
               color={"#005D5D"}
-              _hover={{rounded:"full"}}
+              rounded={'full'}
             />
           </PopoverTrigger>
           <PopoverContent>
