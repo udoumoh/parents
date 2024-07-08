@@ -34,14 +34,41 @@ import { useRouter } from "next/navigation";
 import { MdOutlinePayment } from "react-icons/md";
 import OverpaidBalancePaymentModal from "@/components/shared/overpaidBalancePaymentModal";
 
+interface StudentInvoiceProps {
+  term: string;
+  year: string;
+  category: string;
+  amountPaid: number;
+  id: number;
+  status: string;
+  summary: string;
+  createdAt: string;
+  invoiceId: string;
+  schoolname: string;
+  schoollogo: string;
+  balance: number;
+  isRefundable: boolean;
+  receipt: {
+    amountPaid: number;
+    createdAt: string;
+    creator: string;
+    fileType: string;
+    id: number;
+    parentInvoiceId: string;
+    status: string;
+    summary: string;
+    updatedAt: string;
+    uploadedDocument: string;
+  }[];
+}
 
 interface InvoiceDataModalProps {
-    id: number;
+    invoice: StudentInvoiceProps | undefined;
     isOpen: boolean;
     onClose: () => void;
 }
 
-const InvoiceDataModal: FC<InvoiceDataModalProps> = ({id, isOpen, onClose}) => {
+const InvoiceDataModal: FC<InvoiceDataModalProps> = ({invoice, isOpen, onClose}) => {
     const router = useRouter();
     const { currentWardProfile, invoiceData } = useUserAPI();
     const { isOpen: isCollapseOpen, onToggle: onCollapseToggle } =
@@ -72,9 +99,7 @@ const InvoiceDataModal: FC<InvoiceDataModalProps> = ({id, isOpen, onClose}) => {
       return totalCompletedAmount;
     };
 
-    const currentInvoice = invoiceData?.find(
-      (invoice: any) => Number(invoice?.id) === Number(id)
-    );
+    const currentInvoice = invoice
 
   return (
     <Modal

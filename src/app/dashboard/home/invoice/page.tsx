@@ -244,16 +244,6 @@ const Invoice: FC<InvoiceProps> = ({}) => {
     }
   };
 
-  const handleInvoiceDataModal = (id: any) => {
-    return (
-      <InvoiceDataModal
-        isOpen={isInvoiceDataModalOpen}
-        onClose={onInvoiceDataModalClose}
-        id={id}
-      />
-    );
-  }
-
   const renderAllInvoices = useMemo(() => {
     return (
       <>
@@ -387,8 +377,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                             display={"flex"}
                             gap={"3"}
                             onClick={() => {
-                              handleInvoiceDataModal(item?.id);
-                              onInvoiceDataModalOpen
+                              onInvoiceDataModalOpen()
                             }}
                           >
                             <Icon
@@ -989,6 +978,11 @@ const Invoice: FC<InvoiceProps> = ({}) => {
         <SchoolAccountDetailsModal
           isOpen={isSchoolAccountDetailsModalOpen}
           onClose={onSchoolAccountDetailsModalClose}
+        />
+        <InvoiceDataModal
+          isOpen={isInvoiceDataModalOpen}
+          onClose={onInvoiceDataModalClose}
+          invoice={currentInvoice}
         />
         <SimpleGrid minChildWidth="200px" spacing={"10px"}>
           <Flex
