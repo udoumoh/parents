@@ -99,7 +99,7 @@ const InvoiceDataModal: FC<InvoiceDataModalProps> = ({invoice, isOpen, onClose})
       return totalCompletedAmount;
     };
 
-    const currentInvoice = invoice
+    console.log(invoice)
 
   return (
     <Modal
@@ -125,7 +125,7 @@ const InvoiceDataModal: FC<InvoiceDataModalProps> = ({invoice, isOpen, onClose})
               isOpen={isOverpaidModalModalOpen}
               onOpen={onOverpaidModalModalOpen}
               onClose={onOverpaidModalModalClose}
-              invoiceData={currentInvoice}
+              invoiceData={invoice}
               balance={currentWardProfile?.wallet}
             />
             <Button
@@ -188,7 +188,7 @@ const InvoiceDataModal: FC<InvoiceDataModalProps> = ({invoice, isOpen, onClose})
                   <Button
                     display={
                       ["active", "partial payment"].includes(
-                        currentInvoice?.status || ""
+                        invoice?.status || ""
                       ) && (currentWardProfile?.wallet || 0) > 0
                         ? "flex"
                         : "none"
@@ -205,7 +205,7 @@ const InvoiceDataModal: FC<InvoiceDataModalProps> = ({invoice, isOpen, onClose})
                 </Flex>
                 <Box w={"full"}>
                   <Collapse in={isCollapseOpen} animateOpacity>
-                    {currentInvoice?.receipt?.length === 0 ? (
+                    {invoice?.receipt?.length === 0 ? (
                       <Box
                         border={"1px solid #005D5D60"}
                         p={3}
@@ -219,7 +219,7 @@ const InvoiceDataModal: FC<InvoiceDataModalProps> = ({invoice, isOpen, onClose})
                         </Text>
                       </Box>
                     ) : (
-                      currentInvoice?.receipt?.map((receipt, index) => {
+                      invoice?.receipt?.map((receipt, index) => {
                         return (
                           <Box
                             key={index}
@@ -283,7 +283,7 @@ const InvoiceDataModal: FC<InvoiceDataModalProps> = ({invoice, isOpen, onClose})
                                     fontWeight={"bold"}
                                     color={"#000000"}
                                   >
-                                    {currentInvoice?.category}
+                                    {invoice?.category}
                                   </Text>
                                 </Box>
                                 <Box>
@@ -398,8 +398,8 @@ const InvoiceDataModal: FC<InvoiceDataModalProps> = ({invoice, isOpen, onClose})
                                   fontSize={{ base: "xs", md: "sm" }}
                                   color={"gray.500"}
                                 >
-                                  {currentInvoice?.term} -{" "}
-                                  {currentInvoice?.year}
+                                  {invoice?.term} -{" "}
+                                  {invoice?.year}
                                 </Text>
                               </Box>
                             </Box>
@@ -439,16 +439,16 @@ const InvoiceDataModal: FC<InvoiceDataModalProps> = ({invoice, isOpen, onClose})
                       <Badge
                         variant={"solid"}
                         colorScheme={
-                          currentInvoice?.status === "active"
+                          invoice?.status === "active"
                             ? "green"
-                            : currentInvoice?.status === "rejected by parent"
+                            : invoice?.status === "rejected by parent"
                             ? "red"
-                            : currentInvoice?.status === "processing"
+                            : invoice?.status === "processing"
                             ? "yellow"
                             : "purple"
                         }
                       >
-                        {currentInvoice?.status}
+                        {invoice?.status}
                       </Badge>
                     </Box>
                   </Flex>
@@ -473,7 +473,7 @@ const InvoiceDataModal: FC<InvoiceDataModalProps> = ({invoice, isOpen, onClose})
                           fontWeight={"bold"}
                           color={"#000000"}
                         >
-                          {currentInvoice?.category}
+                          {invoice?.category}
                         </Text>
                       </Box>
 
@@ -490,7 +490,7 @@ const InvoiceDataModal: FC<InvoiceDataModalProps> = ({invoice, isOpen, onClose})
                           fontWeight={"bold"}
                           color={"#000000"}
                         >
-                          {currentInvoice?.invoiceId}
+                          {invoice?.invoiceId}
                         </Text>
                       </Box>
 
@@ -515,14 +515,14 @@ const InvoiceDataModal: FC<InvoiceDataModalProps> = ({invoice, isOpen, onClose})
                               color={"#000000"}
                             >
                               ₦
-                              {currentInvoice?.status === "active" ||
-                              currentInvoice?.status === "processing"
+                              {invoice?.status === "active" ||
+                              invoice?.status === "processing"
                                 ? formatNumberWithCommas(
-                                    currentInvoice?.amountPaid
+                                    invoice?.amountPaid
                                   )
                                 : formatNumberWithCommas(
-                                    currentInvoice?.amountPaid +
-                                      getCompletedInvoiceAmount(currentInvoice)
+                                    invoice?.amountPaid +
+                                      getCompletedInvoiceAmount(invoice)
                                   )}
                             </Text>
                           </Box>
@@ -547,7 +547,7 @@ const InvoiceDataModal: FC<InvoiceDataModalProps> = ({invoice, isOpen, onClose})
                               fontWeight={"bold"}
                               color={"#000000"}
                             >
-                              ₦{formatNumberWithCommas(currentInvoice?.balance)}
+                              ₦{formatNumberWithCommas(invoice?.balance)}
                             </Text>
                           </Box>
                         </Flex>
@@ -574,7 +574,7 @@ const InvoiceDataModal: FC<InvoiceDataModalProps> = ({invoice, isOpen, onClose})
                       </Text>
                       <Box
                         display={
-                          (currentInvoice?.summary ?? "")?.length > 0
+                          (invoice?.summary ?? "")?.length > 0
                             ? "block"
                             : "none"
                         }
@@ -584,7 +584,7 @@ const InvoiceDataModal: FC<InvoiceDataModalProps> = ({invoice, isOpen, onClose})
                         rounded={"md"}
                       >
                         <Text fontSize={"sm"} color={"#000000"}>
-                          {currentInvoice?.summary}
+                          {invoice?.summary}
                         </Text>
                       </Box>
                     </Box>
@@ -599,13 +599,13 @@ const InvoiceDataModal: FC<InvoiceDataModalProps> = ({invoice, isOpen, onClose})
                         fontSize={{ base: "xs", md: "sm" }}
                         color={"gray.500"}
                       >
-                        {currentInvoice?.term} - {currentInvoice?.year}
+                        {invoice?.term} - {invoice?.year}
                       </Text>
                       <Text
                         fontSize={{ base: "xs", md: "sm" }}
                         color={"gray.500"}
                       >
-                        Created on {currentInvoice?.createdAt}
+                        Created on {invoice?.createdAt}
                       </Text>
                     </Box>
                   </Box>
