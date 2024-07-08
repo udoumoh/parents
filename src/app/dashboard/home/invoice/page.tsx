@@ -377,6 +377,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                             display={"flex"}
                             gap={"3"}
                             onClick={() => {
+                              setCurrentInvoice(item)
                               onInvoiceDataModalOpen()
                             }}
                           >
