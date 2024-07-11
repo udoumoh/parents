@@ -1,7 +1,7 @@
 "use client";
 import React, { FC, useRef } from "react";
 import { Box, Button } from "@chakra-ui/react";
-import ResultSheet from "@/components/ResultSheet";
+import ResultSheetTemplateTwo from "@/components/ResultSheet/ResultSheetTemplateTwo";
 import {useReactToPrint} from 'react-to-print';
 
 interface ClipsProps {}
@@ -15,7 +15,7 @@ const Clips: FC<ClipsProps> = () => {
 
   return (
     <Box p={4}>
-      <ResultSheet ref={resultSheetRef} />
+      <ResultSheetTemplateTwo ref={resultSheetRef} />
       <Button mt={4} onClick={handlePrint}>
         Print Result Sheet
       </Button>

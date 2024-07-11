@@ -179,7 +179,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
     let filteredInvoices = invoiceData;
     if (filterParam) {
       filteredInvoices = filteredInvoices?.filter(
-        (invoice) => invoice?.schoolname === filterParam
+        (invoice) => invoice?.schoolname.toLowerCase() === filterParam.toLowerCase()
       );
     }
     setInvoices(filteredInvoices);

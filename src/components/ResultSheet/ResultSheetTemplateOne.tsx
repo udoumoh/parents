@@ -18,7 +18,7 @@ import {
 import './ResultStyles.css'
 import Image from "next/image";
 
-const ResultSheet = forwardRef<HTMLDivElement>((props, ref) => {
+const ResultSheetTemplateOne = forwardRef<HTMLDivElement>((props, ref) => {
   return (
     <Box ref={ref} p={4} w={"full"}>
       <Flex justifyContent={"space-between"} alignItems={"center"}>
@@ -301,4 +301,4 @@ const ResultSheet = forwardRef<HTMLDivElement>((props, ref) => {
   );
 });
 
-export default ResultSheet;
+export default ResultSheetTemplateOne;

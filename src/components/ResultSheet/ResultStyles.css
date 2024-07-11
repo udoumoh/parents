@@ -1,12 +1,8 @@
-table {
-    font-family: arial, sans-serif;
-    border-collapse: collapse;
-    width: 100%;
-}
-
 td,
 th {
     border: 1px solid #747474 !important;
     text-align: left;
-    padding: 8px;
+    padding-top: 2px !important;
+    padding-bottom: 4px !important;
+    font-size: 10px !important;
 }
