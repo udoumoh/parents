@@ -224,14 +224,14 @@ const Invoice: FC<InvoiceProps> = ({}) => {
     <Box
       p={"1rem"}
       backgroundColor={"#fff"}
-      rounded={"2xl"}
+      rounded={"md"}
       w={"full"}
       border={"1px solid #005D5D50"}
     >
       <Flex w={"full"} justifyContent={"space-between"} gap={3}>
         <Box display={"flex"} alignItems={"center"} gap={2}>
           <Icon as={IoReceiptOutline} boxSize={"5"} color={"#189879"} />
-          <Text fontWeight={"boold"} fontSize={'md'}>
+          <Text fontWeight={"bold"} fontSize={'md'}>
             {"Invoice Received"}
           </Text>
         </Box>

@@ -60,10 +60,10 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
       >
         <Box
           width={"full"}
-          rounded={"2xl"}
+          rounded={"md"}
           border={"1px solid #449c7c"}
           overflow={"hidden"}
-          backgroundColor={"#F4FFFB"}
+          backgroundColor={"#E3FEF7"}
           p={"1rem"}
           bgSize={"cover"}
           my={{ base: "10px", md: "0" }}
@@ -179,7 +179,7 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
 
         <Box
           border={"1px solid #005D5D50"}
-          rounded={"2xl"}
+          rounded={"md"}
           pt={4}
           pb={2}
           minW={"300px"}
