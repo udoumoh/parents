@@ -221,10 +221,6 @@ const Invoice: FC<InvoiceProps> = ({}) => {
 
   const totalAmountPaid = nonEmptyReceipts?.map((receiptItem) => receiptItem?.reduce((acc, item) => acc + item?.amountPaid, 0)).reduce((acc: any, item: any) => acc + item, 0);
 
-  const handleSelectedInvoice = (invoice: any) => {
-    window.location.assign(`/dashboard/home/invoice/${invoice?.id}`);
-  };
-
   const handleAcceptInvoice = (invoice: any) => {
     setCurrentInvoice(invoice);
     onAcceptModalOpen();
@@ -539,7 +535,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                             display={"flex"}
                             gap={"3"}
                             onClick={() => {
-                              handleSelectedInvoice(item);
+                              handleInvoiceDetailsModal(item);
                             }}
                           >
                             <Icon
@@ -688,7 +684,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                             display={"flex"}
                             gap={"3"}
                             onClick={() => {
-                              handleSelectedInvoice(item);
+                              handleInvoiceDetailsModal(item);
                             }}
                           >
                             <Icon
@@ -792,7 +788,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                             display={"flex"}
                             gap={"3"}
                             onClick={() => {
-                              handleSelectedInvoice(item);
+                              handleInvoiceDetailsModal(item);
                             }}
                           >
                             <Icon
@@ -938,7 +934,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                             display={"flex"}
                             gap={"3"}
                             onClick={() => {
-                              handleSelectedInvoice(item);
+                              handleInvoiceDetailsModal(item);
                             }}
                           >
                             <Icon

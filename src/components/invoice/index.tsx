@@ -26,6 +26,7 @@ import { useUserAPI } from "@/hooks/UserContext";
 import { formatDate } from "@/helpers/formatDate";
 import formatNumberWithCommas from "@/helpers/formatNumberWithCommas";
 import { useRouter } from "next/navigation";
+import InvoiceDataModal from "../shared/InvoiceDataModal";
 
 interface InvoiceItemProps {
   studentInvoice: StudentInvoiceProps;
@@ -71,6 +72,12 @@ const InvoiceItem: FC<InvoiceItemProps> = ({
     onClose: onRejectModalClose,
   } = useDisclosure();
 
+  const {
+    isOpen: isInvoiceDataModalOpen,
+    onOpen: onInvoiceDataModalOpen,
+    onClose: onInvoiceDataModalClose,
+  } = useDisclosure();
+
   const getCompletedInvoiceAmount = (invoice: any) => {
     const totalCompletedAmount = invoice?.receipt
       ?.filter((item: any) => item?.status !== "rejected by school")
@@ -81,14 +88,23 @@ const InvoiceItem: FC<InvoiceItemProps> = ({
 
   return (
     <Box border={"1px solid #C2C2C2"} rounded={"xl"} p={"0.4rem"} mb={"1rem"}>
+      <InvoiceDataModal
+        isOpen={isInvoiceDataModalOpen}
+        onClose={onInvoiceDataModalClose}
+        invoice={studentInvoice}
+      />
       <Box
         backgroundColor={"#44506960"}
         rounded={"lg"}
         p={"0.6rem"}
         pb={"1rem"}
-        _hover={{ cursor: "pointer", backgroundColor: "#44506980", transitionDuration:'0.5s' }}
+        _hover={{
+          cursor: "pointer",
+          backgroundColor: "#44506980",
+          transitionDuration: "0.5s",
+        }}
         onClick={() =>
-          window.location.assign(`/dashboard/home/invoice/${studentInvoice?.id}`)
+          onInvoiceDataModalOpen()
         }
       >
         <Box display={"flex"} gap={1} alignItems={"center"}>
