@@ -28,7 +28,7 @@ const ViewResultModal: FC<ViewResultModalProps> = ({isOpen, onClose, result}) =>
       isOpen={isOpen}
       onClose={onClose}
       isCentered
-      size={{ base: "lg", md: "2xl" }}
+      size={{ base: "lg", md: "4xl" }}
     >
       <ModalOverlay />
       <ModalContent>

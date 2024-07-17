@@ -29,7 +29,7 @@ import { GET_STUDENT_UPLOADED_RESULT } from "@/gql/queries";
 import { GET_STUDENT_GENERATED_RESULT } from "@/gql/queries";
 import { useQuery } from "@apollo/client";
 import { useUserAPI } from "@/hooks/UserContext";
-import { formatDate } from "@/helpers/formatDate";
+import { formatDateWithSuffix } from "@/helpers/formatDate";
 import { MdKeyboardArrowRight, MdKeyboardArrowLeft } from "react-icons/md";
 import ImgViewer from "@/components/shared/imageViewer";
 import { PDFViewer } from "@/components/shared/uploadedResultPdfViewer";
@@ -298,15 +298,14 @@ const Results: FC<ResultsProps> = ({}) => {
                     <Td color={"#000"}>{data?.resultType}</Td>
                     <Td>
                       <Flex gap={2} alignItems={"center"}>
-                        <Avatar size={"xs"} src={data?.school?.creator?.admin?.profileImgUrl} />
+                        <Avatar size={"xs"} src={data?.creatorPicture} />
                         <Text fontSize={"md"} fontWeight={"400"}>
-                          {data?.school?.creator?.admin?.firstName} {data?.school?.creator?.admin?.middleName}{" "}
-                          {data?.school?.creator?.admin?.lastName}
+                          {data?.creatorName}
                         </Text>
                       </Flex>
                     </Td>
                     <Td color={"#000"}>
-                      {data?.school?.creator?.admin?.createdAt}
+                      {formatDateWithSuffix(data?.createdAt)}
                     </Td>
                   </Tr>
                 );
