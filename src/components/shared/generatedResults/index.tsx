@@ -160,7 +160,6 @@ const GeneratedResults: React.FC<GeneratedResultsProps> = ({
   isOpen,
   onClose,
 }) => {
-  console.log(result)
   const sumOfTest1 = result?.test1?.reduce(
     (acc: any, num: any) => acc + num,
     0

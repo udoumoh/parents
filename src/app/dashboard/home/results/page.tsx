@@ -33,48 +33,12 @@ import { formatDate } from "@/helpers/formatDate";
 import { MdKeyboardArrowRight, MdKeyboardArrowLeft } from "react-icons/md";
 import ImgViewer from "@/components/shared/imageViewer";
 import { PDFViewer } from "@/components/shared/uploadedResultPdfViewer";
-import GeneratedResults from "@/components/shared/generatedResults";
+import { GenerateResult, UploadedResult } from "@/gql/types";
+import ViewResultModal from "@/components/shared/viewResultModal";
 
 interface ResultsProps {}
 
-interface GeneratedResultProps {
-  test1: [];
-  test2: [];
-  test3: [];
-  test4: [];
-  scores: [];
-  authorsFirstName: string;
-  authorsSchoolName: string;
-  authorsLastName: string;
-  authorsMiddleName: string;
-  studentsFirstName: string;
-  studentsMiddleName: string;
-  studentsLastName: string;
-  academicTerm: string;
-  resultType: string;
-  creator: string;
-  schoolLogo: string;
-  schoolName: string;
-  studentProfileImgUrl: string;
-  studentAge: number;
-  className: string;
-  classStudents: number;
-  attendance: number;
-  subjects: [];
-  grades: [];
-  remark: string;
-  authorsProfileImgUrl: string;
-  documentPath: string;
-  authorsCreatedAt: string;
-  isOfficial: string;
-  examType: string;
-  sharerFirstName: string;
-  shareDate: string;
-  createdAt: string;
-  teachersFirstName: string;
-  teachersLastName: string;
-  teachersMiddleName: string;
-}
+type Result = GenerateResult & UploadedResult
 
 const Results: FC<ResultsProps> = ({}) => {
   const imageExtensions = [
@@ -119,16 +83,16 @@ const Results: FC<ResultsProps> = ({}) => {
     }
   );
   const [selectedTableResult, setSelectedTableResult] =
-    useState<GeneratedResultProps>();
+    useState<Result>();
   const [resultsType, setResultstype] = useState("generated");
-  const [pdfResult, setPdfResult] = useState<GeneratedResultProps[]>([]);
+  const [pdfResult, setPdfResult] = useState<Result[]>([]);
   const [uploadedResults, setUploadedResults] = useState<
-    GeneratedResultProps[]
+    Result[]
   >([]);
-  const [currentResult, setCurrentResult] = useState<GeneratedResultProps[]>(
+  const [currentResult, setCurrentResult] = useState<Result[]>(
     []
   );
-  const [resultToShow, setResultToShow] = useState<GeneratedResultProps[]>([]);
+  const [resultToShow, setResultToShow] = useState<Result[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalNumberOfPages, setTotalNumberOfPages] = useState(1);
   const itemsPerPage = 10;
@@ -141,46 +105,7 @@ const Results: FC<ResultsProps> = ({}) => {
           console.log("failed to fetch results data");
         }
         if (response) {
-          const pdfViewData = response?.studentGeneratedResult?.map(
-            (result: any) => ({
-              test1: result?.test1,
-              test2: result?.test2,
-              test3: result?.test3,
-              test4: result?.test4,
-              scores: result?.scores,
-              authorsFirstName: result?.student?.creator?.admin?.firstName,
-              authorsSchoolName: result?.student?.creator?.admin?.school,
-              authorsLastName: result?.student?.creator?.admin?.lastName,
-              authorsMiddleName: result?.student?.creator?.admin?.middleName,
-              studentsFirstName: result?.student?.firstName,
-              studentsMiddleName: result?.student?.middleName,
-              studentsLastName: result?.student?.lastName,
-              academicTerm: result?.academicTerm,
-              resultType: result?.resultType,
-              creator: result?.creator,
-              schoolLogo: result?.school?.logoImgUrl,
-              schoolName: result?.school?.schoolName,
-              studentProfileImgUrl: result?.student?.profileImgUrl,
-              studentAge: result?.student?.ageInput,
-              className: result?.className,
-              classStudents: result?.classStudents,
-              attendance: result?.attendance,
-              subjects: result?.subjects,
-              grades: result?.grades,
-              remark: result?.remark,
-              authorsProfileImgUrl:
-                result?.student?.creator?.admin?.profileImgUrl,
-              documentPath: "",
-              authorsCreatedAt: formatDate(result?.createdAt),
-              isOfficial: result?.isOfficial,
-              teachersFirstName:
-                result?.student?.classroom?.classroom?.teacher[0]?.firstName,
-              teachersLastName:
-                result?.student?.classroom?.classroom?.teacher[0]?.lastName,
-              teachersMiddleName:
-                result?.student?.classroom?.classroom?.teacher[0]?.middleName,
-            })
-          );
+          const pdfViewData = response?.studentGeneratedResult
           setPdfResult(pdfViewData);
         }
       } catch (err: any) {
@@ -195,27 +120,7 @@ const Results: FC<ResultsProps> = ({}) => {
           console.log("failed to fetch results data");
         }
         if (response) {
-          const parsedResultsData = response?.studentUploadedResult?.map(
-            (item: any) => ({
-              term: item.academicTerm,
-              examType: item.resultType,
-              schoolLogo: item?.school?.logoImgUrl,
-              schoolName: item?.school?.schoolName,
-              status: item?.isOfficial,
-              teachersFirstName:
-                item?.student?.classroom?.classroom?.teacher[0]?.firstName,
-                teachersMiddleName:
-                  item?.student?.classroom?.classroom?.teacher[0]?.middleName,
-              teachersLastName:
-                item?.student?.classroom?.classroom?.teacher[0]?.lastName,
-              authorsProfileImgUrl:
-                item?.creatorPicture,
-              authorsFirstName: item?.creatorName,
-              authorsLastName: "",
-              shareDate: formatDate(item?.createdAt),
-              documentPath: item?.document,
-            })
-          );
+          const parsedResultsData = response?.studentUploadedResult
           setUploadedResults(parsedResultsData);
         }
       } catch (err: any) {
@@ -337,7 +242,7 @@ const Results: FC<ResultsProps> = ({}) => {
             {currentResult?.slice(0, 5)?.map((result, index) => {
               return (
                 <WrapItem key={index}>
-                  <ResultCard key={index} generatedresult={result} />
+                  <ResultCard key={index} results={result} />
                 </WrapItem>
               );
             })}
@@ -378,29 +283,30 @@ const Results: FC<ResultsProps> = ({}) => {
                       <Flex gap={2} alignItems={"center"}>
                         <Image
                           boxSize={"6"}
-                          src={data?.schoolLogo}
+                          src={data?.school?.logoImgUrl}
                           alt="logo"
                           pointerEvents={"none"}
                         />
                         <Text fontSize={"sm"} fontWeight={"500"}>
-                          {data?.schoolName}
+                          {data?.school?.schoolName}
                         </Text>
                       </Flex>
                     </Td>
                     <Td color={"#000"}>
                       {data?.isOfficial ? "Official" : "Unofficial"}
                     </Td>
-                    <Td color={"#000"}>{data?.resultType || data?.examType}</Td>
+                    <Td color={"#000"}>{data?.resultType}</Td>
                     <Td>
                       <Flex gap={2} alignItems={"center"}>
-                        <Avatar size={"xs"} src={data?.authorsProfileImgUrl} />
+                        <Avatar size={"xs"} src={data?.school?.creator?.admin?.profileImgUrl} />
                         <Text fontSize={"md"} fontWeight={"400"}>
-                          {data?.authorsFirstName} {data?.authorsMiddleName} {data?.authorsLastName}
+                          {data?.school?.creator?.admin?.firstName} {data?.school?.creator?.admin?.middleName}{" "}
+                          {data?.school?.creator?.admin?.lastName}
                         </Text>
                       </Flex>
                     </Td>
                     <Td color={"#000"}>
-                      {data?.shareDate || data?.authorsCreatedAt}
+                      {data?.school?.creator?.admin?.createdAt}
                     </Td>
                   </Tr>
                 );
@@ -427,17 +333,17 @@ const Results: FC<ResultsProps> = ({}) => {
         </Flex>
       </Box>
       <ImgViewer
-        path={selectedTableResult?.documentPath || ""}
+        path={selectedTableResult?.document}
         isOpen={isImageModalOpen}
         onClose={onImageModalClose}
       />
       <PDFViewer
         isOpen={isUploadedModalOpen}
         onClose={onUploadedModalClose}
-        path={selectedTableResult?.documentPath}
+        path={selectedTableResult?.document}
       />
       {selectedTableResult && (
-        <GeneratedResults
+        <ViewResultModal
           result={selectedTableResult}
           isOpen={isGeneratedModalOpen}
           onClose={onGeneratedModalClose}

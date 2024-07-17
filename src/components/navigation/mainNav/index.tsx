@@ -950,7 +950,7 @@ const MainNav: FC<MainNav> = ({ children }) => {
       </Drawer>
       {/* mobilenav */}
       <MobileNav onOpen={onOpen} />
-      <Box ml={{ base: 0, md: "4.1rem" }}>
+      <Box ml={{ base: 0, md: "4.1rem" }} minH={'100vh'}>
         {/* Content */}
         {children}
       </Box>
