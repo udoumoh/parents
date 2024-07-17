@@ -29,12 +29,12 @@ import { GET_STUDENT_UPLOADED_RESULT } from "@/gql/queries";
 import { GET_STUDENT_GENERATED_RESULT } from "@/gql/queries";
 import { useQuery } from "@apollo/client";
 import { useUserAPI } from "@/hooks/UserContext";
-import { formatDateWithSuffix } from "@/helpers/formatDate";
 import { MdKeyboardArrowRight, MdKeyboardArrowLeft } from "react-icons/md";
 import ImgViewer from "@/components/shared/imageViewer";
 import { PDFViewer } from "@/components/shared/uploadedResultPdfViewer";
 import { GenerateResult, UploadedResult } from "@/gql/types";
 import ViewResultModal from "@/components/shared/viewResultModal";
+import { formatDate } from "@/helpers/formatDate";
 
 interface ResultsProps {}
 
@@ -305,7 +305,7 @@ const Results: FC<ResultsProps> = ({}) => {
                       </Flex>
                     </Td>
                     <Td color={"#000"}>
-                      {formatDateWithSuffix(data?.createdAt)}
+                      {formatDate(data?.createdAt)}
                     </Td>
                   </Tr>
                 );

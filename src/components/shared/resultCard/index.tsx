@@ -14,7 +14,7 @@ import { capitalizeFirstLetter } from "@/helpers/capitalizeFirstLetter";
 import { GenerateResult } from "@/gql/types";
 import { UploadedResult } from "@/gql/types";
 import ViewResultModal from "../viewResultModal";
-import { formatDateWithSuffix } from "@/helpers/formatDate";
+import { formatDate } from "@/helpers/formatDate";
 
 interface ResultCardProps {
   results: GenerateResult & UploadedResult
@@ -101,7 +101,7 @@ const ResultCard: FC<ResultCardProps> = ({ results }) => {
       </Flex>
       <Flex>
         <Text color={"#959595"} fontSize={"xs"} mt={"0.3rem"}>
-          Generated on {formatDateWithSuffix(results?.createdAt)}
+          Generated on {formatDate(results?.createdAt)}
         </Text>
       </Flex>
       <Flex
