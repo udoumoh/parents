@@ -102,6 +102,7 @@ const InvoiceDataModal: FC<InvoiceDataModalProps> = ({invoice, isOpen, onClose})
       isOpen={isOpen}
       onClose={onClose}
       size={{ base: "xs", sm: "sm", md: "md", lg: "2xl" }}
+      scrollBehavior="inside"
     >
       <ModalOverlay />
       <ModalContent>
@@ -127,9 +128,7 @@ const InvoiceDataModal: FC<InvoiceDataModalProps> = ({invoice, isOpen, onClose})
               invoiceData={invoice}
               balance={currentWardProfile?.wallet}
             />
-            <Box
-              w={"full"}
-            >
+            <Box w={"full"}>
               <Flex
                 alignItems={"center"}
                 justifyContent={"center"}
@@ -215,7 +214,7 @@ const InvoiceDataModal: FC<InvoiceDataModalProps> = ({invoice, isOpen, onClose})
                             color="white"
                             mt="4"
                             rounded="lg"
-                            style={{borderSpacing:"10px 5px"}}
+                            style={{ borderSpacing: "10px 5px" }}
                           >
                             <Flex justifyContent={"space-between"}>
                               <Box
