@@ -26,7 +26,7 @@ export const TemplateFour: React.FC<ResultBuilderProps> = (props) => {
   const school = results?.school;
   const classroom = results?.student?.classroom?.classroom!;
   const student = results?.student;
-  const year = results?.school?.currentSession;
+  const year = results?.resultType
   const authors = results?.classTeacherName;
   const componentRef = useRef(null);
   const handlePrint = useReactToPrint({
