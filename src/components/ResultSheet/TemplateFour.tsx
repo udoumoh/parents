@@ -222,7 +222,11 @@ export const TemplateFour: React.FC<ResultBuilderProps> = (props) => {
                         px={1}
                         fontWeight="bold"
                         color={"#FFFFFF"}
-                        display={results?.testArray?.includes(1) ? "table-cell" : "none"}
+                        display={
+                          results?.testArray?.includes(1)
+                            ? "table-cell"
+                            : "none"
+                        }
                       >
                         Test 1
                       </Th>
@@ -230,7 +234,11 @@ export const TemplateFour: React.FC<ResultBuilderProps> = (props) => {
                         px={1}
                         fontWeight="bold"
                         color={"#FFFFFF"}
-                        display={results?.testArray?.includes(2) ? "table-cell" : "none"}
+                        display={
+                          results?.testArray?.includes(2)
+                            ? "table-cell"
+                            : "none"
+                        }
                       >
                         Test 2
                       </Th>
@@ -238,7 +246,11 @@ export const TemplateFour: React.FC<ResultBuilderProps> = (props) => {
                         px={1}
                         fontWeight="bold"
                         color={"#FFFFFF"}
-                        display={results?.testArray?.includes(3) ? "table-cell" : "none"}
+                        display={
+                          results?.testArray?.includes(3)
+                            ? "table-cell"
+                            : "none"
+                        }
                       >
                         Test 3
                       </Th>
@@ -246,7 +258,11 @@ export const TemplateFour: React.FC<ResultBuilderProps> = (props) => {
                         px={1}
                         fontWeight="bold"
                         color={"#FFFFFF"}
-                        display={results?.testArray?.includes(4) ? "table-cell" : "none"}
+                        display={
+                          results?.testArray?.includes(4)
+                            ? "table-cell"
+                            : "none"
+                        }
                       >
                         Test 4
                       </Th>
@@ -276,7 +292,9 @@ export const TemplateFour: React.FC<ResultBuilderProps> = (props) => {
                           px={1}
                           border="1px solid #747474"
                           display={
-                            results?.testArray?.includes(1) ? "table-cell" : "none"
+                            results?.testArray?.includes(1)
+                              ? "table-cell"
+                              : "none"
                           }
                         >
                           {results.test1![index]}
@@ -285,7 +303,9 @@ export const TemplateFour: React.FC<ResultBuilderProps> = (props) => {
                           px={1}
                           border="1px solid #747474"
                           display={
-                            results?.testArray?.includes(2) ? "table-cell" : "none"
+                            results?.testArray?.includes(2)
+                              ? "table-cell"
+                              : "none"
                           }
                         >
                           {results.test2![index]}
@@ -294,7 +314,9 @@ export const TemplateFour: React.FC<ResultBuilderProps> = (props) => {
                           px={1}
                           border="1px solid #747474"
                           display={
-                            results?.testArray?.includes(3) ? "table-cell" : "none"
+                            results?.testArray?.includes(3)
+                              ? "table-cell"
+                              : "none"
                           }
                         >
                           {results.test3![index]}
@@ -303,7 +325,9 @@ export const TemplateFour: React.FC<ResultBuilderProps> = (props) => {
                           px={1}
                           border="1px solid #747474"
                           display={
-                            results?.testArray?.includes(4) ? "table-cell" : "none"
+                            results?.testArray?.includes(4)
+                              ? "table-cell"
+                              : "none"
                           }
                         >
                           {results.test4![index]}
@@ -334,16 +358,32 @@ export const TemplateFour: React.FC<ResultBuilderProps> = (props) => {
                       </Td>
                       <Td></Td>
                       <Td
-                        display={results?.testArray?.includes(1) ? "table-cell" : "none"}
+                        display={
+                          results?.testArray?.includes(1)
+                            ? "table-cell"
+                            : "none"
+                        }
                       ></Td>
                       <Td
-                        display={results?.testArray?.includes(2) ? "table-cell" : "none"}
+                        display={
+                          results?.testArray?.includes(2)
+                            ? "table-cell"
+                            : "none"
+                        }
                       ></Td>
                       <Td
-                        display={results?.testArray?.includes(3) ? "table-cell" : "none"}
+                        display={
+                          results?.testArray?.includes(3)
+                            ? "table-cell"
+                            : "none"
+                        }
                       ></Td>
                       <Td
-                        display={results?.testArray?.includes(4) ? "table-cell" : "none"}
+                        display={
+                          results?.testArray?.includes(4)
+                            ? "table-cell"
+                            : "none"
+                        }
                       ></Td>
                       <Td color="white">{percentageAverage.toPrecision(4)}%</Td>
                       <Td></Td>
@@ -375,6 +415,29 @@ export const TemplateFour: React.FC<ResultBuilderProps> = (props) => {
                   <Box p={"0.5rem"}>
                     <Text fontStyle={"italic"} fontSize={"2xs"}>
                       {results?.remark || "No Comment"}
+                    </Text>
+                  </Box>
+                </Box>
+
+                {/* Admin remark */}
+                <Box
+                  display={"flex"}
+                  flexDir={"column"}
+                  border={"1px solid #00000060"}
+                >
+                  <Box backgroundColor={"#253f5b"}>
+                    <Text
+                      color={"#FFFFFF"}
+                      px={"0.5rem"}
+                      py={"0.2rem"}
+                      fontSize={"2xs"}
+                    >
+                      Admin Remark
+                    </Text>
+                  </Box>
+                  <Box p={"0.5rem"}>
+                    <Text fontStyle={"italic"} fontSize={"2xs"}>
+                      {results?.adminRemark || "No Comment"}
                     </Text>
                   </Box>
                 </Box>
