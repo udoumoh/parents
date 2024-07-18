@@ -102,7 +102,7 @@ const InvoiceDataModal: FC<InvoiceDataModalProps> = ({invoice, isOpen, onClose})
       isOpen={isOpen}
       onClose={onClose}
       size={{ base: "xs", sm: "sm", md: "md", lg: "2xl" }}
-      scrollBehavior="inside"```
+      scrollBehavior={"inside"}
     >
       <ModalOverlay />
       <ModalContent>
