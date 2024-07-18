@@ -22,6 +22,7 @@ export const TemplateFour: React.FC<ResultBuilderProps> = (props) => {
   const {
     results,
   } = props;
+  console.log(results)
   const school = results?.school;
   const classroom = results?.student?.classroom?.classroom!;
   const student = results?.student;
