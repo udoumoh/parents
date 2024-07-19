@@ -28,12 +28,6 @@ interface SelectPlanModalProps {
 }
 
 const SelectPlanModal: FC<SelectPlanModalProps> = ({ isOpen, onClose }) => {
-  const router = useRouter()
-  const {
-    isOpen: isPlanOpen,
-    onOpen: onPlanOpen,
-    onClose: onPlanClose,
-  } = useDisclosure();
   const toast = useToast();
   const {parentData} = useUserAPI()
   const [trial, setTrial] = useState("");
@@ -66,14 +60,6 @@ const SelectPlanModal: FC<SelectPlanModalProps> = ({ isOpen, onClose }) => {
     border: "1px solid #005D5D",
     borderRadius: "4px",
   };
-
-  // Check local storage to see if the modal has been opened before
-  // useEffect(() => {
-  //   if (me?.me?.admin?.plan?.length! <= 0) {
-  //     onOpen();
-  //   }
-  //   // onOpen();
-  // }, [onOpen]);
 
   return (
     <>
