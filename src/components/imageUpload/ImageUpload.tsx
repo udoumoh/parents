@@ -22,6 +22,7 @@ import React, { useState } from "react";
 import TopBarProgress from "react-topbar-progress-indicator";
 import { IoImagesOutline } from "react-icons/io5";
 import { TbUpload } from "react-icons/tb";
+import { formDataUpload } from "./utils/FormDataUpload";
 
 interface FormValues {
   file: File | null;
@@ -67,15 +68,15 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({
         formData.append("upload_preset", "greynote");
         setUploading(true);
         try {
-          const response = await axios.post(
-            "https://api.cloudinary.com/v1_1/dgtfoc2ee/upload",
-            formData,
-            {
-              headers: {
-                "Content-Type": "multipart/form-data",
-              },
-            }
-          );
+          const response = await formDataUpload({
+            accountId: "kW15c9n",
+            apiKey: process.env.NEXT_PUBLIC_IMAGEUPLOADSERVER!,
+            requestBody: values.file,
+            originalFileName: values.file.name,
+            querystring: {
+              folderPath: `/gn_profile_images/${folder}`,
+            },
+          });
           if (response.status === 200) {
             toast({
               title: "Upload Successful",
@@ -86,10 +87,10 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({
               isClosable: true,
             });
           }
-          const uploadedImageUrl = response?.data?.secure_url;
+          const uploadedImageUrl = response?.files[0]?.fileUrl;
           const uploadedFolder = folder;
           onUpload(uploadedImageUrl, uploadedFolder);
-          onModalClose()
+          onModalClose();
         } catch (error) {
           if (error) {
             setUploading(false);
@@ -119,7 +120,7 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({
     <Modal
       isOpen={isModalOpen}
       onClose={onModalClose}
-      scrollBehavior={'inside'}
+      scrollBehavior={"inside"}
     >
       <ModalOverlay />
       <ModalContent>
