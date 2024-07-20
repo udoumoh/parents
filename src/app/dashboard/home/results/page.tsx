@@ -110,6 +110,7 @@ const { data: getgeneratedresult } = useQuery(GET_STUDENT_GENERATED_RESULT, {
           console.log("failed to fetch results data");
         }
         if (response) {
+          console.log("generatedResult", response)
           const pdfViewData = response?.data?.studentGeneratedResult
           setPdfResult(pdfViewData);
         }
@@ -121,6 +122,7 @@ const { data: getgeneratedresult } = useQuery(GET_STUDENT_GENERATED_RESULT, {
     const fetchUploadedResult = async () => {
       try {
         const response = await getUploadedResult;
+        console.log("uploadedResult", response)
         if (!response) {
           console.log("failed to fetch results data");
         }
