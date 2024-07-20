@@ -74,12 +74,12 @@ const Results: FC<ResultsProps> = ({}) => {
   } = useDisclosure();
   const { currentWardProfile } = useUserAPI();
 
-const { data: getgeneratedresult } = useQuery(GET_STUDENT_GENERATED_RESULT, {
+const { data: getgeneratedresult, loading } = useQuery(GET_STUDENT_GENERATED_RESULT, {
     skip: !currentWardProfile?.id,
     variables: { studentId: currentWardProfile?.id },
   });
   
-  const { data: getUploadedResult, loading } = useQuery(
+  const { data: getUploadedResult } = useQuery(
     GET_STUDENT_UPLOADED_RESULT,
     {
       skip: !currentWardProfile?.id,
