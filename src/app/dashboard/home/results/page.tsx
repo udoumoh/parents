@@ -106,6 +106,7 @@ const { data: getgeneratedresult } = useQuery(GET_STUDENT_GENERATED_RESULT, {
     const fetchGeneratedResult = async () => {
       try {
         const response = await getgeneratedresult;
+        console.log('generated result', response)
         if (!response) {
           console.log("failed to fetch results data");
         }
@@ -119,6 +120,7 @@ const { data: getgeneratedresult } = useQuery(GET_STUDENT_GENERATED_RESULT, {
     const fetchUploadedResult = async () => {
       try {
         const response = await getUploadedResult;
+        console.log("uploaded result", response);
         if (!response) {
           console.log("failed to fetch results data");
         }
