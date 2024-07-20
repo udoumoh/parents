@@ -985,9 +985,15 @@ query StudentGeneratedResult($studentId: Float!) {
     updatedAt
     verifiedBy
     remark
+    adminRemark
+    signature1
+    signature2
     academicTerm
     resultType
     creator
+    creatorRole
+    creatorPicture
+    creatorName
     student {
       id
       createdAt
@@ -1009,6 +1015,7 @@ query StudentGeneratedResult($studentId: Float!) {
       birthDate
       isArchived
       profileImgUrl
+      wallet
       classroom {
         errors {
           field
@@ -1024,6 +1031,7 @@ query StudentGeneratedResult($studentId: Float!) {
           className
           classSubjects
           description
+          resultTemplate
           isDisabled
           students {
             id
@@ -1046,6 +1054,7 @@ query StudentGeneratedResult($studentId: Float!) {
             birthDate
             isArchived
             profileImgUrl
+            wallet
             grayId
             fatherName
             fatherEmail
@@ -1075,6 +1084,64 @@ query StudentGeneratedResult($studentId: Float!) {
           }
         }
       }
+      parent {
+        id
+        userId
+        status
+        isPaid
+        isVerified
+        isReferred
+        agreedTo
+        createdAt
+        firstName
+        middleName
+        lastName
+        parentRole
+        phoneNumber
+        email
+        role
+        plan
+        folder
+        subscriptionId
+        subscriptionType
+        subscriptionAmount
+        subscriptionDuration
+        isDisabled
+        profileImgUrl
+        children {
+          id
+          createdAt
+          transferedAt
+          firstName
+          middleName
+          lastName
+          gender
+          ageInput
+          folder
+          isOwing
+          isVisible
+          isDuplicate
+          linkedAt
+          linkCount
+          isLinked
+          startDate
+          endDate
+          birthDate
+          isArchived
+          profileImgUrl
+          wallet
+          grayId
+          fatherName
+          fatherEmail
+          fatherNumber
+          motherName
+          motherEmail
+          motherNumber
+          homeAddress
+          lgaOrigin
+          state
+        }
+      }
       creator {
         admin {
           id
@@ -1082,8 +1149,10 @@ query StudentGeneratedResult($studentId: Float!) {
           userId
           folder
           status
+          statusCode
           plan
           isReferred
+          isBeginner
           isDisabled
           agreedTo
           referralCode
@@ -1107,6 +1176,9 @@ query StudentGeneratedResult($studentId: Float!) {
             phoneNumber
             role
             status
+            position
+            rank
+            points
             department
             email
             profileImgUrl
@@ -1116,8 +1188,10 @@ query StudentGeneratedResult($studentId: Float!) {
               userId
               folder
               status
+              statusCode
               plan
               isReferred
+              isBeginner
               isDisabled
               agreedTo
               referralCode
@@ -1131,12 +1205,14 @@ query StudentGeneratedResult($studentId: Float!) {
               role
               school
               schoolImg
-              statusCode
+              schoolCurrentTerm
+              schoolCurrentSession
             }
           }
           school
           schoolImg
-          statusCode
+          schoolCurrentTerm
+          schoolCurrentSession
         }
       }
       studentCase {
@@ -1165,6 +1241,7 @@ query StudentGeneratedResult($studentId: Float!) {
     school {
       id
       createdAt
+      updatedAt
       isDisabled
       isVerified
       schoolName
@@ -1172,7 +1249,16 @@ query StudentGeneratedResult($studentId: Float!) {
       address
       type
       lgarea
+      profileLikes
+      profileViews
+      whoLikedProfile
       folder
+      schoolType
+      priceRange
+      genderType
+      studentPerClassroom
+      currentTerm
+      currentSession
       state
       country
       description
@@ -1183,6 +1269,7 @@ query StudentGeneratedResult($studentId: Float!) {
       facebookUrl
       twitterUrl
       linkedinUrl
+      schoolMedia
       accountName
       accountNumber
       bankName
@@ -1190,18 +1277,23 @@ query StudentGeneratedResult($studentId: Float!) {
       bannerImgUrl
       license
     }
+    resultTemplate
+    classTermAverage
+    classTeacherName
     studentName
     studentAge
     attendance
     classStudents
     className
     subjects
+    assessment
     grades
     scores
     test1
     test2
     test3
     test4
+    testArray
   }
 }
 `)
@@ -1577,6 +1669,7 @@ query StudentUploadedResult($studentId: Float!) {
       birthDate
       isArchived
       profileImgUrl
+      wallet
       classroom {
         errors {
           field
@@ -1592,6 +1685,7 @@ query StudentUploadedResult($studentId: Float!) {
           className
           classSubjects
           description
+          resultTemplate
           isDisabled
           students {
             id
@@ -1614,6 +1708,7 @@ query StudentUploadedResult($studentId: Float!) {
             birthDate
             isArchived
             profileImgUrl
+            wallet
             grayId
             fatherName
             fatherEmail
@@ -1643,6 +1738,9 @@ query StudentUploadedResult($studentId: Float!) {
           }
         }
       }
+      school {
+        
+      }
       parent {
         id
         userId
@@ -1659,7 +1757,12 @@ query StudentUploadedResult($studentId: Float!) {
         phoneNumber
         email
         role
+        plan
         folder
+        subscriptionId
+        subscriptionType
+        subscriptionAmount
+        subscriptionDuration
         isDisabled
         profileImgUrl
         children {
@@ -1683,6 +1786,7 @@ query StudentUploadedResult($studentId: Float!) {
           birthDate
           isArchived
           profileImgUrl
+          wallet
           grayId
           fatherName
           fatherEmail
@@ -1702,8 +1806,10 @@ query StudentUploadedResult($studentId: Float!) {
           userId
           folder
           status
+          statusCode
           plan
           isReferred
+          isBeginner
           isDisabled
           agreedTo
           referralCode
@@ -1727,6 +1833,9 @@ query StudentUploadedResult($studentId: Float!) {
             phoneNumber
             role
             status
+            position
+            rank
+            points
             department
             email
             profileImgUrl
@@ -1736,8 +1845,10 @@ query StudentUploadedResult($studentId: Float!) {
               userId
               folder
               status
+              statusCode
               plan
               isReferred
+              isBeginner
               isDisabled
               agreedTo
               referralCode
@@ -1751,12 +1862,14 @@ query StudentUploadedResult($studentId: Float!) {
               role
               school
               schoolImg
-              statusCode
+              schoolCurrentTerm
+              schoolCurrentSession
             }
           }
           school
           schoolImg
-          statusCode
+          schoolCurrentTerm
+          schoolCurrentSession
         }
       }
       studentCase {
@@ -1785,6 +1898,7 @@ query StudentUploadedResult($studentId: Float!) {
     school {
       id
       createdAt
+      updatedAt
       isDisabled
       isVerified
       schoolName
@@ -1792,7 +1906,16 @@ query StudentUploadedResult($studentId: Float!) {
       address
       type
       lgarea
+      profileLikes
+      profileViews
+      whoLikedProfile
       folder
+      schoolType
+      priceRange
+      genderType
+      studentPerClassroom
+      currentTerm
+      currentSession
       state
       country
       description
@@ -1803,6 +1926,7 @@ query StudentUploadedResult($studentId: Float!) {
       facebookUrl
       twitterUrl
       linkedinUrl
+      schoolMedia
       accountName
       accountNumber
       bankName
