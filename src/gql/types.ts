@@ -276,7 +276,7 @@ export type GenerateResult = {
   isOfficial: Scalars['Boolean'];
   isVerified: Scalars['Boolean'];
   remark?: Maybe<Scalars['String']>;
-  resultTemplate: Scalars['Float']
+  resultTemplate: Scalars['Int']
   resultType: Scalars['String'];
   school: School;
   scores?: Maybe<Array<Scalars['Int']>>;
