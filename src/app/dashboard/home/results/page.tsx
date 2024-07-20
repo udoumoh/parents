@@ -110,7 +110,7 @@ const { data: getgeneratedresult } = useQuery(GET_STUDENT_GENERATED_RESULT, {
           console.log("failed to fetch results data");
         }
         if (response) {
-          const pdfViewData = response?.studentGeneratedResult
+          const pdfViewData = response?.data?.studentGeneratedResult
           setPdfResult(pdfViewData);
         }
       } catch (err: any) {
@@ -125,7 +125,7 @@ const { data: getgeneratedresult } = useQuery(GET_STUDENT_GENERATED_RESULT, {
           console.log("failed to fetch results data");
         }
         if (response) {
-          const parsedResultsData = response?.studentUploadedResult
+          const parsedResultsData = response?.data?.studentUploadedResult
           setUploadedResults(parsedResultsData);
         }
       } catch (err: any) {
