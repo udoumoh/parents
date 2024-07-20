@@ -130,8 +130,8 @@ const { data: getgeneratedresult } = useQuery(GET_STUDENT_GENERATED_RESULT, {
         console.log(err.message);
       }
     };
-    fetchUploadedResult();
     fetchGeneratedResult();
+    fetchUploadedResult();
   }, [getgeneratedresult, getUploadedResult, currentWardProfile]);
 
   useEffect(() => {
