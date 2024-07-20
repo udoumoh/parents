@@ -187,6 +187,8 @@ const Results: FC<ResultsProps> = ({}) => {
       : onGeneratedModalOpen();
   };
 
+  console.log(currentWardProfile)
+
   return (
     <Box mb={{ base: "8rem", lg: "5rem" }}>
       <Text>Result Type</Text>
