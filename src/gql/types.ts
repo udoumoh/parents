@@ -258,7 +258,7 @@ export type FieldError = {
 export type GenerateResult = {
   __typename?: 'GenerateResult';
   academicTerm: Scalars['String'];
-  adminRemark?: Maybe<Scalars['String']>;
+  adminRemark?: Scalars['String'];
   approvedAt: Scalars['String'];
   assessment: Scalars['String'];
   attendance?: Maybe<Scalars['Int']>;
