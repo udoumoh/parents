@@ -104,7 +104,6 @@ const { data: getgeneratedresult, loading } = useQuery(GET_STUDENT_GENERATED_RES
 
   useEffect(() => {
     const fetchGeneratedResult = async () => {
-      try {
         const response = await getgeneratedresult;
         console.log('generated result', response)
         if (!response) {
@@ -112,13 +111,9 @@ const { data: getgeneratedresult, loading } = useQuery(GET_STUDENT_GENERATED_RES
         }
           const pdfViewData = response?.data?.studentGeneratedResult
           setPdfResult(pdfViewData);
-      } catch (err: any) {
-        console.log(err.message);
-      }
     };
 
     const fetchUploadedResult = async () => {
-      try {
         const response = await getUploadedResult;
         console.log("uploaded result", response);
         if (!response) {
@@ -126,9 +121,6 @@ const { data: getgeneratedresult, loading } = useQuery(GET_STUDENT_GENERATED_RES
         }
           const parsedResultsData = response?.data?.studentUploadedResult
           setUploadedResults(parsedResultsData);
-      } catch (err: any) {
-        console.log(err.message);
-      }
     };
     fetchGeneratedResult();
     fetchUploadedResult();
