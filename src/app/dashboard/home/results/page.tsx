@@ -21,12 +21,13 @@ import {
   IconButton,
   Spinner,
 } from "@chakra-ui/react";
-
 import { AiOutlinePlus } from "react-icons/ai";
 import ResultCard from "@/components/shared/resultCard";
 import UploadResultModal from "@/components/shared/uploadResultModal";
-import { GET_STUDENT_UPLOADED_RESULT } from "@/gql/queries";
-import { GET_STUDENT_GENERATED_RESULT } from "@/gql/queries";
+import {
+  GET_STUDENT_UPLOADED_RESULT,
+  GET_STUDENT_GENERATED_RESULT,
+} from "@/gql/queries";
 import { useQuery } from "@apollo/client";
 import { useUserAPI } from "@/hooks/UserContext";
 import { MdKeyboardArrowRight, MdKeyboardArrowLeft } from "react-icons/md";
@@ -38,7 +39,7 @@ import { formatDate } from "@/helpers/formatDate";
 
 interface ResultsProps {}
 
-type Result = GenerateResult & UploadedResult
+type Result = GenerateResult & UploadedResult;
 
 const Results: FC<ResultsProps> = ({}) => {
   const imageExtensions = [
@@ -51,7 +52,6 @@ const Results: FC<ResultsProps> = ({}) => {
     ".tiff",
     ".svg",
   ];
-  
   const {
     isOpen: isModalOpen,
     onClose: onModalClose,
@@ -74,12 +74,16 @@ const Results: FC<ResultsProps> = ({}) => {
   } = useDisclosure();
   const { currentWardProfile } = useUserAPI();
 
-const { data: getgeneratedresult, loading } = useQuery(GET_STUDENT_GENERATED_RESULT, {
+  const {
+    data: getGeneratedResult,
+    loading: loadingGeneratedResult,
+    error: errorGeneratedResult,
+  } = useQuery(GET_STUDENT_GENERATED_RESULT, {
     skip: !currentWardProfile?.id,
     variables: { studentId: currentWardProfile?.id },
   });
-  
-  const { data: getUploadedResult } = useQuery(
+
+  const { data: getUploadedResult, error: errorUploadedResult } = useQuery(
     GET_STUDENT_UPLOADED_RESULT,
     {
       skip: !currentWardProfile?.id,
@@ -87,50 +91,48 @@ const { data: getgeneratedresult, loading } = useQuery(GET_STUDENT_GENERATED_RES
     }
   );
 
-  const [selectedTableResult, setSelectedTableResult] =
-    useState<Result>();
-  const [resultsType, setResultstype] = useState("generated");
+  const [selectedTableResult, setSelectedTableResult] = useState<Result>();
+  const [resultsType, setResultsType] = useState("generated");
   const [pdfResult, setPdfResult] = useState<Result[]>([]);
-  const [uploadedResults, setUploadedResults] = useState<
-    Result[]
-  >([]);
-  const [currentResult, setCurrentResult] = useState<Result[]>(
-    []
-  );
+  const [uploadedResults, setUploadedResults] = useState<Result[]>([]);
+  const [currentResult, setCurrentResult] = useState<Result[]>([]);
   const [resultToShow, setResultToShow] = useState<Result[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalNumberOfPages, setTotalNumberOfPages] = useState(1);
   const itemsPerPage = 10;
 
   useEffect(() => {
-    const fetchGeneratedResult = async () => {
-        const response = await getgeneratedresult;
-        console.log('generated result', response)
-        if (!response) {
-          console.log("failed to fetch results data");
-        }
-          const pdfViewData = response?.data?.studentGeneratedResult
-          setPdfResult(pdfViewData);
-    };
+    if (getGeneratedResult) {
+      console.log("generated result", getGeneratedResult);
+      const pdfViewData = getGeneratedResult?.studentGeneratedResult;
+      setPdfResult(pdfViewData);
+    }
+    if (errorGeneratedResult) {
+      console.error(
+        "Error fetching generated results:",
+        errorGeneratedResult.message
+      );
+    }
+  }, [getGeneratedResult, errorGeneratedResult]);
 
-    const fetchUploadedResult = async () => {
-        const response = await getUploadedResult;
-        console.log("uploaded result", response);
-        if (!response) {
-          console.log("failed to fetch results data");
-        }
-          const parsedResultsData = response?.data?.studentUploadedResult
-          setUploadedResults(parsedResultsData);
-    };
-    fetchGeneratedResult();
-    fetchUploadedResult();
-  }, [getgeneratedresult, getUploadedResult, currentWardProfile]);
+  useEffect(() => {
+    if (getUploadedResult) {
+      console.log("uploaded result", getUploadedResult);
+      const parsedResultsData = getUploadedResult?.studentUploadedResult;
+      setUploadedResults(parsedResultsData);
+    }
+    if (errorUploadedResult) {
+      console.error(
+        "Error fetching uploaded results:",
+        errorUploadedResult.message
+      );
+    }
+  }, [getUploadedResult, errorUploadedResult]);
 
   useEffect(() => {
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = Math.min(startIndex + itemsPerPage, currentResult?.length);
     setResultToShow(currentResult?.slice(startIndex, endIndex));
-
     const newTotalPages = Math.ceil(currentResult?.length / itemsPerPage);
     setTotalNumberOfPages(newTotalPages);
   }, [currentResult, currentPage]);
@@ -146,7 +148,7 @@ const { data: getgeneratedresult, loading } = useQuery(GET_STUDENT_GENERATED_RES
   const columnNames = ["School", "Status", "Type", "Shared by", "Shared date"];
 
   const handleResultsTypeChange = (e: any) => {
-    setResultstype(e.target.value);
+    setResultsType(e.target.value);
   };
 
   const handleNextPage = () => {
@@ -224,9 +226,9 @@ const { data: getgeneratedresult, loading } = useQuery(GET_STUDENT_GENERATED_RES
       <Box>
         <Text mb={"1rem"}>Most Recent</Text>
 
-        {loading ? (
-          <Spinner color="green.500"/>
-        ) : !loading && currentResult?.length === 0 ? (
+        {loadingGeneratedResult ? (
+          <Spinner color="green.500" />
+        ) : !loadingGeneratedResult && currentResult?.length === 0 ? (
           <>
             <Text fontSize={"xl"}>
               There are no results available for this student
@@ -299,9 +301,7 @@ const { data: getgeneratedresult, loading } = useQuery(GET_STUDENT_GENERATED_RES
                         </Text>
                       </Flex>
                     </Td>
-                    <Td color={"#000"}>
-                      {formatDate(data?.createdAt)}
-                    </Td>
+                    <Td color={"#000"}>{formatDate(data?.createdAt)}</Td>
                   </Tr>
                 );
               })}
