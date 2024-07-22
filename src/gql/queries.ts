@@ -1286,7 +1286,6 @@ query StudentGeneratedResult($studentId: Float!) {
     classStudents
     className
     subjects
-    assessment
     grades
     scores
     test1
