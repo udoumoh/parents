@@ -40,7 +40,7 @@ export const TemplateTwo: React.FC<TempTwoPreviewProps> = (props) => {
   const student = results?.student;
   const year = results?.school?.currentSession;
   const authors = results?.classTeacherName;
-  const assessment = JSON.parse(results?.assessment)
+  // const assessment = JSON.parse(results?.assessment)
   const componentRef = useRef(null);
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
@@ -206,16 +206,16 @@ export const TemplateTwo: React.FC<TempTwoPreviewProps> = (props) => {
                       </Tr>
                     </Thead>
                     <Tbody>
-                      { assessment && assessment[index]?.assessment?.map(
+                      {/* { assessment && assessment[index]?.assessment?.map(
                         (subItem: any, subIndex: any) => (
                           <Tr key={subIndex}>
                             <Td border="1px solid #747474">{subItem}</Td>
                             <Td border="1px solid #747474">
-                              {assessment[index].score[subIndex]}
+                              {assessment[index]?.score[subIndex]}
                             </Td>
                           </Tr>
                         )
-                      )}
+                      )} */}
                     </Tbody>
                   </Table>
                 </TableContainer>
