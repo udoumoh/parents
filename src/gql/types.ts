@@ -260,7 +260,7 @@ export type GenerateResult = {
   academicTerm: Scalars['String'];
   adminRemark?: Scalars['String'];
   approvedAt: Scalars['String'];
-  assessment: Scalars['String'];
+  assessment: Maybe<Scalars['String']>;
   attendance?: Maybe<Scalars['Int']>;
   className?: Maybe<Scalars['String']>;
   classStudents?: Maybe<Scalars['Int']>;
