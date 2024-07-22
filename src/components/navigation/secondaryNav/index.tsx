@@ -188,7 +188,7 @@ const SidebarWithHeader: FC<SidebarWithHeader> = ({ children }) => {
               <SidebarContent onClose={onClose} />
             </DrawerContent>
           </Drawer>
-          <Box ml={{ base: 0, md: 64 }} p="4" minH={"100vh"}>
+          <Box ml={{ base: 0, md: 64 }} p="4" h={"100vh"} overflowY={'auto'} >
             {/* Content */}
             <Box>
               <Breadcrumb

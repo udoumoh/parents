@@ -36,6 +36,7 @@ import { PDFViewer } from "@/components/shared/uploadedResultPdfViewer";
 import { GenerateResult, UploadedResult } from "@/gql/types";
 import ViewResultModal from "@/components/shared/viewResultModal";
 import { formatDate } from "@/helpers/formatDate";
+import placeholderImg from '/public/images/placeholderImg.jpg'
 
 interface ResultsProps {}
 
@@ -103,7 +104,6 @@ const Results: FC<ResultsProps> = ({}) => {
 
   useEffect(() => {
     if (getGeneratedResult) {
-      console.log("generated result", getGeneratedResult);
       const pdfViewData = getGeneratedResult?.studentGeneratedResult;
       setPdfResult(pdfViewData);
     }
@@ -117,7 +117,6 @@ const Results: FC<ResultsProps> = ({}) => {
 
   useEffect(() => {
     if (getUploadedResult) {
-      console.log("uploaded result", getUploadedResult);
       const parsedResultsData = getUploadedResult?.studentUploadedResult;
       setUploadedResults(parsedResultsData);
     }
@@ -280,7 +279,7 @@ const Results: FC<ResultsProps> = ({}) => {
                       <Flex gap={2} alignItems={"center"}>
                         <Image
                           boxSize={"6"}
-                          src={data?.school?.logoImgUrl}
+                          src={data?.school?.logoImgUrl || `${placeholderImg}`}
                           alt="logo"
                           pointerEvents={"none"}
                         />

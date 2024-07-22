@@ -15,6 +15,8 @@ import { GenerateResult } from "@/gql/types";
 import { UploadedResult } from "@/gql/types";
 import ViewResultModal from "../viewResultModal";
 import { formatDate } from "@/helpers/formatDate";
+import placeholderImg from "/public/images/placeholderImg.jpg";
+
 
 interface ResultCardProps {
   results: GenerateResult & UploadedResult
@@ -86,7 +88,7 @@ const ResultCard: FC<ResultCardProps> = ({ results }) => {
       </Flex>
       <Flex alignItems={"center"} gap={2} mt={"0.6rem"}>
         <Image
-          src={results?.school?.logoImgUrl}
+          src={results?.school?.logoImgUrl || `${placeholderImg}`}
           alt="logo"
           height={"2.5rem"}
           width={"2.5rem"}
@@ -94,7 +96,7 @@ const ResultCard: FC<ResultCardProps> = ({ results }) => {
           borderRadius={"md"}
         />
         <Box>
-          <Text fontSize={"sm"} maxW={"160px"}>
+          <Text fontSize={"sm "} maxW={"160px"}>
             {capitalizeFirstLetter(results?.school?.schoolName.toLowerCase())}
           </Text>
         </Box>
