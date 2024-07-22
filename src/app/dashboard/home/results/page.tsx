@@ -101,19 +101,19 @@ const Results: FC<ResultsProps> = ({}) => {
   const [totalNumberOfPages, setTotalNumberOfPages] = useState(1);
   const itemsPerPage = 10;
 
-  // useEffect(() => {
-  //   if (getGeneratedResult) {
-  //     console.log("generated result", getGeneratedResult);
-  //     const pdfViewData = getGeneratedResult?.studentGeneratedResult;
-  //     setPdfResult(pdfViewData);
-  //   }
-  //   if (errorGeneratedResult) {
-  //     console.error(
-  //       "Error fetching generated results:",
-  //       errorGeneratedResult.message
-  //     );
-  //   }
-  // }, [getGeneratedResult, errorGeneratedResult]);
+  useEffect(() => {
+    if (getGeneratedResult) {
+      console.log("generated result", getGeneratedResult);
+      const pdfViewData = getGeneratedResult?.studentGeneratedResult;
+      setPdfResult(pdfViewData);
+    }
+    if (errorGeneratedResult) {
+      console.error(
+        "Error fetching generated results:",
+        errorGeneratedResult.message
+      );
+    }
+  }, [getGeneratedResult, errorGeneratedResult]);
 
   useEffect(() => {
     if (getUploadedResult) {
@@ -141,9 +141,9 @@ const Results: FC<ResultsProps> = ({}) => {
     if (resultsType === "uploaded") {
       setCurrentResult(uploadedResults);
     } else if (resultsType === "generated") {
-      setCurrentResult(getGeneratedResult?.data);
+      setCurrentResult(pdfResult);
     }
-  }, [resultsType, getGeneratedResult?.data, uploadedResults]);
+  }, [resultsType, pdfResult, uploadedResults]);
 
   const columnNames = ["School", "Status", "Type", "Shared by", "Shared date"];
 
