@@ -206,7 +206,7 @@ export const TemplateTwo: React.FC<TempTwoPreviewProps> = (props) => {
                       </Tr>
                     </Thead>
                     <Tbody>
-                      {assessment[index]?.assessment?.map(
+                      { assessment && assessment[index]?.assessment?.map(
                         (subItem: any, subIndex: any) => (
                           <Tr key={subIndex}>
                             <Td border="1px solid #747474">{subItem}</Td>
