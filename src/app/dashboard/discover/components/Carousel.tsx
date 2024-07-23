@@ -100,7 +100,7 @@ const Carousel: FC<CarouselProps> = ({ media, slider, setSlider }) => {
             key={index}
             height={{ base: "300px", md: "400px" }}
             position="relative"
-            backgroundColor={"#FFFFFF55"}
+            backgroundColor={"#000000"}
             backdropFilter={"blur(6px)"}
           >
             <Box
