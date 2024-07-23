@@ -123,7 +123,7 @@ const SchoolDetailsModal: FC<SchoolDetailsModalProps> = ({
               activeProfileIndex >= filteredPosts?.length - 1 ? true : false
             }
           />
-          <ModalBody p={"0.5rem"}>
+          <ModalBody>
             <Box px={"0"}>
               <Carousel
                 media={profile?.schoolMedia}
@@ -131,7 +131,7 @@ const SchoolDetailsModal: FC<SchoolDetailsModalProps> = ({
                 setSlider={setSlider}
               />
 
-              <Box px={'0.5rem'}>
+              <Box px={'1rem'}>
                 <Flex
                   display={{ base: "none", md: "flex" }}
                   mt={"1.5rem"}
