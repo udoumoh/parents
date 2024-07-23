@@ -123,15 +123,15 @@ const SchoolDetailsModal: FC<SchoolDetailsModalProps> = ({
               activeProfileIndex >= filteredPosts?.length - 1 ? true : false
             }
           />
-          <ModalBody>
-            <Box px={"0"}>
+          <ModalBody p={0}>
+            <Box p={"0"}>
               <Carousel
                 media={profile?.schoolMedia}
                 slider={slider}
                 setSlider={setSlider}
               />
 
-              <Box px={'1rem'}>
+              <Box px={"1rem"}>
                 <Flex
                   display={{ base: "none", md: "flex" }}
                   mt={"1.5rem"}
@@ -229,11 +229,7 @@ const SchoolDetailsModal: FC<SchoolDetailsModalProps> = ({
                     Send a Message
                   </Button>
                 </Box>
-                <Box
-                  mt={"2.5rem"}
-                  height={"160px"}
-                  overflowY={"auto"}
-                >
+                <Box mt={"2.5rem"} height={"160px"} overflowY={"auto"}>
                   <Text
                     color={"#000"}
                     fontSize={{ base: "sm", md: "md" }}
