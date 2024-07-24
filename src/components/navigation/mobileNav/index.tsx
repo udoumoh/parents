@@ -19,6 +19,7 @@ import {
   AiOutlineSetting,
 } from "react-icons/ai";
 import { usePathname } from 'next/navigation';
+import { useRouter } from 'next/router';
 
 interface LinkItemProps {
   name: string;
@@ -72,6 +73,7 @@ const LinkItems: Array<LinkItemProps> = [
 
 const BottomNav: FC<BottomNavProps> = ({}) => {
     const pathName = usePathname()
+    const router = useRouter()
   return (
     <Box
       display={{ base: "block", md: "none" }}
@@ -91,7 +93,7 @@ const BottomNav: FC<BottomNavProps> = ({}) => {
             _hover={{
               cursor: "pointer",
             }}
-            onClick={() => window.location.assign(item.url)}
+            onClick={() => router.push(item.url)}
           >
             <Icon
               as={pathName.includes(item.url) ? item.iconFill : item.iconLight}

@@ -275,7 +275,7 @@ const NavItem = ({ icon, link, name, ...rest }: NavItemProps) => {
         as="a"
         w={"auto"}
         h={"auto"}
-        onClick={()=>{window.location.assign(link); router.prefetch(link)}}
+        onClick={()=>{router.push(link)}}
         style={{ textDecoration: "none" }}
         _focus={{ boxShadow: "none" }}
         display={"flex"}
@@ -534,7 +534,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
           <MenuList>
             <MenuItem
               px={"1rem"}
-              onClick={() =>window.location.assign("/dashboard/settings")}
+              onClick={() =>router.push("/dashboard/settings")}
               display={"flex"}
               gap={"3"}
             >
@@ -545,7 +545,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
             </MenuItem>
             <MenuItem
               px={"1rem"}
-              onClick={() =>window.location.assign("/dashboard/inbox")}
+              onClick={() =>router.push("/dashboard/inbox")}
               display={"flex"}
               gap={"3"}
             >
@@ -770,7 +770,7 @@ const MainNav: FC<MainNav> = ({ children }) => {
                           py={"0.8rem"}
                           color={"gray.500"}
                           onClick={() => {
-                            window.location.assign(item?.url);
+                            router.push(item?.url);
                             onClose();
                           }}
                           _hover={{
@@ -805,7 +805,7 @@ const MainNav: FC<MainNav> = ({ children }) => {
                           gap={6}
                           py={"0.8rem"}
                           onClick={() => {
-                            window.location.assign(`/${item.url}`);
+                            router.push(`/${item.url}`);
                             onClose();
                           }}
                           _hover={{

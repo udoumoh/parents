@@ -115,7 +115,7 @@ const NavItem = ({ icon, children, link, ...rest }: NavItemProps) => {
   return (
     <Box
       as="a"
-      onClick={() => window.location.assign(link)}
+      onClick={() => router.push(link)}
       style={{ textDecoration: "none" }}
       _focus={{ boxShadow: "none" }}
     >
