@@ -19,7 +19,7 @@ import {
   AiOutlineSetting,
 } from "react-icons/ai";
 import { usePathname } from 'next/navigation';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 
 interface LinkItemProps {
   name: string;
