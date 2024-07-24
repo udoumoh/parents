@@ -1,26 +1,33 @@
-import { FC } from "react";
+import React, { forwardRef } from "react";
 import { Box } from "@chakra-ui/react";
 
 interface VideoPlayerProps {
-    link: any
+  link: string;
 }
 
-const VideoPlayer: FC<VideoPlayerProps> = ({link}) => {
-  return (
-    <video
-      controls
-      preload="auto"
-      muted
-      playsInline
-      autoPlay
-      style={{ objectFit: "cover", width:"26%", height:"85vh", borderRadius:'10px' }}
-    >
-      <source
-        src={link}
-        type="video/mp4"
-      />
-    </video>
-  );
-};
+const VideoPlayer = forwardRef<HTMLVideoElement, VideoPlayerProps>(
+  ({ link }, ref) => {
+    return (
+      <Box maxW={'500px'} height={['400px', '300px', '830px']}>
+      <video
+        ref={ref}
+        controls
+        preload="auto"
+        muted
+        playsInline
+        autoPlay
+        style={{
+          objectFit: "cover",
+          width: "100%",
+          height: "100%",
+          borderRadius: "10px",
+        }}
+      >
+        <source src={link} type="video/mp4" />
+      </video>
+      </Box>
+    );
+  }
+);
 
 export default VideoPlayer;

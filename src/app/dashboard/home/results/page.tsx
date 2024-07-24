@@ -20,6 +20,10 @@ import {
   useDisclosure,
   IconButton,
   Spinner,
+  Alert,
+  AlertIcon,
+  AlertTitle,
+  AlertDescription,
 } from "@chakra-ui/react";
 import { AiOutlinePlus } from "react-icons/ai";
 import ResultCard from "@/components/shared/resultCard";
@@ -73,7 +77,7 @@ const Results: FC<ResultsProps> = ({}) => {
     onClose: onGeneratedModalClose,
     onOpen: onGeneratedModalOpen,
   } = useDisclosure();
-  const { currentWardProfile } = useUserAPI();
+  const { currentWardProfile, isTrialOver } = useUserAPI();
 
   const {
     data: getGeneratedResult,
@@ -222,109 +226,130 @@ const Results: FC<ResultsProps> = ({}) => {
         />
       </Flex>
 
-      <Box>
-        <Text mb={"1rem"}>Most Recent</Text>
+      {isTrialOver ? (
+        <>
+          <Alert status="warning" rounded={"md"}>
+            <AlertIcon />
+            <AlertTitle>
+              Results are not available on your current plan!
+            </AlertTitle>
+            <AlertDescription>
+              Please subscribe to view your child's results
+            </AlertDescription>
+          </Alert>
+        </>
+      ) : (
+        <Box>
+          <Box>
+            <Text mb={"1rem"}>Most Recent</Text>
 
-        {loadingGeneratedResult ? (
-          <Spinner color="green.500" />
-        ) : !loadingGeneratedResult && currentResult?.length === 0 ? (
-          <>
-            <Text fontSize={"xl"}>
-              There are no results available for this student
-            </Text>
-          </>
-        ) : (
-          <Wrap gap={5} flexDir={{ base: "column", lg: "row" }}>
-            {currentResult?.slice(0, 5)?.map((result, index) => {
-              return (
-                <WrapItem key={index}>
-                  <ResultCard key={index} results={result} />
-                </WrapItem>
-              );
-            })}
-          </Wrap>
-        )}
-      </Box>
-
-      <Box
-        mt={{ base: "12" }}
-        display={currentResult?.length === 0 ? "none" : "block"}
-        overflowY={"auto"}
-        border={"1px solid #005D5D50"}
-        rounded={"lg"}
-        p={"1rem"}
-      >
-        <TableContainer>
-          <Table variant="simple" size={{ base: "sm", md: "md" }}>
-            <Thead>
-              <Tr>
-                {columnNames?.map((column, index) => {
+            {loadingGeneratedResult ? (
+              <Spinner color="green.500" />
+            ) : !loadingGeneratedResult && currentResult?.length === 0 ? (
+              <>
+                <Text fontSize={"xl"}>
+                  There are no results available for this student
+                </Text>
+              </>
+            ) : (
+              <Wrap gap={5} flexDir={{ base: "column", lg: "row" }}>
+                {currentResult?.slice(0, 5)?.map((result, index) => {
                   return (
-                    <Th key={index} color={"#000"} fontWeight={"600"}>
-                      {column}
-                    </Th>
+                    <WrapItem key={index}>
+                      <ResultCard key={index} results={result} />
+                    </WrapItem>
                   );
                 })}
-              </Tr>
-            </Thead>
-            <Tbody>
-              {resultToShow?.map((data, index) => {
-                return (
-                  <Tr
-                    key={index}
-                    onClick={() => handleTableItemClick(data)}
-                    _hover={{ backgroundColor: "#005D5D10", cursor: "pointer" }}
-                  >
-                    <Td color={"#000"}>
-                      <Flex gap={2} alignItems={"center"}>
-                        <Image
-                          boxSize={"6"}
-                          src={data?.school?.logoImgUrl || `${placeholderImg}`}
-                          alt="logo"
-                          pointerEvents={"none"}
-                        />
-                        <Text fontSize={"sm"} fontWeight={"500"}>
-                          {data?.school?.schoolName}
-                        </Text>
-                      </Flex>
-                    </Td>
-                    <Td color={"#000"}>
-                      {data?.isOfficial ? "Official" : "Unofficial"}
-                    </Td>
-                    <Td color={"#000"}>{data?.resultType}</Td>
-                    <Td>
-                      <Flex gap={2} alignItems={"center"}>
-                        <Avatar size={"xs"} src={data?.creatorPicture} />
-                        <Text fontSize={"md"} fontWeight={"400"}>
-                          {data?.creatorName}
-                        </Text>
-                      </Flex>
-                    </Td>
-                    <Td color={"#000"}>{formatDate(data?.createdAt)}</Td>
-                  </Tr>
-                );
-              })}
-            </Tbody>
-          </Table>
-        </TableContainer>
-        <Flex justifyContent={"center"}>
-          <Box mt={"1rem"} display={"flex"} gap={4} alignItems={"center"}>
-            <IconButton
-              aria-label="paginate"
-              icon={<MdKeyboardArrowLeft />}
-              onClick={handlePreviousPage}
-            />
-            <Text>
-              Page {currentPage} of {totalNumberOfPages || currentPage}
-            </Text>
-            <IconButton
-              aria-label="paginate"
-              icon={<MdKeyboardArrowRight />}
-              onClick={handleNextPage}
-            />
+              </Wrap>
+            )}
           </Box>
-        </Flex>
-      </Box>
+
+          <Box
+            mt={{ base: "12" }}
+            display={currentResult?.length === 0 ? "none" : "block"}
+            overflowY={"auto"}
+            border={"1px solid #005D5D50"}
+            rounded={"lg"}
+            p={"1rem"}
+          >
+            <TableContainer>
+              <Table variant="simple" size={{ base: "sm", md: "md" }}>
+                <Thead>
+                  <Tr>
+                    {columnNames?.map((column, index) => {
+                      return (
+                        <Th key={index} color={"#000"} fontWeight={"600"}>
+                          {column}
+                        </Th>
+                      );
+                    })}
+                  </Tr>
+                </Thead>
+                <Tbody>
+                  {resultToShow?.map((data, index) => {
+                    return (
+                      <Tr
+                        key={index}
+                        onClick={() => handleTableItemClick(data)}
+                        _hover={{
+                          backgroundColor: "#005D5D10",
+                          cursor: "pointer",
+                        }}
+                      >
+                        <Td color={"#000"}>
+                          <Flex gap={2} alignItems={"center"}>
+                            <Image
+                              boxSize={"6"}
+                              src={
+                                data?.school?.logoImgUrl || `${placeholderImg}`
+                              }
+                              alt="logo"
+                              pointerEvents={"none"}
+                            />
+                            <Text fontSize={"sm"} fontWeight={"500"}>
+                              {data?.school?.schoolName}
+                            </Text>
+                          </Flex>
+                        </Td>
+                        <Td color={"#000"}>
+                          {data?.isOfficial ? "Official" : "Unofficial"}
+                        </Td>
+                        <Td color={"#000"}>{data?.resultType}</Td>
+                        <Td>
+                          <Flex gap={2} alignItems={"center"}>
+                            <Avatar size={"xs"} src={data?.creatorPicture} />
+                            <Text fontSize={"md"} fontWeight={"400"}>
+                              {data?.creatorName}
+                            </Text>
+                          </Flex>
+                        </Td>
+                        <Td color={"#000"}>{formatDate(data?.createdAt)}</Td>
+                      </Tr>
+                    );
+                  })}
+                </Tbody>
+              </Table>
+            </TableContainer>
+            <Flex justifyContent={"center"}>
+              <Box mt={"1rem"} display={"flex"} gap={4} alignItems={"center"}>
+                <IconButton
+                  aria-label="paginate"
+                  icon={<MdKeyboardArrowLeft />}
+                  onClick={handlePreviousPage}
+                />
+                <Text>
+                  Page {currentPage} of {totalNumberOfPages || currentPage}
+                </Text>
+                <IconButton
+                  aria-label="paginate"
+                  icon={<MdKeyboardArrowRight />}
+                  onClick={handleNextPage}
+                />
+              </Box>
+            </Flex>
+          </Box>
+        </Box>
+      )}
       <ImgViewer
         path={selectedTableResult?.document}
         isOpen={isImageModalOpen}
