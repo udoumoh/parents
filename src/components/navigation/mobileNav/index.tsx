@@ -93,7 +93,7 @@ const BottomNav: FC<BottomNavProps> = ({}) => {
             _hover={{
               cursor: "pointer",
             }}
-            onClick={() => router.push(item.url)}
+            onClick={() => router.push(item?.url)}
           >
             <Icon
               as={pathName.includes(item.url) ? item.iconFill : item.iconLight}
