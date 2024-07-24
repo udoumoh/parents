@@ -226,7 +226,7 @@ const Results: FC<ResultsProps> = ({}) => {
         />
       </Flex>
 
-      {isTrialOver ? (
+      {!isTrialOver ? (
         <>
           <Alert status="warning" rounded={"md"}>
             <AlertIcon />
