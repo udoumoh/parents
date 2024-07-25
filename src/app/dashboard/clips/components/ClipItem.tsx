@@ -1,3 +1,4 @@
+'use client'
 import React, { forwardRef } from "react";
 import {
   Box,
@@ -13,6 +14,16 @@ import {
   MenuGroup,
   MenuOptionGroup,
   MenuDivider,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  PopoverHeader,
+  PopoverBody,
+  PopoverFooter,
+  PopoverArrow,
+  PopoverCloseButton,
+  PopoverAnchor,
+  Portal,
 } from "@chakra-ui/react";
 import VideoPlayer from "./VideoPlayer";
 import {
@@ -50,7 +61,7 @@ const ClipItem = forwardRef<HTMLVideoElement, ClipItemProps>(
         gap={4}
         alignItems="flex-end"
         py="0.5rem"
-        px={'2rem'}
+        px={"2rem"}
         css={{ scrollSnapAlign: "center" }}
       >
         <VideoPlayer link={videoLink} ref={ref} />
@@ -149,8 +160,8 @@ const ClipItem = forwardRef<HTMLVideoElement, ClipItemProps>(
           </Grid>
 
           <Grid alignContent="center">
-            <Menu>
-              <MenuButton>
+            <Popover isLazy matchWidth={true}>
+              <PopoverTrigger>
                 <Box
                   backgroundColor="#00000010"
                   display="flex"
@@ -163,28 +174,43 @@ const ClipItem = forwardRef<HTMLVideoElement, ClipItemProps>(
                 >
                   <Icon as={FaShare} boxSize="5" />
                 </Box>
-              </MenuButton>
-              <MenuList
-                rounded={"xl"}
+              </PopoverTrigger>
+              <PopoverContent
+                rounded={"2xl"}
                 border={"0px"}
                 shadow={"lg"}
-                fontWeight={"bold"}
-                px={'0.5rem'}
+                fontWeight={"semibold"}
               >
-                {ShareLinks.map((item, key) => (
-                  <MenuItem key={key} gap={3} py={'0.6rem'} my={'0.3rem'} rounded={'lg'}>
-                    <Box width={'25px'} height={'25px'} rounded={'full'} backgroundColor={item.bg} display={'flex'} justifyContent={'center'} alignItems={'center'} p={'1rem'}>
-                      <Icon
-                        as={item?.icon}
-                        boxSize={"4"}
-                        color={"#ffffff"}
-                      />
-                    </Box>{" "}
-                    {item.label}
-                  </MenuItem>
-                ))}
-              </MenuList>
-            </Menu>
+                <PopoverBody p={'0.5rem'}>
+                  {ShareLinks.map((item, key) => (
+                    <Flex
+                      key={key}
+                      gap={3}
+                      py={"0.6rem"}
+                      my={"0.3rem"}
+                      rounded={"lg"}
+                      alignItems={"center"}
+                      _hover={{ cursor: "pointer", backgroundColor:"#00000008" }}
+                      px={'1rem'}
+                    >
+                      <Box
+                        width={"25px"}
+                        height={"25px"}
+                        rounded={"full"}
+                        backgroundColor={item.bg}
+                        display={"flex"}
+                        justifyContent={"center"}
+                        alignItems={"center"}
+                        p={"1rem"}
+                      >
+                        <Icon as={item?.icon} boxSize={"4"} color={"#ffffff"} />
+                      </Box>{" "}
+                      {item.label}
+                    </Flex>
+                  ))}
+                </PopoverBody>
+              </PopoverContent>
+            </Popover>
 
             <Text fontWeight="bold" textAlign="center" fontSize="sm">
               12.1K
