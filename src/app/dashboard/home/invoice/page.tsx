@@ -68,6 +68,8 @@ const InvoiceDataModal = lazy(
   () => import("@/components/shared/InvoiceDataModal")
 );
 
+// DDD
+
 interface StudentInvoiceProps {
   term: string;
   year: string;
