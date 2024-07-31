@@ -10,8 +10,9 @@ const VideoPlayer = forwardRef<HTMLVideoElement, VideoPlayerProps>(
     return (
       <Box
         maxW="500px"
-        height={["400px", "450px", "830px"]}
+        height={["100vh", "400px", "450px", "700px"]}
         position="relative"
+        rounded={{ base: "none", md: "lg" }}
       >
         <video
           ref={ref}
@@ -24,12 +25,11 @@ const VideoPlayer = forwardRef<HTMLVideoElement, VideoPlayerProps>(
             objectFit: "cover",
             width: "100%",
             height: "100%",
-            borderRadius: "10px",
           }}
         >
           <source src={link} type="video/mp4" />
         </video>
-        {/* <Text
+        <Text
           position="absolute"
           bottom="50px" // Adjust this value to ensure it's above the controls
           left="10px"
@@ -40,7 +40,7 @@ const VideoPlayer = forwardRef<HTMLVideoElement, VideoPlayerProps>(
           zIndex="1" // Ensure the text is above the video controls
         >
           messing around
-        </Text> */}
+        </Text>
       </Box>
     );
   }

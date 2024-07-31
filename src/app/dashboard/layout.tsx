@@ -21,13 +21,7 @@ const Layout: React.FC<layoutProps> = ({ children }) => {
           }
   }, [parentData, isTrialOver]);
 
-  return (
-    <MainNav>
-      <BottomNav />
-      {children}
-    </MainNav>
-  );
-  loading ? (
+  return  loading ? (
     <Loading />
   ) : !loading && parent?.parent?.errors !== null ? (
     <>{window.location.replace("/signin")}</>

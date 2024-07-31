@@ -61,7 +61,7 @@ const ClipItem = forwardRef<HTMLVideoElement, ClipItemProps>(
         gap={4}
         alignItems="flex-end"
         py="0.5rem"
-        px={"2rem"}
+        px={{base:"0rem", md:"2rem"}}
         css={{ scrollSnapAlign: "center" }}
       >
         <VideoPlayer link={videoLink} ref={ref} />
@@ -71,7 +71,8 @@ const ClipItem = forwardRef<HTMLVideoElement, ClipItemProps>(
           bg="linear-gradient(135deg, #2ebf9115, #8360c315)"
           py="1rem"
           px="0.6rem"
-          rounded="lg"
+          rounded={{base:"none", md:"lg"}}
+          display={{base:"none", md:"grid"}}
         >
           <Grid alignContent="center">
             <Box
