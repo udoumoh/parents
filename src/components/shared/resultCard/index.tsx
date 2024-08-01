@@ -10,50 +10,19 @@ import {
 } from "@chakra-ui/react";
 import { PDFViewer } from "../uploadedResultPdfViewer";
 import ImgViewer from "../imageViewer";
-import GeneratedResults from "../generatedResults";
 import { capitalizeFirstLetter } from "@/helpers/capitalizeFirstLetter";
+import { GenerateResult } from "@/gql/types";
+import { UploadedResult } from "@/gql/types";
+import ViewResultModal from "../viewResultModal";
+import { formatDate } from "@/helpers/formatDate";
+import placeholderImg from "/public/images/placeholderImg.jpg";
+
 
 interface ResultCardProps {
-  generatedresult: {
-    test1: [];
-    test2: [];
-    test3: [];
-    test4: [];
-    scores: [];
-    authorsFirstName: string;
-    authorsSchoolName: string;
-    authorsLastName: string;
-    authorsMiddleName: string;
-    studentsFirstName: string;
-    studentsMiddleName: string;
-    studentsLastName: string;
-    academicTerm: string;
-    resultType: string;
-    creator: string;
-    schoolLogo: string;
-    schoolName: string;
-    studentProfileImgUrl: string;
-    studentAge: number;
-    className: string;
-    classStudents: number;
-    attendance: number;
-    subjects: [];
-    grades: [];
-    remark: string;
-    authorsProfileImgUrl: string;
-    documentPath: string;
-    authorsCreatedAt: string;
-    isOfficial: string;
-    examType: string;
-    shareDate: string;
-    createdAt: string;
-    teachersFirstName: string;
-    teachersLastName: string;
-    teachersMiddleName: string;
-  };
+  results: GenerateResult & UploadedResult
 }
 
-const ResultCard: FC<ResultCardProps> = ({ generatedresult }) => {
+const ResultCard: FC<ResultCardProps> = ({ results }) => {
   const imageExtensions = [
     ".jpg",
     ".jpeg",
@@ -65,7 +34,7 @@ const ResultCard: FC<ResultCardProps> = ({ generatedresult }) => {
     ".svg",
   ];
   const isImage = imageExtensions.some((ext) =>
-    generatedresult?.documentPath?.toLowerCase().endsWith(ext)
+    results?.document?.toLowerCase().endsWith(ext)
   );
   const {
     isOpen: isModalOpen,
@@ -95,7 +64,7 @@ const ResultCard: FC<ResultCardProps> = ({ generatedresult }) => {
         transition: "0.5s",
       }}
       onClick={
-        generatedresult?.documentPath?.endsWith(".pdf")
+        results?.document?.endsWith(".pdf")
           ? onUploadedModalOpen
           : isImage
           ? onImageModalOpen
@@ -119,7 +88,7 @@ const ResultCard: FC<ResultCardProps> = ({ generatedresult }) => {
       </Flex>
       <Flex alignItems={"center"} gap={2} mt={"0.6rem"}>
         <Image
-          src={generatedresult?.schoolLogo}
+          src={results?.school?.logoImgUrl || `${placeholderImg}`}
           alt="logo"
           height={"2.5rem"}
           width={"2.5rem"}
@@ -127,15 +96,14 @@ const ResultCard: FC<ResultCardProps> = ({ generatedresult }) => {
           borderRadius={"md"}
         />
         <Box>
-          <Text fontSize={"sm"} maxW={"160px"}>
-            {capitalizeFirstLetter(generatedresult.schoolName.toLowerCase())}
+          <Text fontSize={"sm "} maxW={"160px"}>
+            {capitalizeFirstLetter(results?.school?.schoolName.toLowerCase())}
           </Text>
         </Box>
       </Flex>
       <Flex>
-        <Text color={"#959595"} fontSize={"xs"} mt={'0.3rem'}>
-          Generated on{" "}
-          {generatedresult?.shareDate || generatedresult.authorsCreatedAt}
+        <Text color={"#959595"} fontSize={"xs"} mt={"0.3rem"}>
+          Generated on {formatDate(results?.createdAt)}
         </Text>
       </Flex>
       <Flex
@@ -151,10 +119,10 @@ const ResultCard: FC<ResultCardProps> = ({ generatedresult }) => {
               px={"1rem"}
               rounded={"md"}
               py={"0.3rem"}
-              display={generatedresult.academicTerm ? "block" : "none"}
+              display={results.academicTerm ? "block" : "none"}
             >
               <Text color="#fff" fontSize={"2xs"}>
-                {generatedresult.academicTerm}
+                {results.academicTerm}
               </Text>
             </Box>
             <Box
@@ -164,7 +132,7 @@ const ResultCard: FC<ResultCardProps> = ({ generatedresult }) => {
               py={"0.3rem"}
             >
               <Text color="#fff" fontSize={"2xs"}>
-                {generatedresult.resultType || generatedresult.examType}
+                {results.resultType}
               </Text>
             </Box>
           </Flex>
@@ -176,17 +144,17 @@ const ResultCard: FC<ResultCardProps> = ({ generatedresult }) => {
         /> */}
       </Flex>
       <ImgViewer
-        path={generatedresult?.documentPath}
+        path={results?.document}
         isOpen={isImageModalOpen}
         onClose={onImageModalClose}
       />
       <PDFViewer
         isOpen={isUploadedModalOpen}
         onClose={onUploadedModalClose}
-        path={generatedresult?.documentPath}
+        path={results?.document}
       />
-      <GeneratedResults
-        result={generatedresult}
+      <ViewResultModal
+        result={results}
         isOpen={isModalOpen}
         onClose={onModalClose}
       />

@@ -115,7 +115,7 @@ const NavItem = ({ icon, children, link, ...rest }: NavItemProps) => {
   return (
     <Box
       as="a"
-      onClick={() => window.location.assign(link)}
+      onClick={() => router.push(link)}
       style={{ textDecoration: "none" }}
       _focus={{ boxShadow: "none" }}
     >
@@ -188,7 +188,7 @@ const SidebarWithHeader: FC<SidebarWithHeader> = ({ children }) => {
               <SidebarContent onClose={onClose} />
             </DrawerContent>
           </Drawer>
-          <Box ml={{ base: 0, md: 64 }} p="4" h={"100vh"} overflowY={"auto"}>
+          <Box ml={{ base: 0, md: 64 }} p="4" h={"100vh"} overflowY={'auto'} >
             {/* Content */}
             <Box>
               <Breadcrumb

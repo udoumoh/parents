@@ -14,7 +14,7 @@ import {
 interface ImgViewerProps {
   isOpen: boolean;
   onClose: () => void;
-  path: string;
+  path: string | undefined;
 }
 
 const ImgViewer: FC<ImgViewerProps> = ({path, isOpen, onClose}) => {

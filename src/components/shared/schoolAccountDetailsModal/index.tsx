@@ -35,30 +35,6 @@ const SchoolAccountDetailsModal: FC<SchoolAccountDetailsModalProps> = ({isOpen, 
       bankName: currentWardProfile?.schoolBankName[index],
     }));
 
-    // const schoolAccountDetails = [
-    //   {
-    //     schoolLogo:
-    //       "https://th.bing.com/th?id=OIF.Ik%2bZvTuSYLB%2fFKtY5ZjcDg&w=191&h=140&c=7&r=0&o=5&pid=1.7",
-    //     accountName: "Lecture Mate College",
-    //     accountNumber: "2261911004",
-    //     bankName:"Zenith Bank"
-    //   },
-    //   {
-    //     schoolLogo:
-    //       "https://th.bing.com/th?id=OIF.Ik%2bZvTuSYLB%2fFKtY5ZjcDg&w=191&h=140&c=7&r=0&o=5&pid=1.7",
-    //     accountName: "Lecture Mate College",
-    //     accountNumber: "2261911004",
-    //     bankName:"Zenith Bank"
-    //   },
-    //   {
-    //     schoolLogo:
-    //       "https://th.bing.com/th?id=OIF.Ik%2bZvTuSYLB%2fFKtY5ZjcDg&w=191&h=140&c=7&r=0&o=5&pid=1.7",
-    //     accountName: "Lecture Mate College",
-    //     accountNumber: "2261911004",
-    //     bankName:"Zenith Bank"
-    //   },
-    // ];
-
     const toast = useToast()
 
     const [copiedText, setCopiedText] = useState("")

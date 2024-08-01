@@ -100,7 +100,7 @@ const Carousel: FC<CarouselProps> = ({ media, slider, setSlider }) => {
             key={index}
             height={{ base: "300px", md: "400px" }}
             position="relative"
-            backgroundColor={"#FFFFFF55"}
+            backgroundColor={"#000000"}
             backdropFilter={"blur(6px)"}
           >
             <Box
@@ -114,13 +114,21 @@ const Carousel: FC<CarouselProps> = ({ media, slider, setSlider }) => {
               backgroundPosition="center"
               filter="blur(10px)"
               zIndex={1}
+
             />
-            <Box position="relative" w="100%" h="100%" zIndex={2}>
+            <Box
+              position="relative"
+              w="100%"
+              h="100%"
+              zIndex={2}
+
+            >
               <Image
                 src={url}
                 layout="fill"
                 objectFit="contain"
                 alt={`image-${index}`}
+                style={{ borderRadius: "30px" }}
               />
             </Box>
           </Box>

@@ -20,61 +20,31 @@ import {
   useDisclosure,
   IconButton,
   Spinner,
+  Alert,
+  AlertIcon,
+  AlertTitle,
+  AlertDescription,
 } from "@chakra-ui/react";
-
 import { AiOutlinePlus } from "react-icons/ai";
 import ResultCard from "@/components/shared/resultCard";
 import UploadResultModal from "@/components/shared/uploadResultModal";
-import { GET_STUDENT_UPLOADED_RESULT } from "@/gql/queries";
-import { GET_STUDENT_GENERATED_RESULT } from "@/gql/queries";
+import {
+  GET_STUDENT_UPLOADED_RESULT,
+  GET_STUDENT_GENERATED_RESULT,
+} from "@/gql/queries";
 import { useQuery } from "@apollo/client";
 import { useUserAPI } from "@/hooks/UserContext";
-import { formatDate } from "@/helpers/formatDate";
 import { MdKeyboardArrowRight, MdKeyboardArrowLeft } from "react-icons/md";
 import ImgViewer from "@/components/shared/imageViewer";
 import { PDFViewer } from "@/components/shared/uploadedResultPdfViewer";
-import GeneratedResults from "@/components/shared/generatedResults";
+import { GenerateResult, UploadedResult } from "@/gql/types";
+import ViewResultModal from "@/components/shared/viewResultModal";
+import { formatDate } from "@/helpers/formatDate";
+import placeholderImg from '/public/images/placeholderImg.jpg'
 
 interface ResultsProps {}
 
-interface GeneratedResultProps {
-  test1: [];
-  test2: [];
-  test3: [];
-  test4: [];
-  scores: [];
-  authorsFirstName: string;
-  authorsSchoolName: string;
-  authorsLastName: string;
-  authorsMiddleName: string;
-  studentsFirstName: string;
-  studentsMiddleName: string;
-  studentsLastName: string;
-  academicTerm: string;
-  resultType: string;
-  creator: string;
-  schoolLogo: string;
-  schoolName: string;
-  studentProfileImgUrl: string;
-  studentAge: number;
-  className: string;
-  classStudents: number;
-  attendance: number;
-  subjects: [];
-  grades: [];
-  remark: string;
-  authorsProfileImgUrl: string;
-  documentPath: string;
-  authorsCreatedAt: string;
-  isOfficial: string;
-  examType: string;
-  sharerFirstName: string;
-  shareDate: string;
-  createdAt: string;
-  teachersFirstName: string;
-  teachersLastName: string;
-  teachersMiddleName: string;
-}
+type Result = GenerateResult & UploadedResult;
 
 const Results: FC<ResultsProps> = ({}) => {
   const imageExtensions = [
@@ -87,7 +57,6 @@ const Results: FC<ResultsProps> = ({}) => {
     ".tiff",
     ".svg",
   ];
-  
   const {
     isOpen: isModalOpen,
     onClose: onModalClose,
@@ -108,129 +77,65 @@ const Results: FC<ResultsProps> = ({}) => {
     onClose: onGeneratedModalClose,
     onOpen: onGeneratedModalOpen,
   } = useDisclosure();
-  const { currentWardProfile } = useUserAPI();
-  const { data: getgeneratedresult } = useQuery(GET_STUDENT_GENERATED_RESULT, {
+  const { currentWardProfile, isTrialOver } = useUserAPI();
+
+  const {
+    data: getGeneratedResult,
+    loading: loadingGeneratedResult,
+    error: errorGeneratedResult,
+  } = useQuery(GET_STUDENT_GENERATED_RESULT, {
+    skip: !currentWardProfile?.id,
     variables: { studentId: currentWardProfile?.id },
   });
-  const { data: getUploadedResult, loading } = useQuery(
+
+  const { data: getUploadedResult, error: errorUploadedResult } = useQuery(
     GET_STUDENT_UPLOADED_RESULT,
     {
+      skip: !currentWardProfile?.id,
       variables: { studentId: currentWardProfile?.id },
     }
   );
-  const [selectedTableResult, setSelectedTableResult] =
-    useState<GeneratedResultProps>();
-  const [resultsType, setResultstype] = useState("generated");
-  const [pdfResult, setPdfResult] = useState<GeneratedResultProps[]>([]);
-  const [uploadedResults, setUploadedResults] = useState<
-    GeneratedResultProps[]
-  >([]);
-  const [currentResult, setCurrentResult] = useState<GeneratedResultProps[]>(
-    []
-  );
-  const [resultToShow, setResultToShow] = useState<GeneratedResultProps[]>([]);
+
+  const [selectedTableResult, setSelectedTableResult] = useState<Result>();
+  const [resultsType, setResultsType] = useState("generated");
+  const [pdfResult, setPdfResult] = useState<Result[]>([]);
+  const [uploadedResults, setUploadedResults] = useState<Result[]>([]);
+  const [currentResult, setCurrentResult] = useState<Result[]>([]);
+  const [resultToShow, setResultToShow] = useState<Result[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalNumberOfPages, setTotalNumberOfPages] = useState(1);
   const itemsPerPage = 10;
 
   useEffect(() => {
-    const fetchGeneratedResult = async () => {
-      try {
-        const response = await getgeneratedresult;
-        if (!response) {
-          console.log("failed to fetch results data");
-        }
-        if (response) {
-          const pdfViewData = response?.studentGeneratedResult?.map(
-            (result: any) => ({
-              test1: result?.test1,
-              test2: result?.test2,
-              test3: result?.test3,
-              test4: result?.test4,
-              scores: result?.scores,
-              authorsFirstName: result?.student?.creator?.admin?.firstName,
-              authorsSchoolName: result?.student?.creator?.admin?.school,
-              authorsLastName: result?.student?.creator?.admin?.lastName,
-              authorsMiddleName: result?.student?.creator?.admin?.middleName,
-              studentsFirstName: result?.student?.firstName,
-              studentsMiddleName: result?.student?.middleName,
-              studentsLastName: result?.student?.lastName,
-              academicTerm: result?.academicTerm,
-              resultType: result?.resultType,
-              creator: result?.creator,
-              schoolLogo: result?.school?.logoImgUrl,
-              schoolName: result?.school?.schoolName,
-              studentProfileImgUrl: result?.student?.profileImgUrl,
-              studentAge: result?.student?.ageInput,
-              className: result?.className,
-              classStudents: result?.classStudents,
-              attendance: result?.attendance,
-              subjects: result?.subjects,
-              grades: result?.grades,
-              remark: result?.remark,
-              authorsProfileImgUrl:
-                result?.student?.creator?.admin?.profileImgUrl,
-              documentPath: "",
-              authorsCreatedAt: formatDate(result?.createdAt),
-              isOfficial: result?.isOfficial,
-              teachersFirstName:
-                result?.student?.classroom?.classroom?.teacher[0]?.firstName,
-              teachersLastName:
-                result?.student?.classroom?.classroom?.teacher[0]?.lastName,
-              teachersMiddleName:
-                result?.student?.classroom?.classroom?.teacher[0]?.middleName,
-            })
-          );
-          setPdfResult(pdfViewData);
-        }
-      } catch (err: any) {
-        console.log(err.message);
-      }
-    };
+    if (getGeneratedResult) {
+      const pdfViewData = getGeneratedResult?.studentGeneratedResult;
+      setPdfResult(pdfViewData);
+    }
+    if (errorGeneratedResult) {
+      console.error(
+        "Error fetching generated results:",
+        errorGeneratedResult.message
+      );
+    }
+  }, [getGeneratedResult, errorGeneratedResult]);
 
-    const fetchUploadedResult = async () => {
-      try {
-        const response = await getUploadedResult;
-        if (!response) {
-          console.log("failed to fetch results data");
-        }
-        if (response) {
-          const parsedResultsData = response?.studentUploadedResult?.map(
-            (item: any) => ({
-              term: item.academicTerm,
-              examType: item.resultType,
-              schoolLogo: item?.school?.logoImgUrl,
-              schoolName: item?.school?.schoolName,
-              status: item?.isOfficial,
-              teachersFirstName:
-                item?.student?.classroom?.classroom?.teacher[0]?.firstName,
-                teachersMiddleName:
-                  item?.student?.classroom?.classroom?.teacher[0]?.middleName,
-              teachersLastName:
-                item?.student?.classroom?.classroom?.teacher[0]?.lastName,
-              authorsProfileImgUrl:
-                item?.creatorPicture,
-              authorsFirstName: item?.creatorName,
-              authorsLastName: "",
-              shareDate: formatDate(item?.createdAt),
-              documentPath: item?.document,
-            })
-          );
-          setUploadedResults(parsedResultsData);
-        }
-      } catch (err: any) {
-        console.log(err.message);
-      }
-    };
-    fetchUploadedResult();
-    fetchGeneratedResult();
-  }, [getgeneratedresult, getUploadedResult, currentWardProfile]);
+  useEffect(() => {
+    if (getUploadedResult) {
+      const parsedResultsData = getUploadedResult?.studentUploadedResult;
+      setUploadedResults(parsedResultsData);
+    }
+    if (errorUploadedResult) {
+      console.error(
+        "Error fetching uploaded results:",
+        errorUploadedResult.message
+      );
+    }
+  }, [getUploadedResult, errorUploadedResult]);
 
   useEffect(() => {
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = Math.min(startIndex + itemsPerPage, currentResult?.length);
     setResultToShow(currentResult?.slice(startIndex, endIndex));
-
     const newTotalPages = Math.ceil(currentResult?.length / itemsPerPage);
     setTotalNumberOfPages(newTotalPages);
   }, [currentResult, currentPage]);
@@ -246,7 +151,7 @@ const Results: FC<ResultsProps> = ({}) => {
   const columnNames = ["School", "Status", "Type", "Shared by", "Shared date"];
 
   const handleResultsTypeChange = (e: any) => {
-    setResultstype(e.target.value);
+    setResultsType(e.target.value);
   };
 
   const handleNextPage = () => {
@@ -321,123 +226,142 @@ const Results: FC<ResultsProps> = ({}) => {
         />
       </Flex>
 
-      <Box>
-        <Text mb={"1rem"}>Most Recent</Text>
+      {!isTrialOver ? (
+        <>
+          <Alert status="warning" rounded={"md"}>
+            <AlertIcon />
+            <AlertTitle>
+              Results are not available on your current plan!
+            </AlertTitle>
+            <AlertDescription>
+              Please subscribe to view your child's results
+            </AlertDescription>
+          </Alert>
+        </>
+      ) : (
+        <Box>
+          <Box>
+            <Text mb={"1rem"}>Most Recent</Text>
 
-        {loading ? (
-          <Spinner color="green.500"/>
-        ) : !loading && currentResult?.length === 0 ? (
-          <>
-            <Text fontSize={"xl"}>
-              There are no results available for this student
-            </Text>
-          </>
-        ) : (
-          <Wrap gap={5} flexDir={{ base: "column", lg: "row" }}>
-            {currentResult?.slice(0, 5)?.map((result, index) => {
-              return (
-                <WrapItem key={index}>
-                  <ResultCard key={index} generatedresult={result} />
-                </WrapItem>
-              );
-            })}
-          </Wrap>
-        )}
-      </Box>
-
-      <Box
-        mt={{ base: "12" }}
-        display={currentResult?.length === 0 ? "none" : "block"}
-        overflowY={"auto"}
-        border={"1px solid #005D5D50"}
-        rounded={"lg"}
-        p={"1rem"}
-      >
-        <TableContainer>
-          <Table variant="simple" size={{ base: "sm", md: "md" }}>
-            <Thead>
-              <Tr>
-                {columnNames?.map((column, index) => {
+            {loadingGeneratedResult ? (
+              <Spinner color="green.500" />
+            ) : !loadingGeneratedResult && currentResult?.length === 0 ? (
+              <>
+                <Text fontSize={"xl"}>
+                  There are no results available for this student
+                </Text>
+              </>
+            ) : (
+              <Wrap gap={5} flexDir={{ base: "column", lg: "row" }}>
+                {currentResult?.slice(0, 5)?.map((result, index) => {
                   return (
-                    <Th key={index} color={"#000"} fontWeight={"600"}>
-                      {column}
-                    </Th>
+                    <WrapItem key={index}>
+                      <ResultCard key={index} results={result} />
+                    </WrapItem>
                   );
                 })}
-              </Tr>
-            </Thead>
-            <Tbody>
-              {resultToShow?.map((data, index) => {
-                return (
-                  <Tr
-                    key={index}
-                    onClick={() => handleTableItemClick(data)}
-                    _hover={{ backgroundColor: "#005D5D10", cursor: "pointer" }}
-                  >
-                    <Td color={"#000"}>
-                      <Flex gap={2} alignItems={"center"}>
-                        <Image
-                          boxSize={"6"}
-                          src={data?.schoolLogo}
-                          alt="logo"
-                          pointerEvents={"none"}
-                        />
-                        <Text fontSize={"sm"} fontWeight={"500"}>
-                          {data?.schoolName}
-                        </Text>
-                      </Flex>
-                    </Td>
-                    <Td color={"#000"}>
-                      {data?.isOfficial ? "Official" : "Unofficial"}
-                    </Td>
-                    <Td color={"#000"}>{data?.resultType || data?.examType}</Td>
-                    <Td>
-                      <Flex gap={2} alignItems={"center"}>
-                        <Avatar size={"xs"} src={data?.authorsProfileImgUrl} />
-                        <Text fontSize={"md"} fontWeight={"400"}>
-                          {data?.authorsFirstName} {data?.authorsMiddleName} {data?.authorsLastName}
-                        </Text>
-                      </Flex>
-                    </Td>
-                    <Td color={"#000"}>
-                      {data?.shareDate || data?.authorsCreatedAt}
-                    </Td>
-                  </Tr>
-                );
-              })}
-            </Tbody>
-          </Table>
-        </TableContainer>
-        <Flex justifyContent={"center"}>
-          <Box mt={"1rem"} display={"flex"} gap={4} alignItems={"center"}>
-            <IconButton
-              aria-label="paginate"
-              icon={<MdKeyboardArrowLeft />}
-              onClick={handlePreviousPage}
-            />
-            <Text>
-              Page {currentPage} of {totalNumberOfPages || currentPage}
-            </Text>
-            <IconButton
-              aria-label="paginate"
-              icon={<MdKeyboardArrowRight />}
-              onClick={handleNextPage}
-            />
+              </Wrap>
+            )}
           </Box>
-        </Flex>
-      </Box>
+
+          <Box
+            mt={{ base: "12" }}
+            display={currentResult?.length === 0 ? "none" : "block"}
+            overflowY={"auto"}
+            border={"1px solid #005D5D50"}
+            rounded={"lg"}
+            p={"1rem"}
+          >
+            <TableContainer>
+              <Table variant="simple" size={{ base: "sm", md: "md" }}>
+                <Thead>
+                  <Tr>
+                    {columnNames?.map((column, index) => {
+                      return (
+                        <Th key={index} color={"#000"} fontWeight={"600"}>
+                          {column}
+                        </Th>
+                      );
+                    })}
+                  </Tr>
+                </Thead>
+                <Tbody>
+                  {resultToShow?.map((data, index) => {
+                    return (
+                      <Tr
+                        key={index}
+                        onClick={() => handleTableItemClick(data)}
+                        _hover={{
+                          backgroundColor: "#005D5D10",
+                          cursor: "pointer",
+                        }}
+                      >
+                        <Td color={"#000"}>
+                          <Flex gap={2} alignItems={"center"}>
+                            <Image
+                              boxSize={"6"}
+                              src={
+                                data?.school?.logoImgUrl || `${placeholderImg}`
+                              }
+                              alt="logo"
+                              pointerEvents={"none"}
+                            />
+                            <Text fontSize={"sm"} fontWeight={"500"}>
+                              {data?.school?.schoolName}
+                            </Text>
+                          </Flex>
+                        </Td>
+                        <Td color={"#000"}>
+                          {data?.isOfficial ? "Official" : "Unofficial"}
+                        </Td>
+                        <Td color={"#000"}>{data?.resultType}</Td>
+                        <Td>
+                          <Flex gap={2} alignItems={"center"}>
+                            <Avatar size={"xs"} src={data?.creatorPicture} />
+                            <Text fontSize={"md"} fontWeight={"400"}>
+                              {data?.creatorName}
+                            </Text>
+                          </Flex>
+                        </Td>
+                        <Td color={"#000"}>{formatDate(data?.createdAt)}</Td>
+                      </Tr>
+                    );
+                  })}
+                </Tbody>
+              </Table>
+            </TableContainer>
+            <Flex justifyContent={"center"}>
+              <Box mt={"1rem"} display={"flex"} gap={4} alignItems={"center"}>
+                <IconButton
+                  aria-label="paginate"
+                  icon={<MdKeyboardArrowLeft />}
+                  onClick={handlePreviousPage}
+                />
+                <Text>
+                  Page {currentPage} of {totalNumberOfPages || currentPage}
+                </Text>
+                <IconButton
+                  aria-label="paginate"
+                  icon={<MdKeyboardArrowRight />}
+                  onClick={handleNextPage}
+                />
+              </Box>
+            </Flex>
+          </Box>
+        </Box>
+      )}
       <ImgViewer
-        path={selectedTableResult?.documentPath || ""}
+        path={selectedTableResult?.document}
         isOpen={isImageModalOpen}
         onClose={onImageModalClose}
       />
       <PDFViewer
         isOpen={isUploadedModalOpen}
         onClose={onUploadedModalClose}
-        path={selectedTableResult?.documentPath}
+        path={selectedTableResult?.document}
       />
       {selectedTableResult && (
-        <GeneratedResults
+        <ViewResultModal
           result={selectedTableResult}
           isOpen={isGeneratedModalOpen}
           onClose={onGeneratedModalClose}

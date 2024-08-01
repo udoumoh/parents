@@ -166,7 +166,7 @@ const Discover: FC<DiscoverProps> = ({}) => {
   }, [likedPosts]);
 
   return (
-    <Box h={"100vh"} w={"full"} p={"0.5rem"} overflowY={"auto"} pb={"10rem"}>
+    <Box w={"full"} p={"0.5rem"} h={'100vh'} overflowY={'auto'} pb={'8rem'}>
       <FilterModal isOpen={isOpen} onClose={onClose} />
       <Box
         backgroundImage={"/images/discoverbg.png"}
@@ -472,29 +472,27 @@ const Discover: FC<DiscoverProps> = ({}) => {
           </Box>
         </Box>
       </Box>
-      <Box mt={"1.5rem"} px={{base:"0", lg:"5rem"}}>
-          <Tabs variant={"unstyled"}>
-            <TabList>
-              <Tab fontSize={"sm"} _selected={{ color: "#007C7B" }}>
-                EXPLORE
-              </Tab>
-              <Tab fontSize={"sm"} _selected={{ color: "#007C7B" }}>
-                LIKED SCHOOLS
-              </Tab>
-            </TabList>
-            <TabIndicator
-              mt="-1.5px"
-              height="2px"
-              bg="#007C7B"
-              borderRadius="1px"
-            />
-            <TabPanels mt={'1rem'}>
-              <TabPanel px={0}>
-                {renderFilteredPosts}
-              </TabPanel>
-              <TabPanel px={0}>{renderLikedPosts}</TabPanel>
-            </TabPanels>
-          </Tabs>
+      <Box mt={"1.5rem"} px={{ base: "0", lg: "5rem" }}>
+        <Tabs variant={"unstyled"}>
+          <TabList>
+            <Tab fontSize={"sm"} _selected={{ color: "#007C7B" }}>
+              EXPLORE
+            </Tab>
+            <Tab fontSize={"sm"} _selected={{ color: "#007C7B" }}>
+              LIKED SCHOOLS
+            </Tab>
+          </TabList>
+          <TabIndicator
+            mt="-1.5px"
+            height="2px"
+            bg="#007C7B"
+            borderRadius="1px"
+          />
+          <TabPanels mt={"1rem"}>
+            <TabPanel px={0}>{renderFilteredPosts}</TabPanel>
+            <TabPanel px={0}>{renderLikedPosts}</TabPanel>
+          </TabPanels>
+        </Tabs>
       </Box>
     </Box>
   );
