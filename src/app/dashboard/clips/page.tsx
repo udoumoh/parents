@@ -49,11 +49,10 @@ const Clips: FC<ClipsProps> = () => {
 
   return (
     <Box
-      height="100vh"
+      height={{base:"90dvh", md:"100dvh"}}
       overflowY="scroll"
       css={{ scrollSnapType: "y mandatory" }}
-      py={'2rem'}
-      pb={'6rem'}
+      py={{base:0, md:'2rem'}}
     >
       {tempData.map((item, index) => (
         <ClipItem

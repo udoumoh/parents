@@ -104,7 +104,7 @@ const PostItem: FC<PostItemProps> = ({ profile, currentIndex }) => {
 
   
   return (
-    <Box _hover={{ cursor: "pointer" }}>
+    <Box _hover={{ cursor: "pointer" }} my={'1rem'}>
       <SchoolDetailsModal
         isOpen={isSchoolModalOpen}
         onClose={onClose}

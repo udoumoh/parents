@@ -6,24 +6,10 @@ import {
   Grid,
   Icon,
   Text,
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
-  MenuItemOption,
-  MenuGroup,
-  MenuOptionGroup,
-  MenuDivider,
   Popover,
   PopoverTrigger,
   PopoverContent,
-  PopoverHeader,
   PopoverBody,
-  PopoverFooter,
-  PopoverArrow,
-  PopoverCloseButton,
-  PopoverAnchor,
-  Portal,
 } from "@chakra-ui/react";
 import VideoPlayer from "./VideoPlayer";
 import {
@@ -60,7 +46,7 @@ const ClipItem = forwardRef<HTMLVideoElement, ClipItemProps>(
         justifyContent="center"
         gap={4}
         alignItems="flex-end"
-        py="0.5rem"
+        py={{base:0, md:"0.5rem"}}
         px={{base:"0rem", md:"2rem"}}
         css={{ scrollSnapAlign: "center" }}
       >
@@ -177,10 +163,11 @@ const ClipItem = forwardRef<HTMLVideoElement, ClipItemProps>(
                 </Box>
               </PopoverTrigger>
               <PopoverContent
-                rounded={"2xl"}
-                border={"0px"}
+                rounded={"xl"}
+                border={"transparent"}
                 shadow={"lg"}
                 fontWeight={"semibold"}
+                maxWidth={'250px'}
               >
                 <PopoverBody p={'0.5rem'}>
                   {ShareLinks.map((item, key) => (
@@ -202,7 +189,7 @@ const ClipItem = forwardRef<HTMLVideoElement, ClipItemProps>(
                         display={"flex"}
                         justifyContent={"center"}
                         alignItems={"center"}
-                        p={"1rem"}
+                        p={"0.8rem"}
                       >
                         <Icon as={item?.icon} boxSize={"4"} color={"#ffffff"} />
                       </Box>{" "}

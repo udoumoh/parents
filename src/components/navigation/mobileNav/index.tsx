@@ -1,8 +1,7 @@
 'use client'
 import { FC } from 'react'
-import { Box, Text, Icon, Flex, IconButton } from '@chakra-ui/react'
+import { Box, Text, Icon, Flex} from '@chakra-ui/react'
 import { IconType } from 'react-icons';
-import { MdHome } from "react-icons/md";
 import {
   IoReceiptOutline,
   IoReceipt,
@@ -34,13 +33,13 @@ interface BottomNavProps {
 
 const LinkItems: Array<LinkItemProps> = [
   {
-    name: "Overview",
+    name: "Home",
     iconLight: IoGridOutline,
     iconFill: IoGrid,
     url: "/dashboard/home/overview",
   },
   {
-    name: "Academic Results",
+    name: "Results",
     iconLight: IoFolderOutline,
     iconFill: IoFolder,
     url: "/dashboard/home/results",
@@ -63,12 +62,6 @@ const LinkItems: Array<LinkItemProps> = [
     iconFill: PiChatsTeardropFill,
     url: "/dashboard/inbox",
   },
-  {
-    name: "Settings",
-    iconLight: AiOutlineSetting,
-    iconFill: IoMdSettings,
-    url: "/dashboard/settings",
-  },
 ];
 
 const BottomNav: FC<BottomNavProps> = ({}) => {
@@ -81,30 +74,41 @@ const BottomNav: FC<BottomNavProps> = ({}) => {
       bottom="0"
       left="0"
       right="0"
-      bg="white"
+      bg={pathName.includes("clips") ? "#000" : "white"}
       boxShadow="0 -2px 5px rgba(0,0,0,0.1)"
       zIndex="1000"
+      height={"10vh"}
+      borderTopWidth={'0.5px'}
+      borderTopColor={'gray.500'}
     >
-      <Flex justify={"space-around"} align={"center"} py={"0.8rem"}>
+      <Flex justify={"space-around"} alignItems={"center"} h={"full"}>
         {LinkItems.map((item, index) => (
-          <Box
-            as="a"
+          <Flex
             key={index}
             _hover={{
               cursor: "pointer",
             }}
             onClick={() => router.push(item?.url)}
+            alignItems={"center"}
+            flexDir={"column"}
           >
             <Icon
               as={pathName.includes(item.url) ? item.iconFill : item.iconLight}
-              color={"green.900"}
+              color={pathName.includes("clips") ? "white" : "green.900"}
               boxSize={6}
               _hover={{
                 transform: "scale(1.1)",
                 transition: "0.5s",
               }}
             />
-          </Box>
+            <Text
+              color={pathName.includes("clips") ? "white" : "green.900"}
+              fontSize={"xs"}
+              fontWeight={'bold'}
+            >
+              {item?.name}
+            </Text>
+          </Flex>
         ))}
       </Flex>
     </Box>

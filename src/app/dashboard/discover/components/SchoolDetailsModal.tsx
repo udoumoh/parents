@@ -29,9 +29,7 @@ import { ComposeMessage } from "../../inbox/component/ComposeMessage";
 import { MdOutlineMailOutline } from "react-icons/md";
 import { capitalizeFirstLetterOfEachWord } from "@/helpers/capitalizeFirstLetter";
 import Slider from "react-slick";
-import dynamic from "next/dynamic";
-
-const Carousel = dynamic(() => import("./Carousel"), { ssr: false });
+import Carousel from "./Carousel";
 
 interface SchoolDetailsModalProps {
   isOpen: boolean;
@@ -131,7 +129,7 @@ const SchoolDetailsModal: FC<SchoolDetailsModalProps> = ({
                 setSlider={setSlider}
               />
 
-              <Box px={"1rem"}>
+              <Box px={{base:"0.5rem", md:"1rem"}}>
                 <Flex
                   display={{ base: "none", md: "flex" }}
                   mt={"1.5rem"}
@@ -190,13 +188,14 @@ const SchoolDetailsModal: FC<SchoolDetailsModalProps> = ({
                         src={profile?.logoImgUrl}
                         border={"1px solid #005D5D"}
                         p={"0.1rem"}
+                        size={"sm"}
                       />
-                      <Flex flexDir={"column"} justifyContent={"space-between"}>
-                        <Text fontSize={"md"} fontWeight={"bold"}>
+                      <Flex flexDir={"column"} >
+                        <Text fontSize={"sm"} fontWeight={"bold"}>
                           {capitalizeFirstLetterOfEachWord(profile?.schoolName)}
                         </Text>
                         <Flex alignItems={"center"} gap={2}>
-                          <Text fontSize={"sm"}>{profile?.state}, Nigeria</Text>
+                          <Text fontSize={"xs"}>{profile?.state}, Nigeria</Text>
                         </Flex>
                       </Flex>
                     </Flex>
@@ -209,7 +208,7 @@ const SchoolDetailsModal: FC<SchoolDetailsModalProps> = ({
                         color={
                           isPostLiked(profile?.id) ? "red.500" : "#00000070"
                         }
-                        boxSize={7}
+                        boxSize={6}
                         transition="transform 0.2s ease-in-out"
                         _hover={{
                           cursor: "pointer",
@@ -220,26 +219,27 @@ const SchoolDetailsModal: FC<SchoolDetailsModalProps> = ({
                     </Flex>
                   </Flex>
                   <Button
-                    leftIcon={<MdOutlineMailOutline size={18} />}
+                    leftIcon={<MdOutlineMailOutline size={16} />}
                     mt={"0.8rem"}
-                    size={"sm"}
+                    size={"xs"}
                     colorScheme="blue"
                     onClick={onComposeModalOpen}
+                    rounded={'sm'}
                   >
                     Send a Message
                   </Button>
                 </Box>
-                <Box mt={"2.5rem"} height={"160px"} overflowY={"auto"}>
+                <Box mt={{base:"1rem", md:"2rem"}} height={"160px"} overflowY={"auto"}>
                   <Text
                     color={"#000"}
-                    fontSize={{ base: "sm", md: "md" }}
+                    fontSize={{ base: "xs", md: "md" }}
                     fontWeight={"bold"}
                   >
                     ABOUT SCHOOL
                   </Text>
                   <Text
-                    mt={"0.8rem"}
-                    fontSize={{ base: "sm", md: "md" }}
+                    mt={"0.5rem"}
+                    fontSize={{ base: "xs", md: "md" }}
                     whiteSpace={"pre-wrap"}
                   >
                     {profile?.description}
@@ -253,6 +253,7 @@ const SchoolDetailsModal: FC<SchoolDetailsModalProps> = ({
             justifyContent={"start"}
             alignItems={"flex-start"}
             flexDir={"column"}
+            px={'0.5rem'}
           >
             <Flex gap={4}>
               <Icon
