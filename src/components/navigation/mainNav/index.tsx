@@ -2,6 +2,7 @@
 import { FC, useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { useRouter } from "next/navigation";
+import { motion } from "framer-motion";
 import {
   Box,
   Flex,
@@ -430,7 +431,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
         backgroundColor={"#D71313"}
         rounded={"md"}
         alignItems={"center"}
-        display={parentData?.isPaid ? 'none' : { base: "flex", md: "none" }}
+        display={parentData?.isPaid ? "none" : { base: "flex", md: "none" }}
       >
         <Text color="#FFFFFF" fontSize={{ base: "xs", md: "sm" }}>
           Trial Plan
@@ -441,12 +442,17 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
         <Popover>
           <PopoverTrigger>
             <IconButton
+              as={motion.button}
+              whileHover={{
+                rotateZ: [0, -60, 60, -60, 60, -60, 60, 0],
+                transition: { duration: 0.5 },
+              }}
               aria-label="notification"
               backgroundColor={"transparent"}
               icon={<VscBellDot />}
               fontSize={"18px"}
               color={"#005D5D"}
-              rounded={'full'}
+              rounded={"full"}
             />
           </PopoverTrigger>
           <PopoverContent>
@@ -476,15 +482,16 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
                   notifications.map((notification, index) => {
                     return (
                       <Box
+                        as={motion.div}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={"0.2s"}
                         key={index}
                         p={"0.4rem"}
                         _hover={{
                           backgroundColor: "#005D5D10",
                           cursor: "pointer",
                         }}
-                        // onClick={() =>
-                        //   window.location.assign("/dashboard/inbox")
-                        // }
                       >
                         <Flex justifyContent={"space-between"} mb={"0.2rem"}>
                           <Text
@@ -534,7 +541,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
           <MenuList>
             <MenuItem
               px={"1rem"}
-              onClick={() =>router.push("/dashboard/settings")}
+              onClick={() => router.push("/dashboard/settings")}
               display={"flex"}
               gap={"3"}
             >
@@ -545,7 +552,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
             </MenuItem>
             <MenuItem
               px={"1rem"}
-              onClick={() =>router.push("/dashboard/inbox")}
+              onClick={() => router.push("/dashboard/inbox")}
               display={"flex"}
               gap={"3"}
             >
@@ -555,11 +562,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
               </Text>
             </MenuItem>
             <MenuDivider />
-            <MenuItem
-              onClick={handleLogout}
-              display={"flex"}
-              gap={"3"}
-            >
+            <MenuItem onClick={handleLogout} display={"flex"} gap={"3"}>
               <Icon as={IoLogOut} boxSize={"4"} color={"red.600"} />
               <Text color={"#005D5D"} fontWeight={"600"}>
                 Logout

@@ -1,4 +1,4 @@
-import React, { forwardRef, useRef, useState, useEffect } from "react";
+import React, { forwardRef, useRef, useState, useEffect, useImperativeHandle } from "react";
 import {
   Box,
   Text,
@@ -23,9 +23,10 @@ import {
   FaShare,
   FaTelegramPlane,
   FaInstagram,
-  FaVolumeMute,
-  FaVolumeUp,
+  FaPlay,
+  FaPause,
 } from "react-icons/fa";
+
 
 interface VideoPlayerProps {
   link: string;
@@ -41,17 +42,72 @@ const ShareLinks = [
 
 const VideoPlayer = forwardRef<HTMLVideoElement, VideoPlayerProps>(
   ({ link }, ref) => {
+    
+const videoRef = useRef<HTMLVideoElement>(null);
+const [isPlaying, setIsPlaying] = useState(false);
+const [showControls, setShowControls] = useState(true);
+
+useImperativeHandle(ref, () => videoRef.current as HTMLVideoElement);
+
+useEffect(() => {
+  const video = videoRef.current;
+
+  if (video) {
+    const handlePlay = () => {
+      setIsPlaying(true);
+    };
+
+    const handlePause = () => {
+      setIsPlaying(false);
+    };
+
+    video.addEventListener("play", handlePlay);
+    video.addEventListener("pause", handlePause);
+
+    return () => {
+      video.removeEventListener("play", handlePlay);
+      video.removeEventListener("pause", handlePause);
+    };
+  }
+}, []);
+
+const handleTogglePlay = () => {
+  const video = videoRef.current;
+
+  if (video) {
+    if (video.paused) {
+      video.play();
+    } else {
+      video.pause();
+    }
+  }
+};
+
+const handleVideoClick = () => {
+  const video = videoRef.current;
+
+  if (video) {
+    if (video.paused) {
+      video.play();
+    } else {
+      video.pause();
+    }
+  }
+};
     return (
       <Box
         maxW={"600px"}
-        w={{ base: "full", md: "30vw" }}
+        w={{ base: "full", md: "60vw", xl: "30vw" }}
         height={["90dvh", "90dvh"]}
         position="relative"
         shadow={"xl"}
+        rounded={"xl"}
+        _hover={{ cursor: "pointer" }}
+        onClick={handleVideoClick}
       >
         <Box
           as="video"
-          ref={ref}
+          ref={videoRef}
           preload="auto"
           muted
           playsInline
@@ -62,6 +118,9 @@ const VideoPlayer = forwardRef<HTMLVideoElement, VideoPlayerProps>(
             height: "100%",
           }}
           rounded={{ base: "0", md: "xl" }}
+          onClick={handleVideoClick}
+          onTouchStart={() => setShowControls(true)}
+          onTouchEnd={() => setShowControls(false)}
         >
           <source src={link} type="video/mp4" />
         </Box>
@@ -278,7 +337,7 @@ const VideoPlayer = forwardRef<HTMLVideoElement, VideoPlayerProps>(
           </Flex>
 
           <Box py={"0.5rem"} display={"grid"} gap={"2"}>
-            <Flex alignItems={'flex-end'} justifyContent={'space-between'}>
+            <Flex alignItems={"flex-end"} justifyContent={"space-between"}>
               <Flex gap={2}>
                 <Avatar size={"sm"} />
                 <Flex alignItems={"center"} gap={2}>
@@ -297,170 +356,170 @@ const VideoPlayer = forwardRef<HTMLVideoElement, VideoPlayerProps>(
                 </Flex>
               </Flex>
 
-                <Grid gap={3}>
-                  <Grid alignContent="center" gap={1}>
-                    <Box
-                      display="flex"
-                      justifyContent="center"
-                      alignItems="center"
-                      rounded="full"
-                      _hover={{ cursor: "pointer" }}
-                      sx={{
-                        "&:hover > svg": {
-                          transform: "scale(1.1)",
-                          transition: "transform 0.5s",
-                        },
-                      }}
-                    >
-                      <Icon
-                        as={IoHeart}
-                        boxSize="7"
-                        color={"#fe2c55"}
-                        transition="transform 0.5s"
-                      />
-                    </Box>
-                    <Text
-                      fontWeight="bold"
-                      textAlign="center"
-                      fontSize="xs"
-                      color={"#fff"}
-                    >
-                      1.4M
-                    </Text>
-                  </Grid>
-
-                  <Grid alignContent="center" gap={1}>
-                    <Box
-                      display="flex"
-                      justifyContent="center"
-                      alignItems="center"
-                      rounded="full"
-                      height={"40px"}
-                      width={"40px"}
-                      _hover={{ cursor: "pointer" }}
-                      sx={{
-                        "&:hover > svg": {
-                          transform: "scale(1.1)",
-                          transition: "transform 0.5s",
-                        },
-                      }}
-                    >
-                      <Icon
-                        as={AiFillMessage}
-                        boxSize="7"
-                        transition="transform 0.5s"
-                        color={"#fff"}
-                      />
-                    </Box>
-                    <Text
-                      fontWeight="bold"
-                      textAlign="center"
-                      fontSize="xs"
-                      color={"#fff"}
-                    >
-                      6161
-                    </Text>
-                  </Grid>
-
-                  <Grid alignContent="center" gap={1}>
-                    <Box
-                      display="flex"
-                      justifyContent="center"
-                      alignItems="center"
-                      rounded="full"
-                      _hover={{ cursor: "pointer" }}
-                      sx={{
-                        "&:hover > svg": {
-                          transform: "scale(1.1)",
-                          transition: "transform 0.5s",
-                        },
-                      }}
-                    >
-                      <Icon
-                        as={FaBookmark}
-                        boxSize="7"
-                        transition="transform 0.5s"
-                        color="#FF8225"
-                      />
-                    </Box>
-                    <Text
-                      fontWeight="bold"
-                      textAlign="center"
-                      fontSize="xs"
-                      color={"#fff"}
-                    >
-                      88.2K
-                    </Text>
-                  </Grid>
-
-                  <Grid alignContent="center" gap={1}>
-                    <Popover isLazy matchWidth={true}>
-                      <PopoverTrigger>
-                        <Box
-                          display="flex"
-                          justifyContent="center"
-                          alignItems="center"
-                          rounded="full"
-                          _hover={{ cursor: "pointer" }}
-                        >
-                          <Icon as={FaShare} boxSize="7" color={"#fff"} />
-                        </Box>
-                      </PopoverTrigger>
-                      <PopoverContent
-                        rounded={"xl"}
-                        border={"transparent"}
-                        shadow={"lg"}
-                        fontWeight={"semibold"}
-                        maxWidth={"250px"}
-                      >
-                        <PopoverBody p={"0.5rem"}>
-                          {ShareLinks.map((item, key) => (
-                            <Flex
-                              key={key}
-                              gap={3}
-                              py={"0.6rem"}
-                              my={"0.3rem"}
-                              rounded={"lg"}
-                              alignItems={"center"}
-                              _hover={{
-                                cursor: "pointer",
-                                backgroundColor: "#00000008",
-                              }}
-                              px={"1rem"}
-                            >
-                              <Box
-                                width={"25px"}
-                                height={"25px"}
-                                rounded={"full"}
-                                backgroundColor={item.bg}
-                                display={"flex"}
-                                justifyContent={"center"}
-                                alignItems={"center"}
-                                p={"0.8rem"}
-                              >
-                                <Icon
-                                  as={item?.icon}
-                                  boxSize={"4"}
-                                  color={"#ffffff"}
-                                />
-                              </Box>{" "}
-                              {item.label}
-                            </Flex>
-                          ))}
-                        </PopoverBody>
-                      </PopoverContent>
-                    </Popover>
-
-                    <Text
-                      fontWeight="bold"
-                      textAlign="center"
-                      fontSize="xs"
-                      color={"#fff"}
-                    >
-                      12.1K
-                    </Text>
-                  </Grid>
+              <Grid gap={3}>
+                <Grid alignContent="center" gap={1}>
+                  <Box
+                    display="flex"
+                    justifyContent="center"
+                    alignItems="center"
+                    rounded="full"
+                    _hover={{ cursor: "pointer" }}
+                    sx={{
+                      "&:hover > svg": {
+                        transform: "scale(1.1)",
+                        transition: "transform 0.5s",
+                      },
+                    }}
+                  >
+                    <Icon
+                      as={IoHeart}
+                      boxSize="7"
+                      color={"#fe2c55"}
+                      transition="transform 0.5s"
+                    />
+                  </Box>
+                  <Text
+                    fontWeight="bold"
+                    textAlign="center"
+                    fontSize="xs"
+                    color={"#fff"}
+                  >
+                    1.4M
+                  </Text>
                 </Grid>
+
+                <Grid alignContent="center" gap={1}>
+                  <Box
+                    display="flex"
+                    justifyContent="center"
+                    alignItems="center"
+                    rounded="full"
+                    height={"40px"}
+                    width={"40px"}
+                    _hover={{ cursor: "pointer" }}
+                    sx={{
+                      "&:hover > svg": {
+                        transform: "scale(1.1)",
+                        transition: "transform 0.5s",
+                      },
+                    }}
+                  >
+                    <Icon
+                      as={AiFillMessage}
+                      boxSize="7"
+                      transition="transform 0.5s"
+                      color={"#fff"}
+                    />
+                  </Box>
+                  <Text
+                    fontWeight="bold"
+                    textAlign="center"
+                    fontSize="xs"
+                    color={"#fff"}
+                  >
+                    6161
+                  </Text>
+                </Grid>
+
+                <Grid alignContent="center" gap={1}>
+                  <Box
+                    display="flex"
+                    justifyContent="center"
+                    alignItems="center"
+                    rounded="full"
+                    _hover={{ cursor: "pointer" }}
+                    sx={{
+                      "&:hover > svg": {
+                        transform: "scale(1.1)",
+                        transition: "transform 0.5s",
+                      },
+                    }}
+                  >
+                    <Icon
+                      as={FaBookmark}
+                      boxSize="7"
+                      transition="transform 0.5s"
+                      color="#FF8225"
+                    />
+                  </Box>
+                  <Text
+                    fontWeight="bold"
+                    textAlign="center"
+                    fontSize="xs"
+                    color={"#fff"}
+                  >
+                    88.2K
+                  </Text>
+                </Grid>
+
+                <Grid alignContent="center" gap={1}>
+                  <Popover isLazy matchWidth={true}>
+                    <PopoverTrigger>
+                      <Box
+                        display="flex"
+                        justifyContent="center"
+                        alignItems="center"
+                        rounded="full"
+                        _hover={{ cursor: "pointer" }}
+                      >
+                        <Icon as={FaShare} boxSize="7" color={"#fff"} />
+                      </Box>
+                    </PopoverTrigger>
+                    <PopoverContent
+                      rounded={"xl"}
+                      border={"transparent"}
+                      shadow={"lg"}
+                      fontWeight={"semibold"}
+                      maxWidth={"250px"}
+                    >
+                      <PopoverBody p={"0.5rem"}>
+                        {ShareLinks.map((item, key) => (
+                          <Flex
+                            key={key}
+                            gap={3}
+                            py={"0.6rem"}
+                            my={"0.3rem"}
+                            rounded={"lg"}
+                            alignItems={"center"}
+                            _hover={{
+                              cursor: "pointer",
+                              backgroundColor: "#00000008",
+                            }}
+                            px={"1rem"}
+                          >
+                            <Box
+                              width={"25px"}
+                              height={"25px"}
+                              rounded={"full"}
+                              backgroundColor={item.bg}
+                              display={"flex"}
+                              justifyContent={"center"}
+                              alignItems={"center"}
+                              p={"0.8rem"}
+                            >
+                              <Icon
+                                as={item?.icon}
+                                boxSize={"4"}
+                                color={"#ffffff"}
+                              />
+                            </Box>{" "}
+                            {item.label}
+                          </Flex>
+                        ))}
+                      </PopoverBody>
+                    </PopoverContent>
+                  </Popover>
+
+                  <Text
+                    fontWeight="bold"
+                    textAlign="center"
+                    fontSize="xs"
+                    color={"#fff"}
+                  >
+                    12.1K
+                  </Text>
+                </Grid>
+              </Grid>
             </Flex>
 
             <Flex>
@@ -472,6 +531,106 @@ const VideoPlayer = forwardRef<HTMLVideoElement, VideoPlayerProps>(
         </Box>
 
         {/* <Text height={'full'} w={'full'} position={'absolute'} top={'50%'} left={'50%'}> hello</Text> */}
+
+        <Box
+          display={{ base: "none", md: "flex" }}
+          position={"absolute"}
+          top={"0"}
+          height={"full"}
+          w={"full"}
+          py={"0.5rem"}
+          px={"1rem"}
+          flexDir={"column"}
+          justifyContent={"space-between"}
+          backgroundColor={"#00000020"}
+          rounded={"xl"}
+        >
+          <Flex justifyContent={"center"} w={"full"}>
+            <Flex
+              gap={"2"}
+              alignItems={"center"}
+              background={"#00000070"}
+              px={"0.5rem"}
+              py={"0.3rem"}
+              rounded={"full"}
+            >
+              <Image
+                alt="logo"
+                src={"/images/greylightBordered.svg"}
+                width={"15"}
+                height={"10"}
+              />
+              <Text
+                fontSize={"xs"}
+                fontWeight={"bold"}
+                color={"#fff"}
+                bgGradient="linear(to-r, #c9ffbf, #ffafbd)"
+                bgClip="text"
+              >
+                Greynote Clips
+              </Text>
+            </Flex>
+          </Flex>
+
+          <Flex justifyContent={"space-between"}>
+            <Box></Box>
+
+            <Box></Box>
+          </Flex>
+
+          <Box py={"0.5rem"} display={"grid"} gap={"2"}>
+            <Flex alignItems={"flex-end"} justifyContent={"space-between"}>
+              <Flex gap={2}>
+                <Avatar size={"sm"} name="patrick henry" />
+                <Flex alignItems={"center"} gap={2}>
+                  <Text fontWeight={"bold"} color={"#fff"} fontSize={"sm"}>
+                    Patrick_harry
+                  </Text>
+                  <Text color={"#fff"}>•</Text>
+                  <Button
+                    size={"sm"}
+                    variant="outline"
+                    color={"#fff"}
+                    fontWeight={"bold"}
+                  >
+                    Follow
+                  </Button>
+                </Flex>
+              </Flex>
+            </Flex>
+
+            <Flex>
+              <Text color={"#fff"} fontSize={"sm"} fontWeight={"bold"}>
+                #Godnogoshameus
+              </Text>
+            </Flex>
+          </Box>
+        </Box>
+
+        {showControls && (
+          <Flex
+            position="absolute"
+            top="50%"
+            left="50%"
+            transform={`translate(-50%, -50%) scale(${isPlaying ? 0 : 1})`}
+            opacity={isPlaying ? 0 : 1}
+            alignItems="center"
+            justifyContent="center"
+            backgroundColor="#00000080"
+            borderRadius="50%"
+            w="70px"
+            h="70px"
+            _hover={{ cursor: "pointer" }}
+            transition="opacity 0.5s ease, transform 0.5s ease"
+          >
+            <Icon
+              as={FaPlay}
+              color="#fff"
+              boxSize={5}
+              _hover={{ cursor: "pointer" }}
+            />
+          </Flex>
+        )}
       </Box>
     );
   }

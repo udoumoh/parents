@@ -10,6 +10,7 @@ import {
   PopoverTrigger,
   PopoverContent,
   PopoverBody,
+  useDisclosure,
 } from "@chakra-ui/react";
 import VideoPlayer from "./VideoPlayer";
 import {
@@ -23,8 +24,6 @@ import { IoHeart } from "react-icons/io5";
 import { MdOutlineContentCopy } from "react-icons/md";
 import { TiSocialFacebook } from "react-icons/ti";
 import { FaWhatsapp } from "react-icons/fa6";
-import { IoLogoInstagram } from "react-icons/io";
-import { PiTelegramLogoLight } from "react-icons/pi";
 
 interface ClipItemProps {
   videoLink: string;
@@ -41,6 +40,7 @@ const ShareLinks = [
 const ClipItem = forwardRef<HTMLVideoElement, ClipItemProps>(
   ({ videoLink }, ref) => {
     return (
+      <>
       <Flex
         w="full"
         justifyContent="center"
@@ -206,6 +206,7 @@ const ClipItem = forwardRef<HTMLVideoElement, ClipItemProps>(
           </Grid>
         </Grid>
       </Flex>
+      </>
     );
   }
 );
