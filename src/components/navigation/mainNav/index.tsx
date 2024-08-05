@@ -387,7 +387,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
     <Flex
       ml={{ base: 0, md: 16 }}
       px={{ base: 4, md: 4 }}
-      display={{ base: "none", md: "flex" }}
+      // display={{ base: "none", md: "flex" }}
       height="12"
       alignItems="center"
       bg={"#fff"}
@@ -437,12 +437,15 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
       </Flex>
 
       <Flex
+        as={motion.button}
+        whileHover={{ scale: 1.04 }}
+        whileTap={{ scale: 0.9 }}
         px={"1rem"}
         py={"0.3rem"}
-        backgroundColor={"#D71313"}
-        rounded={"md"}
+        backgroundColor={"#C80036"}
+        rounded={"3px"}
         alignItems={"center"}
-        display={parentData?.isPaid ? "none" : { base: "flex", md: "none" }}
+        display={parentData?.isPaid ? "none" : { base: "none", md: "flex" }}
       >
         <Text color="#FFFFFF" fontSize={{ base: "xs", md: "sm" }}>
           Trial Plan

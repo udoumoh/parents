@@ -109,7 +109,6 @@ const handleVideoClick = () => {
           as="video"
           ref={videoRef}
           preload="auto"
-          muted
           playsInline
           autoPlay
           style={{
