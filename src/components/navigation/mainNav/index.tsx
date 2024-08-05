@@ -42,20 +42,16 @@ import {
   AccordionPanel,
   AccordionIcon,
   AvatarBadge,
+  useBreakpointValue,
 } from "@chakra-ui/react";
 import { FiMenu } from "react-icons/fi";
 import { IoMdSettings } from "react-icons/io";
 import { RiMailOpenFill } from "react-icons/ri";
 import { PiChatsTeardrop, PiChatsTeardropFill } from "react-icons/pi";
 import { GoHome, GoHomeFill } from "react-icons/go";
-import {
-  RiArrowRightSLine,
-} from "react-icons/ri";
-import {
-  AiOutlinePlus,
-  AiOutlineSetting,
-} from "react-icons/ai";
-import { MdArrowDropDown, } from "react-icons/md";
+import { RiArrowRightSLine } from "react-icons/ri";
+import { AiOutlinePlus, AiOutlineSetting } from "react-icons/ai";
+import { MdArrowDropDown, MdMovieFilter, MdOutlineMovieFilter } from "react-icons/md";
 import {
   IoClose,
   IoHelpCircleOutline,
@@ -76,11 +72,11 @@ import { useUserAPI } from "@/hooks/UserContext";
 import SearchStudentModal from "@/components/shared/searchStudentModal";
 import { LOGOUT_PARENTS } from "@/gql/mutations";
 import { useMutation, useQuery } from "@apollo/client";
-import Lottie from "react-lottie"
-import animationData from '../../../../public/lotties/noNotifications.json'
+import Lottie from "react-lottie";
+import animationData from "../../../../public/lotties/noNotifications.json";
 import { GET_NOTIFICATIONS } from "@/gql/queries";
 import { formatDateWithSuffix } from "@/helpers/formatDate";
-
+import { GoAlertFill } from "react-icons/go";
 
 interface MobileProps extends FlexProps {
   onOpen: () => void;
@@ -125,9 +121,15 @@ const LinkItems: Array<LinkItemProps> = [
   },
   {
     name: "Discover",
-    iconLight: IoCompassOutline ,
+    iconLight: IoCompassOutline,
     iconFill: IoCompass,
     url: "/dashboard/discover",
+  },
+  {
+    name: "Clips",
+    iconLight: MdOutlineMovieFilter,
+    iconFill: MdMovieFilter,
+    url: "/dashboard/clips",
   },
   {
     name: "Settings",
@@ -161,7 +163,7 @@ const DrawerNavLinkItems = {
   NavLinks: [
     {
       name: "Discover",
-      iconLight: IoCompassOutline ,
+      iconLight: IoCompassOutline,
       iconFill: IoCompass,
       url: "dashboard/discover",
     },
@@ -189,10 +191,9 @@ const options = {
   },
 };
 
-
 const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
   const pathName = usePathname();
-  const {parentData} = useUserAPI()
+  const { parentData } = useUserAPI();
 
   return (
     <Box
@@ -224,7 +225,7 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
         </Box>
         <Grid justifyContent={"center"} gap={4}>
           <NavItem
-            icon={pathName === "/dashboard" ? GoHomeFill : GoHome}
+            icon={pathName.includes('dashboard/home') ? GoHomeFill : GoHome}
             link={
               (parentData?.children ?? []).length > 0
                 ? "/dashboard/home/overview"
@@ -260,14 +261,14 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
 };
 
 const NavItem = ({ icon, link, name, ...rest }: NavItemProps) => {
-  const router = useRouter()
+  const router = useRouter();
   return (
     <Tooltip
       hasArrow
       bg={"#144646"}
       rounded={"md"}
       py={"0.3rem"}
-      transition={"0.5s"}
+      transition={"0.3s"}
       px={"1rem"}
       label={name}
       placement="right"
@@ -276,7 +277,9 @@ const NavItem = ({ icon, link, name, ...rest }: NavItemProps) => {
         as="a"
         w={"auto"}
         h={"auto"}
-        onClick={()=>{router.push(link)}}
+        onClick={() => {
+          router.push(link);
+        }}
         style={{ textDecoration: "none" }}
         _focus={{ boxShadow: "none" }}
         display={"flex"}
@@ -292,6 +295,7 @@ const NavItem = ({ icon, link, name, ...rest }: NavItemProps) => {
           rounded={"md"}
           role="group"
           cursor="pointer"
+          transition={"0.5s"}
           _hover={{
             bg: "#144646",
             transitionDuration: "0.5s",
@@ -302,6 +306,7 @@ const NavItem = ({ icon, link, name, ...rest }: NavItemProps) => {
             <Icon
               color={"#fff"}
               fontSize="23"
+              transition={"0.5s"}
               _groupHover={{
                 color: "#fff",
                 transform: "scale(1.1)",
@@ -317,9 +322,9 @@ const NavItem = ({ icon, link, name, ...rest }: NavItemProps) => {
 };
 
 const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
-  const toast = useToast()
-  const router = useRouter()
-  const {profileData, parentData} = useUserAPI()
+  const toast = useToast();
+  const router = useRouter();
+  const { profileData, parentData } = useUserAPI();
   const {
     isOpen: isModalOpen,
     onOpen: onModalOpen,
@@ -327,10 +332,10 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
   } = useDisclosure();
   const [logoutParent] = useMutation(LOGOUT_PARENTS);
   const { data: getnotifications, loading } = useQuery(GET_NOTIFICATIONS, {
-    variables: { ref: 'parent' },
+    variables: { ref: "parent" },
     pollInterval: 5000,
   });
-  const [notifications, setNotifications] = useState<Notifications[]>([])
+  const [notifications, setNotifications] = useState<Notifications[]>([]);
 
   const handleLogout = async () => {
     const response = await logoutParent();
@@ -382,7 +387,8 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
     <Flex
       ml={{ base: 0, md: 16 }}
       px={{ base: 4, md: 4 }}
-      height="16"
+      display={{ base: "none", md: "flex" }}
+      height="12"
       alignItems="center"
       bg={"#fff"}
       borderBottom={"1px solid #C2C2C2"}
@@ -405,22 +411,26 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
         _hover={{ backgroundColor: "#044141" }}
         display={{ base: "none", md: "flex" }}
         onClick={onModalOpen}
+        size={"sm"}
+        leftIcon={<AiOutlinePlus />}
       >
-        <AiOutlinePlus />
-        <Text fontWeight={"light"} pl="0.5rem">
-          Link your Child
-        </Text>
+        Link your Child
       </Button>
 
       <Flex
+        as={motion.button}
+        whileHover={{ scale: 1.04 }}
+        whileTap={{ scale: 0.9 }}
         px={"1rem"}
         py={"0.3rem"}
-        backgroundColor={"#D71313"}
-        rounded={"md"}
+        backgroundColor={"#C80036"}
+        rounded={"3px"}
         alignItems={"center"}
         display={parentData?.isPaid ? "none" : { base: "none", md: "flex" }}
+        gap={2}
       >
-        <Text color="#FFFFFF" fontSize={{ base: "xs", md: "sm" }}>
+        <Icon as={GoAlertFill} color={"#fff"} />
+        <Text color="#FFFFFF" fontSize={{ base: "2xs", md: "xs" }}>
           You are currently on the 14-day Trial Plan
         </Text>
       </Flex>
@@ -582,15 +592,22 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
 };
 
 const MainNav: FC<MainNav> = ({ children }) => {
-  const toast = useToast()
+  const isMobile = useBreakpointValue({ base: true, md: false });
+  const toast = useToast();
   const {
     isOpen: isModalOpen,
     onOpen: onModalOpen,
     onClose: onModalClose,
   } = useDisclosure();
-  const router = useRouter()
+  const router = useRouter();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { profileData, childData, currentId, setLocalstorageId, currentWardProfile } = useUserAPI();
+  const {
+    profileData,
+    childData,
+    currentId,
+    setLocalstorageId,
+    currentWardProfile,
+  } = useUserAPI();
   const pathName = usePathname();
   const [active, setActive] = useState("");
   const [logoutParent] = useMutation(LOGOUT_PARENTS);
@@ -628,7 +645,12 @@ const MainNav: FC<MainNav> = ({ children }) => {
   }, [pathName]);
 
   return (
-    <Box minH="100vh" bg={"#fff"} w={"full"} pos={"fixed"}>
+    <Box
+      minH={isMobile && pathName.includes("clips") ? "90vh" : "100vh"}
+      bg={"#fff"}
+      w={"full"}
+      pos={pathName.includes("clips") ? "relative" : "fixed"}
+    >
       <SidebarContent
         onClose={() => onClose}
         display={{ base: "none", md: "block" }}
@@ -681,7 +703,9 @@ const MainNav: FC<MainNav> = ({ children }) => {
                       flexDir={"column"}
                     >
                       <Text fontWeight={"semibold"} fontSize={"md"}>
-                        {`${currentWardProfile?.firstName} ${currentWardProfile?.middleName || ""} ${currentWardProfile?.lastName}`}
+                        {`${currentWardProfile?.firstName} ${
+                          currentWardProfile?.middleName || ""
+                        } ${currentWardProfile?.lastName}`}
                       </Text>
                       <Text fontSize={"sm"} color={"#B8E7E7"}>
                         {currentWardProfile?.greynoteNumber}
@@ -864,7 +888,9 @@ const MainNav: FC<MainNav> = ({ children }) => {
                           color={"gray.800"}
                           fontWeight={"semibold"}
                           fontSize={"md"}
-                        >{`${profileData.userBio.firstName} ${profileData?.userBio?.middleName || ""} ${profileData.userBio.lastName}`}</Text>
+                        >{`${profileData.userBio.firstName} ${
+                          profileData?.userBio?.middleName || ""
+                        } ${profileData.userBio.lastName}`}</Text>
                         <Text color={"#AAAAAA"} fontSize={"sm"}>
                           {profileData.userBio.email}
                         </Text>
@@ -903,7 +929,9 @@ const MainNav: FC<MainNav> = ({ children }) => {
                         textTransform={"capitalize"}
                         fontSize={{ base: "lg", lg: "2xl" }}
                         fontWeight={"bold"}
-                      >{`${profileData?.userBio?.firstName} ${profileData?.userBio?.middleName || ""} ${profileData?.userBio?.lastName}`}</Text>
+                      >{`${profileData?.userBio?.firstName} ${
+                        profileData?.userBio?.middleName || ""
+                      } ${profileData?.userBio?.lastName}`}</Text>
                       <Image
                         src="/images/verifiedtag.png"
                         alt="badge"
@@ -927,7 +955,9 @@ const MainNav: FC<MainNav> = ({ children }) => {
                     color="#747474"
                     onClick={() =>
                       (window.location.href = `mailto:admin@greynote.app?subject=Parent app (${encodeURIComponent(
-                        `${profileData?.userBio?.firstName} ${profileData?.userBio?.middleName || ""} ${profileData.userBio?.lastName}`
+                        `${profileData?.userBio?.firstName} ${
+                          profileData?.userBio?.middleName || ""
+                        } ${profileData.userBio?.lastName}`
                       )}): Support`)
                     }
                   >
@@ -953,7 +983,7 @@ const MainNav: FC<MainNav> = ({ children }) => {
       </Drawer>
       {/* mobilenav */}
       <MobileNav onOpen={onOpen} />
-      <Box ml={{ base: 0, md: "4.1rem" }} h={'100vh'} overflowY={'auto'}>
+      <Box ml={{ base: 0, md: "4.1rem" }}>
         {/* Content */}
         {children}
       </Box>
