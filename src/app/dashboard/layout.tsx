@@ -28,11 +28,6 @@ const Layout: React.FC<layoutProps> = ({ children }) => {
     <Loading />
   ) : !loading && parent?.parent?.errors !== null ? (
     <>{window.location.replace("/signin")}</>
-  ) : pathname.includes("clips") ? (
-    <Box>
-      <Box>{children}</Box>
-      <BottomNav />
-    </Box>
   ) : (
     <Box p={0}>
       <MainNav>{children}</MainNav>
