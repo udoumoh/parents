@@ -24,32 +24,20 @@ const Layout: React.FC<layoutProps> = ({ children }) => {
     }
   }, [parentData, isTrialOver]);
 
-  return (
-    <Box p={0}>
-      <MainNav>
-        {children}
-      </MainNav>
-      <BottomNav />
-    </Box>
-  ) 
-  loading ? (
+  return loading ? (
     <Loading />
   ) : !loading && parent?.parent?.errors !== null ? (
     <>{window.location.replace("/signin")}</>
-  ) : (
-    pathname.includes("clips") ? (
+  ) : pathname.includes("clips") ? (
     <Box>
-    <Box>
-      {children}
-    </Box>
+      <Box>{children}</Box>
       <BottomNav />
     </Box>
   ) : (
-    <MainNav>
+    <Box p={0}>
+      <MainNav>{children}</MainNav>
       <BottomNav />
-      {children}
-    </MainNav>
-  )
+    </Box>
   );
 };
 

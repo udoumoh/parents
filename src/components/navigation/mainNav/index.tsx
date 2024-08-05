@@ -232,7 +232,7 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
                 : "/dashboard"
             }
             backgroundColor={
-              pathName === "/dashboard" ? "#144646" : "transparent"
+              pathName.includes('/dashboard/home') ? "#144646" : "transparent"
             }
             name={"Dashboard"}
           />
@@ -391,7 +391,8 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
       height="12"
       alignItems="center"
       bg={"#fff"}
-      borderBottom={"1px solid #C2C2C2"}
+      borderBottom={"1px solid"}
+      borderBottomColor={"gray.300"}
       justifyContent={"space-between"}
       {...rest}
     >
