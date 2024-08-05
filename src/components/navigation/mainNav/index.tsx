@@ -322,6 +322,7 @@ const NavItem = ({ icon, link, name, ...rest }: NavItemProps) => {
 };
 
 const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
+  const pathName = usePathname()
   const toast = useToast();
   const router = useRouter();
   const { profileData, parentData } = useUserAPI();
@@ -387,7 +388,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
     <Flex
       ml={{ base: 0, md: 16 }}
       px={{ base: 4, md: 4 }}
-      // display={{ base: "none", md: "flex" }}
+      display={!pathName.includes('clips') ? "flex" : { base: "none", md: "flex" }}
       height="12"
       alignItems="center"
       bg={"#fff"}
@@ -445,7 +446,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
         backgroundColor={"#C80036"}
         rounded={"3px"}
         alignItems={"center"}
-        display={parentData?.isPaid ? "none" : { base: "none", md: "flex" }}
+        display={parentData?.isPaid ? "none" : { base: "flex", md: "none" }}
       >
         <Text color="#FFFFFF" fontSize={{ base: "xs", md: "sm" }}>
           Trial Plan
