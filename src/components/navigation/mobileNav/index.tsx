@@ -74,12 +74,12 @@ const BottomNav: FC<BottomNavProps> = ({}) => {
       bottom="0"
       left="0"
       right="0"
-      bg={pathName.includes("clips") ? "#000" : "white"}
+      bg={pathName.includes("clips") ? "#0C0C0C" : "white"}
       boxShadow="0 -2px 5px rgba(0,0,0,0.1)"
       zIndex="1000"
       height={"10vh"}
-      borderTopWidth={'0.5px'}
-      borderTopColor={'gray.500'}
+      borderTopWidth={pathName.includes("clips") ? "0.5px" : "0px"}
+      borderTopColor={"gray.500"}
     >
       <Flex justify={"space-around"} alignItems={"center"} h={"full"}>
         {LinkItems.map((item, index) => (
@@ -94,7 +94,13 @@ const BottomNav: FC<BottomNavProps> = ({}) => {
           >
             <Icon
               as={pathName.includes(item.url) ? item.iconFill : item.iconLight}
-              color={pathName.includes("clips") ? "white" : "green.900"}
+              color={
+                pathName.includes("clips")
+                  ? "white"
+                  : pathName.includes(item.url)
+                  ? "#000"
+                  : "gray.600"
+              }
               boxSize={6}
               _hover={{
                 transform: "scale(1.1)",
@@ -102,9 +108,14 @@ const BottomNav: FC<BottomNavProps> = ({}) => {
               }}
             />
             <Text
-              color={pathName.includes("clips") ? "white" : "green.900"}
+              color={
+                pathName.includes("clips")
+                  ? "white"
+                  : pathName.includes(item.url)
+                  ? "#000"
+                  : "gray.600"
+              }
               fontSize={"xs"}
-              fontWeight={'bold'}
             >
               {item?.name}
             </Text>

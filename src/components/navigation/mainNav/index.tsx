@@ -174,6 +174,12 @@ const DrawerNavLinkItems = {
       url: "dashboard/inbox",
     },
     {
+      name: "Clips",
+      iconLight: MdOutlineMovieFilter,
+      iconFill: MdMovieFilter,
+      url: "/dashboard/clips",
+    },
+    {
       name: "Settings",
       iconLight: AiOutlineSetting,
       iconFill: IoMdSettings,
