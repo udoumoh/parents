@@ -619,12 +619,11 @@ const handleVideoClick = () => {
             px={"0.5rem"}
             alignItems={"center"}
           >
-            <Box
-            >
+            <Box>
               <Icon
                 as={FiMenu}
                 color={"#ffffff"}
-                boxSize={"4"}
+                boxSize={"5"}
                 onClick={(e) => {
                   e.stopPropagation();
                   onOpen();
@@ -886,8 +885,8 @@ const handleVideoClick = () => {
               <Image
                 alt="logo"
                 src={"/images/greylightBordered.svg"}
-                width={"15"}
-                height={"10"}
+                width={"20px"}
+                height={"16px"}
               />
               <Text
                 fontSize={"xs"}
