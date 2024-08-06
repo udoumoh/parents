@@ -74,12 +74,12 @@ const BottomNav: FC<BottomNavProps> = ({}) => {
       bottom="0"
       left="0"
       right="0"
-      bg={pathName.includes("clips") ? "#0C0C0C" : "white"}
+      bg={pathName.includes("clips") ? "#000000" : "white"}
       boxShadow="0 -2px 5px rgba(0,0,0,0.1)"
       zIndex="1000"
-      height={"10vh"}
+      height={"8vh"}
       borderTopWidth={pathName.includes("clips") ? "0.5px" : "0px"}
-      borderTopColor={"gray.500"}
+      borderTopColor={"gray.600"}
     >
       <Flex justify={"space-around"} alignItems={"center"} h={"full"}>
         {LinkItems.map((item, index) => (
@@ -101,7 +101,7 @@ const BottomNav: FC<BottomNavProps> = ({}) => {
                   ? "#000"
                   : "gray.600"
               }
-              boxSize={6}
+              boxSize={5}
               _hover={{
                 transform: "scale(1.1)",
                 transition: "0.5s",
@@ -115,7 +115,7 @@ const BottomNav: FC<BottomNavProps> = ({}) => {
                   ? "#000"
                   : "gray.600"
               }
-              fontSize={"xs"}
+              fontSize={"2xs"}
             >
               {item?.name}
             </Text>

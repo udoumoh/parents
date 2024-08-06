@@ -1,12 +1,13 @@
 "use client";
 import React, { useEffect, useRef, FC } from "react";
-import { Box, Flex } from "@chakra-ui/react";
+import { Box, Flex, useBreakpointValue } from "@chakra-ui/react";
 import { ClipItem } from "./components/ClipItem";
 
 interface ClipsProps {}
 
 const Clips: FC<ClipsProps> = () => {
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
+  const isMobile = useBreakpointValue({ base: true, md: false });
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -47,8 +48,8 @@ const Clips: FC<ClipsProps> = () => {
 
   return (
     <Box
-      height={{base:"90dvh", md:"94dvh"}}
-      overflowY="auto"
+      height={{base:"92dvh", md:"94dvh"}}
+      overflowY={isMobile ? "hidden" : "auto"}
       css={{ scrollSnapType: "y mandatory" }}
       w={'full'}
     >

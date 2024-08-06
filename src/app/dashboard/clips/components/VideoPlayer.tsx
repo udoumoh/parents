@@ -129,7 +129,7 @@ const DrawerNavLinkItems = {
       name: "Clips",
       iconLight: MdOutlineMovieFilter,
       iconFill: MdMovieFilter,
-      url: "/dashboard/clips",
+      url: "dashboard/clips",
     },
     {
       name: "Settings",
@@ -244,12 +244,18 @@ const handleVideoClick = () => {
       <Box
         maxW={"600px"}
         w={{ base: "full", md: "60vw", xl: "30vw" }}
-        height={["90dvh", "90dvh"]}
+        height={["92dvh", "90dvh"]}
         position="relative"
         shadow={"xl"}
         rounded={"xl"}
         _hover={{ cursor: "pointer" }}
         onClick={handleVideoClick}
+        sx={{
+          "&:focus": {
+            outline: "none",
+          },
+          "-webkit-tap-highlight-color": "transparent",
+        }}
       >
         <Box
           as="video"
@@ -263,7 +269,6 @@ const handleVideoClick = () => {
             height: "100%",
           }}
           rounded={{ base: "0", md: "xl" }}
-          onClick={handleVideoClick}
           onTouchStart={() => setShowControls(true)}
           onTouchEnd={() => setShowControls(false)}
         >
@@ -277,10 +282,16 @@ const handleVideoClick = () => {
           top={"0"}
           height={"full"}
           w={"full"}
-          p={"0.5rem"}
+          py={"0.5rem"}
+          px={"0.6rem"}
           flexDir={"column"}
           justifyContent={"space-between"}
           backgroundColor={"#00000020"}
+          sx={{
+            "&:focus": {
+              outline: "none",
+            },
+          }}
         >
           {/* Drawer component */}
           <Drawer
@@ -619,7 +630,7 @@ const handleVideoClick = () => {
             px={"0.5rem"}
             alignItems={"center"}
           >
-            <Box display={'flex'} alignItems={'center'}>
+            <Box display={"flex"} alignItems={"center"}>
               <Icon
                 as={FiMenu}
                 color={"#ffffff"}
@@ -666,24 +677,32 @@ const handleVideoClick = () => {
 
           <Box py={"0.5rem"} display={"grid"} gap={"2"}>
             <Flex alignItems={"flex-end"} justifyContent={"space-between"}>
-              <Flex gap={2}>
-                <Avatar size={"sm"} />
-                <Flex alignItems={"center"} gap={2}>
-                  <Text fontWeight={"bold"} color={"#fff"} fontSize={"sm"}>
-                    Patrick_harry
-                  </Text>
-                  <Text color={"#fff"}>•</Text>
-                  <Button
-                    size={"xs"}
-                    variant="outline"
-                    color={"#fff"}
-                    fontWeight={"bold"}
-                    onClick={(e) => e.stopPropagation()}
-                  >
-                    Follow
-                  </Button>
+              <Grid gap={2}>
+                <Flex gap={2}>
+                  <Avatar size={"sm"} />
+                  <Flex alignItems={"center"} gap={2}>
+                    <Text fontWeight={"bold"} color={"#fff"} fontSize={"sm"}>
+                      Patrick_harry
+                    </Text>
+                    <Text color={"#fff"}>•</Text>
+                    <Button
+                      size={"xs"}
+                      variant="outline"
+                      color={"#fff"}
+                      fontWeight={"bold"}
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      Follow
+                    </Button>
+                  </Flex>
                 </Flex>
-              </Flex>
+
+                <Flex>
+                  <Text color={"#fff"} fontSize={"xs"} fontWeight={"semibold"}>
+                    #Godnogoshameus
+                  </Text>
+                </Flex>
+              </Grid>
 
               <Grid gap={3}>
                 <Grid alignContent="center" gap={1}>
@@ -735,7 +754,7 @@ const handleVideoClick = () => {
                   >
                     <Icon
                       as={AiFillMessage}
-                      boxSize="7"
+                      boxSize="6"
                       transition="transform 0.5s"
                       color={"#fff"}
                     />
@@ -766,7 +785,7 @@ const handleVideoClick = () => {
                   >
                     <Icon
                       as={FaBookmark}
-                      boxSize="7"
+                      boxSize="5"
                       transition="transform 0.5s"
                       color="#FF8225"
                     />
@@ -791,7 +810,7 @@ const handleVideoClick = () => {
                         rounded="full"
                         _hover={{ cursor: "pointer" }}
                       >
-                        <Icon as={FaShare} boxSize="7" color={"#fff"} />
+                        <Icon as={FaShare} boxSize="5" color={"#fff"} />
                       </Box>
                     </PopoverTrigger>
                     <PopoverContent
@@ -849,12 +868,6 @@ const handleVideoClick = () => {
                   </Text>
                 </Grid>
               </Grid>
-            </Flex>
-
-            <Flex>
-              <Text color={"#fff"} fontSize={"sm"} fontWeight={"bold"}>
-                #Godnogoshameus
-              </Text>
             </Flex>
           </Box>
         </Box>
