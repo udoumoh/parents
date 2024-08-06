@@ -619,7 +619,7 @@ const handleVideoClick = () => {
             px={"0.5rem"}
             alignItems={"center"}
           >
-            <Box>
+            <Box display={'flex'} alignItems={'center'}>
               <Icon
                 as={FiMenu}
                 color={"#ffffff"}
