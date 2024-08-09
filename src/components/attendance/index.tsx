@@ -1,4 +1,5 @@
 import { FC, useEffect, useState } from "react";
+import { motion } from "framer-motion";
 import { Box, Text, Flex, Divider, Icon, Image } from "@chakra-ui/react";
 import { BsArchive } from "react-icons/bs";
 import { PrimaryBadge } from "../shared/badge";
@@ -47,6 +48,10 @@ const Attendance: FC<AttendanceProps> = ({}) => {
 
   return (
     <Box
+      as={motion.div}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={"1s ease"}
       p={"1rem"}
       backgroundColor={"#fff"}
       rounded={"md"}
@@ -57,7 +62,7 @@ const Attendance: FC<AttendanceProps> = ({}) => {
       <Flex>
         <Box display={"flex"} alignItems={"center"} gap={3}>
           <Icon as={BsArchive} boxSize={"5"} color={"#189879"} />
-          <Text fontWeight={"bold"} fontSize={'md'}>
+          <Text fontWeight={"bold"} fontSize={"md"}>
             {"Weekly Attendance"}
           </Text>
         </Box>
@@ -123,7 +128,7 @@ const Attendance: FC<AttendanceProps> = ({}) => {
                 Present
               </Text>
 
-              {presentDays?.slice(0,8)?.map((item, index) => (
+              {presentDays?.slice(0, 8)?.map((item, index) => (
                 <Flex justifyContent={"space-between"} my={"1rem"} key={index}>
                   <Box display={"flex"} flexDir={"column"}>
                     <Text
@@ -156,10 +161,10 @@ const Attendance: FC<AttendanceProps> = ({}) => {
           <Image
             src="/images/attendanceEmptyState.svg"
             alt="No invoice card"
-            maxW={{base:"200px", md:"300px"}}
+            maxW={{ base: "200px", md: "300px" }}
             pointerEvents={"none"}
           />
-          <Text color={"#747474"} mt={"2rem"} textAlign={'center'}>
+          <Text color={"#747474"} mt={"2rem"} textAlign={"center"}>
             No attendance has been recorded for your ward
           </Text>
         </Box>

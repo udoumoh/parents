@@ -6,30 +6,33 @@ import { GET_PARENT } from "@/gql/queries";
 import Loading from "../loading";
 import { useUserAPI } from "@/hooks/UserContext";
 import BottomNav from "@/components/navigation/mobileNav";
+import { usePathname } from "next/navigation";
+import { Box } from "@chakra-ui/react";
 
 interface layoutProps {
   children: ReactNode;
 }
 
 const Layout: React.FC<layoutProps> = ({ children }) => {
+  const pathname = usePathname();
   const { data: parent, loading } = useQuery(GET_PARENT);
   const { parentData, isTrialOver } = useUserAPI();
 
   useEffect(() => {
-      if (!parentData?.isPaid && isTrialOver) {
-            window.location.replace("/subscription/choose");
-          }
+    if (!parentData?.isPaid && isTrialOver) {
+      window.location.replace("/subscription/choose");
+    }
   }, [parentData, isTrialOver]);
 
-  return  loading ? (
+  return loading ? (
     <Loading />
   ) : !loading && parent?.parent?.errors !== null ? (
     <>{window.location.replace("/signin")}</>
   ) : (
-    <MainNav>
+    <Box p={0}>
+      <MainNav>{children}</MainNav>
       <BottomNav />
-      {children}
-    </MainNav>
+    </Box>
   );
 };
 

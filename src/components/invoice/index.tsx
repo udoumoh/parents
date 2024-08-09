@@ -1,5 +1,6 @@
 "use client";
 import { FC, useState, useEffect } from "react";
+import { motion } from "framer-motion";
 import {
   Box,
   Text,
@@ -238,6 +239,10 @@ const Invoice: FC<InvoiceProps> = ({}) => {
 
   return (
     <Box
+      as={motion.div}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transitionDuration={"1s"}
       p={"1rem"}
       backgroundColor={"#fff"}
       rounded={"md"}
@@ -247,7 +252,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
       <Flex w={"full"} justifyContent={"space-between"} gap={3}>
         <Box display={"flex"} alignItems={"center"} gap={2}>
           <Icon as={IoReceiptOutline} boxSize={"5"} color={"#189879"} />
-          <Text fontWeight={"bold"} fontSize={'md'}>
+          <Text fontWeight={"bold"} fontSize={"md"}>
             {"Invoice Received"}
           </Text>
         </Box>

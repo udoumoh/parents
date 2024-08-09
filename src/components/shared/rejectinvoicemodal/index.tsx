@@ -13,9 +13,11 @@ import {
   Textarea,
   Button,
   useToast,
+  Icon,
 } from "@chakra-ui/react";
 import { useMutation } from "@apollo/client";
 import { REJECT_INVOICE } from "@/gql/queries";
+import { IoIosCloseCircle } from "react-icons/io";
 
 interface RejectInvoiceModalProps {
   isOpen: boolean;
@@ -118,29 +120,27 @@ const RejectInvoiceModal: FC<RejectInvoiceModalProps> = ({
       <ModalOverlay />
       <ModalContent rounded={"xl"}>
         <ModalHeader>
-          <Flex>
-            <Box alignItems={"center"} gap={2}>
-              <Text fontWeight={"600"} fontSize={"xl"}>
-                {"Reject Invoice"}
-              </Text>
-              <Text fontWeight={"500"} fontSize={"sm"} color={"#8F8F8F"}>
-                {"Reject this invoice"}
-              </Text>
-            </Box>
+          <Flex alignItems={"center"} gap={3}>
+            <Icon as={IoIosCloseCircle} boxSize={6} color={"#005D5D"} />
+            <Text fontSize={"md"}>Reject Invoice</Text>
           </Flex>
-
-          <Divider color={"#C2C2C2"} />
-          <ModalCloseButton />
         </ModalHeader>
-        <ModalBody pb={6} px={{base:"1rem", md:"2rem"}}>
+        <ModalCloseButton />
+        <Divider />
+        <ModalBody pb={6} px={{ base: "1rem", md: "2rem" }}>
           <Box>
-            <Text fontSize={{base:"sm", md:"lg"}} fontWeight={"400"}>
-              You have selected to reject the invoice. Can you tell the school
+            <Text fontSize={{ base: "sm", md: "md" }} fontWeight={"semibold"}>
+              You are about to reject this invoice. Can you tell the school
               admin why you rejected the invoice?
             </Text>
-            <Box mt={"2rem"}>
+            <Box mt={"1rem"}>
               <Box>
-                <Text fontSize={"lg"} mb={"0.5rem"} color={"#005D5D"}>
+                <Text
+                  fontSize={"MD"}
+                  mb={"0.5rem"}
+                  fontWeight={"bold"}
+                  color={"#005D5D"}
+                >
                   Reason
                 </Text>
                 <Textarea
@@ -153,14 +153,15 @@ const RejectInvoiceModal: FC<RejectInvoiceModalProps> = ({
               </Box>
 
               <Button
-                my={"2rem"}
+                mt={"2rem"}
                 w={"full"}
                 py={"1.5rem"}
                 backgroundColor={"#007C7B"}
                 px={"3rem"}
-                _hover={{ backgroundColor: "#099C9B" }}
+                _hover={{ backgroundColor: "#003C43" }}
                 onClick={handleSubmit}
                 isLoading={loading}
+                isDisabled={!summary ? true : false}
               >
                 <Text color={"#fff"} fontWeight={"400"} fontSize={"lg"}>
                   Reject Invoice

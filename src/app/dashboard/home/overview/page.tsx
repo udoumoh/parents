@@ -1,5 +1,6 @@
 "use client";
 import { FC, useState, useEffect } from "react";
+import { motion } from "framer-motion";
 import {
   Box,
   Flex,
@@ -59,6 +60,10 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
         columnGap={5}
       >
         <Box
+          as={motion.div}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={"1s"}
           width={"full"}
           rounded={"md"}
           border={"1px solid #449c7c"}
@@ -178,6 +183,10 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
         </Box>
 
         <Box
+          as={motion.div}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={"1s"}
           border={"1px solid #005D5D50"}
           rounded={"md"}
           pt={4}

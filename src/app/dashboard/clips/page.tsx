@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useRef, FC } from "react";
-import { Box, Flex } from "@chakra-ui/react";
+import { Box, Flex} from "@chakra-ui/react";
 import { ClipItem } from "./components/ClipItem";
 
 interface ClipsProps {}
@@ -43,17 +43,21 @@ const Clips: FC<ClipsProps> = () => {
   const tempData = [
     "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
     "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
-    "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
-    "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
   ];
 
   return (
     <Box
-      height="100vh"
-      overflowY="scroll"
+      height={{ base: "92dvh", md: "94dvh" }}
+      overflowY={"auto"}
       css={{ scrollSnapType: "y mandatory" }}
-      py={'2rem'}
-      pb={'6rem'}
+      w={"full"}
+      sx={{
+        overflow: "scroll",
+        scrollbarWidth: { base: "none", md: "auto" },
+        "&::-webkit-scrollbar": {
+          display: { base: "none", md: "block" },
+        },
+      }}
     >
       {tempData.map((item, index) => (
         <ClipItem
