@@ -1304,7 +1304,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
 
             <TabPanels>
               <TabPanel
-                border={"1px solid #005D5D50"}
+                border={"1px solid #E2E2E2"}
                 rounded={"lg"}
                 mt={"1rem"}
               >
@@ -1312,7 +1312,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
               </TabPanel>
 
               <TabPanel
-                border={"1px solid #005D5D50"}
+                border={"1px solid #E2E2E2"}
                 rounded={"lg"}
                 mt={"1rem"}
               >
@@ -1320,7 +1320,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
               </TabPanel>
 
               <TabPanel
-                border={"1px solid #005D5D50"}
+                border={"1px solid #E2E2E2"}
                 rounded={"lg"}
                 mt={"1rem"}
               >
@@ -1328,7 +1328,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
               </TabPanel>
 
               <TabPanel
-                border={"1px solid #005D5D50"}
+                border={"1px solid #E2E2E2"}
                 rounded={"lg"}
                 mt={"1rem"}
               >
@@ -1336,7 +1336,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
               </TabPanel>
 
               <TabPanel
-                border={"1px solid #005D5D50"}
+                border={"1px solid #E2E2E2"}
                 rounded={"lg"}
                 mt={"1rem"}
               >

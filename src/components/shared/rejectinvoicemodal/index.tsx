@@ -14,6 +14,10 @@ import {
   Button,
   useToast,
   Icon,
+  Alert,
+  AlertIcon,
+  AlertTitle,
+  AlertDescription,
 } from "@chakra-ui/react";
 import { useMutation } from "@apollo/client";
 import { REJECT_INVOICE } from "@/gql/queries";
@@ -116,23 +120,27 @@ const RejectInvoiceModal: FC<RejectInvoiceModalProps> = ({
       onClose={onClose}
       size={{ base: "xs", sm: "lg", md: "2xl" }}
       scrollBehavior={"inside"}
+      isCentered
     >
       <ModalOverlay />
       <ModalContent rounded={"xl"}>
         <ModalHeader>
           <Flex alignItems={"center"} gap={3}>
             <Icon as={IoIosCloseCircle} boxSize={6} color={"#005D5D"} />
-            <Text fontSize={"md"}>Reject Invoice</Text>
+            <Text fontSize={"md"} fontWeight={'semibold'}>
+              Reject Invoice
+            </Text>
           </Flex>
         </ModalHeader>
         <ModalCloseButton />
         <Divider />
-        <ModalBody pb={6} px={{ base: "1rem", md: "2rem" }}>
-          <Box>
-            <Text fontSize={{ base: "sm", md: "md" }} fontWeight={"semibold"}>
+        <ModalBody px={{ base: "1rem", md: "1.5rem" }}>
+          <Box py={"1rem"}>
+            <Alert status="error" rounded={"md"}>
+              <AlertIcon />
               You are about to reject this invoice. Can you tell the school
-              admin why you rejected the invoice?
-            </Text>
+              admin why you are rejecting the invoice?
+            </Alert>
             <Box mt={"1rem"}>
               <Box>
                 <Text

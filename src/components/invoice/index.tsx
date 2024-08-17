@@ -88,146 +88,155 @@ const InvoiceItem: FC<InvoiceItemProps> = ({
   };
 
   return (
-    <Box border={"1px solid #C2C2C2"} rounded={"xl"} p={"0.4rem"} mb={"1rem"}>
+    <Box border={"1px solid #E2E2E2"} rounded={"md"} p={"1rem"} mb={"1rem"}>
       <InvoiceDataModal
         isOpen={isInvoiceDataModalOpen}
         onClose={onInvoiceDataModalClose}
         invoice={studentInvoice}
       />
+      <AcceptInvoiceModal
+        isOpen={isAcceptModalOpen}
+        onOpen={onAcceptModalOpen}
+        onClose={onAcceptModalClose}
+        invoiceData={studentInvoice}
+      />
+      <RejectInvoiceModal
+        isOpen={isRejectModalOpen}
+        onOpen={onRejectModalOpen}
+        onClose={onRejectModalClose}
+        invoiceData={studentInvoice}
+      />
       <Box
-        backgroundColor={"#44506960"}
-        rounded={"lg"}
-        p={"0.6rem"}
-        pb={"1rem"}
-        _hover={{
-          cursor: "pointer",
-          backgroundColor: "#44506980",
-          transitionDuration: "0.5s",
-        }}
-        onClick={() =>
-          onInvoiceDataModalOpen()
-        }
-      >
-        <Box display={"flex"} gap={1} alignItems={"center"}>
-          <Text fontSize={"xs"}>{studentInvoice.term}</Text> •{" "}
-          <Text fontSize={"xs"}>{studentInvoice.year}</Text>
-        </Box>
-        <Text mt={"1.3rem"} fontSize={"xs"}>
-          {studentInvoice.category}
-        </Text>
-        <Text color={"#000"} fontSize={"2xl"} fontWeight={"600"}>
-          ₦
-          {studentInvoice?.status === "active" ||
-          studentInvoice?.status === "processing"
-            ? formatNumberWithCommas(studentInvoice?.amountPaid)
-            : formatNumberWithCommas(
-                studentInvoice?.amountPaid +
-                  getCompletedInvoiceAmount(studentInvoice)
-              )}
-        </Text>
-      </Box>
-      <Box px={"0.5rem"} w={"auto"} mb={"0.5rem"}>
-        <Text color={"#666666"} fontSize={"xs"} fontWeight={"400"} mt={"1rem"}>
-          Summary
-        </Text>
-        <Text
-          fontSize={{ base: "sm", lg: "16px" }}
-          fontWeight={"500"}
-          color={"#000000"}
-          isTruncated={true}
-          maxW={"180px"}
-        >
-          {`${studentInvoice.summary || studentInvoice.category}`}
-        </Text>
-
-        <Badge
-          variant={"solid"}
-          colorScheme={
-            studentInvoice?.status === "active"
-              ? "green"
-              : studentInvoice?.status === "rejected by parent"
-              ? "red"
-              : studentInvoice?.status === "processing"
-              ? "yellow"
-              : studentInvoice?.status === "completed"
-              ? "blue"
-              : "purple"
-          }
-          px={"1rem"}
-          py={"0.1rem"}
-          fontSize={"2xs"}
-          borderRadius={"3px"}
-          my={"0.5rem"}
-        >
-          {studentInvoice.status}
-        </Badge>
-      </Box>
-
-      <Flex
-        alignItems={"end"}
+        display={"flex"}
         justifyContent={"space-between"}
-        px={"0.5rem"}
-        mt={"0.3rem"}
-        gap={3}
+        alignItems={"initial"}
+        gap={2}
       >
-        <Text color={"#C2C2C2"} fontSize={"2xs"}>
+        <Flex gap={1}>
+          <Box backgroundColor={"#E6E6E6"} rounded={"2px"}>
+            <Text
+              color={"#747474"}
+              fontWeight={"semibold"}
+              fontSize={"2xs"}
+              px={"0.8rem"}
+              py={"0.2rem"}
+            >
+              {studentInvoice?.term}
+            </Text>
+          </Box>
+
+          <Box backgroundColor={"#E6E6E6"} rounded={"2px"}>
+            <Text
+              color={"#747474"}
+              fontWeight={"semibold"}
+              fontSize={"2xs"}
+              px={"0.8rem"}
+              py={"0.2rem"}
+            >
+              {studentInvoice?.year}
+            </Text>
+          </Box>
+
+          <Badge
+            variant={"solid"}
+            colorScheme={
+              studentInvoice?.status === "active"
+                ? "green"
+                : studentInvoice?.status === "rejected by parent"
+                ? "red"
+                : studentInvoice?.status === "processing"
+                ? "yellow"
+                : studentInvoice?.status === "completed"
+                ? "blue"
+                : "purple"
+            }
+            px={"0.8rem"}
+            py={"0.2rem"}
+            fontSize={"2xs"}
+            borderRadius={"3px"}
+          >
+            {studentInvoice.status}
+          </Badge>
+
+          <Badge
+            variant={"solid"}
+            px={"0.8rem"}
+            py={"0.2rem"}
+            fontSize={"2xs"}
+            borderRadius={"3px"}
+            backgroundColor={"#DC791E"}
+          >
+            non-refundable
+          </Badge>
+        </Flex>
+        <Text color={"#666666"} fontSize={"2xs"} fontWeight={"semibold"}>
           Generated on {studentInvoice?.createdAt}
         </Text>
-        <Flex gap={3}>
-          <Tooltip
-            hasArrow
-            label="Accept Invoice"
-            bg="green.300"
-            color="black"
-            placement="left-start"
-          >
-            <IconButton
-              colorScheme="green"
-              aria-label="Search database"
-              icon={<FaCheck />}
-              onClick={onAcceptModalOpen}
-              size={"sm"}
-              isDisabled={
-                !["active", "partial payment"].includes(studentInvoice?.status)
-                  ? true
-                  : false
-              }
-            />
-          </Tooltip>
-          <Tooltip
-            hasArrow
-            label="Reject Invoice"
-            bg="red.300"
-            color="black"
-            placement="right-start"
-          >
-            <IconButton
-              colorScheme="red"
-              aria-label="Search database"
-              icon={<IoClose size="24" />}
+      </Box>
+
+      <Box>
+        <Text
+          mt={"1.3rem"}
+          fontSize={"xs"}
+          color={"#666666"}
+          fontWeight={"semibold"}
+        >
+          {studentInvoice.category}
+        </Text>
+
+        <Box display={"flex"} justifyContent={"space-between"} gap={2}>
+          <Text color={"#000"} fontSize={"2xl"} fontWeight={"semibold"}>
+            ₦
+            {studentInvoice?.status === "active" ||
+            studentInvoice?.status === "processing"
+              ? formatNumberWithCommas(studentInvoice?.amountPaid)
+              : formatNumberWithCommas(
+                  studentInvoice?.amountPaid +
+                    getCompletedInvoiceAmount(studentInvoice)
+                )}
+          </Text>
+
+          <Flex gap={2}>
+            <Button
+              px={"1.2rem"}
+              rounded={"3px"}
+              colorScheme="gray"
+              size="sm"
+              onClick={() => onInvoiceDataModalOpen()}
+            >
+              More Details
+            </Button>
+            <Button
               onClick={onRejectModalOpen}
-              size={"sm"}
+              px={"1.2rem"}
+              rounded={"3px"}
+              colorScheme="gray"
+              size="sm"
               isDisabled={
                 !["active", "partial payment"].includes(studentInvoice?.status)
                   ? true
                   : false
               }
-            />
-          </Tooltip>
-        </Flex>
-        <AcceptInvoiceModal
-          isOpen={isAcceptModalOpen}
-          onOpen={onAcceptModalOpen}
-          onClose={onAcceptModalClose}
-          invoiceData={studentInvoice}
-        />
-        <RejectInvoiceModal
-          isOpen={isRejectModalOpen}
-          onOpen={onRejectModalOpen}
-          onClose={onRejectModalClose}
-          invoiceData={studentInvoice}
-        />
-      </Flex>
+            >
+              Reject
+            </Button>
+            <Button
+              onClick={onAcceptModalOpen}
+              px={"1.2rem"}
+              rounded={"3px"}
+              colorScheme="teal"
+              size="sm"
+              isDisabled={
+                !["active", "partial payment"].includes(studentInvoice?.status)
+                  ? true
+                  : false
+              }
+            >
+              Accept
+            </Button>
+          </Flex>
+        </Box>
+      </Box>
     </Box>
   );
 };
@@ -235,7 +244,96 @@ const InvoiceItem: FC<InvoiceItemProps> = ({
 const Invoice: FC<InvoiceProps> = ({}) => {
   const {invoiceData} = useUserAPI()
   const router = useRouter();
-  
+
+  const tempData = [
+    {
+      term: "1st Term",
+      year: "2014/2015",
+      category: "School Fees",
+      amountPaid: 250000,
+      id: 5,
+      status: "active",
+      summary: "",
+      createdAt: "21st June 2024",
+      invoiceId: "12",
+      isRefundable: true,
+      schoolname: "Alice International",
+      schoollogo: "/",
+      balance: 5000,
+      receipt: [
+        {
+          amountPaid: 10000,
+          createdAt: "",
+          creator: "",
+          fileType: "",
+          id: 3,
+          parentInvoiceId: "",
+          status: "",
+          summary: "",
+          updatedAt: "",
+          uploadedDocument: "",
+        },
+      ],
+    },
+    {
+      term: "1st Term",
+      year: "2014/2015",
+      category: "School Fees",
+      amountPaid: 250000,
+      id: 5,
+      status: "rejected by parent",
+      summary: "",
+      createdAt: "21st June 2024",
+      invoiceId: "12",
+      isRefundable: true,
+      schoolname: "Alice International",
+      schoollogo: "/",
+      balance: 5000,
+      receipt: [
+        {
+          amountPaid: 10000,
+          createdAt: "",
+          creator: "",
+          fileType: "",
+          id: 3,
+          parentInvoiceId: "",
+          status: "",
+          summary: "",
+          updatedAt: "",
+          uploadedDocument: "",
+        },
+      ],
+    },
+    {
+      term: "1st Term",
+      year: "2014/2015",
+      category: "School Fees",
+      amountPaid: 250000,
+      id: 5,
+      status: "active",
+      summary: "",
+      createdAt: "21st June 2024",
+      invoiceId: "12",
+      isRefundable: true,
+      schoolname: "Alice International",
+      schoollogo: "/",
+      balance: 5000,
+      receipt: [
+        {
+          amountPaid: 10000,
+          createdAt: "",
+          creator: "",
+          fileType: "",
+          id: 3,
+          parentInvoiceId: "",
+          status: "",
+          summary: "",
+          updatedAt: "",
+          uploadedDocument: "",
+        },
+      ],
+    },
+  ];
 
   return (
     <Box
@@ -243,11 +341,12 @@ const Invoice: FC<InvoiceProps> = ({}) => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transitionDuration={"1s"}
-      p={"1rem"}
+      pt={"1rem"}
+      px={'1rem'}
       backgroundColor={"#fff"}
       rounded={"md"}
       w={"full"}
-      border={"1px solid #005D5D50"}
+      border={"1px solid #E2E2E2"}
     >
       <Flex w={"full"} justifyContent={"space-between"} gap={3}>
         <Box display={"flex"} alignItems={"center"} gap={2}>
@@ -272,22 +371,24 @@ const Invoice: FC<InvoiceProps> = ({}) => {
       <Divider color={"#C2C2C2"} my={"0.8rem"} />
 
       {invoiceData?.length > 0 ? (
-        <Wrap spacing={"15px"}>
+        <Box
+          maxH={"500px"}
+          overflowY={"auto"}
+          sx={{
+            "::-webkit-scrollbar": { display: "none" },
+          }}
+        >
           {invoiceData?.slice(0, 3)?.map((student, index) => {
-            return (
-              <WrapItem key={index} w={"auto"}>
-                <InvoiceItem studentInvoice={student} />
-              </WrapItem>
-            );
+            return <InvoiceItem studentInvoice={student} />;
           })}
-        </Wrap>
+        </Box>
       ) : (
         <Box
           display={"flex"}
           flexDir={"column"}
           alignItems={"center"}
           justifyContent={"center"}
-          mt={"3rem"}
+          py={'1rem'}
         >
           <Image
             src="/images/emptyStateInvoice.svg"

@@ -24,6 +24,10 @@ import {
   useToast,
   FormErrorMessage,
   Badge,
+  Alert,
+  AlertIcon,
+  AlertTitle,
+  AlertDescription,
 } from "@chakra-ui/react";
 import { Formik, Form, Field } from "formik";
 import { FileUpload } from "../fileUpload";
@@ -188,7 +192,7 @@ const {
           <ModalHeader>
             <Flex>
               <Box alignItems={"center"} gap={2}>
-                <Text fontWeight={"600"} fontSize={"xl"}>
+                <Text fontSize={"lg"}>
                   {"Accept Invoice"}
                 </Text>
                 <Text fontWeight={"500"} fontSize={"sm"} color={"#8F8F8F"}>
@@ -196,14 +200,13 @@ const {
                 </Text>
               </Box>
             </Flex>
-
-            <Divider color={"#C2C2C2"} my={"0.8rem"} />
-            <ModalCloseButton />
           </ModalHeader>
+            <ModalCloseButton />
+            <Divider />
           <ModalBody pb={6} px={{ base: "1rem", md: "2rem" }}>
             <Box>
               <Flex mb={'1rem'}>
-                <Badge colorScheme={invoiceData?.isRefundable ? 'green' : !invoiceData?.isRefundable ? 'red' : 'default'}>{invoiceData?.isRefundable ? "Refundable" : "Non-Refundable"}</Badge>
+                <Badge variant={'solid'} px={'1rem'} py={'0.2rem'} colorScheme={invoiceData?.isRefundable ? 'green' : !invoiceData?.isRefundable ? 'red' : 'default'}>{invoiceData?.isRefundable ? "This invoice is Refundable" : "This invoice is Not Refundable"}</Badge>
               </Flex>
               <Formik
                 initialValues={{

@@ -31,11 +31,11 @@ interface DashboardPageProps {}
 
 const DashboardPage: FC<DashboardPageProps> = ({}) => {
   const { currentWardProfile, invoiceData } = useUserAPI();
-  const [show, setShow] = useState(false);
 
   const totalBalance = invoiceData
     ?.filter((invoice) => invoice.status === "partial payment")
     ?.reduce((acc, invoice) => acc + invoice?.balance, 0);
+
   const totalOwingAmount =
     invoiceData
       ?.filter(
@@ -43,13 +43,6 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
           invoice.status === "active" || invoice.status === "processing"
       )
       .reduce((acc, invoice) => acc + invoice?.amountPaid, 0) + totalBalance;
-
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      setShow(true);
-    }, 500);
-    return () => clearTimeout(timeout);
-  }, []);
 
   return (
     <Flex gap={5} flexDir={"column"} mb={{ base: "8rem", lg: "5rem" }}>
@@ -187,7 +180,7 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={"1s"}
-          border={"1px solid #005D5D50"}
+          border={"1px solid #E2E2E2"}
           rounded={"md"}
           pt={4}
           pb={2}
@@ -223,10 +216,6 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
               py={2}
               mb={"1rem"}
               border={"1px solid red.800"}
-              _hover={{
-                backgroundColor: "#FED3D3",
-                transitionDuration: "0.5s",
-              }}
             >
               <Text fontSize={"sm"} color={"#00000070"} fontWeight={"bold"}>
                 Owing balance
@@ -242,10 +231,6 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
               px={4}
               py={2}
               my={"0.5rem"}
-              _hover={{
-                backgroundColor: "#BAF2E5",
-                transitionDuration: "0.5s",
-              }}
             >
               <Flex justifyContent={"space-between"} alignItems={"center"}>
                 <Text fontSize={"sm"} color={"#00000070"} fontWeight={"bold"}>

@@ -190,7 +190,7 @@ const SidebarWithHeader: FC<SidebarWithHeader> = ({ children }) => {
           </Drawer>
           <Box ml={{ base: 0, md: 64 }} p="4" h={"100vh"} overflowY={'auto'} >
             {/* Content */}
-            <Box>
+            {/* <Box>
               <Breadcrumb
                 mb={"1rem"}
                 spacing="4px"
@@ -220,7 +220,7 @@ const SidebarWithHeader: FC<SidebarWithHeader> = ({ children }) => {
                   </BreadcrumbLink>
                 </BreadcrumbItem>
               </Breadcrumb>
-            </Box>
+            </Box> */}
             {children}
           </Box>
         </Box>

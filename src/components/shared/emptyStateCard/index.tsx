@@ -8,7 +8,7 @@ interface EmptyStateCardProps {
 const EmptyStateCard: FC<EmptyStateCardProps> = ({ }) => {
   return (
     <Card
-      border={"1px solid #C2C2C2"}
+      border={"1px solid #E2E2E2"}
       rounded={"xl"}
       w={"full"}
       p={10}

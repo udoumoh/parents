@@ -268,7 +268,7 @@ const Results: FC<ResultsProps> = ({}) => {
             mt={{ base: "12" }}
             display={currentResult?.length === 0 ? "none" : "block"}
             overflowY={"auto"}
-            border={"1px solid #005D5D50"}
+            border={"1px solid #E2E2E2"}
             rounded={"lg"}
             p={"1rem"}
           >

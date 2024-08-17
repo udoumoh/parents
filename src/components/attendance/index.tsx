@@ -56,7 +56,7 @@ const Attendance: FC<AttendanceProps> = ({}) => {
       backgroundColor={"#fff"}
       rounded={"md"}
       w={"full"}
-      border={"1px solid #005D5D50"}
+      border={"1px solid #E2E2E2"}
       maxW={{ base: "auto", xl: "550px" }}
     >
       <Flex>
