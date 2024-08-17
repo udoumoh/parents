@@ -88,7 +88,12 @@ const InvoiceItem: FC<InvoiceItemProps> = ({
   };
 
   return (
-    <Box border={"1px solid #E2E2E2"} rounded={"md"} p={"1rem"} mb={"1rem"}>
+    <Box
+      border={"1px solid #E2E2E2"}
+      rounded={"md"}
+      p={{ base: "0.5rem", md: "1rem" }}
+      mb={"1rem"}
+    >
       <InvoiceDataModal
         isOpen={isInvoiceDataModalOpen}
         onClose={onInvoiceDataModalClose}
@@ -107,7 +112,7 @@ const InvoiceItem: FC<InvoiceItemProps> = ({
         invoiceData={studentInvoice}
       />
       <Box
-        display={"flex"}
+        display={{ base: "grid", md: "flex" }}
         justifyContent={"space-between"}
         alignItems={"initial"}
         gap={2}
@@ -117,8 +122,8 @@ const InvoiceItem: FC<InvoiceItemProps> = ({
             <Text
               color={"#747474"}
               fontWeight={"semibold"}
-              fontSize={"2xs"}
-              px={"0.8rem"}
+              fontSize={{ base: "3xs", md: "2xs" }}
+              px={{ base: "0.4rem", md: "0.8rem" }}
               py={"0.2rem"}
             >
               {studentInvoice?.term}
@@ -129,8 +134,8 @@ const InvoiceItem: FC<InvoiceItemProps> = ({
             <Text
               color={"#747474"}
               fontWeight={"semibold"}
-              fontSize={"2xs"}
-              px={"0.8rem"}
+              fontSize={{ base: "3xs", md: "2xs" }}
+              px={{ base: "0.4rem", md: "0.8rem" }}
               py={"0.2rem"}
             >
               {studentInvoice?.year}
@@ -150,19 +155,19 @@ const InvoiceItem: FC<InvoiceItemProps> = ({
                 ? "blue"
                 : "purple"
             }
-            px={"0.8rem"}
+            px={{ base: "0.4rem", md: "0.8rem" }}
             py={"0.2rem"}
-            fontSize={"2xs"}
+            fontSize={{ base: "3xs", md: "2xs" }}
             borderRadius={"3px"}
           >
-            {studentInvoice.status}
+            {studentInvoice.status.split(" ")[0]}
           </Badge>
 
           <Badge
             variant={"solid"}
-            px={"0.8rem"}
+            px={{ base: "0.4rem", md: "0.8rem" }}
             py={"0.2rem"}
-            fontSize={"2xs"}
+            fontSize={{ base: "3xs", md: "2xs" }}
             borderRadius={"3px"}
             backgroundColor={"#DC791E"}
           >
@@ -184,7 +189,13 @@ const InvoiceItem: FC<InvoiceItemProps> = ({
           {studentInvoice.category}
         </Text>
 
-        <Box display={"flex"} justifyContent={"space-between"} gap={2}>
+        <Box
+          display={"flex"}
+          flexDir={{ base: "column", md: "row" }}
+          justifyContent={"space-between"}
+          gap={{ base: 2, md: 8, lg:64 }}
+          w={"full"}
+        >
           <Text color={"#000"} fontSize={"2xl"} fontWeight={"semibold"}>
             ₦
             {studentInvoice?.status === "active" ||
@@ -196,22 +207,26 @@ const InvoiceItem: FC<InvoiceItemProps> = ({
                 )}
           </Text>
 
-          <Flex gap={2}>
+          <Flex gap={2} w={"full"}>
             <Button
-              px={"1.2rem"}
+              px={"2rem"}
+              w={"full"}
               rounded={"3px"}
               colorScheme="gray"
-              size="sm"
+              size={'sm'}
+              fontSize={{base:'xs', md:"md"}}
               onClick={() => onInvoiceDataModalOpen()}
             >
               More Details
             </Button>
             <Button
               onClick={onRejectModalOpen}
-              px={"1.2rem"}
+              px={"0.8rem"}
+              w={"full"}
               rounded={"3px"}
               colorScheme="gray"
-              size="sm"
+              size={'sm'}
+              fontSize={{base:'xs', md:"md"}}
               isDisabled={
                 !["active", "partial payment"].includes(studentInvoice?.status)
                   ? true
@@ -222,10 +237,12 @@ const InvoiceItem: FC<InvoiceItemProps> = ({
             </Button>
             <Button
               onClick={onAcceptModalOpen}
-              px={"1.2rem"}
+              px={"0.8rem"}
+              w={"full"}
               rounded={"3px"}
               colorScheme="teal"
-              size="sm"
+              size={'sm'}
+              fontSize={{base:'xs', md:"md"}}
               isDisabled={
                 !["active", "partial payment"].includes(studentInvoice?.status)
                   ? true
@@ -245,95 +262,95 @@ const Invoice: FC<InvoiceProps> = ({}) => {
   const {invoiceData} = useUserAPI()
   const router = useRouter();
 
-  // const tempData = [
-  //   {
-  //     term: "1st Term",
-  //     year: "2014/2015",
-  //     category: "School Fees",
-  //     amountPaid: 250000,
-  //     id: 5,
-  //     status: "active",
-  //     summary: "",
-  //     createdAt: "21st June 2024",
-  //     invoiceId: "12",
-  //     isRefundable: true,
-  //     schoolname: "Alice International",
-  //     schoollogo: "/",
-  //     balance: 5000,
-  //     receipt: [
-  //       {
-  //         amountPaid: 10000,
-  //         createdAt: "",
-  //         creator: "",
-  //         fileType: "",
-  //         id: 3,
-  //         parentInvoiceId: "",
-  //         status: "",
-  //         summary: "",
-  //         updatedAt: "",
-  //         uploadedDocument: "",
-  //       },
-  //     ],
-  //   },
-  //   {
-  //     term: "1st Term",
-  //     year: "2014/2015",
-  //     category: "School Fees",
-  //     amountPaid: 250000,
-  //     id: 5,
-  //     status: "rejected by parent",
-  //     summary: "",
-  //     createdAt: "21st June 2024",
-  //     invoiceId: "12",
-  //     isRefundable: true,
-  //     schoolname: "Alice International",
-  //     schoollogo: "/",
-  //     balance: 5000,
-  //     receipt: [
-  //       {
-  //         amountPaid: 10000,
-  //         createdAt: "",
-  //         creator: "",
-  //         fileType: "",
-  //         id: 3,
-  //         parentInvoiceId: "",
-  //         status: "",
-  //         summary: "",
-  //         updatedAt: "",
-  //         uploadedDocument: "",
-  //       },
-  //     ],
-  //   },
-  //   {
-  //     term: "1st Term",
-  //     year: "2014/2015",
-  //     category: "School Fees",
-  //     amountPaid: 250000,
-  //     id: 5,
-  //     status: "active",
-  //     summary: "",
-  //     createdAt: "21st June 2024",
-  //     invoiceId: "12",
-  //     isRefundable: true,
-  //     schoolname: "Alice International",
-  //     schoollogo: "/",
-  //     balance: 5000,
-  //     receipt: [
-  //       {
-  //         amountPaid: 10000,
-  //         createdAt: "",
-  //         creator: "",
-  //         fileType: "",
-  //         id: 3,
-  //         parentInvoiceId: "",
-  //         status: "",
-  //         summary: "",
-  //         updatedAt: "",
-  //         uploadedDocument: "",
-  //       },
-  //     ],
-  //   },
-  // ];
+  const tempData = [
+    {
+      term: "1st Term",
+      year: "2014/2015",
+      category: "School Fees",
+      amountPaid: 250000,
+      id: 5,
+      status: "active",
+      summary: "",
+      createdAt: "21st June 2024",
+      invoiceId: "12",
+      isRefundable: true,
+      schoolname: "Alice International",
+      schoollogo: "/",
+      balance: 5000,
+      receipt: [
+        {
+          amountPaid: 10000,
+          createdAt: "",
+          creator: "",
+          fileType: "",
+          id: 3,
+          parentInvoiceId: "",
+          status: "",
+          summary: "",
+          updatedAt: "",
+          uploadedDocument: "",
+        },
+      ],
+    },
+    {
+      term: "1st Term",
+      year: "2014/2015",
+      category: "School Fees",
+      amountPaid: 250000,
+      id: 5,
+      status: "rejected by parent",
+      summary: "",
+      createdAt: "21st June 2024",
+      invoiceId: "12",
+      isRefundable: true,
+      schoolname: "Alice International",
+      schoollogo: "/",
+      balance: 5000,
+      receipt: [
+        {
+          amountPaid: 10000,
+          createdAt: "",
+          creator: "",
+          fileType: "",
+          id: 3,
+          parentInvoiceId: "",
+          status: "",
+          summary: "",
+          updatedAt: "",
+          uploadedDocument: "",
+        },
+      ],
+    },
+    {
+      term: "1st Term",
+      year: "2014/2015",
+      category: "School Fees",
+      amountPaid: 250000,
+      id: 5,
+      status: "active",
+      summary: "",
+      createdAt: "21st June 2024",
+      invoiceId: "12",
+      isRefundable: true,
+      schoolname: "Alice International",
+      schoollogo: "/",
+      balance: 5000,
+      receipt: [
+        {
+          amountPaid: 10000,
+          createdAt: "",
+          creator: "",
+          fileType: "",
+          id: 3,
+          parentInvoiceId: "",
+          status: "",
+          summary: "",
+          updatedAt: "",
+          uploadedDocument: "",
+        },
+      ],
+    },
+  ];
 
   return (
     <Box
@@ -342,7 +359,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
       animate={{ opacity: 1 }}
       transitionDuration={"1s"}
       pt={"1rem"}
-      px={'1rem'}
+      px={{base:"0.5rem", md:'1rem'}}
       backgroundColor={"#fff"}
       rounded={"md"}
       w={"full"}
@@ -379,7 +396,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
           }}
         >
           {invoiceData?.slice(0, 3)?.map((student, index) => {
-            return <InvoiceItem studentInvoice={student} />;
+            return <InvoiceItem studentInvoice={student} key={index}/>;
           })}
         </Box>
       ) : (
