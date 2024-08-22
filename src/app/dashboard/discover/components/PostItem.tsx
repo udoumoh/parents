@@ -1,4 +1,5 @@
 import { FC, useState, useEffect } from "react";
+import {motion} from 'framer-motion'
 import {
   Box,
   Text,
@@ -7,9 +8,8 @@ import {
   Icon,
   useDisclosure,
 } from "@chakra-ui/react";
-import { IoMdHeartEmpty, IoMdHeart } from "react-icons/io";
+import { IoHeart, IoHeartOutline } from "react-icons/io5";
 import { IoCopy } from "react-icons/io5";
-import dynamic from "next/dynamic";
 import { useUserAPI } from "@/hooks/UserContext";
 import { useUserLikesAPI } from "@/hooks/UserLikesContext";
 import { capitalizeFirstLetterOfEachWord } from "@/helpers/capitalizeFirstLetter";
@@ -101,7 +101,7 @@ const PostItem: FC<ProfileProps> = ({ profile }) => {
 
   
   return (
-    <Box _hover={{ cursor: "pointer" }} my={"1rem"}>
+    <Box _hover={{ cursor: "pointer" }} mb={"1rem"}>
       <SchoolDetailsModal
         isOpen={isSchoolModalOpen}
         onClose={onClose}
@@ -109,7 +109,7 @@ const PostItem: FC<ProfileProps> = ({ profile }) => {
       />
       <Box position={"relative"}>
         <Box
-          h={{ base: "150px", xl: "200px" }}
+          h={{ base: "150px", xl: "180px" }}
           w={"full"}
           position={"relative"}
         >
@@ -117,7 +117,7 @@ const PostItem: FC<ProfileProps> = ({ profile }) => {
             fill={true}
             alt="postItem"
             src={imageLinks[0]}
-            style={{ objectFit: "cover", borderRadius: "13px" }}
+            style={{ objectFit: "cover", borderRadius: "10px" }}
             onClick={() => {
               onOpen();
               setActiveProfileId(profile?.id);
@@ -161,21 +161,30 @@ const PostItem: FC<ProfileProps> = ({ profile }) => {
         </Flex>
 
         <Flex alignItems={"center"} flexDir={"column"}>
-          <Icon
-            as={isPostLiked(profile?.id) ? IoMdHeart : IoMdHeartEmpty}
-            onClick={handleToggleLike}
-            color={isPostLiked(profile?.id) ? "red.500" : "#00000070"}
-            boxSize={6}
-            transition="transform 0.2s ease-in-out"
-            _hover={{
-              cursor: "pointer",
-              transform: "scale(1.1)",
-              transition: "0.2s",
+          <Box
+            display={"flex"}
+            alignItems={"center"}
+            justifyContent={"center"}
+            as={motion.button}
+            whileTap={{ scale: 0.9 }}
+            sx={{
+              "&:hover > svg": {
+                transform: "scale(1.1)",
+                transition: "transform 0.5s",
+              },
             }}
-          />
+          >
+            <Icon
+              as={isPostLiked(profile?.id) ? IoHeart : IoHeartOutline}
+              onClick={handleToggleLike}
+              color={isPostLiked(profile?.id) ? "#fe2c55" : "#00000070"}
+              boxSize={6}
+              transition="transform 0.5s"
+            />
+          </Box>
 
-          <Text fontSize={"xs"} color={"#000"}>
-            {profileLikes} {profileLikes !== 1 ? "Likes" : "Like"}
+          <Text fontSize={"xs"} color={"#00000070"} fontWeight={'semibold'}>
+            {profileLikes} {profileLikes !== 1 ? "likes" : "like"}
           </Text>
         </Flex>
       </Flex>

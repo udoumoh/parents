@@ -15,7 +15,6 @@ import {
   IconButton,
   useDisclosure,
 } from "@chakra-ui/react";
-import { IoMdHeartEmpty, IoMdHeart } from "react-icons/io";
 import {
   BiLeftArrowAlt,
   BiRightArrowAlt,
@@ -30,7 +29,8 @@ import { MdOutlineMailOutline } from "react-icons/md";
 import { capitalizeFirstLetterOfEachWord } from "@/helpers/capitalizeFirstLetter";
 import Slider from "react-slick";
 import Carousel from "./Carousel";
-import { ProfileProps } from "./PostItem";
+import {motion} from 'framer-motion'
+import { IoHeart, IoHeartOutline } from "react-icons/io5";
 
 interface SchoolDetailsModalProps {
   isOpen: boolean;
@@ -61,9 +61,13 @@ const SchoolDetailsModal: FC<SchoolDetailsModalProps> = ({
     setActiveProfileId,
   } = useUserLikesAPI();
 
-  const filteredProfile = filteredPosts.filter((post) => post.id === activeProfileId);
+  const filteredPostsLength = filteredPosts.length;
 
-  const profile = filteredProfile[0]
+  const profile = filteredPosts.filter((post) => post.id === activeProfileId)[0];
+
+  const currentProfileIndex = filteredPosts?.findIndex(item => item.id === profile?.id)
+  const lastPostId = filteredPosts[filteredPostsLength - 1]?.id
+  const firstPostId = filteredPosts[0]?.id;
   
   const handleToggleLike = () => {
     if (isPostLiked(profile?.id)) {
@@ -76,12 +80,12 @@ const SchoolDetailsModal: FC<SchoolDetailsModalProps> = ({
   };
 
   const handleNextPost = () => {
-    setActiveProfileId(activeProfileId + 1);
+    setActiveProfileId(filteredPosts[currentProfileIndex + 1]?.id);
     slider?.slickGoTo(0);
   };
 
   const handlePreviousPost = () => {
-    setActiveProfileId(activeProfileId - 1);
+    setActiveProfileId(filteredPosts[currentProfileIndex - 1]?.id);
     slider?.slickGoTo(0);
   };
 
@@ -108,7 +112,7 @@ const SchoolDetailsModal: FC<SchoolDetailsModalProps> = ({
             rounded={"full"}
             transform="translateY(-50%)"
             onClick={handlePreviousPost}
-            isDisabled={activeProfileId <= 0 ? true : false}
+            isDisabled={activeProfileId === firstPostId ? true : false}
           />
           <IconButton
             display={{ base: "none", md: "flex" }}
@@ -120,9 +124,7 @@ const SchoolDetailsModal: FC<SchoolDetailsModalProps> = ({
             transform="translateY(-50%)"
             rounded={"full"}
             onClick={handleNextPost}
-            isDisabled={
-              activeProfileId >= filteredPosts?.length - 1 ? true : false
-            }
+            isDisabled={activeProfileId === lastPostId ? true : false}
           />
           <ModalBody p={0}>
             <Box p={"0"}>
@@ -132,7 +134,7 @@ const SchoolDetailsModal: FC<SchoolDetailsModalProps> = ({
                 setSlider={setSlider}
               />
 
-              <Box px={{base:"0.5rem", md:"1rem"}}>
+              <Box px={{ base: "0.5rem", md: "1rem" }}>
                 <Flex
                   display={{ base: "none", md: "flex" }}
                   mt={"1.5rem"}
@@ -156,18 +158,31 @@ const SchoolDetailsModal: FC<SchoolDetailsModalProps> = ({
                     </Flex>
                   </Flex>
                   <Flex gap={2} alignItems={"center"}>
-                    <Icon
-                      as={isPostLiked(profile?.id) ? IoMdHeart : IoMdHeartEmpty}
-                      onClick={handleToggleLike}
-                      color={isPostLiked(profile?.id) ? "red.500" : "#00000070"}
-                      boxSize={7}
-                      transition="transform 0.2s ease-in-out"
-                      _hover={{
-                        cursor: "pointer",
-                        transform: "scale(1.1)",
-                        transition: "0.2s",
+                    <Box
+                      display={"flex"}
+                      alignItems={"center"}
+                      justifyContent={"center"}
+                      as={motion.button}
+                      whileTap={{ scale: 0.9 }}
+                      sx={{
+                        "&:hover > svg": {
+                          transform: "scale(1.1)",
+                          transition: "transform 0.5s",
+                        },
                       }}
-                    />
+                    >
+                      <Icon
+                        as={
+                          isPostLiked(profile?.id) ? IoHeart : IoHeartOutline
+                        }
+                        onClick={handleToggleLike}
+                        color={
+                          isPostLiked(profile?.id) ? "#fe2c55" : "#00000070"
+                        }
+                        boxSize={7}
+                        transition="transform 0.5s"
+                      />
+                    </Box>
                     <Button
                       leftIcon={<MdOutlineMailOutline size={18} />}
                       colorScheme="blue"
@@ -193,7 +208,7 @@ const SchoolDetailsModal: FC<SchoolDetailsModalProps> = ({
                         p={"0.1rem"}
                         size={"sm"}
                       />
-                      <Flex flexDir={"column"} >
+                      <Flex flexDir={"column"}>
                         <Text fontSize={"sm"} fontWeight={"bold"}>
                           {capitalizeFirstLetterOfEachWord(profile?.schoolName)}
                         </Text>
@@ -202,22 +217,28 @@ const SchoolDetailsModal: FC<SchoolDetailsModalProps> = ({
                         </Flex>
                       </Flex>
                     </Flex>
-                    <Flex gap={2} alignItems={"center"}>
+                    <Flex
+                      gap={2}
+                      alignItems={"center"}
+                      as={motion.button}
+                      whileTap={{ scale: 0.9 }}
+                      sx={{
+                        "&:hover > svg": {
+                          transform: "scale(1.3)",
+                          transition: "transform 0.5s",
+                        },
+                      }}
+                    >
                       <Icon
                         as={
-                          isPostLiked(profile?.id) ? IoMdHeart : IoMdHeartEmpty
+                          isPostLiked(profile?.id) ? IoHeart : IoHeartOutline
                         }
                         onClick={handleToggleLike}
                         color={
-                          isPostLiked(profile?.id) ? "red.500" : "#00000070"
+                          isPostLiked(profile?.id) ? "#fe2c55" : "#00000070"
                         }
                         boxSize={6}
-                        transition="transform 0.2s ease-in-out"
-                        _hover={{
-                          cursor: "pointer",
-                          transform: "scale(1.1)",
-                          transition: "0.2s",
-                        }}
+                        transition="transform 0.5s"
                       />
                     </Flex>
                   </Flex>
@@ -227,12 +248,16 @@ const SchoolDetailsModal: FC<SchoolDetailsModalProps> = ({
                     size={"xs"}
                     colorScheme="blue"
                     onClick={onComposeModalOpen}
-                    rounded={'sm'}
+                    rounded={"sm"}
                   >
                     Send a Message
                   </Button>
                 </Box>
-                <Box mt={{base:"1rem", md:"2rem"}} height={"160px"} overflowY={"auto"}>
+                <Box
+                  mt={{ base: "1rem", md: "2rem" }}
+                  height={"160px"}
+                  overflowY={"auto"}
+                >
                   <Text
                     color={"#000"}
                     fontSize={{ base: "xs", md: "md" }}
@@ -256,7 +281,7 @@ const SchoolDetailsModal: FC<SchoolDetailsModalProps> = ({
             justifyContent={"start"}
             alignItems={"flex-start"}
             flexDir={"column"}
-            px={'0.5rem'}
+            px={"0.5rem"}
           >
             <Flex gap={4}>
               <Icon
@@ -351,7 +376,7 @@ const SchoolDetailsModal: FC<SchoolDetailsModalProps> = ({
                 <Button
                   size={"sm"}
                   onClick={handlePreviousPost}
-                  isDisabled={activeProfileId <= 0 ? true : false}
+                  isDisabled={activeProfileId === firstPostId ? true : false}
                 >
                   Prev
                 </Button>
@@ -359,9 +384,7 @@ const SchoolDetailsModal: FC<SchoolDetailsModalProps> = ({
                   size={"sm"}
                   onClick={handleNextPost}
                   isDisabled={
-                    activeProfileId >= filteredPosts?.length - 1
-                      ? true
-                      : false
+                    activeProfileId === lastPostId ? true : false
                   }
                 >
                   Next
