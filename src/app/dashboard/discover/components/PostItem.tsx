@@ -8,8 +8,7 @@ import {
   Icon,
   useDisclosure,
 } from "@chakra-ui/react";
-import { IoHeart, IoHeartOutline } from "react-icons/io5";
-import { IoCopy } from "react-icons/io5";
+import { IoCopy, IoEye, IoHeart, IoHeartOutline } from "react-icons/io5";
 import { useUserAPI } from "@/hooks/UserContext";
 import { useUserLikesAPI } from "@/hooks/UserLikesContext";
 import { capitalizeFirstLetterOfEachWord } from "@/helpers/capitalizeFirstLetter";
@@ -66,6 +65,7 @@ const PostItem: FC<ProfileProps> = ({ profile }) => {
   const { parentData } = useUserAPI();
   const [profileLikes, setProfileLikes] = useState(profile?.profileLikes);
   const imageLinks: string[] = [];
+  const [isHovered, setIsHovered] = useState(false)
 
   profile?.schoolMedia?.forEach((link) => {
     if (
@@ -98,26 +98,26 @@ const PostItem: FC<ProfileProps> = ({ profile }) => {
   }, [profile, parentData, setLikedPosts]);
 
   const { isOpen: isSchoolModalOpen, onOpen, onClose } = useDisclosure();
-
-  
   return (
-    <Box _hover={{ cursor: "pointer" }} mb={"1rem"}>
+    <Box mb={"1rem"}>
       <SchoolDetailsModal
         isOpen={isSchoolModalOpen}
         onClose={onClose}
         setProfileLikes={setProfileLikes}
       />
-      <Box position={"relative"}>
+      <Box position="relative" _hover={{ cursor: "pointer" }}>
         <Box
-          h={{ base: "150px", xl: "180px" }}
-          w={"full"}
-          position={"relative"}
+          h={{ base: "150px", xl: "250px" }}
+          w="full"
+          position="relative"
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
         >
           <Image
-            fill={true}
+            fill
             alt="postItem"
             src={imageLinks[0]}
-            style={{ objectFit: "cover", borderRadius: "10px" }}
+            style={{ objectFit: "cover", borderRadius: "8px" }}
             onClick={() => {
               onOpen();
               setActiveProfileId(profile?.id);
@@ -127,14 +127,74 @@ const PostItem: FC<ProfileProps> = ({ profile }) => {
             blurDataURL="/images/mountain.jpg"
             sizes="(max-width: 600px) 50vw, (min-width: 601px) 25vw"
           />
+
+          <Box
+            position="absolute"
+            bottom={0}
+            left={0}
+            right={0}
+            height="100%"
+            bgGradient="linear(to-t, rgba(0, 0, 0, 0.5), transparent)"
+            borderRadius="8px"
+            transition="opacity 0.5s ease"
+            opacity={isHovered ? 1 : 0}
+            pointerEvents="none"
+          />
+
+          <Box
+            display={isHovered ? "flex" : "none"}
+            position="absolute"
+            bottom="5"
+            w="full"
+            px="1rem"
+            transition="transform 0.3s ease"
+          >
+            <Flex w="full" justifyContent="space-between" alignItems="center">
+              <Text color="white"></Text>
+              <Box
+                backgroundColor={isPostLiked(profile?.id) ? "#FFF7F7" : "#fff"}
+                display="flex"
+                justifyContent="center"
+                alignItems="center"
+                rounded="full"
+                height={"40px"}
+                width={"40px"}
+                _hover={{ cursor: "pointer" }}
+                onClick={handleToggleLike}
+              >
+                <Box
+                  display={"flex"}
+                  alignItems={"center"}
+                  justifyContent={"center"}
+                  as={motion.button}
+                  whileTap={{ scale: 0.9 }}
+                  sx={{
+                    "&:hover > svg": {
+                      transform: "scale(1.1)",
+                      transition: "transform 0.5s",
+                    },
+                  }}
+                >
+                  <Icon
+                    as={isPostLiked(profile?.id) ? IoHeart : IoHeartOutline}
+                    boxSize="18px"
+                    color={isPostLiked(profile?.id) ? "#fe2c55" : "#686D76"}
+                    transition="transform 0.5s"
+                  />
+                </Box>
+              </Box>
+            </Flex>
+          </Box>
         </Box>
+
+        {/* Copy icon */}
         <Icon
           as={IoCopy}
           position="absolute"
           top="10px"
           right="10px"
           boxSize={4}
-          color={"white"}
+          color="white"
         />
       </Box>
 
@@ -146,46 +206,66 @@ const PostItem: FC<ProfileProps> = ({ profile }) => {
             name={profile?.schoolName}
             borderRadius="full"
           />
-          <Flex flexDir={"column"} justifyContent={"center"}>
-            <Text fontWeight={"bold"} fontSize={{ base: "sm", md: "md" }}>
+          <Flex
+            flexDir={"column"}
+            justifyContent={"center"}
+            pointerEvents={"none"}
+          >
+            <Text fontWeight={"bold"} fontSize={{ base: "sm", md: "sm" }}>
               {capitalizeFirstLetterOfEachWord(
                 profile?.schoolName.toLowerCase()
               )}
             </Text>
             <Flex alignItems={"center"} gap={2}>
-              <Text fontSize={{ base: "xs", md: "sm" }}>
+              <Text fontSize={{ base: "xs", md: "xs" }}>
                 {profile?.state}, Nigeria
               </Text>
             </Flex>
           </Flex>
         </Flex>
 
-        <Flex alignItems={"center"} flexDir={"column"}>
-          <Box
-            display={"flex"}
-            alignItems={"center"}
-            justifyContent={"center"}
-            as={motion.button}
-            whileTap={{ scale: 0.9 }}
-            sx={{
-              "&:hover > svg": {
-                transform: "scale(1.1)",
-                transition: "transform 0.5s",
-              },
-            }}
-          >
-            <Icon
-              as={isPostLiked(profile?.id) ? IoHeart : IoHeartOutline}
-              onClick={handleToggleLike}
-              color={isPostLiked(profile?.id) ? "#fe2c55" : "#00000070"}
-              boxSize={6}
-              transition="transform 0.5s"
-            />
-          </Box>
+        <Flex gap={2}>
+          <Flex alignItems={"center"} gap={1}>
+            <Box
+              display={"flex"}
+              alignItems={"center"}
+              justifyContent={"center"}
+              as={motion.button}
+              whileTap={{ scale: 0.9 }}
+              sx={{
+                "&:hover > svg": {
+                  transform: "scale(1.1)",
+                  transition: "transform 0.5s",
+                },
+              }}
+            >
+              <Icon
+                as={IoHeart}
+                onClick={handleToggleLike}
+                color={isPostLiked(profile?.id) ? "#fe2c55" : "#909090"}
+                boxSize={"16px"}
+                transition="transform 0.5s"
+              />
+            </Box>
 
-          <Text fontSize={"xs"} color={"#00000070"} fontWeight={'semibold'}>
-            {profileLikes} {profileLikes !== 1 ? "likes" : "like"}
-          </Text>
+            <Text fontSize={"xs"} color={"#4D4D4D"} fontWeight={"semibold"}>
+              {profileLikes}
+            </Text>
+          </Flex>
+
+          <Flex alignItems={"center"} gap={1}>
+            <Box
+              display={"flex"}
+              alignItems={"center"}
+              justifyContent={"center"}
+            >
+              <Icon as={IoEye} color={"#909090"} boxSize={"16px"} />
+            </Box>
+
+            <Text fontSize={"xs"} color={"#4D4D4D"} fontWeight={"semibold"}>
+              {profile?.profileViews}
+            </Text>
+          </Flex>
         </Flex>
       </Flex>
     </Box>
