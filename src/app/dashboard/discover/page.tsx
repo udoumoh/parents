@@ -169,7 +169,7 @@ const Discover: FC<DiscoverProps> = ({}) => {
   }, [likedPosts]);
 
   return (
-    <Box w={"full"} p={"0.5rem"} h={'96vh'} overflowY={'auto'} >
+    <Box w={"full"} p={"0.5rem"} h={'94.5vh'} overflowY={'auto'} >
       <FilterModal isOpen={isOpen} onClose={onClose} />
       <Box
         backgroundImage={"/images/discoverbg.png"}

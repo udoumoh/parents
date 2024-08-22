@@ -193,7 +193,7 @@ const InvoiceItem: FC<InvoiceItemProps> = ({
           display={"flex"}
           flexDir={{ base: "column", md: "row" }}
           justifyContent={"space-between"}
-          gap={{ base: 2, md: 8, lg:64 }}
+          gap={{ base: 2, md: 8}}
           w={"full"}
         >
           <Text color={"#000"} fontSize={"2xl"} fontWeight={"semibold"}>
@@ -207,7 +207,7 @@ const InvoiceItem: FC<InvoiceItemProps> = ({
                 )}
           </Text>
 
-          <Flex gap={2} w={"full"}>
+          <Flex gap={2} maxW={{base:"full", md:"300px"}}>
             <Button
               px={"2rem"}
               w={"full"}
@@ -387,7 +387,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
 
       <Divider color={"#C2C2C2"} my={"0.8rem"} />
 
-      {invoiceData?.length > 0 ? (
+      {tempData?.length > 0 ? (
         <Box
           maxH={"500px"}
           overflowY={"auto"}
@@ -395,7 +395,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
             "::-webkit-scrollbar": { display: "none" },
           }}
         >
-          {invoiceData?.slice(0, 3)?.map((student, index) => {
+          {tempData?.slice(0, 3)?.map((student, index) => {
             return <InvoiceItem studentInvoice={student} key={index}/>;
           })}
         </Box>

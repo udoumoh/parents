@@ -107,7 +107,7 @@ const PostItem: FC<ProfileProps> = ({ profile }) => {
       />
       <Box position="relative" _hover={{ cursor: "pointer" }}>
         <Box
-          h={{ base: "150px", xl: "250px" }}
+          h={{ base: "150px", xl: "180px" }}
           w="full"
           position="relative"
           onMouseEnter={() => setIsHovered(true)}
@@ -207,7 +207,7 @@ const PostItem: FC<ProfileProps> = ({ profile }) => {
         />
       </Box>
 
-      <Flex justifyContent={"space-between"} alignItems={"center"}>
+      <Flex justifyContent={"space-between"} alignItems={"center"} gap={2}>
         <Flex gap={2} mt={"0.8rem"} alignItems={"flex-start"}>
           <Avatar
             size={"sm"}
