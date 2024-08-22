@@ -6,10 +6,6 @@ import {
   Flex,
   Icon,
   useDisclosure,
-  ScaleFade,
-  Skeleton,
-  Badge,
-  Tooltip,
 } from "@chakra-ui/react";
 import { IoMdHeartEmpty, IoMdHeart } from "react-icons/io";
 import { IoCopy } from "react-icons/io5";

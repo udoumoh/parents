@@ -93,7 +93,6 @@ const Discover: FC<DiscoverProps> = ({}) => {
     filterLikedPosts();
   }, [filterLikedPosts]);
 
-  // Use useMemo to memoize component props and reduce unnecessary renders
   const renderFilteredPosts = useMemo(() => {
     if (filteredPosts?.length === 0) {
       return (

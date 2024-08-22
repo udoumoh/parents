@@ -180,12 +180,6 @@ export const UserLikesAPIProvider: FC<UserLikesApiProviderProps> = ({
 
   const likePost = useCallback(
     async (postId: number) => {
-      await likeMutation({
-        variables: {
-          schoolId: postId,
-        },
-      });
-
       setLikedPosts((prevState) => ({
         ...prevState,
         [postId]: true,
@@ -195,18 +189,32 @@ export const UserLikesAPIProvider: FC<UserLikesApiProviderProps> = ({
         ...prevState,
         [postId]: (prevState[postId] || 0) + 1,
       }));
+
+      try {
+        await likeMutation({
+        variables: {
+          schoolId: postId,
+        },
+      });
+      } catch (error) {
+        setLikedPosts((prevState) => ({
+          ...prevState,
+          [postId]: false,
+        }));
+
+        setNumberOfLikes((prevState) => ({
+          ...prevState,
+          [postId]: Math.max((prevState[postId] || 0) - 1, 0),
+        }));
+
+        console.error("Failed to like the post", error);
+      }
     },
     [likeMutation]
   );
 
   const unlikePost = useCallback(
     async (postId: number) => {
-      await unlikeMutation({
-        variables: {
-          schoolId: postId,
-        },
-      });
-
       setLikedPosts((prevState) => ({
         ...prevState,
         [postId]: false,
@@ -216,9 +224,29 @@ export const UserLikesAPIProvider: FC<UserLikesApiProviderProps> = ({
         ...prevState,
         [postId]: Math.max((prevState[postId] || 0) - 1, 0),
       }));
+
+      try {
+        await unlikeMutation({
+          variables: {
+            schoolId: postId,
+          },
+        });
+      } catch (error) {
+        setLikedPosts((prevState) => ({
+          ...prevState,
+          [postId]: true,
+        }));
+
+        setNumberOfLikes((prevState) => ({
+          ...prevState,
+          [postId]: (prevState[postId] || 0) + 1,
+        }));
+        console.error("Failed to unlike the post", error);
+      }
     },
     [unlikeMutation]
   );
+
 
   const isPostLiked = useCallback(
     (postId: number) => likedPosts[postId] || false,
