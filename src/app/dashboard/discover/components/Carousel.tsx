@@ -126,9 +126,8 @@ const Carousel: FC<CarouselProps> = ({ media, slider, setSlider }) => {
               <Image
                 src={url}
                 layout="fill"
-                objectFit="contain"
                 alt={`image-${index}`}
-                style={{ borderRadius: "30px" }}
+                style={{ borderRadius: "30px", objectFit:"contain" }}
               />
             </Box>
           </Box>

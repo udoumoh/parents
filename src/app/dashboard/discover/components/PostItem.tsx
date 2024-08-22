@@ -16,7 +16,7 @@ import { capitalizeFirstLetterOfEachWord } from "@/helpers/capitalizeFirstLetter
 import Image from "next/image";
 import SchoolDetailsModal from "./SchoolDetailsModal";
 
-interface PostItemProps {
+export type ProfileProps = {
   profile: {
     genderType: string;
     schoolType: string;
@@ -48,11 +48,16 @@ interface PostItemProps {
     creator: {
       admin: {
         plan: string;
-      }
-    }
+      };
+    };
   };
+};
+
+interface PostItemProps {
+  profile: ProfileProps["profile"];
   currentIndex: number;
 }
+
 
 const PostItem: FC<PostItemProps> = ({ profile, currentIndex }) => {
   const {
@@ -60,7 +65,7 @@ const PostItem: FC<PostItemProps> = ({ profile, currentIndex }) => {
     unlikePost,
     isPostLiked,
     setLikedPosts,
-    setActiveProfileIndex,
+    setActiveProfileId,
   } = useUserLikesAPI();
   const { parentData } = useUserAPI();
   const [profileLikes, setProfileLikes] = useState(profile?.profileLikes);
@@ -100,27 +105,31 @@ const PostItem: FC<PostItemProps> = ({ profile, currentIndex }) => {
 
   
   return (
-    <Box _hover={{ cursor: "pointer" }} my={'1rem'}>
+    <Box _hover={{ cursor: "pointer" }} my={"1rem"}>
       <SchoolDetailsModal
         isOpen={isSchoolModalOpen}
         onClose={onClose}
         setProfileLikes={setProfileLikes}
       />
       <Box position={"relative"}>
-        <Box h={{ base: "150px", xl: "200px" }} w={"full"}>
+        <Box
+          h={{ base: "150px", xl: "200px" }}
+          w={"full"}
+          position={"relative"}
+        >
           <Image
             fill={true}
             alt="postItem"
             src={imageLinks[0]}
-            objectFit={"cover"}
+            style={{ objectFit: "cover", borderRadius: "13px" }}
             onClick={() => {
               onOpen();
-              setActiveProfileIndex(currentIndex);
+              setActiveProfileId(profile?.id);
             }}
             loading="lazy"
-            style={{ borderRadius: "13px" }}
             placeholder="blur"
             blurDataURL="/images/mountain.jpg"
+            sizes="(max-width: 600px) 50vw, (min-width: 601px) 25vw"
           />
         </Box>
         <Icon
@@ -134,13 +143,13 @@ const PostItem: FC<PostItemProps> = ({ profile, currentIndex }) => {
       </Box>
 
       <Flex justifyContent={"space-between"} alignItems={"center"}>
-        <Flex gap={2} mt={"0.8rem"} alignItems={'flex-start'}>
-              <Avatar
-                size={'sm'}
-                src={profile?.logoImgUrl}
-                name={profile?.schoolName}
-                borderRadius="full"
-              />
+        <Flex gap={2} mt={"0.8rem"} alignItems={"flex-start"}>
+          <Avatar
+            size={"sm"}
+            src={profile?.logoImgUrl}
+            name={profile?.schoolName}
+            borderRadius="full"
+          />
           <Flex flexDir={"column"} justifyContent={"center"}>
             <Text fontWeight={"bold"} fontSize={{ base: "sm", md: "md" }}>
               {capitalizeFirstLetterOfEachWord(

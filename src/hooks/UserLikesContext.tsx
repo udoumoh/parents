@@ -53,8 +53,8 @@ interface UserLikesContextProps {
   setLikedPosts: React.Dispatch<
     React.SetStateAction<{ [postId: number]: boolean }>
   >;
-  activeProfileIndex: number;
-  setActiveProfileIndex: (id: number) => void;
+  activeProfileId: number;
+  setActiveProfileId: (id: number) => void;
   schoolProfiles: SchoolProfilesProps[];
   filteredPosts: SchoolProfilesProps[];
   setFilteredPosts: (posts: any) => void;
@@ -88,7 +88,7 @@ export const UserLikesAPIProvider: FC<UserLikesApiProviderProps> = ({
   const [schoolProfiles, setSchoolProfiles] = useState<SchoolProfilesProps[]>(
     []
   );
-  const [activeProfileIndex, setActiveProfileIndex] = useState(0);
+  const [activeProfileId, setActiveProfileId] = useState(0);
   const [likedPosts, setLikedPosts] = useState<{ [postId: number]: boolean }>(
     {}
   );
@@ -282,8 +282,8 @@ export const UserLikesAPIProvider: FC<UserLikesApiProviderProps> = ({
     isPostLiked,
     getNumberOfLikes,
     setLikedPosts,
-    activeProfileIndex,
-    setActiveProfileIndex,
+    activeProfileId,
+    setActiveProfileId,
     schoolProfiles,
     filteredPosts,
     setFilteredPosts,

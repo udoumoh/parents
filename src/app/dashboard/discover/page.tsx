@@ -69,7 +69,6 @@ interface ProfileProps {
   };
 }
 
-// Dynamic import of the FilterModal to avoid loading it initially
 const FilterModal = dynamic(() => import("./components/FilterModal"));
 
 interface DiscoverProps {}
@@ -81,7 +80,6 @@ const Discover: FC<DiscoverProps> = ({}) => {
     useUserLikesAPI();
   const [likedPosts, setLikedPosts] = useState<ProfileProps[]>([]);
 
-  // Use useCallback to memoize the function
   const filterLikedPosts = useCallback(() => {
     const likedPosts = filteredPosts?.filter((profile) =>
       profile?.whoLikedProfile?.includes(parentData?.userId || "")

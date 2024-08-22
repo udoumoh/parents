@@ -30,6 +30,7 @@ import { MdOutlineMailOutline } from "react-icons/md";
 import { capitalizeFirstLetterOfEachWord } from "@/helpers/capitalizeFirstLetter";
 import Slider from "react-slick";
 import Carousel from "./Carousel";
+import { ProfileProps } from "./PostItem";
 
 interface SchoolDetailsModalProps {
   isOpen: boolean;
@@ -56,11 +57,13 @@ const SchoolDetailsModal: FC<SchoolDetailsModalProps> = ({
     unlikePost,
     isPostLiked,
     filteredPosts,
-    activeProfileIndex,
-    setActiveProfileIndex,
+    activeProfileId,
+    setActiveProfileId,
   } = useUserLikesAPI();
 
-  const profile = filteredPosts[activeProfileIndex];
+  const filteredProfile = filteredPosts.filter((post) => post.id === activeProfileId);
+
+  const profile = filteredProfile[0]
   
   const handleToggleLike = () => {
     if (isPostLiked(profile?.id)) {
@@ -73,12 +76,12 @@ const SchoolDetailsModal: FC<SchoolDetailsModalProps> = ({
   };
 
   const handleNextPost = () => {
-    setActiveProfileIndex(activeProfileIndex + 1);
+    setActiveProfileId(activeProfileId + 1);
     slider?.slickGoTo(0);
   };
 
   const handlePreviousPost = () => {
-    setActiveProfileIndex(activeProfileIndex - 1);
+    setActiveProfileId(activeProfileId - 1);
     slider?.slickGoTo(0);
   };
 
@@ -105,7 +108,7 @@ const SchoolDetailsModal: FC<SchoolDetailsModalProps> = ({
             rounded={"full"}
             transform="translateY(-50%)"
             onClick={handlePreviousPost}
-            isDisabled={activeProfileIndex <= 0 ? true : false}
+            isDisabled={activeProfileId <= 0 ? true : false}
           />
           <IconButton
             display={{ base: "none", md: "flex" }}
@@ -118,7 +121,7 @@ const SchoolDetailsModal: FC<SchoolDetailsModalProps> = ({
             rounded={"full"}
             onClick={handleNextPost}
             isDisabled={
-              activeProfileIndex >= filteredPosts?.length - 1 ? true : false
+              activeProfileId >= filteredPosts?.length - 1 ? true : false
             }
           />
           <ModalBody p={0}>
@@ -348,7 +351,7 @@ const SchoolDetailsModal: FC<SchoolDetailsModalProps> = ({
                 <Button
                   size={"sm"}
                   onClick={handlePreviousPost}
-                  isDisabled={activeProfileIndex <= 0 ? true : false}
+                  isDisabled={activeProfileId <= 0 ? true : false}
                 >
                   Prev
                 </Button>
@@ -356,7 +359,7 @@ const SchoolDetailsModal: FC<SchoolDetailsModalProps> = ({
                   size={"sm"}
                   onClick={handleNextPost}
                   isDisabled={
-                    activeProfileIndex >= filteredPosts?.length - 1
+                    activeProfileId >= filteredPosts?.length - 1
                       ? true
                       : false
                   }
