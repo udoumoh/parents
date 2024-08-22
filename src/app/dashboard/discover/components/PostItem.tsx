@@ -52,7 +52,7 @@ export type ProfileProps = {
   };
 };
 
-
+const MotionBox = motion(Box)
 
 const PostItem: FC<ProfileProps> = ({ profile }) => {
   const {
@@ -151,23 +151,32 @@ const PostItem: FC<ProfileProps> = ({ profile }) => {
           >
             <Flex w="full" justifyContent="space-between" alignItems="center">
               <Text color="white"></Text>
-              <Box
+              <MotionBox
                 backgroundColor={isPostLiked(profile?.id) ? "#FFF7F7" : "#fff"}
                 display="flex"
                 justifyContent="center"
                 alignItems="center"
                 rounded="full"
-                height={"40px"}
-                width={"40px"}
+                height="40px"
+                width="40px"
                 _hover={{ cursor: "pointer" }}
                 onClick={handleToggleLike}
+                initial={{ scale: 1, rotate: 0 }}
+                animate={{
+                  scale: isPostLiked(profile?.id) ? [1, 1.5, 1.2] : [1.2, 1],
+                  rotate: isPostLiked(profile?.id) ? [0, 360] : [360, 0],
+                  color: isPostLiked(profile?.id) ? "#fe2c55" : "#686D76",
+                }}
+                transition={{
+                  scale: { type: "spring", stiffness: 300, damping: 15 },
+                  rotate: { duration: 0.5, ease: "easeInOut" },
+                  color: { duration: 0.3, ease: "easeInOut" },
+                }}
               >
                 <Box
-                  display={"flex"}
-                  alignItems={"center"}
-                  justifyContent={"center"}
-                  as={motion.button}
-                  whileTap={{ scale: 0.9 }}
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="center"
                   sx={{
                     "&:hover > svg": {
                       transform: "scale(1.1)",
@@ -178,11 +187,11 @@ const PostItem: FC<ProfileProps> = ({ profile }) => {
                   <Icon
                     as={isPostLiked(profile?.id) ? IoHeart : IoHeartOutline}
                     boxSize="18px"
-                    color={isPostLiked(profile?.id) ? "#fe2c55" : "#686D76"}
+                    color="inherit"
                     transition="transform 0.5s"
                   />
                 </Box>
-              </Box>
+              </MotionBox>
             </Flex>
           </Box>
         </Box>
