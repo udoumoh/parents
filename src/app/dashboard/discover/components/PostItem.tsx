@@ -53,13 +53,9 @@ export type ProfileProps = {
   };
 };
 
-interface PostItemProps {
-  profile: ProfileProps["profile"];
-  currentIndex: number;
-}
 
 
-const PostItem: FC<PostItemProps> = ({ profile, currentIndex }) => {
+const PostItem: FC<ProfileProps> = ({ profile }) => {
   const {
     likePost,
     unlikePost,

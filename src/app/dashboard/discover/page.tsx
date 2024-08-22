@@ -120,7 +120,7 @@ const Discover: FC<DiscoverProps> = ({}) => {
     return (
       <SimpleGrid columns={[1, 2, 3, 4]} spacing="20px">
         {filteredPosts?.map((item, index) => (
-          <PostItem key={index} profile={item} currentIndex={index} />
+          <PostItem key={index} profile={item} />
         ))}
       </SimpleGrid>
     );
@@ -156,7 +156,7 @@ const Discover: FC<DiscoverProps> = ({}) => {
     return (
       <SimpleGrid columns={[1, 2, 3, 4]} spacing="20px">
         {likedPosts?.map((item, index) => (
-          <PostItem key={index} profile={item} currentIndex={index} />
+          <PostItem key={index} profile={item} />
         ))}
       </SimpleGrid>
     );
