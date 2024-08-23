@@ -228,7 +228,7 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
               <Avatar src={currentWardProfile?.profileImage} size={"lg"} />
               <Text
                 fontSize={{ base: "md", md: "lg" }}
-                fontWeight={"bold"}
+                fontWeight={"semibold"}
                 mt={"0.5rem"}
               >
                 {currentWardProfile?.firstName} {currentWardProfile?.middleName}{" "}
@@ -361,7 +361,7 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
                 </Text>
               </Box>
 
-              <Icon as={MdDelete} boxSize={6} color={"#C80036"} onClick={()=>setSelectedSchool(undefined)}/>
+              <Icon as={MdDelete} boxSize={5} _hover={{cursor:"pointer"}} color={"#C80036"} onClick={()=>setSelectedSchool(undefined)}/>
             </Flex>
           </Box>
           <Box>
