@@ -24,7 +24,6 @@ interface ViewResultModalProps {
 }
 
 const ViewResultModal: FC<ViewResultModalProps> = ({isOpen, onClose, result}) => {
-  console.log(result)
   return (
     <Modal
       isOpen={isOpen}

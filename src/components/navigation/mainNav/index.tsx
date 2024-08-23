@@ -77,6 +77,7 @@ import animationData from "../../../../public/lotties/noNotifications.json";
 import { GET_NOTIFICATIONS } from "@/gql/queries";
 import { formatDateWithSuffix } from "@/helpers/formatDate";
 import { GoAlertFill } from "react-icons/go";
+import { PiHeart, PiShoppingCart, PiBell } from "react-icons/pi";
 
 interface MobileProps extends FlexProps {
   onOpen: () => void;
@@ -394,7 +395,9 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
     <Flex
       ml={{ base: 0, md: 16 }}
       px={{ base: 4, md: 4 }}
-      display={!pathName.includes('clips') ? "flex" : { base: "none", md: "flex" }}
+      display={
+        !pathName.includes("clips") ? "flex" : { base: "none", md: "flex" }
+      }
       height="12"
       alignItems="center"
       bg={"#fff"}
@@ -459,87 +462,117 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
         </Text>
       </Flex>
 
-      <Flex gap={3} alignItems={"center"}>
-        <Popover>
-          <PopoverTrigger>
-            <IconButton
-              as={motion.button}
-              whileHover={{
-                rotateZ: [0, -60, 60, -60, 60, -60, 60, 0],
-                transition: { duration: 0.5 },
-              }}
-              aria-label="notification"
-              backgroundColor={"transparent"}
-              icon={<VscBellDot />}
-              fontSize={"18px"}
-              color={"#005D5D"}
-              rounded={"full"}
-            />
-          </PopoverTrigger>
-          <PopoverContent>
-            <PopoverArrow />
-            <PopoverCloseButton />
-            <PopoverHeader>Notifications</PopoverHeader>
-            <PopoverBody p={1}>
-              <Box>
-                {notifications?.length === 0 ? (
-                  <Flex flexDir={"column"} alignItems={"center"} py={"1rem"}>
-                    <Lottie options={options} height={"auto"} width={"auto"} />
-                    <Text
-                      textAlign={"center"}
-                      color={"#00000070"}
-                      fontSize={"sm"}
-                      fontWeight={"bold"}
-                    >
-                      NO NOTIFICATIONS
-                    </Text>
-                    <Text
-                      textAlign={"center"}
-                      color={"#00000070"}
-                      fontSize={"xs"}
-                    >{`We'll notify you when there's something new`}</Text>
-                  </Flex>
-                ) : (
-                  notifications.map((notification, index) => {
-                    return (
-                      <Box
-                        as={motion.div}
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={"0.2s"}
-                        key={index}
-                        p={"0.4rem"}
-                        _hover={{
-                          backgroundColor: "#005D5D10",
-                          cursor: "pointer",
-                        }}
+      <Flex gap={4} alignItems={"center"}>
+        <Flex gap={5} alignItems={"center"}>
+          <Popover>
+            <PopoverTrigger>
+              <Flex
+                alignItems={"center"}
+                justifyContent={"center"}
+                as={motion.button}
+                whileHover={{
+                  rotateZ: [0, -30, 30, -30, 30, -30, 30, 0],
+                  transition: { duration: 0.8 },
+                }}
+              >
+                <Icon
+                  aria-label="notification"
+                  as={PiBell}
+                  boxSize={5}
+                  _hover={{ color: "#005D5D" }}
+                  rounded={"full"}
+                  transition={"0.3s"}
+                  color={"gray.600"}
+                />
+              </Flex>
+            </PopoverTrigger>
+            <PopoverContent>
+              <PopoverArrow />
+              <PopoverCloseButton />
+              <PopoverHeader>Notifications</PopoverHeader>
+              <PopoverBody p={1}>
+                <Box>
+                  {notifications?.length === 0 ? (
+                    <Flex flexDir={"column"} alignItems={"center"} py={"1rem"}>
+                      <Lottie
+                        options={options}
+                        height={"auto"}
+                        width={"auto"}
+                      />
+                      <Text
+                        textAlign={"center"}
+                        color={"#00000070"}
+                        fontSize={"sm"}
+                        fontWeight={"bold"}
                       >
-                        <Flex justifyContent={"space-between"} mb={"0.2rem"}>
-                          <Text
-                            fontSize={"xs"}
-                            color={"#005D5D"}
-                            fontWeight={"semibold"}
-                          >
-                            {notification?.action}
+                        NO NOTIFICATIONS
+                      </Text>
+                      <Text
+                        textAlign={"center"}
+                        color={"#00000070"}
+                        fontSize={"xs"}
+                      >{`We'll notify you when there's something new`}</Text>
+                    </Flex>
+                  ) : (
+                    notifications.map((notification, index) => {
+                      return (
+                        <Box
+                          as={motion.div}
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          transition={"0.2s"}
+                          key={index}
+                          p={"0.4rem"}
+                          _hover={{
+                            backgroundColor: "#005D5D10",
+                            cursor: "pointer",
+                          }}
+                        >
+                          <Flex justifyContent={"space-between"} mb={"0.2rem"}>
+                            <Text
+                              fontSize={"xs"}
+                              color={"#005D5D"}
+                              fontWeight={"semibold"}
+                            >
+                              {notification?.action}
+                            </Text>
+                            <Text
+                              fontSize={"xs"}
+                              color={"#005D5D"}
+                              fontWeight={"semibold"}
+                            >
+                              {formatDateWithSuffix(notification?.createdAt)}
+                            </Text>
+                          </Flex>
+                          <Text fontSize={"sm"}>
+                            {notification?.message} 📬{" "}
                           </Text>
-                          <Text
-                            fontSize={"xs"}
-                            color={"#005D5D"}
-                            fontWeight={"semibold"}
-                          >
-                            {formatDateWithSuffix(notification?.createdAt)}
-                          </Text>
-                        </Flex>
-                        <Text fontSize={"sm"}>{notification?.message} 📬 </Text>
-                        <Divider mt={"0.3rem"} />
-                      </Box>
-                    );
-                  })
-                )}
-              </Box>
-            </PopoverBody>
-          </PopoverContent>
-        </Popover>
+                          <Divider mt={"0.3rem"} />
+                        </Box>
+                      );
+                    })
+                  )}
+                </Box>
+              </PopoverBody>
+            </PopoverContent>
+          </Popover>
+
+          <Icon
+            as={PiHeart}
+            boxSize={5}
+            color={"gray.600"}
+            _hover={{ color: "#005D5D", cursor: "pointer" }}
+            display={pathName.includes("marketplace") ? "block" : "none"}
+          />
+
+          <Icon
+            as={PiShoppingCart}
+            boxSize={5}
+            color={"gray.600"}
+            _hover={{ color: "#005D5D", cursor: "pointer" }}
+            display={pathName.includes("marketplace") ? "block" : "none"}
+          />
+        </Flex>
         <Menu>
           <MenuButton>
             <Box display={"flex"} alignItems={"center"} gap={2}>

@@ -163,7 +163,7 @@ const PostItem: FC<ProfileProps> = ({ profile }) => {
                 onClick={handleToggleLike}
                 initial={{ scale: 1, rotate: 0 }}
                 animate={{
-                  scale: isPostLiked(profile?.id) ? [1, 1.5, 1.2] : [1.2, 1],
+                  scale: isPostLiked(profile?.id) ? [1] : [1.2, 1],
                   rotate: isPostLiked(profile?.id) ? [0, 360] : [360, 0],
                   color: isPostLiked(profile?.id) ? "#fe2c55" : "#686D76",
                 }}

@@ -387,7 +387,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
 
       <Divider color={"#C2C2C2"} my={"0.8rem"} />
 
-      {tempData?.length > 0 ? (
+      {invoiceData?.length > 0 ? (
         <Box
           maxH={"500px"}
           overflowY={"auto"}
@@ -395,7 +395,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
             "::-webkit-scrollbar": { display: "none" },
           }}
         >
-          {tempData?.slice(0, 3)?.map((student, index) => {
+          {invoiceData?.slice(0, 3)?.map((student, index) => {
             return <InvoiceItem studentInvoice={student} key={index}/>;
           })}
         </Box>
