@@ -34,6 +34,7 @@ import { GET_SCHOOLS } from "@/gql/queries";
 import { UPLOAD_RESULT } from "@/gql/queries";
 import { AiOutlineSearch } from "react-icons/ai";
 import { capitalizeFirstLetterOfEachWord } from "@/helpers/capitalizeFirstLetter";
+import { MdDelete } from "react-icons/md";
 
 interface UploadResultModalProps {
   isOpen: boolean;
@@ -209,7 +210,7 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
         </ModalHeader>
         <ModalBody
           pb={6}
-          px={{ base: "1.5rem", md: "4rem" }}
+          px={{ base: "1.5rem", md: "2rem" }}
           sx={{
             "&::-webkit-scrollbar": {
               width: "6px",
@@ -227,12 +228,17 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
               <Avatar src={currentWardProfile?.profileImage} size={"lg"} />
               <Text
                 fontSize={{ base: "md", md: "lg" }}
-                fontWeight={"500"}
+                fontWeight={"bold"}
                 mt={"0.5rem"}
               >
-                {currentWardProfile?.firstName} {currentWardProfile?.middleName} {currentWardProfile?.lastName}
+                {currentWardProfile?.firstName} {currentWardProfile?.middleName}{" "}
+                {currentWardProfile?.lastName}
               </Text>
-              <Text color={"#747474"} fontSize={{ base: "xs", md: "md" }}>
+              <Text
+                color={"#747474"}
+                fontSize={{ base: "xs", md: "sm" }}
+                fontWeight={"semibold"}
+              >
                 {currentWardProfile?.firstName} • {currentWardProfile?.class} •{" "}
                 {`${currentWardProfile?.age} Years old`}
               </Text>
@@ -325,7 +331,7 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
                       >
                         <Avatar
                           src={item.schoollogo}
-                          size={{ base: "xs", lg: "lg" }}
+                          size={{ base: "xs", lg: "sm" }}
                         />
                         <Text fontSize={{ base: "xs", lg: "md" }} py={"0.5rem"}>
                           {capitalizeFirstLetterOfEachWord(item.schoolname)}
@@ -336,23 +342,27 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
                 )}
               </Box>
             )}
-            <Box
+            <Flex
               display={selectedSchool ? "flex" : "none"}
               my={"1rem"}
               p={"0.5rem"}
               rounded={"md"}
               backgroundColor="#3F999830"
+              justifyContent={"space-between"}
               alignItems={"center"}
-              gap={3}
             >
-              <Avatar
-                src={selectedSchool?.logo}
-                size={{ base: "xs", lg: "lg" }}
-              />
-              <Text fontSize={{ base: "xs", lg: "md" }}>
-                {selectedSchool?.schoolName || ""}
-              </Text>
-            </Box>
+              <Box alignItems={"center"} gap={3} display={"flex"}>
+                <Avatar
+                  src={selectedSchool?.logo}
+                  size={{ base: "xs", lg: "sm" }}
+                />
+                <Text fontSize={{ base: "xs", lg: "md" }}>
+                  {selectedSchool?.schoolName || ""}
+                </Text>
+              </Box>
+
+              <Icon as={MdDelete} boxSize={6} color={"#C80036"} onClick={()=>setSelectedSchool(undefined)}/>
+            </Flex>
           </Box>
           <Box>
             <Formik
