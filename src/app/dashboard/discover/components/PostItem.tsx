@@ -129,35 +129,7 @@ const PostItem: FC<ProfileProps> = ({ profile }) => {
             sizes="(max-width: 600px) 50vw, (min-width: 601px) 25vw"
           />
 
-          <Box
-            position="absolute"
-            bottom={0}
-            left={0}
-            right={0}
-            height="100%"
-            bgGradient="linear(to-t, rgba(0, 0, 0, 0.5), transparent)"
-            borderRadius="8px"
-            transition="opacity 0.5s ease"
-            opacity={isHovered ? 1 : 0}
-            pointerEvents="none"
-          />
-
-          <Box
-            display={isHovered ? "flex" : "none"}
-            position="absolute"
-            bottom="5"
-            w="full"
-            px="1rem"
-            transition="transform 0.3s ease"
-          >
-            <Flex w="full" justifyContent="space-between" alignItems="center">
-              <Text color="white"></Text>
-              <LikeButton
-                isLiked={isPostLiked(profile?.id)}
-                onToggleLike={handleToggleLike}
-              />
-            </Flex>
-          </Box>
+        // duplicate like action removed. Like Button should not be on hover state 
         </Box>
 
         {/* Copy icon */}
@@ -226,19 +198,7 @@ const PostItem: FC<ProfileProps> = ({ profile }) => {
             </Text>
           </Flex>
 
-          <Flex alignItems={"center"} gap={1}>
-            <Box
-              display={"flex"}
-              alignItems={"center"}
-              justifyContent={"center"}
-            >
-              <Icon as={IoEye} color={"#909090"} boxSize={"16px"} />
-            </Box>
-
-            <Text fontSize={"xs"} color={"#4D4D4D"} fontWeight={"semibold"}>
-              {profile?.profileViews}
-            </Text>
-          </Flex>
+         // Users are not meant to see views count on school profiles
         </Flex>
       </Flex>
     </Box>
