@@ -129,7 +129,7 @@ const PostItem: FC<ProfileProps> = ({ profile }) => {
             sizes="(max-width: 600px) 50vw, (min-width: 601px) 25vw"
           />
 
-        // duplicate like action removed. Like Button should not be on hover state 
+        {/* duplicate like action removed. Like Button should not be on hover state  */}
         </Box>
 
         {/* Copy icon */}
@@ -198,7 +198,7 @@ const PostItem: FC<ProfileProps> = ({ profile }) => {
             </Text>
           </Flex>
 
-         // Users are not meant to see views count on school profiles
+         {/* Users are not meant to see views count on school profiles */}
         </Flex>
       </Flex>
     </Box>
