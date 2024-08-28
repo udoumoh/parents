@@ -16,7 +16,8 @@ interface LayoutProps {
 }
 
 const client = new ApolloClient({
-  uri: "https://api.greynote.app/graphql",
+  uri: "http://localhost:3004/graphql",
+  // uri: "https://api.greynote.app/graphql",
   credentials: "include",
   cache: new InMemoryCache(),
 });

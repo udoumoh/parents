@@ -563,7 +563,7 @@ const Page: FC<pageProps> = ({}) => {
                             w={"17rem"}
                             _hover={{ backgroundColor: "#099C9B" }}
                             isLoading={loading}
-                            isDisabled={!profileUrl}
+                            // isDisabled={!profileUrl}
                           >
                             Submit
                           </Button>

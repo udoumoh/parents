@@ -49,7 +49,7 @@ export interface UserChildren {
   wallet: number;
 }
 
-interface StudentInvoiceProps {
+export interface StudentInvoiceProps {
   term: string;
   year: string;
   category: string;

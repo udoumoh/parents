@@ -53,8 +53,6 @@ export type ProfileProps = {
   };
 };
 
-const MotionBox = motion(Box)
-
 const PostItem: FC<ProfileProps> = ({ profile }) => {
   const {
     likePost,
