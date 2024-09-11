@@ -69,17 +69,21 @@ const BottomNav: FC<BottomNavProps> = ({}) => {
     const router = useRouter()
   return (
     <Box
+      border={'1px solid #007C7B'}
       display={{ base: "block", md: "none" }}
       position={"fixed"}
-      bottom="0"
+      bottom="5"
       left="0"
       right="0"
-      bg={pathName.includes("clips") ? "#000000" : "white"}
-      boxShadow="0 -2px 5px rgba(0,0,0,0.1)"
+      bg={pathName.includes("clips") ? "#000000" : "#ffffff80"}
+      boxShadow="xl"
       zIndex="1000"
       height={"8vh"}
       borderTopWidth={pathName.includes("clips") ? "0.5px" : "0px"}
       borderTopColor={"gray.600"}
+      borderRadius={'full'}
+      mx={'0.7rem'}
+      backdropFilter={'blur(10px)'}
     >
       <Flex justify={"space-around"} alignItems={"center"} h={"full"}>
         {LinkItems.map((item, index) => (

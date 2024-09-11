@@ -65,8 +65,9 @@ import {
   IoCompassOutline,
   IoCompass,
   IoAdd,
+  IoStorefrontOutline,
+  IoStorefront,
 } from "react-icons/io5";
-import { VscBellDot } from "react-icons/vsc";
 import { IconType } from "react-icons";
 import { useUserAPI } from "@/hooks/UserContext";
 import SearchStudentModal from "@/components/shared/searchStudentModal";
@@ -415,12 +416,16 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
         icon={<FiMenu />}
       />
 
+      {/* Display on every page other than marketplace */}
       <Button
         backgroundColor={"#005D5D"}
         color={"#fff"}
         colorScheme="teal"
         _hover={{ backgroundColor: "#044141" }}
-        display={{ base: "none", md: "flex" }}
+        display={{
+          base: "none",
+          md: !pathName.includes("marketplace") ? "flex" : "none",
+        }}
         onClick={onModalOpen}
         size={"sm"}
         leftIcon={<AiOutlinePlus />}
@@ -428,6 +433,23 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
         Link your Child
       </Button>
 
+      {/* display only on the marketplace page */}
+      <Flex
+        alignItems={"center"}
+        justifyContent={"center"}
+        gap={1}
+        display={{
+          base: "none",
+          md: pathName.includes("marketplace") ? "flex" : "none",
+        }}
+      >
+        <Icon as={IoStorefrontOutline} boxSize={5} color={"#007C7B"} />
+        <Text fontSize={"sm"} fontWeight={"semibold"}>
+          Greynote Marketplace
+        </Text>
+      </Flex>
+
+      {/* Show on large screens */}
       <Flex
         as={motion.button}
         whileHover={{ scale: 1.04 }}
@@ -446,6 +468,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
         </Text>
       </Flex>
 
+      {/* Show on mobile screens */}
       <Flex
         as={motion.button}
         whileHover={{ scale: 1.04 }}
@@ -457,12 +480,12 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
         alignItems={"center"}
         display={parentData?.isPaid ? "none" : { base: "flex", md: "none" }}
       >
-        <Text color="#FFFFFF" fontSize={{ base: "xs", md: "sm" }}>
+        <Text color="#FFFFFF" fontSize={{ base: "2xs", md: "sm" }}>
           Trial Plan
         </Text>
       </Flex>
 
-      <Flex gap={4} alignItems={"center"}>
+      <Flex gap={{base:3, md: 4}} alignItems={"center"}>
         <Flex gap={5} alignItems={"center"}>
           <Popover>
             <PopoverTrigger>
@@ -478,7 +501,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
                 <Icon
                   aria-label="notification"
                   as={PiBell}
-                  boxSize={5}
+                  boxSize={{ base: 4, md: 5 }}
                   _hover={{ color: "#005D5D" }}
                   rounded={"full"}
                   transition={"0.3s"}
@@ -559,7 +582,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
 
           <Icon
             as={PiHeart}
-            boxSize={5}
+            boxSize={{ base: 4, md: 5 }}
             color={"gray.600"}
             _hover={{ color: "#005D5D", cursor: "pointer" }}
             display={pathName.includes("marketplace") ? "block" : "none"}
@@ -567,7 +590,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
 
           <Icon
             as={PiShoppingCart}
-            boxSize={5}
+            boxSize={{ base: 4, md: 5 }}
             color={"gray.600"}
             _hover={{ color: "#005D5D", cursor: "pointer" }}
             display={pathName.includes("marketplace") ? "block" : "none"}
@@ -625,7 +648,6 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
           </MenuList>
         </Menu>
       </Flex>
-
       <SearchStudentModal
         isSearchOpen={isModalOpen}
         onSearchClose={onModalClose}

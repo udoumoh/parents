@@ -366,7 +366,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
               >
                 - Any -
               </MenuItem>
-              {schoolsAttended?.map((school, index) => {
+              {schoolsAttended?.map((school: any, index: any) => {
                 return (
                   <MenuItem
                     _hover={{
@@ -452,7 +452,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                     >
                       - Any -
                     </MenuItem>
-                    {schoolsAttended?.map((school, index) => {
+                    {schoolsAttended?.map((school: any, index: any) => {
                       return (
                         <MenuItem
                           _hover={{

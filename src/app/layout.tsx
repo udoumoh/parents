@@ -1,6 +1,6 @@
 "use client";
 import "./globals.css";
-import { FC, useState } from "react";
+import { FC} from "react";
 import UserApiProvider from "@/hooks/UserContext";
 import { Mulish } from "next/font/google";
 import { Providers } from "./providers";
@@ -16,16 +16,36 @@ interface LayoutProps {
 }
 
 const client = new ApolloClient({
-  uri: "http://localhost:3004/graphql",
-  // uri: "https://api.greynote.app/graphql",
+  // uri: "http://localhost:3004/graphql",
+  uri: "https://api.greynote.app/graphql",
   credentials: "include",
   cache: new InMemoryCache(),
 });
 
 const Layout: FC<LayoutProps> = ({ children }) => {
+  
   return (
     <html lang="en">
       <head>
+      <title>Greynote Parents Dashboard</title>
+      <meta property="og:title" content="Greynote Parent" />
+      <meta
+        property="og:description"
+        content="Stay involved in your child's education with the Greynote Parents app. Track academic progress, receive updates, and communicate with teachers to support your child's learning journey."
+      />
+      <meta property="og:image" content="/images/greylightBordered.svg" />
+      <meta property="og:url" content="https://parent.greynote.app/" />
+        <link
+          rel="stylesheet"
+          type="text/css"
+          charSet="UTF-8"
+          href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css"
+        />
+        <link
+          rel="stylesheet"
+          type="text/css"
+          href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css"
+        />
         <link rel="icon" href="/images/greylightBordered.svg" />
         <link rel="manifest" href="/manifest.json" />
       </head>

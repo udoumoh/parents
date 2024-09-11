@@ -1,0 +1,25 @@
+.slick-dots {
+    display: none !important;
+}
+
+.slick-track {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    padding: 10px 0 !important;
+}
+
+@media (min-width: 768px) {
+    .slick-slide {
+        margin-right: 10px;
+    }
+
+    .slick-slide:first-child {
+        margin-left: 0px !important;
+    }
+
+    .slick-slide:last-child {
+        margin-right: 0px !important;
+    }
+}
