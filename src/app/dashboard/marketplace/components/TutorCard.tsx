@@ -56,20 +56,18 @@ const TutorCard: FC<TutorCardProps> = ({
             </Text>
           </Flex>
 
-          <Flex alignItems={"center"} gap={2}>
+          <Flex alignItems={{base:"flex-start", md: "center"}} gap={{base:1,  md: 2}} flexDir={{base:"column",  md:'row'}}>
             <Flex alignItems={"center"} gap={1}>
               <Icon as={HiOutlineBookOpen} boxSize={3} color={"#007C7B"} />
               <Text
                 fontSize={{ base: "2xs", md: "xs" }}
                 fontWeight={"semibold"}
-                isTruncated
-                maxW={"40px"}
               >
                 IELTS, TOEFL
               </Text>
             </Flex>
 
-            <Flex alignItems={"center"} gap={1}>
+            <Flex alignItems={"center"} gap={1} >
               <Icon as={LuClock2} boxSize={3} color={"#007C7B"} />
               <Text
                 fontSize={{ base: "2xs", md: "xs" }}

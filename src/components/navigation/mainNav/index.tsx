@@ -79,9 +79,11 @@ import { GET_NOTIFICATIONS } from "@/gql/queries";
 import { formatDateWithSuffix } from "@/helpers/formatDate";
 import { GoAlertFill } from "react-icons/go";
 import { PiHeart, PiShoppingCart, PiBell } from "react-icons/pi";
+import LinkedStudentsPopover from "@/components/shared/linkedStudentsPopover";
 
 interface MobileProps extends FlexProps {
   onOpen: () => void;
+  onClose: () => void;
 }
 
 interface Notifications {
@@ -329,7 +331,7 @@ const NavItem = ({ icon, link, name, ...rest }: NavItemProps) => {
   );
 };
 
-const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
+const MobileNav = ({ onOpen, onClose, ...rest }: MobileProps) => {
   const pathName = usePathname()
   const toast = useToast();
   const router = useRouter();
@@ -338,6 +340,11 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
     isOpen: isModalOpen,
     onOpen: onModalOpen,
     onClose: onModalClose,
+  } = useDisclosure();
+  const {
+    onOpen: onPopoverOpen,
+    onClose: onPopoverClose,
+    isOpen: isPopoverOpen,
   } = useDisclosure();
   const [logoutParent] = useMutation(LOGOUT_PARENTS);
   const { data: getnotifications, loading } = useQuery(GET_NOTIFICATIONS, {
@@ -417,21 +424,12 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
       />
 
       {/* Display on every page other than marketplace */}
-      <Button
-        backgroundColor={"#005D5D"}
-        color={"#fff"}
-        colorScheme="teal"
-        _hover={{ backgroundColor: "#044141" }}
-        display={{
-          base: "none",
-          md: !pathName.includes("marketplace") ? "flex" : "none",
-        }}
-        onClick={onModalOpen}
-        size={"sm"}
-        leftIcon={<AiOutlinePlus />}
-      >
-        Link your Child
-      </Button>
+      <LinkedStudentsPopover
+        onClose={onClose}
+        isPopoverOpen={isPopoverOpen}
+        onPopoverClose={onPopoverClose}
+        onPopoverOpen={onPopoverOpen}
+      />
 
       {/* display only on the marketplace page */}
       <Flex
@@ -485,7 +483,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
         </Text>
       </Flex>
 
-      <Flex gap={{base:3, md: 4}} alignItems={"center"}>
+      <Flex gap={{ base: 3, md: 4 }} alignItems={"center"}>
         <Flex gap={5} alignItems={"center"}>
           <Popover>
             <PopoverTrigger>
@@ -665,6 +663,11 @@ const MainNav: FC<MainNav> = ({ children }) => {
     onOpen: onModalOpen,
     onClose: onModalClose,
   } = useDisclosure();
+  const {
+    isOpen: isPopoverOpen,
+    onOpen: onPopoverOpen,
+    onClose: onPopoverClose,
+  } = useDisclosure();
   const router = useRouter();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const {
@@ -712,10 +715,11 @@ const MainNav: FC<MainNav> = ({ children }) => {
 
   return (
     <Box
-      minH={isMobile && pathName.includes("clips") ? "90vh" : "100vh"}
+      // minH={isMobile && pathName.includes("clips") ? "90vh" : "100vh"}
       bg={"#fff"}
       w={"full"}
-      pos={pathName.includes("clips") ? "relative" : "fixed"}
+      // pos={pathName.includes("clips") ? "relative" : "fixed"}
+      minH={'100VH'}
     >
       <SidebarContent
         onClose={() => onClose}
@@ -1048,8 +1052,8 @@ const MainNav: FC<MainNav> = ({ children }) => {
         </DrawerContent>
       </Drawer>
       {/* mobilenav */}
-      <MobileNav onOpen={onOpen} />
-      <Box ml={{ base: 0, md: "4.1rem" }}>
+      <MobileNav onOpen={onOpen} onClose={onPopoverClose}/>
+      <Box ml={{ base: 0, md: "4.1rem" }} p={pathName.includes("clips") || pathName.includes("marketplace") ? 0 : 4}>
         {/* Content */}
         {children}
       </Box>

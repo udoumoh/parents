@@ -279,7 +279,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
   };
 
   return (
-    <Box mb={{ base: "8rem", lg: "5rem" }}>
+    <Box>
       <Box>
         <Box>
           <Text

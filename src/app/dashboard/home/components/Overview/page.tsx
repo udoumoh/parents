@@ -45,7 +45,7 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
       .reduce((acc, invoice) => acc + invoice?.amountPaid, 0) + totalBalance;
 
   return (
-    <Flex gap={5} flexDir={"column"} mb={{ base: "8rem", lg: "5rem" }}>
+    <Flex gap={5} flexDir={"column"} >
       <Flex
         flexDir={{ base: "column", lg: "row" }}
         justifyContent={"space-between"}
@@ -184,11 +184,11 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
           rounded={"md"}
           pt={4}
           pb={2}
-          minW={"300px"}
+          minW={{base:"full", md:"300px"}}
         >
           <Box
             display={"flex"}
-            w={"auto"}
+            w={"full"}
             maxW={"200px"}
             roundedRight={"full"}
             alignItems={"center"}

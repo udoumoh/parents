@@ -188,7 +188,7 @@ const Results: FC<ResultsProps> = ({}) => {
   };
 
   return (
-    <Box mb={{ base: "8rem", lg: "5rem" }}>
+    <Box>
       <Text>Result Type</Text>
       <Flex justifyContent={"space-between"} my={"1rem"}>
         <Box>
@@ -230,10 +230,10 @@ const Results: FC<ResultsProps> = ({}) => {
         <>
           <Alert status="warning" rounded={"md"}>
             <AlertIcon />
-            <AlertTitle>
+            <AlertTitle fontSize={{ base: "sm", md: "md" }}>
               Results are not available on your current plan!
             </AlertTitle>
-            <AlertDescription>
+            <AlertDescription display={{base:"none", md: 'flex'}}>
               Please subscribe to view your child's results
             </AlertDescription>
           </Alert>

@@ -262,10 +262,7 @@ const Marketplace: FC<MarketplaceProps> = ({}) => {
 
   return (
     <Box
-      h={"94vh"}
-      overflowY={"auto"}
-      overflowX={"hidden"}
-      pb={{ base: "5rem", md: "0" }}
+    overflowX={'hidden'}
     >
       <Head>
         <title>Greynote Parent - Marketplace</title>
@@ -305,7 +302,7 @@ const Marketplace: FC<MarketplaceProps> = ({}) => {
                       src={`/images/marketplacebg/MQ${index + 1}.png`}
                       key={`marquee-${index}`}
                       alt={`Market Image ${index + 1}`}
-                      boxSize="150px"
+                      boxSize={{base:"100px", md: "150px"}}
                     />
                   ))
                 )}
@@ -321,7 +318,7 @@ const Marketplace: FC<MarketplaceProps> = ({}) => {
                       src={`/images/marketplacebg/MQ${index + 13}.png`}
                       key={`marquee-${index}`}
                       alt={`Market Image ${index + 13}`}
-                      boxSize="150px"
+                      boxSize={{base:"100px", md: "150px"}}
                     />
                   ))
                 )}
@@ -337,7 +334,7 @@ const Marketplace: FC<MarketplaceProps> = ({}) => {
                       src={`/images/marketplacebg/MQ${index + 26}.png`}
                       key={`marquee-${index}`}
                       alt={`Market Image ${index + 26}`}
-                      boxSize="150px"
+                      boxSize={{base:"100px", md: "150px"}}
                     />
                   ))
                 )}

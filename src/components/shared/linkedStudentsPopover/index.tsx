@@ -18,6 +18,7 @@ import { useUserAPI } from '@/hooks/UserContext';
 import { AiOutlinePlus } from "react-icons/ai";
 import SearchStudentModal from '../searchStudentModal';
 import { useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 
 interface LinkedStudentsPopoverProps {
   onClose: () => void;
@@ -26,7 +27,7 @@ interface LinkedStudentsPopoverProps {
   onPopoverOpen: () => void;
 }
 
-const LinkedStudentsPopover: FC<LinkedStudentsPopoverProps> = ({onClose, isPopoverOpen, onPopoverClose, onPopoverOpen}) => {
+const LinkedStudentsPopover: FC<LinkedStudentsPopoverProps> = ({onClose, isPopoverOpen, onPopoverClose, onPopoverOpen, ...rest}) => {
     const router = useRouter()
     const {
       isOpen: isModalOpen,
@@ -35,15 +36,24 @@ const LinkedStudentsPopover: FC<LinkedStudentsPopoverProps> = ({onClose, isPopov
     } = useDisclosure();
     const { currentId, setLocalstorageId, currentWardProfile, childData } =
       useUserAPI();
+    const pathName = usePathname()
       
   return (
-    <Box display={"flex"} w={"full"} mb={10} alignItems={"center"}>
+    <Box
+      display={{
+        base: "none",
+        md: pathName.includes("marketplace") ? "none" : "flex",
+      }}
+      w={"auto"}
+      alignItems={"center"}
+      {...rest}
+    >
       <Popover
         isOpen={isPopoverOpen}
         onOpen={onPopoverOpen}
         onClose={onPopoverClose}
         isLazy
-        matchWidth={true}
+        // matchWidth={true}
       >
         <PopoverTrigger>
           <Box
@@ -55,16 +65,16 @@ const LinkedStudentsPopover: FC<LinkedStudentsPopoverProps> = ({onClose, isPopov
           >
             <Flex alignItems={"center"} gap={2}>
               <Avatar
-                size={"md"}
+                size={"sm"}
                 src={currentWardProfile?.profileImage}
                 name={`${currentWardProfile?.firstName} ${currentWardProfile?.lastName}`}
                 pointerEvents={"none"}
               />
               <Box lineHeight={"20px"}>
                 <Text fontWeight={"600"} fontSize={"sm"}>
-                  {`${currentWardProfile?.firstName || ""} ${currentWardProfile?.middleName || ""} ${
-                    currentWardProfile?.lastName || ""
-                  }`}
+                  {`${currentWardProfile?.firstName || ""} ${
+                    currentWardProfile?.middleName || ""
+                  } ${currentWardProfile?.lastName || ""}`}
                 </Text>
                 <Text fontSize={"12px"} color={"#AAAAAA"} fontWeight={"600"}>
                   {currentWardProfile?.greynoteNumber || ""}
