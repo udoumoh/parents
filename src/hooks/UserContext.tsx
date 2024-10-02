@@ -47,6 +47,10 @@ export interface UserChildren {
   schoolAccountNumber: string[];
   schoolBankName: string[];
   wallet: number;
+  isPaid: boolean;
+  collectibleDuration: string;
+  collectibleType: string;
+  subscribedAt: string;
 }
 
 interface StudentInvoiceProps {
@@ -159,6 +163,10 @@ export const UserApiProvider: FC<UserApiProviderProps> = ({ children }) => {
         schoolAccountNumber: [""],
         schoolBankName: [""],
         wallet: 0,
+        isPaid: false,
+        collectibleDuration: "",
+        collectibleType: "",
+        subscribedAt: "",
       },
     ],
   });
@@ -233,7 +241,11 @@ export const UserApiProvider: FC<UserApiProviderProps> = ({ children }) => {
             schoolAccountName: child?.school?.school?.accountName,
             schoolAccountNumber: child?.school?.school?.accountNumber,
             schoolBankName: child?.school?.school?.bankName,
-            wallet: child?.wallet
+            wallet: child?.wallet,
+            isPaid: child?.isPaid,
+            collectibleDuration: child?.collectibleDuration,
+            collectibleType: child?.collectibleType,
+            subscribedAt: child?.subscribedAt,
           })
         );
 

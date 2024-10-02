@@ -16,7 +16,8 @@ interface LayoutProps {
 }
 
 const client = new ApolloClient({
-  uri: "https://api.greynote.app/graphql",
+  // uri: "https://api.greynote.app/graphql",
+  uri: "http://localhost:4001/graphql",
   credentials: "include",
   cache: new InMemoryCache(),
 });
@@ -29,8 +30,8 @@ const Layout: FC<LayoutProps> = ({ children }) => {
         <link rel="manifest" href="/manifest.json" />
       </head>
       <body className={mulish.className}>
-        <Providers>
           <ApolloProvider client={client}>
+          <Providers>
             {typeof window === "undefined" ? (
               <Loading />
             ) : (
@@ -38,8 +39,8 @@ const Layout: FC<LayoutProps> = ({ children }) => {
                 <UserLikesAPIProvider>{children}</UserLikesAPIProvider>
               </UserApiProvider>
             )}
-          </ApolloProvider>
-        </Providers>
+          </Providers>
+        </ApolloProvider>
       </body>
     </html>
   );
