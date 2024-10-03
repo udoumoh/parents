@@ -1,5 +1,14 @@
 import { useState, useEffect, FC } from "react";
-import { Button, Flex, Text, useDisclosure } from "@chakra-ui/react";
+import {
+  Avatar,
+  Badge,
+  Box,
+  Button,
+  Flex,
+  Input,
+  Text,
+  useDisclosure,
+} from "@chakra-ui/react";
 import {
   Modal,
   ModalOverlay,
@@ -8,19 +17,14 @@ import {
   ModalBody,
   ModalCloseButton,
   Image,
-  Tabs,
-  TabList,
-  TabPanels,
-  Tab,
-  TabPanel,
-  List,
-  ListItem,
-  ListIcon,
+  Collapse,
   useToast,
 } from "@chakra-ui/react";
 import { IoCheckmarkCircle } from "react-icons/io5";
-import { useUserAPI } from "@/hooks/UserContext";
+import { UserChildren, useUserAPI } from "@/hooks/UserContext";
 import { useRouter } from "next/navigation";
+import { REDEEM_COLLECTIBLE } from "@/gql/mutations";
+import { useMutation } from "@apollo/client";
 
 interface SelectPlanModalProps {
   isOpen: boolean;
@@ -29,250 +33,229 @@ interface SelectPlanModalProps {
 
 const SelectPlanModal: FC<SelectPlanModalProps> = ({ isOpen, onClose }) => {
   const toast = useToast();
-  const {parentData} = useUserAPI()
-  const [trial, setTrial] = useState("");
+  const { parentData, childData } = useUserAPI();
+  const [redeem] = useMutation(REDEEM_COLLECTIBLE)
+  const [code, setCode] = useState("");
+  const [selectedChild, setSelectedChild] = useState<
+    UserChildren | undefined
+  >();
+  const [selectedChildId, setSelectedChildId] = useState<number | null>(null);
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async (plan: any) => {
-    const monthlyUrl = `https://paystack.com/pay/gn-parent-monthly/?email=${parentData?.email}&first_name=${parentData?.firstName}&last_name=${parentData?.lastName}&readonly=first_name,last_name,email`;
-    const quaterlyUrl = `https://paystack.com/pay/gn-parent-quarterly/?email=${parentData?.email}&first_name=${parentData?.firstName}&last_name=${parentData?.lastName}&readonly=first_name,last_name,email`;
-    const yearlyUrl = `https://paystack.com/pay/gn-parent-yearly/?email=${parentData?.email}&first_name=${parentData?.firstName}&last_name=${parentData?.lastName}&readonly=first_name,last_name,email`;
-    if(plan === 'monthly'){
-      window.location.assign(monthlyUrl)
-    } else if(plan === 'quaterly'){
-      window.location.assign(quaterlyUrl)
-    } else if(plan === 'yearly'){
-      window.location.assign(yearlyUrl)
-    } else {
+  const handleChildClick = (child: UserChildren) => {
+    setSelectedChild(child);
+    setSelectedChildId(prevId => prevId === child.id ? null : child.id);
+  };
+
+  const handleApply = async () => {
+    setLoading(true);
+    try {
+    const response = await redeem({ variables: {
+      studentId: selectedChild?.id,
+      voucherCode: code,
+    }})
+  if (response.data?.redeemCollectible) {
       toast({
-        title: "No plan chosen",
-        description: "Please select a plan to proceed",
-        position: "top-right",
-        variant: "left-accent",
-        isClosable: true,
-        status: "error",
-      });
+          title: "Voucher Applied",
+          description: `Subscription applied to ${selectedChild?.firstName} ${selectedChild?.middleName} ${selectedChild?.lastName}`,
+          status: "success",
+          variant: "left-accent",
+          duration: 5000,
+          isClosable: true,
+          position: "top-right"
+        });
+        setLoading(false);
+        setTimeout(() => {
+            window.location.reload();
+        }, 500);
+    }
+    } catch (error: any) {
+      toast({
+          title: "Voucher Error.",
+          description: `${error.message || "An error occured while trying to redeem your voucher"}`,
+          status: "error",
+          variant: "left-accent",
+          duration: 5000,
+          isClosable: true,
+          position: "top-right"
+        });
+        setLoading(false);
     }
   };
 
-  const tabStyle = {
-    bg: "#AEF0D8",
-    color: "#000000",
-    border: "1px solid #005D5D",
-    borderRadius: "4px",
-  };
-
   return (
-    <>
-      <Modal
-        isOpen={isOpen}
-        onClose={onClose}
-        closeOnOverlayClick={false}
-        size={{ base: "lg", sm: "lg", md: "xl" }}
+    <Modal
+      isOpen={isOpen}
+      onClose={onClose}
+      closeOnOverlayClick={false}
+      size={{ base: "lg", sm: "lg", md: "xl" }}
+    >
+      <ModalOverlay />
+      <ModalContent
+        as={Flex}
+        borderRadius={"10px"}
+        p={1}
+        align="center"
+        w="full"
+        bg="#FFF"
       >
-        <ModalOverlay />
-        <ModalContent
-          as={Flex}
-          borderRadius={"10px"}
-          p={1}
-          align="center"
+        <ModalCloseButton />
+        <Flex
+          borderRadius="9px"
           w="full"
-          bg="#F0F0F0"
+          h="100px"
+          overflow="hidden"
+          border="1px solid #E2E2E2"
+          bg="#005D5D"
+          direction="column"
+          p={2}
         >
-          <ModalCloseButton />
-          <Flex
-            borderRadius="9px"
-            w="full"
-            h="100px"
-            overflow="hidden"
-            border="1px solid #E2E2E2"
-            bg="#005D5D"
-            direction="column"
-            p={2}
-          >
-            <Flex direction="column" w="full" mt={4} px={2} color={"#FFFFFF"}>
-              <Text fontWeight={"semibold"} fontSize={"lg"}>
-                Select a plan you would like to try
-              </Text>
-              <Text fontSize={"xs"} mb={2}>
-                Choose the package that fits best
-              </Text>
-            </Flex>
+          <Flex direction="column" w="full" mt={4} px={2} color={"#FFFFFF"}>
+            <Text fontWeight={"semibold"} fontSize={"lg"}>
+              Select the child that you are applying the subscription to
+            </Text>
+            <Text fontSize={"xs"} mb={2}>
+              Contact the school admin to get the best package for your child
+            </Text>
           </Flex>
-          <Flex direction="column" w="full" mt={4} px={2}>
-            <Tabs
-              orientation={"vertical"}
-              variant="unstyled"
-              gap={4}
-              w="full"
-              defaultIndex={1}
-            >
-              <TabList gap="2" w="full">
-                <Tab
-                  _selected={{ ...tabStyle }}
-                  onClick={() => setTrial("basic")}
-                  bg="white"
-                  _hover={{ border: "1px solid #d1d1d1" }}
-                  border="1px solid #E2E2E2"
-                  borderRadius={"md"}
-                >
-                  <Flex justify="space-between" w="full">
-                    <Text fontWeight={600} fontSize={{ base: "xs", md: "md" }}>
-                      Monthly
-                    </Text>
-                    <Text
-                      textAlign={"right"}
-                      fontSize={{ base: "xs", md: "md" }}
+        </Flex>
+        <Flex direction="column" w="full" mt={4} px={2} pb={3}>
+          <Flex flexDir={"column"} gap={4}>
+            {(childData ?? []).length === 0 ? (
+              <Box
+                display={"flex"}
+                flexDir={"column"}
+                alignItems={"center"}
+                justifyContent={"center"}
+                px={"1.3rem"}
+                rounded={"md"}
+                py={"1rem"}
+                w={"100%"}
+              >
+                <Image
+                  src="/images/nochild.svg"
+                  maxH={{ base: "100px", md: "200px" }}
+                  maxW={{ base: "150px", md: "300px" }}
+                  alt="bg"
+                />
+                <Text mt={"1rem"} fontSize={{ base: "sm", md: "lg" }}>
+                  No child has been linked to your account
+                </Text>
+              </Box>
+            ) : (
+              (childData ?? []).map((item, index) => {
+                return (
+                  <Flex direction={"column"} gap={2} key={item.id}>
+                    <Flex
+                      alignItems={"center"}
+                      justifyContent={"space-between"}
+                      gap={2}
+                      py={"0.9rem"}
+                      px={"1rem"}
+                      backgroundColor={"#fafafa"}
+                      rounded={"md"}
+                      _hover={{
+                        backgroundColor: "#005D5D30",
+                        transitionDuration: "0.5s",
+                        cursor: "pointer",
+                      }}
+                      w={"full"}
+                      border={"1px solid #e2e2e2"}
+                      onClick={() => handleChildClick(item)}
                     >
-                      <strong>₦250</strong>
-                      <sub>/month</sub>
-                    </Text>
-                  </Flex>
-                </Tab>
-                <Tab
-                  _selected={{ ...tabStyle }}
-                  onClick={() => setTrial("basic plus")}
-                  bg="white"
-                  _hover={{ border: "1px solid #d1d1d1" }}
-                  border="1px solid #E2E2E2"
-                  borderRadius={"md"}
-                >
-                  <Flex justify="space-between" w="full">
-                    <Text fontWeight={600} fontSize={{ base: "xs", md: "md" }}>
-                      Quaterly
-                    </Text>
-                    <Text
-                      textAlign={"right"}
-                      fontSize={{ base: "xs", md: "md" }}
-                    >
-                      <strong>₦750</strong>
-                      <sub>/3months</sub>
-                    </Text>
-                  </Flex>
-                </Tab>
-                <Tab
-                  _selected={{ ...tabStyle }}
-                  bg="white"
-                  _hover={{ border: "1px solid #d1d1d1" }}
-                  border="1px solid #E2E2E2"
-                  borderRadius={"md"}
-                  onClick={() => setTrial("standard")}
-                >
-                  <Flex justify="space-between" w="full">
-                    <Text fontWeight={600} fontSize={{ base: "xs", md: "md" }}>
-                      Yearly
-                    </Text>
-                    <Text
-                      textAlign={"right"}
-                      fontSize={{ base: "xs", md: "md" }}
-                    >
-                      <strong>₦2500</strong>
-                      <sub>/Year</sub>
-                    </Text>
-                  </Flex>
-                </Tab>
-              </TabList>
+                      <Box display={"flex"} gap={"2"} alignItems={"center"}>
+                        <Avatar
+                          size={"md"}
+                          src={item.profileImage}
+                          pointerEvents={"none"}
+                          name={`${item?.firstName} ${item?.middleName || ""} ${
+                            item?.lastName
+                          }`}
+                        />
+                        <Box>
+                          <Flex gap={2} w="full">
+                          <Text
+                            fontWeight={"700"}
+                            fontSize={"lg"}
+                            pointerEvents={"none"}
+                          >
+                            {item?.firstName} {item?.middleName || ""}{" "}
+                            {item?.lastName}
+                          </Text>
+                          <Badge
+                            colorScheme={item.isPaid ? "green" : "red"}
+                            fontSize="0.7rem"
+                            px={2}
+                            py={1}
+                            rounded="md"
+                          >
+                            {item.isPaid ? "Paid" : "Trial"}
+                          </Badge>
 
-              <TabPanels bg="white" borderRadius={"8px"}>
-                <TabPanel>
-                  <Flex direction="column">
-                    <Text fontWeight="semibold">Monthly Plan</Text>
-                    <List
-                      mt={2}
-                      spacing={1}
-                      fontSize={{ base: "xs", md: "sm" }}
-                    >
-                      <ListItem>
-                        <ListIcon as={IoCheckmarkCircle} color="green.500" />
-                        Register up to <strong>4</strong> children
-                      </ListItem>
-                      <ListItem>
-                        <ListIcon as={IoCheckmarkCircle} color="green.500" />
-                        Pay an additional <strong>₦65</strong> per child if you
-                        have more than 4 children
-                      </ListItem>
-                    </List>
-                    <Button
-                      size="sm"
-                      _hover={{ bg: "#343434" }}
-                      bg="black"
-                      color="white"
-                      borderRadius={"full"}
-                      mt={14}
-                      onClick={() => handleSubmit("monthly")}
-                    >
-                      Select Monthly Plan
-                    </Button>
-                  </Flex>
-                </TabPanel>
-                <TabPanel p={2}>
-                  <Flex direction="column">
-                    <Text fontWeight="semibold">Quaterly Plan</Text>
-                    <List
-                      mt={2}
-                      spacing={1}
-                      fontSize={{ base: "xs", md: "sm" }}
-                    >
-                      <ListItem>
-                        <ListIcon as={IoCheckmarkCircle} color="green.500" />
-                        Register up to <strong>4</strong> children
-                      </ListItem>
-                      <ListItem>
-                        <ListIcon as={IoCheckmarkCircle} color="green.500" />
-                        Pay an additional <strong>₦195</strong> per child if you
-                        have more than 4 children
-                      </ListItem>
-                    </List>
-                    <Button
-                      size="sm"
-                      _hover={{ bg: "#343434" }}
-                      bg="black"
-                      color="white"
-                      borderRadius={"full"}
-                      mt={14}
-                      onClick={() => handleSubmit("quaterly")}
-                    >
-                      Select Quartely Plan
-                    </Button>
-                  </Flex>
-                </TabPanel>
-                <TabPanel>
-                  <Flex direction="column">
-                    <Text fontWeight="semibold">Yearly Plan</Text>
-                    <List
-                      mt={2}
-                      spacing={1}
-                      fontSize={{ base: "xs", md: "sm" }}
-                    >
-                      <ListItem>
-                        <ListIcon as={IoCheckmarkCircle} color="green.500" />
-                        Register up to <strong>4</strong> children
-                      </ListItem>
-                      <ListItem>
-                        <ListIcon as={IoCheckmarkCircle} color="green.500" />
-                        Pay an additional <strong>₦500</strong> per child if you
-                        have more than 4 children
-                      </ListItem>
-                    </List>
+                          </Flex>
+                          <Text
+                            fontSize={"sm"}
+                            color={"#AAAAAA"}
+                            fontWeight={"600"}
+                            pointerEvents={"none"}
+                          >
+                            {item?.greynoteNumber} • {item.school} •{" "}
+                            {item.class || "Not Enrolled"}
+                          </Text>
+                        </Box>
+                      </Box>
+                    </Flex>
+                    <Collapse in={selectedChildId === item.id} animateOpacity>
+                      <Box
+                        p="10px"
+                        minH="100px"
+                        mt="2"
+                        mb={5}
+                        bg="white"
+                        border="1px solid #e2e2e2"
+                        rounded="md"
+                      >
+                        <Text>Enter the code you received from the school</Text>
+                        {item.isPaid && (
+                          <Text p={3} bg="teal.100" color="teal.900" borderColor="teal.900" border="1px dashed" borderWidth={1} rounded="md" mt={2}>You have an active subscription</Text>
+                        )}
+                        <Flex gap={3}>
+                        <Input
+                          placeholder="Enter code here..."
+                          border="1px solid #e2e2e2"
+                          rounded="md"
+                          focusBorderColor="#005D5D"
+                          mt={2}
+                          py={7}
+                          value={code}
+                          onChange={(e) => setCode(e.target.value)}
+                          isDisabled={item.isPaid}
+                        />
+                        <Button
+                          colorScheme="teal"
+                          color="#FFF"
+                          rounded="md"
+                          mt={2}
+                          py={7}
+                          px={5}
+                          onClick={handleApply}
+                          isLoading={loading}
+                          isDisabled={item.isPaid}
 
-                    <Button
-                      size="sm"
-                      _hover={{ bg: "#343434" }}
-                      bg="black"
-                      color="white"
-                      borderRadius={"full"}
-                      mt={14}
-                      onClick={() => handleSubmit("yearly")}
-                    >
-                      Select Yearly Plan
-                    </Button>
+                        >
+                          Apply
+                        </Button>
+                        </Flex>
+                      </Box>
+                    </Collapse>
                   </Flex>
-                </TabPanel>
-              </TabPanels>
-            </Tabs>
+                );
+              })
+            )}
           </Flex>
-        </ModalContent>
-      </Modal>
-    </>
+        </Flex>
+      </ModalContent>
+    </Modal>
   );
 };
 

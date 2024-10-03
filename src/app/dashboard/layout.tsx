@@ -7,7 +7,7 @@ import Loading from "../loading";
 import { useUserAPI } from "@/hooks/UserContext";
 import BottomNav from "@/components/navigation/mobileNav";
 import { usePathname } from "next/navigation";
-import { Box } from "@chakra-ui/react";
+import { Box, ChakraProvider } from "@chakra-ui/react";
 
 interface layoutProps {
   children: ReactNode;
@@ -29,10 +29,12 @@ const Layout: React.FC<layoutProps> = ({ children }) => {
   ) : !loading && parent?.parent?.errors !== null ? (
     <>{window.location.replace("/signin")}</>
   ) : (
-    <Box p={0}>
-      <MainNav>{children}</MainNav>
-      <BottomNav />
-    </Box>
+    <ChakraProvider>
+      <Box p={0}>
+        <MainNav>{children}</MainNav>
+        <BottomNav />
+      </Box>
+    </ChakraProvider>
   );
   // (
   //   <Box p={0} position={'relative'}>

@@ -22,14 +22,21 @@ query Parent {
       phoneNumber
       email
       role
+      plan
       folder
+      viewedContent
+      likedContent
       subscriptionId
+      subscriptionType
+      subscriptionAmount
+      subscriptionDuration
       isDisabled
       profileImgUrl
       children {
         id
         createdAt
         transferedAt
+        subscribedAt
         firstName
         middleName
         lastName
@@ -48,6 +55,15 @@ query Parent {
         isArchived
         profileImgUrl
         wallet
+        coinbank
+        cart
+        blockedCreators
+        avatarUrl
+        achievements
+        authType
+        isPaid
+        collectibleType
+        collectibleDuration
         classroom {
           classroom {
             id
@@ -59,11 +75,13 @@ query Parent {
             className
             classSubjects
             description
+            resultTemplate
             isDisabled
             students {
               id
               createdAt
               transferedAt
+              subscribedAt
               firstName
               middleName
               lastName
@@ -82,6 +100,15 @@ query Parent {
               isArchived
               profileImgUrl
               wallet
+              coinbank
+              cart
+              blockedCreators
+              avatarUrl
+              achievements
+              authType
+              isPaid
+              collectibleType
+              collectibleDuration
               grayId
               fatherName
               fatherEmail
@@ -104,6 +131,7 @@ query Parent {
               phoneNumber
               email
               role
+              type
               folder
               isDisabled
               isVisible
@@ -115,6 +143,7 @@ query Parent {
           school {
             id
             createdAt
+            updatedAt
             isDisabled
             isVerified
             schoolName
@@ -122,10 +151,17 @@ query Parent {
             address
             type
             lgarea
+            wallet
             profileLikes
             profileViews
             whoLikedProfile
             folder
+            schoolType
+            priceRange
+            genderType
+            studentPerClassroom
+            currentTerm
+            currentSession
             state
             country
             description
@@ -143,6 +179,36 @@ query Parent {
             logoImgUrl
             bannerImgUrl
             license
+            walletTransactions {
+              amount
+              description
+              transactionDate
+              transactionType
+              transactionStatus
+            }
+            schoolItems {
+              createdAt
+              redeemedAt
+              quantity
+              voucherCode
+              isExpired
+              expiresAt
+              collectible {
+                id
+                title
+                caption
+                image
+                creator
+                category
+                price
+                isForSale
+                isDisabled
+                createdAt
+                updatedAt
+                likedBy
+                purchasedBy
+              }
+            }
           }
         }
         creator {
@@ -152,8 +218,10 @@ query Parent {
             userId
             folder
             status
+            statusCode
             plan
             isReferred
+            isBeginner
             isDisabled
             agreedTo
             referralCode
@@ -177,6 +245,9 @@ query Parent {
               phoneNumber
               role
               status
+              position
+              rank
+              points
               department
               email
               profileImgUrl
@@ -186,8 +257,10 @@ query Parent {
                 userId
                 folder
                 status
+                statusCode
                 plan
                 isReferred
+                isBeginner
                 isDisabled
                 agreedTo
                 referralCode
@@ -201,12 +274,14 @@ query Parent {
                 role
                 school
                 schoolImg
-                statusCode
+                schoolCurrentTerm
+                schoolCurrentSession
               }
             }
             school
             schoolImg
-            statusCode
+            schoolCurrentTerm
+            schoolCurrentSession
           }
         }
         studentCase {

@@ -11,9 +11,9 @@ import { useMutation } from "@apollo/client";
 import { useUserAPI } from "@/hooks/UserContext";
 import axios from "axios";
 import { INITIATE_PARENT_SUBSCRIPTION } from "@/gql/mutations";
-
+ 
 interface pageProps {}
-
+ 
 const Page: FC<pageProps> = ({}) => {
   const {parentData} = useUserAPI();
   const toast = useToast();
@@ -21,11 +21,11 @@ const Page: FC<pageProps> = ({}) => {
   const [subscriptionData, setSubscriptionData] = useState<any>({})
   const [isLoading, setIsloading] = useState(false)
   let parentEmail = localStorage.getItem("userEmail");
-
+ 
   const subDuration = subscriptionData?.plan?.name == 'yearly' ? "Annually" : subscriptionData?.plan?.name == 'quarterly' ? "Quarterly" : "Monthly"
-
+ 
   const token = process.env.NEXT_PUBLIC_API_TOKEN;
-
+ 
   const handleInitiateSubscription = async () => {
     setIsloading(true)
     try {
@@ -42,7 +42,7 @@ const Page: FC<pageProps> = ({}) => {
         });
         return;
       }
-
+ 
       if (response?.data?.initiateParentSubscription) {
         toast({
           title: "Plan Initialized Successfully",
@@ -72,7 +72,7 @@ const Page: FC<pageProps> = ({}) => {
       setIsloading(false)
     }
   };
-
+ 
   useEffect(() => {
     const fetchData = async() => {
       try {
@@ -93,7 +93,7 @@ const Page: FC<pageProps> = ({}) => {
     }
     fetchData()
   }, [parentData])
-
+ 
   return  (
     <Box
       display={"flex"}
@@ -133,13 +133,13 @@ const Page: FC<pageProps> = ({}) => {
               Initiate your subscription for {subscriptionData?.plan?.name}
             </Text>
           </Box>
-
+ 
           <Box display={'flex'} justifyContent={'center'} alignItems={'center'} mt={'1rem'}>
             <Text color={"#005D5D90"} fontWeight={"bold"} fontSize={"5xl"}>
               ₦{(subscriptionData?.amount / 100).toLocaleString()}
             </Text>
           </Box>
-
+ 
           <Box
             display={"flex"}
             flexDir={"column"}
@@ -157,5 +157,5 @@ const Page: FC<pageProps> = ({}) => {
   );
  
 };
-
+ 
 export default Page;

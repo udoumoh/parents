@@ -36,6 +36,12 @@ mutation Mutation {
 }
 `);
 
+export const REDEEM_COLLECTIBLE = gql(`
+  mutation RedeemCollectible($studentId: Float!, $voucherCode: String!) {
+  redeemCollectible(studentId: $studentId, voucherCode: $voucherCode)
+}
+`);
+
 export const REGISTER_PARENT = gql(`
 mutation RegisterParent($folder: String!, $options: parentRegInput!) {
   registerParent(folder: $folder, options: $options) {

@@ -38,7 +38,7 @@ const SearchResultItem = ({ student}: SearchResultItemProps) => {
         pointerEvents={"none"}
       />
       <Box lineHeight={"20px"}>
-        <Text fontWeight={"500"} fontSize={"lg"}>
+        <Text fontWeight={"500"} fontSize={"lg"} textTransform={"capitalize"}>
           {`${student.name}`}
         </Text>
         <Text fontSize={"sm"} color={"#AAAAAA"} fontWeight={"600"}>

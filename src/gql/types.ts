@@ -614,11 +614,20 @@ export type Notes = {
     school?: Maybe<School>;
   };
   
+
   export type Student = {
     __typename?: 'Student';
+    achievements?: Maybe<Array<Scalars['String']>>;
     ageInput: Scalars['Float'];
+    authType?: Maybe<Scalars['String']>;
+    avatarUrl?: Maybe<Scalars['String']>;
     birthDate: Scalars['DateTime'];
+    blockedCreators?: Maybe<Array<Scalars['String']>>;
+    cart?: Maybe<Array<Scalars['String']>>;
     classroom: ClassroomResponse;
+    coinbank?: Maybe<Scalars['Float']>;
+    collectibleDuration?: Maybe<Scalars['String']>;
+    collectibleType?: Maybe<Scalars['String']>;
     createdAt: Scalars['String'];
     creator: AdminResponse;
     endDate: Scalars['String'];
@@ -635,6 +644,7 @@ export type Notes = {
     isDuplicate: Scalars['Boolean'];
     isLinked: Scalars['Boolean'];
     isOwing: Scalars['Boolean'];
+    isPaid: Scalars['Boolean'];
     isVisible: Scalars['Boolean'];
     lastName: Scalars['String'];
     lgaOrigin: Scalars['String'];
@@ -650,6 +660,7 @@ export type Notes = {
     startDate: Scalars['String'];
     state: Scalars['String'];
     studentCase: GrayCaseResponse;
+    subscribedAt: Scalars['String'];
     transferedAt: Scalars['String'];
     wallet?: Maybe<Scalars['Float']>;
   };
