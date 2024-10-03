@@ -1,8 +1,10 @@
-import { FC, useRef, useState, useEffect } from 'react'
-import { Box, Icon, Flex, Heading } from '@chakra-ui/react';
-import Slider from 'react-slick';
-import '../styles.css'
+import React, { FC, useRef, useState, useEffect } from "react";
+import { Box, Icon, Flex, Heading } from "@chakra-ui/react";
+import Slider from "react-slick";
+import "../styles.css";
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 interface CarouselProps {
   children: React.ReactNode;
@@ -10,66 +12,71 @@ interface CarouselProps {
   test2: string;
 }
 
-const Carousel: FC<CarouselProps> = ({children, test1, test2}) => {
-    const sliderRef = useRef< Slider | null>(null);
-    const [slideIndex, setSlideIndex] = useState(0);
-    const [updateCount, setUpdateCount] = useState(0);
-    const [dotsCount, setDotsCount] = useState(0);
+const Carousel: FC<CarouselProps> = ({ children, test1, test2 }) => {
+  const sliderRef = useRef<Slider | null>(null);
+  const [activeSlide, setActiveSlide] = useState(0);
+  const [slidesCount, setSlidesCount] = useState(0);
 
-     const settings = {
-       accessibility:true,
-       dots: true,
-       infinite: false,
-       speed: 500,
-       slidesToShow: 4.5,
-       slidesToScroll: 4,
-       initialSlide: 0,
-       arrows: false,
-       afterChange: () => {
-         const dots = document.querySelectorAll(".slick-dots li");
-         setDotsCount(dots.length);
-         setUpdateCount(updateCount + 1);
-       },
-       beforeChange: (next: any, current: any) => {
-         setSlideIndex(current);
-       },
-       responsive: [
-         {
-           breakpoint: 1024,
-           settings: {
-             slidesToShow: 3,
-             slidesToScroll: 3,
-           },
-         },
-         {
-           breakpoint: 600,
-           settings: {
-             slidesToShow: 2,
-             slidesToScroll: 2,
-           },
-         },
-         {
-           breakpoint: 480,
-           settings: {
-             slidesToShow: 1.5,
-             slidesToScroll: 1,
-           },
-         },
-       ],
-     };
+  const settings = {
+    dots: false,
+    infinite: false,
+    speed: 500,
+    slidesToShow: 4,
+    slidesToScroll: 4,
+    initialSlide: 0,
+    arrows: false,
+    afterChange: (current: number) => {
+      setActiveSlide(current);
+    },
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 3,
+        },
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 2,
+        },
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1.5,
+          slidesToScroll: 1,
+        },
+      },
+    ],
+  };
 
-    const goToNext = () => {
-      sliderRef?.current?.slickNext();
-    };
+  const goToNext = () => {
+    sliderRef?.current?.slickNext();
+  };
 
-    const goToPrevious = () => {
-      sliderRef?.current?.slickPrev();
-    };
+  const goToPrevious = () => {
+    sliderRef?.current?.slickPrev();
+  };
 
-    useEffect(() => {
-      const dots = document.querySelectorAll(".slick-dots li");
-      setDotsCount(dots.length);
-    }, []);
+  useEffect(() => {
+    if (sliderRef.current) {
+      const slideCount = React.Children.count(children);
+      const dotsCount =
+        Math.ceil(
+          (slideCount - settings.slidesToShow) / settings.slidesToScroll
+        ) + 1;
+      setSlidesCount(dotsCount);
+    }
+  }, [children]);
+
+  const isActiveDot = (index: number) => {
+    const slideRangeStart = index * settings.slidesToScroll;
+    const slideRangeEnd = slideRangeStart + settings.slidesToScroll;
+    return activeSlide >= slideRangeStart && activeSlide < slideRangeEnd;
+  };
 
   return (
     <Box mt={"3rem"} display={"flex"} flexDir={"column"}>
@@ -81,25 +88,27 @@ const Carousel: FC<CarouselProps> = ({children, test1, test2}) => {
         <span style={{ color: "#007C7B" }}>{test1}</span> {test2}
       </Heading>
 
-      <Flex gap={1} pb={"0.5rem"} justifyContent={"flex-end"} px={{base:"0.5rem", md:"3rem"}} display={{base:"none", md:"flex"}}>
-        {[...Array(dotsCount)].map((_, index) => (
+      <Flex
+        gap={1}
+        pb={"0.5rem"}
+        justifyContent={"flex-end"}
+        px={{ base: "0.5rem", md: "3rem" }}
+        display={{ base: "none", md: "flex" }}
+      >
+        {[...Array(slidesCount)].map((_, index) => (
           <Box
             as="span"
             display="block"
-            width={{base:"20px", md:"30px"}}
+            width={{ base: "20px", md: "30px" }}
             height="2px"
-            backgroundColor={
-              index === Math.max(Math.floor(slideIndex) - 1, 0)
-                ? "#007C7B"
-                : "#DCDCDC"
-            }
+            backgroundColor={isActiveDot(index) ? "#007C7B" : "#DCDCDC"}
             borderRadius="2px"
             key={index}
           />
         ))}
       </Flex>
 
-      <Flex alignItems={"center"} px={{base:"0.5rem", md:"0rem"}}>
+      <Flex alignItems={"center"} px={{ base: "0.5rem", md: "0rem" }}>
         <Icon
           display={{ base: "none", md: "flex" }}
           as={MdKeyboardArrowLeft}
@@ -141,6 +150,6 @@ const Carousel: FC<CarouselProps> = ({children, test1, test2}) => {
       </Flex>
     </Box>
   );
-}
+};
 
-export default Carousel
+export default Carousel;

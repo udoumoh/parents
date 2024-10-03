@@ -47,7 +47,6 @@ import {
 import { FiMenu } from "react-icons/fi";
 import { IoMdSettings } from "react-icons/io";
 import { RiMailOpenFill } from "react-icons/ri";
-import { PiChatsTeardrop, PiChatsTeardropFill } from "react-icons/pi";
 import { GoHome, GoHomeFill } from "react-icons/go";
 import { RiArrowRightSLine } from "react-icons/ri";
 import { AiOutlinePlus, AiOutlineSetting } from "react-icons/ai";
@@ -78,7 +77,13 @@ import animationData from "../../../../public/lotties/noNotifications.json";
 import { GET_NOTIFICATIONS } from "@/gql/queries";
 import { formatDateWithSuffix } from "@/helpers/formatDate";
 import { GoAlertFill } from "react-icons/go";
-import { PiHeart, PiShoppingCart, PiBell } from "react-icons/pi";
+import {
+  PiHeart,
+  PiShoppingCart,
+  PiBell,
+  PiChatsTeardrop,
+  PiChatsTeardropFill,
+} from "react-icons/pi";
 import LinkedStudentsPopover from "@/components/shared/linkedStudentsPopover";
 
 interface MobileProps extends FlexProps {
@@ -149,19 +154,19 @@ const DrawerNavLinkItems = {
       name: "Overview",
       iconLight: IoGridOutline,
       iconFill: IoGrid,
-      url: "/dashboard/home/overview",
+      url: "/dashboard/home",
     },
     {
       name: "Academic Results",
       iconLight: IoFolderOutline,
       iconFill: IoFolder,
-      url: "/dashboard/home/results",
+      url: "/dashboard/home",
     },
     {
       name: "Invoice",
       iconLight: IoReceiptOutline,
       iconFill: IoReceipt,
-      url: "/dashboard/home/invoice",
+      url: "/dashboard/home",
     },
   ],
   NavLinks: [
@@ -238,7 +243,7 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
             icon={pathName.includes('dashboard/home') ? GoHomeFill : GoHome}
             link={
               (parentData?.children ?? []).length > 0
-                ? "/dashboard/home/overview"
+                ? "/dashboard/home"
                 : "/dashboard"
             }
             backgroundColor={
@@ -406,7 +411,7 @@ const MobileNav = ({ onOpen, onClose, ...rest }: MobileProps) => {
       display={
         !pathName.includes("clips") ? "flex" : { base: "none", md: "flex" }
       }
-      height="12"
+      height={{base:"12", md:"16"}}
       alignItems="center"
       bg={"#fff"}
       borderBottom={"1px solid"}
@@ -444,42 +449,6 @@ const MobileNav = ({ onOpen, onClose, ...rest }: MobileProps) => {
         <Icon as={IoStorefrontOutline} boxSize={5} color={"#007C7B"} />
         <Text fontSize={"sm"} fontWeight={"semibold"}>
           Greynote Marketplace
-        </Text>
-      </Flex>
-
-      {/* Show on large screens */}
-      <Flex
-        as={motion.button}
-        whileHover={{ scale: 1.04 }}
-        whileTap={{ scale: 0.9 }}
-        px={"1rem"}
-        py={"0.3rem"}
-        backgroundColor={"#C80036"}
-        rounded={"3px"}
-        alignItems={"center"}
-        display={parentData?.isPaid ? "none" : { base: "none", md: "flex" }}
-        gap={2}
-      >
-        <Icon as={GoAlertFill} color={"#fff"} />
-        <Text color="#FFFFFF" fontSize={{ base: "2xs", md: "xs" }}>
-          You are currently on the 14-day Trial Plan
-        </Text>
-      </Flex>
-
-      {/* Show on mobile screens */}
-      <Flex
-        as={motion.button}
-        whileHover={{ scale: 1.04 }}
-        whileTap={{ scale: 0.9 }}
-        px={"1rem"}
-        py={"0.3rem"}
-        backgroundColor={"#C80036"}
-        rounded={"3px"}
-        alignItems={"center"}
-        display={parentData?.isPaid ? "none" : { base: "flex", md: "none" }}
-      >
-        <Text color="#FFFFFF" fontSize={{ base: "2xs", md: "sm" }}>
-          Trial Plan
         </Text>
       </Flex>
 
@@ -698,9 +667,9 @@ const MainNav: FC<MainNav> = ({ children }) => {
   };
 
   useEffect(() => {
-    if (pathName.includes("/home/overview")) {
+    if (pathName.includes("/home")) {
       setActive("Overview");
-    } else if (pathName.includes("/home/results")) {
+    } else if (pathName.includes("/home")) {
       setActive("Results");
     } else if (pathName.includes("/home/greycases")) {
       setActive("Greycases");
@@ -719,7 +688,7 @@ const MainNav: FC<MainNav> = ({ children }) => {
       bg={"#fff"}
       w={"full"}
       // pos={pathName.includes("clips") ? "relative" : "fixed"}
-      minH={'100VH'}
+      minH={'100vh'}
     >
       <SidebarContent
         onClose={() => onClose}

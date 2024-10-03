@@ -22,13 +22,15 @@ const Page: FC<pageProps> = ({}) => {
   const [isLoading, setIsloading] = useState(false)
   let parentEmail = localStorage.getItem("userEmail");
 
+  const subDuration = subscriptionData?.plan?.name == 'yearly' ? "Annually" : subscriptionData?.plan?.name == 'quarterly' ? "Quarterly" : "Monthly"
+
   const token = process.env.NEXT_PUBLIC_API_TOKEN;
 
   const handleInitiateSubscription = async () => {
     setIsloading(true)
     try {
       const response = await initiateSubscription({
-        variables: { subAmount: subscriptionData?.amount, plan: subscriptionData?.plan?.name, code: subscriptionData?.subscription_code },
+        variables: { subAmount: subscriptionData?.amount, plan: subscriptionData?.plan?.name, code: subscriptionData?.subscription_code, subDuration: subDuration, subType: "one-time", },
       });
       if (!response?.data) {
         toast({
@@ -51,7 +53,7 @@ const Page: FC<pageProps> = ({}) => {
           status: "success",
         });
         setTimeout(() => {
-          window.location.assign("/dashboard/home/overview");
+          window.location.assign("/dashboard/home");
         }, 1000);
       } else {
         toast({

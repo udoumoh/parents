@@ -55,19 +55,19 @@ const LinkItems: Array<LinkItemProps> = [
     name: "Overview",
     iconLight: IoGridOutline,
     iconFill: IoGrid,
-    url: "/dashboard/home/overview",
+    url: "/dashboard/home",
   },
   {
     name: "Academic Results",
     iconLight: IoFolderOutline,
     iconFill: IoFolder,
-    url: "/dashboard/home/results",
+    url: "/dashboard/home",
   },
   {
     name: "Invoice",
     iconLight: IoReceiptOutline,
     iconFill: IoReceipt,
-    url: "/dashboard/home/invoice",
+    url: "/dashboard/home",
   },
 ];
 

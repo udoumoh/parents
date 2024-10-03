@@ -16,8 +16,8 @@ interface LayoutProps {
 }
 
 const client = new ApolloClient({
-  // uri: "http://localhost:3004/graphql",
-  uri: "https://api.greynote.app/graphql",
+  uri: "http://localhost:3004/graphql",
+  // uri: "https://api.greynote.app/graphql",
   credentials: "include",
   cache: new InMemoryCache(),
 });
@@ -27,14 +27,14 @@ const Layout: FC<LayoutProps> = ({ children }) => {
   return (
     <html lang="en">
       <head>
-      <title>Greynote Parents Dashboard</title>
-      <meta property="og:title" content="Greynote Parent" />
-      <meta
-        property="og:description"
-        content="Stay involved in your child's education with the Greynote Parents app. Track academic progress, receive updates, and communicate with teachers to support your child's learning journey."
-      />
-      <meta property="og:image" content="/images/greylightBordered.svg" />
-      <meta property="og:url" content="https://parent.greynote.app/" />
+        <title>Greynote Parents Dashboard</title>
+        <meta property="og:title" content="Greynote Parent" />
+        <meta
+          property="og:description"
+          content="Stay involved in your child's education with the Greynote Parents app. Track academic progress, receive updates, and communicate with teachers to support your child's learning journey."
+        />
+        <meta property="og:image" content="/images/greylightBordered.svg" />
+        <meta property="og:url" content="https://parent.greynote.app/" />
         <link
           rel="stylesheet"
           type="text/css"
@@ -48,6 +48,10 @@ const Layout: FC<LayoutProps> = ({ children }) => {
         />
         <link rel="icon" href="/images/greylightBordered.svg" />
         <link rel="manifest" href="/manifest.json" />
+        <link
+          rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/glider-js@1/glider.min.css"
+        ></link>
       </head>
       <body className={mulish.className}>
         <Providers>
@@ -61,6 +65,7 @@ const Layout: FC<LayoutProps> = ({ children }) => {
             )}
           </ApolloProvider>
         </Providers>
+        <script src="https://cdn.jsdelivr.net/npm/glider-js@1/glider.min.js"></script>
       </body>
     </html>
   );

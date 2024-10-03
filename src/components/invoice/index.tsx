@@ -377,7 +377,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
           rounded={"md"}
           border={"1px solid #E2E2E2"}
           size={"sm"}
-          onClick={() => window.location.assign("/dashboard/home/invoice")}
+          onClick={() => window.location.assign("/dashboard/home")}
         >
           <Text fontSize={"sm"} color={"#747474"}>
             See All
@@ -410,7 +410,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
           <Image
             src="/images/emptyStateInvoice.svg"
             alt="No invoice card"
-            maxW={{ base: "200px", md: "300px" }}
+            maxW={{ base: "100px", md: "120px" }}
             pointerEvents={"none"}
           />
           <Text color={"#747474"} mt={"2rem"}>

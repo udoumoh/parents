@@ -64,7 +64,7 @@ const Page: FC<PageProps> = ({}) => {
 
             <TabPanels>
               {invoiceTabs.map((tab, index) => (
-                <TabPanel px={0}>
+                <TabPanel px={0} key={index}>
                   {tab.content}
                 </TabPanel>
               ))}

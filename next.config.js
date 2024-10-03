@@ -16,12 +16,12 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'res.cloudinary.com',
+        hostname: '**',
         port: '',
       },
       {
-        protocol: 'https',
-        hostname: 'upcdn.io',
+        protocol: 'http',
+        hostname: '**',
         port: '',
       },
     ],

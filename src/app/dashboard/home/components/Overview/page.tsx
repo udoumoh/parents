@@ -5,7 +5,6 @@ import {
   Box,
   Flex,
   Text,
-  Image,
   Grid,
   Avatar,
   IconButton,
@@ -19,6 +18,9 @@ import {
   PopoverCloseButton,
   PopoverAnchor,
   Icon,
+  Button,
+  Stack,
+  Badge,
 } from "@chakra-ui/react";
 import Attendance from "@/components/attendance";
 import Invoice from "@/components/invoice";
@@ -26,11 +28,51 @@ import { useUserAPI } from "@/hooks/UserContext";
 import formatNumberWithCommas from "@/helpers/formatNumberWithCommas";
 import { CiWarning } from "react-icons/ci";
 import { IoIosWarning } from "react-icons/io";
+import Image from "next/image";
+import { PiChatsTeardropBold, PiEyeBold } from "react-icons/pi";
+import { HiOutlineUser } from "react-icons/hi";
+import { GET_PARENT } from "@/gql/queries";
+import { Parent } from "@/gql/types";
+import { useQuery } from "@apollo/client";
+import { capitalizeFirstLetter } from "@/helpers/capitalizeFirstLetter";
+import Carousel from "./components/Carousel";
+import { Student } from "@/gql/types";
 
 interface DashboardPageProps {}
 
 const DashboardPage: FC<DashboardPageProps> = ({}) => {
+  const { data: parent, loading } = useQuery(GET_PARENT);
+  const [parentData, setParentData] = useState<Parent>();
   const { currentWardProfile, invoiceData } = useUserAPI();
+  const [currentStudentData, setCurrentStudentData] = useState<Student>();
+
+  useEffect(() => {
+    const fetchParent = async () => {
+      try {
+        const response = await parent;
+        if (!response?.errors) {
+          setParentData(response?.parent?.parent);
+        } else {
+          throw new Error('an error', response.errors);
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchParent();
+  }, [parent]); 
+
+  useEffect(() => {
+    const currentId = Number(localStorage.getItem("currentId"));
+    if (!loading) {
+      console.log("children", parentData?.children)
+      const studentData = parentData?.children?.find(
+        (child) => child.id === currentId
+      );
+      setCurrentStudentData(studentData);
+    }
+  }, [parentData]);
 
   const totalBalance = invoiceData
     ?.filter((invoice) => invoice.status === "partial payment")
@@ -44,264 +86,407 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
       )
       .reduce((acc, invoice) => acc + invoice?.amountPaid, 0) + totalBalance;
 
+      console.log(parentData)
+
   return (
-    <Flex gap={5} flexDir={"column"} >
-      <Flex
-        flexDir={{ base: "column", lg: "row" }}
-        justifyContent={"space-between"}
-        gap={5}
-        columnGap={5}
-      >
-        <Box
-          as={motion.div}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={"1s"}
-          width={"full"}
-          rounded={"md"}
-          border={"1px solid #449c7c"}
-          overflow={"hidden"}
-          backgroundColor={"#E3FEF7"}
-          p={"1rem"}
-          bgSize={"cover"}
-          my={{ base: "10px", md: "0" }}
-          display={"flex"}
-          flexDir={"column"}
+    <Box>
+      <Flex gap={5} flexDir={"column"}>
+        <Flex
+          flexDir={{ base: "column", lg: "row" }}
           justifyContent={"space-between"}
+          gap={5}
+          columnGap={5}
         >
-          <Box display={"flex"} justifyContent={"space-between"} gap={3}>
-            <Box display={"flex"} alignItems={"center"} gap={3}>
-              <Avatar
-                size={"lg"}
-                src={currentWardProfile?.profileImage}
-                pointerEvents={"none"}
-                name={`${currentWardProfile?.firstName} ${
-                  currentWardProfile?.middleName || ""
-                } ${currentWardProfile?.lastName}`}
+          <Box
+            as={motion.div}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={"1s"}
+            width={"full"}
+            rounded={"md"}
+            border={"1px solid #E2E2E2"}
+            overflow={"hidden"}
+            backgroundColor={"#ffffff"}
+            p={"1rem"}
+            display={"flex"}
+            flexDir={"column"}
+            justifyContent={"space-between"}
+            alignItems={"center"}
+          >
+            <Box
+              display={"flex"}
+              flexDir={"column"}
+              alignItems={"center"}
+              gap={3}
+            >
+              <Image
+                src={`${
+                  currentWardProfile?.profileImage ||
+                  "https://th.bing.com/th/id/R.22dbc0f5e5f5648613f0d1de3ea7ae0a?rik=k6HQ45uVGe81rw&pid=ImgRaw&r=0"
+                }`}
+                height={140}
+                width={140}
+                alt="profile-img"
+                style={{ borderRadius: "10px" }}
               />
-              <Box lineHeight={"30px"}>
-                <Text fontWeight={"600"} fontSize={{ base: "lg", lg: "2xl" }}>
-                  {`${currentWardProfile?.firstName || ""} ${
-                    currentWardProfile?.middleName || ""
-                  }
-                   ${currentWardProfile?.lastName || ""}`}
+              <Box>
+                <Text fontWeight={"bold"} fontSize={{ base: "lg", lg: "xl" }}>
+                  {`${currentWardProfile?.firstName} ${currentWardProfile?.middleName}
+                    ${currentWardProfile?.lastName}`}
                 </Text>
               </Box>
             </Box>
-            <Box display={"flex"} gap={2} alignItems={"initial"}>
-              <Image
-                rounded={"lg"}
-                src={currentWardProfile?.schoollogo}
-                alt="profileImg"
-                w={{ base: "2.5rem", lg: "4.5rem" }}
-                h={{ base: "2.5rem", lg: "4.5rem" }}
-                pointerEvents={"none"}
-              />
-            </Box>
-          </Box>
-          <Box>
             <Box
               textAlign={"start"}
               display={"flex"}
               alignItems={"center"}
               gap={{ base: 2, md: 10 }}
-              my={"1rem"}
             >
-              <Grid gap={1}>
+              <Grid alignItems={"center"} gap={1}>
                 <Text
-                  color={"#449c7c"}
-                  fontSize={{ base: "xs", md: "sm", xl: "lg" }}
+                  color={"#8F8F8F"}
+                  fontSize={{ base: "2xs", md: "xs" }}
                   fontWeight={"600"}
                 >
                   Gender
                 </Text>
                 <Text
-                  fontWeight={"500"}
+                  fontWeight={"semibold"}
                   fontSize={{ base: "xs", md: "sm", xl: "lg" }}
-                  // color={"#606162"}
                 >
                   {currentWardProfile?.gender}
                 </Text>
               </Grid>
-              <Grid gap={1}>
+              <Grid alignItems={"center"} gap={1}>
                 <Text
-                  color={"#449c7c"}
-                  fontSize={{ base: "xs", md: "sm", xl: "lg" }}
-                  fontWeight={"600"}
-                >
-                  Class
-                </Text>
-                <Text
-                  fontWeight={"500"}
-                  fontSize={{ base: "xs", md: "sm", xl: "lg" }}
-                  // color={"#606162"}
-                >
-                  {currentWardProfile?.class}
-                </Text>
-              </Grid>
-              <Grid gap={1}>
-                <Text
-                  color={"#449c7c"}
-                  fontSize={{ base: "xs", md: "sm", xl: "lg" }}
+                  color={"#8F8F8F"}
+                  fontSize={{ base: "2xs", md: "xs" }}
                   fontWeight={"600"}
                 >
                   Date of Birth
                 </Text>
                 <Text
-                  fontWeight={"500"}
+                  fontWeight={"semibold"}
                   fontSize={{ base: "xs", md: "sm", xl: "lg" }}
-                  // color={"#606162"}
                 >
                   {currentWardProfile?.dateOfBirth}
                 </Text>
               </Grid>
-              <Grid gap={1} display={{ base: "none", md: "grid" }}>
+              <Grid alignItems={"center"} gap={1}>
                 <Text
-                  color={"#449c7c"}
-                  fontSize={{ base: "xs", md: "sm", xl: "lg" }}
+                  color={"#8F8F8F"}
+                  fontSize={{ base: "2xs", md: "xs" }}
                   fontWeight={"600"}
                 >
-                  School
+                  LGA
                 </Text>
                 <Text
-                  fontWeight={"500"}
+                  fontWeight={"semibold"}
                   fontSize={{ base: "xs", md: "sm", xl: "lg" }}
-                  // color={"#606162"}
                 >
-                  {currentWardProfile?.school}
+                  {currentStudentData?.lgaOrigin}
+                </Text>
+              </Grid>
+              <Grid gap={1} display={{ base: "none", md: "grid" }}>
+                <Text
+                  color={"#8F8F8F"}
+                  fontSize={{ base: "2xs", md: "xs" }}
+                  fontWeight={"600"}
+                >
+                  State
+                </Text>
+                <Text
+                  fontWeight={"semibold"}
+                  fontSize={{ base: "xs", md: "sm", xl: "lg" }}
+                >
+                  {currentStudentData?.state}
                 </Text>
               </Grid>
             </Box>
           </Box>
-        </Box>
 
-        <Box
-          as={motion.div}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={"1s"}
-          border={"1px solid #E2E2E2"}
-          rounded={"md"}
-          pt={4}
-          pb={2}
-          minW={{base:"full", md:"300px"}}
-        >
           <Box
-            display={"flex"}
+            p={"1rem"}
             w={"full"}
-            maxW={"200px"}
-            roundedRight={"full"}
-            alignItems={"center"}
-            bgGradient="linear(to-l, #DDA44E, #005D5D)"
-            mb={3}
+            rounded={"md"}
+            border={"1px solid #E2E2E2"}
+            overflow={"hidden"}
+            backgroundColor={"#ffffff"}
+            gap={3}
+            display={"flex"}
+            flexDir={"column"}
+            justifyContent={"space-between"}
           >
-            {/* <Icon as={FaMoneyBill} color={'#005D5D'}/> */}
-            <Text
-              fontWeight={"bold"}
-              color={"#FFFFFF"}
-              fontSize={"sm"}
-              px={4}
-              py={1}
-            >
-              Quick Financials
-            </Text>
-          </Box>
-
-          <Box px={4}>
-            <Flex
-              flexDir={"column"}
-              backgroundColor={"#FAEEEE"}
-              rounded={"lg"}
-              px={4}
-              py={2}
-              mb={"1rem"}
-              border={"1px solid red.800"}
-            >
-              <Text fontSize={"sm"} color={"#00000070"} fontWeight={"bold"}>
-                Owing balance
-              </Text>
-              <Text fontSize={"2xl"} color={"red.700"} fontWeight={"bold"}>
-                ₦{formatNumberWithCommas(totalOwingAmount || 0)}
-              </Text>
-            </Flex>
-            <Flex
-              flexDir={"column"}
-              backgroundColor={"#EEFAF4"}
-              rounded={"lg"}
-              px={4}
-              py={2}
-              my={"0.5rem"}
-            >
-              <Flex justifyContent={"space-between"} alignItems={"center"}>
-                <Text fontSize={"sm"} color={"#00000070"} fontWeight={"bold"}>
-                  Overpaid Balance
-                </Text>
-                <Popover placement="bottom" closeOnBlur={false}>
-                  <PopoverTrigger>
-                    <IconButton
-                      aria-label="warning"
-                      icon={<CiWarning size={"16"} />}
-                      color={"red"}
-                      size={"xs"}
-                      backgroundColor={"#EEFAF4"}
+            <Box>
+              <Flex alignItems={"center"} gap={4}>
+                {currentStudentData?.school?.school?.bannerImgUrl && (
+                  <>
+                    <Image
+                      src={`${currentStudentData?.school?.school?.bannerImgUrl}`}
+                      width={50}
+                      height={62}
+                      style={{ objectFit: "cover" }}
+                      alt="school logo"
                     />
-                  </PopoverTrigger>
-                  <PopoverContent
-                    color="#fff"
-                    bg="red.800"
-                    borderColor="red.800"
-                  >
-                    <PopoverHeader pt={4} fontWeight="bold" border="0">
-                      <Flex alignItems={"center"} gap={2}>
-                        <Icon as={IoIosWarning} color={"orange"} />
-                        <Text color={"orange"}>Disclaimer!!!</Text>
-                      </Flex>
-                    </PopoverHeader>
-                    <PopoverArrow bg="red.800" />
-                    <PopoverCloseButton />
-                    <PopoverBody>
-                      <Text fontSize={{ base: "xs", sm: "sm" }}>
-                        Before starting the process of transferring your child
-                        to another school, it's crucial to use up your Overpaid
-                        balance in your current school. Unpaid balances cannot
-                        be transferred to a new school. Greynote doesn't manage
-                        payments or receive funds for schools or parents. Please
-                        note that all funds in your wallet belong to the school,
-                        and if you choose to withdraw your child, the school is
-                        responsible for refunding your wallet balance. Greynote
-                        will not be held responsible if parents fail to deplete
-                        their wallet balance before transferring a child to
-                        another school.
-                      </Text>
-                    </PopoverBody>
-                    <PopoverFooter
-                      border="0"
-                      display="flex"
-                      alignItems="center"
-                      justifyContent="space-between"
-                    ></PopoverFooter>
-                  </PopoverContent>
-                </Popover>
+                  </>
+                )}
+                <Box gap={3}>
+                  <Text fontWeight={"bold"} fontSize={"lg"}>
+                    {capitalizeFirstLetter(
+                      currentStudentData?.school?.school?.schoolName
+                    )}
+                  </Text>
+                  <Text fontSize={"sm"}>
+                    {currentStudentData?.school?.school?.address}
+                  </Text>
+                </Box>
               </Flex>
-              <Text fontSize={"2xl"} color={"#005D5D"} fontWeight={"bold"}>
-                ₦{formatNumberWithCommas(currentWardProfile?.wallet || 0)}
+
+              <Stack direction="row" spacing={4} mt={"0.8rem"}>
+                <Button
+                  leftIcon={<PiChatsTeardropBold />}
+                  backgroundColor={"#007C7B"}
+                  color={"#ffffff"}
+                  variant="solid"
+                  size={"sm"}
+                  rounded={"4px"}
+                  _hover={{ backgroundColor: "#026A69" }}
+                  fontSize={"xs"}
+                  _active={{
+                    backgroundColor: "#064F4E",
+                    transform: "scale(1.1)",
+                    transition: "0.3s ease",
+                  }}
+                >
+                  Send Message
+                </Button>
+                <Button
+                  leftIcon={<PiEyeBold />}
+                  backgroundColor={"#007C7B"}
+                  color={"#ffffff"}
+                  variant="solid"
+                  size={"sm"}
+                  rounded={"4px"}
+                  _hover={{ backgroundColor: "#026A69" }}
+                  fontSize={"xs"}
+                  _active={{
+                    backgroundColor: "#064F4E",
+                    transform: "scale(1.03)",
+                    transition: "0.1s ease",
+                  }}
+                >
+                  View Profile
+                </Button>
+              </Stack>
+            </Box>
+
+            <Box display={"flex"} flexDir={"column"} gap={2}>
+              <Stack gap={3}>
+                <Flex alignItems={"center"} gap={3}>
+                  <Icon as={HiOutlineUser} boxSize={4} color={"#007C7B"} />
+                  <Flex alignItems={"center"} gap={2}>
+                    <Text fontSize={"sm"}>
+                      {capitalizeFirstLetter(
+                        currentStudentData?.creator?.admin?.firstName
+                      )}{" "}
+                      {currentStudentData?.creator?.admin?.middleName}
+                      {""}
+                      {currentStudentData?.creator?.admin?.lastName}
+                    </Text>
+                    <Badge
+                      size={"sm"}
+                      backgroundColor={"#FDBC52"}
+                      textTransform={"capitalize"}
+                      fontSize={"2xs"}
+                      color={"#ffffff"}
+                      fontWeight={"normal"}
+                      px={"0.3rem"}
+                    >
+                      Admin
+                    </Badge>
+                  </Flex>
+                </Flex>
+
+                <Flex
+                  alignItems={"center"}
+                  gap={3}
+                  display={
+                    currentStudentData?.classroom?.classroom?.teacher
+                      ?.length === 0
+                      ? "none"
+                      : "flex"
+                  }
+                >
+                  <Icon as={HiOutlineUser} boxSize={4} color={"#007C7B"} />
+                  <Flex alignItems={"center"} gap={2}>
+                    <Text fontSize={"sm"}>
+                      {capitalizeFirstLetter(
+                        currentStudentData?.classroom?.classroom?.teacher[0]
+                          ?.firstName
+                      )}{" "}
+                      {
+                        currentStudentData?.classroom?.classroom?.teacher[0]
+                          ?.middleName
+                      }{" "}
+                      {
+                        currentStudentData?.classroom?.classroom?.teacher[0]
+                          ?.lastName
+                      }
+                    </Text>
+                    <Badge
+                      size={"sm"}
+                      backgroundColor={"#5B7FC9"}
+                      textTransform={"capitalize"}
+                      fontSize={"2xs"}
+                      color={"#ffffff"}
+                      fontWeight={"normal"}
+                      px={"0.3rem"}
+                    >
+                      Teacher
+                    </Badge>
+                  </Flex>
+                </Flex>
+              </Stack>
+
+              <Text fontWeight={"bold"} fontSize={"sm"}>
+                Class Enrolled:{" "}
+                {currentStudentData?.classroom?.classroom?.className}
               </Text>
-            </Flex>
+            </Box>
           </Box>
-        </Box>
-      </Flex>
 
-      <Flex
-        flexDir={{ base: "column", xl: "row" }}
-        justifyContent={"space-between"}
-        gap={5}
-        columnGap={5}
-      >
-        <Attendance />
+          {/* Financials */}
+          <Box
+            as={motion.div}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={"1s"}
+            border={"1px solid #E2E2E2"}
+            rounded={"md"}
+            pt={4}
+            pb={2}
+            minW={{ base: "full", md: "300px" }}
+          >
+            <Box
+              display={"flex"}
+              w={"full"}
+              maxW={"200px"}
+              roundedRight={"full"}
+              alignItems={"center"}
+              bgGradient="linear(to-l, #DDA44E, #005D5D)"
+              mb={3}
+            >
+              {/* <Icon as={FaMoneyBill} color={'#005D5D'}/> */}
+              <Text
+                fontWeight={"bold"}
+                color={"#FFFFFF"}
+                fontSize={"sm"}
+                px={4}
+                py={1}
+              >
+                Quick Financials
+              </Text>
+            </Box>
 
-        <Invoice />
+            <Box px={4}>
+              <Flex
+                flexDir={"column"}
+                backgroundColor={"#FAEEEE"}
+                rounded={"lg"}
+                px={4}
+                py={2}
+                mb={"1rem"}
+                border={"1px solid red.800"}
+              >
+                <Text fontSize={"sm"} color={"#00000070"} fontWeight={"bold"}>
+                  Owing balance
+                </Text>
+                <Text fontSize={"2xl"} color={"red.700"} fontWeight={"bold"}>
+                  ₦{formatNumberWithCommas(totalOwingAmount || 0)}
+                </Text>
+              </Flex>
+              <Flex
+                flexDir={"column"}
+                backgroundColor={"#EEFAF4"}
+                rounded={"lg"}
+                px={4}
+                py={2}
+                my={"0.5rem"}
+              >
+                <Flex justifyContent={"space-between"} alignItems={"center"}>
+                  <Text fontSize={"sm"} color={"#00000070"} fontWeight={"bold"}>
+                    Overpaid Balance
+                  </Text>
+                  <Popover placement="bottom" closeOnBlur={false}>
+                    <PopoverTrigger>
+                      <IconButton
+                        aria-label="warning"
+                        icon={<CiWarning size={"16"} />}
+                        color={"red"}
+                        size={"xs"}
+                        backgroundColor={"#EEFAF4"}
+                      />
+                    </PopoverTrigger>
+                    <PopoverContent
+                      color="#fff"
+                      bg="red.800"
+                      borderColor="red.800"
+                    >
+                      <PopoverHeader pt={4} fontWeight="bold" border="0">
+                        <Flex alignItems={"center"} gap={2}>
+                          <Icon as={IoIosWarning} color={"orange"} />
+                          <Text color={"orange"}>Disclaimer!!!</Text>
+                        </Flex>
+                      </PopoverHeader>
+                      <PopoverArrow bg="red.800" />
+                      <PopoverCloseButton />
+                      <PopoverBody>
+                        <Text fontSize={{ base: "xs", sm: "sm" }}>
+                          Before starting the process of transferring your child
+                          to another school, it's crucial to use up your
+                          Overpaid balance in your current school. Unpaid
+                          balances cannot be transferred to a new school.
+                          Greynote doesn't manage payments or receive funds for
+                          schools or parents. Please note that all funds in your
+                          wallet belong to the school, and if you choose to
+                          withdraw your child, the school is responsible for
+                          refunding your wallet balance. Greynote will not be
+                          held responsible if parents fail to deplete their
+                          wallet balance before transferring a child to another
+                          school.
+                        </Text>
+                      </PopoverBody>
+                      <PopoverFooter
+                        border="0"
+                        display="flex"
+                        alignItems="center"
+                        justifyContent="space-between"
+                      ></PopoverFooter>
+                    </PopoverContent>
+                  </Popover>
+                </Flex>
+                <Text fontSize={"2xl"} color={"#005D5D"} fontWeight={"bold"}>
+                  ₦{formatNumberWithCommas(currentWardProfile?.wallet || 0)}
+                </Text>
+              </Flex>
+            </Box>
+          </Box>
+        </Flex>
+
+        <Flex
+          flexDir={{ base: "column", xl: "row" }}
+          justifyContent={"space-between"}
+          gap={5}
+          columnGap={5}
+        >
+          <Attendance />
+
+          <Invoice />
+
+          {/* <Carousel /> */}
+        </Flex>
       </Flex>
-    </Flex>
+    </Box>
   );
 };
 

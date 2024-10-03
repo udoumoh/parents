@@ -161,7 +161,7 @@ const Attendance: FC<AttendanceProps> = ({}) => {
           <Image
             src="/images/attendanceEmptyState.svg"
             alt="No invoice card"
-            maxW={{ base: "200px", md: "300px" }}
+            maxW={{ base: "100px", md: "120px" }}
             pointerEvents={"none"}
           />
           <Text color={"#747474"} mt={"2rem"} textAlign={"center"}>

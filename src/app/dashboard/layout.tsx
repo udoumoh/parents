@@ -24,13 +24,7 @@ const Layout: React.FC<layoutProps> = ({ children }) => {
     }
   }, [parentData, isTrialOver]);
 
-  return (
-    <Box p={0}>
-      <MainNav>{children}</MainNav>
-      <BottomNav />
-    </Box>
-  );
-  loading ? (
+  return loading ? (
     <Loading />
   ) : !loading && parent?.parent?.errors !== null ? (
     <>{window.location.replace("/signin")}</>
@@ -40,6 +34,13 @@ const Layout: React.FC<layoutProps> = ({ children }) => {
       <BottomNav />
     </Box>
   );
+  // (
+  //   <Box p={0} position={'relative'}>
+  //     <MainNav>{children}</MainNav>
+  //     <BottomNav />
+  //   </Box>
+  // );
+  
 };
 
 export default Layout;

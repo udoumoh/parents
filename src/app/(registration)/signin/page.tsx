@@ -96,7 +96,7 @@ const Signin: FC<pageProps> = ({}) => {
         isClosable: true,
         status: "success",
       });
-        window.location.assign("/dashboard/home/overview")
+        window.location.assign("/dashboard/home")
     } catch (error: any) {
       toast({
         title: "Error",
@@ -122,7 +122,7 @@ const Signin: FC<pageProps> = ({}) => {
   return loading ? (
     <Loading />
   ) : !loading && parent?.parent?.errors === null ? (
-    <>{window.location.assign("/dashboard/home/overview")}</>
+    <>{window.location.assign("/dashboard/home")}</>
   ) : (
     <Box
       display={"flex"}

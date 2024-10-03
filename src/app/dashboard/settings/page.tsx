@@ -392,7 +392,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                       border={"1px solid #005D5D80"}
                       onClick={() => {
                         setLocalstorageId(item?.id || 0);
-                        window.location.assign("/dashboard/home/overview");
+                        window.location.assign("/dashboard/home");
                       }}
                     >
                       <Box display={"flex"} gap={"2"} alignItems={"center"}>

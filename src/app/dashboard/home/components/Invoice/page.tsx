@@ -51,12 +51,12 @@ const InvoiceDataModal = lazy(
   () => import("@/components/shared/InvoiceDataModal")
 );
 
-const OverviewCard = ({count, totalInvoiceValue, title}: any) => {
+const OverviewCard = ({count, totalInvoiceValue, title, ...props}: any) => {
   return (
     <>
       <Flex
         flexDir={"column"}
-        backgroundColor={"#DBEEFC"}
+        {...props}
         border={"1px solid #83ACC960"}
         rounded={"lg"}
         px={5}
@@ -326,21 +326,25 @@ const Invoice: FC<InvoiceProps> = ({}) => {
             count={completedInvoice}
             title={"Total Amount Paid"}
             totalInvoiceValue={totalAmountPaid}
+            backgroundColor={"#DBEEFC"}
           />
           <OverviewCard
             count={activeInvoice}
             title={"Active"}
             totalInvoiceValue={totalActiveAmount}
+            backgroundColor={"#E7FDF5"}
           />
           <OverviewCard
             count={rejectedInvoice}
             title={"Rejected"}
             totalInvoiceValue={totalRejectedAmount}
+            backgroundColor={"#FDE7E7"}
           />
           <OverviewCard
             count={processingInvoice}
             title={"Processing"}
             totalInvoiceValue={totalProcessingAmount}
+            backgroundColor={"#FCF1DB"}
           />
         </SimpleGrid>
 
@@ -405,7 +409,6 @@ const Invoice: FC<InvoiceProps> = ({}) => {
               alignItems={"center"}
               flexDir={{ base: "column", md: "row" }}
             >
-
               <TabList
                 backgroundColor={"#005D5D40"}
                 p={"0.4rem"}

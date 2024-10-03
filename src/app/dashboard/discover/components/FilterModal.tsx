@@ -1,5 +1,5 @@
 'use client'
-import { FC, useEffect, useState } from 'react'
+import { FC } from 'react'
 import {
   Modal,
   ModalOverlay,

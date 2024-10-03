@@ -482,6 +482,6 @@ export const PAY_WITH_BALANCE = gql(`mutation PayInvoiceWithBalance($invoiceId: 
 }`)
 
 export const INITIATE_PARENT_SUBSCRIPTION = gql(`
-mutation InitiateParentSubscription($subAmount: Float!, $plan: String!, $code: String!) {
-  initiateParentSubscription(subAmount: $subAmount, plan: $plan, code: $code)
+mutation InitiateParentSubscription($subDuration: String!, $subType: String!, $subAmount: Float!, $plan: String!, $code: String!) {
+  initiateParentSubscription(subDuration: $subDuration, subType: $subType, subAmount: $subAmount, plan: $plan, code: $code)
 }`)

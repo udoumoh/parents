@@ -97,19 +97,19 @@ const DrawerNavLinkItems = {
       name: "Overview",
       iconLight: IoGridOutline,
       iconFill: IoGrid,
-      url: "/dashboard/home/overview",
+      url: "/dashboard/home",
     },
     {
       name: "Academic Results",
       iconLight: IoFolderOutline,
       iconFill: IoFolder,
-      url: "/dashboard/home/results",
+      url: "/dashboard/home",
     },
     {
       name: "Invoice",
       iconLight: IoReceiptOutline,
       iconFill: IoReceipt,
-      url: "/dashboard/home/invoice",
+      url: "/dashboard/home",
     },
   ],
   NavLinks: [
@@ -172,9 +172,9 @@ const pathName = usePathname()
 const toast = useToast();
 
 useEffect(() => {
-  if (pathName.includes("/home/overview")) {
+  if (pathName.includes("/home")) {
     setActive("Overview");
-  } else if (pathName.includes("/home/results")) {
+  } else if (pathName.includes("/home")) {
     setActive("Results");
   } else if (pathName.includes("/home/greycases")) {
     setActive("Greycases");

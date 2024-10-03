@@ -62,6 +62,7 @@ const LinkedStudentsPopover: FC<LinkedStudentsPopoverProps> = ({onClose, isPopov
             width={"full"}
             justifyContent={"space-between"}
             _hover={{ cursor: "pointer" }}
+            gap={4}
           >
             <Flex alignItems={"center"} gap={2}>
               <Avatar
