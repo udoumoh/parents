@@ -19,6 +19,7 @@ import {
   Th,
   Td,
   TableContainer,
+  Stack,
 } from "@chakra-ui/react";
 import axios from "axios";
 import { AiFillClockCircle } from "react-icons/ai";
@@ -31,12 +32,10 @@ import { GoPencil } from "react-icons/go";
 import RemoveStudentModal from "@/components/shared/removeStudentModal";
 import { RiBookletFill, RiVerifiedBadgeFill } from "react-icons/ri";
 import GraycaseModal from "@/components/shared/greycaseModal";
-import { GET_PARENT } from "@/gql/queries";
 import { formatDateWithSuffix } from "@/helpers/formatDate";
 import { FaChildren, FaCodePullRequest } from "react-icons/fa6";
 import {
   MdAccountBalanceWallet,
-  MdOutlineKeyboardArrowRight,
 } from "react-icons/md";
 import SelectPlanModal from "@/components/shared/selectPlanModal";
 import FreeTrial from "@/components/shared/freeTrial";
@@ -58,7 +57,6 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
   const toast = useToast();
   const [subscriptionData, setSubscriptionData] = useState<any>({});
   const [requestData, setRequestData] = useState<RequestDataProps[]>([]);
-  const { data: parent } = useQuery(GET_PARENT);
 
   const {
     isOpen: isModalOpen,
@@ -84,7 +82,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
   const { data: getRequests } = useQuery(PARENT_REQUESTS, {
     variables: { parentId: parentData?.userId },
   });
-  const [graycases, setGraycases] = useState([]);
+  const [graycases, setGraycases] = useState<any[]>();
   const [deleteRequest] = useMutation(DELETE_REQUEST);
   const [currentStudentCase, setCurrentStudentCase] = useState<
     UserChildren | undefined
@@ -190,41 +188,41 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
       } catch (err: any) {
         console.log(err);
       }
-
-      try{
-        const response = await parent;
-        const filteredCases = response?.parent?.parent?.children?.filter((child: any) => child.studentCase.grayCase !== null)
-        const newArray = filteredCases?.map((child: any) => ({
-            firstName: child?.firstName,
-            lastName: child?.lastName,
-            middleName: child?.middleName,
-            greynoteNumber: child?.grayId,
-            profileImage: child?.profileImgUrl,
-            gender: child?.gender,
-            class: child?.classroom?.classroom?.className,
-            dateOfBirth: formatDateWithSuffix(child?.birthDate),
-            school: child?.school?.school?.schoolName,
-            schoollogo: child?.school?.school?.logoImgUrl,
-            childId: child?.id,
-            age: child?.ageInput,
-            schoolId: child?.school?.school?.id,
-            isVisible: child?.isVisible,
-            category: child?.studentCase.grayCase?.category,
-            createdAt: formatDateWithSuffix(child?.studentCase.grayCase?.createdAt),
-            id: child?.studentCase.grayCase?.id,
-            isActive: child?.studentCase.grayCase?.isActive,
-            notes: child?.studentCase.grayCase?.note,
-            owingAmount: child?.studentCase.grayCase?.owingAmount,
-            updatedAt: formatDateWithSuffix(child?.studentCase.grayCase?.updatedAt),
-            wasEdited: child?.studentCase.grayCase?.wasEdited,
-          }));
-        setGraycases(newArray);
-      } catch (err: any) {
-        console.log(err);
-      }
     };
     fetchData();
   }, [getRequests, parent]);
+
+  useEffect(() => {
+     const filteredCases = parentData?.children?.filter(
+       (child: any) => child.studentCase.grayCase !== null
+     );
+     const newArray = filteredCases?.map((child: any) => ({
+       firstName: child?.firstName,
+       lastName: child?.lastName,
+       middleName: child?.middleName,
+       greynoteNumber: child?.grayId,
+       profileImage: child?.profileImgUrl,
+       gender: child?.gender,
+       class: child?.classroom?.classroom?.className,
+       dateOfBirth: formatDateWithSuffix(child?.birthDate),
+       school: child?.school?.school?.schoolName,
+       schoollogo: child?.school?.school?.logoImgUrl,
+       childId: child?.id,
+       age: child?.ageInput,
+       schoolId: child?.school?.school?.id,
+       isVisible: child?.isVisible,
+       category: child?.studentCase.grayCase?.category,
+       createdAt: formatDateWithSuffix(child?.studentCase.grayCase?.createdAt),
+       id: child?.studentCase.grayCase?.id,
+       isActive: child?.studentCase.grayCase?.isActive,
+       notes: child?.studentCase.grayCase?.note,
+       owingAmount: child?.studentCase.grayCase?.owingAmount,
+       updatedAt: formatDateWithSuffix(child?.studentCase.grayCase?.updatedAt),
+       wasEdited: child?.studentCase.grayCase?.wasEdited,
+     }));
+     setGraycases(newArray);
+  }, [parentData])
+
   return (
     <Box
       display={"flex"}
@@ -232,17 +230,10 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
       justifyContent={"center"}
       alignItems={"center"}
     >
-      <Box
-        w={"full"}
-        px={"5%"}
-        overflowY={"auto"}
-        h={"100vh"}
-        pt={"2rem"}
-        pb={{ base: "10rem", md: "5rem" }}
-      >
+      <Box w={"full"} px={{ base: "0rem", md: "5%" }} pt={"1rem"}>
         <Flex
           justifyContent={"space-between"}
-          alignItems={{ base: "center", lg: "start" }}
+          alignItems={"center"}
           flexDir={{ base: "column", md: "row" }}
           rounded={"2xl"}
           p={"2rem"}
@@ -255,11 +246,24 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
             flexDir={{ base: "column", lg: "row" }}
             justifyContent={"center"}
           >
-            <Avatar
-              src={profileData?.userBio?.profileImage}
-              size={{ base: "xl", lg: "2xl" }}
-              pointerEvents={"none"}
-            />
+            <Box position={"relative"}>
+              <Avatar
+                src={profileData?.userBio?.profileImage}
+                size={{ base: "xl", lg: "2xl" }}
+                pointerEvents={"none"}
+                border={"2px solid #F2F2F2"}
+                p={1}
+              />
+              <Icon
+                as={RiVerifiedBadgeFill}
+                boxSize={"4"}
+                color={"orange"}
+                position={"absolute"}
+                top={1}
+                right={2}
+                display={{ base: "block", md: "none" }}
+              />
+            </Box>
             {/* </Box> */}
             <Box
               display={"flex"}
@@ -269,15 +273,21 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
             >
               <Flex alignItems={"center"} gap={2}>
                 <Text
-                  fontSize={{ base: "lg", lg: "3xl" }}
+                  fontSize={{ base: "sm", lg: "3xl" }}
                   fontWeight={"bold"}
                   color={"#FCF4D9"}
+                  textAlign={"center"}
                 >
                   {`${profileData?.userBio?.firstName} ${
                     profileData?.userBio?.middleName || ""
                   } ${profileData?.userBio?.lastName}`}{" "}
                 </Text>
-                <Icon as={RiVerifiedBadgeFill} boxSize={"4"} color={"orange"} />
+                <Icon
+                  as={RiVerifiedBadgeFill}
+                  boxSize={"4"}
+                  color={"orange"}
+                  display={{ base: "none", md: "block" }}
+                />
               </Flex>
 
               <Text fontSize={"lg"} fontWeight={"700"} color={"#FCF4D990"}>
@@ -292,8 +302,9 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
               </Flex>
             </Box>
           </Flex>
-          <Flex gap={"6"} flexDir={{ base: "column", sm: "row" }}>
+          <Flex gap={"6"}>
             <Button
+              size={{ base: "sm", md: "md" }}
               variant={"outline"}
               border={"1px solid #FCF4D9"}
               onClick={onModalOpen}
@@ -301,15 +312,16 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
               color="#FCF4D9"
               _hover={{ color: "green", backgroundColor: "green.100" }}
             >
-              <Icon as={GoPencil} boxSize={4} />
-              <Text>Edit Profile</Text>
+              <Icon as={GoPencil} boxSize={{ base: 3, md: 4 }} />
+              <Text fontSize={{ base: "xs", md: "md" }}>Edit Profile</Text>
             </Button>
             <Button
               onClick={onRemoveStudentModalOpen}
               gap={"2"}
               colorScheme="red"
+              size={{ base: "sm", md: "md" }}
             >
-              <Text>Remove Child</Text>
+              <Text fontSize={{ base: "xs", md: "md" }}>Remove Child</Text>
             </Button>
           </Flex>
           <EditProfileModal
@@ -339,8 +351,9 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
             rounded={"xl"}
             pb={"1rem"}
             px={"1rem"}
+            py={"1rem"}
           >
-            <Box py={"1rem"}>
+            <Box>
               <Flex alignItems={"center"} gap={1}>
                 <Icon as={FaChildren} color="#005D5D" fontWeight={"bold"} />
                 <Text fontWeight={"600"} fontSize={"lg"} color={"#005D5D"}>
@@ -397,7 +410,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                     >
                       <Box display={"flex"} gap={"2"} alignItems={"center"}>
                         <Avatar
-                          size={"md"}
+                          size={{ base: "sm", md: "md" }}
                           src={item.profileImage}
                           pointerEvents={"none"}
                           name={`${item?.firstName} ${item?.lastName}`}
@@ -405,14 +418,14 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                         <Box>
                           <Text
                             fontWeight={"700"}
-                            fontSize={"lg"}
+                            fontSize={{ base: "xs", md: "lg" }}
                             pointerEvents={"none"}
                           >
                             {item?.firstName} {item?.middleName || ""}{" "}
                             {item?.lastName}
                           </Text>
                           <Text
-                            fontSize={"sm"}
+                            fontSize={{ base: "2xs", md: "sm" }}
                             color={"#AAAAAA"}
                             fontWeight={"600"}
                             pointerEvents={"none"}
@@ -437,9 +450,10 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
             rounded={"xl"}
             pb={"1rem"}
             px={"1rem"}
+            py={"1rem"}
           >
             <Box display={"flex"} flexDir={"column"} w={"full"}>
-              <Box py={"1rem"}>
+              <Box>
                 <Flex alignItems={"center"} gap={1}>
                   <Icon
                     as={FaCodePullRequest}
@@ -576,7 +590,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                               </Button>
                             </Flex>
                             <Text
-                              mt={{base:"0.4rem", md:"0"}}
+                              mt={{ base: "0.4rem", md: "0" }}
                               fontSize={{ base: "xs", lg: "sm" }}
                               color={"gray.500"}
                               fontWeight={"600"}
@@ -593,7 +607,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                                 color: "#FFFFFF",
                               }}
                               // variant={"outline"}
-                              rounded={{base:"sm", md:"md"}}
+                              rounded={{ base: "sm", md: "md" }}
                               onClick={() => handleRequestDelete(item?.id)}
                             >
                               Withdraw request
@@ -617,12 +631,13 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
           pb={"1rem"}
           px={"1rem"}
           mt={"2rem"}
+          py={"1rem"}
         >
           <SelectPlanModal
             isOpen={isSelectPlanModalOpen}
             onClose={onSelectPlanModalClose}
           />
-          <Box py={"1rem"}>
+          <Box>
             <Flex alignItems={"center"} gap={1}>
               <Icon as={RiBookletFill} color="#005D5D" fontWeight={"bold"} />
               <Text fontWeight={"600"} fontSize={"lg"} color={"#005D5D"}>
@@ -710,11 +725,11 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
           flexDir={"column"}
           border={"1px solid #005D5D30"}
           rounded={"xl"}
-          pb={"3rem"}
           px={"1rem"}
           mt={"2rem"}
+          py={"1rem"}
         >
-          <Box py={"1rem"}>
+          <Box>
             <Flex alignItems={"center"} gap={1}>
               <Icon
                 as={MdAccountBalanceWallet}
@@ -734,166 +749,84 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
             gap={3}
             display={parentData?.isPaid ? "none" : "flex"}
           >
-            <Text color={"gray.600"} textAlign={"center"}>
-              You are currently on the{" "}
-              <Box as={"span"} fontWeight={"bold"}>
-                Free Trial
-              </Box>{" "}
-              plan that expires in
-            </Text>
-            <FreeTrial createdAt={Number(parentData?.createdAt)} />
-            <Text color={"gray.600"} textAlign={"center"}>
-              Subscribe to one of our plans now to avoid losing access to your
-              childs data.
-            </Text>
-            <Button
-              colorScheme="green"
-              variant={"outline"}
-              onClick={onSelectPlanModalOpen}
+            <Stack
+              direction={{ base: "column", md: "row" }}
+              gap={4}
+              justifyContent={"space-between"}
+              w={"full"}
             >
-              Subscribe
-            </Button>
-          </Flex>
-
-          <Box display={parentData?.isPaid ? "block" : "none"}>
-            <Flex flexDir={"column"} gap={4}>
-              <Box w={"full"}>
-                <Text fontSize={"lg"} fontWeight={"500"} mb={"1rem"}>
-                  Plan Details
-                </Text>
-
-                <Box
-                  shadow={"sm"}
+              {parentData?.children?.map((child, index) => (
+                <Flex
+                  alignItems={"center"}
+                  key={index}
+                  justifyContent={"center"}
+                  flexDir={"column"}
+                  w={"full"}
+                  bg={"gray.100"}
+                  border={"1px solid #005D5D50"}
                   rounded={"xl"}
-                  border={"1px solid #00000030"}
+                  p={"1rem"}
                 >
-                  <Box
-                    roundedTop={"xl"}
-                    h={"8px"}
-                    bgGradient="linear(to-l, #911194, #005D5D)"
-                  ></Box>
+                  <Avatar
+                    src={child?.profileImgUrl}
+                    name={`${child?.firstName} ${child?.middleName || ""} ${
+                      child?.lastName
+                    }`}
+                    size={{ base: "md", md: "xl" }}
+                    mb={"0.5rem"}
+                  />
+                  <Text
+                    fontWeight={"semibold"}
+                    fontSize={{ base: "sm", md: "lg" }}
+                    textTransform={"capitalize"}
+                    mb={"0.5rem"}
+                    textAlign={"center"}
+                  >
+                    {`${child?.firstName} ${child?.middleName || ""} ${
+                      child?.lastName
+                    }`}
+                  </Text>
+                  <Text
+                    textAlign={"center"}
+                    mb={"0.5rem"}
+                    fontSize={{ base: "xs", md: "sm" }}
+                    color={"gray.600"}
+                    textTransform={"capitalize"}
+                    fontWeight={"semibold"}
+                  >
+                    {child?.school?.school?.schoolName} •{" "}
+                    {child?.classroom?.classroom?.className}
+                  </Text>
 
-                  <Box px={5} mt={"0.5rem"}>
+                  <Box display={child?.isPaid ? "block" : "none"}>
                     <Text
-                      fontWeight={"bold"}
-                      fontSize={{ base: "md", md: "xl" }}
-                      textTransform={"capitalize"}
+                      color={"gray.600"}
+                      textAlign={"center"}
+                      mb={"0.5rem"}
+                      fontSize={{ base: "sm", md: "md" }}
                     >
-                      {subscriptionData?.plan?.interval} Plan
+                      You are currently on the{" "}
+                      <Box as={"span"} fontWeight={"bold"}>
+                        {child?.collectibleType}
+                      </Box>{" "}
+                      plan that expires in
                     </Text>
-                    <Text
-                      color={"#00000080"}
-                      fontWeight={"500"}
-                      fontSize={{ base: "sm", md: "lg" }}
-                    >
-                      Can register up to 4 children and will be charged{" "}
-                      <span style={{ color: "#005D5D", fontWeight: "bold" }}>
-                        ₦
-                        {subscriptionData?.plan?.interval?.toLowerCase() ===
-                        "monthly"
-                          ? "65"
-                          : subscriptionData?.plan?.interval?.toLowerCase() ===
-                            "quarterly"
-                          ? "195"
-                          : "500"}
-                      </span>{" "}
-                      for every additional child
-                    </Text>
-                    <Divider mt={"1rem"} borderColor={"#005D5D50"} />
+                    <FreeTrial createdAt={Number(child?.subscribedAt)} />
                   </Box>
 
-                  <Box
-                    display={"flex"}
-                    justifyContent={"space-between"}
-                    w={"full"}
-                    px={2}
-                  >
+                  <Box display={child?.isPaid ? "none" : "block"}>
                     <Button
-                      rightIcon={<MdOutlineKeyboardArrowRight />}
-                      w="full"
-                      justifyContent={"space-between"}
-                      py={"1.5rem"}
-                      fontSize={"lg"}
-                      my={"0.4rem"}
+                      colorScheme="green"
                       variant={"outline"}
-                      border={"0px solid"}
                       onClick={onSelectPlanModalOpen}
-                      _hover={{ backgroundColor: "#EBF6F3" }}
                     >
-                      <Text fontSize={{ base: "sm", md: "lg" }}>
-                        Change plan
-                      </Text>
+                      Subscribe
                     </Button>
                   </Box>
-                </Box>
-              </Box>
-
-              <Box w={"full"}>
-                <Text
-                  fontSize={"lg"}
-                  fontWeight={"500"}
-                  mt={"1rem"}
-                  mb={"1rem"}
-                >
-                  Payment Info
-                </Text>
-
-                <Box
-                  rounded={"lg"}
-                  shadow={"sm"}
-                  border={"1px solid #00000030"}
-                  pb={"1rem"}
-                >
-                  <Box
-                    px={5}
-                    mt={"0.5rem"}
-                    display={"flex"}
-                    flexDir={"column"}
-                    gap={1}
-                  >
-                    <Text
-                      fontWeight={"bold"}
-                      fontSize={{ base: "md", md: "xl" }}
-                    >
-                      Next Payment
-                    </Text>
-                    <Text color={"#00000080"} fontWeight={"bold"}>
-                      {date}
-                    </Text>
-                    <Box display={"flex"} alignItems={"center"} gap={4}>
-                      <Image
-                        alt="mastercard"
-                        src={
-                          subscriptionData?.authorization?.brand ===
-                          "mastercard"
-                            ? "/images/mastercard.svg"
-                            : subscriptionData?.authorization?.brand === "visa"
-                            ? "/images/visa.svg"
-                            : "/images/verve.svg"
-                        }
-                        h={"2rem"}
-                      />
-                      <Text
-                        fontSize={"sm"}
-                        color={"#00000090"}
-                        fontWeight={"bold"}
-                      >
-                        •••• •••• •••• {subscriptionData?.authorization?.last4}
-                      </Text>
-                    </Box>
-                  </Box>
-                </Box>
-              </Box>
-              <Button
-                colorScheme="red"
-                variant={"outline"}
-                mt={"2rem"}
-                maxW={"200px"}
-              >
-                Cancel Membership
-              </Button>
-            </Flex>
-          </Box>
+                </Flex>
+              ))}
+            </Stack>
+          </Flex>
         </Flex>
       </Box>
     </Box>

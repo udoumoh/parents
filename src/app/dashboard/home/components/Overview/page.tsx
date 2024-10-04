@@ -34,44 +34,21 @@ import { HiOutlineUser } from "react-icons/hi";
 import { GET_PARENT } from "@/gql/queries";
 import { Parent } from "@/gql/types";
 import { useQuery } from "@apollo/client";
-import { capitalizeFirstLetter } from "@/helpers/capitalizeFirstLetter";
 import Carousel from "./components/Carousel";
 import { Student } from "@/gql/types";
 
 interface DashboardPageProps {}
 
 const DashboardPage: FC<DashboardPageProps> = ({}) => {
-  const { data: parent, loading } = useQuery(GET_PARENT);
-  const [parentData, setParentData] = useState<Parent>();
-  const { currentWardProfile, invoiceData } = useUserAPI();
+  const { currentWardProfile, invoiceData, parentData } = useUserAPI();
   const [currentStudentData, setCurrentStudentData] = useState<Student>();
 
   useEffect(() => {
-    const fetchParent = async () => {
-      try {
-        const response = await parent;
-        if (!response?.errors) {
-          setParentData(response?.parent?.parent);
-        } else {
-          throw new Error('an error', response.errors);
-        }
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    fetchParent();
-  }, [parent]); 
-
-  useEffect(() => {
     const currentId = Number(localStorage.getItem("currentId"));
-    if (!loading) {
-      console.log("children", parentData?.children)
       const studentData = parentData?.children?.find(
         (child) => child.id === currentId
       );
       setCurrentStudentData(studentData);
-    }
   }, [parentData]);
 
   const totalBalance = invoiceData
@@ -87,7 +64,6 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
       .reduce((acc, invoice) => acc + invoice?.amountPaid, 0) + totalBalance;
 
       console.log(parentData)
-
   return (
     <Box>
       <Flex gap={5} flexDir={"column"}>
@@ -231,10 +207,8 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
                   </>
                 )}
                 <Box gap={3}>
-                  <Text fontWeight={"bold"} fontSize={"lg"}>
-                    {capitalizeFirstLetter(
-                      currentStudentData?.school?.school?.schoolName
-                    )}
+                  <Text fontWeight={"bold"} fontSize={"lg"} textTransform={'capitalize'}>
+                      {currentStudentData?.school?.school?.schoolName}
                   </Text>
                   <Text fontSize={"sm"}>
                     {currentStudentData?.school?.school?.address}
@@ -285,12 +259,12 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
                 <Flex alignItems={"center"} gap={3}>
                   <Icon as={HiOutlineUser} boxSize={4} color={"#007C7B"} />
                   <Flex alignItems={"center"} gap={2}>
-                    <Text fontSize={"sm"}>
-                      {capitalizeFirstLetter(
+                    <Text fontSize={"sm"} textTransform={'capitalize'}>
+                      {
                         currentStudentData?.creator?.admin?.firstName
-                      )}{" "}
+                      }{" "}
                       {currentStudentData?.creator?.admin?.middleName}
-                      {""}
+                      {" "}
                       {currentStudentData?.creator?.admin?.lastName}
                     </Text>
                     <Badge
@@ -307,45 +281,49 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
                   </Flex>
                 </Flex>
 
-                <Flex
-                  alignItems={"center"}
-                  gap={3}
-                  display={
-                    currentStudentData?.classroom?.classroom?.teacher
-                      ?.length === 0
-                      ? "none"
-                      : "flex"
-                  }
-                >
-                  <Icon as={HiOutlineUser} boxSize={4} color={"#007C7B"} />
-                  <Flex alignItems={"center"} gap={2}>
-                    <Text fontSize={"sm"}>
-                      {capitalizeFirstLetter(
-                        currentStudentData?.classroom?.classroom?.teacher[0]
-                          ?.firstName
-                      )}{" "}
-                      {
-                        currentStudentData?.classroom?.classroom?.teacher[0]
-                          ?.middleName
-                      }{" "}
-                      {
-                        currentStudentData?.classroom?.classroom?.teacher[0]
-                          ?.lastName
+                {currentStudentData?.classroom?.classroom && (
+                  <>
+                    <Flex
+                      alignItems={"center"}
+                      gap={3}
+                      display={
+                        currentStudentData?.classroom?.classroom?.teacher
+                          ?.length === 0
+                          ? "none"
+                          : "flex"
                       }
-                    </Text>
-                    <Badge
-                      size={"sm"}
-                      backgroundColor={"#5B7FC9"}
-                      textTransform={"capitalize"}
-                      fontSize={"2xs"}
-                      color={"#ffffff"}
-                      fontWeight={"normal"}
-                      px={"0.3rem"}
                     >
-                      Teacher
-                    </Badge>
-                  </Flex>
-                </Flex>
+                      <Icon as={HiOutlineUser} boxSize={4} color={"#007C7B"} />
+                      <Flex alignItems={"center"} gap={2}>
+                        <Text fontSize={"sm"}  textTransform={'uppercase'}>
+                          {
+                            currentStudentData?.classroom?.classroom?.teacher[0]
+                              ?.firstName
+                          }{" "}
+                          {
+                            currentStudentData?.classroom?.classroom?.teacher[0]
+                              ?.middleName
+                          }{" "}
+                          {
+                            currentStudentData?.classroom?.classroom?.teacher[0]
+                              ?.lastName
+                          }
+                        </Text>
+                        <Badge
+                          size={"sm"}
+                          backgroundColor={"#5B7FC9"}
+                          textTransform={"capitalize"}
+                          fontSize={"2xs"}
+                          color={"#ffffff"}
+                          fontWeight={"normal"}
+                          px={"0.3rem"}
+                        >
+                          Teacher
+                        </Badge>
+                      </Flex>
+                    </Flex>
+                  </>
+                )}
               </Stack>
 
               <Text fontWeight={"bold"} fontSize={"sm"}>

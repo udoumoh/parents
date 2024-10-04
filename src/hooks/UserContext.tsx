@@ -6,6 +6,7 @@ import { format } from "date-fns";
 import { capitalizeFirstLetter } from "@/helpers/capitalizeFirstLetter";
 import { GET_STUDENT_INVOICE } from "@/gql/queries";
 import { formatDate } from "@/helpers/formatDate";
+import { Parent } from "@/gql/types";
 
 interface UserBio {
   firstName: string;
@@ -81,28 +82,28 @@ export interface StudentInvoiceProps {
   }[];
 }
 
-interface ParentDataProps {
-  agreedTo: boolean;
-  children: [];
-  createdAt: string;
-  email: string;
-  firstName: string;
-  folder: string;
-  id: number;
-  isDisabled: boolean;
-  isPaid: boolean;
-  isReferred: boolean;
-  isVerified: boolean;
-  lastName: string;
-  middleName: string;
-  parentRole: string;
-  phoneNumber: string;
-  profileImgUrl: string;
-  role: string;
-  status: string;
-  userId: string;
-  subscriptionId: string;
-}
+// interface ParentDataProps {
+//   agreedTo: boolean;
+//   children: [];
+//   createdAt: string;
+//   email: string;
+//   firstName: string;
+//   folder: string;
+//   id: number;
+//   isDisabled: boolean;
+//   isPaid: boolean;
+//   isReferred: boolean;
+//   isVerified: boolean;
+//   lastName: string;
+//   middleName: string;
+//   parentRole: string;
+//   phoneNumber: string;
+//   profileImgUrl: string;
+//   role: string;
+//   status: string;
+//   userId: string;
+//   subscriptionId: string;
+// }
 
 interface UserContextProps {
   profileData: {
@@ -118,7 +119,7 @@ interface UserContextProps {
     }>
   >
   currentWardProfile?: UserChildren;
-  parentData: ParentDataProps | undefined;
+  parentData: Parent | undefined;
   childData: UserChildren[] | undefined;
   invoiceData: StudentInvoiceProps[];
   loading: boolean;
@@ -170,9 +171,8 @@ export const UserApiProvider: FC<UserApiProviderProps> = ({ children }) => {
       },
     ],
   });
-  const [parentData, setParentData] = useState<ParentDataProps | undefined>(
-    undefined
-  );
+
+  const [parentData, setParentData] = useState<Parent>();
 
   const [isTrialOver, setIsTrialOver] = useState<boolean>(false)
 

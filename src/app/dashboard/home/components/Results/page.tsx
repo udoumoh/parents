@@ -41,6 +41,8 @@ import { GenerateResult, UploadedResult } from "@/gql/types";
 import ViewResultModal from "@/components/shared/viewResultModal";
 import { formatDate } from "@/helpers/formatDate";
 import placeholderImg from '/public/images/placeholderImg.jpg'
+import SelectPlanModal from "@/components/shared/selectPlanModal";
+import { Student } from "@/gql/types";
 
 interface ResultsProps {}
 
@@ -77,6 +79,11 @@ const Results: FC<ResultsProps> = ({}) => {
     onClose: onGeneratedModalClose,
     onOpen: onGeneratedModalOpen,
   } = useDisclosure();
+  const {
+    isOpen: isSelectPlanModalOpen,
+    onOpen: onSelectPlanModalOpen,
+    onClose: onSelectPlanModalClose,
+  } = useDisclosure();
   const { currentWardProfile, isTrialOver } = useUserAPI();
 
   const {
@@ -96,15 +103,25 @@ const Results: FC<ResultsProps> = ({}) => {
     }
   );
 
+  const {parentData} = useUserAPI();
   const [selectedTableResult, setSelectedTableResult] = useState<Result>();
   const [resultsType, setResultsType] = useState("generated");
   const [pdfResult, setPdfResult] = useState<Result[]>([]);
   const [uploadedResults, setUploadedResults] = useState<Result[]>([]);
   const [currentResult, setCurrentResult] = useState<Result[]>([]);
   const [resultToShow, setResultToShow] = useState<Result[]>([]);
+  const [currentStudentData, setCurrentStudentData] = useState<Student>();
   const [currentPage, setCurrentPage] = useState(1);
   const [totalNumberOfPages, setTotalNumberOfPages] = useState(1);
   const itemsPerPage = 10;
+
+  useEffect(() => {
+    const currentId = Number(localStorage.getItem("currentId"));
+    const studentData = parentData?.children?.find(
+      (child) => child.id === currentId
+    );
+    setCurrentStudentData(studentData);
+  }, [parentData]);
 
   useEffect(() => {
     if (getGeneratedResult) {
@@ -189,6 +206,10 @@ const Results: FC<ResultsProps> = ({}) => {
 
   return (
     <Box>
+      <SelectPlanModal
+        isOpen={isSelectPlanModalOpen}
+        onClose={onSelectPlanModalClose}
+      />
       <Text>Result Type</Text>
       <Flex justifyContent={"space-between"} my={"1rem"}>
         <Box>
@@ -226,17 +247,22 @@ const Results: FC<ResultsProps> = ({}) => {
         />
       </Flex>
 
-      {!isTrialOver ? (
+      {!currentStudentData?.isPaid ? (
         <>
-          <Alert status="warning" rounded={"md"}>
+          <Alert status="info" rounded={"md"}>
             <AlertIcon />
-            <AlertTitle fontSize={{ base: "sm", md: "md" }}>
-              Results are not available on your current plan!
-            </AlertTitle>
-            <AlertDescription display={{base:"none", md: 'flex'}}>
-              Please subscribe to view your child's results
-            </AlertDescription>
+            <Box display={'flex'} flexDir={{base:"column", md:"row"}} alignItems={'center'} gap={4}>
+              <Text fontSize={{ base: "xs", md: "md" }} fontWeight={"bold"}>
+                Results are not available on your current plan!
+              </Text>
+              <Text fontSize={{ base: "xs", md: "md" }} mt={"0.3rem"}>
+                Please subscribe to view your child's results
+              </Text>
+            </Box>
           </Alert>
+            <Button w={{base:'full', md:"auto"}} size={"sm"} variant={{base:"outline", md:'solid'}} mt={'0.5rem'} rounded={"3px"} colorScheme="teal" onClick={onSelectPlanModalOpen}>
+              Subscribe
+            </Button>
         </>
       ) : (
         <Box>
@@ -247,9 +273,12 @@ const Results: FC<ResultsProps> = ({}) => {
               <Spinner color="green.500" />
             ) : !loadingGeneratedResult && currentResult?.length === 0 ? (
               <>
-                <Text fontSize={"xl"}>
-                  There are no results available for this student
+              <Box display={'flex'} flexDir={'column'} w={'full'} alignItems={'center'}>
+                <Image  src="/images/results-empty-state.svg" boxSize={52} />
+                <Text fontSize={{base:"sm", md:"md"}} fontWeight={'semibold'} color={'gray.500'}>
+                  No results have been uploaded yet
                 </Text>
+              </Box>
               </>
             ) : (
               <Wrap gap={5} flexDir={{ base: "column", lg: "row" }}>

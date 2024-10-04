@@ -56,7 +56,7 @@ const Layout: FC<LayoutProps> = ({ children }) => {
 
   const Overlay = () => <ModalOverlay bg="none" backdropFilter="blur(10px)" />;
   return (
-    <SidebarWithHeader>
+    <Box>
       {/* ... Your modal content ... */}
       <Modal
         isCentered
@@ -127,7 +127,7 @@ const Layout: FC<LayoutProps> = ({ children }) => {
         </ModalContent>
       </Modal>
       {children}
-    </SidebarWithHeader>
+    </Box>
   );
 };
 

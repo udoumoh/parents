@@ -1022,7 +1022,7 @@ const MainNav: FC<MainNav> = ({ children }) => {
       </Drawer>
       {/* mobilenav */}
       <MobileNav onOpen={onOpen} onClose={onPopoverClose}/>
-      <Box ml={{ base: 0, md: "4.1rem" }} p={pathName.includes("clips") || pathName.includes("marketplace") ? 0 : 4}>
+      <Box ml={{ base: 0, md: "4.1rem" }} mb={'2.5rem'} p={pathName.includes("clips") || pathName.includes("marketplace") ? 0 : 4}>
         {/* Content */}
         {children}
       </Box>
