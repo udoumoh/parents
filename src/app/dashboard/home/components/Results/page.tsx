@@ -42,7 +42,7 @@ import ViewResultModal from "@/components/shared/viewResultModal";
 import { formatDate } from "@/helpers/formatDate";
 import placeholderImg from '/public/images/placeholderImg.jpg'
 import SelectPlanModal from "@/components/shared/selectPlanModal";
-import { Student } from "@/gql/types";
+import { FiPlus } from "react-icons/fi";
 
 interface ResultsProps {}
 
@@ -84,7 +84,7 @@ const Results: FC<ResultsProps> = ({}) => {
     onOpen: onSelectPlanModalOpen,
     onClose: onSelectPlanModalClose,
   } = useDisclosure();
-  const { currentWardProfile, isTrialOver } = useUserAPI();
+  const { currentWardProfile } = useUserAPI();
 
   const {
     data: getGeneratedResult,
@@ -103,25 +103,16 @@ const Results: FC<ResultsProps> = ({}) => {
     }
   );
 
-  const {parentData} = useUserAPI();
+  const {currentStudentData} = useUserAPI();
   const [selectedTableResult, setSelectedTableResult] = useState<Result>();
   const [resultsType, setResultsType] = useState("generated");
   const [pdfResult, setPdfResult] = useState<Result[]>([]);
   const [uploadedResults, setUploadedResults] = useState<Result[]>([]);
   const [currentResult, setCurrentResult] = useState<Result[]>([]);
   const [resultToShow, setResultToShow] = useState<Result[]>([]);
-  const [currentStudentData, setCurrentStudentData] = useState<Student>();
   const [currentPage, setCurrentPage] = useState(1);
   const [totalNumberOfPages, setTotalNumberOfPages] = useState(1);
   const itemsPerPage = 10;
-
-  useEffect(() => {
-    const currentId = Number(localStorage.getItem("currentId"));
-    const studentData = parentData?.children?.find(
-      (child) => child.id === currentId
-    );
-    setCurrentStudentData(studentData);
-  }, [parentData]);
 
   useEffect(() => {
     if (getGeneratedResult) {
@@ -217,7 +208,7 @@ const Results: FC<ResultsProps> = ({}) => {
             placeholder="Select Type"
             value={resultsType}
             onChange={handleResultsTypeChange}
-            size={"md"}
+            size={{ base: "sm", md: "md" }}
             border={"2px solid #007C7B"}
             fontSize={"sm"}
             color={"#747474"}
@@ -232,11 +223,16 @@ const Results: FC<ResultsProps> = ({}) => {
           backgroundColor={"#005D5D"}
           color={"#fff"}
           colorScheme="teal"
-          size={"md"}
+          size={{ base: "sm", md: "md" }}
           onClick={onModalOpen}
+          isDisabled={!currentStudentData?.isPaid}
         >
           <AiOutlinePlus />
-          <Text fontWeight={"light"} pl="0.5rem" fontSize={"sm"}>
+          <Text
+            fontWeight={"light"}
+            pl="0.5rem"
+            fontSize={{ base: "xs", md: "sm" }}
+          >
             Upload Result
           </Text>
         </Button>
@@ -251,7 +247,12 @@ const Results: FC<ResultsProps> = ({}) => {
         <>
           <Alert status="info" rounded={"md"}>
             <AlertIcon />
-            <Box display={'flex'} flexDir={{base:"column", md:"row"}} alignItems={'center'} gap={4}>
+            <Box
+              display={"flex"}
+              flexDir={{ base: "column", md: "row" }}
+              alignItems={"center"}
+              gap={4}
+            >
               <Text fontSize={{ base: "xs", md: "md" }} fontWeight={"bold"}>
                 Results are not available on your current plan!
               </Text>
@@ -260,25 +261,51 @@ const Results: FC<ResultsProps> = ({}) => {
               </Text>
             </Box>
           </Alert>
-            <Button w={{base:'full', md:"auto"}} size={"sm"} variant={{base:"outline", md:'solid'}} mt={'0.5rem'} rounded={"3px"} colorScheme="teal" onClick={onSelectPlanModalOpen}>
-              Subscribe
-            </Button>
+          <Button
+            rightIcon={<FiPlus />}
+            shadow={"sm"}
+            w={{ base: "full", md: "180px" }}
+            size={{ base: "sm", md: "md" }}
+            variant={{ base: "outline", md: "outline" }}
+            mt={"0.5rem"}
+            rounded={{base:"3px", md:"md"}}
+            colorScheme="blue"
+            onClick={onSelectPlanModalOpen}
+          >
+            Subscribe
+          </Button>
         </>
       ) : (
         <Box>
           <Box>
-            <Text mb={"1rem"}>Most Recent</Text>
+            <Text
+              fontSize={"sm"}
+              fontWeight={"semibold"}
+              color={"gray.500"}
+              mb={"1rem"}
+            >
+              Most Recent
+            </Text>
 
             {loadingGeneratedResult ? (
               <Spinner color="green.500" />
             ) : !loadingGeneratedResult && currentResult?.length === 0 ? (
               <>
-              <Box display={'flex'} flexDir={'column'} w={'full'} alignItems={'center'}>
-                <Image  src="/images/results-empty-state.svg" boxSize={52} />
-                <Text fontSize={{base:"sm", md:"md"}} fontWeight={'semibold'} color={'gray.500'}>
-                  No results have been uploaded yet
-                </Text>
-              </Box>
+                <Box
+                  display={"flex"}
+                  flexDir={"column"}
+                  w={"full"}
+                  alignItems={"center"}
+                >
+                  <Image src="/images/results-empty-state.svg" boxSize={52} />
+                  <Text
+                    fontSize={{ base: "sm", md: "md" }}
+                    fontWeight={"semibold"}
+                    color={"gray.500"}
+                  >
+                    No results have been uploaded yet
+                  </Text>
+                </Box>
               </>
             ) : (
               <Wrap gap={5} flexDir={{ base: "column", lg: "row" }}>

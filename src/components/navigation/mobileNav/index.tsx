@@ -3,12 +3,8 @@ import { FC } from 'react'
 import { Box, Text, Icon, Flex} from '@chakra-ui/react'
 import { IconType } from 'react-icons';
 import {
-  IoReceiptOutline,
-  IoReceipt,
   IoGridOutline,
   IoGrid,
-  IoFolderOutline,
-  IoFolder,
   IoCompassOutline,
   IoCompass,
 } from "react-icons/io5";
@@ -39,18 +35,6 @@ const LinkItems: Array<LinkItemProps> = [
     url: "/dashboard/home",
   },
   {
-    name: "Results",
-    iconLight: IoFolderOutline,
-    iconFill: IoFolder,
-    url: "/dashboard/home",
-  },
-  {
-    name: "Invoice",
-    iconLight: IoReceiptOutline,
-    iconFill: IoReceipt,
-    url: "/dashboard/home",
-  },
-  {
     name: "Discover",
     iconLight: IoCompassOutline,
     iconFill: IoCompass,
@@ -62,6 +46,12 @@ const LinkItems: Array<LinkItemProps> = [
     iconFill: PiChatsTeardropFill,
     url: "/dashboard/inbox",
   },
+  {
+    name: "Settings",
+    iconLight: AiOutlineSetting,
+    iconFill: IoMdSettings,
+    url: "/dashboard/settings",
+  },
 ];
 
 const BottomNav: FC<BottomNavProps> = ({}) => {
@@ -71,7 +61,7 @@ const BottomNav: FC<BottomNavProps> = ({}) => {
     <Box
       display={{ base: "block", md: "none" }}
       position={"fixed"}
-      bottom="0"
+      bottom="2"
       left="0"
       right="0"
       bg={pathName.includes("clips") ? "#000000" : "#ffffff80"}
@@ -80,7 +70,9 @@ const BottomNav: FC<BottomNavProps> = ({}) => {
       height={"8vh"}
       borderTopWidth={pathName.includes("clips") ? "0.5px" : "0px"}
       borderTopColor={"gray.600"}
-      backdropFilter={'blur(10px)'}
+      borderRadius={"full"}
+      mx={"0.7rem"}
+      backdropFilter={"blur(10px)"}
     >
       <Flex justify={"space-around"} alignItems={"center"} h={"full"}>
         {LinkItems.map((item, index) => (
@@ -102,7 +94,7 @@ const BottomNav: FC<BottomNavProps> = ({}) => {
                   ? "#000"
                   : "gray.600"
               }
-              boxSize={5}
+              boxSize={4}
               _hover={{
                 transform: "scale(1.1)",
                 transition: "0.5s",

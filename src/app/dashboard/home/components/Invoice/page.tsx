@@ -1,10 +1,5 @@
 "use client";
-import {
-  FC,
-  useState,
-  useEffect,
-  lazy,
-} from "react";
+import { FC, useState, useEffect, lazy } from "react";
 import {
   Box,
   Text,
@@ -22,18 +17,20 @@ import {
   MenuItem,
   useDisclosure,
   Button,
+  Alert,
+  AlertIcon,
   IconButton,
 } from "@chakra-ui/react";
 import { useUserAPI } from "@/hooks/UserContext";
 import formatNumberWithCommas from "@/helpers/formatNumberWithCommas";
-import {
-  MdAccountBalanceWallet,
-} from "react-icons/md";
+import { MdAccountBalanceWallet } from "react-icons/md";
 import { GET_STUDENT_EDUCATION_HISTORY } from "@/gql/queries";
 import { useQuery } from "@apollo/client";
 import { IoFilterOutline } from "react-icons/io5";
 import { StudentInvoiceProps } from "@/hooks/UserContext";
 import InvoiceTable from "./components/InvoiceTable";
+import { FiPlus } from "react-icons/fi";
+import SelectPlanModal from "@/components/shared/selectPlanModal";
 
 const AcceptInvoiceModal = lazy(
   () => import("@/components/shared/acceptInvoiceModal")
@@ -51,7 +48,7 @@ const InvoiceDataModal = lazy(
   () => import("@/components/shared/InvoiceDataModal")
 );
 
-const OverviewCard = ({count, totalInvoiceValue, title, ...props}: any) => {
+const OverviewCard = ({ count, totalInvoiceValue, title, ...props }: any) => {
   return (
     <>
       <Flex
@@ -59,16 +56,16 @@ const OverviewCard = ({count, totalInvoiceValue, title, ...props}: any) => {
         {...props}
         border={"1px solid #83ACC960"}
         rounded={"lg"}
-        px={5}
+        px={{base:2, md:5}}
         py={2}
         gap={"2"}
         w={"full"}
         _hover={{ boxShadow: "md", transitionDuration: "0.5s" }}
       >
-        <Text fontSize={"md"} color={"blue.800"} fontWeight={"500"}>
+        <Text fontSize={{base:"xs", md:"md"}} color={"blue.800"} fontWeight={"semibold"}>
           {title}
         </Text>
-        <Text fontSize={"3xl"} fontWeight={"700"} color={"gray.700"}>
+        <Text fontSize={{base:"lg", md:"3xl"}} fontWeight={"700"} color={"gray.700"}>
           ₦
           {totalInvoiceValue === undefined
             ? 0
@@ -80,8 +77,9 @@ const OverviewCard = ({count, totalInvoiceValue, title, ...props}: any) => {
           py={"0.1rem"}
           px={"0.5rem"}
           color={"#fff"}
-          maxW={"100px"}
-          fontSize={"2xs"}
+          // maxW={"100px"}
+          fontSize={{base:"3xs", md:"2xs"}}
+          w={'fit-content'}
           shadow={"md"}
         >
           {count?.length || 0} invoices
@@ -89,16 +87,16 @@ const OverviewCard = ({count, totalInvoiceValue, title, ...props}: any) => {
       </Flex>
     </>
   );
-}
+};
 
 interface InvoiceProps {}
 
 const Invoice: FC<InvoiceProps> = ({}) => {
-  const { invoiceData, currentWardProfile } = useUserAPI();
+  const { invoiceData, currentWardProfile, currentStudentData } = useUserAPI();
   const { data: getEducationHistory } = useQuery(
     GET_STUDENT_EDUCATION_HISTORY,
     {
-      variables: { studentId: currentWardProfile?.id},
+      variables: { studentId: currentWardProfile?.id },
     }
   );
 
@@ -130,6 +128,12 @@ const Invoice: FC<InvoiceProps> = ({}) => {
     isOpen: isSchoolAccountDetailsModalOpen,
     onOpen: onSchoolAccountDetailsModalOpen,
     onClose: onSchoolAccountDetailsModalClose,
+  } = useDisclosure();
+
+  const {
+    isOpen: isSelectPlanModalOpen,
+    onOpen: onSelectPlanModalOpen,
+    onClose: onSelectPlanModalClose,
   } = useDisclosure();
 
   const [invoices, setInvoices] = useState<StudentInvoiceProps[]>([]);
@@ -176,7 +180,8 @@ const Invoice: FC<InvoiceProps> = ({}) => {
     let filteredInvoices = invoiceData;
     if (filterParam) {
       filteredInvoices = filteredInvoices?.filter(
-        (invoice) => invoice?.schoolname.toLowerCase() === filterParam.toLowerCase()
+        (invoice) =>
+          invoice?.schoolname.toLowerCase() === filterParam.toLowerCase()
       );
     }
     setInvoices(filteredInvoices);
@@ -191,17 +196,30 @@ const Invoice: FC<InvoiceProps> = ({}) => {
     return totalCompletedAmount;
   };
 
-  const filterInvoicesByStatus = (invoices: StudentInvoiceProps[], status: string[]) => {
-    return invoices?.filter((invoice: StudentInvoiceProps) => status.includes(invoice.status))
-  }
+  const filterInvoicesByStatus = (
+    invoices: StudentInvoiceProps[],
+    status: string[]
+  ) => {
+    return invoices?.filter((invoice: StudentInvoiceProps) =>
+      status.includes(invoice.status)
+    );
+  };
 
-  const calculateTotalAmount = (invoices: StudentInvoiceProps[], amountFn: (invoice: StudentInvoiceProps) => number) => {
-    return invoices?.reduce((acc, invoice) => acc + amountFn(invoice), 0)
-  }
+  const calculateTotalAmount = (
+    invoices: StudentInvoiceProps[],
+    amountFn: (invoice: StudentInvoiceProps) => number
+  ) => {
+    return invoices?.reduce((acc, invoice) => acc + amountFn(invoice), 0);
+  };
 
-  const completedInvoice = filterInvoicesByStatus(invoices, ['completed'])
-  const activeInvoice = filterInvoicesByStatus(invoices, ["active", "partial payment"]);
-  const rejectedInvoice = filterInvoicesByStatus(invoices, ["rejected by parent"]);
+  const completedInvoice = filterInvoicesByStatus(invoices, ["completed"]);
+  const activeInvoice = filterInvoicesByStatus(invoices, [
+    "active",
+    "partial payment",
+  ]);
+  const rejectedInvoice = filterInvoicesByStatus(invoices, [
+    "rejected by parent",
+  ]);
   const processingInvoice = filterInvoicesByStatus(invoices, ["processing"]);
 
   const totalActiveAmount = calculateTotalAmount(
@@ -209,15 +227,25 @@ const Invoice: FC<InvoiceProps> = ({}) => {
     (invoice) => invoice?.amountPaid + getCompletedInvoiceAmount(invoice)
   );
 
-  const totalRejectedAmount = calculateTotalAmount(rejectedInvoice, (invoice) => invoice?.amountPaid)
-  
-  const totalProcessingAmount = calculateTotalAmount(processingInvoice, (invoice) => invoice?.amountPaid)
-  
+  const totalRejectedAmount = calculateTotalAmount(
+    rejectedInvoice,
+    (invoice) => invoice?.amountPaid
+  );
+
+  const totalProcessingAmount = calculateTotalAmount(
+    processingInvoice,
+    (invoice) => invoice?.amountPaid
+  );
+
   const nonEmptyReceipts = invoices
     ?.map((invoice) => invoice?.receipt)
     ?.filter((receipt: any) => receipt?.length !== 0);
 
-  const totalAmountPaid = nonEmptyReceipts?.map((receiptItem) => receiptItem?.reduce((acc, item) => acc + item?.amountPaid, 0)).reduce((acc: any, item: any) => acc + item, 0);
+  const totalAmountPaid = nonEmptyReceipts
+    ?.map((receiptItem) =>
+      receiptItem?.reduce((acc, item) => acc + item?.amountPaid, 0)
+    )
+    .reduce((acc: any, item: any) => acc + item, 0);
 
   const handleAcceptInvoice = (invoice: StudentInvoiceProps) => {
     setCurrentInvoice(invoice);
@@ -237,7 +265,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
   const handleInvoiceDetailsModal = (invoice: StudentInvoiceProps) => {
     setCurrentInvoice(invoice);
     onInvoiceDataModalOpen();
-  }
+  };
 
   const handleNextPage = () => {
     const nextPage = currentPage + 1;
@@ -280,169 +308,126 @@ const Invoice: FC<InvoiceProps> = ({}) => {
 
   return (
     <Box>
-      <Box>
-        <Box>
-          <Text
-            color={"#005D5D"}
-            fontSize={"2xl"}
-            fontWeight={"600"}
-            mb={"1rem"}
-          >
-            Overview
-          </Text>
-        </Box>
-        <AcceptInvoiceModal
-          isOpen={isAcceptModalOpen}
-          onOpen={onAcceptModalOpen}
-          onClose={onAcceptModalClose}
-          invoiceData={currentInvoice}
-        />
-        <RejectInvoiceModal
-          isOpen={isRejectModalOpen}
-          onOpen={onRejectModalOpen}
-          onClose={onRejectModalClose}
-          invoiceData={currentInvoice}
-        />
-        <OverpaidBalancePaymentModal
-          isOpen={isOverpaidModalModalOpen}
-          onOpen={onOverpaidModalModalOpen}
-          onClose={onOverpaidModalModalClose}
-          invoiceData={currentInvoice}
-          balance={currentWardProfile?.wallet}
-        />
-        <SchoolAccountDetailsModal
-          isOpen={isSchoolAccountDetailsModalOpen}
-          onClose={onSchoolAccountDetailsModalClose}
-        />
-        <InvoiceDataModal
-          isOpen={isInvoiceDataModalOpen}
-          onClose={onInvoiceDataModalClose}
-          invoice={currentInvoice}
-        />
-
-        {/* Overview grid cards for total, rejected, processing and active invoices */}
-        <SimpleGrid minChildWidth="200px" spacing={"10px"}>
-          <OverviewCard
-            count={completedInvoice}
-            title={"Total Amount Paid"}
-            totalInvoiceValue={totalAmountPaid}
-            backgroundColor={"#DBEEFC"}
-          />
-          <OverviewCard
-            count={activeInvoice}
-            title={"Active"}
-            totalInvoiceValue={totalActiveAmount}
-            backgroundColor={"#E7FDF5"}
-          />
-          <OverviewCard
-            count={rejectedInvoice}
-            title={"Rejected"}
-            totalInvoiceValue={totalRejectedAmount}
-            backgroundColor={"#FDE7E7"}
-          />
-          <OverviewCard
-            count={processingInvoice}
-            title={"Processing"}
-            totalInvoiceValue={totalProcessingAmount}
-            backgroundColor={"#FCF1DB"}
-          />
-        </SimpleGrid>
-
-        <Flex alignItems={"center"} mt={"1.5rem"} gap={2}>
-          <Menu isLazy>
-            <MenuButton>
-              <IconButton
-                display={{ base: "flex", lg: "none" }}
-                size={"md"}
-                variant={"outline"}
-                aria-label="filter"
-                colorScheme="teal"
-                icon={<IoFilterOutline size={20} />}
-              />
-            </MenuButton>
-            <MenuList px={"0.5rem"}>
-              <MenuItem
-                _hover={{
-                  backgroundColor: "#005D5D15",
-                  color: "#005D5D",
-                }}
-                onClick={() => handleFilterChange("")}
-              >
-                - Any -
-              </MenuItem>
-              {schoolsAttended?.map((school: any, index: any) => {
-                return (
-                  <MenuItem
-                    _hover={{
-                      backgroundColor: "#005D5D15",
-                      color: "#005D5D",
-                    }}
-                    key={index}
-                    onClick={() => handleFilterChange(school)}
-                  >
-                    {school}
-                  </MenuItem>
-                );
-              })}
-            </MenuList>
-          </Menu>
-          <Button
-            display={{ base: "flex", lg: "none" }}
-            leftIcon={<MdAccountBalanceWallet />}
-            backgroundColor={"#005D5D"}
-            color={"#ffffff"}
-            _hover={{ backgroundColor: "#004A4A" }}
-            onClick={onSchoolAccountDetailsModalOpen}
-          >
-            School Account
-          </Button>
-        </Flex>
-      </Box>
-
-      <Box mt={"3rem"}>
-        <Box>
-          <Tabs variant={"unstyled"} size={"xs"} w={"full"}>
-            <Flex
-              gap={4}
-              overflowX={"auto"}
-              justifyContent={{ base: "start", md: "space-between" }}
-              alignItems={"center"}
+      <SelectPlanModal
+        isOpen={isSelectPlanModalOpen}
+        onClose={onSelectPlanModalClose}
+      />
+      <AcceptInvoiceModal
+        isOpen={isAcceptModalOpen}
+        onOpen={onAcceptModalOpen}
+        onClose={onAcceptModalClose}
+        invoiceData={currentInvoice}
+      />
+      <RejectInvoiceModal
+        isOpen={isRejectModalOpen}
+        onOpen={onRejectModalOpen}
+        onClose={onRejectModalClose}
+        invoiceData={currentInvoice}
+      />
+      <OverpaidBalancePaymentModal
+        isOpen={isOverpaidModalModalOpen}
+        onOpen={onOverpaidModalModalOpen}
+        onClose={onOverpaidModalModalClose}
+        invoiceData={currentInvoice}
+        balance={currentWardProfile?.wallet}
+      />
+      <SchoolAccountDetailsModal
+        isOpen={isSchoolAccountDetailsModalOpen}
+        onClose={onSchoolAccountDetailsModalClose}
+      />
+      <InvoiceDataModal
+        isOpen={isInvoiceDataModalOpen}
+        onClose={onInvoiceDataModalClose}
+        invoice={currentInvoice}
+      />
+      {!currentStudentData?.isPaid ? (
+        <>
+          <Alert status="info" rounded={"md"}>
+            <AlertIcon />
+            <Box
+              display={"flex"}
               flexDir={{ base: "column", md: "row" }}
+              alignItems={"center"}
+              gap={4}
             >
-              <TabList
-                backgroundColor={"#005D5D40"}
-                p={"0.4rem"}
-                rounded={"md"}
-                gap={{ base: "1", md: "3" }}
-              >
-                {invoiceTabs.map((tab) => (
-                  <Tab
-                    key={tab.tabName}
-                    fontSize={{ base: "xs", md: "md" }}
-                    color={"#000"}
-                    px={{ base: "0.5rem", md: "1rem" }}
-                    py={"0.3rem"}
-                    borderRadius={"4px"}
-                    _selected={{ backgroundColor: "#005D5D", color: "#FFFFFF" }}
-                  >
-                    {tab.tabName}
-                  </Tab>
-                ))}
-              </TabList>
+              <Text fontSize={{ base: "xs", md: "md" }} fontWeight={"bold"}>
+                Results are not available on your current plan!
+              </Text>
+              <Text fontSize={{ base: "xs", md: "md" }} mt={"0.3rem"}>
+                Please subscribe to view your child's results
+              </Text>
+            </Box>
+          </Alert>
+          <Button
+            rightIcon={<FiPlus />}
+            shadow={"sm"}
+            w={{ base: "full", md: "180px" }}
+            size={{ base: "sm", md: "md" }}
+            variant={{ base: "outline", md: "outline" }}
+            mt={"0.5rem"}
+            rounded={{ base: "3px", md: "md" }}
+            colorScheme="blue"
+            onClick={onSelectPlanModalOpen}
+          >
+            Subscribe
+          </Button>
+        </>
+      ) : (
+        <>
+          <Box>
+            <Box>
+              <Box>
+                <Text
+                  color={"#005D5D"}
+                  fontSize={"2xl"}
+                  fontWeight={"600"}
+                  mb={"1rem"}
+                >
+                  Overview
+                </Text>
+              </Box>
 
-              <Flex
-                alignItems={"center"}
-                gap={2}
-                display={{ base: "none", lg: "flex" }}
+              {/* Overview grid cards for total, rejected, processing and active invoices */}
+              <SimpleGrid
+                templateColumns="repeat(auto-fit, minmax(150px, 1fr))"
+                spacing={"10px"}
               >
+                <OverviewCard
+                  count={completedInvoice}
+                  title={"Total Amount Paid"}
+                  totalInvoiceValue={totalAmountPaid}
+                  backgroundColor={"#DBEEFC"}
+                />
+                <OverviewCard
+                  count={activeInvoice}
+                  title={"Active"}
+                  totalInvoiceValue={totalActiveAmount}
+                  backgroundColor={"#E7FDF5"}
+                />
+                <OverviewCard
+                  count={rejectedInvoice}
+                  title={"Rejected"}
+                  totalInvoiceValue={totalRejectedAmount}
+                  backgroundColor={"#FDE7E7"}
+                />
+                <OverviewCard
+                  count={processingInvoice}
+                  title={"Processing"}
+                  totalInvoiceValue={totalProcessingAmount}
+                  backgroundColor={"#FCF1DB"}
+                />
+              </SimpleGrid>
+
+              <Flex alignItems={"center"} mt={"1.5rem"} gap={2}>
                 <Menu isLazy>
                   <MenuButton>
                     <IconButton
-                      size={"md"}
+                      display={{ base: "flex", lg: "none" }}
+                      size={{ base: "xs", md: "md" }}
                       variant={"outline"}
                       aria-label="filter"
                       colorScheme="teal"
-                      icon={<IoFilterOutline size={20} />}
+                      icon={<IoFilterOutline size={12} />}
                     />
                   </MenuButton>
                   <MenuList px={"0.5rem"}>
@@ -472,44 +457,137 @@ const Invoice: FC<InvoiceProps> = ({}) => {
                   </MenuList>
                 </Menu>
                 <Button
+                  size={{ base: "xs", md: "md" }}
+                  display={{ base: "flex", lg: "none" }}
                   leftIcon={<MdAccountBalanceWallet />}
                   backgroundColor={"#005D5D"}
                   color={"#ffffff"}
                   _hover={{ backgroundColor: "#004A4A" }}
                   onClick={onSchoolAccountDetailsModalOpen}
+                  fontSize={{ base: "2xs", md: "md" }}
                 >
                   School Account
                 </Button>
               </Flex>
-            </Flex>
+            </Box>
 
-            <TabPanels>
-              {invoiceTabs.map((tab) => (
-                <TabPanel
-                  key={tab.tabName}
-                  border={"1px solid #E2E2E2"}
-                  rounded={"lg"}
-                  mt={"1rem"}
-                >
-                  <InvoiceTable
-                    getFormattedInvoiceAmount={getFormattedInvoiceAmount}
-                    invoices={tab.content}
-                    handleAcceptInvoice={handleAcceptInvoice}
-                    handleRejectInvoice={handleRejectInvoice}
-                    handleOverpaidInvoice={handleOverpaidInvoice}
-                    handleInvoiceDetailsModal={handleInvoiceDetailsModal}
-                    currentWardProfile={currentWardProfile}
-                    handlePreviousPage={handlePreviousPage}
-                    handleNextPage={handleNextPage}
-                    currentPage={currentPage}
-                    totalPages={totalPages}
-                  />
-                </TabPanel>
-              ))}
-            </TabPanels>
-          </Tabs>
-        </Box>
-      </Box>
+            <Box mt={"3rem"}>
+              <Box>
+                <Tabs variant={"unstyled"} size={"xs"} w={"full"}>
+                  <Flex
+                    gap={4}
+                    overflowX={"auto"}
+                    justifyContent={{ base: "start", md: "space-between" }}
+                    alignItems={"center"}
+                    flexDir={{ base: "column", md: "row" }}
+                  >
+                    <TabList
+                      backgroundColor={"#005D5D40"}
+                      p={"0.4rem"}
+                      rounded={"md"}
+                      gap={{ base: "1", md: "3" }}
+                    >
+                      {invoiceTabs.map((tab) => (
+                        <Tab
+                          key={tab.tabName}
+                          fontSize={{ base: "xs", md: "md" }}
+                          color={"#000"}
+                          px={{ base: "0.5rem", md: "1rem" }}
+                          py={"0.3rem"}
+                          borderRadius={"4px"}
+                          _selected={{
+                            backgroundColor: "#005D5D",
+                            color: "#FFFFFF",
+                          }}
+                        >
+                          {tab.tabName}
+                        </Tab>
+                      ))}
+                    </TabList>
+
+                    <Flex
+                      alignItems={"center"}
+                      gap={2}
+                      display={{ base: "none", lg: "flex" }}
+                    >
+                      <Menu isLazy>
+                        <MenuButton>
+                          <IconButton
+                            size={"md"}
+                            variant={"outline"}
+                            aria-label="filter"
+                            colorScheme="teal"
+                            icon={<IoFilterOutline size={20} />}
+                          />
+                        </MenuButton>
+                        <MenuList px={"0.5rem"}>
+                          <MenuItem
+                            _hover={{
+                              backgroundColor: "#005D5D15",
+                              color: "#005D5D",
+                            }}
+                            onClick={() => handleFilterChange("")}
+                          >
+                            - Any -
+                          </MenuItem>
+                          {schoolsAttended?.map((school: any, index: any) => {
+                            return (
+                              <MenuItem
+                                _hover={{
+                                  backgroundColor: "#005D5D15",
+                                  color: "#005D5D",
+                                }}
+                                key={index}
+                                onClick={() => handleFilterChange(school)}
+                              >
+                                {school}
+                              </MenuItem>
+                            );
+                          })}
+                        </MenuList>
+                      </Menu>
+                      <Button
+                        leftIcon={<MdAccountBalanceWallet />}
+                        backgroundColor={"#005D5D"}
+                        color={"#ffffff"}
+                        _hover={{ backgroundColor: "#004A4A" }}
+                        onClick={onSchoolAccountDetailsModalOpen}
+                      >
+                        School Account
+                      </Button>
+                    </Flex>
+                  </Flex>
+
+                  <TabPanels>
+                    {invoiceTabs.map((tab) => (
+                      <TabPanel
+                        key={tab.tabName}
+                        border={"1px solid #E2E2E2"}
+                        rounded={"lg"}
+                        mt={"1rem"}
+                      >
+                        <InvoiceTable
+                          getFormattedInvoiceAmount={getFormattedInvoiceAmount}
+                          invoices={tab.content}
+                          handleAcceptInvoice={handleAcceptInvoice}
+                          handleRejectInvoice={handleRejectInvoice}
+                          handleOverpaidInvoice={handleOverpaidInvoice}
+                          handleInvoiceDetailsModal={handleInvoiceDetailsModal}
+                          currentWardProfile={currentWardProfile}
+                          handlePreviousPage={handlePreviousPage}
+                          handleNextPage={handleNextPage}
+                          currentPage={currentPage}
+                          totalPages={totalPages}
+                        />
+                      </TabPanel>
+                    ))}
+                  </TabPanels>
+                </Tabs>
+              </Box>
+            </Box>
+          </Box>
+        </>
+      )}
     </Box>
   );
 };

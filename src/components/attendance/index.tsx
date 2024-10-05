@@ -18,7 +18,7 @@ interface AttendanceItemProps {
 }
 
 const Attendance: FC<AttendanceProps> = ({}) => {
-  const { currentWardProfile } = useUserAPI();
+  const { currentWardProfile, currentStudentData  } = useUserAPI();
   const [attendance, setAttendance] = useState<AttendanceItemProps[]>([]);
   const { data: getattendance } = useQuery(GET_STUDENT_ATTENDANCE, {
     variables: { studentId: currentWardProfile?.id },
@@ -70,104 +70,136 @@ const Attendance: FC<AttendanceProps> = ({}) => {
 
       <Divider color={"#E2E2E2"} my={"0.8rem"} />
 
-      {attendance?.length > 0 ? (
+      {currentStudentData?.isPaid ? (
         <>
-          {/* Section for absent pupils */}
-          {absentDays.length === 0 ? (
+          {attendance?.length > 0 ? (
             <>
-              <Text fontSize={"sm"} color={"#747474"} mt={"1rem"}>
-                Absent
-              </Text>
-              <Text my={"1rem"} color={"#747474"}>
-                No absences reported this week for this child.🌟
-              </Text>
+              {/* Section for absent pupils */}
+              {absentDays.length === 0 ? (
+                <>
+                  <Text fontSize={"sm"} color={"#747474"} mt={"1rem"}>
+                    Absent
+                  </Text>
+                  <Text my={"1rem"} color={"#747474"}>
+                    No absences reported this week for this child.🌟
+                  </Text>
+                </>
+              ) : (
+                <Box>
+                  <Text fontSize={"sm"} color={"#747474"} mt={"1rem"}>
+                    Absent
+                  </Text>
+
+                  {absentDays?.map((item, index) => (
+                    <Flex
+                      justifyContent={"space-between"}
+                      my={"1rem"}
+                      key={index}
+                    >
+                      <Box display={"flex"} flexDir={"column"}>
+                        <Text
+                          fontSize={{ base: "sm", lg: "md" }}
+                          fontWeight={"500"}
+                        >
+                          {item?.createdAt}
+                        </Text>
+                        <Text
+                          fontSize={{ base: "2xs", lg: "xs" }}
+                          color={"#747474"}
+                        >
+                          {item?.note}
+                        </Text>
+                      </Box>
+                      {item?.present ? <PrimaryBadge /> : <SecondaryBadge />}
+                    </Flex>
+                  ))}
+                </Box>
+              )}
+
+              <Divider size={"10"} />
+
+              {/* Section for present pupils */}
+              {presentDays.length === 0 ? (
+                <>
+                  <Text fontSize={"sm"} color={"#747474"} mt={"1rem"}>
+                    Present
+                  </Text>
+                  <Text my={"1rem"} color={"#747474"}>
+                    ⚠️ Your child has not been in school this week.
+                  </Text>
+                </>
+              ) : (
+                <Box>
+                  <Text fontSize={"sm"} color={"#747474"} mt={"1rem"}>
+                    Present
+                  </Text>
+
+                  {presentDays?.slice(0, 8)?.map((item, index) => (
+                    <Flex
+                      justifyContent={"space-between"}
+                      my={"1rem"}
+                      key={index}
+                    >
+                      <Box display={"flex"} flexDir={"column"}>
+                        <Text
+                          fontSize={{ base: "sm", lg: "md" }}
+                          fontWeight={"500"}
+                        >
+                          {item?.createdAt}
+                        </Text>
+                        <Text
+                          fontSize={{ base: "2xs", lg: "xs" }}
+                          color={"#747474"}
+                        >
+                          {item?.note}
+                        </Text>
+                      </Box>
+                      {item?.present ? <PrimaryBadge /> : <SecondaryBadge />}
+                    </Flex>
+                  ))}
+                </Box>
+              )}
             </>
           ) : (
-            <Box>
-              <Text fontSize={"sm"} color={"#747474"} mt={"1rem"}>
-                Absent
+            <Box
+              display={"flex"}
+              flexDir={"column"}
+              alignItems={"center"}
+              justifyContent={"center"}
+              mt={"3rem"}
+            >
+              <Image
+                src="/images/attendanceEmptyState.svg"
+                alt="No invoice card"
+                maxW={{ base: "100px", md: "120px" }}
+                pointerEvents={"none"}
+              />
+              <Text color={"#747474"} mt={"2rem"} textAlign={"center"}>
+                No attendance has been recorded for your ward
               </Text>
-
-              {absentDays?.map((item, index) => (
-                <Flex justifyContent={"space-between"} my={"1rem"} key={index}>
-                  <Box display={"flex"} flexDir={"column"}>
-                    <Text
-                      fontSize={{ base: "sm", lg: "md" }}
-                      fontWeight={"500"}
-                    >
-                      {item?.createdAt}
-                    </Text>
-                    <Text
-                      fontSize={{ base: "2xs", lg: "xs" }}
-                      color={"#747474"}
-                    >
-                      {item?.note}
-                    </Text>
-                  </Box>
-                  {item?.present ? <PrimaryBadge /> : <SecondaryBadge />}
-                </Flex>
-              ))}
-            </Box>
-          )}
-
-          <Divider size={"10"} />
-
-          {/* Section for present pupils */}
-          {presentDays.length === 0 ? (
-            <>
-              <Text fontSize={"sm"} color={"#747474"} mt={"1rem"}>
-                Present
-              </Text>
-              <Text my={"1rem"} color={"#747474"}>
-                ⚠️ Your child has not been in school this week.
-              </Text>
-            </>
-          ) : (
-            <Box>
-              <Text fontSize={"sm"} color={"#747474"} mt={"1rem"}>
-                Present
-              </Text>
-
-              {presentDays?.slice(0, 8)?.map((item, index) => (
-                <Flex justifyContent={"space-between"} my={"1rem"} key={index}>
-                  <Box display={"flex"} flexDir={"column"}>
-                    <Text
-                      fontSize={{ base: "sm", lg: "md" }}
-                      fontWeight={"500"}
-                    >
-                      {item?.createdAt}
-                    </Text>
-                    <Text
-                      fontSize={{ base: "2xs", lg: "xs" }}
-                      color={"#747474"}
-                    >
-                      {item?.note}
-                    </Text>
-                  </Box>
-                  {item?.present ? <PrimaryBadge /> : <SecondaryBadge />}
-                </Flex>
-              ))}
             </Box>
           )}
         </>
       ) : (
-        <Box
-          display={"flex"}
-          flexDir={"column"}
-          alignItems={"center"}
-          justifyContent={"center"}
-          mt={"3rem"}
-        >
-          <Image
-            src="/images/attendanceEmptyState.svg"
-            alt="No invoice card"
-            maxW={{ base: "100px", md: "120px" }}
-            pointerEvents={"none"}
-          />
-          <Text color={"#747474"} mt={"2rem"} textAlign={"center"}>
-            No attendance has been recorded for your ward
-          </Text>
-        </Box>
+        <>
+          <Box
+            display={"flex"}
+            flexDir={"column"}
+            alignItems={"center"}
+            justifyContent={"center"}
+            mt={"3rem"}
+          >
+            <Image
+              src="/images/attendanceEmptyState.svg"
+              alt="No invoice card"
+              maxW={{ base: "100px", md: "120px" }}
+              pointerEvents={"none"}
+            />
+            <Text color={"#747474"} mt={"2rem"} fontWeight={'semibold'} textAlign={"center"}>
+              Subscribe to view this students attendance
+            </Text>
+          </Box>
+        </>
       )}
     </Box>
   );

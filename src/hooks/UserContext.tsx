@@ -6,7 +6,7 @@ import { format } from "date-fns";
 import { capitalizeFirstLetter } from "@/helpers/capitalizeFirstLetter";
 import { GET_STUDENT_INVOICE } from "@/gql/queries";
 import { formatDate } from "@/helpers/formatDate";
-import { Parent } from "@/gql/types";
+import { Parent, Student } from "@/gql/types";
 
 interface UserBio {
   firstName: string;
@@ -125,6 +125,7 @@ interface UserContextProps {
   loading: boolean;
   isTrialOver: boolean;
   setIsTrialOver: (arg: boolean) => void;
+  currentStudentData: Student | undefined;
 }
 
 const UserContext = createContext<UserContextProps | undefined>(undefined);
@@ -135,6 +136,7 @@ interface UserApiProviderProps {
 
 export const UserApiProvider: FC<UserApiProviderProps> = ({ children }) => {
   const { data: parent, loading } = useQuery(GET_PARENT);
+  const [currentStudentData, setCurrentStudentData] = useState<Student>();
   const [profileData, setProfileData] = useState({
     userBio: {
       firstName: "",
@@ -198,6 +200,13 @@ export const UserApiProvider: FC<UserApiProviderProps> = ({ children }) => {
       };
     });
   };
+
+  useEffect(() => {
+    const studentData = parentData?.children?.find(
+      (child) => child.id === currentId
+    );
+    setCurrentStudentData(studentData);
+  }, [parentData, currentId]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -302,6 +311,7 @@ export const UserApiProvider: FC<UserApiProviderProps> = ({ children }) => {
   return (
     <UserContext.Provider
       value={{
+        currentStudentData,
         invoiceData,
         profileData,
         setProfileData,

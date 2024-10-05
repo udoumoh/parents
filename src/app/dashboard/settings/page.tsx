@@ -20,6 +20,7 @@ import {
   Td,
   TableContainer,
   Stack,
+  SimpleGrid,
 } from "@chakra-ui/react";
 import axios from "axios";
 import { AiFillClockCircle } from "react-icons/ai";
@@ -748,11 +749,10 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
             justifyContent={"center"}
             gap={3}
           >
-            <Stack
-              direction={{ base: "column", md: "row" }}
-              gap={4}
-              justifyContent={"space-between"}
-              w={"full"}
+            <SimpleGrid
+              templateColumns="repeat(auto-fit, minmax(300px, 1fr))"
+              spacing="12px"
+              w={'full'}
             >
               {parentData?.children?.map((child, index) => (
                 <Flex
@@ -824,7 +824,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                   </Box>
                 </Flex>
               ))}
-            </Stack>
+            </SimpleGrid>
           </Flex>
         </Flex>
       </Box>
