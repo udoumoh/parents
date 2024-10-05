@@ -6,7 +6,6 @@ import {
   Text,
   Button,
   Image,
-  keyframes,
   Input,
   InputLeftElement,
   InputGroup,
@@ -27,6 +26,7 @@ import { IoIosStar } from "react-icons/io";
 import { PiHeart } from "react-icons/pi";
 import './styles.css'
 import Head from "next/head";
+import { keyframes, Keyframes } from "@emotion/react";
 
 const marqueeLeft = keyframes`
   0% { transform: translateX(0); }
