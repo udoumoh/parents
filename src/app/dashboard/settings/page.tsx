@@ -747,7 +747,6 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
             alignItems={"center"}
             justifyContent={"center"}
             gap={3}
-            display={parentData?.isPaid ? "none" : "flex"}
           >
             <Stack
               direction={{ base: "column", md: "row" }}

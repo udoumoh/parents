@@ -63,7 +63,6 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
       )
       .reduce((acc, invoice) => acc + invoice?.amountPaid, 0) + totalBalance;
 
-      console.log(parentData)
   return (
     <Box>
       <Flex gap={5} flexDir={"column"}>
@@ -101,7 +100,7 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
                   "https://th.bing.com/th/id/R.22dbc0f5e5f5648613f0d1de3ea7ae0a?rik=k6HQ45uVGe81rw&pid=ImgRaw&r=0"
                 }`}
                 height={140}
-                width={140}
+                width={62}
                 alt="profile-img"
                 style={{ borderRadius: "10px" }}
               />
