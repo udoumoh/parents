@@ -1,12 +1,10 @@
 "use client";
-import React, { ReactNode, useState, useEffect } from "react";
+import React, { ReactNode } from "react";
 import MainNav from "@/components/navigation/mainNav";
 import { useQuery } from "@apollo/client";
 import { GET_PARENT } from "@/gql/queries";
 import Loading from "../loading";
-import { useUserAPI } from "@/hooks/UserContext";
 import BottomNav from "@/components/navigation/mobileNav";
-import { usePathname } from "next/navigation";
 import { Box, ChakraProvider } from "@chakra-ui/react";
 
 interface layoutProps {
@@ -14,15 +12,14 @@ interface layoutProps {
 }
 
 const Layout: React.FC<layoutProps> = ({ children }) => {
-  const pathname = usePathname();
   const { data: parent, loading } = useQuery(GET_PARENT);
-  const { parentData, isTrialOver } = useUserAPI();
+  // const { parentData, isTrialOver } = useUserAPI();
 
-  useEffect(() => {
-    if (!parentData?.isPaid && isTrialOver) {
-      window.location.replace("/subscription/choose");
-    }
-  }, [parentData, isTrialOver]);
+  // useEffect(() => {
+  //   if (!parentData?.isPaid && isTrialOver) {
+  //     window.location.replace("/subscription/choose");
+  //   }
+  // }, [parentData, isTrialOver]);
 
   return loading ? (
     <Loading />
