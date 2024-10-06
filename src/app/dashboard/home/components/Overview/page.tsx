@@ -32,7 +32,7 @@ import { CiWarning } from "react-icons/ci";
 import { IoIosWarning } from "react-icons/io";
 import { PiChatsTeardropBold, PiEyeBold } from "react-icons/pi";
 import { HiOutlineUser } from "react-icons/hi";
-import { ComposeMessage } from "@/app/dashboard/inbox/component/ComposeMessage";
+import { ComposeInstantMessage } from "@/components/shared/composeInstantMessage";
 import Carousel from "./components/Carousel";
 import { Student } from "@/gql/types";
 
@@ -67,21 +67,22 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
       )
       .reduce((acc, invoice) => acc + invoice?.amountPaid, 0) + totalBalance;
 
-    //   const recipientData = {
-    //   name: `${currentStudentData?.creator?.admin?.firstName || ""} ${currentStudentData?.creator?.admin?.middleName || ""} ${currentStudentData?.creator?.admin?.lastName || ""}`,
-    //   role: currentStudentData?.creator?.admin?.role,
-    //   email: currentStudentData?.creator?.admin?.email,
-    //   profileImageUrl: currentStudentData?.creator?.admin?.profileImgUrl,
-    //   school: currentStudentData?.creator?.admin?.school,
-    //   schoolImg: currentStudentData?.creator?.admin?.schoolImg,
-    //   id: currentStudentData?.creator?.admin?.userId,
-    // }
+      const recipientData = {
+      name: `${currentStudentData?.creator?.admin?.firstName || ""} ${currentStudentData?.creator?.admin?.middleName || ""} ${currentStudentData?.creator?.admin?.lastName || ""}`,
+      role: currentStudentData?.creator?.admin?.role,
+      email: currentStudentData?.creator?.admin?.email,
+      profileImageUrl: currentStudentData?.creator?.admin?.profileImgUrl,
+      school: currentStudentData?.creator?.admin?.school,
+      schoolImg: currentStudentData?.creator?.admin?.schoolImg,
+      id: currentStudentData?.creator?.admin?.userId,
+    }
 
   return (
     <Box>
-      <ComposeMessage
+      <ComposeInstantMessage
         isOpen={isComposeModalOpen}
         onClose={onComposeModalClose}
+        recipientDetails={recipientData}
       />
       <Flex gap={5} flexDir={"column"}>
         <Flex
