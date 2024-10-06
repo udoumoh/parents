@@ -259,98 +259,8 @@ const InvoiceItem: FC<InvoiceItemProps> = ({
 };
 
 const Invoice: FC<InvoiceProps> = ({}) => {
-  const {invoiceData} = useUserAPI()
+  const {invoiceData, currentStudentData} = useUserAPI()
   const router = useRouter();
-
-  const tempData = [
-    {
-      term: "1st Term",
-      year: "2014/2015",
-      category: "School Fees",
-      amountPaid: 250000,
-      id: 5,
-      status: "active",
-      summary: "",
-      createdAt: "21st June 2024",
-      invoiceId: "12",
-      isRefundable: true,
-      schoolname: "Alice International",
-      schoollogo: "/",
-      balance: 5000,
-      receipt: [
-        {
-          amountPaid: 10000,
-          createdAt: "",
-          creator: "",
-          fileType: "",
-          id: 3,
-          parentInvoiceId: "",
-          status: "",
-          summary: "",
-          updatedAt: "",
-          uploadedDocument: "",
-        },
-      ],
-    },
-    {
-      term: "1st Term",
-      year: "2014/2015",
-      category: "School Fees",
-      amountPaid: 250000,
-      id: 5,
-      status: "rejected by parent",
-      summary: "",
-      createdAt: "21st June 2024",
-      invoiceId: "12",
-      isRefundable: true,
-      schoolname: "Alice International",
-      schoollogo: "/",
-      balance: 5000,
-      receipt: [
-        {
-          amountPaid: 10000,
-          createdAt: "",
-          creator: "",
-          fileType: "",
-          id: 3,
-          parentInvoiceId: "",
-          status: "",
-          summary: "",
-          updatedAt: "",
-          uploadedDocument: "",
-        },
-      ],
-    },
-    {
-      term: "1st Term",
-      year: "2014/2015",
-      category: "School Fees",
-      amountPaid: 250000,
-      id: 5,
-      status: "active",
-      summary: "",
-      createdAt: "21st June 2024",
-      invoiceId: "12",
-      isRefundable: true,
-      schoolname: "Alice International",
-      schoollogo: "/",
-      balance: 5000,
-      receipt: [
-        {
-          amountPaid: 10000,
-          createdAt: "",
-          creator: "",
-          fileType: "",
-          id: 3,
-          parentInvoiceId: "",
-          status: "",
-          summary: "",
-          updatedAt: "",
-          uploadedDocument: "",
-        },
-      ],
-    },
-  ];
 
   return (
     <Box
@@ -359,7 +269,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
       animate={{ opacity: 1 }}
       transitionDuration={"1s"}
       pt={"1rem"}
-      px={{base:"0.5rem", md:'1rem'}}
+      px={{ base: "0.5rem", md: "1rem" }}
       backgroundColor={"#fff"}
       rounded={"md"}
       w={"full"}
@@ -387,36 +297,65 @@ const Invoice: FC<InvoiceProps> = ({}) => {
 
       <Divider color={"#C2C2C2"} my={"0.8rem"} />
 
-      {invoiceData?.length > 0 ? (
-        <Box
-          maxH={"500px"}
-          overflowY={"auto"}
-          sx={{
-            "::-webkit-scrollbar": { display: "none" },
-          }}
-        >
-          {invoiceData?.slice(0, 3)?.map((student, index) => {
-            return <InvoiceItem studentInvoice={student} key={index}/>;
-          })}
-        </Box>
+      {currentStudentData?.isPaid ? (
+        <>
+          {invoiceData?.length > 0 ? (
+            <Box
+              maxH={"500px"}
+              overflowY={"auto"}
+              sx={{
+                "::-webkit-scrollbar": { display: "none" },
+              }}
+            >
+              {invoiceData?.slice(0, 3)?.map((student, index) => {
+                return <InvoiceItem studentInvoice={student} key={index} />;
+              })}
+            </Box>
+          ) : (
+            <Box
+              display={"flex"}
+              flexDir={"column"}
+              alignItems={"center"}
+              justifyContent={"center"}
+              py={"1rem"}
+            >
+              <Image
+                src="/images/emptyStateInvoice.svg"
+                alt="No invoice card"
+                maxW={{ base: "100px", md: "120px" }}
+                pointerEvents={"none"}
+              />
+              <Text color={"#747474"} mt={"2rem"}>
+                Your ward has no active invoice
+              </Text>
+            </Box>
+          )}
+        </>
       ) : (
-        <Box
-          display={"flex"}
-          flexDir={"column"}
-          alignItems={"center"}
-          justifyContent={"center"}
-          py={'1rem'}
-        >
-          <Image
-            src="/images/emptyStateInvoice.svg"
-            alt="No invoice card"
-            maxW={{ base: "100px", md: "120px" }}
-            pointerEvents={"none"}
-          />
-          <Text color={"#747474"} mt={"2rem"}>
-            Your ward has no active invoice
-          </Text>
-        </Box>
+        <>
+          <Box
+            display={"flex"}
+            flexDir={"column"}
+            alignItems={"center"}
+            justifyContent={"center"}
+            mt={"3rem"}
+          >
+            <Image
+              src="/images/attendanceEmptyState.svg"
+              alt="No invoice card"
+              maxW={{ base: "100px", md: "120px" }}
+              pointerEvents={"none"}
+            />
+            <Text
+              color={"#747474"}
+              mt={"2rem"}
+              fontWeight={"semibold"}
+              textAlign={"center"}
+            >
+              Subscribe to view this students invoices
+            </Text>
+          </Box>
+        </>
       )}
     </Box>
   );

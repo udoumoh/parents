@@ -76,7 +76,6 @@ import Lottie from "react-lottie";
 import animationData from "../../../../public/lotties/noNotifications.json";
 import { GET_NOTIFICATIONS } from "@/gql/queries";
 import { formatDateWithSuffix } from "@/helpers/formatDate";
-import { GoAlertFill } from "react-icons/go";
 import {
   PiHeart,
   PiShoppingCart,
@@ -926,7 +925,7 @@ const MainNav: FC<MainNav> = ({ children }) => {
                         <Text
                           color={"gray.800"}
                           fontWeight={"semibold"}
-                          fontSize={"md"}
+                          fontSize={"sm"}
                         >{`${profileData.userBio.firstName} ${
                           profileData?.userBio?.middleName || ""
                         } ${profileData.userBio.lastName}`}</Text>

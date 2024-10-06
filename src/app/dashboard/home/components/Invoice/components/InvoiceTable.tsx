@@ -229,14 +229,16 @@ const InvoiceTable: FC<InvoiceTableProps> = ({
             aria-label="paginate"
             icon={<MdKeyboardArrowLeft />}
             onClick={handlePreviousPage}
+            boxSize={{ base: 6, md: 10 }}
           />
-          <Text>
+          <Text fontSize={{base:"xs", md:"md"}}>
             Page {currentPage} of {totalPages || currentPage}
           </Text>
           <IconButton
             aria-label="paginate"
             icon={<MdKeyboardArrowRight />}
             onClick={handleNextPage}
+            boxSize={{ base: 6, md: 10 }}
           />
         </Box>
       </Flex>

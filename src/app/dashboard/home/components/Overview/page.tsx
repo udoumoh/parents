@@ -21,6 +21,8 @@ import {
   Button,
   Stack,
   Badge,
+  Image,
+  useDisclosure
 } from "@chakra-ui/react";
 import Attendance from "@/components/attendance";
 import Invoice from "@/components/invoice";
@@ -28,12 +30,9 @@ import { useUserAPI } from "@/hooks/UserContext";
 import formatNumberWithCommas from "@/helpers/formatNumberWithCommas";
 import { CiWarning } from "react-icons/ci";
 import { IoIosWarning } from "react-icons/io";
-import Image from "next/image";
 import { PiChatsTeardropBold, PiEyeBold } from "react-icons/pi";
 import { HiOutlineUser } from "react-icons/hi";
-import { GET_PARENT } from "@/gql/queries";
-import { Parent } from "@/gql/types";
-import { useQuery } from "@apollo/client";
+import { ComposeMessage } from "@/app/dashboard/inbox/component/ComposeMessage";
 import Carousel from "./components/Carousel";
 import { Student } from "@/gql/types";
 
@@ -42,6 +41,11 @@ interface DashboardPageProps {}
 const DashboardPage: FC<DashboardPageProps> = ({}) => {
   const { currentWardProfile, invoiceData, parentData } = useUserAPI();
   const [currentStudentData, setCurrentStudentData] = useState<Student>();
+  const {
+    isOpen: isComposeModalOpen,
+    onClose: onComposeModalClose,
+    onOpen: onComposeModalOpen,
+  } = useDisclosure();
 
   useEffect(() => {
     const currentId = Number(localStorage.getItem("currentId"));
@@ -63,8 +67,22 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
       )
       .reduce((acc, invoice) => acc + invoice?.amountPaid, 0) + totalBalance;
 
+    //   const recipientData = {
+    //   name: `${currentStudentData?.creator?.admin?.firstName || ""} ${currentStudentData?.creator?.admin?.middleName || ""} ${currentStudentData?.creator?.admin?.lastName || ""}`,
+    //   role: currentStudentData?.creator?.admin?.role,
+    //   email: currentStudentData?.creator?.admin?.email,
+    //   profileImageUrl: currentStudentData?.creator?.admin?.profileImgUrl,
+    //   school: currentStudentData?.creator?.admin?.school,
+    //   schoolImg: currentStudentData?.creator?.admin?.schoolImg,
+    //   id: currentStudentData?.creator?.admin?.userId,
+    // }
+
   return (
     <Box>
+      <ComposeMessage
+        isOpen={isComposeModalOpen}
+        onClose={onComposeModalClose}
+      />
       <Flex gap={5} flexDir={"column"}>
         <Flex
           flexDir={{ base: "column", lg: "row" }}
@@ -99,8 +117,8 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
                   currentWardProfile?.profileImage ||
                   "https://th.bing.com/th/id/R.22dbc0f5e5f5648613f0d1de3ea7ae0a?rik=k6HQ45uVGe81rw&pid=ImgRaw&r=0"
                 }`}
-                height={140}
-                width={62}
+                height={70}
+                width={140}
                 alt="profile-img"
                 style={{ borderRadius: "10px" }}
               />
@@ -195,19 +213,20 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
             <Box>
               <Flex alignItems={"center"} gap={4}>
                 {currentStudentData?.school?.school?.bannerImgUrl && (
-                  <>
-                    <Image
+                  <Box h={"full"}>
+                    <Avatar
                       src={`${currentStudentData?.school?.school?.bannerImgUrl}`}
-                      width={50}
-                      height={62}
-                      style={{ objectFit: "cover" }}
-                      alt="school logo"
+                      borderRadius={"5px"}
                     />
-                  </>
+                  </Box>
                 )}
                 <Box gap={3}>
-                  <Text fontWeight={"bold"} fontSize={"lg"} textTransform={'capitalize'}>
-                      {currentStudentData?.school?.school?.schoolName}
+                  <Text
+                    fontWeight={"bold"}
+                    fontSize={"lg"}
+                    textTransform={"capitalize"}
+                  >
+                    {currentStudentData?.school?.school?.schoolName}
                   </Text>
                   <Text fontSize={"sm"}>
                     {currentStudentData?.school?.school?.address}
@@ -230,10 +249,11 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
                     transform: "scale(1.1)",
                     transition: "0.3s ease",
                   }}
+                  onClick={onComposeModalOpen}
                 >
                   Send Message
                 </Button>
-                <Button
+                {/* <Button
                   leftIcon={<PiEyeBold />}
                   backgroundColor={"#007C7B"}
                   color={"#ffffff"}
@@ -249,7 +269,7 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
                   }}
                 >
                   View Profile
-                </Button>
+                </Button> */}
               </Stack>
             </Box>
 
@@ -258,12 +278,9 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
                 <Flex alignItems={"center"} gap={3}>
                   <Icon as={HiOutlineUser} boxSize={4} color={"#007C7B"} />
                   <Flex alignItems={"center"} gap={2}>
-                    <Text fontSize={"sm"} textTransform={'capitalize'}>
-                      {
-                        currentStudentData?.creator?.admin?.firstName
-                      }{" "}
-                      {currentStudentData?.creator?.admin?.middleName}
-                      {" "}
+                    <Text fontSize={"sm"} textTransform={"capitalize"}>
+                      {currentStudentData?.creator?.admin?.firstName}{" "}
+                      {currentStudentData?.creator?.admin?.middleName}{" "}
                       {currentStudentData?.creator?.admin?.lastName}
                     </Text>
                     <Badge
@@ -294,7 +311,7 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
                     >
                       <Icon as={HiOutlineUser} boxSize={4} color={"#007C7B"} />
                       <Flex alignItems={"center"} gap={2}>
-                        <Text fontSize={"sm"}  textTransform={'uppercase'}>
+                        <Text fontSize={"sm"} textTransform={"uppercase"}>
                           {
                             currentStudentData?.classroom?.classroom?.teacher[0]
                               ?.firstName
