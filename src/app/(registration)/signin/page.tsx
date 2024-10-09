@@ -252,6 +252,7 @@ const Signin: FC<pageProps> = ({}) => {
                 w={"full"}
                 _hover={{ backgroundColor: "#005D5D90" }}
                 isLoading={isSubmitting}
+                isDisabled={isSubmitting}
                 onClick={handleLogin}
               >
                 Sign in
