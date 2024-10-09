@@ -351,10 +351,10 @@ const Invoice: FC<InvoiceProps> = ({}) => {
               gap={4}
             >
               <Text fontSize={{ base: "xs", md: "md" }} fontWeight={"bold"}>
-                Results are not available on your current plan!
+                Financials are not available on your current plan!
               </Text>
               <Text fontSize={{ base: "xs", md: "md" }} mt={"0.3rem"}>
-                Please subscribe to view your child's results
+                Please subscribe to view your child's financial Information
               </Text>
             </Box>
           </Alert>
