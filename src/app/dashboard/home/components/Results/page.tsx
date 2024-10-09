@@ -265,11 +265,11 @@ const Results: FC<ResultsProps> = ({}) => {
             rightIcon={<FiPlus />}
             shadow={"sm"}
             w={{ base: "full", md: "180px" }}
-            size={{ base: "sm", md: "md" }}
-            variant={{ base: "outline", md: "outline" }}
+            variant="outline"
+            py={6}
             mt={"0.5rem"}
             rounded={{base:"3px", md:"md"}}
-            colorScheme="blue"
+            colorScheme="teal"
             onClick={onSelectPlanModalOpen}
           >
             Subscribe

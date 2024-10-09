@@ -118,8 +118,9 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
                   currentWardProfile?.profileImage ||
                   "https://th.bing.com/th/id/R.22dbc0f5e5f5648613f0d1de3ea7ae0a?rik=k6HQ45uVGe81rw&pid=ImgRaw&r=0"
                 }`}
-                height={70}
-                width={140}
+                w="150px"
+                h="150px"
+                objectFit="cover"
                 alt="profile-img"
                 style={{ borderRadius: "10px" }}
               />
@@ -213,10 +214,10 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
           >
             <Box>
               <Flex alignItems={"center"} gap={4}>
-                {currentStudentData?.school?.school?.bannerImgUrl && (
+                {currentStudentData?.school?.school?.logoImgUrl && (
                   <Box h={"full"}>
                     <Avatar
-                      src={`${currentStudentData?.school?.school?.bannerImgUrl}`}
+                      src={`${currentStudentData?.school?.school?.logoImgUrl}`}
                       borderRadius={"5px"}
                     />
                   </Box>
