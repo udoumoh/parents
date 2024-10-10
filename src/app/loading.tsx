@@ -1,9 +1,13 @@
 "use client";
 import { Flex, Image } from "@chakra-ui/react";
-import PuffLoader from "react-spinners/PuffLoader";
-import {motion} from 'framer-motion'
+import { keyframes } from "@emotion/react";
 
 const Loading = () => {
+  const pulseAnimation = keyframes`
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+  `;
   return (
     <Flex
       justifyContent={"center"}
@@ -15,16 +19,10 @@ const Loading = () => {
       <Flex
         alignItems={"center"}
         justifyContent={"center"}
-        as={motion.div}
-        animate={{
-          scale: [1, 2, 2, 1, 1],
-          rotate: [0, 0, 270, 270, 0],
-          borderRadius: ["20%", "20%", "50%", "50%", "20%"],
-        }}
+        animation={`${pulseAnimation} 1.5s ease-in-out infinite`}
       >
         <Image src="/images/greylightBordered.svg" />
       </Flex>
-      {/* <PuffLoader color="#005D5D" /> */}
     </Flex>
   );
 };

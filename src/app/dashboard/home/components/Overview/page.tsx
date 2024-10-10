@@ -125,7 +125,7 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
                 style={{ borderRadius: "10px" }}
               />
               <Box>
-                <Text fontWeight={"bold"} fontSize={{ base: "lg", lg: "xl" }}>
+                <Text fontWeight={"bold"} fontSize={{ base: "lg", lg: "xl" }} textTransform={"capitalize"}>
                   {`${currentWardProfile?.firstName} ${currentWardProfile?.middleName}
                     ${currentWardProfile?.lastName}`}
                 </Text>
