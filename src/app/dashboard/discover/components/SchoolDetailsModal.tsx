@@ -24,13 +24,13 @@ import {
 } from "react-icons/bi";
 import { TbWorld } from "react-icons/tb";
 import { useUserLikesAPI } from "@/hooks/UserLikesContext";
-import { ComposeMessage } from "../../inbox/component/ComposeMessage";
 import { MdOutlineMailOutline } from "react-icons/md";
 import { capitalizeFirstLetterOfEachWord } from "@/helpers/capitalizeFirstLetter";
 import Slider from "react-slick";
 import Carousel from "./Carousel";
 import {motion} from 'framer-motion'
 import { IoHeart, IoHeartOutline } from "react-icons/io5";
+import { ComposeInstantMessage } from "@/components/shared/composeInstantMessage";
 
 interface SchoolDetailsModalProps {
   isOpen: boolean;
@@ -80,13 +80,29 @@ const SchoolDetailsModal: FC<SchoolDetailsModalProps> = ({
   };
 
   const handleNextPost = () => {
-    setActiveProfileId(filteredPosts[currentProfileIndex + 1]?.id);
-    slider?.slickGoTo(0);
+    if (currentProfileIndex < filteredPostsLength - 1) {
+      setActiveProfileId(filteredPosts[currentProfileIndex + 1]?.id);
+      slider?.slickGoTo(0);
+    }
   };
 
   const handlePreviousPost = () => {
-    setActiveProfileId(filteredPosts[currentProfileIndex - 1]?.id);
-    slider?.slickGoTo(0);
+    if (currentProfileIndex > 0) {
+      setActiveProfileId(filteredPosts[currentProfileIndex - 1]?.id);
+      slider?.slickGoTo(0);
+    }
+  };
+
+  const recipientData = {
+    name: `${profile?.creator?.admin?.firstName || ""} ${
+      profile?.creator?.admin?.middleName || ""
+    } ${profile?.creator?.admin?.lastName || ""}`.trim(),
+    role: profile?.creator?.admin?.role || "Unknown",
+    email: profile?.creator?.admin?.email || "N/A",
+    profileImageUrl: profile?.creator?.admin?.profileImgUrl || "",
+    school: profile?.creator?.admin?.school || "N/A",
+    schoolImg: profile?.creator?.admin?.schoolImg || "",
+    id: profile?.creator?.admin?.userId || "",
   };
 
   return (
@@ -96,9 +112,10 @@ const SchoolDetailsModal: FC<SchoolDetailsModalProps> = ({
         onClose={onClose}
         size={{ base: "full", sm: "lg", md: "2xl" }}
       >
-        <ComposeMessage
+        <ComposeInstantMessage
           isOpen={isComposeModalOpen}
           onClose={onComposeModalClose}
+          recipientDetails={recipientData}
         />
         <ModalOverlay />
         <ModalContent position={"relative"}>
@@ -172,9 +189,7 @@ const SchoolDetailsModal: FC<SchoolDetailsModalProps> = ({
                       }}
                     >
                       <Icon
-                        as={
-                          isPostLiked(profile?.id) ? IoHeart : IoHeartOutline
-                        }
+                        as={isPostLiked(profile?.id) ? IoHeart : IoHeartOutline}
                         onClick={handleToggleLike}
                         color={
                           isPostLiked(profile?.id) ? "#fe2c55" : "#00000070"
@@ -230,9 +245,7 @@ const SchoolDetailsModal: FC<SchoolDetailsModalProps> = ({
                       }}
                     >
                       <Icon
-                        as={
-                          isPostLiked(profile?.id) ? IoHeart : IoHeartOutline
-                        }
+                        as={isPostLiked(profile?.id) ? IoHeart : IoHeartOutline}
                         onClick={handleToggleLike}
                         color={
                           isPostLiked(profile?.id) ? "#fe2c55" : "#00000070"
@@ -383,9 +396,7 @@ const SchoolDetailsModal: FC<SchoolDetailsModalProps> = ({
                 <Button
                   size={"sm"}
                   onClick={handleNextPost}
-                  isDisabled={
-                    activeProfileId === lastPostId ? true : false
-                  }
+                  isDisabled={activeProfileId === lastPostId ? true : false}
                 >
                   Next
                 </Button>

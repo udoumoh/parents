@@ -9,6 +9,7 @@ import React, {
 import { useMutation, useQuery } from "@apollo/client";
 import { LIKE_PROFILE, UNLIKE_PROFILE } from "@/gql/mutations";
 import { GET_SCHOOLS } from "@/gql/queries";
+import { AdminResponse } from "@/gql/types";
 
 interface SchoolProfilesProps {
   genderType: string;
@@ -38,11 +39,7 @@ interface SchoolProfilesProps {
   address: string;
   priceRange: string;
   studentPerClassroom: string;
-  creator: {
-    admin: {
-      plan: string;
-    };
-  };
+  creator: AdminResponse;
 }
 
 interface UserLikesContextProps {
