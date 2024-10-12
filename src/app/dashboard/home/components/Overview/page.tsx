@@ -118,13 +118,14 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
                   currentWardProfile?.profileImage ||
                   "https://th.bing.com/th/id/R.22dbc0f5e5f5648613f0d1de3ea7ae0a?rik=k6HQ45uVGe81rw&pid=ImgRaw&r=0"
                 }`}
-                height={70}
-                width={140}
+                w="150px"
+                h="150px"
+                objectFit="cover"
                 alt="profile-img"
                 style={{ borderRadius: "10px" }}
               />
               <Box>
-                <Text fontWeight={"bold"} fontSize={{ base: "lg", lg: "xl" }}>
+                <Text fontWeight={"bold"} fontSize={{ base: "lg", lg: "xl" }} textTransform={"capitalize"}>
                   {`${currentWardProfile?.firstName} ${currentWardProfile?.middleName}
                     ${currentWardProfile?.lastName}`}
                 </Text>
@@ -213,10 +214,10 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
           >
             <Box>
               <Flex alignItems={"center"} gap={4}>
-                {currentStudentData?.school?.school?.bannerImgUrl && (
+                {currentStudentData?.school?.school?.logoImgUrl && (
                   <Box h={"full"}>
                     <Avatar
-                      src={`${currentStudentData?.school?.school?.bannerImgUrl}`}
+                      src={`${currentStudentData?.school?.school?.logoImgUrl}`}
                       borderRadius={"5px"}
                     />
                   </Box>
@@ -412,7 +413,7 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
                   <Text fontSize={"sm"} color={"#00000070"} fontWeight={"bold"}>
                     Overpaid Balance
                   </Text>
-                  <Popover placement="bottom" closeOnBlur={false}>
+                  <Popover  closeOnBlur={false}>
                     <PopoverTrigger>
                       <IconButton
                         aria-label="warning"
@@ -423,24 +424,23 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
                       />
                     </PopoverTrigger>
                     <PopoverContent
-                      color="#fff"
-                      bg="red.800"
-                      borderColor="red.800"
+                      color="#000"
+                      bg="white"
+                      borderColor="red.500"
                     >
                       <PopoverHeader pt={4} fontWeight="bold" border="0">
                         <Flex alignItems={"center"} gap={2}>
-                          <Icon as={IoIosWarning} color={"orange"} />
-                          <Text color={"orange"}>Disclaimer!!!</Text>
+                          <Icon as={IoIosWarning} color={"red"} />
+                          <Text color={"red"}>Disclaimer!!!</Text>
                         </Flex>
                       </PopoverHeader>
-                      <PopoverArrow bg="red.800" />
                       <PopoverCloseButton />
                       <PopoverBody>
                         <Text fontSize={{ base: "xs", sm: "sm" }}>
                           Before starting the process of transferring your child
                           to another school, it's crucial to use up your
-                          Overpaid balance in your current school. Unpaid
-                          balances cannot be transferred to a new school.
+                          Overpaid balance in your current school. <strong>Unpaid
+                          balances cannot be transferred to a new school. </strong> 
                           Greynote doesn't manage payments or receive funds for
                           schools or parents. Please note that all funds in your
                           wallet belong to the school, and if you choose to

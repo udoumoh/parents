@@ -2,7 +2,9 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Getting Started
 
-### john does not know how to use git
+# john does not know how to use git
+
+
 
 First, run the development server:
 
