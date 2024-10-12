@@ -35,7 +35,6 @@ interface pageProps {}
 
 const Page: FC<pageProps> = ({}) => {
   const toast = useToast();
-  const router = useRouter();
   const [tabIndex, setTabIndex] = useState(0);
   const { isOpen, onClose, onOpen } = useDisclosure();
   const [profileUrl, setProfileUrl] = useState("");
