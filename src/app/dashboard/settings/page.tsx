@@ -239,7 +239,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
           rounded={"2xl"}
           p={"2rem"}
           shadow={"lg"}
-          backgroundColor={"#334854"}
+          backgroundColor={"#005d5d"}
         >
           <Flex
             alignItems={"center"}
@@ -247,25 +247,15 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
             flexDir={{ base: "column", lg: "row" }}
             justifyContent={"center"}
           >
-            <Box position={"relative"}>
+            <Box border={"3px solid #F2F2F2"} rounded="full">
               <Avatar
                 src={profileData?.userBio?.profileImage}
                 size={{ base: "xl", lg: "2xl" }}
                 pointerEvents={"none"}
-                border={"2px solid #F2F2F2"}
+                border={"2px solid transparent"}
                 p={1}
               />
-              <Icon
-                as={RiVerifiedBadgeFill}
-                boxSize={"4"}
-                color={"orange"}
-                position={"absolute"}
-                top={1}
-                right={2}
-                display={{ base: "block", md: "none" }}
-              />
             </Box>
-            {/* </Box> */}
             <Box
               display={"flex"}
               flexDir={"column"}
@@ -276,7 +266,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                 <Text
                   fontSize={{ base: "sm", lg: "3xl" }}
                   fontWeight={"bold"}
-                  color={"#FCF4D9"}
+                  color={"#FFF"}
                   textAlign={"center"}
                 >
                   {`${profileData?.userBio?.firstName} ${
@@ -286,18 +276,17 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                 <Icon
                   as={RiVerifiedBadgeFill}
                   boxSize={"4"}
-                  color={"orange"}
-                  display={{ base: "none", md: "block" }}
+                  color={"#f4b95f"}
                 />
               </Flex>
 
-              <Text fontSize={"lg"} fontWeight={"700"} color={"#FCF4D990"}>
+              <Text fontSize={"lg"} fontWeight={"700"} color={"#FFFFFF90"}>
                 {profileData?.userBio?.parentRole}
               </Text>
 
-              <Flex alignItems={"center"} gap={2} my="0.5rem">
-                <Icon as={AiFillClockCircle} color={"#FFF"} />
-                <Text color={"#FFF"} fontSize={{ base: "2xs", lg: "sm" }}>
+              <Flex alignItems={"center"} gap={1}>
+                <Icon as={AiFillClockCircle} color={"#FFFFFF90"} />
+                <Text color={"#FFFFFF90"} fontSize={{ base: "2xs", lg: "sm" }}>
                   Created on {formatDate(parentData?.createdAt)}
                 </Text>
               </Flex>
@@ -307,11 +296,11 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
             <Button
               size={{ base: "sm", md: "md" }}
               variant={"outline"}
-              border={"1px solid #FCF4D9"}
+              border={"1px solid #FFFFFF"}
               onClick={onModalOpen}
               gap={"2"}
-              color="#FCF4D9"
-              _hover={{ color: "green", backgroundColor: "green.100" }}
+              color="white"
+              _hover={{ color: "teal", backgroundColor: "white" }}
             >
               <Icon as={GoPencil} boxSize={{ base: 3, md: 4 }} />
               <Text fontSize={{ base: "xs", md: "md" }}>Edit Profile</Text>
@@ -395,7 +384,6 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                       key={index}
                       py={"0.6rem"}
                       px={"1rem"}
-                      backgroundColor={"#005D5D10"}
                       rounded={"md"}
                       _hover={{
                         backgroundColor: "#005D5D30",
@@ -403,7 +391,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                         cursor: "pointer",
                       }}
                       w={"full"}
-                      border={"1px solid #005D5D80"}
+                      border={"1px solid #e2e2e2"}
                       onClick={() => {
                         setLocalstorageId(item?.id || 0);
                         window.location.assign("/dashboard/home");
@@ -761,8 +749,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                   justifyContent={"center"}
                   flexDir={"column"}
                   w={"full"}
-                  bg={"gray.100"}
-                  border={"1px solid #005D5D50"}
+                  border={"1px solid #e2e2e2"}
                   rounded={"xl"}
                   p={"1rem"}
                 >
@@ -794,7 +781,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                     fontWeight={"semibold"}
                   >
                     {child?.school?.school?.schoolName} •{" "}
-                    {child?.classroom?.classroom?.className}
+                    {child?.classroom?.classroom?.className || "Not Enrolled Yet"}
                   </Text>
 
                   <Box display={child?.isPaid ? "block" : "none"}>
@@ -815,7 +802,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
 
                   <Box display={child?.isPaid ? "none" : "block"}>
                     <Button
-                      colorScheme="green"
+                      colorScheme="teal"
                       variant={"outline"}
                       onClick={onSelectPlanModalOpen}
                     >

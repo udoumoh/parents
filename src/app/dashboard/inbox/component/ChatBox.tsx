@@ -710,9 +710,9 @@ const ChatBox = () => {
                   color="#000"
                   fontSize="18"
                   fontWeight={600}
-                  h="48px"
+                  h="40px"
                 >
-                  {/* <Text>ChatBox</Text> */}
+                  <Text>Messages</Text>
                 </Flex>
                 <Flex
                   direction="column"

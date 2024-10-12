@@ -69,33 +69,34 @@ interface RecipientDetails {
 }
 
 const SEND_MESSAGE = gql(`
-mutation SendMessage($receiver: [String!]!, $message: String!, $subject: String!) {
-    sendMessage(receiver: $receiver, message: $message, subject: $subject) {
-      errors {
-        field
-        message
-      }
-      messages {
-        id
-        parentMessageId
-        subject
-        message
-        sender
-        senderRole
-        senderProfilePicture
-        senderName
-        receiver
-        receiverRole
-        receiverProfilePicture
-        receiverName
-        status
-        isVisible
-        wasEdited
-        createdAt
-        updatedAt
-      }
+mutation SendMessage($receiverName: [String!]!, $receiver: [String!]!, $message: String!, $subject: String!) {
+  sendMessage(receiverName: $receiverName, receiver: $receiver, message: $message, subject: $subject) {
+    errors {
+      field
+      message
+    }
+    messages {
+      id
+      parentMessageId
+      subject
+      message
+      sender
+      senderRole
+      senderProfilePicture
+      senderName
+      receiver
+      receiverRole
+      receiverProfilePicture
+      receiverName
+      status
+      hasReply
+      isVisible
+      wasEdited
+      createdAt
+      updatedAt
     }
   }
+}
 `);
 
 const DRAFT_MESSAGE = gql(`
@@ -345,6 +346,7 @@ export const ComposeInstantMessage: React.FC<ComposeInstantMessageProps> = ({
                 const response = await send({
                   variables: {
                     receiver: receiverId,
+                    receiverName: receivers.map((item) => item.name),
                     message: values.message,
                     subject: values.subject,
                   },
