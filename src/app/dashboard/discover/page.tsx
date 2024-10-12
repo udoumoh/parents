@@ -33,41 +33,8 @@ import dynamic from "next/dynamic";
 import PostItem from "./components/PostItem";
 import { useUserLikesAPI } from "@/hooks/UserLikesContext";
 import { useUserAPI } from "@/hooks/UserContext";
+import { SchoolProfilesProps } from "@/hooks/UserLikesContext";
 
-interface ProfileProps {
-  genderType: string;
-  schoolType: string;
-  type: string;
-  bannerImgUrl: string;
-  country: string;
-  createdAt: string;
-  description: string;
-  email: string;
-  facebookUrl: string;
-  id: number;
-  instagramUrl: string;
-  lgarea: string;
-  linkedinUrl: string;
-  logoImgUrl: string;
-  phonenumber: string;
-  profileLikes: number;
-  profileViews: number;
-  rcnumber: string;
-  schoolName: string;
-  state: string;
-  twitterUrl: string;
-  websiteUrl: string;
-  whoLikedProfile: string[];
-  schoolMedia: string[];
-  address: string;
-  priceRange: string;
-  studentPerClassroom: string;
-  creator: {
-    admin: {
-      plan: string;
-    };
-  };
-}
 
 const FilterModal = dynamic(() => import("./components/FilterModal"));
 
@@ -78,7 +45,7 @@ const Discover: FC<DiscoverProps> = ({}) => {
   const { parentData } = useUserAPI();
   const { filteredPosts, handleFilterChange, filterParams, applyFilters } =
     useUserLikesAPI();
-  const [likedPosts, setLikedPosts] = useState<ProfileProps[]>([]);
+  const [likedPosts, setLikedPosts] = useState<SchoolProfilesProps[]>([]);
 
   const filterLikedPosts = useCallback(() => {
     const likedPosts = filteredPosts?.filter((profile) =>

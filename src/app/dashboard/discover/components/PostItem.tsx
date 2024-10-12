@@ -14,43 +14,11 @@ import { useUserLikesAPI } from "@/hooks/UserLikesContext";
 import { capitalizeFirstLetterOfEachWord } from "@/helpers/capitalizeFirstLetter";
 import Image from "next/image";
 import SchoolDetailsModal from "./SchoolDetailsModal";
+import { SchoolProfilesProps } from "@/hooks/UserLikesContext";
 import { LikeButton } from "./LikeButton";
 
 export type ProfileProps = {
-  profile: {
-    genderType: string;
-    schoolType: string;
-    type: string;
-    bannerImgUrl: string;
-    country: string;
-    createdAt: string;
-    description: string;
-    email: string;
-    facebookUrl: string;
-    id: number;
-    instagramUrl: string;
-    lgarea: string;
-    linkedinUrl: string;
-    logoImgUrl: string;
-    phonenumber: string;
-    profileLikes: number;
-    profileViews: number;
-    rcnumber: string;
-    schoolName: string;
-    state: string;
-    twitterUrl: string;
-    websiteUrl: string;
-    whoLikedProfile: string[];
-    schoolMedia: string[];
-    address: string;
-    priceRange: string;
-    studentPerClassroom: string;
-    creator: {
-      admin: {
-        plan: string;
-      };
-    };
-  };
+  profile: SchoolProfilesProps;
 };
 
 const PostItem: FC<ProfileProps> = ({ profile }) => {
@@ -127,7 +95,6 @@ const PostItem: FC<ProfileProps> = ({ profile }) => {
             sizes="(max-width: 600px) 50vw, (min-width: 601px) 25vw"
           />
 
-        {/* duplicate like action removed. Like Button should not be on hover state  */}
         </Box>
 
         {/* Copy icon */}

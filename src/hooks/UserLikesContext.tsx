@@ -11,7 +11,7 @@ import { LIKE_PROFILE, UNLIKE_PROFILE } from "@/gql/mutations";
 import { GET_SCHOOLS } from "@/gql/queries";
 import { AdminResponse } from "@/gql/types";
 
-interface SchoolProfilesProps {
+export interface SchoolProfilesProps {
   genderType: string;
   schoolType: string;
   type: string;

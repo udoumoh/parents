@@ -1,4 +1,9 @@
+# *
 User-agent: *
 Allow: /
 
+# Host
+Host: https://parent.greynote.app
+
+# Sitemaps
 Sitemap: https://parent.greynote.app/sitemap.xml

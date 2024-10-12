@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:mobile="http://www.google.com/schemas/sitemap-mobile/1.0" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
+<url><loc>https://parent.greynote.app/signup</loc><lastmod>2024-10-12T08:25:34.386Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://parent.greynote.app/confirmOtp</loc><lastmod>2024-10-12T08:25:34.387Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://parent.greynote.app/link-child</loc><lastmod>2024-10-12T08:25:34.387Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://parent.greynote.app/forgotpassword</loc><lastmod>2024-10-12T08:25:34.387Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://parent.greynote.app/confirmation</loc><lastmod>2024-10-12T08:25:34.387Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://parent.greynote.app/dashboard/home/components/Invoice</loc><lastmod>2024-10-12T08:25:34.387Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://parent.greynote.app/signin</loc><lastmod>2024-10-12T08:25:34.387Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://parent.greynote.app/dashboard/discover</loc><lastmod>2024-10-12T08:25:34.387Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://parent.greynote.app/dashboard/home/components/Overview</loc><lastmod>2024-10-12T08:25:34.387Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://parent.greynote.app/dashboard/clips</loc><lastmod>2024-10-12T08:25:34.387Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://parent.greynote.app/verifyotp</loc><lastmod>2024-10-12T08:25:34.387Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://parent.greynote.app/dashboard/home</loc><lastmod>2024-10-12T08:25:34.387Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://parent.greynote.app/dashboard/home/components/Results</loc><lastmod>2024-10-12T08:25:34.387Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://parent.greynote.app/subscription/choose</loc><lastmod>2024-10-12T08:25:34.387Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://parent.greynote.app</loc><lastmod>2024-10-12T08:25:34.387Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://parent.greynote.app/subscription/initiate-subscription</loc><lastmod>2024-10-12T08:25:34.387Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://parent.greynote.app/dashboard</loc><lastmod>2024-10-12T08:25:34.387Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://parent.greynote.app/dashboard/marketplace</loc><lastmod>2024-10-12T08:25:34.387Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://parent.greynote.app/dashboard/results</loc><lastmod>2024-10-12T08:25:34.387Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://parent.greynote.app/dashboard/settings</loc><lastmod>2024-10-12T08:25:34.387Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://parent.greynote.app/dashboard/inbox</loc><lastmod>2024-10-12T08:25:34.387Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+</urlset>
