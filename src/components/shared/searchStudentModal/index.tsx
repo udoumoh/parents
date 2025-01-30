@@ -138,6 +138,7 @@ const SearchStudentModal: FC<SearchStudentModalProps> = ({isSearchOpen, onSearch
             />
           </InputGroup>
 
+          // Display search results
           {searchInput &&
             (loading ? (
               <Spinner size={'sm'}/>
