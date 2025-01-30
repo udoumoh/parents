@@ -19,6 +19,7 @@ import {
   ModalFooter,
   ModalCloseButton,
   Avatar,
+  Spinner,
 } from "@chakra-ui/react";
 import SearchResultItem from '../searchResultItem';
 import { FaLink } from "react-icons/fa6";
@@ -60,7 +61,7 @@ const SearchStudentModal: FC<SearchStudentModalProps> = ({isSearchOpen, onSearch
         "",
         id: "",
     }])
-    const {data:search} = useQuery(GET_STUDENTS)
+    const {data:search, loading} = useQuery(GET_STUDENTS)
     const handleSearchChange = (e: any) => {
     setSearchInput(e.target.value)
   };
@@ -136,27 +137,31 @@ const SearchStudentModal: FC<SearchStudentModalProps> = ({isSearchOpen, onSearch
               _placeholder={{ color: "#C2C2C2" }}
             />
           </InputGroup>
-          {searchInput && (
-            <Box
-              w={"full"}
-              display={"flex"}
-              flexDir={"column"}
-              justifyContent={"center"}
-              mt={"1rem"}
-            >
-              {filteredSearchData.length == 0 ? (
-                <Text textAlign={"center"} fontSize={"lg"} color={"#484848"}>
-                  No results match your search criteria
-                </Text>
-              ) : (
-                filteredSearchData?.map((item, index) => (
-                  <Box key={index} onClick={() => setSelectedStudent(item)}>
-                    <SearchResultItem student={item} key={index} />
-                  </Box>
-                ))
-              )}
-            </Box>
-          )}
+
+          {searchInput &&
+            (loading ? (
+              <Spinner size={'sm'}/>
+            ) : (
+              <Box
+                w={"full"}
+                display={"flex"}
+                flexDir={"column"}
+                justifyContent={"center"}
+                mt={"1rem"}
+              >
+                {filteredSearchData.length == 0 ? (
+                  <Text textAlign={"center"} fontSize={"lg"} color={"#484848"}>
+                    No results match your search criteria
+                  </Text>
+                ) : (
+                  filteredSearchData?.map((item, index) => (
+                    <Box key={index} onClick={() => setSelectedStudent(item)}>
+                      <SearchResultItem student={item} key={index} />
+                    </Box>
+                  ))
+                )}
+              </Box>
+            ))}
 
           {selectedStudent.age == 0 ? (
             <></>
@@ -198,7 +203,9 @@ const SearchStudentModal: FC<SearchStudentModalProps> = ({isSearchOpen, onSearch
             gap={2}
             px={"3rem"}
             _hover={{ backgroundColor: "#044141" }}
-            onClick={() => {onModalOpen()}}
+            onClick={() => {
+              onModalOpen();
+            }}
             isDisabled={selectedStudent?.age === 0 ? true : false}
           >
             <Icon as={AiOutlinePlus} color={"#fff"} />

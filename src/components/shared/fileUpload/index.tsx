@@ -64,7 +64,7 @@ export const FileUpload: React.FC<FileUploadProps> = ({
         const formData = new FormData();
         const folder = imageFolder || generateRandomAlphanumeric(8);
         formData.append("file", values.file);
-        formData.append("folder", `gn_documents/agents/${folder}`);
+        formData.append("folder", `gn_documents/parents/${folder}`);
         formData.append("upload_preset", "greynote");
         setUploading(true);
         try {

@@ -82,29 +82,6 @@ export interface StudentInvoiceProps {
   }[];
 }
 
-// interface ParentDataProps {
-//   agreedTo: boolean;
-//   children: [];
-//   createdAt: string;
-//   email: string;
-//   firstName: string;
-//   folder: string;
-//   id: number;
-//   isDisabled: boolean;
-//   isPaid: boolean;
-//   isReferred: boolean;
-//   isVerified: boolean;
-//   lastName: string;
-//   middleName: string;
-//   parentRole: string;
-//   phoneNumber: string;
-//   profileImgUrl: string;
-//   role: string;
-//   status: string;
-//   userId: string;
-//   subscriptionId: string;
-// }
-
 interface UserContextProps {
   profileData: {
     userBio: UserBio;

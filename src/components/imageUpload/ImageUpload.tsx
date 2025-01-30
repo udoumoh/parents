@@ -16,7 +16,6 @@ import {
 } from "@chakra-ui/react";
 import { useFormik } from "formik";
 import { useDropzone } from "react-dropzone";
-import axios from "axios";
 import { RxUpload, RxFile } from "react-icons/rx";
 import React, { useState } from "react";
 import TopBarProgress from "react-topbar-progress-indicator";
@@ -70,7 +69,7 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({
         try {
           const response = await formDataUpload({
             accountId: "kW15c9n",
-            apiKey: process.env.NEXT_PUBLIC_IMAGEUPLOADSERVER!,
+            apiKey: process.env.NEXT_PUBLIC_CLOUD!,
             requestBody: values.file,
             originalFileName: values.file.name,
             querystring: {

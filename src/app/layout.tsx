@@ -28,7 +28,7 @@ const Layout: FC<LayoutProps> = ({ children }) => {
     <html lang="en">
       <head>
         <title>Greynote Parents Dashboard</title>
-        <meta property="og:title" content="Greynote Parent" />
+        <meta property="og:title" content="Greynote Parent Dashboard" />
         <meta
           property="og:description"
           content="Stay involved in your child's education with the Greynote Parents app. Track academic progress, receive updates, and communicate with teachers to support your child's learning journey."
