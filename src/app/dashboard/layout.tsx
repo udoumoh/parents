@@ -13,18 +13,15 @@ interface layoutProps {
 
 const Layout: React.FC<layoutProps> = ({ children }) => {
   const { data: parent, loading } = useQuery(GET_PARENT);
-  // const { parentData, isTrialOver } = useUserAPI();
 
-  // useEffect(() => {
-  //   if (!parentData?.isPaid && isTrialOver) {
-  //     window.location.replace("/subscription/choose");
-  //   }
-  // }, [parentData, isTrialOver]);
+  React.useEffect(() => {
+    if (!loading && parent?.parent?.errors !== null) {
+      window.location.replace("/signin");
+    }
+  }, [loading, parent]);
 
   return loading ? (
     <Loading />
-  ) : !loading && parent?.parent?.errors !== null ? (
-    <>{window.location.replace("/signin")}</>
   ) : (
     <ChakraProvider>
       <Box p={0}>
@@ -33,12 +30,6 @@ const Layout: React.FC<layoutProps> = ({ children }) => {
       </Box>
     </ChakraProvider>
   );
-  // (
-  //   <Box p={0} position={'relative'}>
-  //     <MainNav>{children}</MainNav>
-  //     <BottomNav />
-  //   </Box>
-  // );
   
 };
 

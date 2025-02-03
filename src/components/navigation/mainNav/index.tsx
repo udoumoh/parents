@@ -133,12 +133,12 @@ const LinkItems: Array<LinkItemProps> = [
     iconFill: IoCompass,
     url: "/dashboard/discover",
   },
-  {
-    name: "Clips",
-    iconLight: MdOutlineMovieFilter,
-    iconFill: MdMovieFilter,
-    url: "/dashboard/clips",
-  },
+  // {
+  //   name: "Clips",
+  //   iconLight: MdOutlineMovieFilter,
+  //   iconFill: MdMovieFilter,
+  //   url: "/dashboard/clips",
+  // },
   {
     name: "Settings",
     iconLight: AiOutlineSetting,
@@ -181,12 +181,12 @@ const DrawerNavLinkItems = {
       iconFill: PiChatsTeardropFill,
       url: "dashboard/inbox",
     },
-    {
-      name: "Clips",
-      iconLight: MdOutlineMovieFilter,
-      iconFill: MdMovieFilter,
-      url: "dashboard/clips",
-    },
+    // {
+    //   name: "Clips",
+    //   iconLight: MdOutlineMovieFilter,
+    //   iconFill: MdMovieFilter,
+    //   url: "dashboard/clips",
+    // },
     {
       name: "Settings",
       iconLight: AiOutlineSetting,

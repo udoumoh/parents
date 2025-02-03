@@ -138,10 +138,10 @@ const SearchStudentModal: FC<SearchStudentModalProps> = ({isSearchOpen, onSearch
             />
           </InputGroup>
 
-          // Display search results
+          {/* Display search results */}
           {searchInput &&
             (loading ? (
-              <Spinner size={'sm'}/>
+              <Spinner size={"sm"} my={"1rem"} color="#005D5D" />
             ) : (
               <Box
                 w={"full"}
