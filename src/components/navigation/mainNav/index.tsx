@@ -67,6 +67,7 @@ import {
   IoStorefrontOutline,
   IoStorefront,
 } from "react-icons/io5";
+import Link from "next/link";
 import { IconType } from "react-icons";
 import { useUserAPI } from "@/hooks/UserContext";
 import SearchStudentModal from "@/components/shared/searchStudentModal";
@@ -287,17 +288,9 @@ const NavItem = ({ icon, link, name, ...rest }: NavItemProps) => {
       label={name}
       placement="right"
     >
-      <Box
-        as="a"
-        w={"auto"}
-        h={"auto"}
-        onClick={() => {
-          router.push(link);
-        }}
-        style={{ textDecoration: "none" }}
-        _focus={{ boxShadow: "none" }}
-        display={"flex"}
-        justifyContent={"center"}
+      <Link
+        href={link}
+        style={{ textDecoration: "none", width: "auto", height: "auto", display:"flex", justifyContent: "center" }}
       >
         <Flex
           justifyContent={"center"}
@@ -330,7 +323,7 @@ const NavItem = ({ icon, link, name, ...rest }: NavItemProps) => {
             />
           )}
         </Flex>
-      </Box>
+      </Link>
     </Tooltip>
   );
 };
