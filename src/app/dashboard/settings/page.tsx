@@ -39,7 +39,6 @@ import {
   MdAccountBalanceWallet,
 } from "react-icons/md";
 import SelectPlanModal from "@/components/shared/selectPlanModal";
-import FreeTrial from "@/components/shared/freeTrial";
 import { formatDate } from "@/helpers/formatDate";
 
 interface SettingsPageProps {}
@@ -79,6 +78,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
     onOpen: onSelectPlanModalOpen,
     onClose: onSelectPlanModalClose,
   } = useDisclosure();
+
   const { profileData, parentData, childData, setLocalstorageId } = useUserAPI();
   const { data: getRequests } = useQuery(PARENT_REQUESTS, {
     variables: { parentId: parentData?.userId },
@@ -107,7 +107,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
             setSubscriptionData(response?.data?.data[0]);
           });
       } catch (err: any) {
-        console.log(err?.mesage);
+        // console.log(err?.mesage);
       }
     };
     fetchData();
@@ -141,7 +141,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
         window.location.reload();
       }
     } catch (err: any) {
-      console.log(err);
+      // console.log(err);
       toast({
         title: "Error",
         description: err?.message,
@@ -171,7 +171,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
       try {
         const response = await getRequests;
         if (!response) {
-          console.log("client error");
+          // console.log("client error");
         } else {
           const newData = response?.parentRequests?.map((item: any) => ({
             studentFirstName: item?.student?.firstName,
@@ -187,7 +187,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
           );
         }
       } catch (err: any) {
-        console.log(err);
+        // console.log(err);
       }
     };
     fetchData();
@@ -784,7 +784,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                     {child?.classroom?.classroom?.className || "Not Enrolled Yet"}
                   </Text>
 
-                  <Box display={child?.isPaid ? "block" : "none"}>
+                  {/* <Box display={child?.isPaid ? "block" : "none"}>
                     <Text
                       color={"gray.600"}
                       textAlign={"center"}
@@ -798,9 +798,13 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                       plan that expires in
                     </Text>
                     <FreeTrial createdAt={Number(child?.subscribedAt)} />
+                  </Box> */}
+
+                  <Box bgColor={'#005D5D'} color={'white'} px={4} py={2} rounded={'md'} display={child?.isPaid ? "block" : "none"}>
+                    <Text fontSize={'sm'}>Subscribed</Text>
                   </Box>
 
-                  <Box display={child?.isPaid ? "none" : "block"}>
+                  <Box display={child?.isPaid ? "none" : "block"} >
                     <Button
                       colorScheme="teal"
                       variant={"outline"}

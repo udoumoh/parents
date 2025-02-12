@@ -169,7 +169,7 @@ const Invoice: FC<InvoiceProps> = ({}) => {
           setSchoolsAttended(schools);
         }
       } catch (err: any) {
-        console.log(err);
+        // console.log(err);
       }
     };
     fetchData();

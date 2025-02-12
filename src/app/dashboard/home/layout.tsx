@@ -16,31 +16,22 @@ import {
 import { useRouter } from "next/navigation";
 import { useUserAPI } from "@/hooks/UserContext";
 import { capitalizeFirstLetter } from "@/helpers/capitalizeFirstLetter";
-import SidebarWithHeader from "@/components/navigation/secondaryNav";
-import Router from "next/router";
-import TopBarProgress from "react-topbar-progress-indicator";
+import ExpiredSubscriptionModal from "@/components/shared/expiredSubscriptionModal";
 
 interface LayoutProps {
   children: React.ReactNode;
 }
 
 const Layout: FC<LayoutProps> = ({ children }) => {
-  const [progress, setProgress] = useState(false);
+  const { parentData, childData, setLocalstorageId, currentId, currentStudentData } = useUserAPI();
 
-  Router.events.on("routeChangeStart", () => {
-    setProgress(true);
-  });
-  Router.events.on("routeChangeComplete", () => {
-    setProgress(false);
-  });
-  TopBarProgress.config({
-    barColors: {
-      "0": "#099C9B",
-      "1.0": "#007C7B",
-    },
-  });
+  const {
+    isOpen: isExpiredSubscriptionModalOpen,
+    onOpen: onExpiredSubscriptionModalOpen,
+    onClose: onExpiredSubscriptionModalClose,
+  } = useDisclosure();
+
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { parentData, childData, setLocalstorageId, currentId } = useUserAPI();
   const router = useRouter();
 
   useEffect(() => {
@@ -50,6 +41,10 @@ const Layout: FC<LayoutProps> = ({ children }) => {
     }
   }, [onOpen]);
 
+  useEffect(() => {if(currentStudentData?.isPaid === false) {
+    onExpiredSubscriptionModalOpen();
+  }}, [currentStudentData])
+
   if (parentData?.children.length === 0) {
     window.location.replace("/dashboard");
   }
@@ -57,7 +52,10 @@ const Layout: FC<LayoutProps> = ({ children }) => {
   const Overlay = () => <ModalOverlay bg="none" backdropFilter="blur(10px)" />;
   return (
     <Box>
-      {/* ... Your modal content ... */}
+      <ExpiredSubscriptionModal
+        isOpen={isExpiredSubscriptionModalOpen}
+        onClose={onExpiredSubscriptionModalClose}
+      />
       <Modal
         isCentered
         isOpen={isOpen}
@@ -110,7 +108,9 @@ const Layout: FC<LayoutProps> = ({ children }) => {
                   />
                   <Box lineHeight={"20px"}>
                     <Text fontWeight={"600"} fontSize={"sm"}>
-                      {`${ward.firstName} ${ward.middleName || ""} ${ward.lastName}`}
+                      {`${ward.firstName} ${ward.middleName || ""} ${
+                        ward.lastName
+                      }`}
                     </Text>
                     <Text
                       fontSize={"12px"}

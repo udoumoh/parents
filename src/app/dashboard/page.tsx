@@ -12,7 +12,7 @@ import { AiOutlinePlus } from "react-icons/ai";
 import SearchStudentModal from "@/components/shared/searchStudentModal";
 import { useUserAPI } from "@/hooks/UserContext";
 import { PARENT_REQUESTS } from "@/gql/queries";
-import { useQuery, useMutation } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import { GET_PARENT } from "@/gql/queries";
 import Loading from "../loading";
 
@@ -30,7 +30,7 @@ interface RequestDataProps {
 
 const Page: FC<pageProps> = ({}) => {
   const { data: parent, loading: parentLoading } = useQuery(GET_PARENT);
-  const { parentData } = useUserAPI();
+  const { parentData, currentStudentData } = useUserAPI();
   const { data: getRequests, loading: requestsLoading } = useQuery(
     PARENT_REQUESTS,
     {
@@ -49,7 +49,7 @@ const Page: FC<pageProps> = ({}) => {
       try {
         const response = await getRequests;
         if (!response) {
-          console.log("client error");
+          // console.log("client error");
         } else {
           const newData = response?.parentRequests.map((item: any) => ({
             studentFirstName: item?.student?.firstName,
@@ -63,7 +63,7 @@ const Page: FC<pageProps> = ({}) => {
           setRequestData(newData);
         }
       } catch (err: any) {
-        console.log(err);
+        // console.log(err);
       }
     };
 
@@ -80,7 +80,8 @@ const Page: FC<pageProps> = ({}) => {
     } else if (childrenCount !== 0) {
       window.location.assign("/dashboard/home");
     }
-  }, [parent, requestData]);
+
+  }, [parent, requestData, currentStudentData]);
 
   if (parentLoading || requestsLoading) {
     return <Loading />;

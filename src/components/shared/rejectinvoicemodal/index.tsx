@@ -110,7 +110,7 @@ const RejectInvoiceModal: FC<RejectInvoiceModalProps> = ({
         }, 600)
       }
     } catch (e: any) {
-      console.log(e.message);
+      // console.log(e.message);
     }
   };
   return (

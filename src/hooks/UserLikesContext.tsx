@@ -265,7 +265,7 @@ export const UserLikesAPIProvider: FC<UserLikesApiProviderProps> = ({
         setSchoolProfiles(filteredProfiles);
       }
     } catch (err: any) {
-      console.log(err?.message);
+      // console.log(err?.message);
     }
   }, [getSchools]);
 

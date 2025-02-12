@@ -262,7 +262,7 @@ export const UserApiProvider: FC<UserApiProviderProps> = ({ children }) => {
         );
         setInvoiceData(parsedInvoiceData?.reverse());
       } catch (err: any) {
-        console.log(err?.message);
+        // console.log(err?.message);
       }
 
     };

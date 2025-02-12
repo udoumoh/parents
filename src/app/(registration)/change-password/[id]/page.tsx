@@ -90,7 +90,7 @@ const Page: FC<PageProps> = ({ params }: { params: { id: string } }) => {
         }, 2000)
       }
     } catch (err: any) {
-      console.log(err);
+      // console.log(err);
     } finally {
       setIsSubmitting(false)
     }

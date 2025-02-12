@@ -88,7 +88,7 @@ const Page: FC<pageProps> = ({}) => {
           setSubscriptionData(response.data.data[0])
         })
       } catch (err: any) {
-          console.log(err?.mesage)
+          // console.log(err?.mesage)
       }
     }
     fetchData()

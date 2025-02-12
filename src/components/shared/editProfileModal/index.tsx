@@ -124,7 +124,7 @@ const EditProfileModal: FC<EditProfileModalProps> = ({
         }, 3000);
       }
     } catch (err: any) {
-      console.log(err.message);
+      // console.log(err.message);
     }
   };
 

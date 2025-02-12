@@ -84,7 +84,7 @@ const RemoveStudentModal: FC<RemoveStudentModalProps> = ({
         window.location.reload();
       }
     } catch (err: any) {
-      console.log(err);
+      // console.log(err);
     } finally {
       setIsRemoveSubmitting(false);
     }
@@ -130,7 +130,7 @@ const RemoveStudentModal: FC<RemoveStudentModalProps> = ({
         window.location.reload();
       }
     } catch (err: any) {
-      console.log(err);
+      // console.log(err);
     } finally {
       setIsRecoverSubmitting(false);
     }

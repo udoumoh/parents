@@ -100,7 +100,7 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
     try {
       const response = getschools;
       if (!response) {
-        console.log("Couldn't fetch from server");
+        // console.log("Couldn't fetch from server");
       }
       if (response?.getSchools) {
         const schools = response?.getSchools?.map((school: any) => ({
@@ -111,7 +111,7 @@ const UploadResultModal: FC<UploadResultModalProps> = ({
         setSchool(schools);
       }
     } catch (error: any) {
-      console.log(error?.message);
+      // console.log(error?.message);
     }
   }, [getschools]);
 

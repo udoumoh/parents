@@ -45,7 +45,7 @@ const FreeTrial: React.FC<FreeTrialProps> = ({ createdAt }) => {
 
   return (
     <Flex direction="column" align="center">
-      {/* <Text my={2} fontSize={12} display={expired === 0 ? "block" : "none"} >Your free trial period has ended</Text> */}
+      <Text my={2} fontSize={12} display={expired === 0 ? "block" : "none"} >Your free trial period has ended</Text>
       <Flex gap={2}>
         <Flex
           direction="column"

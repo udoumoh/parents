@@ -371,7 +371,7 @@ const MobileNav = ({ onOpen, onClose, ...rest }: MobileProps) => {
       try {
         const response = await getnotifications;
         if (!response)
-          console.log("Client error occurred while fetching notifications");
+          // console.log("Client error occurred while fetching notifications");
         if (response) {
           if (
             notifications.length > 0 &&
@@ -390,7 +390,7 @@ const MobileNav = ({ onOpen, onClose, ...rest }: MobileProps) => {
           );
         }
       } catch (err) {
-        console.log(err);
+        // console.log(err);
       }
     };
     fetchData();

@@ -5,7 +5,7 @@ import { useQuery } from "@apollo/client";
 import { GET_PARENT } from "@/gql/queries";
 import Loading from "../loading";
 import BottomNav from "@/components/navigation/mobileNav";
-import { Box, ChakraProvider } from "@chakra-ui/react";
+import { Box, ChakraProvider} from "@chakra-ui/react";
 
 interface layoutProps {
   children: ReactNode;
