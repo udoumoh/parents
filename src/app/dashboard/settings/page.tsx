@@ -40,6 +40,7 @@ import {
 } from "react-icons/md";
 import SelectPlanModal from "@/components/shared/selectPlanModal";
 import { formatDate } from "@/helpers/formatDate";
+import FreeTrial from "@/components/shared/freeTrial";
 
 interface SettingsPageProps {}
 
@@ -784,7 +785,7 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                     {child?.classroom?.classroom?.className || "Not Enrolled Yet"}
                   </Text>
 
-                  {/* <Box display={child?.isPaid ? "block" : "none"}>
+                  <Box display={child?.isPaid ? "block" : "none"}>
                     <Text
                       color={"gray.600"}
                       textAlign={"center"}
@@ -798,11 +799,11 @@ const SettingsPage: FC<SettingsPageProps> = ({}) => {
                       plan that expires in
                     </Text>
                     <FreeTrial createdAt={Number(child?.subscribedAt)} />
-                  </Box> */}
-
-                  <Box bgColor={'#005D5D'} color={'white'} px={4} py={2} rounded={'md'} display={child?.isPaid ? "block" : "none"}>
-                    <Text fontSize={'sm'}>Subscribed</Text>
                   </Box>
+
+                  {/* <Box bgColor={'#005D5D'} color={'white'} px={4} py={2} rounded={'md'} display={child?.isPaid ? "block" : "none"}>
+                    <Text fontSize={'sm'}>Subscribed</Text>
+                  </Box> */}
 
                   <Box display={child?.isPaid ? "none" : "block"} >
                     <Button
