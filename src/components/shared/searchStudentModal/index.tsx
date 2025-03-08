@@ -28,7 +28,7 @@ import {
   AiOutlinePlus,
 } from "react-icons/ai";
 import LinkRequestModal from '../linkRequestModal';
-import { useQuery } from "@apollo/client";
+import { useQuery, useLazyQuery } from "@apollo/client";
 import { GET_STUDENTS } from '@/gql/queries';
 
 interface SearchStudentModalProps {
@@ -61,35 +61,34 @@ const SearchStudentModal: FC<SearchStudentModalProps> = ({isSearchOpen, onSearch
         "",
         id: "",
     }])
-    const {data:search, loading} = useQuery(GET_STUDENTS)
-    const handleSearchChange = (e: any) => {
-    setSearchInput(e.target.value)
-  };
+    const [getStudents, { data: studentSearch, loading }] =
+      useLazyQuery(GET_STUDENTS);
 
-  useEffect( () => {
-    const fetchData = async () => {
-      try {
-        const response = await search?.getStudent || [];
-        const data = response.map((student: any) => ({
-          name: student?.firstName + " " + student?.middleName + " " + student.lastName,
-          age: student?.ageInput,
-          className: student?.classroom?.classroom?.className || "",
-          gender: student?.gender,
-          profileImageUrl: student?.profileImgUrl,
-          id: student?.id,
-        }));
-        setStudentData(data)
-      } catch (error) {
-        console.error("Error fetching data:", error);
+    const handleSearchChange = (e: any) => {
+      const value = e.target.value;
+      setSearchInput(value);
+      if (value.length > 2) {
+        getStudents({ variables: { name: value } });
       }
     };
 
-    fetchData();
-  }, [search]);
+    useEffect(() => {
+      const data = studentSearch?.getStudent?.map((student: any) => ({
+        name: `${student.firstName} ${student?.middleName || ""} ${
+          student.lastName
+        }`,
+        age: student.ageInput,
+        className: student?.classroom?.classroom?.className,
+        gender: student?.gender,
+        profileImageUrl: student?.profileImgUrl,
+        id: student?.id,
+      }));
+      setStudentData(data);
+    }, [studentSearch]);
 
-  const filteredSearchData = studentData.filter((item) =>
-    item?.name?.toLowerCase().includes(searchInput.toLowerCase())
-  );
+    const filteredSearchData = studentData?.filter((item) =>
+      item?.name?.toLowerCase().includes(searchInput.toLowerCase())
+    );
   return (
     <Modal
       blockScrollOnMount={false}

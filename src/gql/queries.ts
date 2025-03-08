@@ -1555,11 +1555,12 @@ mutation CreateRequest($message: String!, $purpose: String!, $studentId: Float!)
 }`);
 
 export const GET_STUDENTS = gql(`
-query GetStudent {
-  getStudent {
+query GetStudent($name: String) {
+  getStudent(name: $name) {
     id
     createdAt
     transferedAt
+    subscribedAt
     firstName
     middleName
     lastName
@@ -1569,11 +1570,24 @@ query GetStudent {
     isOwing
     isVisible
     isDuplicate
+    linkedAt
+    linkCount
+    isLinked
     startDate
     endDate
     birthDate
     isArchived
     profileImgUrl
+    wallet
+    coinbank
+    cart
+    blockedCreators
+    avatarUrl
+    achievements
+    authType
+    isPaid
+    collectibleType
+    collectibleDuration
     classroom {
       errors {
         field
@@ -1587,12 +1601,15 @@ query GetStudent {
         updatedAt
         classId
         className
+        classSubjects
         description
+        resultTemplate
         isDisabled
         students {
           id
           createdAt
           transferedAt
+          subscribedAt
           firstName
           middleName
           lastName
@@ -1602,11 +1619,24 @@ query GetStudent {
           isOwing
           isVisible
           isDuplicate
+          linkedAt
+          linkCount
+          isLinked
           startDate
           endDate
           birthDate
           isArchived
           profileImgUrl
+          wallet
+          coinbank
+          cart
+          blockedCreators
+          avatarUrl
+          achievements
+          authType
+          isPaid
+          collectibleType
+          collectibleDuration
           grayId
           fatherName
           fatherEmail
@@ -1618,12 +1648,30 @@ query GetStudent {
           lgaOrigin
           state
         }
+        teacher {
+          id
+          userId
+          createdAt
+          status
+          firstName
+          middleName
+          lastName
+          phoneNumber
+          email
+          role
+          type
+          folder
+          isDisabled
+          isVisible
+          profileImgUrl
+        }
       }
     }
     school {
       school {
         id
         createdAt
+        updatedAt
         isDisabled
         isVerified
         schoolName
@@ -1631,7 +1679,17 @@ query GetStudent {
         address
         type
         lgarea
+        wallet
+        profileLikes
+        profileViews
+        whoLikedProfile
         folder
+        schoolType
+        priceRange
+        genderType
+        studentPerClassroom
+        currentTerm
+        currentSession
         state
         country
         description
@@ -1642,9 +1700,113 @@ query GetStudent {
         facebookUrl
         twitterUrl
         linkedinUrl
+        schoolMedia
+        accountName
+        accountNumber
+        bankName
         logoImgUrl
         bannerImgUrl
         license
+        walletTransactions {
+          amount
+          description
+          transactionDate
+          transactionType
+          transactionStatus
+        }
+        schoolItems {
+          createdAt
+          redeemedAt
+          quantity
+          voucherCode
+          isExpired
+          expiresAt
+          collectible {
+            id
+            title
+            caption
+            image
+            creator
+            category
+            price
+            isForSale
+            isDisabled
+            createdAt
+            updatedAt
+            likedBy
+            purchasedBy
+          }
+        }
+      }
+    }
+    parent {
+      id
+      userId
+      status
+      isPaid
+      isVerified
+      isReferred
+      agreedTo
+      createdAt
+      firstName
+      middleName
+      lastName
+      parentRole
+      phoneNumber
+      email
+      role
+      plan
+      folder
+      viewedContent
+      likedContent
+      subscriptionId
+      subscriptionType
+      subscriptionAmount
+      subscriptionDuration
+      isDisabled
+      profileImgUrl
+      children {
+        id
+        createdAt
+        transferedAt
+        subscribedAt
+        firstName
+        middleName
+        lastName
+        gender
+        ageInput
+        folder
+        isOwing
+        isVisible
+        isDuplicate
+        linkedAt
+        linkCount
+        isLinked
+        startDate
+        endDate
+        birthDate
+        isArchived
+        profileImgUrl
+        wallet
+        coinbank
+        cart
+        blockedCreators
+        avatarUrl
+        achievements
+        authType
+        isPaid
+        collectibleType
+        collectibleDuration
+        grayId
+        fatherName
+        fatherEmail
+        fatherNumber
+        motherName
+        motherEmail
+        motherNumber
+        homeAddress
+        lgaOrigin
+        state
       }
     }
     creator {
@@ -1654,8 +1816,10 @@ query GetStudent {
         userId
         folder
         status
+        statusCode
         plan
         isReferred
+        isBeginner
         isDisabled
         agreedTo
         referralCode
@@ -1667,9 +1831,55 @@ query GetStudent {
         email
         profileImgUrl
         role
+        accountOfficer {
+          id
+          userId
+          isDisabled
+          isSuper
+          isDirector
+          createdAt
+          fullName
+          username
+          phoneNumber
+          role
+          status
+          position
+          rank
+          points
+          department
+          email
+          profileImgUrl
+          greyAdmin {
+            id
+            isPaid
+            userId
+            folder
+            status
+            statusCode
+            plan
+            isReferred
+            isBeginner
+            isDisabled
+            agreedTo
+            referralCode
+            createdAt
+            firstName
+            middleName
+            lastName
+            phoneNumber
+            email
+            profileImgUrl
+            role
+            school
+            schoolImg
+            schoolCurrentTerm
+            schoolCurrentSession
+          }
+        }
         school
         schoolImg
-        statusCode
+        schoolCurrentTerm
+        schoolCurrentSession
       }
     }
     studentCase {

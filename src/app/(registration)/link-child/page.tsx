@@ -14,13 +14,14 @@ import {
   Avatar,
   Flex,
   ChakraProvider,
+  Spinner,  
 } from "@chakra-ui/react";
 import { IoMdClose } from "react-icons/io";
 import SearchResultItem from "@/components/shared/searchResultItem";
 import LinkRequestModal from "@/components/shared/linkRequestModal";
 import { IoIosSearch } from "react-icons/io";
 import { AiOutlinePlus } from "react-icons/ai";
-import { gql, useQuery } from "@apollo/client";
+import { gql, useQuery, useLazyQuery } from "@apollo/client";
 import { useRouter } from "next/navigation";
 import { GET_STUDENTS } from "@/gql/queries";
 
@@ -54,16 +55,18 @@ const Page: FC<PageProps> = ({}) => {
     },
   ]);
   const [selectedStudent, setSelectedStudent] = useState<Student | undefined>();
-  const { data: search } = useQuery(GET_STUDENTS);
+  const [ getStudents, {data:studentSearch, loading} ] = useLazyQuery(GET_STUDENTS);
+
   const handleSearchChange = (e: any) => {
-    setSearchInput(e.target.value);
+    const value = e.target.value;
+    setSearchInput(value);
+    if (value.length > 2) {
+      getStudents({ variables: { name: value } });
+    }
   };
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = (await search?.getStudent) || [];
-        const data = response.map((student: any) => ({
+        const data = studentSearch?.getStudent?.map((student: any) => ({
           name: `${student.firstName} ${student?.middleName || ""} ${student.lastName}`,
           age: student.ageInput,
           className: student?.classroom?.classroom?.className,
@@ -72,15 +75,9 @@ const Page: FC<PageProps> = ({}) => {
           id: student?.id,
         }));
         setStudentData(data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
+  }, [studentSearch]);
 
-    fetchData();
-  }, [search]);
-
-  const filteredSearchData = studentData.filter((item) =>
+  const filteredSearchData = studentData?.filter((item) =>
     item?.name?.toLowerCase().includes(searchInput.toLowerCase())
   );
   return (
@@ -169,7 +166,10 @@ const Page: FC<PageProps> = ({}) => {
                   },
                 }}
               >
-                {filteredSearchData.length === 0 ? (
+                {
+                  loading && <Spinner />
+                }
+                {filteredSearchData?.length === 0 ? (
                   <Text textAlign={"center"} fontSize={"xl"} color={"#484848"}>
                     No results match your search criteria
                   </Text>
