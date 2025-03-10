@@ -57,7 +57,7 @@ const ExpiredSubscriptionModal: FC<ExpiredSubscriptionModalProps> = ({
           <GoAlert />
           <Text>Subscription Renewal Required</Text>
         </ModalHeader>
-
+        <ModalCloseButton />
         <ModalBody pt={4}>
           <Flex
             alignItems="center"
