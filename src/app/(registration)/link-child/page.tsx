@@ -23,7 +23,7 @@ import { IoIosSearch } from "react-icons/io";
 import { AiOutlinePlus } from "react-icons/ai";
 import { gql, useQuery, useLazyQuery } from "@apollo/client";
 import { useRouter } from "next/navigation";
-import { GET_STUDENTS } from "@/gql/queries";
+import { FETCH_STUDENT } from "@/gql/queries";
 
 interface PageProps {}
 
@@ -55,18 +55,18 @@ const Page: FC<PageProps> = ({}) => {
     },
   ]);
   const [selectedStudent, setSelectedStudent] = useState<Student | undefined>();
-  const [ getStudents, {data:studentSearch, loading} ] = useLazyQuery(GET_STUDENTS);
+  const [ fetchStudents, {data:studentSearch, loading} ] = useLazyQuery(FETCH_STUDENT);
 
   const handleSearchChange = (e: any) => {
     const value = e.target.value;
     setSearchInput(value);
     if (value.length > 2) {
-      getStudents({ variables: { name: value } });
+      fetchStudents({ variables: { name: value } });
     }
   };
 
   useEffect(() => {
-        const data = studentSearch?.getStudent?.map((student: any) => ({
+        const data = studentSearch?.fetchStudent?.map((student: any) => ({
           name: `${student.firstName} ${student?.middleName || ""} ${student.lastName}`,
           age: student.ageInput,
           className: student?.classroom?.classroom?.className,

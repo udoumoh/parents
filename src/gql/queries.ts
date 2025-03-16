@@ -1554,9 +1554,9 @@ mutation CreateRequest($message: String!, $purpose: String!, $studentId: Float!)
   }
 }`);
 
-export const GET_STUDENTS = gql(`
-query GetStudent($name: String) {
-  getStudent(name: $name) {
+export const FETCH_STUDENT = gql(`
+query FetchStudent($name: String) {
+  fetchStudent(name: $name) {
     id
     createdAt
     transferedAt

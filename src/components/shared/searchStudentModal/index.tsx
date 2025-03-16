@@ -29,7 +29,7 @@ import {
 } from "react-icons/ai";
 import LinkRequestModal from '../linkRequestModal';
 import { useQuery, useLazyQuery } from "@apollo/client";
-import { GET_STUDENTS } from '@/gql/queries';
+import { FETCH_STUDENT } from '@/gql/queries';
 
 interface SearchStudentModalProps {
   isSearchOpen: boolean;
@@ -61,19 +61,19 @@ const SearchStudentModal: FC<SearchStudentModalProps> = ({isSearchOpen, onSearch
         "",
         id: "",
     }])
-    const [getStudents, { data: studentSearch, loading }] =
-      useLazyQuery(GET_STUDENTS);
+    const [fetchStudents, { data: studentSearch, loading }] =
+      useLazyQuery(FETCH_STUDENT);
 
     const handleSearchChange = (e: any) => {
       const value = e.target.value;
       setSearchInput(value);
       if (value.length > 2) {
-        getStudents({ variables: { name: value } });
+        fetchStudents({ variables: { name: value } });
       }
     };
 
     useEffect(() => {
-      const data = studentSearch?.getStudent?.map((student: any) => ({
+      const data = studentSearch?.fetchStudent?.map((student: any) => ({
         name: `${student.firstName} ${student?.middleName || ""} ${
           student.lastName
         }`,
@@ -149,7 +149,7 @@ const SearchStudentModal: FC<SearchStudentModalProps> = ({isSearchOpen, onSearch
                 justifyContent={"center"}
                 mt={"1rem"}
               >
-                {filteredSearchData.length == 0 ? (
+                {filteredSearchData?.length == 0 ? (
                   <Text textAlign={"center"} fontSize={"lg"} color={"#484848"}>
                     No results match your search criteria
                   </Text>
