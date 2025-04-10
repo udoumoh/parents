@@ -127,13 +127,11 @@ const Signin: FC<pageProps> = ({}) => {
   };
 
   if (!isMounted) {
-    return null; // or a loading indicator
+    return null;
   }
 
   return loading ? (
     <Loading />
-  ) : !loading && parent?.parent?.errors === null ? (
-    <>{window.location.assign("/dashboard/home")}</>
   ) : (
     <Box
       display={"flex"}
